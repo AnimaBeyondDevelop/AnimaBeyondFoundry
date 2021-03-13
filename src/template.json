@@ -1,10 +1,265 @@
 {
-  "Actor": {
-    "types": [],
-    "templates": []
-  },
-  "Item": {
-    "types": [],
-    "templates": []
-  }
+    "Actor": {
+      "types": ["character"],
+      "templates": [],
+      "character": {
+        "Description": {
+            "Name": {
+                "value":0
+            },
+            "Category": {
+                "value":0
+            },
+            "Level": {
+                "value":0
+            },
+            "Experience": {
+                "value":0
+            }
+        },
+
+        "Flags": {
+            "magicUser": {
+                "value":0
+            },
+            "hasInhumanity": {
+                "value":0
+            },
+            "FumbleRange o algo asi": {
+                "value":0
+            }
+        },
+        "Foundry special... algo": {
+            "Vision": {
+                "value":0
+            }
+        },
+
+        "Common Resources": { 
+            "Life points": {
+                "value":0,
+                "max":0
+            }, 
+            "Fatigue": {
+                "value":0,
+                "max":0
+            },
+            "Destiny Points": {
+                "value":0,
+                "max":0
+            },
+            "Custom": {
+                "value":0,
+                "max":0
+            }, 
+            "Sanity": {
+                "value":0,
+                "max":0
+            } 
+        },
+
+        "Characteristics": {
+            "Primaries": {
+                "agi": {
+                    "value":0
+                },
+                "con": {
+                    "value":0
+                },
+                "des": {
+                    "value":0
+                },
+                "fue": {
+                    "value":0
+                },
+                "Int": {
+                    "value":0
+                },
+                "per": {
+                    "value":0
+                },
+                "pod": {
+                    "value":0
+                },
+                "vol": {
+                    "value":0
+                }
+            },
+            "Secondaries": {
+                "Initiative": {
+                    "value":0
+                },
+                "Resistencies": {
+                    "phyr": {
+                        "value":0
+                    },
+                    "disr": {
+                        "value":0
+                    },
+                    "poir": {
+                        "value":0
+                    },
+                    "magr": {
+                        "value":0
+                    },
+                    "psir": {
+                        "value":0
+                    }
+                },
+                "Movement": {
+                    "value":0
+                },
+                "Regeneration": {
+                    "value":0
+                }
+            }
+        },
+
+        "Secondaries": {
+            "Athletics": {
+                "Acrobatics": {
+                    "value":0
+                
+                }
+            }
+        },
+
+        "Combat": {
+            "Attack": {
+                "value":0
+            },
+            "Defense": {
+                "value":0
+            },
+            "Armor": {
+                "Body": {
+                    "Cut": {
+                        "value":0
+                    },
+                    "Pierce": {
+                        "value":0
+                    },
+                    "Impact": {
+                        "value":0
+                    },
+                    "Heat": {
+                        "value":0
+                    },
+                    "Cold": {
+                        "value":0
+                    },
+                    "Electriity": {
+                        "value":0
+                    },
+                    "Energy": {
+                        "value":0
+                    }
+                },
+                "Head": {
+                    "Cut": {
+                        "value":0
+                    },
+                    "Pierce": {
+                        "value":0
+                    },
+                    "Impact": {
+                        "value":0
+                    },
+                    "Heat": {
+                        "value":0
+                    },
+                    "Cold": {
+                        "value":0
+                    },
+                    "Electriity": {
+                        "value":0
+                    },
+                    "Energy": {
+                        "value":0
+                    }
+                }
+            }
+        },    
+
+        "Mystic": {
+            "Zeon": {
+                "value":0,
+                "max":0,
+                "accumulated":0
+                },
+            "Magic Acummulation": {
+                "value":0
+            },
+            "Magic Regeneration": {
+                "value":0
+            },
+            "Magic Projection": {
+                "Offensive": {
+                    "value":0
+                },
+                "Defensive": {
+                    "value":0
+                }
+            },
+            "Magic level": {
+                "value":0
+            },
+
+            "Summoning": {
+                "currentRitualBonus": {
+                    "value":0
+                },
+                "Summon": {
+                    "value":0
+                },
+                "Banish": {
+                    "value":0
+                },
+                "Bind": {
+                    "value":0
+                },
+                "Control": {
+                    "value":0
+                }
+            }
+        },
+
+        "Domine": {
+            "Ki Points": {
+                "value":0,
+                "max":0,
+                "accumulated":0
+                },
+            "Ki Accumulation": {
+                "value":0
+            }
+        },
+
+        "Psychic": {
+            "Free PP": {
+                "value":0,
+                "max":0
+            }, 
+            "currentConcentrationBonus": {
+                "value":0
+            },
+            "psychicPotential": {
+                "value":0
+            },
+            "psychicProjection": {
+                "Offensive": {
+                    "value":0
+                },
+                "Defensive": {
+                    "value":0
+                }
+            }
+        }
+
+      }
+    },
+    "Item": {
+      "types": [],
+      "templates": []
+    }
 }
