@@ -6,11 +6,23 @@
   "Item": {
     "types": ["consumable", "misc"],
     "templates": {
+
       "consumable": {
         "amount": 0,
-        "max": 0
+        "max": 0,
+        "description": ""
       }
+
     },
+
+    "consumable": {
+      "templates": ["consumable"]
+    },
+
+    "misc": {
+      "templates": ["consumable"],
+
+    }
 
   }
 }
