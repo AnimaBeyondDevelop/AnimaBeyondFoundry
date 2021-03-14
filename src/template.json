@@ -4,7 +4,13 @@
     "templates": []
   },
   "Item": {
-    "types": [],
-    "templates": []
+    "types": ["consumable", "misc"],
+    "templates": {
+      "consumable": {
+        "amount": 0,
+        "max": 0
+      }
+    },
+
   }
 }
