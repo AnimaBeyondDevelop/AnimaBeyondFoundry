@@ -9,7 +9,8 @@
 
       "consumable": {
         "amount": 0,
-        "description": ""
+        "description": "",
+        "quality": 0
       }
 
     },
