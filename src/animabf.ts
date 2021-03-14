@@ -13,6 +13,8 @@
 // Import TypeScript modules
 import { registerSettings } from './module/settings.js';
 import { preloadTemplates } from './module/preloadTemplates.js';
+import abfActorSheet from './module/abfActorSheet.js'
+
 
 /* ------------------------------------ */
 /* Initialize system					*/
@@ -29,6 +31,8 @@ Hooks.once('init', async function() {
 	await preloadTemplates();
 
 	// Register custom sheets (if any)
+	Actors.unregisterSheet("core", ActorSheet);
+	Actors.registerSheet("abf", abfActorSheet, { makeDefault: true });
 });
 
 /* ------------------------------------ */
