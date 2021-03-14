@@ -184,6 +184,8 @@
                 "breakage": 5,
                 "description":"",
                 "presence":30,
+                "weigth":0,
+                "price":0,
                 "quality": 0
                 },
             "weaponbase": {
