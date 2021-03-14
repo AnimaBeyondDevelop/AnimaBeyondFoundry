@@ -195,7 +195,8 @@
                 "special":"",
                 "weaponTypePrimary":"",
                 "weaponTypeSecondary":"",
-                "requiredStrength":5
+                "requiredStrength":5,
+                "requiredStrengthTwoHanded":5
             },
                 "armorbase":{
                     "armorRequeriment":10,
