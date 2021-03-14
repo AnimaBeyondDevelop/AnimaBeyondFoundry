@@ -174,8 +174,62 @@
 
       }
     },
+
     "Item": {
-      "types": [],
-      "templates": []
+        "types": ["weapon", "shield", "ammunition", "armor", "helmet"],
+        "templates": {
+            "base": {
+                "quantity": 0,
+                "fortitude": 10,
+                "breakage": 5,
+                "description":"",
+                "presence":30,
+                "quality": 0
+                },
+            "weaponbase": {
+                "size": "normal",
+                "speed":10,
+                "baseDamage": 50,
+                "damageTypePrimary": "cut",
+                "damageTypeSecondary": "impact",
+                "special":"",
+                "weaponTypePrimary":"",
+                "weaponTypeSecondary":"",
+                "requiredStrength":5
+            },
+                "armorbase":{
+                    "armorRequeriment":10,
+                    "naturalPenalty": 10,
+                    "Lozalization":"",
+                    "Type":"",
+                    "presence":30,
+                    "cut":0,
+                    "impact":0,
+                    "pierce":0,
+                    "heat":0,
+                    "cold":0,
+                    "electricity":0,
+                    "energy":0
+                 }
+                },
+                "weapon": {
+                    "templates": ["base", "weaponbase"]
+                    },
+                "shield":{
+                    "templates": ["base", "weaponbase"],
+                    "defenseBonusParry":5,
+                    "defenseBonusDodge":5
+                    },
+                "ammunition": {
+                    "templates": ["base", "weaponbase"],
+                    "typeofAmmunition":""
+                    },
+                "armor": {
+                    "templates": ["base", "armorbase"]
+                    },
+                "helmet": {
+                    "templates": ["base", "armorbase"],
+                    "perceptionPenalty": 10
+                    }
+             }
     }
-}
