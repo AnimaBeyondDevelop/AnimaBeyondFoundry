@@ -1,179 +1,179 @@
 {
-    "Actor": {
-      "types": ["character"],
-      "templates": [],
-      "character": {
-        "Description": {
-            "Name": {"value":0},
-            "Category": {"value":0},
-            "Level": {"value":0},
-            "Experience": {"value":0}
-        },
+  "Actor": {
+    "types": ["character"],
+    "templates": [],
+    "character": {
+      "Description": {
+        "Name": {"value":0},
+        "Category": {"value":0},
+        "Level": {"value":0},
+        "Experience": {"value":0}
+      },
 
-        "Flags": {
-            "magicUser": {"value":0},
-            "hasInhumanity": {"value":0},
-            "FumbleRange o algo asi": {"value":0}
-        },
-        "Foundry special... algo": {
-            "Vision": {"value":0}
-        },
+      "Flags": {
+        "magicUser": {"value":0},
+        "hasInhumanity": {"value":0},
+        "FumbleRange o algo asi": {"value":0}
+      },
+      "Foundry special... algo": {
+        "Vision": {"value":0}
+      },
 
-        "Common Resources": {
-            "Life points": { "value":0, "max":0},
-            "Fatigue": {"value":0,"max":0},
-            "Destiny Points": {"value":0,"max":0},
-            "Custom": {"value":0,"max":0},
-            "Sanity": {"value":0,"max":0}
-        },
+      "Common Resources": {
+        "Life points": { "value":0, "max":0},
+        "Fatigue": {"value":0,"max":0},
+        "Destiny Points": {"value":0,"max":0},
+        "Custom": {"value":0,"max":0},
+        "Sanity": {"value":0,"max":0}
+      },
 
-        "Characteristics": {
-            "Primaries": {
-                "agi": {"value":0},
-                "con": {"value":0},
-                "des": {"value":0},
-                "fue": {"value":0},
-                "Int": {"value":0},
-                "per": {"value":0},
-                "pod": {"value":0},
-                "vol": {"value":0}
-            },
-            "Secondaries": {
-                "Initiative": {"value":0},
-                "Resistencies": {
-                    "phyr": {"value":0},
-                    "disr": {"value":0},
-                    "poir": {"value":0},
-                    "magr": {"value":0},
-                    "psir": {"value":0}
-                },
-                "Movement": {"value":0},
-                "Regeneration": {"value":0}
-            }
+      "Characteristics": {
+        "Primaries": {
+          "agi": {"value":0},
+          "con": {"value":0},
+          "des": {"value":0},
+          "fue": {"value":0},
+          "Int": {"value":0},
+          "per": {"value":0},
+          "pod": {"value":0},
+          "vol": {"value":0}
         },
-
         "Secondaries": {
-            "Athletics": {
-                "Acrobatics": {"value":0},
-                "Athleticism": {"value":0},
-                "Climb":{"value":0},
-                "Jump":{"value":0},
-                "Ride":{"value":0}
-            },
-            "Vigor":{
-                "Composure": {"value":0},
-                "Feats of Strength": {"value":0},
-                "Withstand Pain": {"value":0}
-            },
-            "Perception":{
-                "Notice":{"value":0},
-                "Search":{"value":0},
-                "Track":{"value":0}
-            },
-            "Intellectual":{
-                "Animals":{"value":0},
-                "Appraisal":{"value":0},
-                "Herbal Lore":{"value":0},
-                "History":{"value":0},
-                "Law":{"value":0},
-                "Magic Appraisal":{"value":0},
-                "Medicine":{"value":0},
-                "Memorize":{"value":0},
-                "Navigation":{"value":0},
-                "Occult":{"value":0},
-                "Sciences":{"value":0},
-                "Tactic":{"value":0}
-            },
-            "Social":{
-                "Comerce":{"value":0},
-                "Etiquette":{"value":0},
-                "Intimidate":{"value":0},
-                "Leadership":{"value":0},
-                "Street Knowledge":{"value":0},
-                "Style":{"value":0}
-            },
-            "Subterfuge":{
-                "Disguise":{"value":0},
-                "Hide":{"value":0},
-                "Lock Picking":{"value":0},
-                "Poisons":{"value":0},
-                "Theft":{"value":0},
-                "Trap Lore":{"value":0},
-                "Stealth":{"value":0}
-            },
-            "Creative":{
-                "Art":{"value":0},
-                "Dance":{"value":0},
-                "Forging":{"value":0},
-                "Music":{"value":0},
-                "Sleigth of Hand":{"value":0}
-            },
-            "Special":{
-                "Special":{"value":0}
-            }
-        },
-
-        "Combat": {
-            "Attack": {"value":0},
-            "Defense": {"value":0},
-            "Armor": {
-                "Body": {
-                    "Cut": {"value":0},
-                    "Pierce": {"value":0},
-                    "Impact": {"value":0},
-                    "Heat": {"value":0},
-                    "Cold": {"value":0},
-                    "Electriity": {"value":0},
-                    "Energy": {"value":0}
-                },
-                "Head": {
-                    "Cut": {"value":0},
-                    "Pierce": {"value":0},
-                    "Impact": {"value":0},
-                    "Heat": {"value":0},
-                    "Cold": {"value":0},
-                    "Electriity": {"value":0},
-                    "Energy": {"value":0}
-                }
-            }
-        },
-
-        "Mystic": {
-            "Zeon": {"value":0,"max":0,"accumulated":0},
-            "Magic Acummulation": {"value":0},
-            "Magic Regeneration": {"value":0},
-            "Magic Projection": {
-                "Offensive": {"value":0},
-                "Defensive": {"value":0}
-            },
-            "Magic level": {"value":0},
-
-            "Summoning": {
-                "currentRitualBonus": {"value":0},
-                "Summon": {"value":0},
-                "Banish": {"value":0},
-                "Bind": {"value":0},
-                "Control": {"value":0}
-            }
-        },
-
-        "Domine": {
-            "Ki Points": {"value":0,"max":0,"accumulated":0},
-            "Ki Accumulation": {"value":0}
-        },
-
-        "Psychic": {
-            "Free PP": {"value":0,"max":0},
-            "currentConcentrationBonus": {"value":0},
-            "psychicPotential": {"value":0},
-            "psychicProjection": {
-                "Offensive": {"value":0},
-                "Defensive": {"value":0}
-            }
+          "Initiative": {"value":0},
+          "Resistencies": {
+            "phyr": {"value":0},
+            "disr": {"value":0},
+            "poir": {"value":0},
+            "magr": {"value":0},
+            "psir": {"value":0}
+          },
+          "Movement": {"value":0},
+          "Regeneration": {"value":0}
         }
+      },
 
+      "Secondaries": {
+        "Athletics": {
+          "Acrobatics": {"value":0},
+          "Athleticism": {"value":0},
+          "Climb":{"value":0},
+          "Jump":{"value":0},
+          "Ride":{"value":0}
+        },
+        "Vigor":{
+          "Composure": {"value":0},
+          "Feats of Strength": {"value":0},
+          "Withstand Pain": {"value":0}
+        },
+        "Perception":{
+          "Notice":{"value":0},
+          "Search":{"value":0},
+          "Track":{"value":0}
+        },
+        "Intellectual":{
+          "Animals":{"value":0},
+          "Appraisal":{"value":0},
+          "Herbal Lore":{"value":0},
+          "History":{"value":0},
+          "Law":{"value":0},
+          "Magic Appraisal":{"value":0},
+          "Medicine":{"value":0},
+          "Memorize":{"value":0},
+          "Navigation":{"value":0},
+          "Occult":{"value":0},
+          "Sciences":{"value":0},
+          "Tactic":{"value":0}
+        },
+        "Social":{
+          "Comerce":{"value":0},
+          "Etiquette":{"value":0},
+          "Intimidate":{"value":0},
+          "Leadership":{"value":0},
+          "Street Knowledge":{"value":0},
+          "Style":{"value":0}
+        },
+        "Subterfuge":{
+          "Disguise":{"value":0},
+          "Hide":{"value":0},
+          "Lock Picking":{"value":0},
+          "Poisons":{"value":0},
+          "Theft":{"value":0},
+          "Trap Lore":{"value":0},
+          "Stealth":{"value":0}
+        },
+        "Creative":{
+          "Art":{"value":0},
+          "Dance":{"value":0},
+          "Forging":{"value":0},
+          "Music":{"value":0},
+          "Sleigth of Hand":{"value":0}
+        },
+        "Special":{
+          "Special":{"value":0}
+        }
+      },
+
+      "Combat": {
+        "Attack": {"value":0},
+        "Defense": {"value":0},
+        "Armor": {
+          "Body": {
+            "Cut": {"value":0},
+            "Pierce": {"value":0},
+            "Impact": {"value":0},
+            "Heat": {"value":0},
+            "Cold": {"value":0},
+            "Electriity": {"value":0},
+            "Energy": {"value":0}
+          },
+          "Head": {
+            "Cut": {"value":0},
+            "Pierce": {"value":0},
+            "Impact": {"value":0},
+            "Heat": {"value":0},
+            "Cold": {"value":0},
+            "Electriity": {"value":0},
+            "Energy": {"value":0}
+          }
+        }
+      },
+
+      "Mystic": {
+        "Zeon": {"value":0,"max":0,"accumulated":0},
+        "Magic Acummulation": {"value":0},
+        "Magic Regeneration": {"value":0},
+        "Magic Projection": {
+          "Offensive": {"value":0},
+          "Defensive": {"value":0}
+        },
+        "Magic level": {"value":0},
+
+        "Summoning": {
+          "currentRitualBonus": {"value":0},
+          "Summon": {"value":0},
+          "Banish": {"value":0},
+          "Bind": {"value":0},
+          "Control": {"value":0}
+        }
+      },
+
+      "Domine": {
+        "Ki Points": {"value":0,"max":0,"accumulated":0},
+        "Ki Accumulation": {"value":0}
+      },
+
+      "Psychic": {
+        "Free PP": {"value":0,"max":0},
+        "currentConcentrationBonus": {"value":0},
+        "psychicPotential": {"value":0},
+        "psychicProjection": {
+          "Offensive": {"value":0},
+          "Defensive": {"value":0}
+        }
       }
-    },
+
+    }
+  },
   "Item": {
     "types": ["consumable", "misc"],
     "templates": {
