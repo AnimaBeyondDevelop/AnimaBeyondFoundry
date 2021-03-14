@@ -3,7 +3,6 @@
   "title": "Anima Beyond Fantasy",
   "description": "",
   "version": "0.1.0",
-  "author": "",
   "authors": [
     {
       "name": "",
@@ -21,7 +20,7 @@
   "packs": [],
   "languages": [],
   "gridDistance": 1,
-  "gridUnits": "",
+  "gridUnits": "m",
   "minimumCoreVersion": "0.5.0",
   "compatibleCoreVersion": "0.5.0",
   "url": "",
