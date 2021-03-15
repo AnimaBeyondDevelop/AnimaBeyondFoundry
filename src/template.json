@@ -171,12 +171,10 @@
           "Defensive": {"value":0}
         }
       }
-
     }
   },
-  
-    "Item": {
-        "types": ["consumable", "misc", "weapon", "shield", "ammunition", "armor", "helmet"],
+  "Item": {
+        "types": ["weapon", "shield", "ammunition", "armor", "helmet", "spell", "psychicPower"],
         "templates": {
             "base": {
                 "quantity": 0,
@@ -187,7 +185,7 @@
                 "weigth":0,
                 "price":0,
                 "quality": 0
-                },
+            },
             "weaponbase": {
                 "size": "normal",
                 "speed":10,
@@ -200,39 +198,77 @@
                 "requiredStrength":5,
                 "requiredStrengthTwoHanded":5
             },
-                "armorbase":{
-                    "armorRequeriment":10,
-                    "naturalPenalty": 10,
-                    "Lozalization":"",
-                    "Type":"",
-                    "presence":30,
-                    "cut":0,
-                    "impact":0,
-                    "pierce":0,
-                    "heat":0,
-                    "cold":0,
-                    "electricity":0,
-                    "energy":0
-                 }
-                },
-                "weapon": {
-                    "templates": ["base", "weaponbase"]
-                    },
-                "shield":{
-                    "templates": ["base", "weaponbase"],
-                    "defenseBonusParry":5,
-                    "defenseBonusDodge":5
-                    },
-                "ammunition": {
-                    "templates": ["base", "weaponbase"],
-                    "typeofAmmunition":""
-                    },
-                "armor": {
-                    "templates": ["base", "armorbase"]
-                    },
-                "helmet": {
-                    "templates": ["base", "armorbase"],
-                    "perceptionPenalty": 10
-                    }
-             }
+            "armorbase":{
+                "armorRequeriment":10,
+                "naturalPenalty": 10,
+                "Lozalization":"",
+                "Type":"",
+                "presence":30,
+                "cut":0,
+                "impact":0,
+                "pierce":0,
+                "heat":0,
+                "cold":0,
+                "electricity":0,
+                "energy":0
+            }
+          },
+            "weapon": {
+                "templates": ["base", "weaponbase"]
+            },
+            "shield":{
+                "templates": ["base", "weaponbase"],
+                "defenseBonusParry":5,
+                "defenseBonusDodge":5
+            },
+            "ammunition": {
+                "templates": ["base", "weaponbase"],
+                "typeofAmmunition":""
+            },
+            "armor": {
+                "templates": ["base", "armorbase"]
+            },
+            "helmet": {
+                "templates": ["base", "armorbase"],
+                "perceptionPenalty": 10
+            },
+            "spell": {
+                "magicPath":"",
+                "level":0,
+                "actionType":"",
+                "typePrimary":"",
+                "typeSecondary":"",
+                "efect":"",
+                "spell Level":0,
+                "intelligencerequirement":0,
+                "basicZeon":0,
+                "intermediateZeon":10,
+                "advancedZeon":20,
+                "arcaneZeon":30,
+                "basicEffect":"",
+                "intermediateEffect":"",
+                "advancedEffect":"",
+                "arcaneEffect":"",
+                "maintenanceBasic":0,
+                "maintenanceIntermediate":0,
+                "maintenanceAdvanced":0,
+                "maintenanceArcane":0,
+                "isDiary":0
+            },
+            "psychicPower": {
+                "discipline":"",
+                "level":0,
+                "action":"",
+                "maintenance":0,
+                "routine":"",
+                "easy":"",
+                "medium":"",
+                "difficult":"",
+                "veryDifficult":"",
+                "almostImposible":"",
+                "imposible":"",
+                "Inhuman":"",
+                "Zen":""
+            }
     }
+}
