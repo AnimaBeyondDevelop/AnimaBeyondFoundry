@@ -1,17 +1,37 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-
-    {{!-- Sheet Header --}}
-    <header class="sheet-header">
-        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-        <div class="header-fields">
-            <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-        </div>
-    </header>
-
-    {{!-- Sheet Body --}}
-    <section class="sheet-body">
-        <div>
-            THIS IS WORKING!!          
-        </div>
-    </section>
+<form class="{{cssClass}} flexrow" autocomplete="off">
+	{{!-- Sheet Header --}}
+	<header>
+		<div class="header-fields">
+			<div style="display:flex">
+				<div>
+					<label for="actor.name" class="resource-label">Name</label>
+					<input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+					<label for="data.description.category" class="resource-label">Category</label>
+					<input name="data.description.category" type="text" value="{{data.description.category}}" placeholder="Category"/>
+					<label for="data.description.level.value" class="resource-label">Level</label>
+					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}" placeholder="Level"/>
+				</div>
+				<div >
+					<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="120" width="170"/>
+				</div>
+				<div style="text-align:right">
+					<label for="data.description.race" class="resource-label">Race</label>
+					<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Name"/>
+					<label for="data.description.category" class="resource-label">Hueco 5</label>
+					<input name="category" type="text" value="{{data.Description.Category}}" placeholder="Category"/>
+					<label for="data.description.category" class="resource-label">Hueco 6</label>
+					<input name="tittle" type="text" value="{{data.Description.Category}}" placeholder="Tittle"/>
+				</div>			
+			</div>
+		</div>		
+	<header>
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary" style="width:100%">
+        <a class="item" data-tab="main">Main</a>
+        <a class="item" data-tab="secundaries">Secundaries</a>
+        <a class="item" data-tab="combat">Combat</a>
+        <a class="item" data-tab="mystic">Mystic</a>
+		<a class="item" data-tab="domine">Domine</a>
+		<a class="item" data-tab="elan">Elan</a>
+    </nav>
 </form>
