@@ -4,7 +4,7 @@ export default class abfCombat extends Combat {
        // Reset initiative for everyone when going to the next round
        this.resetAll()
 
-        // Copy-paste the original nextRound() method from foundry.js
+       super.nextRound();
         let turn = 0;
         if (this.settings.skipDefeated) {
             turn = this.turns.findIndex(t => {
