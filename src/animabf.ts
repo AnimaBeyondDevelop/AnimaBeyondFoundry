@@ -9,11 +9,12 @@
  * Software License: [your license] Put your desired license here, which
  * 					 determines how others may use and modify your system
  */
-
 // Import TypeScript modules
+// @ts-nocheck
 import { registerSettings } from './module/settings.js';
 import { preloadTemplates } from './module/preloadTemplates.js';
 import abfActorSheet from './module/abfActorSheet.js'
+import abfCombat from "./module/combat.js";
 
 
 /* ------------------------------------ */
@@ -23,9 +24,14 @@ Hooks.once('init', async function() {
 	console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
 
 	// Assign custom classes and constants here
+	CONFIG.Combat.initiative = {
+		formula: "1d100",
+	  };
+	CONFIG.Combat.entityClass = abfCombat;
 	
 	// Register custom system settings
 	registerSettings();
+	
 	
 	// Preload Handlebars templates
 	await preloadTemplates();

@@ -44,6 +44,8 @@ Mientras la terminal siga corriendo con ese comando, cualquier cambio que se hag
 
 6) Si no has marcado la casilla de "Push Inmediately..." al hacer el commit, verás que se ilumina el botón de Push. Comprueba que efectivamente estás en la rama en la que tienes que estar, y dale al botón PUSH.
 
-7) Cuando el trabajo en una determinada feature esté terminado por completo, se hace un MERGE de la rama donde has estado trabajando a la rama develop. Esto hay que tener cuidado para hacerlo
+7) Cuando el trabajo en una determinada feature esté terminado por completo, entramos en Git y hacemos un PULL REQUEST desde nuestra rama a develop, y marcamos a algunos de los compañeros como reviewers para que repasen nuestro código antes de aceptarlo. Los que tengáis dudas preguntad por Discord.
+
+8) De vez en cuando, cuando la rama Develop haya tenido bastantes cambios, se hará un MERGE de la rama develop a la rama master. De nuevo, esto mejor que solo se haga con consenso entre varios.
 
 b) Para continuar tu trabajo o el trabajo de otro: Lo mismo que lo anterior pero sin el paso 1 ni 3.
