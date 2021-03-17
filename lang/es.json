@@ -1,0 +1,262 @@
+{
+  "anima": {
+    "weapon": {
+      "size": "Tamaño",
+      "baseDamage": "Daño Base",
+      "quality": "Calidad",
+      "weaponSizes": {
+        "normal":"Normal",
+        "big":"Grande",
+        "huge":"Enorme"
+    },
+      "speed": "Turno",
+      "damageTypePrimary":"Crítico Primario",
+      "damageTypeSecondary":"Crìtico Secundario",
+      "weaponDamageType":{
+        "cut":"Filo",
+        "impact":"Contundente",
+        "thrust":"Penetrante",
+        "heat":"Calor",
+        "electric":"Eléctrico",
+        "cold":"Frío",
+        "energy":"Energía"
+    },
+      "fortitude":"Entereza",
+      "breakage":"Rotura",
+      "special":"Especial",
+      "weaponTypePrimary":"Tipo Primario",
+      "weaponTypeSecondary":"Tipo Secundario",
+      "weaponType":{
+        "shortArms":"Arma Corta",
+        "axe":"Hacha",
+        "mace":"Maza",
+        "sword":"Espada",
+        "twoHanded":"Mandoble",
+        "poleWeapon":"Asta",
+        "cord":"Cuerda",
+        "mixedClass":"Mixta"
+    },
+      "description":"Descripción",
+      "requiredStrength":"Fuerza Requerida",
+      "presence":"Presencia"
+    },
+    "template": {
+      "character": {
+        "name": "Nombre",
+        "level": "Nivel",
+        "gnosis": "Gnosis",
+        "race": "Raza",
+        "class": "Categoría",
+        "lifePoints":"Puntos de Vida",
+        "fatiguePoints": "Puntos de Cansancio",
+        "characteristicsTab": "Características",
+        "primaryAbilitiesTab": "Habilidades Primarias",
+        "resistances":{
+          "physicalResistance":"RF",
+          "magicResistance":"RM",
+          "psychicResistance":"RP",
+          "venomResistance":"RV",
+          "diseaseResistance":"RE"
+        },
+        "characteristics": {
+           "strength": "Fuerza",
+           "dexterity": "Destreza",
+           "agility": "Agilidad",
+           "constitution": "Constitución",
+           "perception": "Percepción",
+           "willpower": "Voluntad",
+           "power": "Poder",
+           "intelligence": "Intelligencia"
+        },
+        "primaryabilities":{
+          "combatAbilities":{
+            "attack":"Ataque",
+            "block":"Parada",
+            "dodge":"Esquiva",
+            "wearArmor":"Llevar Armadura"
+          },
+          "sobrenaturalAbilities":{
+            "zeon":"Zeón",
+            "magicAccumulation":"ACT",
+            "magicProjection":"Proyección Mágica",
+            "magicLevel":"Nivel de Magia",
+            "summon":"Convocar",
+            "control":"Dominar",
+            "bind":"Atar",
+            "banish":"Desconvocar"
+          },
+          "psychicAbilities":{
+            "psychicPoints":"CV",
+            "psychicProjection":"Proyección Psíquica"
+          },
+          "kiAbilities":{
+            "ki":"Ki",
+            "kiPoints":"Puntos de Ki",
+            "kiAccumulation":"Acumulación de Ki",
+            "martialKnowledge":"Conocimiento Marcial"
+          }
+        },
+        "secondaryAbilities":{
+          "athleticAbilities":{
+            "acrobatics":"Acrobacias",
+            "athleticism":"Atletismo",
+            "climb":"Trepar",
+            "jump":"Saltar",
+            "ride":"Montar",
+            "swim":"Nadar"
+          },
+          "socialAbilities":{
+            "intimidate":"Intimidar",
+            "leadership":"Liderazgo",
+            "persuasion":"Persuasión",
+            "style":"Estilo",
+            "trading":"Comercio",
+            "etiquette":"Etiqueta",
+            "streetwise":"Callejeo"
+          },
+          "perceptionAbilities":{
+            "notice":"Advertir",
+            "search":"Buscar",
+            "track":"Rastrear"
+          },
+          "intellectualAbilities":{
+            "animals":"Animales",
+            "appraisal":"Tasación",
+            "herbalLore":"Herbolaria",
+            "history":"Historia",
+            "magicAppraisal":"Valoración Mágica",
+            "medicine":"Medicina",
+            "memorize":"Memorizar",
+            "navigation":"Navegación",
+            "occult":"Ocultismo",
+            "science":"Ciencia",
+            "law":"Leyes",
+            "tactics":"Táctica"
+          },
+          "vigorAbilities":{
+            "composure":"Frialdad",
+            "withstandPain":"Resistir el Dolor",
+            "featsOfStrength":"Proezas de Fuerza"
+          },
+          "subterfugeAbilities":{
+            "theft":"Robo",
+            "disguise":"Disfraz",
+            "hide":"Ocultarse",
+            "stealth":"Sigilo",
+            "trapLore":"Trampas",
+            "lockPicking":"Cerrajería",
+            "poisons":"Venenos"
+          },
+          "creativeAbilities":{
+            "art":"Arte",
+            "dance":"Baile",
+            "music":"Música",
+            "sleightOfHand":"Trucos de Manos",
+            "forging":"Forja",
+            "runes":"Runas",
+            "alchemy":"Alquimia",
+            "cooking":"Cocina"
+          }
+          
+        }
+      }
+    },
+    "races": {
+      "human": "Humano",
+      "sylvain": "Sylvain",
+      "dukzarist": "Duk'Zarist",
+      "jayan": "Jayán",
+      "daimah": "Daimah",
+      "danjayni": "D'Anjayni",
+      "ebudan": "Ebudan"
+    },
+    "classes": {
+        "warrior": "Guerrero",
+        "acrobaticWarrior": "Guerrero Acróbata",
+        "paladin": "Paladín",
+        "darkPaladin": "Paladín Oscuro",
+        "weaponsmaster": "Maestro de Armas",
+        "technician": "Tecnicista",
+        "tao": "Tao",
+        "ranger": "Explorador",
+        "shadow": "Sombra",
+        "thief": "Ladrón",
+        "assassin": "Asesino",
+        "wizard": "Hechicero",
+        "warlock": "Warlock",
+        "illusionist": "Ilusionista",
+        "wizardMentalist": "Hechicero Mentalista",
+        "summoner": "Conjurador",
+        "warriorSummoner": "Conjurador",
+        "mentalist": "Mentalista",
+        "warriorMentalist": "Guerrero Mentalista",
+        "novel": "Novel"
+    },
+    "spell":{
+      "magicPath":{
+        "light":"Luz",
+        "darkness":"Oscuridad",
+        "creation":"Creación",
+        "destruction":"Destrucción",
+        "fire":"Fuego",
+        "water":"Agua",
+        "earth":"Tierra",
+        "air":"Aire",
+        "essence":"Esencia",
+        "illusion":"Ilusión",
+        "necromancy":"Nigromancia",
+        "freeAccess":"Acceso Libre",
+        "chaos":"Caos",
+        "war":"Guerra",
+        "literature":"Literae",
+        "death":"Muerte",
+        "nobility":"Nobleza",
+        "peace":"Paz",
+        "sin":"Pecado",
+        "knowledge":"Conocimiento",
+        "blood":"Sangre",
+        "dreams":"Sueños",
+        "time":"Tiempo",
+        "umbra":"Umbra",
+        "void":"Vacío",
+        "music":"Música"
+      },
+      "name":"Nombre",
+      "level":"Nivel",
+      "type":"Tipo",
+      "effect":"Efecto",
+      "grade":"Grado",
+      "basic":"Base",
+      "intermediate":"Intermedio",
+      "advanced":"Avanzado",
+      "arcane":"Arcano",
+      "zeon":"Zeón",
+      "intelligenceRequired":"Int. Requerida",
+      "maintenance":"Mantenimiento" 
+    },
+    "psychicspell":{
+      "name":"Nombre",
+      "level":"Nivel",
+      "action":"Acción",
+      "psychicDiscipline":{
+        "telepathy":"Telepatía",
+        "psychokinesis":"Telequinesis",
+        "pyrokinesis":"Piroquinesis",
+        "cryokinesis":"Crioquinesis",
+        "physicalIncrease":"Incremento Físico",
+        "energy":"Energía",
+        "sentience":"Sentiente",
+        "telemetry":"Telemetría",
+        "matrixPowers":"Poderes Matriciales",
+        "causality":"Causalidad",
+        "electromagnetism":"Electromagnetismo",
+        "teleportation":"Teletransportación",
+        "light":"Luz",
+        "hypersensitivity":"Hipersensibilidad"
+      },
+      "description":"Descripción",
+      "effect":"Efecto"
+    }
+  }
+}
+  
