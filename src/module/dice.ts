@@ -92,6 +92,5 @@ export async function modDialog() {
 
 const resolver = (html) => {
   const results = new FormDataExtended(html.find("form")[0]).toObject();
-  console.log(results.mod);
   return results.mod;
 };
