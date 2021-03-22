@@ -7,14 +7,8 @@ export default class abfCombat extends Combat {
     // Reset initiative for everyone when going to the next round
     this.resetAll();
 
-    super.nextRound();
+    return super.nextRound();
   }
-
-  /* _getInitiativeRoll(combatant, formula) {
-    let roll = super._getInitiativeRoll(combatant, formula);
-
-    // Apply special Fumble modifiers:
-  } */
 
   // Modify rollInitiative so that it asks for modifiers
   async rollInitiative(
