@@ -18,6 +18,6 @@ export default class abfCombat extends Combat {
     let mod = await modDialog();
     formula = CONFIG.Combat.initiative.formula + `+ ${mod}`;
 
-    return super.rollInitiative(ids, formula);
+    return super.rollInitiative(ids, { formula });
   }
 }
