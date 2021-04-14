@@ -52,10 +52,10 @@ export function abfDice(roll) {
         pen = -125;
         break;
       case 2:
-        pen = -75;
+        pen = -100;
         break;
       case 3:
-        pen = -50;
+        pen = -75;
         break;
     }
     roll._total = roll._total - roll.results[0] + pen;
