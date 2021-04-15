@@ -11,12 +11,8 @@
     }
   ],
   "scripts": [],
-  "esmodules": [
-    "animabf.js"
-  ],
-  "styles": [
-    "animabf.css"
-  ],
+  "esmodules": ["animabf.js"],
+  "styles": ["animabf.css"],
   "packs": [],
   "languages": [],
   "gridDistance": 1,
