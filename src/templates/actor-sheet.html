@@ -15,7 +15,17 @@
 				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
 			<aside class="aside-summary-left">
 				<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Race"/>
-				<input name="data.description.background" type="text" value="{{data.description.background}}" placeholder="Background"/>	
+				<input name="data.description.background" type="text" value="{{data.description.background}}" placeholder="Background"/>
+				<div class="common_resources">
+					<span>HP:</span>
+					<input name ="data.common_resources.life_points.value" type="text" value="{{data.common_resources.life_points.value}}">
+					<span class="seplife">/</span>
+					<span class="life.max" name="data.common_resources.life_points.max">{{data.common_resources.life_points.max}}</span>
+					<span>Fatigue:</span>
+					<input name ="data.common_resources.fatigue.value" type="text" value="{{data.common_resources.fatigue.value}}">
+					<span class="sepfatigue">/</span>
+					<span name="data.common_resources.fatigue.max">{{data.common_resources.fatigue.max}}</span>
+				</div>
 			</aside>			
 		</div>		
 	<header>

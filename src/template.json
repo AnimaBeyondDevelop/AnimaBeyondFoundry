@@ -20,8 +20,8 @@
         "vision": {"value":0}
       },
 
-      "common resources": {
-        "life points": { "value":0, "max":0},
+      "common_resources": {
+        "life_points": { "value":0, "max":0},
         "fatigue": {"value":0,"max":0},
         "destiny points": {"value":0,"max":0},
         "custom": {"value":0,"max":0},

@@ -1,4 +1,5 @@
 .abf.sheet.actor{
+    font-size: 15px;
     min-width: 750px;
     min-height: 800px;
     background-color: white;
@@ -7,6 +8,7 @@
     .header-fields{
         margin: 5px;
         margin-bottom: 16px;
+        margin-right: 5px;
         display: flex;
         align-items: center;
         .profile-img{
@@ -20,11 +22,21 @@
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
-            height: 130px;
+            height: 160px;
             margin-right: 70px;
             input{
             width: 150px;
             height: 30px;
+            }
+            .common_resources{
+                margin-left: 40px;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                input{
+                    width: 40px
+                }
             }
         }
         .aside-summary-right {
@@ -33,7 +45,7 @@
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
-            height: 130px;
+            height: 160px;
             width: 30%;
             input{
             width: 150px;
@@ -41,8 +53,16 @@
             }
             
         }
-        .div-xp input{
-            width: 30px;
+        .div-xp{
+            align-items: center;
+            width: 100%;
+            margin-left: 10px;
+            margin-right: 10px;
+            display: flex;
+            justify-content: space-around;
+            input{
+                width: 40px
+            }
         }
            
     }
