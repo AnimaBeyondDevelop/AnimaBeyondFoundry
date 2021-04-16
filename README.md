@@ -24,7 +24,7 @@
 a) Para empezar a trabajar en algo en lo que no se esté trabajando ya:
 
 1) Nos colocamos en la rama DEVELOP. 
--En Sourcetree, la primera vez, tenemos que ir al panel de la izquierda, a >Remotes>origin> y hacer doble click en la rama en la que queremos colocarnos. Al hacerlo veremos como ahora en el panel de la izquierda, en >Branches, aparece la rama en la que acabamos de colocarnos (las ramas que aparecen en >Branches son las que tenemos en local, y las que están en >Remote son las que están en GitHub). 
+-En Sourcetree, la primera vez, tenemos que ir al panel de la izquierda, a >Remotes>background> y hacer doble click en la rama en la que queremos colocarnos. Al hacerlo veremos como ahora en el panel de la izquierda, en >Branches, aparece la rama en la que acabamos de colocarnos (las ramas que aparecen en >Branches son las que tenemos en local, y las que están en >Remote son las que están en GitHub). 
 - Las siguientes veces, cuando ya tengamos Develop en el desplegable de >Branches, pues simplemente hacemos doble clic ahí para colocarnos en ella.
 
 2) Nos aseguramos de que tenemos la versión más actualizada dl repositorio: Botón FETCH, y en caso de que se detecte algún cambio Botón PULL.

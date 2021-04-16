@@ -1,0 +1,53 @@
+.abf.sheet.actor{
+    min-width: 750px;
+    min-height: 800px;
+    background-color: white;
+
+
+    .header-fields{
+        margin: 5px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        .profile-img{
+            flex: 0 0 150px;
+            height: 150px;
+            width: 150px;
+        }
+        .aside-summary-left {
+            display: flex;
+            flex: 1 1;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            height: 130px;
+            margin-right: 70px;
+            input{
+            width: 150px;
+            height: 30px;
+            }
+        }
+        .aside-summary-right {
+            display: flex;
+            flex: 1 1;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            height: 130px;
+            width: 30%;
+            input{
+            width: 150px;
+            height: 30px;
+            }
+            
+        }
+        .div-xp input{
+            width: 30px;
+        }
+           
+    }
+} 
+
+::-webkit-input-placeholder{
+    text-align: center;
+}

@@ -2,31 +2,25 @@
 	{{!-- Sheet Header --}}
 	<header>
 		<div class="header-fields">
-			<div style="display:flex">
-				<div>
-					<label for="actor.name" class="resource-label">Name</label>
-					<input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
-					<label for="data.description.category" class="resource-label">Category</label>
-					<input name="data.description.category" type="text" value="{{data.description.category}}" placeholder="Category"/>
-					<label for="data.description.level.value" class="resource-label">Level</label>
+			<aside class="aside-summary-right">
+				<input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+				<input name="data.description.category" type="text" value="{{data.description.category}}" placeholder="Category"/>
+				<div class="div-xp">
+					<span>Level:</span>
 					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}" placeholder="Level"/>
+					<span>XP:</span>
+					<input name="data.description.experience" type="text" value="{{data.description.experience}}" placeholder="XP">				
 				</div>
-				<div >
-					<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="120" width="170"/>
-				</div>
-				<div style="text-align:right">
-					<label for="data.description.race" class="resource-label">Race</label>
-					<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Name"/>
-					<label for="data.description.category" class="resource-label">Hueco 5</label>
-					<input name="category" type="text" value="{{data.Description.Category}}" placeholder="Category"/>
-					<label for="data.description.category" class="resource-label">Hueco 6</label>
-					<input name="tittle" type="text" value="{{data.Description.Category}}" placeholder="Tittle"/>
-				</div>			
-			</div>
+			</aside>	
+				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+			<aside class="aside-summary-left">
+				<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Race"/>
+				<input name="data.description.background" type="text" value="{{data.description.background}}" placeholder="Background"/>	
+			</aside>			
 		</div>		
 	<header>
-	{{!-- Sheet Tab Navigation --}}
-	<nav class="sheet-tabs tabs" data-group="primary" style="width:100%">
+	{{!-- Character Sheet Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="main">Main</a>
         <a class="item" data-tab="secondaries">Secondaries</a>
         <a class="item" data-tab="combat">Combat</a>
@@ -34,7 +28,6 @@
 		<a class="item" data-tab="domine">Domine</a>
 		<a class="item" data-tab="elan">Elan</a>
     </nav>
-	
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
         

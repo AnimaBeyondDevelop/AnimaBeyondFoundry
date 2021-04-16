@@ -6,6 +6,7 @@
       "description": {
         "race": "",
         "category": "",
+        "background":"",
         "level": {"value":0},
         "experience": {"value":0}
       },
