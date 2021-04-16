@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * This is your TypeScript entry file for Foundry VTT.
  * Register custom settings, sheets, and constants using the Foundry API.
@@ -10,50 +11,54 @@
  * 					 determines how others may use and modify your system
  */
 // Import TypeScript modules
-// @ts-nocheck
-import { registerSettings } from './module/settings.js';
-import { preloadTemplates } from './module/preloadTemplates.js';
-import abfActorSheet from './module/abfActorSheet.js'
-import abfCombat from "./module/combat.js";
 
+import { registerSettings } from "./module/settings.js";
+import { preloadTemplates } from "./module/preloadTemplates.js";
+import abfActorSheet from "./module/abfActorSheet.js";
+import abfRoll from "./module/dice.js";
+import abfCombat from "./module/combat.js";
 
 /* ------------------------------------ */
 /* Initialize system					*/
 /* ------------------------------------ */
-Hooks.once('init', async function() {
-	console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
+Hooks.once("init", async function () {
+  console.log("AnimaBeyondFoundry | Initializing AnimaBeyondFoundry");
 
-	// Assign custom classes and constants here
-	CONFIG.Combat.initiative = {
-		formula: "1d100",
-	  };
-	CONFIG.Combat.entityClass = abfCombat;
-	
-	// Register custom system settings
-	registerSettings();
-	
-	
-	// Preload Handlebars templates
-	await preloadTemplates();
+  // Assign custom classes and constants here
+  game.abf = {
+    abfRoll,
+  };
+  CONFIG.Dice.rolls.unshift(abfRoll);
 
-	// Register custom sheets (if any)
-	Actors.unregisterSheet("core", ActorSheet);
-	Actors.registerSheet("abf", abfActorSheet, { makeDefault: true });
+  CONFIG.Combat.initiative = {
+    formula: "1d100xaTurno",
+  };
+  CONFIG.Combat.entityClass = abfCombat;
+
+  // Register custom system settings
+  registerSettings();
+
+  // Preload Handlebars templates
+  await preloadTemplates();
+
+  // Register custom sheets (if any)
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("abf", abfActorSheet, { makeDefault: true });
 });
 
 /* ------------------------------------ */
 /* Setup system							*/
 /* ------------------------------------ */
-Hooks.once('setup', function() {
-	// Do anything after initialization but before
-	// ready
+Hooks.once("setup", function () {
+  // Do anything after initialization but before
+  // ready
 });
 
 /* ------------------------------------ */
 /* When ready							*/
 /* ------------------------------------ */
-Hooks.once('ready', function() {
-	// Do anything once the system is ready
+Hooks.once("ready", function () {
+  // Do anything once the system is ready
 });
 
 // Add any additional hooks if necessary
