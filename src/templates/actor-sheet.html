@@ -3,73 +3,80 @@
 	<header>
 		<div class="header-fields">
 			<aside class="aside-summary-right">
-				<input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
-				<input name="data.description.category" type="text" value="{{data.description.category}}" placeholder="Category"/>
+				<input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+				<input name="data.description.category" type="text" value="{{data.description.category}}"
+					placeholder="Category" />
 				<div class="div-xp">
 					<span>Level:</span>
-					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}" placeholder="Level"/>
+					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}"
+						placeholder="Level" />
 					<span>XP:</span>
-					<input name="data.description.experience" type="text" value="{{data.description.experience}}" placeholder="XP">				
+					<input name="data.description.experience" type="text" value="{{data.description.experience}}"
+						placeholder="XP">
 				</div>
-			</aside>	
-				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+			</aside>
+			<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
 			<aside class="aside-summary-left">
-				<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Race"/>
-				<input name="data.description.background" type="text" value="{{data.description.background}}" placeholder="Background"/>
+				<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Race" />
+				<input name="data.description.background" type="text" value="{{data.description.background}}"
+					placeholder="Background" />
 				<div class="common_resources">
 					<span>HP:</span>
-					<input name ="data.common_resources.life_points.value" type="text" value="{{data.common_resources.life_points.value}}">
+					<input name="data.common_resources.life_points.value" type="text"
+						value="{{data.common_resources.life_points.value}}">
 					<span class="seplife">/</span>
-					<span class="life.max" name="data.common_resources.life_points.max">{{data.common_resources.life_points.max}}</span>
+					<span class="life.max"
+						name="data.common_resources.life_points.max">{{data.common_resources.life_points.max}}</span>
 					<span>Fatigue:</span>
-					<input name ="data.common_resources.fatigue.value" type="text" value="{{data.common_resources.fatigue.value}}">
+					<input name="data.common_resources.fatigue.value" type="text"
+						value="{{data.common_resources.fatigue.value}}">
 					<span class="sepfatigue">/</span>
 					<span name="data.common_resources.fatigue.max">{{data.common_resources.fatigue.max}}</span>
 				</div>
-			</aside>			
-		</div>		
-	<header>
-	{{!-- Character Sheet Navigation --}}
-	<nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="main">Main</a>
-        <a class="item" data-tab="secondaries">Secondaries</a>
-        <a class="item" data-tab="combat">Combat</a>
-        <a class="item" data-tab="mystic">Mystic</a>
-		<a class="item" data-tab="domine">Domine</a>
-		<a class="item" data-tab="elan">Elan</a>
-    </nav>
-	{{!-- Sheet Body --}}
-	<section class="sheet-body">
-        
-		{{!-- Main Tab --}}
-        <div class="tab main" data-group="primary" data-tab="main">
-            {{> "systems/animabf/templates/parts/main.html"}}
-        </div>
+			</aside>
+		</div>
+		<header>
+			{{!-- Character Sheet Navigation --}}
+			<nav class="sheet-tabs tabs" data-group="primary">
+				<a class="item" data-tab="main">Main</a>
+				<a class="item" data-tab="secondaries">Secondaries</a>
+				<a class="item" data-tab="combat">Combat</a>
+				<a class="item" data-tab="mystic">Mystic</a>
+				<a class="item" data-tab="domine">Domine</a>
+				<a class="item" data-tab="elan">Elan</a>
+			</nav>
+			{{!-- Sheet Body --}}
+			<section class="sheet-body">
 
-		{{!-- Secondaries Tab --}}
-        <div class="tab secondaries" data-group="primary" data-tab="secondaries">
-          {{> "systems/animabf/templates/parts/secondaries.html"}}
-        </div>
+				{{!-- Main Tab --}}
+				<div class="tab main" data-group="primary" data-tab="main">
+					{{> "systems/animabf/templates/parts/main.html"}}
+				</div>
 
-		{{!-- Combat Tab --}}
-        <div class="tab combat" data-group="primary" data-tab="combat">
-            {{> "systems/animabf/templates/parts/combat.html"}}
-        </div>
+				{{!-- Secondaries Tab --}}
+				<div class="tab secondaries" data-group="primary" data-tab="secondaries">
+					{{> "systems/animabf/templates/parts/secondaries.html"}}
+				</div>
 
-		{{!-- Mystic Tab --}}
-        <div class="tab mystic" data-group="primary" data-tab="mystic">
-            {{> "systems/animabf/templates/parts/mystic.html"}}
-        </div>
+				{{!-- Combat Tab --}}
+				<div class="tab combat" data-group="primary" data-tab="combat">
+					{{> "systems/animabf/templates/parts/combat.html"}}
+				</div>
 
-		{{!-- Domine Tab --}}
-        <div class="tab domine" data-group="primary" data-tab="domine">
-            {{> "systems/animabf/templates/parts/domine.html"}}
-        </div>
+				{{!-- Mystic Tab --}}
+				<div class="tab mystic" data-group="primary" data-tab="mystic">
+					{{> "systems/animabf/templates/parts/mystic.html"}}
+				</div>
 
-		{{!-- Elan Tab --}}
-        <div class="tab elan" data-group="primary" data-tab="elan">
-            {{> "systems/animabf/templates/parts/elan.html"}}
-        </div>
-          
-    </section>
+				{{!-- Domine Tab --}}
+				<div class="tab domine" data-group="primary" data-tab="domine">
+					{{> "systems/animabf/templates/parts/domine.html"}}
+				</div>
+
+				{{!-- Elan Tab --}}
+				<div class="tab elan" data-group="primary" data-tab="elan">
+					{{> "systems/animabf/templates/parts/elan.html"}}
+				</div>
+
+			</section>
 </form>
