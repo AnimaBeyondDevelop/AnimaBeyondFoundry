@@ -1,73 +1,117 @@
 .abf.sheet.actor{
-    font-size: 15px;
-    min-width: 750px;
-    min-height: 800px;
-    background-color: white;
+    min-width: 700px;
+    min-height: 700px;
+}
 
 
-    .header-fields{
-        margin: 5px;
-        margin-bottom: 16px;
-        margin-right: 5px;
-        display: flex;
+.header-filds{
+    margin: 10px;
+    margin-bottom: 0;
+    input{
+        border: 0;
+        text-align: center;
+    }
+    ::-webkit-input-placeholder{
+        text-align: center;
+    }
+    .head{
+        height: 250px;
+        grid-template-columns:  160px repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        justify-items: center;
         align-items: center;
-        .profile-img{
-            flex: 0 0 150px;
+        .profile{
+            grid-row: 1 / span 2;
             height: 150px;
             width: 150px;
+            max-width: 150px;
         }
-        .aside-summary-left {
-            display: flex;
-            flex: 1 1;
-            flex-direction: column;
-            justify-content: space-around;
+        .summary{
+            border-left: 4px solid rgb(80, 80, 80);
+            border-bottom: 2px solid rgb(80, 80, 80);
+            height: 100%;
+            width: 100%;
+            grid-column: 2 / span 2;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            justify-items: center;
             align-items: center;
-            height: 160px;
-            margin-right: 70px;
             input{
-            width: 150px;
-            height: 30px;
+                width: 120px;
             }
-            .common_resources{
-                margin-left: 40px;
+            .xp-summary{   
                 width: 100%;
                 display: flex;
-                justify-content: space-around;
                 align-items: center;
+                justify-content: space-evenly;
                 input{
-                    width: 40px
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    width: 50px;
+                }
+            }
+            .gnosis{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                input{
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    width: 50px;
                 }
             }
         }
-        .aside-summary-right {
-            display: flex;
-            flex: 1 1;
-            flex-direction: column;
-            justify-content: space-around;
+        .common.resources{
+            border-right: 4px solid rgb(80, 80, 80);
+            border-left: 4px solid rgb(80, 80, 80);
+            border-top: 2px solid rgb(80, 80, 80);
+            width: 100%;
+            height: 100%;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            justify-items: center;
             align-items: center;
-            height: 160px;
-            width: 30%;
+            .life{
+                width: 100px;
+                grid-column: 1 / span 2;
+            }
+            div{
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                span{
+                    width: 55px;
+                }
+                input{
+                    width: 50px;
+                }
+            }
+
+        }
+        .mod{
+            border-top: 2px solid rgb(80, 80, 80);
+            width: 100%;
+            height: 100%;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            justify-items: center;
+            align-items: center;
             input{
-            width: 150px;
-            height: 30px;
+                width: 70px;
+            }
+            div{
+                grid-row: 1 / span 4;
+                border: none;
+                i{
+                    font-size: 100px;
+                    &:hover{
+                        color: #9e4343;
+                    }
+                }
             }
             
         }
-        .div-xp{
-            align-items: center;
-            width: 100%;
-            margin-left: 10px;
-            margin-right: 10px;
-            display: flex;
-            justify-content: space-around;
-            input{
-                width: 40px
-            }
-        }
-           
-    }
-} 
 
-::-webkit-input-placeholder{
-    text-align: center;
+    }
 }

@@ -1,33 +1,53 @@
 <form class="{{cssClass}} flexrow" autocomplete="off">
 	{{!-- Sheet Header --}}
-	<header>
-		<div class="header-fields">
-			<aside class="aside-summary-right">
+	<header class="header-filds">
+		<div class="head grid">
+			<img class="profile" src="{{actor.img}}" title=" {{actor.name}}" data-edit="img">
+			<div class="summary grid">
 				<input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
-				<input name="data.description.category" type="text" value="{{data.description.category}}" placeholder="Category"/>
-				<div class="div-xp">
-					<span>Level:</span>
-					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}" placeholder="Level"/>
-					<span>XP:</span>
-					<input name="data.description.experience" type="text" value="{{data.description.experience}}" placeholder="XP">				
-				</div>
-			</aside>	
-				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
-			<aside class="aside-summary-left">
 				<input name="data.description.race" type="text" value="{{data.description.race}}" placeholder="Race"/>
+				<input name="data.description.category" type="text" value="{{data.description.category}}" placeholder="Category"/>
 				<input name="data.description.background" type="text" value="{{data.description.background}}" placeholder="Background"/>
-				<div class="common_resources">
-					<span>HP:</span>
-					<input name ="data.common_resources.life_points.value" type="text" value="{{data.common_resources.life_points.value}}">
-					<span class="seplife">/</span>
-					<span class="life.max" name="data.common_resources.life_points.max">{{data.common_resources.life_points.max}}</span>
-					<span>Fatigue:</span>
-					<input name ="data.common_resources.fatigue.value" type="text" value="{{data.common_resources.fatigue.value}}">
-					<span class="sepfatigue">/</span>
-					<span name="data.common_resources.fatigue.max">{{data.common_resources.fatigue.max}}</span>
+				<div class="xp-summary">
+					<span>LV: </span>
+					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}" placeholder="Level" data-dtype="Number"/>
+					<span>XP: </span>
+					<input name="data.description.experience" type="text" value="{{data.description.experience}}" placeholder="XP" data-dtype="Number">
 				</div>
-			</aside>			
-		</div>		
+				<div class="gnosis">
+					<span>Nature: </span>
+					<input type="text" class="natue" name="data.description.nature.value" value="{{data.description.nature.value}}" placeholder="Nature" data-dtype="Number"/>
+					<span>Gnosis: </span>
+					<input type="text" class="gnosis" name="data.description.gnosis.value" value="{{data.description.gnosis.value}}" placeholder="Gnosis" data-dtype="Number"/>
+				</div>
+			</div>
+			<div class="common resources grid">
+				<input class="life" name="data.common.resources.life.points.value" type="text" value="{{data.common.resources.life.points.value}}">
+				<div class="maxlife">
+					<span>Max. Life </span>
+					<input name="data.common.resources.life.points.max" type="text" value="{{data.common.resources.life.points.max}}" disabled>
+				</div>
+				<div class="regen">
+					<input type="text" name="data.secondaries.regeneration.value" value="{{data.secondaries.regeneration.value}}" disabled>
+					<span>Regen. </span>
+				</div>
+				<div class="movement">
+					<span> Movement </span>
+					<input type="text" name="data.secondaries.movement.value" value="{{data.secondaries.movement.value}}" disabled>
+				</div>
+				<div class="fatigue">
+					<input type="text" name="data.common.resources.fatigue.value" value="{{data.common.resources.fatigue.value}}">
+					<span> Fatigue</span>
+				</div>
+			</div>
+			<div class="mod grid">
+				<h3>Modificadores</h3>
+				<div class="rollable" data-roll="1d100xa"><i class="fas fa-dice-d20"></i></div>
+				<input type="text" class="mod." placeholder="Mod.">
+				<input type="text" class="pen" placeholder="Pen.">
+				<input type="text" class="pen-phy" placeholder="Pen. fisico">
+			</div>
+		</div>
 	<header>
 	{{!-- Character Sheet Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
