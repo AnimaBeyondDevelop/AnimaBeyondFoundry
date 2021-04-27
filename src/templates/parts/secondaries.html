@@ -1,87 +1,94 @@
-ATHLETICS
+{{!-- Athletics --}}
+{{localize "anima.athleticAbilities"}}
 {{#each data.secondaries.athletics as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.athletics.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.athletics.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.athletics.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-SOCIAL
+{{!-- Social --}}
+{{localize "anima.socialAbilities"}}
 {{#each data.secondaries.social as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.social.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.social.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.social.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-PERCEPTION
+{{!-- Perception --}}
+{{localize "anima.perceptionAbilities"}}
 {{#each data.secondaries.perception as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.perception.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.perception.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.perception.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-INTELLECTUAL
+{{!-- Intellectual --}}
+{{localize "anima.intellectualAbilities"}}
 {{#each data.secondaries.intellectual as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.intellectual.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.intellectual.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.intellectual.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-VIGOR
+{{!-- Vigor --}}
+{{localize "anima.vigorAbilities"}}
 {{#each data.secondaries.vigor as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.vigor.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.vigor.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.vigor.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-SUBTERFUGE
+{{!-- Subterfuge --}}
+{{localize "anima.subterfugeAbilities"}}
 {{#each data.secondaries.subterfuge as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.subterfuge.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.subterfuge.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.subterfuge.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-CREATIVE
+{{!-- Creative --}}
+{{localize "anima.creativeAbilities"}}
 {{#each data.secondaries.creative as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.creative.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.creative.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.creative.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>
 {{/each}}
 
-
-SPECIAL
+{{!-- Special --}}
+{{localize "anima.special"}}
 {{#each data.secondaries.special as |atr key|}}
 <div class="flexrow flex-group-center">
     <label for="data.secondaries.special.{{key}}.value" class="rollable"
         data-roll="1d100xa+@secondaries.special.{{key}}.value" data-label="{{key}}">
-        {{key}}
+        {{localize (concat "anima." key)}}
     </label>
     <input type="text" name="data.secondaries.special.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
 </div>

@@ -6,234 +6,241 @@
       "description": {
         "race": "",
         "category": "",
-        "background":"",
-        "level": {"value":0},
-        "experience": {"value":0}
+        "background": "",
+        "level": { "value": 0 },
+        "experience": { "value": 0 }
       },
 
       "flags": {
-        "magicuser": {"value":0},
-        "hasinhumanity": {"value":0},
-        "fumblerange o algo asi": {"value":0}
+        "magicUser": { "value": 0 },
+        "hasInhumanity": { "value": 0 },
+        "fumblerange o algo asi": { "value": 0 }
       },
       "foundry special... algo": {
-        "vision": {"value":0}
+        "vision": { "value": 0 }
       },
 
       "common resources": {
-        "life points": { "value":0, "max":0},
-        "fatigue": {"value":0,"max":0},
-        "destiny points": {"value":0,"max":0},
-        "custom": {"value":0,"max":0},
-        "sanity": {"value":0,"max":0}
+        "life points": { "value": 0, "max": 0 },
+        "fatigue": { "value": 0, "max": 0 },
+        "destiny points": { "value": 0, "max": 0 },
+        "custom": { "value": 0, "max": 0 },
+        "sanity": { "value": 0, "max": 0 }
       },
 
       "characteristics": {
         "primaries": {
-          "agi": {"value":0},
-          "con": {"value":0},
-          "des": {"value":0},
-          "fue": {"value":0},
-          "int": {"value":0},
-          "per": {"value":0},
-          "pod": {"value":0},
-          "vol": {"value":0}
+          "agi": { "value": 0 },
+          "con": { "value": 0 },
+          "des": { "value": 0 },
+          "fue": { "value": 0 },
+          "int": { "value": 0 },
+          "per": { "value": 0 },
+          "pod": { "value": 0 },
+          "vol": { "value": 0 }
         },
         "secondaries": {
-          "initiative": {"value":0},
+          "initiative": { "value": 0 },
           "resistencies": {
-            "phyr": {"value":0},
-            "disr": {"value":0},
-            "poir": {"value":0},
-            "magr": {"value":0},
-            "psir": {"value":0}
+            "phyr": { "value": 0 },
+            "disr": { "value": 0 },
+            "poir": { "value": 0 },
+            "magr": { "value": 0 },
+            "psir": { "value": 0 }
           },
-          "movement": {"value":0},
-          "regeneration": {"value":0}
+          "movement": { "value": 0 },
+          "regeneration": { "value": 0 }
         }
       },
 
       "secondaries": {
         "athletics": {
-          "acrobatics": {"value":0},
-          "athleticism": {"value":0},
-          "climb":{"value":0},
-          "jump":{"value":0},
-          "ride":{"value":0}
+          "acrobatics": { "value": 0 },
+          "athleticism": { "value": 0 },
+          "climb": { "value": 0 },
+          "jump": { "value": 0 },
+          "ride": { "value": 0 }
         },
-        "vigor":{
-          "composure": {"value":0},
-          "feats of strength": {"value":0},
-          "withstand pain": {"value":0}
+        "vigor": {
+          "composure": { "value": 0 },
+          "featsOfStrength": { "value": 0 },
+          "withstandPain": { "value": 0 }
         },
-        "perception":{
-          "notice":{"value":0},
-          "search":{"value":0},
-          "track":{"value":0}
+        "perception": {
+          "notice": { "value": 0 },
+          "search": { "value": 0 },
+          "track": { "value": 0 }
         },
-        "intellectual":{
-          "animals":{"value":0},
-          "appraisal":{"value":0},
-          "herbal lore":{"value":0},
-          "history":{"value":0},
-          "law":{"value":0},
-          "magic appraisal":{"value":0},
-          "medicine":{"value":0},
-          "memorize":{"value":0},
-          "navigation":{"value":0},
-          "occult":{"value":0},
-          "sciences":{"value":0},
-          "tactic":{"value":0}
+        "intellectual": {
+          "animals": { "value": 0 },
+          "appraisal": { "value": 0 },
+          "herbalLore": { "value": 0 },
+          "history": { "value": 0 },
+          "law": { "value": 0 },
+          "magicAppraisal": { "value": 0 },
+          "medicine": { "value": 0 },
+          "memorize": { "value": 0 },
+          "navigation": { "value": 0 },
+          "occult": { "value": 0 },
+          "science": { "value": 0 },
+          "tactics": { "value": 0 }
         },
-        "social":{
-          "comerce":{"value":0},
-          "etiquette":{"value":0},
-          "intimidate":{"value":0},
-          "leadership":{"value":0},
-          "street knowledge":{"value":0},
-          "style":{"value":0}
+        "social": {
+          "trading": { "value": 0 },
+          "etiquette": { "value": 0 },
+          "intimidate": { "value": 0 },
+          "leadership": { "value": 0 },
+          "streetwise": { "value": 0 },
+          "style": { "value": 0 }
         },
-        "subterfuge":{
-          "disguise":{"value":0},
-          "hide":{"value":0},
-          "lock picking":{"value":0},
-          "poisons":{"value":0},
-          "theft":{"value":0},
-          "trap lore":{"value":0},
-          "stealth":{"value":0}
+        "subterfuge": {
+          "disguise": { "value": 0 },
+          "hide": { "value": 0 },
+          "lockPicking": { "value": 0 },
+          "poisons": { "value": 0 },
+          "theft": { "value": 0 },
+          "trapLore": { "value": 0 },
+          "stealth": { "value": 0 }
         },
-        "creative":{
-          "art":{"value":0},
-          "dance":{"value":0},
-          "forging":{"value":0},
-          "music":{"value":0},
-          "sleigth of hand":{"value":0}
+        "creative": {
+          "art": { "value": 0 },
+          "dance": { "value": 0 },
+          "forging": { "value": 0 },
+          "music": { "value": 0 },
+          "sleightOfHand": { "value": 0 }
         },
-        "special":{
-          "special":{"value":0}
+        "special": {
+          "special": { "value": 0 }
         }
       },
 
       "combat": {
-        "attack": {"value":0},
-        "defense": {"value":0},
+        "attack": { "value": 0 },
+        "defense": { "value": 0 },
         "armor": {
           "body": {
-            "cut": {"value":0},
-            "pierce": {"value":0},
-            "impact": {"value":0},
-            "heat": {"value":0},
-            "cold": {"value":0},
-            "electriity": {"value":0},
-            "energy": {"value":0}
+            "cut": { "value": 0 },
+            "pierce": { "value": 0 },
+            "impact": { "value": 0 },
+            "heat": { "value": 0 },
+            "cold": { "value": 0 },
+            "electriity": { "value": 0 },
+            "energy": { "value": 0 }
           },
           "head": {
-            "cut": {"value":0},
-            "pierce": {"value":0},
-            "impact": {"value":0},
-            "heat": {"value":0},
-            "cold": {"value":0},
-            "electriity": {"value":0},
-            "energy": {"value":0}
+            "cut": { "value": 0 },
+            "pierce": { "value": 0 },
+            "impact": { "value": 0 },
+            "heat": { "value": 0 },
+            "cold": { "value": 0 },
+            "electriity": { "value": 0 },
+            "energy": { "value": 0 }
           }
         }
       },
 
       "mystic": {
-        "zeon": {"value":0,"max":0,"accumulated":0},
-        "magic acummulation": {"value":0},
-        "magic regeneration": {"value":0},
-        "magic projection": {
-          "offensive": {"value":0},
-          "defensive": {"value":0}
+        "zeon": { "value": 0, "max": 0, "accumulated": 0 },
+        "magicAcummulation": { "value": 0 },
+        "magicRegeneration": { "value": 0 },
+        "magicProjection": {
+          "offensive": { "value": 0 },
+          "defensive": { "value": 0 }
         },
-        "magic level": {"value":0},
+        "magicLevel": { "value": 0 },
 
         "summoning": {
-          "currentritualbonus": {"value":0},
-          "summon": {"value":0},
-          "banish": {"value":0},
-          "bind": {"value":0},
-          "control": {"value":0}
+          "currenRitualBonus": { "value": 0 },
+          "summon": { "value": 0 },
+          "banish": { "value": 0 },
+          "bind": { "value": 0 },
+          "control": { "value": 0 }
         }
       },
 
       "domine": {
-        "ki points": {"value":0,"max":0,"accumulated":0},
-        "ki accumulation": {"value":0}
+        "kiPoints": { "value": 0, "max": 0, "accumulated": 0 },
+        "kiAccumulation": { "value": 0 }
       },
 
       "psychic": {
-        "free pp": {"value":0,"max":0},
-        "currentconcentrationbonus": {"value":0},
-        "psychicpotential": {"value":0},
-        "psychicprojection": {
-          "offensive": {"value":0},
-          "defensive": {"value":0}
+        "freePp": { "value": 0, "max": 0 },
+        "currentConcentrationConus": { "value": 0 },
+        "psychicPotential": { "value": 0 },
+        "psychicProjection": {
+          "offensive": { "value": 0 },
+          "defensive": { "value": 0 }
         }
       }
-
     }
   },
-  
+
   "Item": {
-        "types": ["consumable", "misc", "weapon", "shield", "ammunition", "armor", "helmet"],
-        "templates": {
-            "base": {
-                "quantity": 0,
-                "fortitude": 10,
-                "breakage": 5,
-                "description":"",
-                "presence":30,
-                "weigth":0,
-                "price":0,
-                "quality": 0
-                },
-            "weaponbase": {
-                "size": "normal",
-                "speed":10,
-                "basedamage": 50,
-                "damagetypeprimary": "cut",
-                "damagetypesecondary": "impact",
-                "special":"",
-                "weapontypeprimary":"",
-                "weapontypesecondary":"",
-                "requiredstrength":5,
-                "requiredstrengthtwohanded":5
-            },
-                "armorbase":{
-                    "armorrequeriment":10,
-                    "naturalpenalty": 10,
-                    "lozalization":"",
-                    "type":"",
-                    "presence":30,
-                    "cut":0,
-                    "impact":0,
-                    "pierce":0,
-                    "heat":0,
-                    "cold":0,
-                    "electricity":0,
-                    "energy":0
-                 }
-                },
-                "weapon": {
-                    "templates": ["base", "weaponbase"]
-                    },
-                "shield":{
-                    "templates": ["base", "weaponbase"],
-                    "defensebonusparry":5,
-                    "defensebonusdodge":5
-                    },
-                "ammunition": {
-                    "templates": ["base", "weaponbase"],
-                    "typeofammunition":""
-                    },
-                "armor": {
-                    "templates": ["base", "armorbase"]
-                    },
-                "helmet": {
-                    "templates": ["base", "armorbase"],
-                    "perceptionpenalty": 10
-                    }
-  }
+    "types": [
+      "consumable",
+      "misc",
+      "weapon",
+      "shield",
+      "ammunition",
+      "armor",
+      "helmet"
+    ],
+    "templates": {
+      "base": {
+        "quantity": 0,
+        "fortitude": 10,
+        "breakage": 5,
+        "description": "",
+        "presence": 30,
+        "weigth": 0,
+        "price": 0,
+        "quality": 0
+      },
+      "weaponBase": {
+        "size": "normal",
+        "speed": 10,
+        "basedamage": 50,
+        "damageTypePrimary": "cut",
+        "damageTypeSecondary": "impact",
+        "special": "",
+        "weaponTypePrimary": "",
+        "weaponTypeSecondary": "",
+        "requiredStrength": 5,
+        "requiredStrengthTwoHanded": 5
+      },
+      "armorBase": {
+        "armorRequeriment": 10,
+        "naturalPenalty": 10,
+        "lozalization": "",
+        "type": "",
+        "presence": 30,
+        "cut": 0,
+        "impact": 0,
+        "pierce": 0,
+        "heat": 0,
+        "cold": 0,
+        "electricity": 0,
+        "energy": 0
+      }
+    },
+    "weapon": {
+      "templates": ["base", "weaponbase"]
+    },
+    "shield": {
+      "templates": ["base", "weaponbase"],
+      "defenseBonusParry": 5,
+      "defenseBonusDodge": 5
+    },
+    "ammunition": {
+      "templates": ["base", "weaponbase"],
+      "typeOfAmmunition": ""
+    },
+    "armor": {
+      "templates": ["base", "armorbase"]
+    },
+    "helmet": {
+      "templates": ["base", "armorbase"],
+      "perceptionPenalty": 10
     }
+  }
+}

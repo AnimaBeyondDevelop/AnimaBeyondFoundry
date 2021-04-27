@@ -41,6 +41,16 @@ Hooks.once("init", async function () {
   // Preload Handlebars templates
   await preloadTemplates();
 
+  Handlebars.registerHelper("concat", function () {
+    var outStr = "";
+    for (var arg in arguments) {
+      if (typeof arguments[arg] != "object") {
+        outStr += arguments[arg];
+      }
+    }
+    return outStr;
+  });
+
   // Register custom sheets (if any)
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("abf", abfActorSheet, { makeDefault: true });
