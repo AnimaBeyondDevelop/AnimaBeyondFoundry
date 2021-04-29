@@ -217,5 +217,13 @@
   "anima.withstandPain": "Resistir el dolor",
   "anima.wizard": "Hechicero",
   "anima.wizardMentalist": "Hechicero Mentalista",
-  "anima.zeon": "Zeon"
+  "anima.zeon": "Zeon",
+
+  "anima.background": "Origen",
+  "anima.experience": "XP",
+  "anima.nature": "Natura",
+  "anima.maxLife": "Vida Máxima",
+  "anima.regenerationSHORT": "Regen.",
+  "anima.movementSHORT": "Movient.",
+  "anima.modifiers": "Modificadores"
 }

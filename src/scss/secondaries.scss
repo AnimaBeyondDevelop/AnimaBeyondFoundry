@@ -1,0 +1,29 @@
+.ability{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: baseline;
+    div{
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-evenly;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        .text_group{
+            background-color: black;
+            width: 100%;
+            color: white;
+            text-align: center;
+        }
+        div{
+            input{
+                margin-right: 20px;
+                width: 50px;
+            }
+            label{
+                text-align: center;
+                width: 80px;
+            }
+        }
+    }
+}

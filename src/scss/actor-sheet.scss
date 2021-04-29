@@ -1,5 +1,5 @@
 .abf.sheet.actor {
-  min-width: 700px;
+  min-width: 765px;
   min-height: 700px;
 }
 
@@ -35,8 +35,17 @@
       grid-template-columns: 1fr 1fr;
       justify-items: center;
       align-items: center;
-      input {
-        width: 120px;
+      .text_summary{
+          display: flex;
+          justify-content: center;
+          align-content: center;
+          width: 100%;
+          span{
+              width: 65px;
+          }
+          input{
+              width: 150px;
+          }
       }
       .xp-summary {
         width: 100%;
@@ -71,6 +80,7 @@
       grid-template-rows: 1fr 1fr 1fr;
       justify-items: center;
       align-items: center;
+      text-align: center;
       .life {
         width: 100px;
         grid-column: 1 / span 2;
@@ -103,9 +113,6 @@
         border: none;
         i {
           font-size: 100px;
-          &:hover {
-            color: #9e4343;
-          }
         }
       }
     }

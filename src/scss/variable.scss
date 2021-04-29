@@ -1,3 +1,14 @@
 .grid {
     display: grid
 }
+
+.rollable{
+    cursor: pointer;
+    &:hover,
+    &:focus{
+        text-shadow: 0 0 8px red;
+    }
+}
+.window-app .window-content{
+    background: radial-gradient(circle, rgb(202, 202, 202), rgb(58, 57, 57))
+}
