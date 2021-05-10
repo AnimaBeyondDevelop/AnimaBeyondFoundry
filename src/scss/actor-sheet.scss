@@ -6,33 +6,6 @@
 
   .header-filds{
 
-// ------------------------
-// ------ALLS TEXTS-------
-// ------------------------
-
-    .text, .text-off, .text-armor, .label-text,
-    .level-number, .xp-number, .max-life, .current-life,
-    .turn, .max-fatigue, .current-fatigue, .class-text{
-      font-weight: 600;
-    }
-
-    .text-off{
-      color: $grey;
-    }
-
-// ------------------------
-// ------ALLS INPUTS-------
-// ------------------------
-
-    input{
-      width: 30px;
-      height: 30px;
-      border: none;
-      ::-webkit-input-placeholder{
-        text-align: center;
-      }
-    }
-
     .content{
       display: grid;
       grid-template-areas:
@@ -56,7 +29,7 @@
           background: transparent;
           text-align: center;
           margin: 0;
-          &:focus{
+          &:focus, &:hover{
             box-shadow: 0 5px 3px -3px red;
           }
         }
@@ -72,12 +45,29 @@
             height: 30px;
             width: 100%;
             text-align: start;
+            font-weight: 600;
           }
         }
         .dice{
-          width: 100%;
+          position: relative;
+          justify-self: center;
           text-align: center;
-          font-size: 28px;
+          width: 100%;
+          height: 100%;
+          img{
+            border: none;
+            width: 59%;
+          }
+          &:hover, &:focus{
+            box-shadow: 0 5px 3px -3px red;
+          }
+          span{
+            position: absolute;
+            right: 14px;
+            top: 7px;
+            font-size: 11px;
+            color: $white;
+          }
 
         }
         .class-actor{
@@ -218,6 +208,7 @@
             background: $light-cream;
             text-align: center;
             color: $black;
+            font-weight: 600;
           }
         }
       }
@@ -337,17 +328,19 @@
           }
           .text-armor{
             margin-left: 10px;
-            margin-right: 10px;
+            margin-right: 13px;
           }
         }
         .AT{
           display: grid;
           grid-template-columns: 84px repeat(7, 42px);
           margin-top: 3px;
+          font-weight: 600;
           input{
             border-radius: $border-radius;
             color: $black;
             background: $light-cream;
+            font-weight: 600;
             justify-self: center;
             width: 28px;
             height: 25px;
@@ -374,11 +367,13 @@
         background: transparent;
         border-radius: $border-radius;
         color: $black;
+        font-weight: 600;
       }
       .active{
         text-shadow: none;
         background-color: $red-color;
         color: $white;
+        font-weight: 600;
       }
     }
   }

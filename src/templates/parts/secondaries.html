@@ -1,120 +1,120 @@
 <div class="ability">
     {{!-- Athletics --}}
 
-    <div class="athletics">
-        <h3 class="text_group">{{localize "anima.athleticAbilities"}}</h3>
+    <div class="athletics group">
+        <h3 class="text">{{localize "anima.athleticAbilities"}}</h3>
         {{#each data.secondaries.athletics as |atr key|}}
         <div>
             <label for="data.secondaries.athletics.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.athletics.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.athletics.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.athletics.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Social --}}
 
-    <div class="social">
-        <h3 class="text_group">{{localize "anima.socialAbilities"}}</h3>
+    <div class="social group">
+        <h3 class="text">{{localize "anima.socialAbilities"}}</h3>
         {{#each data.secondaries.social as |atr key|}}
         <div>
             <label for="data.secondaries.social.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.social.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.social.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.social.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Perception --}}
 
-    <div class="perception">
-        <h3 class="text_group">{{localize "anima.perceptionAbilities"}}</h3>
+    <div class="perception group">
+        <h3 class="text">{{localize "anima.perceptionAbilities"}}</h3>
         {{#each data.secondaries.perception as |atr key|}}
         <div>
             <label for="data.secondaries.perception.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.perception.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.perception.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.perception.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Vigor --}}
 
-    <div class="vigor">
-        <h3 class="text_group">{{localize "anima.vigorAbilities"}}</h3>
+    <div class="vigor group">
+        <h3 class="text">{{localize "anima.vigorAbilities"}}</h3>
         {{#each data.secondaries.vigor as |atr key|}}
         <div>
             <label for="data.secondaries.vigor.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.vigor.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.vigor.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.vigor.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Intellectual --}}
 
-    <div class="intellectual">
-        <h3 class="text_group">{{localize "anima.intellectualAbilities"}}</h3>
+    <div class="intellectual group">
+        <h3 class="text">{{localize "anima.intellectualAbilities"}}</h3>
         {{#each data.secondaries.intellectual as |atr key|}}
         <div>
             <label for="data.secondaries.intellectual.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.intellectual.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.intellectual.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.intellectual.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Subterfuge --}}
 
-    <div class="subterfuge">
-        <h3 class="text_group">{{localize "anima.subterfugeAbilities"}}</h3>
+    <div class="subterfuge group">
+        <h3 class="text">{{localize "anima.subterfugeAbilities"}}</h3>
         {{#each data.secondaries.subterfuge as |atr key|}}
         <div>
             <label for="data.secondaries.subterfuge.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.subterfuge.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.subterfuge.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.subterfuge.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Creative --}}
 
-    <div class="creative">
-        <h3 class="text_group">{{localize "anima.creativeAbilities"}}</h3>
+    <div class="creative group">
+        <h3 class="text">{{localize "anima.creativeAbilities"}}</h3>
         {{#each data.secondaries.creative as |atr key|}}
         <div>
             <label for="data.secondaries.creative.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.creative.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.creative.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.creative.{{key}}.value" class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>
 
     {{!-- Special --}}
 
-    <div class="special">
-        <h3 class="text_group">{{localize "anima.special"}}</h3>
+    <div class="special group">
+        <h3 class="text">{{localize "anima.special"}}</h3>
         {{#each data.secondaries.special as |atr key|}}
         <div>
             <label for="data.secondaries.special.{{key}}.value" class="rollable"
                 data-roll="1d100xa+@secondaries.special.{{key}}.value" data-label="{{key}}">
                 {{localize (concat "anima." key)}}
             </label>
-            <input type="text" name="data.secondaries.special.{{key}}.value" value="{{atr.value}}" data-dtype="Number" />
+            <input type="text" name="data.secondaries.special.{{key}}.value"  class="input_value" value="{{atr.value}}" data-dtype="Number" />
         </div>
         {{/each}}
     </div>

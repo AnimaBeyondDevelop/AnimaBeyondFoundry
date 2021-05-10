@@ -58,3 +58,31 @@ $border-radius: 10px;
 .window-app .window-content{
     background: $light-cream; 
 }
+.abf.sheet.actor {
+// ------------------------
+// ------ALLS INPUTS-------
+// ------------------------
+
+    input{
+        width: 30px;
+        height: 30px;
+        border: none;
+        ::-webkit-input-placeholder{
+        text-align: center;
+        }
+    }
+
+// ------------------------
+// ------ALLS TEXTS--------
+// ------------------------
+
+    .text, .text-off, .text-armor, .label-text,
+    .level-number, .xp-number, .max-life, .current-life,
+    .turn, .max-fatigue, .current-fatigue, .class-text{
+    font-weight: 600;
+    }
+
+    .text-off{
+    color: $grey;
+    }
+}
