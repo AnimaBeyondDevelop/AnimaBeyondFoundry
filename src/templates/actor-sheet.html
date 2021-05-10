@@ -1,66 +1,134 @@
 <form class="{{cssClass}} flexrow" autocomplete="off">
 	{{!-- Sheet Header --}}
 	<header class="header-filds">
-		<div class="head grid">
-			<img class="profile" src="{{actor.img}}" title=" {{actor.name}}" data-edit="img">
-			<div class="summary grid">
-				<div class="text_summary">
-					<span>{{localize "anima.name"}}: </span>
-					<input name="name" type="text" value="{{actor.name}}"/>
+		<div class="content">
+			<div class="header-top">
+
+				{{!-- Name --}}
+				<h2 class="name text"><input type="text"  name="name" value="{{actor.name}}"></h2>
+
+				{{!-- Dices --}}
+				<i class="fas fa-dice-d20 dice rollable" data-roll="1d10"></i>
+				<i class="fas fa-dice-d20 dice rollable" data-roll="1d100xa"></i>
+
+				{{!-- Class --}}
+				<div class="class-actor flexrow">
+					<label class="text">{{localize "anima.class"}}:</label>
+					<input type="text" class="class-text" value="{{data.description.class}}" name="data.description.class" data-dtype="String" placeholder="{{localize "anima.class"}}:">
 				</div>
-				<div class="text_summary">
-					<span>{{localize "anima.race"}}: </span>
-					<input name="data.description.race" type="text" value="{{data.description.race}}"/>
+
+				{{!-- Level --}}
+				<div class="level flexrow">
+					<h4 class="text">{{localize "anima.level"}}:</h4>
+					<input type="number" class="level-number" value="{{data.description.level.value}}" name="data.description.level.value" data-dtype="Number">
 				</div>
-				<div class="text_summary">
-					<span>{{localize "anima.class"}}: </span>
-					<input name="data.description.category" type="text" value="{{data.description.category}}"/>
-				</div>
-				<div class="text_summary">
-					<span>{{localize "anima.background"}}: </span>
-					<input name="data.description.background" type="text" value="{{data.description.background}}"/>
-				</div>
-				<div class="xp-summary">
-					<span>{{localize "anima.level"}}: </span>
-					<input name="data.description.level.value" type="text" value="{{data.description.level.value}}" placeholder="0" data-dtype="Number"/>
-					<span>{{localize "anima.experience"}}: </span>
-					<input name="data.description.experience.value" type="text" value="{{data.description.experience.value}}" placeholder="0" data-dtype="Number">
-				</div>
-				<div class="gnosis">
-					<span>{{localize "anima.nature"}}: </span>
-					<input type="text" class="nature" name="data.description.nature.value" value="{{data.description.nature.value}}" placeholder="0" data-dtype="Number"/>
-					<span>{{localize "anima.gnosis"}}: </span>
-					<input type="text" class="gnosis" name="data.description.gnosis.value" value="{{data.description.gnosis.value}}" placeholder="0" data-dtype="Number"/>
+
+				{{!-- Experience --}}
+				<div class="experience flexrow">		
+					<h4 class="text">{{localize "anima.experience"}}:</h4>
+					<input type="number" class="xp-number" value="{{data.description.experience.value}}" name="data.description.experience.value" data-dtype="Number">		
 				</div>
 			</div>
-			<div class="common resources grid">
-				<input class="life" name="data.common.resources.life.points.value" type="text" value="{{data.common.resources.life.points.value}}" placeholder="{{localize "anima.lifePoints"}}">
-				<div class="maxlife">
-					<span>{{localize "anima.maxLife"}} </span>
-					<input name="data.common.resources.life.points.max" type="text" value="{{data.common.resources.life.points.max}}" disabled>
-				</div>
-				<div class="regen">
-					<input type="text" name="data.secondaries.regeneration.value" value="{{data.secondaries.regeneration.value}}" disabled>
-					<span>{{localize "anima.regenerationSHORT"}}</span>
-				</div>
-				<div class="movement">
-					<span> {{localize "anima.movementSHORT"}} </span>
-					<input type="text" name="data.secondaries.movement.value" value="{{data.secondaries.movement.value}}" disabled>
-				</div>
-				<div class="fatigue">
-					<input type="text" name="data.common.resources.fatigue.value" value="{{data.common.resources.fatigue.value}}">
-					<span> {{localize "anima.fatigue"}}</span>
-				</div>
+
+
+			<img src="{{actor.img}}" class="img-profile" data-edit="img" title="{{actor.name}}" height="145" width="145">
+
+			{{!-- Modifiers --}}
+			<div class="modifiers">
+				<h3 class="text">- {{localize "anima.modifiers"}} -</h3>
+				<h4 class="text">{{localize "anima.modifiersPhysical"}}</h4>
+				<h4 class="text">{{localize "anima.modifiersAll"}}</h4>
+				<input type="number" name="data.description.physical" class="physical-number text" value="{{data.description.physical}}" data-dtype="Number">
+				<input type="number" name="data.description.action" class="action-number text" value="{{data.description.action}}" data-dtype="Number">
 			</div>
-			<div class="mod grid">
-				<h3>{{localize "anima.modifiers"}}</h3>
-				<div class="rollable" data-roll="1d100xa"><i class="fas fa-dice-d20"></i></div>
-				<input type="text" class="mod." placeholder="Mod.">
-				<input type="text" class="pen" placeholder="Pen.">
-				<input type="text" class="pen-phy" placeholder="Pen. fisico">
+
+			{{!-- Characteristics --}}
+			<div class="characteristics flexcol">
+				{{#each data.characteristics.primaries as | atr key|}}
+				<div class="flexrow">
+					<label for="data.characteristics.primaries.{{key}}.value" class="rollable text" data-roll="1d10+@characteristics.primaries.{{key}}.value" data-label="{{key}}">{{localize (concat "anima." key)}}</label>
+					<input type="number" name="data.characteristics.primaries.{{key}}.value" value="{{atr.value}}" data-dtype="Number">
+					<label for="data.characteristics.primaries.{{key}}.value" class="bonus text">+40</label>
+				</div>
+				{{/each}}
+			</div>
+
+			{{!-- Resistances --}}
+			<div class="resistances">
+				<h3 class="text">{{localize "anima.resistances"}}</h3>
+				{{#each data.characteristics.secondaries.resistances as | atr key|}}
+				<div>
+					<label for="data.characteristics.secondaries.resistances.{{key}}.value" class="rollable text" data-roll="1d100+@characteristics.secondaries.resistances.{{key}}.value" data-label="{{key}}">
+					{{localize (concat "anima." key)}}
+					</label>
+					<input type="number" name="data.characteristics.secondaries.resistances.{{key}}.value" value="{{atr.value}}" data-dtype="Number">
+				</div>
+				{{/each}}
+			</div>
+
+			{{!-- Common Resources --}}
+			<div class="CommonResources">
+				{{!-- Life --}}
+				<div class="lifePoints">
+					<span class="text-off">{{localize "anima.basic"}}</span>
+					<span class="text">{{localize "anima.lifePoints"}}</span>
+					<input type="number" name="data.common.resources.life.points.max" class="max-life" value="{{data.common.resources.life.points.max}}" data-dtype="Number">
+					<input type="number" name="data.common.resources.life.points.value" class="current-life" value="{{data.common.resources.life.points.value}}" data-dtype="Number">
+				</div>
+
+				{{!-- Turns --}}
+				<div class="turns">
+					<h3 class="text">{{localize "anima.speed"}}</h3>
+					<h3 class="text-off">{{localize "anima.basic"}}</h3>
+					<h3 class="text-off">{{localize "anima.extra"}}</h3>
+					<h3 class="text-off">{{localize "anima.extra"}}</h3>
+					<input type="number" name="data.characteristics.secondaries.initiative.value" class="turn base" value="{{data.characteristics.secondaries.initiative.value}}" data-dtype="Number">
+					<input type="number" name="data.characteristics.secondaries.initiative1.value" class="turn" value="{{data.characteristics.secondaries.initiative1.value}}" data-dtype="Number">
+					<input type="number" name="data.characteristics.secondaries.initiative2.value" class="turn" value="{{data.characteristics.secondaries.initiative2.value}}" data-dtype="Number">
+				</div>
+
+				{{!-- Fatigue and Movement --}}
+				<div class="fati-movem flexrow">
+					<div class="fatigue">
+						<h3 class="text">{{localize "anima.fatigue"}}</h3>
+						<input type="number" name="data.common.resources.fatigue.max" class="max-fatigue" value="{{data.common.resources.fatigue.max}}" data-dtype="Number">
+						<input type="number" name="data.common.resources.fatigue.value" class="current-fatigue" value="{{data.common.resources.fatigue.value}}" data-dtype="Number">
+					</div>
+					<div class="movement">
+						<h3 class="text">{{localize "anima.movement"}}</h3>
+						<div class="box-movement">
+							<input type="number" name="data.characteristics.secondaries.movement" class="movement-meter text" value="{{data.characteristics.secondaries.movement}}" data-dtype="Number">
+							<span class="meter text">m.</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			{{!-- Armor --}}
+			<div class="armor">
+				<div class="label-text flexrow">
+					<span class="text-armor text">{{localize "anima.armor"}}</span>
+					<span class="text">{{localize "anima.cut"}}</span>
+					<span class="text">{{localize "anima.impact"}}</span>
+					<span class="text">{{localize "anima.thrust"}}</span>
+					<span class="text">{{localize "anima.heat"}}</span>
+					<span class="text">{{localize "anima.electric"}}</span>
+					<span class="text">{{localize "anima.cold"}}</span>
+					<span class="text">{{localize "anima.energy"}}</span>
+				</div>
+				<div class="AT">
+					<input type="text" name="data.temp.nameArmor" class="nameArmor" value="{{data.temp.nameArmor}}" data-dtype="String">
+					<input type="Number" name="data.temp.cut.value" class="AT-Number" value="{{data.temp.cut.value}}" data-dtype="Number">
+					<input type="Number" name="data.temp.impact.value" class="AT-Number" value="{{data.temp.impact.value}}" data-dtype="Number">
+					<input type="Number" name="data.temp.thrust.value" class="AT-Number" value="{{data.temp.thrust.value}}" data-dtype="Number">
+					<input type="Number" name="data.temp.heat.value" class="AT-Number" value="{{data.temp.heat.value}}" data-dtype="Number">
+					<input type="Number" name="data.temp.electric.value" class="AT-Number" value="{{data.temp.electric.value}}" data-dtype="Number">
+					<input type="Number" name="data.temp.cold.value" class="AT-Number" value="{{data.temp.cold.value}}" data-dtype="Number">
+					<input type="Number" name="data.temp.energy.value" class="AT-Number" value="{{data.temp.energy.value}}" data-dtype="Number">
+				</div>
 			</div>
 		</div>
-		<header>
+	<header>
 			{{!-- Character Sheet Navigation --}}
 			<nav class="sheet-tabs tabs" data-group="primary">
 				<a class="item" data-tab="main">{{localize "anima.main"}}</a>

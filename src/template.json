@@ -5,7 +5,7 @@
     "character": {
       "description": {
         "race": "",
-        "category": "",
+        "class": "",
         "background": "",
         "level": { "value": 0 },
         "experience": { "value": 0 }
@@ -32,21 +32,21 @@
         "primaries": {
           "agi": { "value": 0 },
           "con": { "value": 0 },
-          "des": { "value": 0 },
-          "fue": { "value": 0 },
+          "dex": { "value": 0 },
+          "str": { "value": 0 },
           "int": { "value": 0 },
           "per": { "value": 0 },
-          "pod": { "value": 0 },
-          "vol": { "value": 0 }
+          "pow": { "value": 0 },
+          "will": { "value": 0 }
         },
         "secondaries": {
           "initiative": { "value": 0 },
-          "resistencies": {
+          "resistances": {
             "phyr": { "value": 0 },
             "disr": { "value": 0 },
             "poir": { "value": 0 },
             "magr": { "value": 0 },
-            "psir": { "value": 0 }
+            "psyr": { "value": 0 }
           },
           "movement": { "value": 0 },
           "regeneration": { "value": 0 }
@@ -57,9 +57,11 @@
         "athletics": {
           "acrobatics": { "value": 0 },
           "athleticism": { "value": 0 },
+          "ride": { "value": 0 },
+          "swim": {"value": 0},
           "climb": { "value": 0 },
           "jump": { "value": 0 },
-          "ride": { "value": 0 }
+          "piloting": {"value": 0}
         },
         "vigor": {
           "composure": { "value": 0 },
@@ -73,41 +75,49 @@
         },
         "intellectual": {
           "animals": { "value": 0 },
-          "appraisal": { "value": 0 },
+          "science": { "value": 0 },
+          "law": { "value": 0 },
           "herbalLore": { "value": 0 },
           "history": { "value": 0 },
-          "law": { "value": 0 },
-          "magicAppraisal": { "value": 0 },
+          "tactics": { "value": 0 },
           "medicine": { "value": 0 },
           "memorize": { "value": 0 },
           "navigation": { "value": 0 },
           "occult": { "value": 0 },
-          "science": { "value": 0 },
-          "tactics": { "value": 0 }
+          "appraisal": { "value": 0 },
+          "magicAppraisal": { "value": 0 }
         },
         "social": {
-          "trading": { "value": 0 },
-          "etiquette": { "value": 0 },
+          "style": { "value": 0 },
           "intimidate": { "value": 0 },
           "leadership": { "value": 0 },
+          "persuasion":{"value": 0},
+          "trading": { "value": 0 },
           "streetwise": { "value": 0 },
-          "style": { "value": 0 }
+          "etiquette": { "value": 0 }
         },
         "subterfuge": {
+          "lockPicking": { "value": 0 },
           "disguise": { "value": 0 },
           "hide": { "value": 0 },
-          "lockPicking": { "value": 0 },
-          "poisons": { "value": 0 },
           "theft": { "value": 0 },
+          "stealth": { "value": 0 },
           "trapLore": { "value": 0 },
-          "stealth": { "value": 0 }
+          "poisons": { "value": 0 }
         },
         "creative": {
           "art": { "value": 0 },
           "dance": { "value": 0 },
           "forging": { "value": 0 },
+          "runes":{"value": 0},
+          "alchemy": {"value": 0},
+          "animism":{"value": 0},
           "music": { "value": 0 },
-          "sleightOfHand": { "value": 0 }
+          "sleightOfHand": { "value": 0 },
+          "ritualCalligraphy":{"value": 0},
+          "jewelry":{"value": 0},
+          "tailoring":{"value": 0},
+          "constructMarionettes":{"value": 0}
         },
         "special": {
           "special": { "value": 0 }
