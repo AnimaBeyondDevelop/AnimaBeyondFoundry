@@ -19,15 +19,6 @@
        justify-content: center;
        align-items: flex-start;
        
-       h3{
-           text-align: center;
-           padding: 3px;
-           margin-bottom: 3px;
-           width: 150px;
-           color: $white;
-           border-radius: $border-radius;
-           background: $red-color;
-       }
        div{
            text-align: center;
            width: 140px;
@@ -44,6 +35,15 @@
                 width: 85px;
             }
        }
+       .text-box, .special-control{
+            text-align: center;
+            padding: 3px;
+            margin-bottom: 3px;
+            width: 150px;
+            color: $white;
+            border-radius: $border-radius;
+            background: $red-color;
+    }
    }
    .athletics{
     grid-area: athletics;
@@ -68,6 +68,12 @@
    }
    .special{
        grid-area: special;
+       .special-control{
+           
+           .text{
+               margin: 0;
+           }
+       }
    }
 
 }

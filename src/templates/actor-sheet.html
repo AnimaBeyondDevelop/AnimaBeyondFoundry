@@ -8,8 +8,8 @@
 				<h2 class="name text"><input type="text"  name="name" value="{{actor.name}}"></h2>
 
 				{{!-- Dices --}}
-				<div class="dice"><img src="\systems\animabf\assets\dice.png" class="rollable" data-roll="1d10"><span style="left:14px">10</span></div>
-				<div class="dice"><img src="\systems\animabf\assets\dice.png" class="rollable" data-roll="1d100xa"><span>100</span></div>
+				<div class="dice"><img src="\systems\animabf\assets\dice.png" class="rollable" data-roll="1d10"><span class="rollable" data-roll="1d10">10</span></div>
+				<div class="dice"><img src="\systems\animabf\assets\dice.png" class="rollable" data-roll="1d100xa"><span class="rollable" data-roll="1d100xa">100</span></div>
 
 				{{!-- Class --}}
 				<div class="class-actor flexrow">
@@ -38,8 +38,8 @@
 				<h3 class="text">- {{localize "anima.modifiers"}} -</h3>
 				<h4 class="text">{{localize "anima.modifiersPhysical"}}</h4>
 				<h4 class="text">{{localize "anima.modifiersAll"}}</h4>
-				<input type="number" name="data.description.physical" class="physical-number text" value="{{data.description.physical}}" data-dtype="Number">
-				<input type="number" name="data.description.action" class="action-number text" value="{{data.description.action}}" data-dtype="Number">
+				<input type="number" name="data.temp.physical.value" class="physical-number text" value="{{data.temp.physical.value}}" data-dtype="Number">
+				<input type="number" name="data.temp.action.value" class="action-number text" value="{{data.temp.action.value}}" data-dtype="Number">
 			</div>
 
 			{{!-- Characteristics --}}
@@ -72,8 +72,8 @@
 				<div class="lifePoints">
 					<span class="text-off">{{localize "anima.basic"}}</span>
 					<span class="text">{{localize "anima.lifePoints"}}</span>
-					<input type="number" name="data.common.resources.life.points.max" class="max-life" value="{{data.common.resources.life.points.max}}" data-dtype="Number">
-					<input type="number" name="data.common.resources.life.points.value" class="current-life" value="{{data.common.resources.life.points.value}}" data-dtype="Number">
+					<input type="number" name="data.commonResources.lifePoints.max" class="max-life" value="{{data.commonResources.lifePoints.max}}" data-dtype="Number">
+					<input type="number" name="data.commonResources.lifePoints.value" class="current-life" value="{{data.commonResources.lifePoints.value}}" data-dtype="Number">
 				</div>
 
 				{{!-- Turns --}}
@@ -83,21 +83,21 @@
 					<h3 class="text-off">{{localize "anima.extra"}}</h3>
 					<h3 class="text-off">{{localize "anima.extra"}}</h3>
 					<input type="number" name="data.characteristics.secondaries.initiative.value" class="turn base" value="{{data.characteristics.secondaries.initiative.value}}" data-dtype="Number">
-					<input type="number" name="data.characteristics.secondaries.initiative1.value" class="turn" value="{{data.characteristics.secondaries.initiative1.value}}" data-dtype="Number">
-					<input type="number" name="data.characteristics.secondaries.initiative2.value" class="turn" value="{{data.characteristics.secondaries.initiative2.value}}" data-dtype="Number">
+					<input type="number" name="data.temp.initiative1.value" class="turn" value="{{data.temp.initiative1.value}}" data-dtype="Number">
+					<input type="number" name="data.temp.initiative2.value" class="turn" value="{{data.temp.initiative2.value}}" data-dtype="Number">
 				</div>
 
 				{{!-- Fatigue and Movement --}}
 				<div class="fati-movem flexrow">
 					<div class="fatigue">
 						<h3 class="text">{{localize "anima.fatigue"}}</h3>
-						<input type="number" name="data.common.resources.fatigue.max" class="max-fatigue" value="{{data.common.resources.fatigue.max}}" data-dtype="Number">
-						<input type="number" name="data.common.resources.fatigue.value" class="current-fatigue" value="{{data.common.resources.fatigue.value}}" data-dtype="Number">
+						<input type="number" name="data.commonResources.fatigue.max" class="max-fatigue" value="{{data.commonResources.fatigue.max}}" data-dtype="Number">
+						<input type="number" name="data.commonResources.fatigue.value" class="current-fatigue" value="{{data.commonResources.fatigue.value}}" data-dtype="Number">
 					</div>
 					<div class="movement">
 						<h3 class="text">{{localize "anima.movement"}}</h3>
 						<div class="box-movement">
-							<input type="number" name="data.characteristics.secondaries.movement" class="movement-meter text" value="{{data.characteristics.secondaries.movement}}" data-dtype="Number">
+							<input type="number" name="data.characteristics.secondaries.movement.value" class="movement-meter text" value="{{data.characteristics.secondaries.movement.value}}" data-dtype="Number">
 							<span class="meter text">m.</span>
 						</div>
 					</div>

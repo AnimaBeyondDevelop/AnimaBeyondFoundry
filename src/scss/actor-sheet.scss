@@ -68,7 +68,10 @@
             font-size: 11px;
             color: $white;
           }
-
+          span:nth-child(2){
+            left:14px
+          }
+          
         }
         .class-actor{
           width: 100%;
