@@ -67,6 +67,9 @@
             top: 7px;
             font-size: 11px;
             color: $white;
+            &:hover{
+              text-shadow: none;
+            }
           }
           span:nth-child(2){
             left:14px
@@ -351,7 +354,7 @@
           }
           .nameArmor{
             width: 75px;
-            text-align: left;
+            text-align: center;
           }
         }
       }
