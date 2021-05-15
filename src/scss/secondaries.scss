@@ -69,9 +69,32 @@
    .special{
        grid-area: special;
        .special-control{
-           
-           .text{
-               margin: 0;
+        text-align: center;
+        margin-bottom: 3px;
+        width: 150px;
+        color: $white;
+        border-radius: $border-radius;
+        background: $red-color;
+        .skillcreate{
+            height: 16px;
+            width: 26px;
+            margin-top: 2px;
+            img{
+                width: 16px;
+                border: none;
+            }
+        }
+
+        .text{
+            margin: 0;
+        }
+       }
+       div{
+           .input_value{
+               width: 35px !important;
+           }
+           .skill-controls{
+               font-size: 13px;
            }
        }
    }

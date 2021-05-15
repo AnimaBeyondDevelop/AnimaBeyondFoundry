@@ -109,14 +109,16 @@
     <div class="special group">
         <div class="special-control">
             <h3 class="text">{{localize "anima.special"}}</h3>
-            <a data-type="skill" class="skillcreate"><i class="fas fa-plus"></i></a>
+            <a data-type="skill" class="skillcreate"><img src="\systems\animabf\assets\images\boton-plus.png"></a>
         </div>
-        {{#each items as |skill id|}}
+        {{#each actor.skill as |skill id|}}
         <div class="skill-item item" data-item-id="{{skill._id}}">
-            <label for="skill._id" class="rollable"data-roll="1d100xa+@skill.value" data-label="{{skill._id}}">
+            <label for="skill._id" class="rollable" data-field="name" 
+                data-roll="1d100xa+@skill.data.value">
                 {{skill.name}}
             </label>
-            <input type="text" name="{{skill._id.value}}"  class="input_value" value="{{skill._id.value}}" data-dtype="Number" />
+            <input type="number" data-field="skill.data.value" class="input_value" value="{{skill.data.value}}" data-dtype="Number" />
+            <a class="skill-controls"><i class="fas fa-trash skilldelete"></i></a>
         </div>
         {{/each}}
     </div>

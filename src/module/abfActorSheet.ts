@@ -19,7 +19,18 @@ export default class abfActorSheet extends ActorSheet {
     });
   }
 
-  activateListeners(html) {
+  getData():any {
+    const data:any = super.getData();
+    data.dtypes = ["String", "Number", "Boolean"]
+
+    if (this.actor.data.type == 'character') {
+      abfActorSheet._prepareItemContainers(data);
+    }
+
+    return data;
+  }
+
+  activateListeners(html: HTMLElement | JQuery<HTMLElement>) {
     super.activateListeners(html);
 
     // Everything below here is only needed if the sheet is editable
@@ -27,7 +38,27 @@ export default class abfActorSheet extends ActorSheet {
 
     // Rollable abilities.
     html.find(".rollable").click(this._onRoll.bind(this));
-  }
+
+    html.find(".skillcreate").click(this._onSkillCreate.bind(this));
+
+    html.find(".skilldelete").click((ev: { currentTarget: any; }) => {
+      const li = $(ev.currentTarget).parents(".item");
+      this.actor.deleteOwnedItem(li.data("itemId"));
+      li.slideUp(200, () => this.render(false));
+    });
+  };
+
+  _onSkillCreate(event: { preventDefault: () => void; currentTarget: any; }) {
+    event.preventDefault();
+    let element = event.currentTarget;
+
+    let itemData = {
+      name: game.i18n.localize("anima.newSkill"),
+      type: element.dataset.type
+    };
+
+    return this.actor.createOwnedItem(itemData)
+  };
 
   async _onRoll(event) {
     event.preventDefault();
@@ -47,4 +78,58 @@ export default class abfActorSheet extends ActorSheet {
       });
     }
   }
+
+  protected static _prepareItemContainers(sheetData:{actor: any; items: any;}):void {
+    const actorData = sheetData.actor;
+
+    const consumable:Item[] = [];
+    const misc:Item[] = [];
+    const weapon:Item[] = [];
+    const shield:Item[] = [];
+    const ammunition:Item[] = [];
+    const armor:Item[] = [];
+    const helmet:Item[] = [];
+    const skill:Item[] = [];
+
+    for (const i of sheetData.items) {
+      i.img = i.img || CONST.DEFAULT_TOKEN;
+      switch (i.type){
+        case 'cosumable':
+          consumable.push(i);
+          break;
+        case 'misc':
+          misc.misc(i);
+          break;
+        case 'weapon':
+          weapon.push(i);
+          break;
+        case 'shield':
+          shield.push(i);
+          break;
+        case 'ammunition':
+          ammunition.push(i);
+          break;
+        case 'armor':
+          armor.push(i);
+          break;
+        case 'helmet':
+          helmet.push(i);
+          break;
+        case 'skill':
+          skill.push(i);
+          break;
+        default:
+          break;
+      }
+    }
+
+    actorData.consumable = consumable;
+    actorData.misc = misc;
+    actorData.weapon = weapon;
+    actorData.shield = shield;
+    actorData.ammunition = ammunition;
+    actorData.armor = armor;
+    actorData.helmet = helmet;
+    actorData.skill = skill;
+  };
 }

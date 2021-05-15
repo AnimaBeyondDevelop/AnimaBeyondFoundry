@@ -17,6 +17,7 @@ import { preloadTemplates } from "./module/preloadTemplates.js";
 import abfActorSheet from "./module/abfActorSheet.js";
 import abfRoll from "./module/dice.js";
 import abfCombat from "./module/combat.js";
+import { abfActor } from "./module/abfActor"
 
 /* ------------------------------------ */
 /* Initialize system					*/
@@ -27,6 +28,7 @@ Hooks.once("init", async function () {
   // Assign custom classes and constants here
   game.abf = {
     abfRoll,
+    abfActor,
   };
   CONFIG.Dice.rolls.unshift(abfRoll);
 
@@ -34,6 +36,7 @@ Hooks.once("init", async function () {
     formula: "1d100xaTurno + @characteristics.secondaries.initiative.value",
   };
   CONFIG.Combat.entityClass = abfCombat;
+  CONFIG.Actor.entityClass = abfActor;
 
   // Register custom system settings
   registerSettings();
