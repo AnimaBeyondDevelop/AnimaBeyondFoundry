@@ -1,5 +1,4 @@
-// @ts-nocheck
-export default class abfRoll extends Roll {
+export default class ABFRoll extends Roll {
   evaluate({ minimize = false, maximize = false } = {}) {
     super.evaluate();
     return abfDice(this);
@@ -7,20 +6,21 @@ export default class abfRoll extends Roll {
 }
 
 // Function with all the custom roll options
-export function abfDice(roll) {
+// TODO: Extract Turno and Explode capabilities into function and unit test it
+export function abfDice(roll: Roll) {
   let openRange = 90;
   let fumbleRange = 3;
-  let formula = roll._formula;
-  let canExplode = formula.includes("xa");
-  let isTurno = formula.includes("Turno");
+  let formula = roll.formula;
+  let canExplode = formula.includes('xa');
+  let isTurno = formula.includes('Turno');
 
   // Erase keywords from formula so they aren't showed later in chat
   if (isTurno) {
-    roll._formula = roll.formula.replace("Turno", "");
-    roll.terms[0].modifiers[0] = roll.terms[0].modifiers[0].replace(
-      "Turno",
-      ""
-    );
+    // @ts-ignore
+    roll._formula = roll.formula.replace('Turno', '');
+
+    // @ts-ignore
+    roll.terms[0].modifiers[0] = roll.terms[0].modifiers[0].replace('Turno', '');
   }
 
   // Case - Open roll
@@ -28,15 +28,19 @@ export function abfDice(roll) {
     let x = roll.results[0];
 
     while (x >= openRange) {
-      let newRoll = new Roll("1d100").evaluate();
+      let newRoll = new Roll('1d100').evaluate();
       let newResult = { result: newRoll.results[0], active: true };
 
       // Rewrite result data
+      // @ts-ignore
       roll.results[0] += newRoll.results[0];
+      // @ts-ignore
       roll._total += newRoll._total;
+      // @ts-ignore
       roll.terms[0].results.push(newResult);
 
       // Flag previous result as exploded
+      // @ts-ignore
       roll.terms[0].results[roll.terms[0].results.length - 2].exploded = true;
 
       // Update loop conditions (x is defined here because using "this" is weird and this works)
@@ -58,39 +62,10 @@ export function abfDice(roll) {
         pen = -75;
         break;
     }
+    // @ts-ignore
     roll._total = roll._total - roll.results[0] + pen;
   }
 
   return roll;
 }
 
-// Open the mod Dialog window. It returns resolver(html), which in turn returns the modifier
-export async function modDialog() {
-  return new Promise((resolve) => {
-    new Dialog({
-      content: `
-      <form>
-      <div class="form-group">
-        <label>Modificador</label>
-        <input id="mod" type="text" name="mod" placeholder="0"/>
-      </div>
-      </form>`,
-      buttons: {
-        submit: {
-          icon: '<i class="fas fa-check"></i>',
-          label: "Aceptar",
-          callback: (html) => {
-            resolve(resolver(html));
-          },
-        },
-      },
-      default: "submit",
-      render: () => $("#mod").focus(),
-    }).render(true);
-  });
-}
-
-const resolver = (html) => {
-  const results = new FormDataExtended(html.find("form")[0]).toObject();
-  return results.mod;
-};

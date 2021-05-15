@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * This is your TypeScript entry file for Foundry VTT.
  * Register custom settings, sheets, and constants using the Foundry API.
@@ -10,30 +9,37 @@
  * Software License: [your license] Put your desired license here, which
  * 					 determines how others may use and modify your system
  */
-// Import TypeScript modules
 
-import { registerSettings } from "./module/settings.js";
-import { preloadTemplates } from "./module/preloadTemplates.js";
-import abfActorSheet from "./module/abfActorSheet.js";
-import abfRoll from "./module/dice.js";
-import abfCombat from "./module/combat.js";
+// Import TypeScript modules
+import { registerSettings } from './module/utils/settings';
+import { preloadTemplates } from './module/utils/preloadTemplates';
+import ABFActorSheet from './module/ABFActorSheet';
+import ABFRoll from './module/ABFRoll';
+import ABFCombat from './module/ABFCombat';
 
 /* ------------------------------------ */
 /* Initialize system					*/
 /* ------------------------------------ */
-Hooks.once("init", async function () {
-  console.log("AnimaBeyondFoundry | Initializing AnimaBeyondFoundry");
+Hooks.once('init', async function () {
+  console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
 
   // Assign custom classes and constants here
   game.abf = {
-    abfRoll,
+    abfRoll: ABFRoll
   };
-  CONFIG.Dice.rolls.unshift(abfRoll);
 
-  CONFIG.Combat.initiative = {
-    formula: "1d100xaTurno",
+  CONFIG.Dice.rolls.unshift(ABFRoll);
+
+  CONFIG.Combat = {
+    entityClass: ABFCombat,
+    collection: CombatEncounters,
+    defeatedStatusId: 'dead',
+    sidebarIcon: 'fas fa-fist-raised',
+    initiative: {
+      formula: '1d100xaTurno',
+      decimals: 2
+    }
   };
-  CONFIG.Combat.entityClass = abfCombat;
 
   // Register custom system settings
   registerSettings();
@@ -42,14 +48,14 @@ Hooks.once("init", async function () {
   await preloadTemplates();
 
   // Register custom sheets (if any)
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("abf", abfActorSheet, { makeDefault: true });
+  Actors.unregisterSheet('core', ActorSheet);
+  Actors.registerSheet('abf', ABFActorSheet, { makeDefault: true });
 });
 
 /* ------------------------------------ */
 /* Setup system							*/
 /* ------------------------------------ */
-Hooks.once("setup", function () {
+Hooks.once('setup', function () {
   // Do anything after initialization but before
   // ready
 });
@@ -57,7 +63,7 @@ Hooks.once("setup", function () {
 /* ------------------------------------ */
 /* When ready							*/
 /* ------------------------------------ */
-Hooks.once("ready", function () {
+Hooks.once('ready', function () {
   // Do anything once the system is ready
 });
 

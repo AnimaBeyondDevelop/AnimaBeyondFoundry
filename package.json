@@ -7,15 +7,14 @@
     "package": "gulp package",
     "build": "gulp build && gulp link",
     "build:watch": "gulp watch",
-    "clean": "gulp clean && gulp link --clean",
-    "update": "npm install --save-dev gitlab:foundry-projects/foundry-pc/foundry-pc-types"
+    "clean": "gulp clean && gulp link --clean"
   },
   "author": "",
   "license": "",
   "devDependencies": {
+    "@league-of-foundry-developers/foundry-vtt-types": "^0.7.9-6",
     "archiver": "^5.3.0",
     "chalk": "^4.1.0",
-    "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types",
     "fs-extra": "^9.1.0",
     "gulp": "^4.0.2",
     "gulp-git": "^2.10.1",
