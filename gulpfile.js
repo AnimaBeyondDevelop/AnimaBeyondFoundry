@@ -15,7 +15,7 @@ const argv = require('yargs').argv;
 
 sass.compiler = require('sass');
 
-const ENTRYFILE = 'AnimaBeyondFantasy';
+const ENTRYFILE = 'animabf';
 
 const ROOT_PATH = `../${ENTRYFILE}`;
 

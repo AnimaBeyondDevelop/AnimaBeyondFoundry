@@ -1,5 +1,5 @@
 {
-  "name": "AnimaBeyondFantasy",
+  "name": "animabf",
   "title": "Anima Beyond Fantasy",
   "description": "",
   "version": "0.1.0",
@@ -11,8 +11,8 @@
     }
   ],
   "scripts": [],
-  "esmodules": ["AnimaBeyondFantasy.js"],
-  "styles": ["AnimaBeyondFantasy.css"],
+  "esmodules": ["animabf.js"],
+  "styles": ["animabf.css"],
   "packs": [],
   "languages": [
     {
