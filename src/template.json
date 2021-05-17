@@ -151,21 +151,74 @@
 
       "mystic": {
         "zeon": { "value": 0, "max": 0, "accumulated": 0 },
-        "magicAcummulation": { "value": 0 },
-        "magicRegeneration": { "value": 0 },
+        "magicAcummulation": { "value": 0, "Alternative": 0},
+        "magicRegeneration": { "value": 0, "Total": 0},
+        "InnerPotential": {"value": 0, "Alternative": 0},
         "magicProjection": {
+          "Base": {"value": 0 },
           "offensive": { "value": 0 },
           "defensive": { "value": 0 }
         },
-        "magicLevel": { "value": 0 },
-
+        "magicLevel": { 
+          "Spheres": { 
+            "Essence": { "value": 0 }, 
+            "water": { "value": 0 }, 
+            "Earth": { "value": 0 }, 
+            "Creation": { "value": 0 }, 
+            "Darkness": { "value": 0 }, 
+            "Necromancy": { "value": 0 }, 
+            "Light": { "value": 0 }, 
+            "Destruction": { "value": 0 }, 
+            "Air": { "value": 0 }, 
+            "Fire": { "value": 0 }, 
+            "Ilusion": { "value": 0 }
+          },
+          "Metamagic": { "value": 0 },
+          "SeletedSpells": { "value": 0 },
+          "Total": {"use": 0, "Total": 0}
+        },
+        "FreeAccesSpells": [
+          {
+            "name": {
+              "value": "Nombre"      
+            },
+            "level": { "Value": 0}
+          }
+        ],
+        "Maintenances": [
+          {
+            "name": {
+              "value": "Nombre"      
+            },
+            "cost": { "Value": 0}
+          }
+        ],
+        "Selected": [
+          {
+            "name": {
+              "value": "Nombre"      
+            },
+            "cost": { "Value": 0}
+          }
+        ],
+        "Metamagic": [
+          {
+            "name": {
+              "value": "Nombre"      
+            },
+            "Grade": { "Value": 0}
+          }           
+        ],
         "summoning": {
           "currenRitualBonus": { "value": 0 },
           "summon": { "value": 0 },
           "banish": { "value": 0 },
           "bind": { "value": 0 },
           "control": { "value": 0 }
-        }
+        },
+        "invocation": [
+          "nombre"
+        ]
       },
 
       "domine": {
