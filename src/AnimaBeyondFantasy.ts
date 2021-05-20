@@ -14,7 +14,7 @@
 import { registerSettings } from './module/utils/settings';
 import { preloadTemplates } from './module/utils/preloadTemplates';
 import ABFActorSheet from './module/ABFActorSheet';
-import ABFRoll from './module/ABFRoll';
+import ABFRoll from './module/ABFRoll/ABFRoll';
 import ABFCombat from './module/ABFCombat';
 
 /* ------------------------------------ */
