@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import * as SYSTEM from '../system.json';
 import { openModDialog } from './utils/openModDialog';
 import ABFRoll from './ABFRoll/ABFRoll';
 
@@ -9,7 +7,7 @@ export default class ABFActorSheet extends ActorSheet {
       ...super.defaultOptions,
       ...{
         classes: ['abf', 'sheet', 'actor'],
-        template: `systems/${SYSTEM.name}/templates/actor-sheet.html`,
+        template: `systems/animabf/templates/actor-sheet.html`,
         width: 600,
         height: 700,
         tabs: [

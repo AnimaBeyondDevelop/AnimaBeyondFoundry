@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 // Open the mod Dialog window. It returns resolver(html), which in turn returns the modifier
 export async function openModDialog(title = 'Dialogo') {
   return new Promise(resolve => {
