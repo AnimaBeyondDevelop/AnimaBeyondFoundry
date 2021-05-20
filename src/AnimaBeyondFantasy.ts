@@ -16,6 +16,7 @@ import { preloadTemplates } from './module/utils/preloadTemplates';
 import ABFActorSheet from './module/ABFActorSheet';
 import ABFRoll from './module/ABFRoll/ABFRoll';
 import ABFCombat from './module/ABFCombat';
+import { ABFActor } from './module/ABFActor';
 
 /* ------------------------------------ */
 /* Initialize system					*/
@@ -25,7 +26,8 @@ Hooks.once('init', async function () {
 
   // Assign custom classes and constants here
   game.abf = {
-    abfRoll: ABFRoll
+    abfRoll: ABFRoll,
+    abfActor: ABFActor
   };
 
   CONFIG.Dice.rolls.unshift(ABFRoll);
@@ -36,16 +38,28 @@ Hooks.once('init', async function () {
     defeatedStatusId: 'dead',
     sidebarIcon: 'fas fa-fist-raised',
     initiative: {
-      formula: '1d100xaTurno',
+      formula: '1d100xaTurno + @characteristics.secondaries.initiative.value',
       decimals: 2
     }
   };
+
+  CONFIG.Actor.entityClass = ABFActor;
 
   // Register custom system settings
   registerSettings();
 
   // Preload Handlebars templates
   await preloadTemplates();
+
+  // Handlebars.registerHelper("concat", function () {
+  //   var outStr = "";
+  //   for (var arg in arguments) {
+  //     if (typeof arguments[arg] != "object") {
+  //       outStr += arguments[arg];
+  //     }
+  //   }
+  //   return outStr;
+  // });
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);

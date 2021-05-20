@@ -1,0 +1,387 @@
+@import "variable.scss";
+
+.abf.sheet.actor {
+  min-width: 690px;
+  min-height: 800px;
+
+  .header-filds{
+
+    .content{
+      display: grid;
+      grid-template-areas:
+      "header-top header-top header-top header-top"
+      "img-profile characteristics resistances CommonResources"
+      "img-profile characteristics resistances CommonResources"
+      "modifiers characteristics armor armor";
+      justify-content: space-evenly;
+
+      .header-top{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-bottom: 2px $red-color solid;
+        display: grid;
+        width: 100%;
+        grid-template-columns: 220px 45px 45px 220px 60px 60px;
+        grid-area: header-top;
+        justify-content: center;
+        input{
+          height: 18px;
+          background: transparent;
+          text-align: center;
+          margin: 0;
+          &:focus, &:hover{
+            box-shadow: 0 5px 3px -3px red;
+          }
+        }
+        h4{
+          margin: 0;
+        }
+        .name{
+          width: 100%;
+          margin-bottom: 0px;
+          font-size: 18px;
+          border: none;
+          input{
+            height: 30px;
+            width: 100%;
+            text-align: start;
+            font-weight: 600;
+          }
+        }
+        .dice{
+          position: relative;
+          justify-self: center;
+          text-align: center;
+          width: 100%;
+          height: 100%;
+          img{
+            border: none;
+            width: 59%;
+          }
+          &:hover, &:focus{
+            box-shadow: 0 5px 3px -3px red;
+          }
+          span{
+            position: absolute;
+            right: 14px;
+            top: 7px;
+            font-size: 11px;
+            color: $white;
+            &:hover{
+              text-shadow: none;
+            }
+          }
+          span:nth-child(2){
+            left:14px
+          }
+          
+        }
+        .class-actor{
+          width: 100%;
+          position: relative;
+          .class-text{
+            height: 100%;
+            &::placeholder{
+              color: transparent;
+            }
+          }
+          .text{
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            display: block;
+          }
+        }
+        .level{
+          width: 100%;
+          position: relative;
+          .level-number{
+            height: 100%;
+          }
+          .text{
+            position: absolute;
+            top: -10px;
+            display: block;
+          }
+        }
+        .experience{
+          width: 100%;
+          position: relative;
+          .xp-number{
+            height: 100%;
+          }
+          .text{
+            position: absolute;
+            top: -10px;
+            display: block;
+          }
+        }
+      }
+
+      .modifiers{
+        height: 65px;
+        width: 145px;
+        display: grid;
+        grid-template-rows: 20px 25px 25px;
+        border-radius: $border-radius;
+        background: $dark-cream;
+        align-items: self-end;
+        justify-items: center;
+        grid-area: modifiers;
+        h3{
+          width: 100%;
+          grid-column: 1 / span 2;
+          text-align: center;
+          color: $white;
+          background: $red-color;
+          border-radius: $border-radius;
+        }
+        input{
+          margin-bottom: 10px;
+          width: 65px;
+          height: 24px;
+          border-radius: $border-radius;
+          background: $light-cream;
+          color: $intensified-red;
+          text-align: center;
+        }
+
+      }
+
+      .characteristics{
+        border-radius: $border-radius;
+        background: $dark-cream;
+        text-align: center;
+        width: 120px;
+        height: 235px;
+        grid-area: characteristics;
+        div{
+          position: relative;
+          align-items: center;
+          label:nth-child(1){
+            margin-left: 5px;
+            position: absolute;
+            left: 8px;
+          }
+          label:last-child{
+            justify-content: center;
+            margin-right: 5px;
+            height: 20px;
+            width: 30px;
+            border-radius: $border-radius;
+            background: $light-cream;
+            position: absolute;
+            right: 6px;
+          }
+          input{
+            background: $red-color;
+            height: 20px;
+            width: 45px;
+            border-radius: $border-radius;
+            position: absolute;
+            left: 45px;
+            text-align: center;
+            color: $white;
+          }
+        }
+      }
+
+      .resistances{
+        height: 170px;
+        width: 167px;
+        grid-area: resistances;
+        background: $dark-cream;
+        border-radius: $border-radius;
+        h3{
+          border-radius: $border-radius;
+          background: $red-color;
+          color: $white;
+          text-align: center;
+        }
+        div{
+          display: flex;
+          margin: 5px;
+          margin-left: 10px;
+          margin-bottom: 2px;
+          label{
+            width: 120px;
+            text-align: left;
+          }
+          input{
+            height: 23px;
+            width: 44px;
+            border-radius: $border-radius;
+            background: $light-cream;
+            text-align: center;
+            color: $black;
+            font-weight: 600;
+          }
+        }
+      }
+
+      .CommonResources{
+        height: 170px;
+        width: 190px;
+        background: $dark-cream;
+        border-radius: $border-radius;
+        grid-area: CommonResources;
+        .text, .text-off{
+          font-size: 13px;
+          text-align: center;
+        }
+        input{
+          height: 25px;
+          border-radius: $border-radius;
+          background: $light-cream;
+          justify-self: center;
+        }
+        .lifePoints{
+          margin: 1px;
+          margin-top: 7px;
+          display: grid;
+          grid-template-columns: 65px 115px;
+          grid-template-rows: 16px 25px;
+          position: relative;
+          .max-life{
+            text-align: center;
+            background: $red-color;
+            color: $white;
+            z-index: 10;
+            width: 50px;
+          }
+          .current-life{
+            color: $black;
+            text-align: center;
+            position: absolute;
+            left: 35px;
+            top: 16px;
+            width: 138px;
+            z-index: 0;
+          }
+        }
+        .turns{
+          display: grid;
+          grid-template-columns: repeat(3, 65px);
+          grid-auto-rows: 15px 18px 23px;
+          margin-bottom: 7px;
+          .text{
+            grid-column: 1 / span 3;
+            margin: 0;
+          }
+          .text-off{
+            margin: 0;
+          }
+          input{
+            width: 50px;
+            text-align: center;
+            color: $black;
+          }
+          .base{
+            background: $red-color;
+            color: $white;
+          }
+        }
+        .fati-movem{
+          text-align: center;
+          .fatigue{
+            position: relative;
+
+            .max-fatigue{
+              position: absolute;
+              background: $red-color;
+              color: $white;
+              text-align: center;
+              left: 7px;
+            }
+            .current-fatigue{
+              width: 70px;
+              margin-right: 10px;
+              color: $intensified-red;
+              text-align: center;
+              padding-left: 30px;
+            }
+          }
+          .movement{
+            position: relative;
+            .box-movement{
+              input{
+                width: 80px;
+              }
+              span{
+                position: absolute;
+                right: 12px;
+                top: 34px;
+              }
+            }
+          }
+        }
+      }
+
+      .armor{
+        height: 50px;
+        width: 375px;
+        margin-top: 14px;
+        border-radius: $border-radius;
+        background: $dark-cream;
+        grid-area: armor;
+        .label-text{
+          height: 20px;
+          background: $red-color;
+          border-radius: $border-radius;
+          color: $white;
+          .text{
+            text-align: center;
+          }
+          .text-armor{
+            margin-left: 10px;
+            margin-right: 13px;
+          }
+        }
+        .AT{
+          display: grid;
+          grid-template-columns: 84px repeat(7, 42px);
+          margin-top: 3px;
+          font-weight: 600;
+          input{
+            border-radius: $border-radius;
+            color: $black;
+            background: $light-cream;
+            font-weight: 600;
+            justify-self: center;
+            width: 28px;
+            height: 25px;
+            text-align: center;
+          }
+          .nameArmor{
+            width: 75px;
+            text-align: center;
+          }
+        }
+      }
+
+      .img-profile{
+        min-width: 145px;
+        min-height: 145px;
+        grid-area: img-profile
+      }
+    }
+
+    .sheet-tabs{
+      border-top: 1px solid $red-color;
+      border-bottom: 1px solid $red-color;
+      .item{
+        background: transparent;
+        border-radius: $border-radius;
+        color: $black;
+        font-weight: 600;
+      }
+      .active{
+        text-shadow: none;
+        background-color: $red-color;
+        color: $white;
+        font-weight: 600;
+      }
+    }
+  }
+
+}

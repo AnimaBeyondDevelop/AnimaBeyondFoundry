@@ -151,10 +151,10 @@ function buildLess() {
  * Build SASS
  */
 function buildSASS() {
-  return gulp
-    .src('src/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(ROOT_PATH));
+	return gulp
+		.src('src/scss/animabf.scss')
+		.pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest(ROOT_PATH));
 }
 
 /**

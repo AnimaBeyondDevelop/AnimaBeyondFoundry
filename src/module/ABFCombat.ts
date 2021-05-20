@@ -1,5 +1,4 @@
-import ABFRollProxy from './ABFRoll/ABFRollProxy';
-import { openModDialog } from "./utils/openModDialog";
+import { openModDialog } from './utils/openModDialog';
 
 export default class ABFCombat extends Combat {
   async nextRound() {
