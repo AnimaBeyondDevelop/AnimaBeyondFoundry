@@ -23,7 +23,7 @@ describe('ABFRoll', () => {
     expect(abfRollProxy.foundryRoll.results.length).toBeGreaterThan(1);
     expect(abfRollProxy.foundryRoll.results[0]).toBe(90);
     expect(abfRollProxy.foundryRoll.total).toBe(
-      abfRollProxy.foundryRoll.results.reduce((val, curr) => curr + val)
+      abfRollProxy.foundryRoll.getResults().reduce((val, curr) => curr + val)
     );
   });
 });

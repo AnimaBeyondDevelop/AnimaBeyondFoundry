@@ -9,7 +9,7 @@ export default class ABFRoll {
   _rolled = false;
   _total: number;
 
-  results: number[];
+  results: (number | string)[];
   terms: DicePool[];
 
   constructor(formula: string, data?: {}) {
@@ -30,11 +30,15 @@ export default class ABFRoll {
   }
 
   recalculateTotal() {
-    this._total = this.results.reduce((prev, curr) => prev + curr);
+    this._total = this.getResults().reduce((prev, curr) => prev + curr);
   }
 
   get total() {
     return this._total;
+  }
+
+  getResults(): number[] {
+    return this.results.map(res => parseInt(res.toString()));
   }
 
   evaluate(testValue?: number) {
@@ -47,7 +51,7 @@ export default class ABFRoll {
     this.results.push(value);
     this.terms.push(results);
 
-    this._total = this.results.reduce((val, curr) => val + curr);
+    this._total = this.getResults().reduce((val, curr) => val + curr);
     this._rolled = true;
 
     return this;

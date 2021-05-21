@@ -6,7 +6,6 @@ export default class ABFRoll extends Roll {
   _formula: string;
   data: {};
 
-  results: number[];
   terms: DicePool[];
 
   constructor(formula: string, data?: {}) {
@@ -16,7 +15,11 @@ export default class ABFRoll extends Roll {
   }
 
   recalculateTotal() {
-    this._total = this.results.reduce((prev, curr) => prev + curr);
+    this._total = this.getResults().reduce((prev, curr) => prev + curr);
+  }
+
+  getResults(): number[] {
+    return this.results.filter(res => typeof res === 'number') as number[];
   }
 
   evaluate({ minimize = false, maximize = false } = {}): this {
