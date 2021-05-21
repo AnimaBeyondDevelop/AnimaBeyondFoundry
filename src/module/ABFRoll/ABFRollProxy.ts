@@ -1,10 +1,17 @@
 import ABFRoll from './ABFRoll';
 
 export default class ABFRollProxy {
-  private readonly foundryRoll: ABFRoll;
+  public readonly foundryRoll: ABFRoll;
+
+  private openRange = 90;
+  private fumbleRange = 3;
+
+  private readonly canExplode: boolean;
 
   constructor(foundryRoll: ABFRoll) {
     this.foundryRoll = foundryRoll;
+
+    this.canExplode = this.foundryRoll._formula.includes('xa');
   }
 
   public evaluate({
@@ -14,9 +21,10 @@ export default class ABFRollProxy {
     minimize?: boolean;
     maximize?: boolean;
   } = {}): ABFRoll {
-    // let openRange = 90;
-    // let fumbleRange = 3;
-    // let canExplode = this.foundryRoll.formula.includes('xa');
+    if (this.canExplode && this.foundryRoll.results[0] >= this.openRange) {
+      this.explodeDice(this.openRange);
+    }
+
     // let isTurno = this.foundryRoll.formula.includes('Turno');
     //
     // // Erase keywords from formula so they aren't showed later in chat
@@ -27,31 +35,6 @@ export default class ABFRollProxy {
     //     this.foundryRoll.terms[0].modifiers[0].replace('Turno', '');
     // }
     //
-    // // Case - Open roll
-    // if (canExplode && this.foundryRoll.results[0] >= openRange) {
-    //   let x = this.foundryRoll.results[0];
-    //
-    //   while (x >= openRange) {
-    //     let newRoll = this.foundryRoll.create('1d100').evaluate();
-    //     let newResult = { result: newRoll.results[0], active: true };
-    //
-    //     // Rewrite result data
-    //     this.foundryRoll.results[0] += newRoll.results[0];
-    //     this.foundryRoll.total += newRoll.total;
-    //
-    //     this.foundryRoll.terms[0].results.push(newResult);
-    //
-    //     // Flag previous result as exploded
-    //
-    //     this.foundryRoll.terms[0].results[
-    //       this.foundryRoll.terms[0].results.length - 2
-    //     ].exploded = true;
-    //
-    //     // Update loop conditions (x is defined here because using "this.foundryRoll" is weird and this.foundryRoll works)
-    //     x = newRoll.results[0];
-    //     openRange = Math.min(openRange + 1, 100);
-    //   }
-    // }
     //
     // // Case - Fumble on initiative
     // if (isTurno && this.foundryRoll.results[0] <= fumbleRange) {
@@ -68,10 +51,32 @@ export default class ABFRollProxy {
     //       break;
     //   }
     //
-    //   this.foundryRoll.total = this.foundryRoll.total - this.foundryRoll.results[0] + pen;
+    //   this.foundryRoll._total = this.foundryRoll._total - this.foundryRoll.results[0] + pen;
     // }
 
-    console.log('Holi');
     return this.foundryRoll;
+  }
+
+  private explodeDice(openRange: number) {
+    const newRoll = new ABFRoll(`1d100`).evaluate();
+    const newResult = this.addRoll(newRoll);
+
+    if (newResult >= Math.min(openRange, 100)) {
+      this.explodeDice(openRange + 1);
+    }
+  }
+
+  private addRoll(newRoll: ABFRoll) {
+    const newResult = { result: newRoll.results[0] as number, active: true };
+
+    this.foundryRoll.results.push(newResult.result);
+
+    const pool = this.foundryRoll.terms[0];
+
+    pool.results.push(newResult);
+
+    this.foundryRoll.recalculateTotal();
+
+    return newRoll.results[0];
   }
 }
