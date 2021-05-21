@@ -12,6 +12,9 @@ export default class ABFRoll {
   results: (number | string)[];
   terms: DicePool[];
 
+  // Test variable
+  static nextValue: number;
+
   constructor(formula: string, data?: {}) {
     this._formula = formula;
     this.data = data;
@@ -20,13 +23,8 @@ export default class ABFRoll {
     this.terms = [];
   }
 
-  /**
-   * Test method
-   * @param testValue
-   */
-  addResult(testValue: number) {
-    this._rolled = false;
-    this.evaluate(testValue);
+  setNextValue(nextValue: number) {
+    ABFRoll.nextValue = nextValue;
   }
 
   recalculateTotal() {
@@ -41,10 +39,10 @@ export default class ABFRoll {
     return this.results.map(res => parseInt(res.toString()));
   }
 
-  evaluate(testValue?: number) {
+  evaluate() {
     if (this._rolled) throw new Error('Already rolled');
 
-    const value = testValue ?? Math.floor(Math.random() * 100);
+    const value = ABFRoll.nextValue ?? Math.floor(Math.random() * 100);
     const result = { result: value, active: true } as DiceTerm.Result;
     const results = { results: [result] } as DicePool;
 
@@ -53,6 +51,7 @@ export default class ABFRoll {
 
     this._total = this.getResults().reduce((val, curr) => val + curr);
     this._rolled = true;
+    ABFRoll.nextValue = null;
 
     return this;
   }
