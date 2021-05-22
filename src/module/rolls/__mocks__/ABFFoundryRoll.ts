@@ -42,7 +42,7 @@ export default class ABFFoundryRoll {
   evaluate() {
     if (this._rolled) throw new Error('Already rolled');
 
-    const value = ABFFoundryRoll.nextValue ?? Math.floor(Math.random() * 100);
+    const value = ABFFoundryRoll.nextValue ?? Math.min(1, Math.floor(Math.random() * 100));
     const result = { result: value, active: true } as DiceTerm.Result;
     const results = { results: [result] } as DicePool;
 
