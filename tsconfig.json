@@ -5,7 +5,8 @@
     "types": ["@league-of-foundry-developers/foundry-vtt-types", "@types/jest"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strictNullChecks": true
   },
   "exclude": ["./**/.*.test.*", "./**/__mocks__"]
 }

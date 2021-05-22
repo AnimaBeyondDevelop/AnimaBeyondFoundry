@@ -1,7 +1,7 @@
-import ABFRollProxy from './ABFRollProxy';
+import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 
-export default class ABFRoll extends Roll {
-  private readonly abfRoll: ABFRollProxy;
+export default class ABFFoundryRoll extends Roll {
+  private readonly abfRoll: ABFExploderRoll | undefined;
 
   _formula: string;
   data: {};
@@ -11,7 +11,9 @@ export default class ABFRoll extends Roll {
   constructor(formula: string, data?: {}) {
     super(formula, data);
 
-    this.abfRoll = new ABFRollProxy(this);
+    if (this.formula.includes('xa')) {
+      this.abfRoll = new ABFExploderRoll(this);
+    }
   }
 
   recalculateTotal() {
@@ -25,7 +27,7 @@ export default class ABFRoll extends Roll {
   evaluate({ minimize = false, maximize = false } = {}): this {
     super.evaluate();
 
-    this.abfRoll.evaluate({ minimize, maximize });
+    this.abfRoll?.evaluate({ minimize, maximize });
 
     return this;
   }

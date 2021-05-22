@@ -14,7 +14,7 @@
 import { registerSettings } from './module/utils/settings';
 import { preloadTemplates } from './module/utils/preloadTemplates';
 import ABFActorSheet from './module/ABFActorSheet';
-import ABFRoll from './module/ABFRoll/ABFRoll';
+import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/ABFCombat';
 import { ABFActor } from './module/ABFActor';
 
@@ -26,11 +26,11 @@ Hooks.once('init', async function () {
 
   // Assign custom classes and constants here
   game.abf = {
-    abfRoll: ABFRoll,
+    abfRoll: ABFFoundryRoll,
     abfActor: ABFActor
   };
 
-  CONFIG.Dice.rolls.unshift(ABFRoll);
+  CONFIG.Dice.rolls.unshift(ABFFoundryRoll);
 
   CONFIG.Combat = {
     entityClass: ABFCombat,

@@ -2,9 +2,9 @@
  * Custom implementation of Roll from foundry.js
  * Test methods are unique methods used for unit testing
  */
-export default class ABFRoll {
+export default class ABFFoundryRoll {
   _formula: string;
-  data: {};
+  data: {} | undefined;
 
   _rolled = false;
   _total: number;
@@ -13,7 +13,7 @@ export default class ABFRoll {
   terms: DicePool[];
 
   // Test variable
-  static nextValue: number;
+  static nextValue: number | null;
 
   constructor(formula: string, data?: {}) {
     this._formula = formula;
@@ -24,7 +24,7 @@ export default class ABFRoll {
   }
 
   setNextValue(nextValue: number) {
-    ABFRoll.nextValue = nextValue;
+    ABFFoundryRoll.nextValue = nextValue;
   }
 
   recalculateTotal() {
@@ -42,7 +42,7 @@ export default class ABFRoll {
   evaluate() {
     if (this._rolled) throw new Error('Already rolled');
 
-    const value = ABFRoll.nextValue ?? Math.floor(Math.random() * 100);
+    const value = ABFFoundryRoll.nextValue ?? Math.floor(Math.random() * 100);
     const result = { result: value, active: true } as DiceTerm.Result;
     const results = { results: [result] } as DicePool;
 
@@ -51,7 +51,7 @@ export default class ABFRoll {
 
     this._total = this.getResults().reduce((val, curr) => val + curr);
     this._rolled = true;
-    ABFRoll.nextValue = null;
+    ABFFoundryRoll.nextValue = null;
 
     return this;
   }

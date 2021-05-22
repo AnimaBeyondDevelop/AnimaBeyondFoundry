@@ -1,5 +1,5 @@
 import { openModDialog } from './utils/openModDialog';
-import ABFRoll from './ABFRoll/ABFRoll';
+import ABFFoundryRoll from './rolls/ABFFoundryRoll';
 
 export default class ABFActorSheet extends ActorSheet {
   static get defaultOptions() {
@@ -71,7 +71,7 @@ export default class ABFActorSheet extends ActorSheet {
       let label = dataset.label ? `Rolling ${dataset.label}` : '';
       let mod = await openModDialog();
       let formula = dataset.roll + `+ ${mod}`;
-      let roll = new ABFRoll(formula, this.actor.data.data);
+      let roll = new ABFFoundryRoll(formula, this.actor.data.data);
       console.log(roll);
 
       roll.toMessage({

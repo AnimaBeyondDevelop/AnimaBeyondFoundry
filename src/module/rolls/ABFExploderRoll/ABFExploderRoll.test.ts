@@ -1,11 +1,11 @@
-import ABFRollProxy from './ABFRollProxy';
-import ABFRollTesting from './__mocks__/ABFRoll';
-import ABFRoll from './ABFRoll';
+import ABFExploderRoll from './ABFExploderRoll';
+import ABFRollTesting from '../__mocks__/ABFFoundryRoll';
+import ABFFoundryRoll from '../ABFFoundryRoll';
 
-jest.mock('./ABFRoll');
+jest.mock('../ABFFoundryRoll');
 
 function getRoll(formula: string) {
-  const abfRoll = new ABFRoll(formula);
+  const abfRoll = new ABFFoundryRoll(formula);
   const abfRollTesting = abfRoll as unknown as ABFRollTesting;
   return { abfRoll, abfRollTesting };
 }
@@ -16,7 +16,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(90);
     abfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFRollProxy(abfRoll);
+    const abfRollProxy = new ABFExploderRoll(abfRoll);
 
     abfRollProxy.evaluate();
 
@@ -30,7 +30,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(89);
     abfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFRollProxy(abfRoll);
+    const abfRollProxy = new ABFExploderRoll(abfRoll);
 
     abfRollProxy.evaluate();
 
@@ -44,7 +44,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(90);
     abfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFRollProxy(abfRoll);
+    const abfRollProxy = new ABFExploderRoll(abfRoll);
 
     abfRollTesting.setNextValue(91);
     abfRollProxy.evaluate();
