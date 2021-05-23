@@ -1,5 +1,6 @@
 import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
+import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 
 /**
  * This class represents the entrypoint of Foundry
@@ -19,10 +20,18 @@ export default class ABFFoundryRoll extends Roll {
     if (this.formula.includes('xa')) {
       this.abfRoll = new ABFExploderRoll(this);
     }
+
+    if (this.formula.includes('Turno')) {
+      this.abfRoll = new ABFInitiativeRoll(this);
+    }
   }
 
-  recalculateTotal() {
-    this._total = this.getResults().reduce((prev, curr) => prev + curr);
+  get firstResult() {
+    return this.getResults()[0];
+  }
+
+  recalculateTotal(mod: number = 0) {
+    this._total = this.getResults().reduce((prev, curr) => prev + curr) + mod;
   }
 
   getResults(): number[] {

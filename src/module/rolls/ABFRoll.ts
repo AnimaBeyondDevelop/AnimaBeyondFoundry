@@ -1,7 +1,13 @@
 import ABFFoundryRoll from './ABFFoundryRoll';
 
 export abstract class ABFRoll {
+  private readonly DEFAULT_FUMBLE = 3;
+
   constructor(protected readonly foundryRoll: ABFFoundryRoll) {}
+
+  get fumbled() {
+    return this.foundryRoll.firstResult <= this.DEFAULT_FUMBLE;
+  }
 
   abstract evaluate({
     minimize,

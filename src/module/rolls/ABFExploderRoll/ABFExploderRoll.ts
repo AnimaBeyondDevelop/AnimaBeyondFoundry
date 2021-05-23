@@ -4,10 +4,12 @@ import { ABFRoll } from '../ABFRoll';
 export default class ABFExploderRoll extends ABFRoll {
   private readonly DEFAULT_OPEN_RANGE = 90;
 
-  public evaluate(): ABFFoundryRoll {
-    const result = this.foundryRoll.results[0];
+  get canExplode() {
+    return this.foundryRoll.firstResult >= this.DEFAULT_OPEN_RANGE;
+  }
 
-    if (result >= this.DEFAULT_OPEN_RANGE) {
+  public evaluate(): ABFFoundryRoll {
+    if (this.canExplode) {
       this.explodeDice(this.DEFAULT_OPEN_RANGE);
     }
 

@@ -27,12 +27,16 @@ export default class ABFFoundryRoll {
     ABFFoundryRoll.nextValue = nextValue;
   }
 
-  recalculateTotal() {
-    this._total = this.getResults().reduce((prev, curr) => prev + curr);
+  recalculateTotal(mod: number = 0) {
+    this._total = this.getResults().reduce((prev, curr) => prev + curr) + mod;
   }
 
   get total() {
     return this._total;
+  }
+
+  get firstResult() {
+    return this.getResults()[0];
   }
 
   getResults(): number[] {
@@ -42,7 +46,8 @@ export default class ABFFoundryRoll {
   evaluate() {
     if (this._rolled) throw new Error('Already rolled');
 
-    const value = ABFFoundryRoll.nextValue ?? Math.min(1, Math.floor(Math.random() * 100));
+    const value =
+      ABFFoundryRoll.nextValue ?? Math.min(1, Math.floor(Math.random() * 100));
     const result = { result: value, active: true } as DiceTerm.Result;
     const results = { results: [result] } as DicePool;
 
