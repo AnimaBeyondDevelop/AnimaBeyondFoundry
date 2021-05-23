@@ -3,8 +3,6 @@ export class ABFActor extends Actor {
     super.prepareData();
 
     const actorData = this.data;
-    const data = actorData.data;
-    const flags = actorData.flags;
 
     if (actorData.type === 'character') this._prepareCharacterData(actorData);
   }
