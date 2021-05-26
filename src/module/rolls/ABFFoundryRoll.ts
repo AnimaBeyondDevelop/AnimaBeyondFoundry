@@ -10,11 +10,11 @@ export default class ABFFoundryRoll extends Roll {
   private readonly abfRoll: ABFRoll | undefined;
 
   _formula: string;
-  data: {};
+  data: Record<string, unknown>;
 
   terms: DicePool[];
 
-  constructor(formula: string, data?: {}) {
+  constructor(formula: string, data?: Record<string, unknown>) {
     super(formula, data);
 
     if (this.formula.includes('xa')) {
@@ -30,7 +30,7 @@ export default class ABFFoundryRoll extends Roll {
     return this.getResults()[0];
   }
 
-  recalculateTotal(mod: number = 0) {
+  recalculateTotal(mod = 0) {
     this._total = this.getResults().reduce((prev, curr) => prev + curr) + mod;
   }
 

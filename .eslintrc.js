@@ -9,6 +9,12 @@ module.exports = {
         tsconfigRootDir: __dirname
       },
       rules: {
+        '@typescript-eslint/comma-dangle': ['off'],
+        'import/no-cycle': ['off'],
+        '@typescript-eslint/lines-between-class-members': ['off'],
+        'operator-linebreak': ['off'],
+        'arrow-parens': ['off'],
+        'no-underscore-dangle': ['off'],
         '@typescript-eslint/explicit-function-return-type': ['off'],
         '@typescript-eslint/explicit-module-boundary-types': ['off'],
         'import/prefer-default-export': ['off'],
@@ -25,6 +31,12 @@ module.exports = {
         tsconfigRootDir: __dirname
       },
       rules: {
+        '@typescript-eslint/comma-dangle': ['off'],
+        'import/no-cycle': ['off'],
+        '@typescript-eslint/lines-between-class-members': ['off'],
+        'operator-linebreak': ['off'],
+        'arrow-parens': ['off'],
+        'no-underscore-dangle': ['off'],
         '@typescript-eslint/explicit-function-return-type': ['off'],
         '@typescript-eslint/explicit-module-boundary-types': ['off']
       }
