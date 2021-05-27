@@ -4,7 +4,7 @@
  */
 export default class ABFFoundryRoll {
   _formula: string;
-  data: {} | undefined;
+  data: Record<string, unknown> | undefined;
 
   _rolled = false;
   _total: number;
@@ -15,7 +15,7 @@ export default class ABFFoundryRoll {
   // Test variable
   static nextValue: number | null;
 
-  constructor(formula: string, data?: {}) {
+  constructor(formula: string, data?: Record<string, unknown>) {
     this._formula = formula;
     this.data = data;
 
@@ -23,11 +23,12 @@ export default class ABFFoundryRoll {
     this.terms = [];
   }
 
+  // eslint-disable-next-line class-methods-use-this
   setNextValue(nextValue: number) {
     ABFFoundryRoll.nextValue = nextValue;
   }
 
-  recalculateTotal(mod: number = 0) {
+  recalculateTotal(mod = 0) {
     this._total = this.getResults().reduce((prev, curr) => prev + curr) + mod;
   }
 
@@ -40,7 +41,7 @@ export default class ABFFoundryRoll {
   }
 
   getResults(): number[] {
-    return this.results.map(res => parseInt(res.toString()));
+    return this.results.map(res => parseInt(res.toString(), 10));
   }
 
   evaluate() {

@@ -8,5 +8,6 @@
     "esModuleInterop": true,
     "strictNullChecks": true
   },
+  "include": ["src"],
   "exclude": ["./**/.*.test.*", "./**/__mocks__"]
 }
