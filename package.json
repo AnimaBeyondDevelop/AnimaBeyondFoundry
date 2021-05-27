@@ -8,7 +8,8 @@
     "build": "gulp build && gulp link",
     "build:watch": "gulp watch",
     "clean": "gulp clean && gulp link --clean",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">14.0.0"
@@ -35,8 +36,10 @@
     "gulp-less": "^4.0.1",
     "gulp-sass": "^4.1.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "json-stringify-pretty-compact": "^3.0.0",
+    "lint-staged": "^11.0.0",
     "node-sass": "^5.0.0",
     "sass": "^1.32.8",
     "ts-jest": "^26.5.6",
@@ -46,5 +49,8 @@
   "dependencies": {
     "jquery": "^3.6.0",
     "prettier": "^2.3.0"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache"
   }
 }
