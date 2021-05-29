@@ -44,11 +44,11 @@
 
 			{{!-- Characteristics --}}
 			<div class="characteristics flexcol">
-				{{#each data.characteristics.primaries as | atr key|}}
+				{{#each data.characteristics.primaries as | char key|}}
 				<div class="flexrow">
 					<label for="data.characteristics.primaries.{{key}}.value" class="rollable text" data-roll="1d10+@characteristics.primaries.{{key}}.value" data-label="{{key}}">{{localize (concat "anima." key)}}</label>
-					<input type="number" name="data.characteristics.primaries.{{key}}.value" value="{{atr.value}}" data-dtype="Number">
-					<label for="data.characteristics.primaries.{{key}}.value" class="bonus text">{{numberFormat key.mod decimals=0 sign=true}}</label>
+					<input type="number" name="data.characteristics.primaries.{{key}}.value" value="{{char.value}}" data-dtype="Number">
+					<label for="data.characteristics.primaries.{{key}}.value" class="bonus text">{{numberFormat char.mod decimals=0 sign=true}}</label>
 				</div>
 				{{/each}}
 			</div>

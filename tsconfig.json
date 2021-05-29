@@ -1,11 +1,13 @@
 {
-	"compilerOptions": {
-		"target": "ES2017",
-		"lib": [
-			"DOM",
-			"ES6",
-			"ES2017"
-		],
-		"types": ["foundry-pc-types"]
-	}
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["@league-of-foundry-developers/foundry-vtt-types", "@types/jest"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true
+  },
+  "include": ["src"],
+  "exclude": ["./**/.*.test.*", "./**/__mocks__"]
 }
