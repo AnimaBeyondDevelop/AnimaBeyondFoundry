@@ -320,7 +320,9 @@
       "shield",
       "ammunition",
       "armor",
-      "helmet"
+      "helmet",
+      "skill",
+      "freeAccessSpell"
     ],
     "templates": {
       "base": {
