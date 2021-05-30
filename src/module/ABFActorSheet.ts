@@ -1,13 +1,18 @@
-import { openModDialog } from './utils/openModDialog';
+import { openModDialog } from './utils/openDialog';
 import ABFFoundryRoll from './rolls/ABFFoundryRoll';
+import { ABFActor } from './ABFActor';
+import { prepareSheet } from './utils/prepareSheet/prepareSheet';
+import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
+import { ItemChanges } from './types/ItemChanges';
+import { unflat } from '../utils/unflat';
 
-export default class ABFActorSheet extends ActorSheet {
+export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>> {
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
       ...{
         classes: ['abf', 'sheet', 'actor'],
-        template: `systems/animabf/templates/actor-sheet.html`,
+        template: 'systems/animabf/templates/actor-sheet.html',
         width: 600,
         height: 700,
         tabs: [
@@ -21,15 +26,25 @@ export default class ABFActorSheet extends ActorSheet {
     };
   }
 
-  getData(): any {
-    const data: any = super.getData();
-    data.dtypes = ['String', 'Number', 'Boolean'];
+  getData(): ActorSheet.Data<ABFActor> {
+    const data = super.getData() as ActorSheet.Data<ABFActor>;
 
-    if (this.actor.data.type == 'character') {
-      ABFActorSheet._prepareItemContainers(data);
+    if (this.actor.data.type === 'character') {
+      return prepareSheet(data);
     }
 
     return data;
+  }
+
+  protected async _updateObject(
+    event: Event,
+    formData: Record<string, unknown>
+  ): Promise<ABFActor> {
+    const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
+
+    this.updateItems(itemChanges);
+
+    return super._updateObject(event, actorChanges);
   }
 
   activateListeners(html) {
@@ -41,37 +56,31 @@ export default class ABFActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 
-    html.find('.skillcreate').click(this._onSkillCreate.bind(this));
+    html.find('.skillcreate').click(() => {
+      this.onAddSkillClick();
+    });
 
-    html.find('.skilldelete').click((ev: { currentTarget: any }) => {
+    html.find('.skilldelete').click((ev: { currentTarget: HTMLElement }) => {
       const li = $(ev.currentTarget).parents('.item');
       this.actor.deleteOwnedItem(li.data('itemId'));
       li.slideUp(200, () => this.render(false));
     });
-  }
 
-  _onSkillCreate(event: { preventDefault: () => void; currentTarget: any }) {
-    event.preventDefault();
-    let element = event.currentTarget;
-
-    let itemData = {
-      name: game.i18n.localize('anima.newSkill'),
-      type: element.dataset.type
-    };
-
-    return this.actor.createOwnedItem(itemData);
+    html.find('[id="add-free-access-spell"]').click(() => {
+      this.onAddFreeAccessSpellClick();
+    });
   }
 
   async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const dataset = element.dataset;
+    const { dataset } = element;
 
     if (dataset.roll) {
-      let label = dataset.label ? `Rolling ${dataset.label}` : '';
-      let mod = await openModDialog();
-      let formula = dataset.roll + `+ ${mod}`;
-      let roll = new ABFFoundryRoll(formula, this.actor.data.data);
+      const label = dataset.label ? `Rolling ${dataset.label}` : '';
+      const mod = await openModDialog();
+      const formula = `${dataset.roll}+ ${mod}`;
+      const roll = new ABFFoundryRoll(formula, this.actor.data.data);
       console.log(roll);
 
       roll.toMessage({
@@ -81,57 +90,21 @@ export default class ABFActorSheet extends ActorSheet {
     }
   }
 
-  protected static _prepareItemContainers(sheetData: { actor: any; items: any }): void {
-    const actorData = sheetData.actor;
+  private onAddFreeAccessSpellClick() {
+    this.actor.addFreeAccessSpellSlot();
+  }
 
-    const consumable: Item[] = [];
-    const misc: Item[] = [];
-    const weapon: Item[] = [];
-    const shield: Item[] = [];
-    const ammunition: Item[] = [];
-    const armor: Item[] = [];
-    const helmet: Item[] = [];
-    const skill: Item[] = [];
+  private onAddSkillClick() {
+    this.actor.addSkillSlot();
+  }
 
-    for (const i of sheetData.items) {
-      i.img = i.img || CONST.DEFAULT_TOKEN;
-      switch (i.type) {
-        case 'cosumable':
-          consumable.push(i);
-          break;
-        case 'misc':
-          misc.push(i);
-          break;
-        case 'weapon':
-          weapon.push(i);
-          break;
-        case 'shield':
-          shield.push(i);
-          break;
-        case 'ammunition':
-          ammunition.push(i);
-          break;
-        case 'armor':
-          armor.push(i);
-          break;
-        case 'helmet':
-          helmet.push(i);
-          break;
-        case 'skill':
-          skill.push(i);
-          break;
-        default:
-          break;
-      }
+  private updateItems(itemChanges: Record<string, unknown>) {
+    if (!itemChanges || Object.keys(itemChanges).length === 0) return;
+
+    const unflattedChanges: ItemChanges = unflat(itemChanges);
+
+    if (unflattedChanges.data.dynamic.skill) {
+      this.actor.editSkills(unflattedChanges.data.dynamic.skill);
     }
-
-    actorData.consumable = consumable;
-    actorData.misc = misc;
-    actorData.weapon = weapon;
-    actorData.shield = shield;
-    actorData.ammunition = ammunition;
-    actorData.armor = armor;
-    actorData.helmet = helmet;
-    actorData.skill = skill;
   }
 }

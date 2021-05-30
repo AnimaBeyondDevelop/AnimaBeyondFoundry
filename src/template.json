@@ -177,14 +177,7 @@
           "SeletedSpells": { "value": 0 },
           "Total": {"use": 0, "Total": 0}
         },
-        "FreeAccesSpells": [
-          {
-            "name": {
-              "value": "Nombre"      
-            },
-            "level": { "Value": 0}
-          }
-        ],
+        "freeAccessSpells": [],
         "Maintenances": [
           {
             "name": {
@@ -385,6 +378,12 @@
     "helmet": {
       "templates": ["base", "armorbase"],
       "perceptionPenalty": 10
+    },
+    "freeAccessSpell": {
+      "level": 0
+    },
+    "skill": {
+      "value": 0
     }
   }
 }

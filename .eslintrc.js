@@ -9,6 +9,7 @@ module.exports = {
         tsconfigRootDir: __dirname
       },
       rules: {
+        'arrow-body-style': 'off',
         'no-restricted-syntax': 'off',
         '@typescript-eslint/comma-dangle': ['off'],
         'import/no-cycle': ['off'],
@@ -32,6 +33,7 @@ module.exports = {
         tsconfigRootDir: __dirname
       },
       rules: {
+        'arrow-body-style': 'off',
         'no-restricted-syntax': 'off',
         '@typescript-eslint/comma-dangle': ['off'],
         'import/no-cycle': ['off'],
