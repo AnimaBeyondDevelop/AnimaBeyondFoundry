@@ -57,7 +57,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     html.find('.rollable').click(this._onRoll.bind(this));
 
     html.find('[data-on-click="add-secondary-skill"]').click(() => {
-      this.actor.addSkillSlot();
+      this.actor.addSecondarySkillSlot();
     });
 
     html.find('[data-on-click="add-free-access-spell"]').click(() => {
@@ -100,7 +100,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
   }
 
   private onAddSkillClick() {
-    this.actor.addSkillSlot();
+    this.actor.addSecondarySkillSlot();
   }
 
   private updateItems(itemChanges: Record<string, unknown>) {
@@ -109,7 +109,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     const unflattedChanges: ItemChanges = unflat(itemChanges);
 
     if (unflattedChanges.data.dynamic.skill) {
-      this.actor.editSkills(unflattedChanges.data.dynamic.skill);
+      this.actor.editSecondarySkills(unflattedChanges.data.dynamic.skill);
     }
 
     if (unflattedChanges.data.dynamic.freeAccessSpells) {

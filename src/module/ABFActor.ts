@@ -32,7 +32,7 @@ export class ABFActor extends Actor {
     }
   }
 
-  async addFreeAccessSpellSlot(): Promise<void> {
+  public async addFreeAccessSpellSlot(): Promise<void> {
     const name = await openDialog<string>({ name: 'Nombre del hechizo de acceso libre' });
 
     const itemData = { name, type: 'freeAccessSpell', level: 0 };
@@ -40,28 +40,7 @@ export class ABFActor extends Actor {
     await this.createOwnedItem(itemData);
   }
 
-  async addSkillSlot(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre de la habilidad' });
-
-    const itemData = { name, type: 'skill', value: 0 };
-
-    await this.createOwnedItem(itemData);
-  }
-
-  editSkills(skillChanges: SkillChange) {
-    for (const id of Object.keys(skillChanges)) {
-      const { value } = skillChanges[id].data;
-
-      this.updateOwnedItem({
-        _id: id,
-        data: {
-          value
-        }
-      });
-    }
-  }
-
-  editFreeAccessSpells(freeAccessSpellsChanges: FreeAccessSpellChange) {
+  public editFreeAccessSpells(freeAccessSpellsChanges: FreeAccessSpellChange) {
     for (const id of Object.keys(freeAccessSpellsChanges)) {
       const { name, data } = freeAccessSpellsChanges[id];
 
@@ -70,6 +49,27 @@ export class ABFActor extends Actor {
         name,
         data: {
           level: data.level
+        }
+      });
+    }
+  }
+
+  async addSecondarySkillSlot(): Promise<void> {
+    const name = await openDialog<string>({ name: 'Nombre de la habilidad' });
+
+    const itemData = { name, type: 'skill', value: 0 };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editSecondarySkills(skillChanges: SkillChange) {
+    for (const id of Object.keys(skillChanges)) {
+      const { value } = skillChanges[id].data;
+
+      this.updateOwnedItem({
+        _id: id,
+        data: {
+          value
         }
       });
     }
