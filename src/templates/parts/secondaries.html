@@ -109,7 +109,7 @@
     <div class="special group">
         <div class="special-control">
             <h3 class="text">{{localize "anima.special"}}</h3>
-            <a data-type="skill" class="skillcreate"><img src="\systems\animabf\assets\images\boton-plus.png"></a>
+            <a data-type="skill" data-on-click='add-secondary-skill' class="skillcreate"><img src="\systems\animabf\assets\images\boton-plus.png"></a>
         </div>
 
         {{#each data.skill as |skill|}}
@@ -119,7 +119,7 @@
                 {{skill.name}}
             </label>
             <input type="number" class="input_value" name='data.dynamic.skill.{{skill._id}}.data.value' value="{{skill.data.value}}" />
-            <a class="skill-controls"><i class="fas fa-trash skilldelete"></i></a>
+            <a class="skill-controls"><i data-item-id='{{skill._id}}' data-on-click='delete-item' class="fas fa-trash skilldelete"></i></a>
         </div>
         {{/each}}
     </div>

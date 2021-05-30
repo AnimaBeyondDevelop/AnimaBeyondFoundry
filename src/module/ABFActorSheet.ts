@@ -56,18 +56,23 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 
-    html.find('.skillcreate').click(() => {
-      this.onAddSkillClick();
+    html.find('[data-on-click="add-secondary-skill"]').click(() => {
+      this.actor.addSkillSlot();
     });
 
-    html.find('.skilldelete').click((ev: { currentTarget: HTMLElement }) => {
-      const li = $(ev.currentTarget).parents('.item');
-      this.actor.deleteOwnedItem(li.data('itemId'));
-      li.slideUp(200, () => this.render(false));
+    html.find('[data-on-click="add-free-access-spell"]').click(() => {
+      this.actor.addFreeAccessSpellSlot();
     });
 
-    html.find('[id="add-free-access-spell"]').click(() => {
-      this.onAddFreeAccessSpellClick();
+    html.find('[data-on-click="delete-item"]').click(e => {
+      const id = e.currentTarget.dataset.itemId;
+      if (id) {
+        this.actor.deleteOwnedItem(id);
+      } else {
+        console.warn(
+          'Trying to delete a dynamic item but data-item-id was not set to the button. Cant delete the item.'
+        );
+      }
     });
   }
 
