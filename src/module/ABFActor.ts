@@ -1,5 +1,6 @@
 import { openDialog } from './utils/openDialog';
 import { SkillChange } from './types/SkillChange';
+import { FreeAccessSpellChange } from './types/FreeAccessSpellChange';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -49,7 +50,28 @@ export class ABFActor extends Actor {
 
   editSkills(skillChanges: SkillChange) {
     for (const id of Object.keys(skillChanges)) {
-      this.updateOwnedItem({ _id: id, data: { value: skillChanges[id].data.value } });
+      const { value } = skillChanges[id].data;
+
+      this.updateOwnedItem({
+        _id: id,
+        data: {
+          value
+        }
+      });
+    }
+  }
+
+  editFreeAccessSpells(freeAccessSpellsChanges: FreeAccessSpellChange) {
+    for (const id of Object.keys(freeAccessSpellsChanges)) {
+      const { name, data } = freeAccessSpellsChanges[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          level: data.level
+        }
+      });
     }
   }
 }

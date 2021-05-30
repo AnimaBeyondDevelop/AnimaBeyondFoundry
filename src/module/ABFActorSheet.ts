@@ -106,5 +106,9 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     if (unflattedChanges.data.dynamic.skill) {
       this.actor.editSkills(unflattedChanges.data.dynamic.skill);
     }
+
+    if (unflattedChanges.data.dynamic.freeAccessSpells) {
+      this.actor.editFreeAccessSpells(unflattedChanges.data.dynamic.freeAccessSpells);
+    }
   }
 }
