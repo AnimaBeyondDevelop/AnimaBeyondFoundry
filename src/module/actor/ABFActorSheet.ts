@@ -95,14 +95,6 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
   }
 
-  private onAddFreeAccessSpellClick() {
-    this.actor.addFreeAccessSpellSlot();
-  }
-
-  private onAddSkillClick() {
-    this.actor.addSecondarySkillSlot();
-  }
-
   private updateItems(itemChanges: Record<string, unknown>) {
     if (!itemChanges || Object.keys(itemChanges).length === 0) return;
 
