@@ -1,10 +1,10 @@
-import { openModDialog } from './utils/openDialog';
-import ABFFoundryRoll from './rolls/ABFFoundryRoll';
+import { openModDialog } from '../utils/openDialog';
+import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { ABFActor } from './ABFActor';
 import { prepareSheet } from './utils/prepareSheet/prepareSheet';
 import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
-import { ItemChanges } from './types/ItemChanges';
-import { unflat } from '../utils/unflat';
+import { ItemChanges } from '../types/ItemChanges';
+import { unflat } from '../../utils/unflat';
 
 export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>> {
   static get defaultOptions() {

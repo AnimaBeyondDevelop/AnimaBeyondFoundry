@@ -1,6 +1,6 @@
-import { openDialog } from './utils/openDialog';
-import { SkillChange } from './types/SkillChange';
-import { FreeAccessSpellChange } from './types/FreeAccessSpellChange';
+import { openDialog } from '../utils/openDialog';
+import { SkillChange } from '../types/SkillChange';
+import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
 
 export class ABFActor extends Actor {
   prepareData() {
