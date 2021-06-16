@@ -46,6 +46,8 @@ export default class abfActorSheet extends ActorSheet {
       this.actor.deleteOwnedItem(li.data("itemId"));
       li.slideUp(200, () => this.render(false));
     });
+
+    html.find(".add-disciplines").click(this._onDisciplineCreate.bind(this));
   };
 
   _onSkillCreate(event: { preventDefault: () => void; currentTarget: any; }) {
@@ -77,6 +79,22 @@ export default class abfActorSheet extends ActorSheet {
         flavor: label,
       });
     }
+  }
+
+  _onDisciplineCreate(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+
+    console.log(element);
+
+    const disciplineData = {
+      name: "",
+      type: ""
+    }
+
+    await this.actor.createOwnedItem();
+
+
   }
 
   protected static _prepareItemContainers(sheetData:{actor: any; items: any;}):void {

@@ -1,0 +1,134 @@
+@import "variable.scss";
+@import "_common.scss";
+
+// TODO simplify margins and put padding if possible
+.mentalism {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  padding: clamp(2px, 1%, 10px) 0;
+
+  .rollable {
+    cursor: pointer;
+    &:hover,
+    &:focus{
+      text-shadow: 0 0 8px red;
+    }
+    display: flex;
+    align-items: center;
+  }
+
+  .input_value {
+    width: clamp(38px, 25%, 42px) !important;
+    height: clamp(15px, 80%, 30px) !important;
+    border-radius: $border-radius;
+    background: $light-cream;
+    text-align: center;
+  }
+
+  .general {
+    flex: 2 1 60%;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0 clamp(.5%, 1%, 8px);
+
+    .dice-disciplines {
+      display: flex;
+      flex-flow: row nowrap;
+      margin: 0 0 clamp(1.8%, 3%, 12px) 0;
+
+      .dice {
+        flex: 1 1 30%;
+        margin: 0 clamp(3px, 1%, 5px) 0 0;
+
+        .potential {
+          margin-bottom: clamp(1.8%, 3%, 12px);
+        }
+
+        .projection {
+          margin-bottom: clamp(1.8%, 3%, 12px);
+        }
+      }
+
+      .disciplines {
+        flex: 10 1 70%;
+        margin: 0 0 0 clamp(3px, 1%, 5px);
+      }
+    }
+
+    .patterns {
+      margin: 0 0 clamp(1.8%, 3%, 12px) 0;
+    }
+
+    .innates {
+      margin: 0 0 clamp(1.8%, 3%, 12px) 0;
+    }
+  }
+
+  .powers {
+    flex: 1 1 40%;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    margin: 0 clamp(.5%, 1%, 8px);
+
+    .power {
+      flex-basis: 25%;
+      flex-grow: 1;
+      margin: 0 0 clamp(1.8%, 3%, 12px) 0;
+    }
+  }
+
+  .group-header {
+    @include group-header;
+  }
+
+  .group {
+    @include group-body;
+
+    .group-body {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(5px, 2%, 10px) clamp(4px, 5%, 8px);
+    }
+
+    .group-body-disciplines {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding: 0 clamp(5px, 2%, 10px) clamp(4px, 5%, 8px);
+
+      input {
+        width: 100%;
+        height: clamp(15px, 18px, 30px) !important;
+        margin-bottom: clamp(6px, 8px, 10px);
+        border-radius: $border-radius;
+        background: $light-cream;
+      }
+
+      .add-disciplines {
+        width: 100%;
+        height: clamp(15px, 18px, 30px) !important;
+        text-align: center;
+        cursor: pointer;
+
+        img {
+          border: none;
+          height: 100%;
+          width: auto;
+          :hover, :focus {
+            box-shadow: 0 0 8px red;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mentalism-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}

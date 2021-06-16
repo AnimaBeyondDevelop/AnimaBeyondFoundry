@@ -256,7 +256,7 @@
 
       "psychic": {
         "freePp": { "value": 0, "max": 0 },
-        "currentConcentrationConus": { "value": 0 },
+        "currentConcentrationBonus": { "value": 0 },
         "psychicPotential": { "value": 0 },
         "psychicProjection": {
           "offensive": { "value": 0 },
@@ -333,5 +333,6 @@
       "templates": ["base", "armorbase"],
       "perceptionPenalty": 10
     }
+
   }
 }
