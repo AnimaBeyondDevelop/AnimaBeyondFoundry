@@ -151,7 +151,7 @@
 
       "mystic": {
         "zeon": { "value": 0, "max": 0, "accumulated": 0 },
-        "magicAcummulation": { "value": 0 },
+        "magicAccumulation": { "value": 0 },
         "magicRegeneration": { "value": 0 },
         "magicProjection": {
           "offensive": { "value": 0 },
@@ -186,7 +186,7 @@
         "arcaneMagnitude": {"value": 0},
         "ageControl": {"value": 0},
         "techniqueImitation": {"value": 0},
-        "tecnicForce": {"value": 0},
+        "technicForce": {"value": 0},
         "eliminationOfWeight": {"value": 0},
         "levitation": {"value": 0},
         "objectMotion": {"value": 0},
@@ -206,7 +206,7 @@
         "airAttack": {"value": 0},
         "earthAttack": {"value": 0},
         "lightAttack": {"value": 0},
-        "darcknessAttack": {"value": 0},
+        "darknessAttack": {"value": 0},
         "increasedDamage": {"value": 0},
         "increasedSpeed": {"value": 0},
         "destructionByKi": {"value": 0},
@@ -300,9 +300,9 @@
         "requiredStrengthTwoHanded": 5
       },
       "armorBase": {
-        "armorRequeriment": 10,
+        "armorRequirement": 10,
         "naturalPenalty": 10,
-        "lozalization": "",
+        "localization": "",
         "type": "",
         "presence": 30,
         "cut": 0,
