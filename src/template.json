@@ -134,7 +134,7 @@
             "impact": { "value": 0 },
             "heat": { "value": 0 },
             "cold": { "value": 0 },
-            "electriity": { "value": 0 },
+            "electricity": { "value": 0 },
             "energy": { "value": 0 }
           },
           "head": {
@@ -143,7 +143,7 @@
             "impact": { "value": 0 },
             "heat": { "value": 0 },
             "cold": { "value": 0 },
-            "electriity": { "value": 0 },
+            "electricity": { "value": 0 },
             "energy": { "value": 0 }
           }
         }
@@ -283,7 +283,7 @@
         "breakage": 5,
         "description": "",
         "presence": 30,
-        "weigth": 0,
+        "weight": 0,
         "price": 0,
         "quality": 0
       },
