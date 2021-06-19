@@ -1,0 +1,628 @@
+<div>
+    <table class="Acus">
+        <tr>
+            <th></th>
+            <th>Acu.</th>
+            <th>Ki</th>
+            <th>Actual</th>
+        </tr>
+        <tr>
+            <td>Fue</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+        <tr>
+            <td>Agi</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+        <tr>
+            <td>Des</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+        <tr>
+            <td>Con</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+        <tr>
+            <td>Vol</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+        <tr>
+            <td>Pod</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+        <tr>
+            <td>Generico</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+        </tr>
+    
+    
+    </table>
+</div>
+
+<div>
+    <table class="Sellos">
+        <th>Sellos de Invocación</th>
+    
+        <tr>
+            <th></th>
+            <th>Menor</th>
+            <th>Mayor</th>
+        </tr>
+        <tr>
+            <td>Madera</td>
+            <td>            
+                <input type="checkbox" id="cbMaderaMenor" value="true"> 
+            </td>
+            <td>            
+                <input type="checkbox" id="cbMaderaMayor" value="true"> 
+            </td>
+        </tr>
+        <tr>
+            <td>Metal</td>
+            <td>            
+                <input type="checkbox" id="cbMetalMenor" value="true"> 
+            </td>
+            <td>            
+                <input type="checkbox" id="cbMetalMayor" value="true"> 
+            </td>
+        </tr>
+        <tr>
+            <td>Aire</td>
+            <td>            
+                <input type="checkbox" id="cbAireMenor" value="true"> 
+            </td>
+            <td>            
+                <input type="checkbox" id="cbAireMayor" value="true"> 
+            </td>
+        </tr>
+    
+        <tr>
+            <td>Agua</td>
+            <td>            
+                <input type="checkbox" id="cbAguaMenor" value="true"> 
+            </td>
+            <td>            
+                <input type="checkbox" id="cbAguaMayor" value="true"> 
+            </td>
+        </tr>
+        
+        <tr>
+            <td>Fuego</td>
+            <td>            
+                <input type="checkbox" id="cbFuegoMenor" value="true"> 
+            </td>
+            <td>            
+                <input type="checkbox" id="cbFuegoMayor" value="true"> 
+            </td>
+        </tr>
+    
+    </table>
+</div>
+
+<div>
+    <form>
+        <input type="text" value="Nombre Tecnica">
+        <table Class="tecnicas" >
+    
+            <tr>
+                <th>FUE</th>
+                <th>AGI</th>
+                <th>DES</th>
+                <th>CON</th>
+                <th>VOL</th>
+                <th>POD</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" value="0" style="width: 50px ;">
+                </td>
+                <td>
+                    <input type="text" value="0" style="width: 50px ;">
+                </td>
+                <td>
+                    <input type="text" value="0" style="width: 50px ;">
+                </td>
+                <td>
+                    <input type="text" value="0" style="width: 50px ;">
+                </td>
+                <td>
+                    <input type="text" value="0" style="width: 50px ;">
+                </td>
+                <td>
+                    <input type="text" value="0" style="width: 50px ;"> 
+                </td>
+            </tr>
+    
+            
+        </table>
+        <textarea id="w3review" name="w3review" rows="2" cols="44">
+            Efectos
+        </textarea>
+    </form>
+    <button>Añadir tecnica</button>
+</div>
+
+<div>
+    <ul id="KiUL">
+        <li><span class="caret">
+            <input type="checkbox" id="cbox2" value="data.domine.useOfKi.value"> 
+            <label for="cbox2">Uso del Ki</label></span>
+            {{#if data.domine.useOfKi.value}}
+          <ul class="nested">
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.kiControl.value" name="data.domine.kiControl.value"> 
+                <label for="cbox2">Control del Ki</label></span>
+                {{#if data.domine.kiControl.value}}
+              <ul class="nested">
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.detectionOfKi.value" name="data.domine.detectionOfKi.value"> 
+                    <label for="cbox2">Detección del Ki</label></span>
+                    {{#if data.domine.detectionOfKi.value}}
+                  <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.erudition.value" name="data.domine.erudition.value"> 
+                        <label for="cbox2">Erudición</label>
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.combatAura.value" name="data.domine.combatAura.value"> 
+                    <label for="cbox2">Aura de combate</label>
+                </li>
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.physicalDominion.value" name="data.domine.physicalDominion.value"> 
+                    <label for="cbox2">Dominio físico</label></span>
+                    {{#if data.domine.physicalDominion.value}}
+                  <ul class="nested">
+                    <li><span class="caret">
+                        <input type="checkbox" id="cbox2" value="data.domine.physicalChange.value" name="data.domine.physicalChange.value"> 
+                        <label for="cbox2">Cambio físico</label></span>
+                        {{#if data.domine.physicalChange.value}}
+                      <ul class="nested">
+                        <li>
+                            <input type="checkbox" id="cbox2" value="data.domine.superiorChange.value" name="data.domine.superiorChange.value"> 
+                            <label for="cbox2">Camibo superior</label>
+                        </li>
+                      </ul>
+                      {{/if}}
+                    </li>
+                    <li><span class="caret">
+                        <input type="checkbox" id="cbox2" value="data.domine.multiplicationOfBodies.value" name="data.domine.multiplicationOfBodies.value"> 
+                        <label for="cbox2">Multiplicación de cuerpos</label></span>
+                        {{#if data.domine.multiplicationOfBodies.value}}
+                      <ul class="nested">
+                        <li><span class="caret">
+                            <input type="checkbox" id="cbox2" value="data.domine.greaterMultiplicationOfBodies.value" name="data.domine.greaterMultiplicationOfBodies.value"> 
+                            <label for="cbox2">Multiplicación mayor</label></span>
+                            {{#if data.domine.greaterMultiplicationOfBodies.value}}
+                          <ul class="nested">
+                            <li>
+                                <input type="checkbox" id="cbox2" value="data.domine.arcaneMultiplicationOfBodies.value" name="data.domine.arcaneMultiplicationOfBodies.value"> 
+                                <label for="cbox2">Multiplicación arcana</label>
+                            </li>
+                          </ul>
+                          {{/if}}
+                        </li>
+                        <li><span class="caret">
+                            <input type="checkbox" id="cbox2" value="data.domine.magnitude.value" name="data.domine.magnitude.value"> 
+                            <label for="cbox2">Magnitud</label></span>
+                            {{#if data.domine.magnitude.value}}
+                          <ul class="nested">
+                            <li>
+                                <input type="checkbox" id="cbox2" value="data.domine.arcaneMagnitude.value" name="data.domine.arcaneMagnitude.value"> 
+                                <label for="cbox2">Magnitud arcana</label>
+                            </li>
+                          </ul>
+                          {{/if}}
+                        </li>
+                      </ul>
+                      {{/if}}
+                    </li>
+                    <li>
+                      <input type="checkbox" id="cbox2" value="data.domine.ageControl.value" name="data.domine.ageControl.value"> 
+                      <label for="cbox2">Control de la edad</label>
+                  </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.techniqueImitation.value" name="data.domine.techniqueImitation.value"> 
+                    <label for="cbox2">Imitación de tecnicas</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.tecnicForce.value" name="data.domine.tecnicForce.value"> 
+                    <label for="cbox2">Forzar tecnicas</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+    
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.eliminationOfWeight.value" name="data.domine.eliminationOfWeight.value"> 
+                <label for="cbox2">Eliminación de peso</label></span>
+                {{#if data.domine.eliminationOfWeight.value}}
+              <ul class="nested">
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.levitation.value" name="data.domine.levitation.value"> 
+                    <label for="cbox2">Levitación</label></span>
+                    {{#if data.domine.levitation.value}}
+                  <ul class="nested">
+                    <li><span class="caret">
+                        <input type="checkbox" id="cbox2" value="data.domine.objectMotion.value" name="data.domine.objectMotion.value"> 
+                        <label for="cbox2">Movimiento de objetos</label></span>
+                      {{#if data.domine.objectMotion.value}}
+                      <ul class="nested">
+                        <li>
+                            <input type="checkbox" id="cbox2" value="data.domine.massMovement.value" name="data.domine.massMovement.value"> 
+                            <label for="cbox2">Movimiento de masas</label>
+                        </li>
+                      </ul>
+                      {{/if}}
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.fly.value" name="data.domine.fly.value"> 
+                        <label for="cbox2">Vuelo</label>
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.presenceExtrusion.value" name="data.domine.presenceExtrusion.value"> 
+                <label for="cbox2">Extrusión de presencia</label></span>
+                {{#if data.domine.presenceExtrusion.value}}
+              <ul class="nested">
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.energyArmor.value" name="data.domine.energyArmor.value"> 
+                    <label for="cbox2">Armadura de energía</label></span>
+                    {{#if data.domine.energyArmor.value}}
+                  <ul class="nested">
+                    <li><span class="caret">
+                        <input type="checkbox" id="cbox2" value="data.domine.greaterEnergyArmor.value" name="data.domine.greaterEnergyArmor.value"> 
+                        <label for="cbox2">Armadura mayor</label></span>
+                        {{#if data.domine.greaterEnergyArmor.value}}
+                      <ul class="nested">
+                        <li>
+                            <input type="checkbox" id="cbox2" value="data.domine.arcaneEnergyArmor.value" name="data.domine.arcaneEnergyArmor.value"> 
+                            <label for="cbox2">Armadura arcana</label>
+                        </li>
+                      </ul>
+                      {{/if}}
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.auraExtrusion.value" name="data.domine.auraExtrusion.value"> 
+                    <label for="cbox2">Extrusión del aura al arma</label></span>
+                    {{#if data.domine.auraExtrusion.value}}
+                  <ul class="nested">
+                    <li><span class="caret"></span>
+                        <input type="checkbox" id="cbox2" value="data.domine.elementalAttack.value" name="data.domine.elementalAttack.value"> 
+                        <label for="cbox2">Ataque elemental</label></span>
+                        {{#if data.domine.auraExtrusion.value}}
+                      <ul class="nested">
+                        
+                        <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.fireAttack.value" name="data.domine.fireAttack.value"> 
+                          <label for="cbox2">Fuego</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.earthAttack.value" name="data.domine.earthAttack.value"> 
+                          <label for="cbox2">Tierra</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.airAttack.value" name="data.domine.airAttack.value"> 
+                          <label for="cbox2">Aire</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.waterAttack.value" name="data.domine.waterAttack.value"> 
+                          <label for="cbox2">Agua</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.lightAttack.value" name="data.domine.lightAttack.value"> 
+                          <label for="cbox2">Luz</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.darcknessAttack.value" name="data.domine.darcknessAttack.value"> 
+                          <label for="cbox2">Oscuidad</label>
+                        </li>
+                        
+                      </ul>
+                      {{/if}}
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.increasedDamage.value" name="data.domine.increasedDamage.value"> 
+                        <label for="cbox2">Daño incrementado</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.increasedReach.value" name="data.domine.increasedReach.value"> 
+                        <label for="cbox2">Alcance incrementado</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.increasedSpeed.value" name="data.domine.increasedSpeed.value"> 
+                        <label for="cbox2">Velocidad incrementada</label>
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.destructionByKi.value" name="data.domine.destructionByKi.value"> 
+                    <label for="cbox2">Destrucción por Ki</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.absorptionOfEnergy.value" name="data.domine.absorptionOfEnergy.value"> 
+                    <label for="cbox2">Absorción de energía</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.physicalShield.value" name="data.domine.physicalShield.value"> 
+                    <label for="cbox2">Escudo físico</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.kiTransmission.value" name="data.domine.kiTransmission.value"> 
+                <label for="cbox2">Transmisión del ki</label></span>
+                {{#if data.domine.auraExtrusion.value}}
+              <ul class="nested">
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.kiHealing.value" name="data.domine.kiHealing.value"> 
+                    <label for="cbox2">Curación por Ki</label></span>
+                    {{#if data.domine.kiHealing.value}}
+                  <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.superiorHealing.value" name="data.domine.superiorHealing.value"> 
+                        <label for="cbox2">Curación superior</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.stabilize.value" name="data.domine.stabilize.value"> 
+                        <label for="cbox2">Estabilizar</label>
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.vitalSacrifice.value" name="data.domine.vitalSacrifice.value"> 
+                    <label for="cbox2">Sacrificio vital</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.useOfNecessaryEnergy.value" name="data.domine.useOfNecessaryEnergy.value"> 
+                <label for="cbox2">Uso de la energía necesaria</label></span>
+                {{#if data.domine.useOfNecessaryEnergy.value}}
+              <ul class="nested">
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.kiConcealment.value" name="data.domine.kiConcealment.value"> 
+                    <label for="cbox2">Ocultación del Ki</label></span>
+                    {{#if data.domine.kiConcealment.value}}
+                  <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.auraOfConcealment.value" name="data.domine.auraOfConcealment.value"> 
+                        <label for="cbox2">Aura de ocultación</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.falseDeath.value" name="data.domine.falseDeath.value"> 
+                        <label for="cbox2">Falsa muerte</label>
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.eliminationOfNecessities.value" name="data.domine.eliminationOfNecessities.value"> 
+                    <label for="cbox2">Eliminación de necesidades</label></span>
+                    {{#if data.domine.eliminationOfNecessities.value}}
+                  <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.elementalImmunityFire.value" name="data.domine.elementalImmunityFire.value"> 
+                        <label for="cbox2">Inmunidad elemental: fuego</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.elementalImmunityCold.value" name="data.domine.elementalImmunityCold.value"> 
+                        <label for="cbox2">Inmunidad elemental: fío</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.elementalImmunityLightning.value" name="data.domine.elementalImmunityLightning.value"> 
+                        <label for="cbox2">Inmunidad elemental: electricidad</label>
+                    </li>
+                  </ul>
+                    {{/if}}
+                </li>
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.eliminationOfPenalties.value" name="data.domine.eliminationOfPenalties.value"> 
+                    <label for="cbox2">Eliminación de penalizadores</label></span>
+                    {{#if data.domine.eliminationOfNecessities.value}}
+                  <ul class="nested">
+                    <li><span class="caret">
+                        <input type="checkbox" id="cbox2" value="data.domine.recovery.value" name="data.domine.recovery.value"> 
+                        <label for="cbox2">Recuperación</label></span>
+                        {{#if data.domine.recovery.value}}
+                      <ul class="nested">
+                        <li>
+                            <input type="checkbox" id="cbox2" value="data.domine.restoreOthers.value" name="data.domine.restoreOthers.value"> 
+                            <label for="cbox2">Restituir a otros</label>
+                        </li>
+                      </ul>
+                      {{/if}}
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.characteristicAugmentation.value" name="data.domine.characteristicAugmentation.value"> 
+                    <label for="cbox2">Aumento de características</label></span>
+                    {{#if data.domine.characteristicAugmentation.value}}
+                  <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.superiorCharacteristicAugmentation.value" name="data.domine.superiorCharacteristicAugmentation.value"> 
+                        <label for="cbox2">Incremento superior</label>
+                    </li>
+                  </ul>
+                  {{/if}}
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li>
+                <input type="checkbox" id="cbox2" value="data.domine.improvisedTechniques.value" name="data.domine.improvisedTechniques.value"> 
+                <label for="cbox2">Tecnicas de combate improvisadas</label>
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.inhumanity.value" name="data.domine.inhumanity.value"> 
+                <label for="cbox2">Inhumanidad</label></span>
+              <ul class="nested">
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.zen.value" name="data.domine.zen.value"> 
+                    <label for="cbox2">Zen</label>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          {{/if}}
+        </li>
+    </ul>
+</div>
+
+<div>
+    <ul id="NemesisUl">
+        <li><span class="caret">
+            <input type="checkbox" id="cbox2" value="data.domine.useOfNemesis.value" name="data.domine.useOfNemesis.value"> 
+            <label for="cbox2">Uso del Nemesis</label></span>
+            {{#if data.domine.useOfNemesis.value}}
+          <ul class="nested">
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.ArmorOfEmptiness.value" name="data.domine.ArmorOfEmptiness.value"> 
+                <label for="cbox2">Armadura de vacío</label></span>
+                {{#if data.domine.ArmorOfEmptiness.value}}
+              <ul class="nested">
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.Noth.value" name="data.domine.Noth.value"> 
+                    <label for="cbox2">Noth</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.KiCancellation.value" name="data.domine.KiCancellation.value"> 
+                <label for="cbox2">Anulación de Ki</label></span>
+                {{#if data.domine.KiCancellation.value}}
+              <ul class="nested">
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.GreaterKiCancellation.value" name="data.domine.GreaterKiCancellation.value"> 
+                    <label for="cbox2">Anulación de Ki mayor</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.MagicCancellation.value" name="data.domine.MagicCancellation.value"> 
+                <label for="cbox2">Anulación de magia</label></span>
+                {{#if data.domine.MagicCancellation.value}}
+              <ul class="nested">
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.MagicCancellation.value" name="data.domine.MagicCancellation.value"> 
+                    <label for="cbox2">Anulación de magia mayor</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.MatricesCancellation.value" name="data.domine.MatricesCancellation.value"> 
+                <label for="cbox2">Anulación de matrices</label></span>
+                {{#if data.domine.MatricesCancellation.value}}
+              <ul class="nested">
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.GreaterMatricesCancellation.value" name="data.domine.GreaterMatricesCancellation.value"> 
+                    <label for="cbox2">Anulación de matrices mayor</label>
+                </li>
+              </ul>
+              {{/if}}
+            </li>
+            <li>
+                <input type="checkbox" id="cbox2" value="data.domine.BindingCancellation.value" name="data.domine.BindingCancellation.value"> 
+                <label for="cbox2">Anulación de lazos</label>
+            </li>
+            <li><span class="caret">
+                <input type="checkbox" id="cbox2" value="data.domine.EmptinessExtrusion.value" name="data.domine.EmptinessExtrusion.value"> 
+                <label for="cbox2">Extrusión de vacío</label></span>
+                {{#if data.domine.EmptinessExtrusion.value}}
+              <ul class="nested">
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.FormOfEmptiness.value" name="data.domine.FormOfEmptiness.value"> 
+                    <label for="cbox2">Forma de vacío</label>
+                </li>
+              </ul>
+              {{/if}}
+              <li><span class="caret">
+                  <input type="checkbox" id="cbox2" value="data.domine.BodyOfEmptiness.value" name="data.domine.BodyOfEmptiness.value"> 
+                  <label for="cbox2">Cuerpo de vacío</label></span>
+                  {{#if data.domine.BodyOfEmptiness.value}}
+                <ul class="nested">
+                  <li>
+                      <input type="checkbox" id="cbox2" value="data.domine.NoNeeds.value" name="data.domine.NoNeeds.value"> 
+                      <label for="cbox2">Sin necesidades</label>
+                  </li>
+                  <li>
+                      <input type="checkbox" id="cbox2" value="data.domine.MovementOfEmptiness.value" name="data.domine.MovementOfEmptiness.value"> 
+                      <label for="cbox2">Movimiento de vacío</label>
+                  </li>
+                  <li><span class="caret">
+                      <input type="checkbox" id="cbox2" value="data.domine.EssenceOfEmptiness.value" name="data.domine.EssenceOfEmptiness.value"> 
+                      <label for="cbox2">Esencia de vacío</label></span>
+                      {{#if data.domine.EssenceOfEmptiness.value}}
+                    <ul class="nested">
+                      <li>
+                          <input type="checkbox" id="cbox2" value="data.domine.OneWithNothing.value" name="data.domine.OneWithNothing.value"> 
+                          <label for="cbox2">Uno con la nada</label>
+                      </li>
+                    </ul>
+                    {{/if}}
+                  </li>
+                </ul>
+                {{/if}}
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.AuraOfEmptiness.value" name="data.domine.AuraOfEmptiness.value"> 
+                    <label for="cbox2">Aura de vacío</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="cbox2" value="data.domine.Undetectable.value" name="data.domine.Undetectable.value"> 
+                    <label for="cbox2">Indetección</label>
+                </li>
+                
+                <li><span class="caret">
+                    <input type="checkbox" id="cbox2" value="data.domine.InhumanityNemesis.value" name="data.domine.InhumanityNemesis.value"> 
+                    <label for="cbox2">Inhumanidad</label></span>
+                  <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="cbox2" value="data.domine.ZenNemesis.value" name="data.domine.ZenNemesis.value"> 
+                        <label for="cbox2">Zen</label>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          {{/if}}
+        </li>
+    </ul>
+</div>
+
