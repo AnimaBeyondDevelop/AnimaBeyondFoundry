@@ -20,7 +20,7 @@ describe('Anima Beyond Fantasy Module', () => {
     });
   });
 
-  it.only('can load a world', () => {
+  it('can load a world', () => {
     cy.createWorld({ name: worldName });
     cy.loadWorld({ name: worldName });
   });

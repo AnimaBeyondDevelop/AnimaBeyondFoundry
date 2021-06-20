@@ -5,5 +5,7 @@ declare namespace Cypress {
     createWorld({ name }: { name: string }): void;
 
     loadWorld({ name }: { name: string }): void;
+
+    closeNotification(): void;
   }
 }

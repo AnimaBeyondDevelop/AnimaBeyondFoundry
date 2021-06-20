@@ -15,5 +15,5 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import from editor
 import './foundry/foundry.actions';
+import './game/game.actions';

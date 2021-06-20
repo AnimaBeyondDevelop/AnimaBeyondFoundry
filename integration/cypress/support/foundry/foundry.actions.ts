@@ -10,8 +10,7 @@ Cypress.Commands.add('bootstrap', ({ password }) => {
       cy.get('button[type="submit"]').click();
     }
 
-    cy.wait(500);
-    cy.get('.notification.info').find('.close').click();
+    cy.closeNotification();
   });
 });
 
@@ -41,4 +40,11 @@ Cypress.Commands.add('loadWorld', ({ name }) => {
   cy.wait(2000);
 
   cy.url().should('eq', 'http://localhost:30000/game');
+
+  cy.closeNotification();
+});
+
+Cypress.Commands.add('closeNotification', () => {
+  cy.wait(1000);
+  cy.get('.notification').find('.close').click();
 });
