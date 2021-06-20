@@ -1,0 +1,149 @@
+@import 'variable.scss';
+
+.base-values-special-abilities-tables-ammunition {
+  display: grid;
+  grid-template-areas: 'base-values special-abilities tables ammunition';
+  justify-content: space-evenly;
+  margin-top: 10px;
+  align-items: flex-start;
+  .group {
+    width: 150px;
+    background: $dark-cream;
+    border-radius: $border-radius;
+    margin-bottom: 15px;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    div {
+      text-align: center;
+      width: 140px;
+      display: flex;
+      justify-content: space-evenly;
+      .input_value {
+        width: 45px !important;
+        height: 15px !important;
+        margin-bottom: 3px;
+        border-radius: $border-radius;
+        background: $light-cream;
+      }
+      .input_text {
+        width: 150px !important;
+        height: 15px !important;
+        margin-bottom: 3px;
+        border-radius: $border-radius;
+        background: $light-cream;
+      }
+      label {
+        width: 85px;
+      }
+    }
+    .text-box,
+    .special-control {
+      text-align: center;
+      padding: 3px;
+      margin-bottom: 3px;
+      width: 150px;
+      color: $white;
+      border-radius: $border-radius;
+      background: $red;
+    }
+  }
+}
+
+.base-values {
+  grid-area: base-values;
+}
+.special-abilities {
+  grid-area: special-abilities;
+}
+.tables {
+  grid-area: tables;
+}
+.ammunition {
+  grid-area: ammunition;
+}
+
+.weapon {
+  max-width: 650px;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: auto;
+  margin-bottom: 40px;
+  .label-text {
+    background: $red;
+    border-radius: $border-radius;
+    color: $white;
+    .text-weapon {
+      flex-grow: 3;
+      width: 300px;
+      margin: 1px;
+      border-radius: $border-radius;
+      background: $light-cream;
+    }
+    .text {
+      text-align: center;
+    }
+    .title {
+      margin-top: 8px;
+    }
+  }
+  .weapon-values-grid {
+    display: grid;
+    grid-template-columns: 220px 420px;
+    margin-top: 3px;
+    font-weight: 600;
+    border-radius: $border-radius;
+    background: $dark-cream;
+    height: 0px;
+    input {
+      border-radius: $border-radius;
+      color: $black;
+      background: $light-cream;
+      font-weight: 600;
+      justify-self: center;
+      width: 50px !important;
+      height: 22px !important;
+      text-align: center;
+    }
+  }
+  .weapon-values {
+    height: 30px;
+    width: 420px;
+    margin-top: -3px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-top: 4px;
+    padding-left: 7px;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    background: $dark-cream;
+    input {
+      margin-right: 19px;
+    }
+  }
+  .esp-ent-rot {
+    height: 30px;
+    margin-top: -3px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-top: 4px;
+    padding-left: 7px;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    background: $dark-cream;
+    input {
+      width: 30px !important;
+      margin-left: 2px;
+      margin-right: 5px;
+    }
+  }
+
+  .margin-right-16 {
+    margin-right: 16px !important;
+  }
+  .margin-right-0 {
+    margin-right: 0px !important;
+  }
+}

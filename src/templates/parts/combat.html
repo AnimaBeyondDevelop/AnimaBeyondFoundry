@@ -1,0 +1,48 @@
+<div class="combat">
+    <!-- Bloque Valores base, tablas, etc -->
+    <div class="base-values group">
+        <h3 class="text text-box">Valores base</h3>
+        <div>
+            <label for="data.combat.attack.value" class="rollable" data-roll="1d100xa+@combat.attack.value"
+                data-label="attack">
+                Ataque
+            </label>
+            <input type="text" name="data.combat.attack.value" class="input_value" value="{{data.combat.attack.value}}"
+                data-dtype="Number" />
+        </div>
+        <div>
+            <label for="data.combat.block.value" class="rollable" data-roll="1d100xa+@combat.block.value"
+                data-label="block">
+                Parada
+            </label>
+            <input type="text" name="data.combat.block.value" class="input_value" value="{{data.combat.block.value}}"
+                data-dtype="Number" />
+        </div>
+        <div>
+            <label for="data.combat.dodge.value" class="rollable" data-roll="1d100xa+@combat.dodge.value"
+                data-label="dodge">
+                Esquiva
+            </label>
+            <input type="text" name="data.combat.dodge.value" class="input_value" value="{{data.combat.dodge.value}}"
+                data-dtype="Number" />
+        </div>
+    </div>
+    <div class="special-abilities group">
+        <h3 class="text text-box">Hab especiales</h3>
+        Habilidades especiales
+    </div>
+    <div class="tables group">
+        <h3 class="text text-box">Tablas</h3>
+        Tablas de combate
+    </div>
+    <div class="ammunition grupo">
+        <h3 class="text text-box">Municion</h3>
+        Municiones
+    </div>
+
+    <!-- Bloque armas -->
+    <!-- <div class="weapons group">
+        <h3 class="text text-box">warmas</h3>
+        test
+    </div> -->
+</div>

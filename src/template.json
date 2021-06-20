@@ -126,6 +126,8 @@
 
       "combat": {
         "attack": { "value": 0 },
+        "block": { "value": 0 },
+        "dodge": { "value": 0 },
         "defense": { "value": 0 },
         "armor": {
           "body": {
