@@ -15,6 +15,7 @@ Cypress.Commands.add('bootstrap', ({ password }) => {
 });
 
 Cypress.Commands.add('createWorld', ({ name }) => {
+  cy.wait(500);
   cy.get('a[data-tab="worlds"]').click();
 
   cy.get('#create-world').click();
