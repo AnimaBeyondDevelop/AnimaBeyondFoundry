@@ -9,7 +9,8 @@
     "build:watch": "gulp watch",
     "clean": "gulp clean && gulp link --clean",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cypress:open": "cd integration && cypress open"
   },
   "engines": {
     "node": ">14.0.0"
@@ -23,10 +24,12 @@
     "@typescript-eslint/parser": "^4.25.0",
     "archiver": "^5.3.0",
     "chalk": "^4.1.0",
+    "cypress": "^7.5.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-prettier": "^3.4.0",
     "fs-extra": "^9.1.0",
