@@ -2,6 +2,7 @@ import * as faker from 'faker';
 
 const primaries = ['agi', 'con', 'dex', 'str', 'int', 'per', 'pow', 'will'];
 const resistances = ['phyr', 'disr', 'poir', 'magr', 'psyr'];
+const commonResources = ['lifePoints', 'fatigue'];
 
 const setValues = (values: string[]) => {
   cy.wrap(values).each(value => {
@@ -31,9 +32,7 @@ describe('Anima Beyond Fantasy Actors', () => {
     cy.bootstrap({ password: Cypress.env('foundryAdminPassword') });
     cy.createWorld({ name: worldName });
     cy.loadWorld({ name: worldName });
-  });
 
-  it('could be created', () => {
     cy.createActor(actorName);
     cy.closeActorSheet();
   });
@@ -66,6 +65,28 @@ describe('Anima Beyond Fantasy Actors', () => {
 
     cy.openActorSheet(actorName);
     checkValues(resistancesSelector);
+
+    cy.closeActorSheet();
+  });
+
+  it.only('common resources should be preserved', () => {
+    cy.openActorSheet(actorName);
+
+    const commonResourcesMaxSelector = commonResources.map(
+      resistance => `data.commonResources.${resistance}.max`
+    );
+
+    const commonResourcesValueSelector = commonResources.map(
+      resistance => `data.commonResources.${resistance}.value`
+    );
+
+    setValues(commonResourcesMaxSelector);
+    setValues(commonResourcesValueSelector);
+    cy.closeActorSheet();
+
+    cy.openActorSheet(actorName);
+    checkValues(commonResourcesMaxSelector);
+    checkValues(commonResourcesValueSelector);
 
     cy.closeActorSheet();
   });
