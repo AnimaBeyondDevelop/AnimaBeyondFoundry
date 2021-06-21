@@ -1,5 +1,6 @@
 import * as faker from 'faker';
 import { ActorSheetTabs } from '../util/ActorSheetTabs';
+import { GameTabs } from '../util/GameTabs';
 
 const fields = {
   characteristics: {
@@ -267,6 +268,26 @@ describe('Anima Beyond Fantasy Actors', () => {
       cy.closeActorSheet();
 
       cy.openActorSheet(actorName);
+    });
+  });
+
+  describe.only('rolls', () => {
+    it('d10 can be rolled', () => {
+      cy.removeAllChatMessages();
+
+      cy.changeTabTo(GameTabs.Actors);
+
+      cy.openActorSheet(actorName);
+
+      cy.get('span.rollable[data-roll="1d10"]').click();
+
+      cy.wait(300);
+
+      cy.get('.window-app div.dialog-buttons button').click();
+
+      cy.changeTabTo(GameTabs.Chat);
+
+      cy.get('#chat li.chat-message h4.dice-total');
     });
   });
 });

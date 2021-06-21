@@ -15,7 +15,8 @@
         // Limit Maximum Length of Line (max-len)
         "max-len": [1, 200, 2],
         "import/extensions": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "arrow-body-style": "off"
       },
       "extends": ["plugin:cypress/recommended"],
       "plugins": ["cypress"]
