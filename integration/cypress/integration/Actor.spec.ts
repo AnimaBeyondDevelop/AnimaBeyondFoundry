@@ -1,8 +1,65 @@
 import * as faker from 'faker';
+import { ActorSheetTabs } from '../util/ActorSheetTabs';
 
-const primaries = ['agi', 'con', 'dex', 'str', 'int', 'per', 'pow', 'will'];
-const resistances = ['phyr', 'disr', 'poir', 'magr', 'psyr'];
-const commonResources = ['lifePoints', 'fatigue'];
+const fields = {
+  characteristics: {
+    primaries: ['agi', 'con', 'dex', 'str', 'int', 'per', 'pow', 'will'],
+    secondaries: ['initiative', 'movement'],
+    secondaries_resistances: ['phyr', 'disr', 'poir', 'magr', 'psyr']
+  },
+  commonResources: ['lifePoints', 'fatigue'],
+  secondaries: {
+    athletics: ['acrobatics', 'athleticism', 'ride', 'swim', 'climb', 'jump', 'piloting'],
+    vigor: ['composure', 'featsOfStrength', 'withstandPain'],
+    perception: ['notice', 'search', 'track'],
+    intellectual: [
+      'animals',
+      'science',
+      'law',
+      'herbalLore',
+      'history',
+      'tactics',
+      'medicine',
+      'memorize',
+      'navigation',
+      'occult',
+      'appraisal',
+      'magicAppraisal'
+    ],
+    social: [
+      'style',
+      'intimidate',
+      'leadership',
+      'persuasion',
+      'trading',
+      'streetwise',
+      'etiquette'
+    ],
+    subterfuge: [
+      'lockPicking',
+      'disguise',
+      'hide',
+      'theft',
+      'stealth',
+      'trapLore',
+      'poisons'
+    ],
+    creative: [
+      'art',
+      'dance',
+      'forging',
+      'runes',
+      'alchemy',
+      'animism',
+      'music',
+      'sleightOfHand',
+      'ritualCalligraphy',
+      'jewelry',
+      'tailoring',
+      'constructMarionettes'
+    ]
+  }
+};
 
 const setValues = (values: string[]) => {
   cy.wrap(values).each(value => {
@@ -37,26 +94,10 @@ describe('Anima Beyond Fantasy Actors', () => {
     cy.closeActorSheet();
   });
 
-  it('primaries should be preserved', () => {
-    cy.openActorSheet(actorName);
-
-    const primariesSelector = primaries.map(
-      primary => `data.characteristics.primaries.${primary}.value`
-    );
-
-    setValues(primariesSelector);
-    cy.closeActorSheet();
-
-    cy.openActorSheet(actorName);
-    checkValues(primariesSelector);
-
-    cy.closeActorSheet();
-  });
-
   it('resistances should be preserved', () => {
     cy.openActorSheet(actorName);
 
-    const resistancesSelector = resistances.map(
+    const resistancesSelector = fields.characteristics.secondaries_resistances.map(
       resistance => `data.characteristics.secondaries.resistances.${resistance}.value`
     );
 
@@ -69,15 +110,15 @@ describe('Anima Beyond Fantasy Actors', () => {
     cy.closeActorSheet();
   });
 
-  it.only('common resources should be preserved', () => {
+  it('common resources should be preserved', () => {
     cy.openActorSheet(actorName);
 
-    const commonResourcesMaxSelector = commonResources.map(
-      resistance => `data.commonResources.${resistance}.max`
+    const commonResourcesMaxSelector = fields.commonResources.map(
+      value => `data.commonResources.${value}.max`
     );
 
-    const commonResourcesValueSelector = commonResources.map(
-      resistance => `data.commonResources.${resistance}.value`
+    const commonResourcesValueSelector = fields.commonResources.map(
+      value => `data.commonResources.${value}.value`
     );
 
     setValues(commonResourcesMaxSelector);
@@ -89,5 +130,143 @@ describe('Anima Beyond Fantasy Actors', () => {
     checkValues(commonResourcesValueSelector);
 
     cy.closeActorSheet();
+  });
+
+  describe('characteristics', () => {
+    it('primaries should be preserved', () => {
+      cy.openActorSheet(actorName);
+
+      const primariesSelector = fields.characteristics.primaries.map(
+        primary => `data.characteristics.primaries.${primary}.value`
+      );
+
+      setValues(primariesSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(primariesSelector);
+
+      cy.closeActorSheet();
+    });
+
+    it('secondaries should be preserved', () => {
+      cy.openActorSheet(actorName);
+
+      const mainSecondariesSelector = fields.characteristics.secondaries.map(
+        value => `data.characteristics.secondaries.${value}.value`
+      );
+
+      setValues(mainSecondariesSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(mainSecondariesSelector);
+
+      cy.closeActorSheet();
+    });
+  });
+
+  describe('secondary', () => {
+    beforeEach(() => {
+      cy.openActorSheet(actorName);
+      cy.changeActorSheetTabTo(ActorSheetTabs.Secondaries);
+    });
+
+    afterEach(() => {
+      cy.closeActorSheet();
+    });
+
+    it('athletics skills should be preserved', () => {
+      const athleticsSelector = fields.secondaries.athletics.map(
+        value => `data.secondaries.athletics.${value}.value`
+      );
+
+      setValues(athleticsSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(athleticsSelector);
+    });
+
+    it('vigor skills should be preserved', () => {
+      const vigorSelector = fields.secondaries.vigor.map(
+        value => `data.secondaries.vigor.${value}.value`
+      );
+
+      setValues(vigorSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(vigorSelector);
+    });
+
+    it('perception skills should be preserved', () => {
+      const perceptionSelector = fields.secondaries.perception.map(
+        value => `data.secondaries.perception.${value}.value`
+      );
+
+      setValues(perceptionSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(perceptionSelector);
+    });
+
+    it('intellectual skills should be preserved', () => {
+      const intellectualSelector = fields.secondaries.intellectual.map(
+        value => `data.secondaries.intellectual.${value}.value`
+      );
+
+      setValues(intellectualSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(intellectualSelector);
+    });
+
+    it('subterfuge skills should be preserved', () => {
+      const subterfugeSelector = fields.secondaries.subterfuge.map(
+        value => `data.secondaries.subterfuge.${value}.value`
+      );
+
+      setValues(subterfugeSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(subterfugeSelector);
+    });
+
+    it('social skills should be preserved', () => {
+      const socialSelector = fields.secondaries.social.map(
+        value => `data.secondaries.social.${value}.value`
+      );
+
+      setValues(socialSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(socialSelector);
+    });
+
+    it('creative skills should be preserved', () => {
+      const creativeSelector = fields.secondaries.creative.map(
+        value => `data.secondaries.creative.${value}.value`
+      );
+
+      setValues(creativeSelector);
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+      checkValues(creativeSelector);
+    });
+
+    // TODO Create when psychic branch merge
+    it.skip('custom skills should be preserved', () => {
+      cy.get('div.special-control a.skillcreate').click();
+
+      cy.closeActorSheet();
+
+      cy.openActorSheet(actorName);
+    });
   });
 });

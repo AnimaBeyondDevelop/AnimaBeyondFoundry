@@ -1,3 +1,5 @@
+import { ActorSheetTabs } from '../../util/ActorSheetTabs';
+
 Cypress.Commands.add('createActor', name => {
   cy.get('#sidebar-tabs a[data-tab="actors"]').click();
   cy.get('#actors button.create-entity').click();
@@ -24,4 +26,8 @@ Cypress.Commands.add('closeActorSheet', () => {
   cy.wait(500);
   cy.get('.window-app a.header-button.close').click();
   cy.wait(500);
+});
+
+Cypress.Commands.add('changeActorSheetTabTo', (tab: ActorSheetTabs) => {
+  cy.get(`nav.sheet-tabs.tabs a[data-tab="${tab}"]`).click();
 });

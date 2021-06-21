@@ -5,5 +5,9 @@ declare namespace Cypress {
     openActorSheet(name: string): void;
 
     closeActorSheet(): void;
+
+    changeActorSheetTabTo(
+      tab: 'main' | 'secondaries' | 'combat' | 'mystic' | 'domine' | 'elan'
+    ): void;
   }
 }
