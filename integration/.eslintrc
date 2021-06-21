@@ -5,7 +5,7 @@
       "files": ["integration/**/*.ts"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": "./tsconfig.cypress.json"
+        "project": "./tsconfig.json"
       },
       "rules": {
         // Override any settings from the "parent" configuration

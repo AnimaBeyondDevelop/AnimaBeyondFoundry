@@ -1,6 +1,21 @@
 import * as faker from 'faker';
 
 const primaries = ['agi', 'con', 'dex', 'str', 'int', 'per', 'pow', 'will'];
+const resistances = ['phyr', 'disr', 'poir', 'magr', 'psyr'];
+
+const setValues = (values: string[]) => {
+  cy.wrap(values).each(value => {
+    cy.get(`input[name="${value}"]`).click();
+    cy.wait(100);
+    cy.get(`input[name="${value}"]`).type('10');
+  });
+};
+
+const checkValues = (values: string[]) => {
+  cy.wrap(values).each(value => {
+    cy.get(`input[name="${value}"]`).should('have.value', '10');
+  });
+};
 
 describe('Anima Beyond Fantasy Actors', () => {
   let actorName: string = faker.internet.userName();
@@ -25,19 +40,33 @@ describe('Anima Beyond Fantasy Actors', () => {
 
   it('primaries should be preserved', () => {
     cy.openActorSheet(actorName);
-    cy.wrap(primaries).each(primary => {
-      cy.get(`input[name="data.characteristics.primaries.${primary}.value"]`).click();
-      cy.wait(100);
-      cy.get(`input[name="data.characteristics.primaries.${primary}.value"]`).type('10');
-    });
+
+    const primariesSelector = primaries.map(
+      primary => `data.characteristics.primaries.${primary}.value`
+    );
+
+    setValues(primariesSelector);
     cy.closeActorSheet();
 
     cy.openActorSheet(actorName);
-    cy.wrap(primaries).each(primary => {
-      cy.get(`input[name="data.characteristics.primaries.${primary}.value"]`).should(
-        'have.value',
-        '10'
-      );
-    });
+    checkValues(primariesSelector);
+
+    cy.closeActorSheet();
+  });
+
+  it('resistances should be preserved', () => {
+    cy.openActorSheet(actorName);
+
+    const resistancesSelector = resistances.map(
+      resistance => `data.characteristics.secondaries.resistances.${resistance}.value`
+    );
+
+    setValues(resistancesSelector);
+    cy.closeActorSheet();
+
+    cy.openActorSheet(actorName);
+    checkValues(resistancesSelector);
+
+    cy.closeActorSheet();
   });
 });

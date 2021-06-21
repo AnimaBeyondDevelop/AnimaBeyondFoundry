@@ -3,10 +3,10 @@ Cypress.Commands.add('bootstrap', ({ password }) => {
 
   cy.url().then(url => {
     if (url === 'http://localhost:30000/join') {
-      cy.get('input[name="adminKey"]').type(password);
+      cy.get('input[name="adminKey"]').type(password, { log: false });
       cy.get('button[data-action="shutdown"]').click();
     } else {
-      cy.get('#key').type(password);
+      cy.get('#key').type(password, { log: false });
       cy.get('button[type="submit"]').click();
     }
 
@@ -46,6 +46,6 @@ Cypress.Commands.add('loadWorld', ({ name }) => {
 });
 
 Cypress.Commands.add('closeNotification', () => {
-  cy.wait(1000);
+  cy.wait(2000);
   cy.get('.notification').find('.close').click();
 });

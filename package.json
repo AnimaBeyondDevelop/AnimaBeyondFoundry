@@ -8,7 +8,7 @@
     "build": "gulp build && gulp link",
     "build:watch": "gulp watch",
     "clean": "gulp clean && gulp link --clean",
-    "test": "jest",
+    "test": "jest src",
     "prepare": "husky install",
     "cypress:open": "cd integration && cypress open"
   },
@@ -56,6 +56,6 @@
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "*.ts": "eslint --cache"
+    "src/*.ts": "eslint --cache"
   }
 }
