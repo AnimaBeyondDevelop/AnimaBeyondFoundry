@@ -218,7 +218,6 @@
   "anima.wizard": "Hechicero",
   "anima.wizardMentalist": "Hechicero Mentalista",
   "anima.zeon": "Zeon",
-
   "anima.experience": "Exp",
   "anima.nature": "Natura",
   "anima.modifiers": "Modificadores",
@@ -233,5 +232,6 @@
   "anima.extra": "Extra",
   "anima.movement": "Movimiento",
   "anima.armor": "Armadura",
-  "anima.newSkill": "Hab. Nueva"
+  "anima.newSkill": "Hab. Nueva",
+  "dialogs.continue": "Continuar"
 }

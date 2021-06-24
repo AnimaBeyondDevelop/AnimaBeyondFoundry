@@ -218,7 +218,6 @@
   "anima.wizard": "Wizard",
   "anima.wizardMentalist": "Wizard Mentalist",
   "anima.zeon": "Zeon",
-
   "anima.background": "Backgorund",
   "anima.experience": "XP",
   "anima.nature": "Nature",
@@ -226,6 +225,8 @@
   "anima.regenerationSHORT": "Regen.",
   "anima.movementSHORT": "Movement",
   "anima.modifiers": "Modifiers",
+  "anima.modifiersPhysical": "Physical",
+  "anima.modifiersAll": "All actions",
   "anima.penaltySHORT":"Pen.",
   "anima.physicalPenaltySHORT": "Pen. Physical",
   "anima.piloting": "Piloting",
@@ -233,5 +234,7 @@
   "anima.ritualCalligraphy": "Ritual Calligraphy",
   "anima.jewelry": "Jewelry",
   "anima.tailoring": "Tailoring",
-  "anima.constructMarionettes": "Construct Marionettes"
+  "anima.constructMarionettes": "Construct Marionettes",
+  "anima.armor": "Armor",
+  "dialogs.continue": "Continue"
 }
