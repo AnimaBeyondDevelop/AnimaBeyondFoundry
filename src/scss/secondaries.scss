@@ -2,7 +2,7 @@
 
 .ability{
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
     "athletics intellectual subterfuge creative"
     "vigor intellectual social creative"
     "perception intellectual social special";
@@ -18,7 +18,7 @@
        flex-flow: wrap;
        justify-content: center;
        align-items: flex-start;
-       
+
        div{
            text-align: center;
            width: 140px;
@@ -42,7 +42,7 @@
             width: 150px;
             color: $white;
             border-radius: $border-radius;
-            background: $red-color;
+            background: $red;
     }
    }
    .athletics{
@@ -74,7 +74,7 @@
         width: 150px;
         color: $white;
         border-radius: $border-radius;
-        background: $red-color;
+        background: $red;
         .skillcreate{
             height: 16px;
             width: 26px;

@@ -1,2 +1,5 @@
 node_modules/
 .idea/
+.eslintcache
+
+foundryconfig.json
