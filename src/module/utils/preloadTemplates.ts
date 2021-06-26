@@ -1,6 +1,10 @@
-export const preloadTemplates = async function () {
+import { Templates } from './constants';
+
+export const preloadTemplates = () => {
   const templatePaths = [
     // Add paths to "systems/AnimaBeyondFoundry/templates"
+    Templates.Dialog.ModDialog,
+    Templates.Dialog.Icons.Accept,
 
     // Actor sheet parts
     'systems/animabf/templates/parts/combat.html',
