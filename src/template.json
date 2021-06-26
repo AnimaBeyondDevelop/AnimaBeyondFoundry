@@ -333,5 +333,6 @@
       "templates": ["base", "armorbase"],
       "perceptionPenalty": 10
     }
+
   }
 }
