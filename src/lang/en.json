@@ -226,7 +226,7 @@
   "anima.wizard": "Wizard",
   "anima.wizardMentalist": "Wizard Mentalist",
   "anima.zeon": "Zeon",
-  "anima.background": "Backgorund",
+  "anima.background": "Background",
   "anima.experience": "XP",
   "anima.nature": "Nature",
   "anima.maxLife": "Maximum life",
@@ -244,5 +244,7 @@
   "anima.tailoring": "Tailoring",
   "anima.constructMarionettes": "Construct Marionettes",
   "anima.armor": "Armor",
-  "dialogs.continue": "Continue"
+  "dialogs.title": "Dialog",
+  "dialogs.continue": "Continue",
+  "dialogs.mod.content": "Modifier"
 }
