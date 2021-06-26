@@ -8,8 +8,9 @@
     "build": "gulp build && gulp link",
     "build:watch": "gulp watch",
     "clean": "gulp clean && gulp link --clean",
-    "test": "jest",
-    "prepare": "husky install"
+    "test": "jest src",
+    "prepare": "husky install",
+    "cypress:open": "cd integration && cypress open"
   },
   "engines": {
     "node": ">14.0.0"
@@ -23,10 +24,12 @@
     "@typescript-eslint/parser": "^4.25.0",
     "archiver": "^5.3.0",
     "chalk": "^4.1.0",
+    "cypress": "^7.5.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-prettier": "^3.4.0",
     "fs-extra": "^9.1.0",
@@ -48,11 +51,13 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
+    "@types/faker": "^5.5.6",
+    "faker": "^5.5.3",
     "jquery": "^3.6.0",
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "*.ts": "eslint --cache"
+    "src/*.ts": "eslint --cache"
   },
   "sasslintConfig": "./.sass-lint.yml"
 }
