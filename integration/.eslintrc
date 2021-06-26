@@ -1,0 +1,24 @@
+{
+  "extends": "../.eslintrc",
+  "overrides": [
+    {
+      "files": ["integration/**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        // Override any settings from the "parent" configuration
+        "func-names": "off",
+        "jest/expect-expect": "off",
+        "jest/valid-expect": 1,
+        // Limit Maximum Length of Line (max-len)
+        "max-len": [1, 200, 2],
+        "import/extensions": "off",
+        "import/no-unresolved": "off"
+      },
+      "extends": ["plugin:cypress/recommended"],
+      "plugins": ["cypress"]
+    }
+  ]
+}

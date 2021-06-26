@@ -33,7 +33,9 @@ export class ABFActor extends Actor {
   }
 
   public async addFreeAccessSpellSlot(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre del hechizo de acceso libre' });
+    const name = await openDialog<string>({
+      content: 'Nombre del hechizo de acceso libre'
+    });
 
     const itemData = { name, type: 'freeAccessSpell', level: 0 };
 
@@ -55,7 +57,7 @@ export class ABFActor extends Actor {
   }
 
   async addSecondarySkillSlot(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre de la habilidad' });
+    const name = await openDialog<string>({ content: 'Nombre de la habilidad' });
 
     const itemData = { name, type: 'skill', value: 0 };
 

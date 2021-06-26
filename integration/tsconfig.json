@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "@cypress/skip-test", "node", "@cypress/skip-test"],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": true
+  },
+  "extends": "../tsconfig.json",
+  "include": ["./**/*.ts"]
+}

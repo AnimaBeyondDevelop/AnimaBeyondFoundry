@@ -134,7 +134,7 @@
             "impact": { "value": 0 },
             "heat": { "value": 0 },
             "cold": { "value": 0 },
-            "electriity": { "value": 0 },
+            "electricity": { "value": 0 },
             "energy": { "value": 0 }
           },
           "head": {
@@ -143,7 +143,7 @@
             "impact": { "value": 0 },
             "heat": { "value": 0 },
             "cold": { "value": 0 },
-            "electriity": { "value": 0 },
+            "electricity": { "value": 0 },
             "energy": { "value": 0 }
           }
         }
@@ -232,7 +232,7 @@
         "arcaneMagnitude": {"value": 0},
         "ageControl": {"value": 0},
         "techniqueImitation": {"value": 0},
-        "tecnicForce": {"value": 0},
+        "technicForce": {"value": 0},
         "eliminationOfWeight": {"value": 0},
         "levitation": {"value": 0},
         "objectMotion": {"value": 0},
@@ -252,7 +252,7 @@
         "airAttack": {"value": 0},
         "earthAttack": {"value": 0},
         "lightAttack": {"value": 0},
-        "darcknessAttack": {"value": 0},
+        "darknessAttack": {"value": 0},
         "increasedDamage": {"value": 0},
         "increasedSpeed": {"value": 0},
         "destructionByKi": {"value": 0},
@@ -302,7 +302,7 @@
 
       "psychic": {
         "freePp": { "value": 0, "max": 0 },
-        "currentConcentrationConus": { "value": 0 },
+        "currentConcentrationBonus": { "value": 0 },
         "psychicPotential": { "value": 0 },
         "psychicProjection": {
           "offensive": { "value": 0 },
@@ -331,7 +331,7 @@
         "breakage": 5,
         "description": "",
         "presence": 30,
-        "weigth": 0,
+        "weight": 0,
         "price": 0,
         "quality": 0
       },
@@ -348,9 +348,9 @@
         "requiredStrengthTwoHanded": 5
       },
       "armorBase": {
-        "armorRequeriment": 10,
+        "armorRequirement": 10,
         "naturalPenalty": 10,
-        "lozalization": "",
+        "localization": "",
         "type": "",
         "presence": 30,
         "cut": 0,
@@ -387,5 +387,6 @@
     "skill": {
       "value": 0
     }
+
   }
 }
