@@ -1,6 +1,7 @@
 import { openDialog } from '../utils/openDialog';
 import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
+import { prepareActor } from "./utils/prepareActor/prepareActor";
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -8,27 +9,8 @@ export class ABFActor extends Actor {
 
     const actorData = this.data;
 
-    if (actorData.type === 'character') this._prepareCharacterData(actorData);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  _prepareCharacterData(actorData: any): void {
-    const { data } = actorData;
-
-    for (const char of Object.values(
-      data.characteristics.primaries as Record<any, any>
-    )) {
-      if (char.value < 4) {
-        char.mod = char.value * 10 - 40;
-      }
-      if (char.value >= 4) {
-        char.mod =
-          (Math.floor((char.value + 5) / 5) +
-            Math.floor((char.value + 4) / 5) +
-            Math.floor((char.value + 2) / 5) -
-            4) *
-          5;
-      }
+    if (actorData.type === 'character') {
+      this.data = prepareActor(actorData);
     }
   }
 
