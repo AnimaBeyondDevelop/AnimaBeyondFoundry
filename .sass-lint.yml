@@ -1,0 +1,6 @@
+options:
+  max-warnings: 10
+rules:
+  class-name-format:
+    - convention: hyphenatedlowercase
+    - allow-leading-underscore: false
