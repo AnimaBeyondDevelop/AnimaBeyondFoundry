@@ -178,22 +178,8 @@
           "Total": {"use": 0, "Total": 0}
         },
         "freeAccessSpells": [],
-        "Maintenances": [
-          {
-            "name": {
-              "value": "Nombre"      
-            },
-            "cost": { "Value": 0}
-          }
-        ],
-        "Selected": [
-          {
-            "name": {
-              "value": "Nombre"      
-            },
-            "cost": { "Value": 0}
-          }
-        ],
+        "maintenances": [],
+        "selected": [],
         "Metamagic": [
           {
             "name": {
@@ -322,7 +308,10 @@
       "armor",
       "helmet",
       "skill",
-      "freeAccessSpell"
+      "freeAccessSpell",
+      "maintenances",
+      "selected"
+
     ],
     "templates": {
       "base": {
@@ -386,6 +375,12 @@
     },
     "skill": {
       "value": 0
+    },
+    "maintenances":{
+      "cost": 0
+    },
+    "selected":{
+      "cost": 0
     }
   }
 }

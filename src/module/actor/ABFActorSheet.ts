@@ -64,6 +64,14 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addFreeAccessSpellSlot();
     });
 
+    html.find('[data-on-click="add-maintenance"]').click(() => {
+      this.actor.addMaintentances();
+    });
+
+    html.find('[data-on-click="add-selected"]').click(() => {
+      this.actor.addSelectedSpells();
+    });
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -106,6 +114,14 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.freeAccessSpells) {
       this.actor.editFreeAccessSpells(unflattedChanges.data.dynamic.freeAccessSpells);
+    }
+
+    if (unflattedChanges.data.dynamic.maintenances) {
+      this.actor.editMaintentances(unflattedChanges.data.dynamic.maintenances);
+    }
+
+    if (unflattedChanges.data.dynamic.selected) {
+      this.actor.editSelectedSpells(unflattedChanges.data.dynamic.selected);
     }
   }
 }

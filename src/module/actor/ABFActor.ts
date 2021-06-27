@@ -1,6 +1,8 @@
 import { openDialog } from '../utils/openDialog';
 import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
+import { MaintenancesChanges } from '../types/maintenancesChange';
+import { SelectedSpelsChange } from '../types/SelectedSpelsChange';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -29,6 +31,50 @@ export class ABFActor extends Actor {
             4) *
           5;
       }
+    }
+  }
+
+  public async addSelectedSpells(): Promise<void> {
+    const name = await openDialog<string>({ name: 'Nombre del nuevo hechizo seleccionado' });
+
+    const itemData = { name, type: 'selected', cost: 0 };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editSelectedSpells(selected: SelectedSpelsChange) {
+    for (const id of Object.keys(selected)) {
+      const { name, data } = selected[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          cost: data.cost
+        }
+      });
+    }
+  }
+
+  public async addMaintentances(): Promise<void> {
+    const name = await openDialog<string>({ name: 'Nombre del nuevo mantenimiento' });
+
+    const itemData = { name, type: 'maintenances', cost: 0 };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editMaintentances(maintentancesChanges: MaintenancesChanges) {
+    for (const id of Object.keys(maintentancesChanges)) {
+      const { name, data } = maintentancesChanges[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          cost: data.cost
+        }
+      });
     }
   }
 

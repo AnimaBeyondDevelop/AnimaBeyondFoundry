@@ -2,6 +2,8 @@ import { ABFActor } from '../../../ABFActor';
 import { attachFreeAccessSpell } from './attachFreeAccessSpell';
 import { attachSecondarySkill } from './attachSecondarySkill';
 import { attachCommonItem } from './attachCommonItem';
+import { attachMaintenances } from './attachMaintenances';
+import { attachSelectedSpells } from './attachSelectedSpells';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -15,7 +17,9 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     'armor',
     'helmet',
     'skill',
-    'freeAccessSpell'
+    'freeAccessSpell',
+    'maintenances',
+    'selected'
   ];
 
   for (const item of newData.items) {
@@ -28,6 +32,12 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case 'skill':
           newData = attachSecondarySkill(newData, item);
+          break;
+        case 'maintenances':
+          newData = attachMaintenances(newData, item);
+          break;
+        case 'selected':
+          newData = attachSelectedSpells(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

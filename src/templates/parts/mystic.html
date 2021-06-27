@@ -321,18 +321,18 @@
     <tr>
       <td>
         <input
-          type="text"
-          name="data.dynamic.freeAccessSpells.{{spell._id}}.name"
-          class="input_value"
-          value="{{spell.name}}"
-        />
-      </td>
-      <td>
-        <input
           type="number"
           name="data.dynamic.freeAccessSpells.{{spell._id}}.data.level"
           class="input_value"
           value="{{spell.data.level}}"
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="data.dynamic.freeAccessSpells.{{spell._id}}.name"
+          class="input_value"
+          value="{{spell.name}}"
         />
       </td>
     </tr>
@@ -343,11 +343,10 @@
     </tr>
     {{/each}}
 
-    <!--TODO iterable desde libresaccesos en el template-->
   </table>
 </div>
 
-<div>
+<!--<div>
   <table class="LibresAccesos" style="float: right">
     <tr>
       <th>Magia Innata</th>
@@ -366,10 +365,15 @@
       <th>Conjuro</th>
     </tr>
 
-    <!--TODO iterable desde libresaccesos en el template-->
+    {{#each data.mystic.freeAccessSpells as |spell|}}
+
+
+
+    {{/each}}
+    
   </table>
 </div>
-
+-->
 <div>
   <table class="CosteDiario" style="float: right">
     <tr>
@@ -378,6 +382,7 @@
         <input
           type="image"
           name="botondeenvio"
+          data-on-click="add-maintenance"
           src="\systems\animabf\assets\images\boton-plus.png"
           alt="+"
         />
@@ -389,7 +394,33 @@
       <th>Coste</th>
     </tr>
 
-    <!--TODO iterable desde libresaccesos en el template-->
+   
+    {{#each data.mystic.maintenances as |Maint|}}
+
+        <tr>
+      <td>
+        <input
+          type="text"
+          name="data.dynamic.maintenances.{{Maint._id}}.name"
+          class="input_value"
+          value="{{Maint.name}}"
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          name="data.dynamic.maintenances.{{Maint._id}}.data.cost"
+          class="input_value"
+          value="{{Maint.data.cost}}"
+        />
+      </td>
+    </tr>
+    
+    {{else}}
+    <tr>
+      <td>Vacío</td>
+    </tr>
+    {{/each}}
   </table>
 </div>
 
@@ -401,6 +432,7 @@
         <input
           type="image"
           name="botondeenvio"
+          data-on-click="add-selected"
           src="\systems\animabf\assets\images\boton-plus.png"
           alt="+"
         />
@@ -414,22 +446,33 @@
     </tr>
 
     <!--TODO iterable desde libresaccesos en el template-->
-  </table>
-</div>
+    
+    {{#each data.mystic.selected as |selected|}}
 
-<div>
-  <table class="invocaciones" style="float: right">
-    <tr>
-      <th>Invocaciones</th>
-      <th>
+        <tr>
+      <td>
         <input
-          type="image"
-          name="botondeenvio"
-          src="\systems\animabf\assets\images\boton-plus.png"
-          alt="+"
+          type="text"
+          name="data.dynamic.selected.{{selected._id}}.name"
+          class="input_value"
+          value="{{selected.name}}"
         />
-      </th>
+      </td>
+      <td>
+        <input
+          type="number"
+          name="data.dynamic.selected.{{selected._id}}.data.cost"
+          class="input_value"
+          value="{{selected.data.cost}}"
+        />
+      </td>
     </tr>
+    
+    {{else}}
+    <tr>
+      <td>Vacío</td>
+    </tr>
+    {{/each}}
 
     <!--TODO iterable desde libresaccesos en el template-->
     <!--Solo nombres-->
@@ -437,8 +480,7 @@
 </div>
 
 <div>
-  <table class="Metagaias" style="float: right">
-    <tr>
+  <table class="Metagaias" style="float: right">    <tr>
       <th>Metamagias</th>
       <th>
         <input
