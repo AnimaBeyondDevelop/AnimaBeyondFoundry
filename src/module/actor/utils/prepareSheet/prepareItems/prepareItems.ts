@@ -6,17 +6,7 @@ import { attachCommonItem } from './attachCommonItem';
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
 
-  const VALID_COLLECTIONS = [
-    'consumable',
-    'misc',
-    'weapon',
-    'shield',
-    'ammunition',
-    'armor',
-    'helmet',
-    'skill',
-    'freeAccessSpell'
-  ];
+  const VALID_COLLECTIONS = ['skill', 'freeAccessSpell'];
 
   for (const item of newData.items) {
     if (VALID_COLLECTIONS.includes(item.type)) {
