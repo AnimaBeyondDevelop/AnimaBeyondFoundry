@@ -246,5 +246,7 @@
   "anima.armor": "Armor",
   "dialogs.title": "Dialog",
   "dialogs.continue": "Continue",
-  "dialogs.mod.content": "Modifier"
+  "dialogs.mod.content": "Modifier",
+  "dialogs.items.secondarySkill.content": "Skill name",
+  "dialogs.items.freeAccessSpell.content": "Free access spell name"
 }

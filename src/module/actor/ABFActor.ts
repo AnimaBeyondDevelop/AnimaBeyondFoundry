@@ -1,7 +1,7 @@
 import { openDialog } from '../utils/openDialog';
 import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
-import { prepareActor } from "./utils/prepareActor/prepareActor";
+import { prepareActor } from './utils/prepareActor/prepareActor';
 import { Items } from './utils/prepareSheet/prepareItems/Items';
 
 export class ABFActor extends Actor {
@@ -17,7 +17,7 @@ export class ABFActor extends Actor {
 
   public async addFreeAccessSpellSlot(): Promise<void> {
     const name = await openDialog<string>({
-      content: 'Nombre del hechizo de acceso libre'
+      content: game.i18n.localize('dialogs.items.freeAccessSpell.content')
     });
 
     const itemData = { name, type: Items.FREE_ACCESS_SPELL, level: 0 };
@@ -40,7 +40,9 @@ export class ABFActor extends Actor {
   }
 
   async addSecondarySkillSlot(): Promise<void> {
-    const name = await openDialog<string>({ content: 'Nombre de la habilidad' });
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.secondarySkill.content')
+    });
 
     const itemData = { name, type: Items.SECONDARY_SKILL, value: 0 };
 

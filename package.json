@@ -57,7 +57,7 @@
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "src/*.ts": "eslint --cache"
+    "src/**/*.ts": "eslint --cache"
   },
   "sasslintConfig": "./.sass-lint.yml"
 }

@@ -245,8 +245,9 @@
   "anima.extra": "Extra",
   "anima.movement": "Movimiento",
   "anima.armor": "Armadura",
-  "anima.newSkill": "Hab. Nueva",
   "dialogs.title": "Diálogo",
   "dialogs.continue": "Continuar",
-  "dialogs.mod.content": "Modificador"
+  "dialogs.mod.content": "Modificador",
+  "dialogs.items.secondarySkill.content": "Nombre de la habilidad",
+  "dialogs.items.freeAccessSpell.content": "Nombre del hechizo de acceso libre"
 }
