@@ -4,39 +4,31 @@ import { attachSecondarySkill } from './attachSecondarySkill';
 import { attachCommonItem } from './attachCommonItem';
 import { attachMaintenances } from './attachMaintenances';
 import { attachSelectedSpells } from './attachSelectedSpells';
+import { Items } from './Items';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
 
-  const VALID_COLLECTIONS = [
-    'consumable',
-    'misc',
-    'weapon',
-    'shield',
-    'ammunition',
-    'armor',
-    'helmet',
-    'skill',
-    'freeAccessSpell',
-    'maintenances',
-    'selected'
-  ];
+  const VALID_ITEM_TYPES = [Items.SECONDARY_SKILL, Items.FREE_ACCESS_SPELL,
+    Items.MAINTENANCES, Items.SELECTED].map(
+    type => type.toString()
+  );
 
   for (const item of newData.items) {
-    if (VALID_COLLECTIONS.includes(item.type)) {
+    if (VALID_ITEM_TYPES.includes(item.type)) {
       item.img = item.img || CONST.DEFAULT_TOKEN;
 
       switch (item.type) {
-        case 'freeAccessSpell':
+        case Items.FREE_ACCESS_SPELL:
           newData = attachFreeAccessSpell(newData, item);
           break;
-        case 'skill':
+        case Items.SECONDARY_SKILL:
           newData = attachSecondarySkill(newData, item);
           break;
-        case 'maintenances':
+        case Items.MAINTENANCES:
           newData = attachMaintenances(newData, item);
           break;
-        case 'selected':
+        case Items.SELECTED:
           newData = attachSelectedSpells(newData, item);
           break;
         default:

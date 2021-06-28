@@ -94,7 +94,6 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       const mod = await openModDialog();
       const formula = `${dataset.roll}+ ${mod}`;
       const roll = new ABFFoundryRoll(formula, this.actor.data.data);
-      console.log(roll);
 
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),

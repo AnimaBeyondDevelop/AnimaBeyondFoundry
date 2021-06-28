@@ -1,27 +1,34 @@
-export const openDialog = <T = number>({
+import { renderTemplates } from './renderTemplates';
+import { Templates } from './constants';
+
+export const openDialog = async <T = number>({
   title,
-  name,
+  content,
   placeholder = ''
 }: {
   title?: string;
-  name: string;
+  content: string;
   placeholder?: string;
 }): Promise<T> => {
+  const [dialogHTML, iconHTML] = await renderTemplates(
+    {
+      name: Templates.Dialog.ModDialog,
+      context: { content, placeholder }
+    },
+    {
+      name: Templates.Dialog.Icons.Accept
+    }
+  );
+
   return new Promise(resolve => {
     new Dialog({
-      title: title ?? 'Diálogo',
-      content: `
-      <form>
-      <div class='form-group'>
-        <label>${name}</label>
-        <input id='dialog-input' type='text' name='dialog-input' placeholder='${placeholder}'/>
-      </div>
-      </form>`,
+      title: title ?? game.i18n.localize('dialogs.title'),
+      content: dialogHTML,
       buttons: {
         submit: {
-          icon: '<i class="fas fa-check"></i>',
-          label: 'Aceptar',
-          callback: (html: JQuery<HTMLElement>) => {
+          icon: iconHTML,
+          label: game.i18n.localize('dialogs.continue'),
+          callback: (html: JQuery) => {
             const results = new FormDataExtended(html.find('form')[0], {}).toObject();
 
             resolve(results['dialog-input'] as T);
@@ -36,5 +43,8 @@ export const openDialog = <T = number>({
 
 // Open the mod Dialog window. It returns resolver(html), which in turn returns the modifier
 export const openModDialog = async () => {
-  return openDialog({ name: 'Modificador', placeholder: '0' });
+  return openDialog({
+    content: game.i18n.localize('dialogs.mod.content'),
+    placeholder: '0'
+  });
 };

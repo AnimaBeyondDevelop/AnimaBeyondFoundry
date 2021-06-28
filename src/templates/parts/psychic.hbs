@@ -1,0 +1,122 @@
+<div class="mentalism">
+
+    <div class="general">
+        <div class="dice-disciplines">
+            <div class="dice">
+                <div class="potential group">
+                    <h3 class="group-header">{{localize "anima.psychicPotential"}}</h3>
+                    <div class="group-body">
+                        <label
+                                for="data.psychic.psychicPotential"
+                                class="rollable"
+                                data-roll="1d100xa+@psychic.psychicPotential.value"
+                                data-label="{{localize 'anima.psychicPotential'}}">
+                            {{localize "anima.psychicPotential"}}
+                        </label>
+                        <input
+                                type="number"
+                                class="input-value"
+                                id="data.psychic.psychicPotential"
+                                name="data.psychic.psychicPotential.value"
+                                value="{{data.psychic.psychicPotential.value}}"
+                                data-dtype="Number">
+                    </div>
+                </div>
+
+                <div class="projection group">
+                    <h3 class="group-header">{{localize "anima.psychicProjection"}}</h3>
+                    <div class="group-body">
+                        <label
+                                for="data.psychic.psychicProjection.offensive"
+                                class="rollable"
+                                data-roll="1d100xa+@psychic.psychicProjection.offensive.value"
+                                data-label="{{localize 'anima.psychicProjection'}}">
+                            {{localize "anima.psychicProjection"}}
+                        </label>
+                        <input
+                                type="number"
+                                class="input-value"
+                                id="data.psychic.psychicProjection.offensive"
+                                name="data.psychic.psychicProjection.offensive.value"
+                                value="{{data.psychic.psychicProjection.offensive.value}}"
+                                data-dtype="Number">
+                    </div>
+                </div>
+
+                <div class="cv group">
+                    <h3 class="group-header">{{localize "anima.psychicPoints"}}</h3>
+                    <div class="group-body">
+                        <label for="data.psychic.freePp">
+                            {{localize "anima.final"}}
+                        </label>
+                        <input
+                                type="number"
+                                class="input-value"
+                                id="data.psychic.freePp.value"
+                                name="data.psychic.freePp.value"
+                                value="{{data.psychic.freePp.value}}"
+                                data-dtype="Number">
+                        <input
+                                type="number"
+                                class="input-value"
+                                id="data.psychic.freePp.max"
+                                name="data.psychic.freePp.max"
+                                value="{{data.psychic.freePp.max}}"
+                                data-dtype="Number">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="disciplines group">
+                <h3 class="group-header">{{localize "anima.psychicDisciplines"}}</h3>
+                <div class="group-body-disciplines">
+                    {{#each data.psychic.disciplines}}
+                        <input
+                                type="text"
+                                class="input_text-line"
+                                placeholder="{{localize 'anima.name'}}"
+                                value=""
+                        >
+                    {{/each}}
+
+                    <div class="add-disciplines">
+                        <img src="\systems\animabf\assets\images\boton-plus.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="patterns group">
+            <h3 class="group-header">{{localize "anima.mentalPattern"}}</h3>
+            <div class="group-body">
+                some content
+            </div>
+        </div>
+
+        <div class="innates group">
+            <h3 class="group-header">{{localize "anima.innatePsychicPower"}}</h3>
+            <div class="group-body">
+                some content
+            </div>
+        </div>
+    </div>
+
+    <div class="powers">
+        <div class="power group">
+            <h3 class="group-header">Poder num 1</h3>
+            <div class="group-body">
+                some random data
+            </div>
+        </div>
+
+        <div class="power group">
+            <h3 class="group-header">Poder num 2</h3>
+            <div class="group-body">
+                some random data
+            </div>
+        </div>
+
+    </div>
+
+</div>

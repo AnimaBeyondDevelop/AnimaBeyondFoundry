@@ -4,7 +4,7 @@
   min-width: 690px;
   min-height: 800px;
 
-  .header-filds{
+  .header-fields{
 
     .content{
       display: grid;
@@ -18,7 +18,7 @@
       .header-top{
         margin-top: 5px;
         margin-bottom: 5px;
-        border-bottom: 2px $red-color solid;
+        border-bottom: 2px $red solid;
         display: grid;
         width: 100%;
         grid-template-columns: 220px 45px 45px 220px 60px 60px;
@@ -74,7 +74,7 @@
           span:nth-child(2){
             left:14px
           }
-          
+
         }
         .class-actor{
           width: 100%;
@@ -133,7 +133,7 @@
           grid-column: 1 / span 2;
           text-align: center;
           color: $white;
-          background: $red-color;
+          background: $red;
           border-radius: $border-radius;
         }
         input{
@@ -174,7 +174,7 @@
             right: 6px;
           }
           input{
-            background: $red-color;
+            background: $red;
             height: 20px;
             width: 45px;
             border-radius: $border-radius;
@@ -194,7 +194,7 @@
         border-radius: $border-radius;
         h3{
           border-radius: $border-radius;
-          background: $red-color;
+          background: $red;
           color: $white;
           text-align: center;
         }
@@ -244,7 +244,7 @@
           position: relative;
           .max-life{
             text-align: center;
-            background: $red-color;
+            background: $red;
             color: $white;
             z-index: 10;
             width: 50px;
@@ -277,7 +277,7 @@
             color: $black;
           }
           .base{
-            background: $red-color;
+            background: $red;
             color: $white;
           }
         }
@@ -288,7 +288,7 @@
 
             .max-fatigue{
               position: absolute;
-              background: $red-color;
+              background: $red;
               color: $white;
               text-align: center;
               left: 7px;
@@ -326,7 +326,7 @@
         grid-area: armor;
         .label-text{
           height: 20px;
-          background: $red-color;
+          background: $red;
           border-radius: $border-radius;
           color: $white;
           .text{
@@ -367,8 +367,8 @@
     }
 
     .sheet-tabs{
-      border-top: 1px solid $red-color;
-      border-bottom: 1px solid $red-color;
+      border-top: 1px solid $red;
+      border-bottom: 1px solid $red;
       .item{
         background: transparent;
         border-radius: $border-radius;
@@ -377,7 +377,7 @@
       }
       .active{
         text-shadow: none;
-        background-color: $red-color;
+        background-color: $red;
         color: $white;
         font-weight: 600;
       }

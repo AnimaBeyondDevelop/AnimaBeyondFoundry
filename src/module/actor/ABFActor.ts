@@ -3,6 +3,8 @@ import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
 import { MaintenancesChanges } from '../types/maintenancesChange';
 import { SelectedSpelsChange } from '../types/SelectedSpelsChange';
+import { prepareActor } from './utils/prepareActor/prepareActor';
+import { Items } from './utils/prepareSheet/prepareItems/Items';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -10,34 +12,17 @@ export class ABFActor extends Actor {
 
     const actorData = this.data;
 
-    if (actorData.type === 'character') this._prepareCharacterData(actorData);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  _prepareCharacterData(actorData: any): void {
-    const { data } = actorData;
-
-    for (const char of Object.values(
-      data.characteristics.primaries as Record<any, any>
-    )) {
-      if (char.value < 4) {
-        char.mod = char.value * 10 - 40;
-      }
-      if (char.value >= 4) {
-        char.mod =
-          (Math.floor((char.value + 5) / 5) +
-            Math.floor((char.value + 4) / 5) +
-            Math.floor((char.value + 2) / 5) -
-            4) *
-          5;
-      }
+    if (actorData.type === 'character') {
+      this.data = prepareActor(actorData);
     }
   }
 
   public async addSelectedSpells(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre del nuevo hechizo seleccionado' });
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.selected.content')
+    });
 
-    const itemData = { name, type: 'selected', cost: 0 };
+    const itemData = { name, type: Items.SELECTED, cost: 0 };
 
     await this.createOwnedItem(itemData);
   }
@@ -57,9 +42,11 @@ export class ABFActor extends Actor {
   }
 
   public async addMaintentances(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre del nuevo mantenimiento' });
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.maintenances.content')
+    });
 
-    const itemData = { name, type: 'maintenances', cost: 0 };
+    const itemData = { name, type: Items.MAINTENANCES, cost: 0 };
 
     await this.createOwnedItem(itemData);
   }
@@ -79,9 +66,11 @@ export class ABFActor extends Actor {
   }
 
   public async addFreeAccessSpellSlot(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre del hechizo de acceso libre' });
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.freeAccessSpell.content')
+    });
 
-    const itemData = { name, type: 'freeAccessSpell', level: 0 };
+    const itemData = { name, type: Items.FREE_ACCESS_SPELL, level: 0 };
 
     await this.createOwnedItem(itemData);
   }
@@ -101,9 +90,11 @@ export class ABFActor extends Actor {
   }
 
   async addSecondarySkillSlot(): Promise<void> {
-    const name = await openDialog<string>({ name: 'Nombre de la habilidad' });
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.secondarySkill.content')
+    });
 
-    const itemData = { name, type: 'skill', value: 0 };
+    const itemData = { name, type: Items.SECONDARY_SKILL, value: 0 };
 
     await this.createOwnedItem(itemData);
   }
