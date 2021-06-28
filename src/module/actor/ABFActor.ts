@@ -5,6 +5,8 @@ import { MaintenancesChanges } from '../types/maintenancesChange';
 import { SelectedSpelsChange } from '../types/SelectedSpelsChange';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { Items } from './utils/prepareSheet/prepareItems/Items';
+import { MetamagicChanges } from '../types/MetamagicChange';
+import { InvocationChanges } from '../types/InvocationChange';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -14,6 +16,30 @@ export class ABFActor extends Actor {
 
     if (actorData.type === 'character') {
       this.data = prepareActor(actorData);
+    }
+  }
+
+  public async addInvocation(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.invocation.content')
+    });
+
+    const itemData = { name, type: Items.INVOCATION, cost: 0 };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editInvocation(invocation: InvocationChanges) {
+    for (const id of Object.keys(invocation)) {
+      const { name, data } = invocation[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          cost: data.cost
+        }
+      });
     }
   }
 
@@ -107,6 +133,30 @@ export class ABFActor extends Actor {
         _id: id,
         data: {
           value
+        }
+      });
+    }
+  }
+
+  public async addMetamagic(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.metamagic.content')
+    });
+
+    const itemData = { name, type: Items.METAMAGIC, grade: 0 };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editMetamagic(Metamagic: MetamagicChanges) {
+    for (const id of Object.keys(Metamagic)) {
+      const { name, data } = Metamagic[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          grade: data.grade
         }
       });
     }

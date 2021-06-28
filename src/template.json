@@ -180,14 +180,7 @@
         "freeAccessSpells": [],
         "maintenances": [],
         "selected": [],
-        "Metamagic": [
-          {
-            "name": {
-              "value": "Nombre"      
-            },
-            "Grade": { "Value": 0}
-          }           
-        ],
+        "metamagic": [],
         "summoning": {
           "currenRitualBonus": { "value": 0 },
           "summon": { "value": 0 },
@@ -195,9 +188,7 @@
           "bind": { "value": 0 },
           "control": { "value": 0 }
         },
-        "invocation": [
-          "nombre"
-        ]
+        "invocation": []
       },
 
       "domine": {
@@ -303,7 +294,9 @@
       "skill", 
       "freeAccessSpell", 
       "maintenances",
-      "selected"
+      "selected",
+      "metamagic",
+      "invocation"
     ],
 
     "freeAccessSpell": {
@@ -316,6 +309,12 @@
       "cost": 0
     },
     "selected":{
+      "cost": 0
+    },
+    "metamagic":{
+      "grade": 0
+    },
+    "invocation":{
       "cost": 0
     }
   }

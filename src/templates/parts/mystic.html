@@ -442,10 +442,9 @@
     <tr>
       <th>Conjuro</th>
       <th>Coste</th>
-      <!--Coste de selección del conjuro, eliminar si resuta demasiado complicado-->
+
     </tr>
 
-    <!--TODO iterable desde libresaccesos en el template-->
     
     {{#each data.mystic.selected as |selected|}}
 
@@ -474,10 +473,49 @@
     </tr>
     {{/each}}
 
-    <!--TODO iterable desde libresaccesos en el template-->
-    <!--Solo nombres-->
+
   </table>
 </div>
+
+<div>
+  <table class="Invocaciones" style="float: right">    <tr>
+      <th>Invocaciones</th>
+      <th>
+        <input
+          type="image"
+          name="botondeenvio"
+          data-on-click="add-invocation"
+          src="\systems\animabf\assets\images\boton-plus.png"
+          alt="+"
+        />
+      </th>
+    </tr>
+
+    <tr>
+      <th>Nombre</th>
+    </tr>
+  {{#each data.mystic.invocation as |invocation|}}
+
+    <tr>
+      <td>
+        <input
+          type="text"
+          name="data.dynamic.invocation.{{invocation._id}}.name"
+          class="input_value"
+          value="{{invocation.name}}"
+        />
+      </td>
+    </tr>
+
+  {{else}}
+    <tr>
+      <td>Vacío</td>
+    </tr>
+  {{/each}}
+
+  </table>
+</div>
+
 
 <div>
   <table class="Metagaias" style="float: right">    <tr>
@@ -486,6 +524,7 @@
         <input
           type="image"
           name="botondeenvio"
+          data-on-click="add-metamagic"
           src="\systems\animabf\assets\images\boton-plus.png"
           alt="+"
         />
@@ -496,7 +535,32 @@
       <th>Metamagia</th>
       <th>Grado</th>
     </tr>
+    {{#each data.mystic.metamagic as |metamagic|}}
 
-    <!--TODO iterable desde libresaccesos en el template-->
+        <tr>
+      <td>
+        <input
+          type="text"
+          name="data.dynamic.selected.{{metamagic._id}}.name"
+          class="input_value"
+          value="{{metamagic.name}}"
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          name="data.dynamic.metamagic.{{metamagic._id}}.data.grade"
+          class="input_value"
+          value="{{metamagic.data.grade}}"
+        />
+      </td>
+    </tr>
+    
+  {{else}}
+    <tr>
+      <td>Vacío</td>
+    </tr>
+  {{/each}}
+
   </table>
 </div>

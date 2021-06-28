@@ -5,12 +5,20 @@ import { attachCommonItem } from './attachCommonItem';
 import { attachMaintenances } from './attachMaintenances';
 import { attachSelectedSpells } from './attachSelectedSpells';
 import { Items } from './Items';
+import { attachInvocation } from './attachInvocation';
+import { attachMetamagic } from './attachMetamagic';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
 
-  const VALID_ITEM_TYPES = [Items.SECONDARY_SKILL, Items.FREE_ACCESS_SPELL,
-    Items.MAINTENANCES, Items.SELECTED].map(
+  const VALID_ITEM_TYPES = [
+    Items.SECONDARY_SKILL,
+    Items.FREE_ACCESS_SPELL,
+    Items.MAINTENANCES,
+    Items.SELECTED,
+    Items.METAMAGIC,
+    Items.INVOCATION
+  ].map(
     type => type.toString()
   );
 
@@ -30,6 +38,12 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.SELECTED:
           newData = attachSelectedSpells(newData, item);
+          break;
+        case Items.INVOCATION:
+          newData = attachInvocation(newData, item);
+          break;
+        case Items.METAMAGIC:
+          newData = attachMetamagic(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

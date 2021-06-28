@@ -72,6 +72,14 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addSelectedSpells();
     });
 
+    html.find('[data-on-click="add-invocation"]').click(() => {
+      this.actor.addInvocation();
+    });
+
+    html.find('[data-on-click="add-metamagic"]').click(() => {
+      this.actor.addMetamagic();
+    });
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -121,6 +129,14 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.selected) {
       this.actor.editSelectedSpells(unflattedChanges.data.dynamic.selected);
+    }
+
+    if (unflattedChanges.data.dynamic.invocation) {
+      this.actor.editInvocation(unflattedChanges.data.dynamic.invocation);
+    }
+
+    if (unflattedChanges.data.dynamic.metamagic) {
+      this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagic);
     }
   }
 }

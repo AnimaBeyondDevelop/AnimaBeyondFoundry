@@ -2,5 +2,7 @@ export enum Items {
   SECONDARY_SKILL = 'skill',
   FREE_ACCESS_SPELL = 'freeAccessSpell',
   MAINTENANCES = 'maintenances',
-  SELECTED = 'selected'
+  SELECTED = 'selected',
+  METAMAGIC = 'metamagic',
+  INVOCATION = 'invocation'
 }
