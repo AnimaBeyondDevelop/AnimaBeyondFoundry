@@ -151,21 +151,44 @@
 
       "mystic": {
         "zeon": { "value": 0, "max": 0, "accumulated": 0 },
-        "magicAccumulation": { "value": 0 },
-        "magicRegeneration": { "value": 0 },
+        "magicAcummulation": { "value": 0, "Alternative": 0},
+        "magicRegeneration": { "value": 0, "Total": 0},
+        "InnerPotential": {"value": 0, "Alternative": 0},
         "magicProjection": {
+          "Base": {"value": 0 },
           "offensive": { "value": 0 },
           "defensive": { "value": 0 }
         },
-        "magicLevel": { "value": 0 },
-
+        "magicLevel": { 
+          "Spheres": { 
+            "Essence": { "value": 0 }, 
+            "water": { "value": 0 }, 
+            "Earth": { "value": 0 }, 
+            "Creation": { "value": 0 }, 
+            "Darkness": { "value": 0 }, 
+            "Necromancy": { "value": 0 }, 
+            "Light": { "value": 0 }, 
+            "Destruction": { "value": 0 }, 
+            "Air": { "value": 0 }, 
+            "Fire": { "value": 0 }, 
+            "Ilusion": { "value": 0 }
+          },
+          "Metamagic": { "value": 0 },
+          "SeletedSpells": { "value": 0 },
+          "Total": {"use": 0, "Total": 0}
+        },
+        "freeAccessSpells": [],
+        "maintenances": [],
+        "selected": [],
+        "metamagic": [],
         "summoning": {
           "currenRitualBonus": { "value": 0 },
           "summon": { "value": 0 },
           "banish": { "value": 0 },
           "bind": { "value": 0 },
           "control": { "value": 0 }
-        }
+        },
+        "invocation": []
       },
 
       "domine": {
@@ -268,71 +291,31 @@
 
   "Item": {
     "types": [
-      "consumable",
-      "misc",
-      "weapon",
-      "shield",
-      "ammunition",
-      "armor",
-      "helmet"
+      "skill", 
+      "freeAccessSpell", 
+      "maintenances",
+      "selected",
+      "metamagic",
+      "invocation"
     ],
-    "templates": {
-      "base": {
-        "quantity": 0,
-        "fortitude": 10,
-        "breakage": 5,
-        "description": "",
-        "presence": 30,
-        "weight": 0,
-        "price": 0,
-        "quality": 0
-      },
-      "weaponBase": {
-        "size": "normal",
-        "speed": 10,
-        "basedamage": 50,
-        "damageTypePrimary": "cut",
-        "damageTypeSecondary": "impact",
-        "special": "",
-        "weaponTypePrimary": "",
-        "weaponTypeSecondary": "",
-        "requiredStrength": 5,
-        "requiredStrengthTwoHanded": 5
-      },
-      "armorBase": {
-        "armorRequirement": 10,
-        "naturalPenalty": 10,
-        "localization": "",
-        "type": "",
-        "presence": 30,
-        "cut": 0,
-        "impact": 0,
-        "pierce": 0,
-        "heat": 0,
-        "cold": 0,
-        "electricity": 0,
-        "energy": 0
-      }
-    },
-    "weapon": {
-      "templates": ["base", "weaponbase"]
-    },
-    "shield": {
-      "templates": ["base", "weaponbase"],
-      "defenseBonusParry": 5,
-      "defenseBonusDodge": 5
-    },
-    "ammunition": {
-      "templates": ["base", "weaponbase"],
-      "typeOfAmmunition": ""
-    },
-    "armor": {
-      "templates": ["base", "armorbase"]
-    },
-    "helmet": {
-      "templates": ["base", "armorbase"],
-      "perceptionPenalty": 10
-    }
 
+    "freeAccessSpell": {
+      "level": 0
+    },
+    "skill": {
+      "value": 0
+    },
+    "maintenances":{
+      "cost": 0
+    },
+    "selected":{
+      "cost": 0
+    },
+    "metamagic":{
+      "grade": 0
+    },
+    "invocation":{
+      "cost": 0
+    }
   }
 }

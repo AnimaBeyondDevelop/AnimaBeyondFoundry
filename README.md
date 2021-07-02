@@ -1,6 +1,6 @@
 # AnimaBeyondFoundry
 
-// Instrucciones de instalación para desarrolladores
+## Instrucciones de instalación para desarrolladores
 
 1) Clonar el repositorio en \AppData\Local\FoundryVTT\Data\systems\AnimaBeyondFoundry. En Sourcetree esto se hace en File-> Clone.
 
@@ -22,8 +22,7 @@
 
 5) Abrir Foundry. Deberíamos ver Anima Beyond Fantasy entre nuestros sistemas instalados.
 
-//
-// Instrucciones de trabajo para desarrolladores
+## Instrucciones de trabajo para desarrolladores
 
 a) Para empezar a trabajar en algo en lo que no se esté trabajando ya:
 
@@ -53,3 +52,7 @@ Mientras la terminal siga corriendo con ese comando, cualquier cambio que se hag
 8) De vez en cuando, cuando la rama Develop haya tenido bastantes cambios, se hará un MERGE de la rama develop a la rama master. De nuevo, esto mejor que solo se haga con consenso entre varios.
 
 b) Para continuar tu trabajo o el trabajo de otro: Lo mismo que lo anterior pero sin el paso 1 ni 3.
+
+## Enlaces útiles
+
+- [Cómo crear un nuevo tipo de item](docs/add-new-item.md)

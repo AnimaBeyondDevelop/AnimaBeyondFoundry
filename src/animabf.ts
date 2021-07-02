@@ -13,10 +13,10 @@
 // Import TypeScript modules
 import { registerSettings } from './module/utils/settings';
 import { preloadTemplates } from './module/utils/preloadTemplates';
-import ABFActorSheet from './module/ABFActorSheet';
+import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/ABFCombat';
-import { ABFActor } from './module/ABFActor';
+import { ABFActor } from './module/actor/ABFActor';
 
 /* ------------------------------------ */
 /* Initialize system					*/

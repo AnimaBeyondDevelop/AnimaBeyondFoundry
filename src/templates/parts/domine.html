@@ -1,3 +1,5 @@
+<!--Tabla de acus y Ki total-->
+
 <div>
     <table class="Acus">
         <tr>
@@ -52,6 +54,8 @@
     
     </table>
 </div>
+
+<!--Sellos de invocación-->
 
 <div>
     <table class="Sellos">
@@ -113,6 +117,8 @@
     </table>
 </div>
 
+<!--Esto como si lo borras-->
+
 <div>
     <form>
         <input type="text" value="Nombre Tecnica">
@@ -156,10 +162,12 @@
     <button>Añadir tecnica</button>
 </div>
 
+<!--Arbol del Ki-->
+
 <div>
     <ul id="KiUL">
         <li><span class="caret">
-            <input type="checkbox" id="cbox2" value="data.domine.useOfKi.value"> 
+            <input type="checkbox" id="cbox2" value="{{data.domine.useOfKi.value}}" checked="data.domine.kiControl.value"> 
             <label for="cbox2">Uso del Ki</label></span>
             {{#if data.domine.useOfKi.value}}
           <ul class="nested">
@@ -500,6 +508,8 @@
         </li>
     </ul>
 </div>
+
+<!--Arbol del nemesis-->
 
 <div>
     <ul id="NemesisUl">
