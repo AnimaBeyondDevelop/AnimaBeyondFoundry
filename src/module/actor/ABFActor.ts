@@ -1,12 +1,12 @@
 import { openDialog } from '../utils/openDialog';
 import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
-import { MaintenancesChanges } from '../types/maintenancesChange';
 import { SelectedSpelsChange } from '../types/SelectedSpelsChange';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { Items } from './utils/prepareSheet/prepareItems/Items';
 import { MetamagicChanges } from '../types/MetamagicChange';
 import { InvocationChanges } from '../types/InvocationChange';
+import { MaintenancesChanges } from '../types/MaintenancesChange';
 
 export class ABFActor extends Actor {
   prepareData() {
