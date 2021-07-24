@@ -6,4 +6,4 @@ foundryconfig.json
 
 /integration/cypress.env.json
 
-/.husky/
+.husky/
