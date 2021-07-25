@@ -1,0 +1,369 @@
+@import 'variable.scss';
+@import '_common.scss';
+
+.main-tab {
+  margin-top: 0.75rem;
+
+  // Grids
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-column-gap: 1rem;
+
+  .second-column > .sub-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1rem;
+  }
+  // Grids
+
+  // Main styles
+  .group {
+    width: 100%;
+
+    .group-header {
+      @include group-header;
+
+      position: relative;
+      z-index: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-height: 1.7rem;
+      padding-right: 0.5rem;
+
+      .group-header-title {
+        font-size: 1.2rem;
+        width: 100%;
+
+        margin: 0;
+      }
+
+      .add-button {
+        justify-self: start;
+      }
+
+      .input {
+        justify-self: end;
+
+        width: 2.8rem !important; // TODO Eliminar el estilo genérico
+        height: 1rem !important; // TODO Eliminar el estilo genérico
+      }
+    }
+
+    .group-body {
+      @include group-body;
+
+      margin-top: -1.5rem;
+      padding: 2rem 0.5rem 0.5rem;
+
+      .input {
+        width: 100% !important; // TODO Eliminar el estilo genérico
+        height: 1.5rem !important; // TODO Eliminar el estilo genérico
+      }
+    }
+
+    .input {
+      border-radius: $border-radius;
+      background: $light-cream;
+      font-weight: bold;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .add-button {
+      width: auto;
+      height: 1.5rem;
+      border-radius: 50%;
+    }
+
+    .label {
+      font-weight: bold;
+
+      &.gray {
+        color: $light-gray;
+      }
+    }
+  }
+
+  // Main styles
+
+  // Level
+  .level {
+    .group-body {
+      .level-row:first-child {
+        margin-top: 0;
+      }
+
+      .level-row {
+        margin-top: 0.25rem;
+
+        & .input {
+          &:first-child {
+            flex: 3.7;
+            margin-right: 0.5rem;
+          }
+
+          flex: 1;
+        }
+      }
+    }
+  }
+  // Level
+
+  // Language
+  .language {
+    .group-body {
+      .base-language {
+        align-items: center;
+      }
+
+      .language-row {
+        margin-top: 0.25rem;
+
+        .input {
+          width: 100%;
+        }
+      }
+    }
+  }
+  // Language
+
+  // Elan
+  .elan {
+    .group-header-title {
+      padding-right: 2rem;
+    }
+
+    .group-body {
+      .elan-row:first-child {
+        margin-top: 0;
+      }
+
+      .elan-row {
+        margin-top: 0.25rem;
+
+        .base {
+          align-items: center;
+        }
+
+        .powers {
+          & .input {
+            &:first-child {
+              margin-right: 0.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  // Elan
+
+  // Titles
+  .titles {
+    .group-header-title {
+      padding-right: 2rem;
+    }
+
+    .group-body {
+      .titles-row:first-child {
+        margin-top: 0;
+      }
+
+      .titles-row {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+  // Titles
+
+  // Experience
+  .experience {
+    .group-body {
+      .experience-bar,
+      .experience-bar .current-experience {
+        height: 0.5rem;
+        border-radius: 0.25rem;
+      }
+
+      .experience-bar {
+        position: relative;
+        background-color: $light-cream;
+
+        .current-experience {
+          position: absolute;
+          left: 0;
+          top: 0;
+
+          background-color: $red;
+          transition: width 300ms ease-in-out;
+        }
+      }
+
+      .input {
+        background-color: transparent;
+        height: 1rem !important; // TODO Eliminar el estilo genérico
+
+        &.current-experience {
+          text-align: end;
+        }
+      }
+    }
+  }
+  // Experience
+
+  // Advantages
+  .advantages {
+    .group-header-title {
+      padding-right: 2rem;
+    }
+
+    .group-body {
+      .advantages-row:first-child {
+        margin-top: 0;
+      }
+
+      .advantages-row {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+  // Advantages
+
+  // Disadvantages
+  .disadvantages {
+    .group-header-title {
+      padding-right: 2rem;
+    }
+
+    .group-body {
+      .disadvantages-row:first-child {
+        margin-top: 0;
+      }
+
+      .disadvantages-row {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+  // Disadvantages
+
+  // Aspect
+  .aspect {
+    .group-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .hair,
+      .eyes,
+      .height,
+      .weight,
+      .age,
+      .genre,
+      .race,
+      .appearance,
+      .size {
+        align-items: center;
+        margin-top: 0.5rem;
+
+        p {
+          margin: 0;
+          margin-right: 0.25rem;
+        }
+      }
+
+      .aspect-row:first-child {
+        margin-top: 0;
+      }
+
+      .aspect-row {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+  // Aspect
+
+  // Description
+  .description {
+    .group-body {
+      .input {
+        border: none;
+        height: 8rem !important; // TODO Eliminar el estilo genérico
+      }
+    }
+  }
+  // Description
+
+  // Contacts
+  .contacts {
+    .group-header-title {
+      padding-right: 2rem;
+    }
+
+    .group-body {
+      .contacts-row:first-child {
+        margin-top: 0;
+      }
+
+      .contacts-row {
+        margin-top: 0.75rem;
+
+        .label {
+          font-size: 1.2rem;
+          color: $light-gray;
+          text-align: center;
+
+          margin-top: 0;
+        }
+
+        .contact-name,
+        .contact-description {
+          flex-direction: column;
+          align-items: center;
+          justify-content: start;
+
+          width: 100%;
+
+          flex: 1;
+        }
+
+        .contact-name {
+          .input {
+            border: none;
+            height: auto !important; // TODO Eliminar el estilo genérico
+          }
+        }
+
+        .contact-description {
+          flex: 2.5;
+
+          .input {
+            border: none;
+            height: auto !important; // TODO Eliminar el estilo genérico
+          }
+        }
+      }
+    }
+  }
+  // Contacts
+
+  // Notes
+  .notes {
+    .group-header-title {
+      padding-right: 2rem;
+    }
+
+    .group-body {
+      .notes-row:first-child {
+        margin-top: 0;
+      }
+
+      .notes-row {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+  // Notes
+}
