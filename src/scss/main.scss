@@ -36,9 +36,8 @@
       padding-right: 0.5rem;
 
       .group-header-title {
-        font-size: 1.2rem;
+        font-weight: bold;
         width: 100%;
-
         margin: 0;
       }
 
@@ -268,7 +267,7 @@
         align-items: center;
         margin-top: 0.5rem;
 
-        p {
+        .label {
           margin: 0;
           margin-right: 0.25rem;
         }
@@ -311,7 +310,6 @@
         margin-top: 0.75rem;
 
         .label {
-          font-size: 1.2rem;
           color: $light-gray;
           text-align: center;
 
