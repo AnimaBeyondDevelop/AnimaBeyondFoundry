@@ -4,8 +4,10 @@
     <h3 class='group-header-title'>Ventajas</h3>
   </div>
   <div class='group-body'>
-    <div class='advantages-row'>
-      <input type='text' class='input' />
-    </div>
+    {{#each data.general.advantages}}
+      <div class='advantages-row'>
+        <input name='{{this}}' type='text' class='input' value='{{this}}' />
+      </div>
+    {{/each}}
   </div>
 </div>

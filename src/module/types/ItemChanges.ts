@@ -1,6 +1,6 @@
 import { SkillChange } from './SkillChange';
 import { FreeAccessSpellChange } from './FreeAccessSpellChange';
-import { SelectedSpelsChange } from './SelectedSpelsChange';
+import { SelectedSpellsChange } from './SelectedSpellsChange';
 import { InvocationChanges } from './InvocationChange';
 import { MetamagicChanges } from './MetamagicChange';
 import { MaintenancesChanges } from './MaintenancesChange';
@@ -11,7 +11,7 @@ export type ItemChanges = {
       skill: SkillChange;
       freeAccessSpells: FreeAccessSpellChange;
       maintenances: MaintenancesChanges;
-      selected: SelectedSpelsChange;
+      selected: SelectedSpellsChange;
       metamagic: MetamagicChanges;
       invocation: InvocationChanges;
     };

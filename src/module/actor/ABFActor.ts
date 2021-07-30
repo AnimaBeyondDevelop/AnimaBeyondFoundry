@@ -1,7 +1,7 @@
 import { openDialog } from '../utils/openDialog';
 import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
-import { SelectedSpelsChange } from '../types/SelectedSpelsChange';
+import { SelectedSpellsChange } from '../types/SelectedSpellsChange';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { Items } from './utils/prepareSheet/prepareItems/Items';
 import { MetamagicChanges } from '../types/MetamagicChange';
@@ -53,7 +53,7 @@ export class ABFActor extends Actor {
     await this.createOwnedItem(itemData);
   }
 
-  public editSelectedSpells(selected: SelectedSpelsChange) {
+  public editSelectedSpells(selected: SelectedSpellsChange) {
     for (const id of Object.keys(selected)) {
       const { name, data } = selected[id];
 
