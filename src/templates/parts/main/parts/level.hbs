@@ -1,13 +1,29 @@
 <div class='group level'>
   <div class='group-header'>
-    <img class='add-button' src='/systems/animabf/assets/images/boton-plus.png' />
+    <img
+      class='add-button'
+      data-on-click='add-level'
+      src='/systems/animabf/assets/images/boton-plus.png'
+    />
     <h3 class='group-header-title'>Nivel</h3>
     <input type='number' class='input' />
   </div>
   <div class='group-body'>
-    <div class='level-row flex'>
-      <input type='text' class='input' />
-      <input type='text' class='input' />
-    </div>
+    {{#each data.general.levels}}
+      <div class='level-row flex'>
+        <input
+          name='data.dynamic.levels.{{this._id}}.name'
+          type='text'
+          class='input'
+          value='{{this.name}}'
+        />
+        <input
+          name='data.dynamic.levels.{{this._id}}.data.level'
+          type='text'
+          class='input'
+          value='{{this.data.level}}'
+        />
+      </div>
+    {{/each}}
   </div>
 </div>

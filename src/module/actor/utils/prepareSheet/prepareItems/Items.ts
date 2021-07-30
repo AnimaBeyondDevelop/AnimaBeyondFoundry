@@ -4,5 +4,6 @@ export enum Items {
   MAINTENANCES = 'maintenances',
   SELECTED = 'selected',
   METAMAGIC = 'metamagic',
-  INVOCATION = 'invocation'
+  INVOCATION = 'invocation',
+  LEVEL = 'level'
 }

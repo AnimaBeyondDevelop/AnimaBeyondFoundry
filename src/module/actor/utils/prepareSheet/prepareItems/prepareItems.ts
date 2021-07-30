@@ -7,6 +7,7 @@ import { attachSelectedSpells } from './attachSelectedSpells';
 import { Items } from './Items';
 import { attachInvocation } from './attachInvocation';
 import { attachMetamagic } from './attachMetamagic';
+import { attachLevels } from './attachLevels';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -17,7 +18,8 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.MAINTENANCES,
     Items.SELECTED,
     Items.METAMAGIC,
-    Items.INVOCATION
+    Items.INVOCATION,
+    Items.LEVEL,
   ].map(
     type => type.toString()
   );
@@ -44,6 +46,9 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.METAMAGIC:
           newData = attachMetamagic(newData, item);
+          break;
+        case Items.LEVEL:
+          newData = attachLevels(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

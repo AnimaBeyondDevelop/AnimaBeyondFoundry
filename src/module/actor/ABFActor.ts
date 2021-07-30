@@ -7,6 +7,7 @@ import { Items } from './utils/prepareSheet/prepareItems/Items';
 import { MetamagicChanges } from '../types/MetamagicChange';
 import { InvocationChanges } from '../types/InvocationChange';
 import { MaintenancesChanges } from '../types/MaintenancesChange';
+import { LevelChanges } from '../types/LevelChange';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -157,6 +158,30 @@ export class ABFActor extends Actor {
         name,
         data: {
           grade: data.grade
+        }
+      });
+    }
+  }
+
+  public async addLevel(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.level.content')
+    });
+
+    const itemData = { name, type: Items.LEVEL, level: 0 };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editLevel(level: LevelChanges) {
+    for (const id of Object.keys(level)) {
+      const { name, data } = level[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          level: data.level
         }
       });
     }

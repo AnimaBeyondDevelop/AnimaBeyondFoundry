@@ -80,6 +80,10 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addMetamagic();
     });
 
+    html.find('[data-on-click="add-level"]').click(() => {
+      this.actor.addLevel();
+    });
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -137,6 +141,10 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.metamagic) {
       this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagic);
+    }
+
+    if (unflattedChanges.data.dynamic.levels) {
+      this.actor.editLevel(unflattedChanges.data.dynamic.levels);
     }
   }
 }

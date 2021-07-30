@@ -4,6 +4,7 @@ import { SelectedSpellsChange } from './SelectedSpellsChange';
 import { InvocationChanges } from './InvocationChange';
 import { MetamagicChanges } from './MetamagicChange';
 import { MaintenancesChanges } from './MaintenancesChange';
+import { LevelChanges } from './LevelChange';
 
 export type ItemChanges = {
   data: {
@@ -14,6 +15,7 @@ export type ItemChanges = {
       selected: SelectedSpellsChange;
       metamagic: MetamagicChanges;
       invocation: InvocationChanges;
+      levels: LevelChanges;
     };
   };
 };
