@@ -10,24 +10,6 @@
 				{{!-- Dices --}}
 				<div class="dice"><img src="\systems\animabf\assets\dice.png" class="rollable" data-roll="1d10"><span class="rollable" data-roll="1d10">10</span></div>
 				<div class="dice"><img src="\systems\animabf\assets\dice.png" class="rollable" data-roll="1d100xa"><span class="rollable" data-roll="1d100xa">100</span></div>
-
-				{{!-- Class --}}
-				<div class="class-actor flexrow">
-					<label class="text">{{localize "anima.class"}}:</label>
-					<input type="text" class="class-text" value="{{data.description.class}}" name="data.description.class" data-dtype="String" placeholder="{{localize "anima.class"}}:">
-				</div>
-
-				{{!-- Level --}}
-				<div class="level flexrow">
-					<h4 class="text">{{localize "anima.level"}}:</h4>
-					<input type="number" class="level-number" value="{{data.description.level.value}}" name="data.description.level.value" data-dtype="Number">
-				</div>
-
-				{{!-- Experience --}}
-				<div class="experience flexrow">
-					<h4 class="text">{{localize "anima.experience"}}:</h4>
-					<input type="number" class="xp-number" value="{{data.description.experience.value}}" name="data.description.experience.value" data-dtype="Number">
-				</div>
 			</div>
 
 
@@ -72,8 +54,8 @@
 				<div class="lifePoints">
 					<span class="text-off">{{localize "anima.basic"}}</span>
 					<span class="text">{{localize "anima.lifePoints"}}</span>
-					<input type="number" name="data.commonResources.lifePoints.max" class="max-life" value="{{data.commonResources.lifePoints.max}}" data-dtype="Number">
-					<input type="number" name="data.commonResources.lifePoints.value" class="current-life" value="{{data.commonResources.lifePoints.value}}" data-dtype="Number">
+					<input type="number" name="data.general.lifePoints.max" class="max-life" value="{{data.general.lifePoints.max}}" data-dtype="Number">
+					<input type="number" name="data.general.lifePoints.value" class="current-life" value="{{data.general.lifePoints.value}}" data-dtype="Number">
 				</div>
 
 				{{!-- Turns --}}
@@ -91,8 +73,8 @@
 				<div class="fati-movem flexrow">
 					<div class="fatigue">
 						<h3 class="text">{{localize "anima.fatigue"}}</h3>
-						<input type="number" name="data.commonResources.fatigue.max" class="max-fatigue" value="{{data.commonResources.fatigue.max}}" data-dtype="Number">
-						<input type="number" name="data.commonResources.fatigue.value" class="current-fatigue" value="{{data.commonResources.fatigue.value}}" data-dtype="Number">
+						<input type="number" name="data.general.fatigue.max" class="max-fatigue" value="{{data.general.fatigue.max}}" data-dtype="Number">
+						<input type="number" name="data.general.fatigue.value" class="current-fatigue" value="{{data.general.fatigue.value}}" data-dtype="Number">
 					</div>
 					<div class="movement">
 						<h3 class="text">{{localize "anima.movement"}}</h3>
