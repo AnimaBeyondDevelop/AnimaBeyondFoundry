@@ -8,6 +8,7 @@ import { MetamagicChanges } from '../types/MetamagicChange';
 import { InvocationChanges } from '../types/InvocationChange';
 import { MaintenancesChanges } from '../types/MaintenancesChange';
 import { LevelChanges } from '../types/LevelChange';
+import { LanguageChanges } from '../types/LanguageChange';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -183,6 +184,27 @@ export class ABFActor extends Actor {
         data: {
           level: data.level
         }
+      });
+    }
+  }
+
+  public async addLanguage(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.language.content')
+    });
+
+    const itemData = { name, type: Items.LANGUAGE };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editLanguage(language: LanguageChanges) {
+    for (const id of Object.keys(language)) {
+      const { name } = language[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
       });
     }
   }

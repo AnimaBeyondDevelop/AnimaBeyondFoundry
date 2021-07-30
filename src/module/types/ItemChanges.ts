@@ -5,6 +5,7 @@ import { InvocationChanges } from './InvocationChange';
 import { MetamagicChanges } from './MetamagicChange';
 import { MaintenancesChanges } from './MaintenancesChange';
 import { LevelChanges } from './LevelChange';
+import { LanguageChanges } from './LanguageChange';
 
 export type ItemChanges = {
   data: {
@@ -16,6 +17,7 @@ export type ItemChanges = {
       metamagic: MetamagicChanges;
       invocation: InvocationChanges;
       levels: LevelChanges;
+      other_languages: LanguageChanges;
     };
   };
 };

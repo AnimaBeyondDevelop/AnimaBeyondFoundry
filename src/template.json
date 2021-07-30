@@ -315,7 +315,8 @@
       "selected",
       "metamagic",
       "invocation",
-      "level"
+      "level",
+      "language"
     ],
 
     "freeAccessSpell": {
@@ -338,6 +339,7 @@
     },
     "level": {
       "level": 0
-    }
+    },
+    "language": {}
   }
 }

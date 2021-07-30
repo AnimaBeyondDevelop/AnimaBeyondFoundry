@@ -5,5 +5,6 @@ export enum Items {
   SELECTED = 'selected',
   METAMAGIC = 'metamagic',
   INVOCATION = 'invocation',
-  LEVEL = 'level'
+  LEVEL = 'level',
+  LANGUAGE = 'language',
 }

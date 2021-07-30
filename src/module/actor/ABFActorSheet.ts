@@ -84,6 +84,10 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addLevel();
     });
 
+    html.find('[data-on-click="add-language"]').click(() => {
+      this.actor.addLanguage();
+    });
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -145,6 +149,10 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.levels) {
       this.actor.editLevel(unflattedChanges.data.dynamic.levels);
+    }
+
+    if (unflattedChanges.data.dynamic.other_languages) {
+      this.actor.editLanguage(unflattedChanges.data.dynamic.other_languages);
     }
   }
 }
