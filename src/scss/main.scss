@@ -179,6 +179,16 @@
   // Titles
 
   // Experience
+  @keyframes experience-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
   .experience {
     .group-body {
       .experience-bar,
@@ -190,6 +200,7 @@
       .experience-bar {
         position: relative;
         background-color: $light-cream;
+        overflow: hidden;
 
         .current-experience {
           position: absolute;
@@ -197,7 +208,8 @@
           top: 0;
 
           background-color: $red;
-          transition: width 300ms ease-in-out;
+
+          animation: experience-bar 300ms ease-in-out;
         }
       }
 
@@ -207,6 +219,10 @@
 
         &.current-experience {
           text-align: end;
+        }
+
+        &.red {
+         color: $red;
         }
       }
     }
