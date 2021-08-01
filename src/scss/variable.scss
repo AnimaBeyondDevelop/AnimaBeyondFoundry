@@ -70,6 +70,10 @@ $border-radius: 10px;
     ::-webkit-input-placeholder {
       text-align: center;
     }
+
+    &:hover {
+      box-shadow: 0 0 5px $red;
+    }
   }
 
   // ------------------------

@@ -51,8 +51,8 @@
       .input {
         justify-self: end;
 
-        width: 2.8rem !important; // TODO Eliminar el estilo genérico
-        height: 1rem !important; // TODO Eliminar el estilo genérico
+        width: 2.8rem;
+        height: 1rem;
       }
     }
 
@@ -63,8 +63,8 @@
       padding: 2rem 0.5rem 0.5rem;
 
       .input {
-        width: 100% !important; // TODO Eliminar el estilo genérico
-        height: 1.5rem !important; // TODO Eliminar el estilo genérico
+        width: 100%;
+        height: 1.5rem;
       }
     }
 
@@ -222,7 +222,7 @@
 
       .input {
         background-color: transparent;
-        height: 1rem !important; // TODO Eliminar el estilo genérico
+        height: 1rem;
 
         &.current-experience {
           text-align: end;
@@ -312,7 +312,7 @@
     .group-body {
       .input {
         border: none;
-        height: 8rem !important; // TODO Eliminar el estilo genérico
+        height: 8rem;
       }
     }
   }
@@ -357,7 +357,7 @@
         .contact-name {
           .input {
             border: none;
-            height: auto !important; // TODO Eliminar el estilo genérico
+            height: auto;
           }
         }
 
@@ -366,7 +366,7 @@
 
           .input {
             border: none;
-            height: auto !important; // TODO Eliminar el estilo genérico
+            height: auto;
           }
         }
       }
