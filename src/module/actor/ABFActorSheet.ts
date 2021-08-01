@@ -88,17 +88,36 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addLanguage();
     });
 
+    // Elan
+    new ContextMenu($('#elan-context-menu-container'), '.elan-row', [
+      {
+        name: 'Eliminar',
+        icon: '<i class="fas fa-trash fa-fw"></i>',
+        callback: target => {
+          const { elanId } = target[0].dataset;
+
+          if (!elanId) throw new Error('elanId missing');
+
+          this.actor.deleteOwnedItem(elanId);
+        }
+      },
+      {
+        name: 'Añadir poder',
+        icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
+        callback: target => {
+          const { elanId } = target[0].dataset;
+
+          if (!elanId) throw new Error('elanId missing');
+
+          this.actor.addElanPower(elanId);
+        }
+      }
+    ]);
+
     html.find('[data-on-click="add-elan"]').click(() => {
       this.actor.addElan();
     });
-
-    html.find('[data-on-click="add-elan-power"]').click(e => {
-      const { elanId } = e.currentTarget.dataset;
-
-      if (!elanId) throw new Error('elanId missing');
-
-      this.actor.addElanPower(elanId);
-    });
+    // Elan
 
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;

@@ -7,9 +7,9 @@
     />
     <h3 class='group-header-title'>Elan</h3>
   </div>
-  <div class='group-body'>
+  <div id='elan-context-menu-container' class='group-body'>
     {{#each data.general.elan as |elan|}}
-      <div class='elan-row'>
+      <div class='elan-row' data-elan-id='{{elan._id}}'>
         <div class='base flex'>
           <p
             data-on-click='add-elan-power'
