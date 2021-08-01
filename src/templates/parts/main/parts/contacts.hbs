@@ -5,13 +5,13 @@
       data-on-click='add-contact'
       src='/systems/animabf/assets/images/boton-plus.png'
     />
-    <h3 class='group-header-title'>Contactos</h3>
+    <h3 class='group-header-title'>{{localize 'anima.ui.contactSection.title'}}</h3>
   </div>
   <div id='contact-context-menu-container' class='group-body'>
     {{#each data.general.contacts}}
       <div data-contact-id='{{this._id}}' class='contact-row flex'>
         <div class='contact-name flex flex-1 mr-3'>
-          <p class='label'>Nombre</p>
+          <p class='label'>{{localize 'anima.ui.contactSection.contactRow.name'}}</p>
           <textarea
             name='data.dynamic.contacts.{{this._id}}.name'
             class='input'
@@ -19,7 +19,9 @@
           >{{this.name}}</textarea>
         </div>
         <div class='contact-description flex flex-4'>
-          <p class='label'>Descripción</p>
+          <p class='label'>{{localize
+              'anima.ui.contactSection.contactRow.description'
+            }}</p>
           <textarea
             name='data.dynamic.contacts.{{this._id}}.description'
             class='input'

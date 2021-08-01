@@ -111,7 +111,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       rowIdData: 'elanId',
       otherItems: [
         {
-          name: 'Añadir poder',
+          name: game.i18n.localize('contextualMenu.elan.options.addPower'),
           icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
           callback: target => {
             const { elanId } = target[0].dataset;
@@ -298,7 +298,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
   }) => {
     return new ContextMenu($(containerSelector), rowSelector, [
       {
-        name: 'Eliminar',
+        name: game.i18n.localize('contextualMenu.common.options.delete'),
         icon: '<i class="fas fa-trash fa-fw"></i>',
         callback: target => {
           const id = target[0].dataset[rowIdData];

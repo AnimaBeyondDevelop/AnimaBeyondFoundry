@@ -5,7 +5,7 @@
       data-on-click='add-elan'
       src='/systems/animabf/assets/images/boton-plus.png'
     />
-    <h3 class='group-header-title'>Elan</h3>
+    <h3 class='group-header-title'>{{localize 'anima.ui.elanSection.title'}}</h3>
   </div>
   <div id='elan-context-menu-container' class='group-body'>
     {{#each data.general.elan as |elan|}}
@@ -15,14 +15,16 @@
             data-on-click='add-elan-power'
             data-elan-id='{{elan._id}}'
             class='label gray mr-2 flex-1'
-          >Potencia</p>
+          >{{localize 'anima.ui.elanSection.elanRow.name'}}</p>
           <input
             name='data.dynamic.elan.{{elan._id}}.name'
             type='text'
             class='input flex-3'
             value='{{elan.name}}'
           />
-          <p class='label gray ml-2 mr-2 flex-1'>Nv</p>
+          <p class='label gray ml-2 mr-2 flex-1'>{{localize
+              'anima.ui.elanSection.elanRow.level'
+            }}</p>
           <input
             name='data.dynamic.elan.{{elan._id}}.level'
             type='text'
