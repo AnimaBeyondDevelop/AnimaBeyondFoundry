@@ -10,6 +10,11 @@ import { attachMetamagic } from './attachMetamagic';
 import { attachLevels } from './attachLevels';
 import { attachLanguages } from './attachLanguages';
 import { attachElan } from './attachElan';
+import { attachTitles } from './attachTitles';
+import { attachAdvantages } from './attachAdvantages';
+import { attachDisadvantages } from './attachDisadvantages';
+import { attachContacts } from './attachContacts';
+import { attachNotes } from './attachNotes';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -23,7 +28,12 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.INVOCATION,
     Items.LEVEL,
     Items.LANGUAGE,
-    Items.ELAN
+    Items.ELAN,
+    Items.TITLE,
+    Items.ADVANTAGE,
+    Items.DISADVANTAGE,
+    Items.CONTACT,
+    Items.NOTE
   ].map(type => type.toString());
 
   for (const item of newData.items) {
@@ -57,6 +67,21 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.ELAN:
           newData = attachElan(newData, item);
+          break;
+        case Items.TITLE:
+          newData = attachTitles(newData, item);
+          break;
+        case Items.ADVANTAGE:
+          newData = attachAdvantages(newData, item);
+          break;
+        case Items.DISADVANTAGE:
+          newData = attachDisadvantages(newData, item);
+          break;
+        case Items.CONTACT:
+          newData = attachContacts(newData, item);
+          break;
+        case Items.NOTE:
+          newData = attachNotes(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

@@ -10,7 +10,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/combat.html',
     'systems/animabf/templates/parts/domine.html',
     'systems/animabf/templates/parts/psychic.hbs',
-    'systems/animabf/templates/parts/main/main.hbs',
+    'systems/animabf/templates/parts/main/general.hbs',
     'systems/animabf/templates/parts/main/parts/level.hbs',
     'systems/animabf/templates/parts/main/parts/language.hbs',
     'systems/animabf/templates/parts/main/parts/elan.hbs',

@@ -1,11 +1,22 @@
 <div class='group titles mt-3'>
   <div class='group-header'>
-    <img class='add-button' src='/systems/animabf/assets/images/boton-plus.png' />
+    <img
+      class='add-button'
+      data-on-click='add-title'
+      src='/systems/animabf/assets/images/boton-plus.png'
+    />
     <h3 class='group-header-title'>Títulos</h3>
   </div>
-  <div class='group-body'>
-    <div class='titles-row'>
-      <input type='text' class='input' />
-    </div>
+  <div id='title-context-menu-container' class='group-body'>
+    {{#each data.general.titles}}
+      <div data-title-id='{{this._id}}' class='title-row'>
+        <input
+          name='data.dynamic.titles.{{this._id}}.name'
+          type='text'
+          class='input'
+          value='{{this.name}}'
+        />
+      </div>
+    {{/each}}
   </div>
 </div>

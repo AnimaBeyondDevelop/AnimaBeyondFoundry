@@ -8,7 +8,7 @@
     <h3 class='group-header-title'>Idiomas</h3>
     <input type='number' class='input' />
   </div>
-  <div class='group-body'>
+  <div id='language-context-menu-container' class='group-body'>
     <div class='base-language flex'>
       <p class='label ml-2 mr-2'>Base</p>
       <input
@@ -19,7 +19,7 @@
       />
     </div>
     {{#each data.general.languages.others}}
-      <div class='language-row'>
+      <div data-language-id='{{this._id}}' class='language-row'>
         <input
           name='data.dynamic.other_languages.{{this._id}}.name'
           type='text'

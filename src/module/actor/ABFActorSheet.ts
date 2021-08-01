@@ -80,44 +80,114 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addMetamagic();
     });
 
+    // Level
+    this.buildCommonContextualMenu({
+      containerSelector: '#level-context-menu-container',
+      rowSelector: '.level-row',
+      rowIdData: 'levelId'
+    });
+
     html.find('[data-on-click="add-level"]').click(() => {
       this.actor.addLevel();
+    });
+    // Level
+
+    // Language
+    this.buildCommonContextualMenu({
+      containerSelector: '#language-context-menu-container',
+      rowSelector: '.language-row',
+      rowIdData: 'languageId'
     });
 
     html.find('[data-on-click="add-language"]').click(() => {
       this.actor.addLanguage();
     });
+    // Language
 
     // Elan
-    new ContextMenu($('#elan-context-menu-container'), '.elan-row', [
-      {
-        name: 'Eliminar',
-        icon: '<i class="fas fa-trash fa-fw"></i>',
-        callback: target => {
-          const { elanId } = target[0].dataset;
+    this.buildCommonContextualMenu({
+      containerSelector: '#elan-context-menu-container',
+      rowSelector: '.elan-row',
+      rowIdData: 'elanId',
+      otherItems: [
+        {
+          name: 'Añadir poder',
+          icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
+          callback: target => {
+            const { elanId } = target[0].dataset;
 
-          if (!elanId) throw new Error('elanId missing');
+            if (!elanId) throw new Error('elanId missing');
 
-          this.actor.deleteOwnedItem(elanId);
+            this.actor.addElanPower(elanId);
+          }
         }
-      },
-      {
-        name: 'Añadir poder',
-        icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
-        callback: target => {
-          const { elanId } = target[0].dataset;
-
-          if (!elanId) throw new Error('elanId missing');
-
-          this.actor.addElanPower(elanId);
-        }
-      }
-    ]);
+      ]
+    });
 
     html.find('[data-on-click="add-elan"]').click(() => {
       this.actor.addElan();
     });
     // Elan
+
+    // Titles
+    this.buildCommonContextualMenu({
+      containerSelector: '#title-context-menu-container',
+      rowSelector: '.title-row',
+      rowIdData: 'titleId'
+    });
+
+    html.find('[data-on-click="add-title"]').click(() => {
+      this.actor.addTitle();
+    });
+    // Titles
+
+    // Advantages
+    this.buildCommonContextualMenu({
+      containerSelector: '#advantage-context-menu-container',
+      rowSelector: '.advantage-row',
+      rowIdData: 'advantageId'
+    });
+
+    html.find('[data-on-click="add-advantage"]').click(() => {
+      this.actor.addAdvantage();
+    });
+    // Advantages
+
+    // Disadvantages
+    this.buildCommonContextualMenu({
+      containerSelector: '#disadvantage-context-menu-container',
+      rowSelector: '.disadvantage-row',
+      rowIdData: 'disadvantageId'
+    });
+
+    html.find('[data-on-click="add-disadvantage"]').click(() => {
+      this.actor.addDisadvantage();
+    });
+    // Disadvantages
+
+    // Contacts
+    this.buildCommonContextualMenu({
+      containerSelector: '#contact-context-menu-container',
+      rowSelector: '.contact-row',
+      rowIdData: 'contactId'
+    });
+
+    html.find('[data-on-click="add-contact"]').click(() => {
+      this.actor.addContact();
+    });
+    // Contacts
+
+    // Notes
+    this.buildCommonContextualMenu({
+      containerSelector: '#note-context-menu-container',
+      rowSelector: '.note-row',
+      rowIdData: 'noteId'
+    });
+
+    html.find('[data-on-click="add-note"]').click(() => {
+      this.actor.addNote();
+    });
+    // Notes
 
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
@@ -193,5 +263,56 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     if (unflattedChanges.data.dynamic.elan_power) {
       await this.actor.editElanPower(unflattedChanges.data.dynamic.elan_power);
     }
+
+    if (unflattedChanges.data.dynamic.titles) {
+      await this.actor.editTitles(unflattedChanges.data.dynamic.titles);
+    }
+
+    if (unflattedChanges.data.dynamic.advantages) {
+      await this.actor.editAdvantages(unflattedChanges.data.dynamic.advantages);
+    }
+
+    if (unflattedChanges.data.dynamic.disadvantages) {
+      await this.actor.editDisadvantages(unflattedChanges.data.dynamic.disadvantages);
+    }
+
+    if (unflattedChanges.data.dynamic.contacts) {
+      await this.actor.editContacts(unflattedChanges.data.dynamic.contacts);
+    }
+
+    if (unflattedChanges.data.dynamic.notes) {
+      await this.actor.editNotes(unflattedChanges.data.dynamic.notes);
+    }
   }
+
+  private buildCommonContextualMenu = ({
+    containerSelector,
+    rowSelector,
+    rowIdData,
+    otherItems = []
+  }: {
+    containerSelector: string;
+    rowSelector: string;
+    rowIdData: string;
+    otherItems?: ContextMenu.Item[];
+  }) => {
+    return new ContextMenu($(containerSelector), rowSelector, [
+      {
+        name: 'Eliminar',
+        icon: '<i class="fas fa-trash fa-fw"></i>',
+        callback: target => {
+          const id = target[0].dataset[rowIdData];
+
+          if (!id) {
+            throw new Error(
+              `Data id missing. Are you sure to set data-${rowIdData} to rows?`
+            );
+          }
+
+          this.actor.deleteOwnedItem(id);
+        }
+      },
+      ...otherItems
+    ]);
+  };
 }

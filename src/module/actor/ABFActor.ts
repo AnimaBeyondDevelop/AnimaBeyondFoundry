@@ -12,6 +12,11 @@ import { LanguageChanges } from '../types/LanguageChange';
 import { ElanPowerChanges } from '../types/ElanPowerChanges';
 import { ElanChanges } from '../types/ElanChanges';
 import { nanoid } from '../../vendor/nanoid/nanoid';
+import { TitleChanges } from '../types/TitleChange';
+import { AdvantageChange } from '../types/AdvantageChange';
+import { ContactChange } from '../types/ContactChange';
+import { DisadvantageChange } from '../types/DisadvantageChange';
+import { NoteChange } from '../types/NoteChange';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -276,6 +281,127 @@ export class ABFActor extends Actor {
         data: {
           level
         }
+      });
+    }
+  }
+
+  public async addTitle(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.title.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.TITLE
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editTitles(titles: TitleChanges) {
+    for (const id of Object.keys(titles)) {
+      const { name } = titles[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addAdvantage(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.advantage.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.ADVANTAGE
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editAdvantages(advantages: AdvantageChange) {
+    for (const id of Object.keys(advantages)) {
+      const { name } = advantages[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addDisadvantage(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.disadvantage.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.DISADVANTAGE
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editDisadvantages(disadvantages: DisadvantageChange) {
+    for (const id of Object.keys(disadvantages)) {
+      const { name } = disadvantages[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addContact(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.contact.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.CONTACT
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editContacts(contacts: ContactChange) {
+    for (const id of Object.keys(contacts)) {
+      const { name, description } = contacts[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: { description }
+      });
+    }
+  }
+
+  public async addNote(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.note.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.NOTE
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editNotes(notes: NoteChange) {
+    for (const id of Object.keys(notes)) {
+      const { name } = notes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
       });
     }
   }

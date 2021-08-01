@@ -8,6 +8,11 @@ import { LevelChanges } from './LevelChange';
 import { LanguageChanges } from './LanguageChange';
 import { ElanPowerChanges } from './ElanPowerChanges';
 import { ElanChanges } from './ElanChanges';
+import { TitleChanges } from './TitleChange';
+import { AdvantageChange } from './AdvantageChange';
+import { DisadvantageChange } from './DisadvantageChange';
+import { ContactChange } from './ContactChange';
+import { NoteChange } from './NoteChange';
 
 export type ItemChanges = {
   data: {
@@ -22,6 +27,11 @@ export type ItemChanges = {
       other_languages: LanguageChanges;
       elan_power: ElanPowerChanges;
       elan: ElanChanges;
+      titles: TitleChanges;
+      advantages: AdvantageChange;
+      disadvantages: DisadvantageChange;
+      contacts: ContactChange;
+      notes: NoteChange;
     };
   };
 };

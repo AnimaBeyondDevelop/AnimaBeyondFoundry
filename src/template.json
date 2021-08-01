@@ -317,7 +317,12 @@
       "invocation",
       "level",
       "language",
-      "elan"
+      "elan",
+      "title",
+      "advantage",
+      "disadvantage",
+      "contact",
+      "note"
     ],
 
     "freeAccessSpell": {
@@ -341,9 +346,12 @@
     "level": {
       "level": 0
     },
-    "language": {},
     "elan": {
-      "level": 0
+      "level": 0,
+      "powers": []
+    },
+    "contact": {
+      "description": ""
     }
   }
 }

@@ -7,5 +7,10 @@ export enum Items {
   INVOCATION = 'invocation',
   LEVEL = 'level',
   LANGUAGE = 'language',
-  ELAN = 'elan'
+  ELAN = 'elan',
+  TITLE = 'title',
+  ADVANTAGE = 'advantage',
+  DISADVANTAGE = 'disadvantage',
+  CONTACT = 'contact',
+  NOTE = 'note'
 }
