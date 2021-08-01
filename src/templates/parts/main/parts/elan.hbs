@@ -1,21 +1,59 @@
 <div class='group elan mt-3'>
   <div class='group-header'>
-    <img class='add-button' src='/systems/animabf/assets/images/boton-plus.png' />
+    <img
+      class='add-button'
+      data-on-click='add-elan'
+      src='/systems/animabf/assets/images/boton-plus.png'
+    />
     <h3 class='group-header-title'>Elan</h3>
   </div>
   <div class='group-body'>
-    <div class='elan-row'>
-      <div class='base flex'>
-        <p class='label gray mr-2 flex-1'>Potencia</p>
-        <input type='text' class='input flex-3' />
-        <p class='label gray ml-2 mr-2 flex-1'>Nv</p>
-        <input type='text' class='input flex-2' />
-      </div>
+    {{#each data.general.elan as |elan|}}
+      <div class='elan-row'>
+        <div class='base flex'>
+          <p
+            data-on-click='add-elan-power'
+            data-elan-id='{{elan._id}}'
+            class='label gray mr-2 flex-1'
+          >Potencia</p>
+          <input
+            name='data.dynamic.elan.{{elan._id}}.name'
+            type='text'
+            class='input flex-3'
+            value='{{elan.name}}'
+          />
+          <p class='label gray ml-2 mr-2 flex-1'>Nv</p>
+          <input
+            name='data.dynamic.elan.{{elan._id}}.level'
+            type='text'
+            class='input flex-2'
+            value='{{elan.data.level}}'
+          />
+        </div>
 
-      <div class='powers flex mt-1'>
-        <input type='text' class='input flex-4' />
-        <input type='text' class='input flex-1' />
+        {{#each elan.data.powers as |power|}}
+          {{log power}}
+          <div class='powers flex mt-1'>
+            <input
+              type='hidden'
+              name='data.dynamic.elan_power.{{power._id}}.elanId'
+              value='{{elan._id}}'
+            />
+            <input
+              name='data.dynamic.elan_power.{{power._id}}.name'
+              type='text'
+              class='input flex-4'
+              value='{{power.name}}'
+            />
+            <input
+              name='data.dynamic.elan_power.{{power._id}}.level'
+              type='text'
+              class='input flex-1'
+              value='{{power.level}}'
+            />
+          </div>
+        {{/each}}
       </div>
-    </div>
+    {{/each}}
   </div>
 </div>

@@ -42,7 +42,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
   ): Promise<ABFActor> {
     const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
 
-    this.updateItems(itemChanges);
+    await this.updateItems(itemChanges);
 
     return super._updateObject(event, actorChanges);
   }
@@ -88,6 +88,18 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addLanguage();
     });
 
+    html.find('[data-on-click="add-elan"]').click(() => {
+      this.actor.addElan();
+    });
+
+    html.find('[data-on-click="add-elan-power"]').click(e => {
+      const { elanId } = e.currentTarget.dataset;
+
+      if (!elanId) throw new Error('elanId missing');
+
+      this.actor.addElanPower(elanId);
+    });
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -118,7 +130,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
   }
 
-  private updateItems(itemChanges: Record<string, unknown>) {
+  private async updateItems(itemChanges: Record<string, unknown>) {
     if (!itemChanges || Object.keys(itemChanges).length === 0) return;
 
     const unflattedChanges: ItemChanges = unflat(itemChanges);
@@ -153,6 +165,14 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.other_languages) {
       this.actor.editLanguage(unflattedChanges.data.dynamic.other_languages);
+    }
+
+    if (unflattedChanges.data.dynamic.elan) {
+      this.actor.editElan(unflattedChanges.data.dynamic.elan);
+    }
+
+    if (unflattedChanges.data.dynamic.elan_power) {
+      await this.actor.editElanPower(unflattedChanges.data.dynamic.elan_power);
     }
   }
 }

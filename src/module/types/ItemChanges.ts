@@ -6,6 +6,8 @@ import { MetamagicChanges } from './MetamagicChange';
 import { MaintenancesChanges } from './MaintenancesChange';
 import { LevelChanges } from './LevelChange';
 import { LanguageChanges } from './LanguageChange';
+import { ElanPowerChanges } from './ElanPowerChanges';
+import { ElanChanges } from './ElanChanges';
 
 export type ItemChanges = {
   data: {
@@ -18,6 +20,8 @@ export type ItemChanges = {
       invocation: InvocationChanges;
       levels: LevelChanges;
       other_languages: LanguageChanges;
+      elan_power: ElanPowerChanges;
+      elan: ElanChanges;
     };
   };
 };

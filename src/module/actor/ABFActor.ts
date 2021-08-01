@@ -9,6 +9,9 @@ import { InvocationChanges } from '../types/InvocationChange';
 import { MaintenancesChanges } from '../types/MaintenancesChange';
 import { LevelChanges } from '../types/LevelChange';
 import { LanguageChanges } from '../types/LanguageChange';
+import { ElanPowerChanges } from '../types/ElanPowerChanges';
+import { ElanChanges } from '../types/ElanChanges';
+import { nanoid } from '../../vendor/nanoid/nanoid';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -205,6 +208,74 @@ export class ABFActor extends Actor {
       this.updateOwnedItem({
         _id: id,
         name
+      });
+    }
+  }
+
+  public async addElanPower(elanId: string): Promise<void> {
+    if (!elanId) throw new Error('elanId missing');
+
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.elan_power.content')
+    });
+
+    const power = { _id: nanoid(), name, level: 0 };
+
+    const elan = await this.getOwnedItem(elanId);
+
+    if (!elan.data.data.powers) {
+      elan.data.data.powers = [power];
+    } else {
+      elan.data.data.powers.push(power);
+    }
+
+    await elan.update(elan.data);
+  }
+
+  public async editElanPower(elanPowers: ElanPowerChanges) {
+    for (const id of Object.keys(elanPowers)) {
+      const { name, elanId, level } = elanPowers[id];
+
+      if (!elanId) throw new Error('elanId missing');
+
+      const elan = await this.getOwnedItem(elanId);
+
+      const elanPower = elan.data.data.powers.find(power => power._id === id);
+
+      if (elanPower.name === name && elanPower.level === level) continue;
+
+      elanPower.name = name;
+      elanPower.level = level;
+
+      await elan.update(elan.data);
+    }
+  }
+
+  public async addElan(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.elan.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.ELAN,
+      level: 0,
+      powers: []
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editElan(elan: ElanChanges) {
+    for (const id of Object.keys(elan)) {
+      const { name, level } = elan[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          level
+        }
       });
     }
   }

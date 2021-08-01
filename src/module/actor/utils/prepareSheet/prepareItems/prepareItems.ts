@@ -9,6 +9,7 @@ import { attachInvocation } from './attachInvocation';
 import { attachMetamagic } from './attachMetamagic';
 import { attachLevels } from './attachLevels';
 import { attachLanguages } from './attachLanguages';
+import { attachElan } from './attachElan';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -21,7 +22,8 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.METAMAGIC,
     Items.INVOCATION,
     Items.LEVEL,
-    Items.LANGUAGE
+    Items.LANGUAGE,
+    Items.ELAN
   ].map(type => type.toString());
 
   for (const item of newData.items) {
@@ -52,6 +54,9 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.LANGUAGE:
           newData = attachLanguages(newData, item);
+          break;
+        case Items.ELAN:
+          newData = attachElan(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

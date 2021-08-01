@@ -316,7 +316,8 @@
       "metamagic",
       "invocation",
       "level",
-      "language"
+      "language",
+      "elan"
     ],
 
     "freeAccessSpell": {
@@ -340,6 +341,9 @@
     "level": {
       "level": 0
     },
-    "language": {}
+    "language": {},
+    "elan": {
+      "level": 0
+    }
   }
 }

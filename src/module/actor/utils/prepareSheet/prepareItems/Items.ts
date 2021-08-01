@@ -7,4 +7,5 @@ export enum Items {
   INVOCATION = 'invocation',
   LEVEL = 'level',
   LANGUAGE = 'language',
+  ELAN = 'elan'
 }
