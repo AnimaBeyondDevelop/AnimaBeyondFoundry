@@ -202,7 +202,6 @@
           "used": { "value": 0 }
         },
         "summoning": {
-          "currenRitualBonus": { "value": 0 },
           "summon": { "value": 0 },
           "banish": { "value": 0 },
           "bind": { "value": 0 },
