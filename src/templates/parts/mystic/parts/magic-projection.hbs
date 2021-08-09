@@ -1,13 +1,13 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="magic-projection"
-  title="Proyec. Mágica"
+  title=(localize "anima.ui.mystic.magicProjection.title")
 }}
   {{>
   "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
     class="final"
-    title="Final"
+    title=(localize "anima.ui.mystic.magicProjection.final.title")
     rollable=true
-    rollableMessage="proyección mágica"
+    rollableMessage=(localize "anima.ui.mystic.magicProjection.final.rollMessage")
     inputName="data.mystic.magicProjection.final.value"
     inputValue=data.mystic.magicProjection.final.value
   }}
@@ -16,18 +16,18 @@
     {{>
     "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
       class="offensive"
-      title="Ofensiva"
+      title=(localize "anima.ui.mystic.magicProjection.offensive.title")
       rollable=true
-      rollableMessage="proyección mágica ofensiva"
+      rollableMessage=(localize "anima.ui.mystic.magicProjection.offensive.rollMessage")
       inputName="data.mystic.magicProjection.imbalance.offensive.value"
       inputValue=data.mystic.magicProjection.imbalance.offensive.value
     }}
     {{>
     "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
       class="defensive"
-      title="Defensiva"
+      title=(localize "anima.ui.mystic.magicProjection.defensive.title")
       rollable=true
-      rollableMessage="proyección mágica defensiva"
+      rollableMessage=(localize "anima.ui.mystic.magicProjection.defensive.rollMessage")
       inputName="data.mystic.magicProjection.imbalance.defensive.value"
       inputValue=data.mystic.magicProjection.imbalance.defensive.value
     }}
