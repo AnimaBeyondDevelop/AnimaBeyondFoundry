@@ -90,13 +90,16 @@
       }
 
       .title {
+        width: 10rem;
+
         position: absolute;
         top: -0.7%;
-        left: 32.5%;
+        left: 24.5%;
 
         font-size: 1.1rem;
         color: white;
         font-weight: bold;
+        text-align: center;
       }
 
       .total {
@@ -133,59 +136,61 @@
         flex-direction: column;
         align-items: center;
 
+        width: 10rem;
+
         &.essence-sphere {
           top: 6.6%;
-          left: 41.4%;
+          left: 24.9%;
         }
 
         &.water-sphere {
-          top: 19%;
-          left: 9.7%;
+          top: 19.4%;
+          left: -9.5%;
         }
 
         &.earth-sphere {
           top: 19.3%;
-          left: 80%;
+          left: 60.7%;
         }
 
         &.creation-sphere {
           top: 29.3%;
-          left: 40.5%;
+          left: 25.2%;
         }
 
         &.darkness-sphere {
           top: 43.4%;
-          left: 4.4%;
+          left: -9.5%;
         }
 
         &.necromancy-sphere {
           top: 43.5%;
-          left: 36%;
+          left: 24.9%;
         }
 
         &.light-sphere {
           top: 43.4%;
-          left: 81%;
+          left: 61.4%;
         }
 
         &.destruction-sphere {
           top: 58%;
-          left: 37%;
+          left: 25.2%;
         }
 
         &.air-sphere {
           top: 63%;
-          left: 10.4%;
+          left: -9.9%;
         }
 
         &.fire-sphere {
           top: 62.9%;
-          left: 79.7%;
+          left: 61.2%;
         }
 
         &.illusion-sphere {
           top: 78%;
-          left: 43%;
+          left: 25.2%;
         }
 
         .sphere-name {
