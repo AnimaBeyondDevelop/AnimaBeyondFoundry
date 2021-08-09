@@ -128,7 +128,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       containerSelector: '#elan-context-menu-container',
       rowSelector: '.elan-row .powers',
       rowIdData: 'elanPowerId',
-      deleteRowMessage: 'Eliminar poder',
+      deleteRowMessage: game.i18n.localize('contextualMenu.elan.options.deletePower'),
       customCallbackFn: target => {
         const { elanId } = target[0].dataset;
 

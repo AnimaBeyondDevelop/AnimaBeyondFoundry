@@ -247,6 +247,7 @@
   "anima.armor": "Armadura",
   "contextualMenu.common.options.delete": "Eliminar",
   "contextualMenu.elan.options.addPower": "Añadir poder",
+  "contextualMenu.elan.options.deletePower": "Eliminar poder",
   "dialogs.title": "Diálogo",
   "dialogs.continue": "Continuar",
   "dialogs.mod.content": "Modificador",

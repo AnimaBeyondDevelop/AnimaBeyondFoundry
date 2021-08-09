@@ -252,6 +252,7 @@
   "dialogs.mod.content": "Modifier",
   "contextualMenu.common.options.delete": "Delete",
   "contextualMenu.elan.options.addPower": "Add power",
+  "contextualMenu.elan.options.deletePower": "Delete power",
   "dialogs.items.secondarySkill.content": "Skill name",
   "dialogs.items.freeAccessSpell.content": "Free access spell name",
   "dialogs.items.level.content": "Archetype name",
