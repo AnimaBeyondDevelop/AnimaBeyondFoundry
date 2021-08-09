@@ -1,4 +1,4 @@
-@import "variable";
+@import 'variable';
 
 @mixin group-header {
   text-align: center;
@@ -14,3 +14,111 @@
   border-radius: $border-radius;
 }
 
+.common- {
+  &group {
+    width: 100%;
+
+    .group-header {
+      @include group-header;
+
+      position: relative;
+      z-index: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-height: 1.7rem;
+      padding-right: 0.5rem;
+
+      .group-header-title {
+        font-weight: bold;
+        width: 100%;
+        margin: 0;
+      }
+
+      .add-button {
+        width: auto;
+        height: 1.5rem;
+        border-radius: 50%;
+
+        justify-self: start;
+        padding: 0.125rem;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    .group-body {
+      @include group-body;
+
+      margin-top: -1.5rem;
+      padding: 2rem 0.5rem 0.5rem;
+    }
+  }
+
+  &titled-input {
+    &.vertical {
+      flex-direction: column;
+
+      .label {
+        text-align: center;
+        margin-right: 0;
+        margin-top: 0;
+
+        .rollable {
+          cursor: pointer;
+          &:hover,
+          &:focus {
+            text-shadow: 0 0 8px $intensified-red;
+          }
+        }
+      }
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .label {
+      font-weight: bold;
+
+      margin-right: 0.5rem;
+    }
+
+    .input-container {
+      width: 4rem;
+
+      display: flex;
+
+      &.big {
+        width: 6rem;
+      }
+    }
+
+    .input {
+      height: 1.5rem;
+
+      text-align: center;
+      border-radius: $border-radius;
+      background: $light-cream;
+      font-weight: bold;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .primary-input {
+      width: 5rem;
+
+      margin-right: 0.5rem;
+      padding-right: 1.75rem;
+      text-align: left;
+    }
+
+    .secondary-input {
+      background-color: $red;
+      color: white;
+      width: 4rem;
+      margin-left: -2rem;
+    }
+  }
+}
