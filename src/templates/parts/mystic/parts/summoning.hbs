@@ -1,0 +1,43 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="summoning"
+  title="Convocación"
+}}
+  <div class='columns'>
+    <div>
+      {{>
+      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        class="summon"
+        title="Convocar"
+        rollable=true
+        inputName="data.mystic.summoning.summon.value"
+        inputValue=data.mystic.summoning.summon.value
+      }}
+      {{>
+      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        class="bind"
+        title="Atar"
+        rollable=true
+        inputName="data.mystic.summoning.bind.value"
+        inputValue=data.mystic.summoning.bind.value
+      }}
+    </div>
+    <div>
+      {{>
+      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        class="control"
+        title="Dominar"
+        rollable=true
+        inputName="data.mystic.summoning.control.value"
+        inputValue=data.mystic.summoning.control.value
+      }}
+      {{>
+      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        class="banish"
+        title="Desconvocar"
+        rollable=true
+        inputName="data.mystic.summoning.banish.value"
+        inputValue=data.mystic.summoning.banish.value
+      }}
+    </div>
+  </div>
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

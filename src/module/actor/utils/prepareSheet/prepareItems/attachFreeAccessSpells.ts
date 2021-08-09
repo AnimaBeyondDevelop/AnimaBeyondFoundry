@@ -1,6 +1,6 @@
 import { ABFActor } from '../../../ABFActor';
 
-export const attachFreeAccessSpell = (
+export const attachFreeAccessSpells = (
   originalSheet: ActorSheet.Data<ABFActor>,
   item: InnerDuplicated<Item.Data>
 ) => {

@@ -1,8 +1,8 @@
-export type MaintenancesChanges = {
+export type SummonChanges = {
   [key: string]: {
     name: string;
     data: {
-      cost: number;
+      cost: { value: number };
     };
   };
 };

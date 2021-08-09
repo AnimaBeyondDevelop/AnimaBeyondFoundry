@@ -1,6 +1,6 @@
 import { ABFActor } from '../../../ABFActor';
 
-export const attachMaintenances = (
+export const attachSpellMaintenances = (
   originalSheet: ActorSheet.Data<ABFActor>,
   item: InnerDuplicated<Item.Data>
 ) => {
@@ -8,10 +8,10 @@ export const attachMaintenances = (
 
   const { data } = newSheet.actor;
 
-  if (!data.mystic.maintenances) {
-    data.mystic.maintenances = [];
+  if (!data.mystic.spellMaintenances) {
+    data.mystic.spellMaintenances = [];
   } else {
-    data.mystic.maintenances.push(item);
+    data.mystic.spellMaintenances.push(item);
   }
 
   return newSheet;

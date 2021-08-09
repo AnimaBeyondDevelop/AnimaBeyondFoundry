@@ -25,7 +25,19 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/general/parts/description.hbs',
     'systems/animabf/templates/parts/general/parts/contacts.hbs',
     'systems/animabf/templates/parts/general/parts/notes.hbs',
-    'systems/animabf/templates/parts/mystic.html',
+    'systems/animabf/templates/parts/mystic/mystic.hbs',
+    'systems/animabf/templates/parts/mystic/parts/act.hbs',
+    'systems/animabf/templates/parts/mystic/parts/magic-projection.hbs',
+    'systems/animabf/templates/parts/mystic/parts/zeon-regeneration.hbs',
+    'systems/animabf/templates/parts/mystic/parts/innate-magic.hbs',
+    'systems/animabf/templates/parts/mystic/parts/zeon.hbs',
+    'systems/animabf/templates/parts/mystic/parts/summoning.hbs',
+    'systems/animabf/templates/parts/mystic/parts/spheres.hbs',
+    'systems/animabf/templates/parts/mystic/parts/free-access-spells.hbs',
+    'systems/animabf/templates/parts/mystic/parts/spell-maintenances.hbs',
+    'systems/animabf/templates/parts/mystic/parts/selected-spells.hbs',
+    'systems/animabf/templates/parts/mystic/parts/summons.hbs',
+    'systems/animabf/templates/parts/mystic/parts/metamagics.hbs',
     'systems/animabf/templates/parts/secondaries.html'
   ];
 

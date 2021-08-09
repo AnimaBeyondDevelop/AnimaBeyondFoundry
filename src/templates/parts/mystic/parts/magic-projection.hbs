@@ -1,0 +1,35 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="magic-projection"
+  title="Proyec. Mágica"
+}}
+  {{>
+  "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+    class="final"
+    title="Final"
+    rollable=true
+    rollableMessage="proyección mágica"
+    inputName="data.mystic.magicProjection.final.value"
+    inputValue=data.mystic.magicProjection.final.value
+  }}
+  <h3 class='title'>Desequilibrio</h3>
+  <div class='imbalance'>
+    {{>
+    "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+      class="offensive"
+      title="Ofensiva"
+      rollable=true
+      rollableMessage="proyección mágica ofensiva"
+      inputName="data.mystic.magicProjection.imbalance.offensive.value"
+      inputValue=data.mystic.magicProjection.imbalance.offensive.value
+    }}
+    {{>
+    "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+      class="defensive"
+      title="Defensiva"
+      rollable=true
+      rollableMessage="proyección mágica defensiva"
+      inputName="data.mystic.magicProjection.imbalance.defensive.value"
+      inputValue=data.mystic.magicProjection.imbalance.defensive.value
+    }}
+  </div>
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

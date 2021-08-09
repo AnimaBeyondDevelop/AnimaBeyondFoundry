@@ -1,9 +1,9 @@
 import { SkillChange } from './SkillChange';
 import { FreeAccessSpellChange } from './FreeAccessSpellChange';
 import { SelectedSpellsChange } from './SelectedSpellsChange';
-import { InvocationChanges } from './InvocationChange';
+import { SummonChanges } from './SummonChange';
 import { MetamagicChanges } from './MetamagicChange';
-import { MaintenancesChanges } from './MaintenancesChange';
+import { SpellMaintenancesChanges } from './SpellMaintenancesChange';
 import { LevelChanges } from './LevelChange';
 import { LanguageChanges } from './LanguageChange';
 import { ElanPowerChanges } from './ElanPowerChanges';
@@ -19,10 +19,10 @@ export type ItemChanges = {
     dynamic: {
       skill: SkillChange;
       freeAccessSpells: FreeAccessSpellChange;
-      maintenances: MaintenancesChanges;
-      selected: SelectedSpellsChange;
-      metamagic: MetamagicChanges;
-      invocation: InvocationChanges;
+      spellMaintenances: SpellMaintenancesChanges;
+      selectedSpells: SelectedSpellsChange;
+      metamagics: MetamagicChanges;
+      summons: SummonChanges;
       levels: LevelChanges;
       other_languages: LanguageChanges;
       elan_power: ElanPowerChanges;

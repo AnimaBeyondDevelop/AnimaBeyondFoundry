@@ -5,8 +5,8 @@ import { SelectedSpellsChange } from '../types/SelectedSpellsChange';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { Items } from './utils/prepareSheet/prepareItems/Items';
 import { MetamagicChanges } from '../types/MetamagicChange';
-import { InvocationChanges } from '../types/InvocationChange';
-import { MaintenancesChanges } from '../types/MaintenancesChange';
+import { SummonChanges } from '../types/SummonChange';
+import { SpellMaintenancesChanges } from '../types/SpellMaintenancesChange';
 import { LevelChanges } from '../types/LevelChange';
 import { LanguageChanges } from '../types/LanguageChange';
 import { ElanPowerChanges } from '../types/ElanPowerChanges';
@@ -29,98 +29,95 @@ export class ABFActor extends Actor {
     }
   }
 
-  public async addInvocation(): Promise<void> {
+  public async addSummon(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.invocation.content')
+      content: game.i18n.localize('dialogs.items.summon.content')
     });
 
-    const itemData = { name, type: Items.INVOCATION, cost: 0 };
+    const itemData = { name, type: Items.SUMMON, cost: { value: 0 } };
 
     await this.createOwnedItem(itemData);
   }
 
-  public editInvocation(invocation: InvocationChanges) {
+  public editSummon(invocation: SummonChanges) {
     for (const id of Object.keys(invocation)) {
       const { name, data } = invocation[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data: {
-          cost: data.cost
-        }
+        data
       });
     }
   }
 
-  public async addSelectedSpells(): Promise<void> {
+  public async addSelectedSpell(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.selected.content')
+      content: game.i18n.localize('dialogs.items.selectedSpell.content')
     });
 
-    const itemData = { name, type: Items.SELECTED, cost: 0 };
+    const itemData = { name, type: Items.SELECTED_SPELL, cost: { value: 0 } };
 
     await this.createOwnedItem(itemData);
   }
 
-  public editSelectedSpells(selected: SelectedSpellsChange) {
-    for (const id of Object.keys(selected)) {
-      const { name, data } = selected[id];
+  public editSelectedSpell(changes: SelectedSpellsChange) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data: {
-          cost: data.cost
-        }
+        data
       });
     }
   }
 
-  public async addMaintentances(): Promise<void> {
+  public async addSpellMaintenance(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.maintenances.content')
+      content: game.i18n.localize('dialogs.items.spellMaintenance.content')
     });
 
-    const itemData = { name, type: Items.MAINTENANCES, cost: 0 };
+    const itemData = { name, type: Items.SPELL_MAINTENANCE, cost: { value: 0 } };
 
     await this.createOwnedItem(itemData);
   }
 
-  public editMaintentances(maintentancesChanges: MaintenancesChanges) {
-    for (const id of Object.keys(maintentancesChanges)) {
-      const { name, data } = maintentancesChanges[id];
+  public editSpellMaintenance(changes: SpellMaintenancesChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data: {
-          cost: data.cost
-        }
+        data
       });
     }
   }
 
-  public async addFreeAccessSpellSlot(): Promise<void> {
+  public async addFreeAccessSpell(): Promise<void> {
     const name = await openDialog<string>({
       content: game.i18n.localize('dialogs.items.freeAccessSpell.content')
     });
 
-    const itemData = { name, type: Items.FREE_ACCESS_SPELL, level: 0 };
+    const itemData = {
+      name,
+      type: Items.FREE_ACCESS_SPELL,
+      level: { value: 0 },
+      cost: { value: 0 }
+    };
 
     await this.createOwnedItem(itemData);
   }
 
-  public editFreeAccessSpells(freeAccessSpellsChanges: FreeAccessSpellChange) {
-    for (const id of Object.keys(freeAccessSpellsChanges)) {
-      const { name, data } = freeAccessSpellsChanges[id];
+  public editFreeAccessSpells(changes: FreeAccessSpellChange) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data: {
-          level: data.level
-        }
+        data
       });
     }
   }
@@ -153,21 +150,19 @@ export class ABFActor extends Actor {
       content: game.i18n.localize('dialogs.items.metamagic.content')
     });
 
-    const itemData = { name, type: Items.METAMAGIC, grade: 0 };
+    const itemData = { name, type: Items.METAMAGIC, grade: { value: 0 } };
 
     await this.createOwnedItem(itemData);
   }
 
-  public editMetamagic(Metamagic: MetamagicChanges) {
-    for (const id of Object.keys(Metamagic)) {
-      const { name, data } = Metamagic[id];
+  public editMetamagic(changes: MetamagicChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data: {
-          grade: data.grade
-        }
+        data
       });
     }
   }

@@ -1,12 +1,12 @@
 import { ABFActor } from '../../../ABFActor';
-import { attachFreeAccessSpell } from './attachFreeAccessSpell';
+import { attachFreeAccessSpells } from './attachFreeAccessSpells';
 import { attachSecondarySkill } from './attachSecondarySkill';
 import { attachCommonItem } from './attachCommonItem';
-import { attachMaintenances } from './attachMaintenances';
+import { attachSpellMaintenances } from './attachSpellMaintenances';
 import { attachSelectedSpells } from './attachSelectedSpells';
 import { Items } from './Items';
-import { attachInvocation } from './attachInvocation';
-import { attachMetamagic } from './attachMetamagic';
+import { attachSummon } from './attachSummon';
+import { attachMetamagics } from './attachMetamagics';
 import { attachLevels } from './attachLevels';
 import { attachLanguages } from './attachLanguages';
 import { attachElan } from './attachElan';
@@ -22,10 +22,10 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   const VALID_ITEM_TYPES = [
     Items.SECONDARY_SKILL,
     Items.FREE_ACCESS_SPELL,
-    Items.MAINTENANCES,
-    Items.SELECTED,
+    Items.SPELL_MAINTENANCE,
+    Items.SELECTED_SPELL,
     Items.METAMAGIC,
-    Items.INVOCATION,
+    Items.SUMMON,
     Items.LEVEL,
     Items.LANGUAGE,
     Items.ELAN,
@@ -42,22 +42,22 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
 
       switch (item.type) {
         case Items.FREE_ACCESS_SPELL:
-          newData = attachFreeAccessSpell(newData, item);
+          newData = attachFreeAccessSpells(newData, item);
           break;
         case Items.SECONDARY_SKILL:
           newData = attachSecondarySkill(newData, item);
           break;
-        case Items.MAINTENANCES:
-          newData = attachMaintenances(newData, item);
+        case Items.SPELL_MAINTENANCE:
+          newData = attachSpellMaintenances(newData, item);
           break;
-        case Items.SELECTED:
+        case Items.SELECTED_SPELL:
           newData = attachSelectedSpells(newData, item);
           break;
-        case Items.INVOCATION:
-          newData = attachInvocation(newData, item);
+        case Items.SUMMON:
+          newData = attachSummon(newData, item);
           break;
         case Items.METAMAGIC:
-          newData = attachMetamagic(newData, item);
+          newData = attachMetamagics(newData, item);
           break;
         case Items.LEVEL:
           newData = attachLevels(newData, item);

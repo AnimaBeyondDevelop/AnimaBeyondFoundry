@@ -1,4 +1,4 @@
-export type SelectedSpellsChange = {
+export type SpellMaintenancesChanges = {
   [key: string]: {
     name: string;
     data: {

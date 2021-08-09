@@ -1,0 +1,27 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="selected-spells"
+  title="Conjuros seleccionados"
+  addRowButtonData="add-selected-spell"
+}}
+  {{#each data.mystic.selectedSpells}}
+    <div data-selected-spell-id='{{this._id}}' class='selected-spell-row'>
+      {{>
+      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+        class="name"
+        title="Conjuro"
+        hideTitle=(is "gt" @index 0)
+        inputType="text"
+        inputName=(concat "data.dynamic.selectedSpells." this._id ".name")
+        inputValue=this.name
+      }}
+      {{>
+      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+        class="cost"
+        title="Coste"
+        hideTitle=(is "gt" @index 0)
+        inputName=(concat "data.dynamic.selectedSpells." this._id ".data.cost.value")
+        inputValue=this.data.cost.value
+      }}
+    </div>
+  {{/each}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}
