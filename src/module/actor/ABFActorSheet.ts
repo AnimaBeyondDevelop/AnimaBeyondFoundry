@@ -107,7 +107,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     // Elan
     this.buildCommonContextualMenu({
       containerSelector: '#elan-context-menu-container',
-      rowSelector: '.elan-row',
+      rowSelector: '.elan-row .base',
       rowIdData: 'elanId',
       otherItems: [
         {
@@ -122,6 +122,30 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
           }
         }
       ]
+    });
+
+    this.buildCommonContextualMenu({
+      containerSelector: '#elan-context-menu-container',
+      rowSelector: '.elan-row .powers',
+      rowIdData: 'elanPowerId',
+      deleteRowMessage: 'Eliminar poder',
+      customCallbackFn: target => {
+        const { elanId } = target[0].dataset;
+
+        if (!elanId) {
+          throw new Error('Data id missing. Are you sure to set data-elan-id to rows?');
+        }
+
+        const { elanPowerId } = target[0].dataset;
+
+        if (!elanPowerId) {
+          throw new Error(
+            'Data id missing. Are you sure to set data-elan-power-id to rows?'
+          );
+        }
+
+        this.actor.removeElanPower(elanId, elanPowerId);
+      }
     });
 
     html.find('[data-on-click="add-elan"]').click(() => {
@@ -289,27 +313,35 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     containerSelector,
     rowSelector,
     rowIdData,
+    deleteRowMessage = game.i18n.localize('contextualMenu.common.options.delete'),
+    customCallbackFn,
     otherItems = []
   }: {
     containerSelector: string;
     rowSelector: string;
     rowIdData: string;
+    deleteRowMessage?: string;
+    customCallbackFn?: (target: JQuery) => void;
     otherItems?: ContextMenu.Item[];
   }) => {
     return new ContextMenu($(containerSelector), rowSelector, [
       {
-        name: game.i18n.localize('contextualMenu.common.options.delete'),
+        name: deleteRowMessage,
         icon: '<i class="fas fa-trash fa-fw"></i>',
         callback: target => {
-          const id = target[0].dataset[rowIdData];
+          if (customCallbackFn) {
+            customCallbackFn(target);
+          } else {
+            const id = target[0].dataset[rowIdData];
 
-          if (!id) {
-            throw new Error(
-              `Data id missing. Are you sure to set data-${rowIdData} to rows?`
-            );
+            if (!id) {
+              throw new Error(
+                `Data id missing. Are you sure to set ${rowIdData} in snake middle case to rows? example: data-elan-id`
+              );
+            }
+
+            this.actor.deleteOwnedItem(id);
           }
-
-          this.actor.deleteOwnedItem(id);
         }
       },
       ...otherItems

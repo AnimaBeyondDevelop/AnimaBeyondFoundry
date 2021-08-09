@@ -237,6 +237,19 @@ export class ABFActor extends Actor {
     await elan.update(elan.data);
   }
 
+  public async removeElanPower(elanId: string, elanPowerId: string): Promise<void> {
+    if (!elanId) throw new Error('elanId missing');
+    if (!elanPowerId) throw new Error('elanPowerId missing');
+
+    const elan = await this.getOwnedItem(elanId);
+
+    elan.data.data.powers = elan.data.data.powers.filter(
+      power => power._id !== elanPowerId
+    );
+
+    await elan.update(elan.data);
+  }
+
   public async editElanPower(elanPowers: ElanPowerChanges) {
     for (const id of Object.keys(elanPowers)) {
       const { name, elanId, level } = elanPowers[id];
