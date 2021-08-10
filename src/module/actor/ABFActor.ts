@@ -17,6 +17,8 @@ import { AdvantageChange } from '../types/AdvantageChange';
 import { ContactChange } from '../types/ContactChange';
 import { DisadvantageChange } from '../types/DisadvantageChange';
 import { NoteChange } from '../types/NoteChange';
+import { PsychicDisciplineChanges } from '../types/PsychicDisciplineChanges';
+import { MentalPatternChanges } from '../types/MentalPatternChanges';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -410,6 +412,62 @@ export class ABFActor extends Actor {
       this.updateOwnedItem({
         _id: id,
         name
+      });
+    }
+  }
+
+  public async addPsychicDiscipline(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.psychicDiscipline.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.PSYCHIC_DISCIPLINE
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editPsychicDisciplines(changes: PsychicDisciplineChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addMentalPattern(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.mentalPattern.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.MENTAL_PATTERN,
+      data: {
+        bonus: 0,
+        penalty: 0
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editMentalPatterns(changes: MentalPatternChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, bonus, penalty } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          bonus,
+          penalty
+        }
       });
     }
   }

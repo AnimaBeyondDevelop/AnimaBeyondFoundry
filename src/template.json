@@ -301,13 +301,18 @@
       },
 
       "psychic": {
-        "freePp": { "value": 0, "max": 0 },
-        "currentConcentrationBonus": { "value": 0 },
         "psychicPotential": { "value": 0 },
-        "psychicProjection": {
-          "offensive": { "value": 0 },
-          "defensive": { "value": 0 }
-        }
+        "psychicProjection": { "value": 0 },
+        "pp": {
+          "used": {
+            "value": 0
+          },
+          "max": {
+            "value": 0
+          }
+        },
+        "psychicDisciplines": [],
+        "mentalPatterns": []
       }
     }
   },
@@ -327,7 +332,9 @@
       "advantage",
       "disadvantage",
       "contact",
-      "note"
+      "note",
+      "psychicDiscipline",
+      "mentalPattern"
     ],
 
     "freeAccessSpell": {
@@ -370,6 +377,14 @@
     },
     "contact": {
       "description": ""
+    },
+    "mentalPattern": {
+      "bonus": {
+        "value": 0
+      },
+      "penalty": {
+        "value": 0
+      }
     }
   }
 }

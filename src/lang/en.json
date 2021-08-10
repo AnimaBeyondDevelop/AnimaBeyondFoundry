@@ -343,5 +343,16 @@
   "anima.ui.mystic.zeonRegeneration.title": "Zeon regen.",
   "anima.ui.mystic.zeonRegeneration.final.title": "Final",
   "anima.ui.mystic.zeon.title": "Zeon",
-  "anima.ui.mystic.zeon.final.title": "Final"
+  "anima.ui.mystic.zeon.final.title": "Final",
+  "anima.ui.psychic.psychicPotential.title": "Psychic potential",
+  "anima.ui.psychic.psychicPotential.potential.title": "Potential",
+  "anima.ui.psychic.psychicProjection.title": "Psychic projection",
+  "anima.ui.psychic.psychicProjection.projection.title": "Projection",
+  "anima.ui.psychic.psychicPower.title": "PP",
+  "anima.ui.psychic.psychicPower.power.title": "Final",
+  "anima.ui.psychic.mentalPattern.title": "Mental Patterns",
+  "anima.ui.psychic.mentalPattern.name.title": "Type",
+  "anima.ui.psychic.mentalPattern.bonus.title": "Bonus",
+  "anima.ui.psychic.mentalPattern.penalty.title": "Penalty",
+  "anima.ui.psychic.psychicDiscipline.title": "Psychic Disciplines"
 }

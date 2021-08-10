@@ -19,7 +19,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
           {
             navSelector: '.sheet-tabs',
             contentSelector: '.sheet-body',
-            initial: 'main'
+            initial: 'psychic'
           }
         ]
       }
@@ -253,6 +253,30 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     });
     // Notes
 
+    // Psychic Disciplines
+    this.buildCommonContextualMenu({
+      containerSelector: '#psychic-disciplines-context-menu-container',
+      rowSelector: '.psychic-discipline-row',
+      rowIdData: 'psychicDisciplineId'
+    });
+
+    html.find('[data-on-click="add-psychic-discipline"]').click(() => {
+      this.actor.addPsychicDiscipline();
+    });
+    // Psychic Disciplines
+
+    // Mental Patterns
+    this.buildCommonContextualMenu({
+      containerSelector: '#mental-patterns-context-menu-container',
+      rowSelector: '.mental-pattern-row',
+      rowIdData: 'mentalPatternId'
+    });
+
+    html.find('[data-on-click="add-mental-pattern"]').click(() => {
+      this.actor.addMentalPattern();
+    });
+    // Mental Patterns
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -346,6 +370,16 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.notes) {
       await this.actor.editNotes(unflattedChanges.data.dynamic.notes);
+    }
+
+    if (unflattedChanges.data.dynamic.psychicDisciplines) {
+      await this.actor.editPsychicDisciplines(
+        unflattedChanges.data.dynamic.psychicDisciplines
+      );
+    }
+
+    if (unflattedChanges.data.dynamic.mentalPatterns) {
+      await this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
     }
   }
 

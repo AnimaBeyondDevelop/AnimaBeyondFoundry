@@ -12,5 +12,7 @@ export enum Items {
   ADVANTAGE = 'advantage',
   DISADVANTAGE = 'disadvantage',
   CONTACT = 'contact',
-  NOTE = 'note'
+  NOTE = 'note',
+  PSYCHIC_DISCIPLINE = 'psychicDiscipline',
+  MENTAL_PATTERN = 'mentalPattern'
 }

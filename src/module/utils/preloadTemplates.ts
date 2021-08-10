@@ -9,7 +9,6 @@ export const preloadTemplates = () => {
     // Actor sheet parts
     'systems/animabf/templates/parts/combat.html',
     'systems/animabf/templates/parts/domine.html',
-    'systems/animabf/templates/parts/psychic.hbs',
     'systems/animabf/templates/parts/common/horizontal-titled-input.hbs',
     'systems/animabf/templates/parts/common/vertical-titled-input.hbs',
     'systems/animabf/templates/parts/common/group.hbs',
@@ -38,6 +37,12 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/mystic/parts/selected-spells.hbs',
     'systems/animabf/templates/parts/mystic/parts/summons.hbs',
     'systems/animabf/templates/parts/mystic/parts/metamagics.hbs',
+    'systems/animabf/templates/parts/psychic/psychic.hbs',
+    'systems/animabf/templates/parts/psychic/parts/psychic-potential.hbs',
+    'systems/animabf/templates/parts/psychic/parts/psychic-projection.hbs',
+    'systems/animabf/templates/parts/psychic/parts/mental-patterns.hbs',
+    'systems/animabf/templates/parts/psychic/parts/psychic-power.hbs',
+    'systems/animabf/templates/parts/psychic/parts/psychic-disciplines.hbs',
     'systems/animabf/templates/parts/secondaries.html'
   ];
 
