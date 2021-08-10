@@ -2,13 +2,17 @@
   class="psychic-power"
   title=(localize "anima.ui.psychic.psychicPower.title")
 }}
-  {{>
-  "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
-    class="power"
-    title=(localize "anima.ui.psychic.psychicPower.power.title")
-    inputName="data.psychic.psychicPower.used.value"
-    inputValue=data.psychic.psychicPower.used.value
-    secondaryInputName="data.psychic.psychicPower.max.value"
-    secondaryInputValue=data.psychic.psychicPower.max.value
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="psychic-power"
   }}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="power"
+      title=(localize "anima.ui.psychic.psychicPower.power.title")
+      inputName="data.psychic.psychicPower.used.value"
+      inputValue=data.psychic.psychicPower.used.value
+      secondaryInputName="data.psychic.psychicPower.max.value"
+      secondaryInputValue=data.psychic.psychicPower.max.value
+    }}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

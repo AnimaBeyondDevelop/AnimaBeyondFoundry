@@ -3,14 +3,18 @@
   title=(localize "anima.ui.psychic.psychicDiscipline.title")
   addRowButtonData="add-psychic-discipline"
 }}
-  {{#each data.psychic.psychicDisciplines}}
-    <div data-psychic-discipline-id='{{this._id}}' class='psychic-discipline-row'>
-      <input
-        name='data.dynamic.psychicDisciplines.{{this._id}}.name'
-        type='text'
-        class='input'
-        value='{{this.name}}'
-      />
-    </div>
-  {{/each}}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="psychic-disciplines"
+  }}
+    {{#each data.psychic.psychicDisciplines}}
+      <div data-psychic-discipline-id='{{this._id}}' class='psychic-discipline-row'>
+        <input
+          name='data.dynamic.psychicDisciplines.{{this._id}}.name'
+          type='text'
+          class='input'
+          value='{{this.name}}'
+        />
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

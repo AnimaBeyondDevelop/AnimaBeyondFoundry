@@ -19,6 +19,7 @@ import { DisadvantageChange } from '../types/DisadvantageChange';
 import { NoteChange } from '../types/NoteChange';
 import { PsychicDisciplineChanges } from '../types/PsychicDisciplineChanges';
 import { MentalPatternChanges } from '../types/MentalPatternChanges';
+import { InnatePsychicPowerChanges } from '../types/InnatePsychicPowerChanges';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -467,6 +468,38 @@ export class ABFActor extends Actor {
         data: {
           bonus,
           penalty
+        }
+      });
+    }
+  }
+
+  public async addInnatePsychicPower(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.innatePsychicPower.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.INNATE_PSYCHIC_POWER,
+      data: {
+        effect: '',
+        value: 0
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editInnatePsychicPowers(changes: InnatePsychicPowerChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, effect, value } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          effect,
+          value
         }
       });
     }

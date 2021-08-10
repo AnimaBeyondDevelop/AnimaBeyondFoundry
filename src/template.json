@@ -312,7 +312,8 @@
           }
         },
         "psychicDisciplines": [],
-        "mentalPatterns": []
+        "mentalPatterns": [],
+        "innatePsychicPowers": []
       }
     }
   },
@@ -334,7 +335,8 @@
       "contact",
       "note",
       "psychicDiscipline",
-      "mentalPattern"
+      "mentalPattern",
+      "innatePsychicPower"
     ],
 
     "freeAccessSpell": {
@@ -383,6 +385,14 @@
         "value": 0
       },
       "penalty": {
+        "value": 0
+      }
+    },
+    "innatePsychicPower": {
+      "effect": {
+        "value": ""
+      },
+      "value": {
         "value": 0
       }
     }

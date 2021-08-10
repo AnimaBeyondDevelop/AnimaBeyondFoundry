@@ -352,5 +352,10 @@
   "anima.ui.psychic.mentalPattern.name.title": "Tipo",
   "anima.ui.psychic.mentalPattern.bonus.title": "Bono",
   "anima.ui.psychic.mentalPattern.penalty.title": "Penalizador",
-  "anima.ui.psychic.psychicDiscipline.title": "Disciplinas Psíquicas"
+  "anima.ui.psychic.psychicDiscipline.title": "Disciplinas Psíquicas",
+  "anima.ui.psychic.innatePsychicPower.title": "Poderes Psíquicos Innatos",
+  "anima.ui.psychic.innatePsychicPower.power.title": "Poder",
+  "anima.ui.psychic.innatePsychicPower.effect.title": "Efecto",
+  "anima.ui.psychic.innatePsychicPower.value.title": "Valor",
+  "anima.ui.psychic.innatePsychicPower.amount.title": "Número de Innatos"
 }

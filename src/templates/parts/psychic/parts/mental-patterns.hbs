@@ -3,36 +3,40 @@
   title=(localize "anima.ui.psychic.mentalPattern.title")
   addRowButtonData="add-mental-pattern"
 }}
-  {{#each data.psychic.mentalPatterns}}
-    <div data-mental-pattern-id='{{this._id}}' class='mental-pattern-row'>
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="name"
-        title=(localize "anima.ui.psychic.mentalPattern.name.title")
-        hideTitle=(is "gt" @index 0)
-        inputType="text"
-        inputName=(concat "data.dynamic.mentalPatterns." this._id ".name")
-        inputValue=this.name
-      }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="mental-patterns"
+  }}
+    {{#each data.psychic.mentalPatterns}}
+      <div data-mental-pattern-id='{{this._id}}' class='mental-pattern-row'>
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.psychic.mentalPattern.name.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.mentalPatterns." this._id ".name")
+          inputValue=this.name
+        }}
 
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="bonus"
-        title=(localize "anima.ui.psychic.mentalPattern.bonus.title")
-        hideTitle=(is "gt" @index 0)
-        inputName=(concat "data.dynamic.mentalPatterns." this._id ".bonus")
-        inputValue=this.data.bonus
-      }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="bonus"
+          title=(localize "anima.ui.psychic.mentalPattern.bonus.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "data.dynamic.mentalPatterns." this._id ".bonus")
+          inputValue=this.data.bonus
+        }}
 
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="penalty"
-        title=(localize "anima.ui.psychic.mentalPattern.penalty.title")
-        hideTitle=(is "gt" @index 0)
-        inputName=(concat "data.dynamic.mentalPatterns." this._id ".penalty")
-        inputValue=this.data.penalty
-      }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="penalty"
+          title=(localize "anima.ui.psychic.mentalPattern.penalty.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "data.dynamic.mentalPatterns." this._id ".penalty")
+          inputValue=this.data.penalty
+        }}
 
-    </div>
-  {{/each}}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

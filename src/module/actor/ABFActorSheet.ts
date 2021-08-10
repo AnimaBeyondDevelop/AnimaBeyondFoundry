@@ -277,6 +277,18 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     });
     // Mental Patterns
 
+    // Innate Psychic Powers
+    this.buildCommonContextualMenu({
+      containerSelector: '#innate-psychic-powers-context-menu-container',
+      rowSelector: '.innate-psychic-power-row',
+      rowIdData: 'innatePsychicPowerId'
+    });
+
+    html.find('[data-on-click="add-innate-psychic-power"]').click(() => {
+      this.actor.addInnatePsychicPower();
+    });
+    // Innate Psychic Powers
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -380,6 +392,10 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.mentalPatterns) {
       await this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
+    }
+
+    if (unflattedChanges.data.dynamic.innatePsychicPowers) {
+      await this.actor.editInnatePsychicPowers(unflattedChanges.data.dynamic.innatePsychicPowers);
     }
   }
 

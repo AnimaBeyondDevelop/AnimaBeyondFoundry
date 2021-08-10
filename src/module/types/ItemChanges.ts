@@ -15,6 +15,7 @@ import { ContactChange } from './ContactChange';
 import { NoteChange } from './NoteChange';
 import { PsychicDisciplineChanges } from './PsychicDisciplineChanges';
 import { MentalPatternChanges } from './MentalPatternChanges';
+import { InnatePsychicPowerChanges } from './InnatePsychicPowerChanges';
 
 export type ItemChanges = {
   data: {
@@ -36,6 +37,7 @@ export type ItemChanges = {
       notes: NoteChange;
       psychicDisciplines: PsychicDisciplineChanges;
       mentalPatterns: MentalPatternChanges;
+      innatePsychicPowers: InnatePsychicPowerChanges;
     };
   };
 };

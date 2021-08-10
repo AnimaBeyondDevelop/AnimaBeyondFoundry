@@ -17,6 +17,7 @@ import { attachContacts } from './attachContacts';
 import { attachNotes } from './attachNotes';
 import { attachPsychicDisciplines } from './attachPsychicDisciplines';
 import { attachMentalPatterns } from './attachMentalPatterns';
+import { attachInnatePsychicPowers } from './attachInnatePsychicPowers';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -37,7 +38,8 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.CONTACT,
     Items.NOTE,
     Items.PSYCHIC_DISCIPLINE,
-    Items.MENTAL_PATTERN
+    Items.MENTAL_PATTERN,
+    Items.INNATE_PSYCHIC_POWER
   ].map(type => type.toString());
 
   for (const item of newData.items) {
@@ -92,6 +94,9 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.MENTAL_PATTERN:
           newData = attachMentalPatterns(newData, item);
+          break;
+        case Items.INNATE_PSYCHIC_POWER:
+          newData = attachInnatePsychicPowers(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

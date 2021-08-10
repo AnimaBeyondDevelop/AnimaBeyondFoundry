@@ -43,6 +43,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/psychic/parts/psychic-potential.hbs',
     'systems/animabf/templates/parts/psychic/parts/psychic-projection.hbs',
     'systems/animabf/templates/parts/psychic/parts/mental-patterns.hbs',
+    'systems/animabf/templates/parts/psychic/parts/innate-psychic-powers.hbs',
     'systems/animabf/templates/parts/psychic/parts/psychic-power.hbs',
     'systems/animabf/templates/parts/psychic/parts/psychic-disciplines.hbs',
     'systems/animabf/templates/parts/secondaries.html'

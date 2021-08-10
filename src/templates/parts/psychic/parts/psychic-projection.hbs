@@ -2,11 +2,15 @@
   class="psychic-projection"
   title=(localize "anima.ui.psychic.psychicProjection.title")
 }}
-  {{>
-  "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
-    class="projection"
-    title=(localize "anima.ui.psychic.psychicProjection.projection.title")
-    inputName="data.psychic.psychicProjection.value"
-    inputValue=data.psychic.psychicProjection.value
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="psychic-projection"
   }}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="projection"
+      title=(localize "anima.ui.psychic.psychicProjection.projection.title")
+      inputName="data.psychic.psychicProjection.value"
+      inputValue=data.psychic.psychicProjection.value
+    }}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

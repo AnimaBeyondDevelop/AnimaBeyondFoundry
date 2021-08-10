@@ -73,4 +73,42 @@
     }
   }
   // Mental Patterns
+
+  // Innate Psychic Powers
+  .innate-psychic-powers {
+    .innate-psychic-power-row:first-child {
+      margin-top: 0;
+    }
+
+    .innate-psychic-power-row:last-child {
+      margin-bottom: 0.5rem;
+    }
+
+    .innate-psychic-power-row {
+      margin-top: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 2fr 3fr 1fr;
+      grid-column-gap: 0.1rem;
+
+      .input-container {
+        width: 100%;
+      }
+
+      .input {
+        border-radius: $border-radius;
+        background: $light-cream;
+        font-weight: bold;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+
+    .group-footer {
+      width: 15rem;
+
+      display: flex;
+      justify-content: center;
+    }
+  }
+  // Mental Patterns
 }

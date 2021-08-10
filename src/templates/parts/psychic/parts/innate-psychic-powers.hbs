@@ -1,0 +1,52 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="innate-psychic-powers"
+  title=(localize "anima.ui.psychic.innatePsychicPower.title")
+  addRowButtonData="add-innate-psychic-power"
+}}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="innate-psychic-powers"
+  }}
+    {{#each data.psychic.innatePsychicPowers}}
+      <div data-innate-psychic-power-id='{{this._id}}' class='innate-psychic-power-row'>
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.psychic.innatePsychicPower.power.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".name")
+          inputValue=this.name
+        }}
+
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="effect"
+          title=(localize "anima.ui.psychic.innatePsychicPower.effect.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".effect")
+          inputValue=this.data.effect
+        }}
+
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="value"
+          title=(localize "anima.ui.psychic.innatePsychicPower.value.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".value")
+          inputValue=this.data.value
+        }}
+
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
+  {{#> "systems/animabf/templates/parts/common/group-footer.hbs"}}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="amount"
+      title=(localize "anima.ui.psychic.innatePsychicPower.amount.title")
+      inputName="data.psychic.innatePsychicPower.amount"
+      inputValue=data.psychic.innatePsychicPower.amount
+    }}
+  {{/"systems/animabf/templates/parts/common/group-footer.hbs"}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}
