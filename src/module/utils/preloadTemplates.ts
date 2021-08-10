@@ -12,6 +12,8 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/common/horizontal-titled-input.hbs',
     'systems/animabf/templates/parts/common/vertical-titled-input.hbs',
     'systems/animabf/templates/parts/common/group.hbs',
+    'systems/animabf/templates/parts/common/group-body.hbs',
+    'systems/animabf/templates/parts/common/group-footer.hbs',
     'systems/animabf/templates/parts/general/general.hbs',
     'systems/animabf/templates/parts/general/parts/level.hbs',
     'systems/animabf/templates/parts/general/parts/language.hbs',

@@ -2,13 +2,17 @@
   class="zeon-regeneration"
   title=(localize "anima.ui.mystic.zeonRegeneration.title")
 }}
-  {{>
-  "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
-    class="final"
-    title=(localize "anima.ui.mystic.zeonRegeneration.final.title")
-    inputName="data.mystic.zeonRegeneration.current.value"
-    inputValue=data.mystic.zeonRegeneration.current.value
-    secondaryInputName="data.mystic.zeonRegeneration.max.value"
-    secondaryInputValue=data.mystic.zeonRegeneration.max.value
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="zeon-regeneration"
   }}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="final"
+      title=(localize "anima.ui.mystic.zeonRegeneration.final.title")
+      inputName="data.mystic.zeonRegeneration.current.value"
+      inputValue=data.mystic.zeonRegeneration.current.value
+      secondaryInputName="data.mystic.zeonRegeneration.max.value"
+      secondaryInputValue=data.mystic.zeonRegeneration.max.value
+    }}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}
