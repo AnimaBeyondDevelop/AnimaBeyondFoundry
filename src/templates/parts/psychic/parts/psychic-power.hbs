@@ -1,7 +1,10 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="psychic-power"
-  title=(localize "anima.ui.psychic.psychicPower.title")
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.psychic.psychicPower.title")
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="psychic-power"
   }}

@@ -1,0 +1,17 @@
+<div class='group-header'>
+  {{# if @partial-block}}
+    {{> @partial-block}}
+  {{else}}
+    {{#if this.addRowButtonData}}
+      {{>
+      "systems/animabf/templates/parts/common/add-item-button.hbs"
+        class=this.addRowButtonClass
+        data=this.addRowButtonData
+      }}
+    {{/if}}
+    {{>
+    "systems/animabf/templates/parts/common/group-header-title.hbs"
+      title=this.title
+    }}
+  {{/if}}
+</div>

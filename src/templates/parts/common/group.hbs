@@ -1,13 +1,3 @@
 <div class='common-group {{this.class}}'>
-  <div class='group-header'>
-    {{#if this.addRowButtonData}}
-      <img
-        class='{{concat this.addRowButtonClass " add-button"}}'
-        data-on-click='{{this.addRowButtonData}}'
-        src='/systems/animabf/assets/images/boton-plus.png'
-      />
-    {{/if}}
-    <h3 class='group-header-title'>{{this.title}}</h3>
-  </div>
   {{> @partial-block}}
 </div>

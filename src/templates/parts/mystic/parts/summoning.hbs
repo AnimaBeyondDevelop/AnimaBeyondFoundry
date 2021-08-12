@@ -1,7 +1,10 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="summoning"
-  title=(localize "anima.ui.mystic.summoning.title")
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.summoning.title")
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="summoning"
   }}

@@ -1,7 +1,10 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="innate-magic"
-  title=(localize "anima.ui.mystic.innateMagic.title")
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.innateMagic.title")
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="innate-magic"
   }}

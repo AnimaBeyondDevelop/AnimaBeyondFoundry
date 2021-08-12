@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="metamagics"
-  title=(localize "anima.ui.mystic.metamagic.title")
-  addRowButtonData="add-metamagic"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.metamagic.title")
+    addRowButtonData="add-metamagic"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="metamagics"
   }}

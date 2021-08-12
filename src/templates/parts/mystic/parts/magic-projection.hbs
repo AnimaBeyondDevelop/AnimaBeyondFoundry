@@ -1,7 +1,10 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="magic-projection"
-  title=(localize "anima.ui.mystic.magicProjection.title")
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.magicProjection.title")
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="magic-projection"
   }}

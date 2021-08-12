@@ -1,7 +1,10 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="psychic-projection"
-  title=(localize "anima.ui.psychic.psychicProjection.title")
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.psychic.psychicProjection.title")
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="psychic-projection"
   }}

@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="spell-maintenances"
-  title=(localize "anima.ui.mystic.spellMaintenance.title")
-  addRowButtonData="add-spell-maintenance"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.spellMaintenance.title")
+    addRowButtonData="add-spell-maintenance"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="spell-maintenances"
   }}

@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="psychic-disciplines"
-  title=(localize "anima.ui.psychic.psychicDiscipline.title")
-  addRowButtonData="add-psychic-discipline"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.psychic.psychicDiscipline.title")
+    addRowButtonData="add-psychic-discipline"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="psychic-disciplines"
   }}

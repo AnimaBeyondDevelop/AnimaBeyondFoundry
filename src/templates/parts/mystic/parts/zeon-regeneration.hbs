@@ -1,7 +1,10 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="zeon-regeneration"
-  title=(localize "anima.ui.mystic.zeonRegeneration.title")
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.zeonRegeneration.title")
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="zeon-regeneration"
   }}

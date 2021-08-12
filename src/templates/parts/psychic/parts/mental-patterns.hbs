@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="mental-patterns"
-  title=(localize "anima.ui.psychic.mentalPattern.title")
-  addRowButtonData="add-mental-pattern"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.psychic.mentalPattern.title")
+    addRowButtonData="add-mental-pattern"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="mental-patterns"
   }}

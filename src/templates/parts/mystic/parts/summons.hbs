@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="summons"
-  title=(localize "anima.ui.mystic.summon.title")
-  addRowButtonData="add-summon"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.summon.title")
+    addRowButtonData="add-summon"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="summons"
   }}

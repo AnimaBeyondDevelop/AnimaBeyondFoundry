@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="selected-spells"
-  title=(localize "anima.ui.mystic.selectedSpells.title")
-  addRowButtonData="add-selected-spell"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.selectedSpells.title")
+    addRowButtonData="add-selected-spell"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="selected-spells"
   }}

@@ -1,8 +1,11 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="innate-psychic-powers"
-  title=(localize "anima.ui.psychic.innatePsychicPower.title")
-  addRowButtonData="add-innate-psychic-power"
 }}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.psychic.innatePsychicPower.title")
+    addRowButtonData="add-innate-psychic-power"
+  }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="innate-psychic-powers"
   }}
