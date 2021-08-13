@@ -20,6 +20,7 @@ import { NoteChange } from '../types/NoteChange';
 import { PsychicDisciplineChanges } from '../types/PsychicDisciplineChanges';
 import { MentalPatternChanges } from '../types/MentalPatternChanges';
 import { InnatePsychicPowerChanges } from '../types/InnatePsychicPowerChanges';
+import { PsychicPowerChanges } from '../types/PsychicPowerChanges';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -500,6 +501,57 @@ export class ABFActor extends Actor {
         data: {
           effect,
           value
+        }
+      });
+    }
+  }
+
+  public async addPsychicPower(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.psychicPower.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.PSYCHIC_POWER,
+      data: {
+        level: { value: 0 },
+        effects: new Array(8).fill({ value: '' }),
+        actionType: { value: '' },
+        hasMaintenance: { value: false },
+        bonus: { value: 0 }
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editPsychicPowers(changes: PsychicPowerChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name,
+        bonus,
+        actionType,
+        effects: effectsObject,
+        hasMaintenance,
+        level
+      } = changes[id];
+
+      const effects = [];
+
+      for (const key of Object.keys(effectsObject)) {
+        effects[key] = { value: effectsObject[key] };
+      }
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          level: { value: level },
+          effects,
+          actionType: { value: actionType },
+          hasMaintenance: { value: hasMaintenance === true },
+          bonus: { value: bonus }
         }
       });
     }

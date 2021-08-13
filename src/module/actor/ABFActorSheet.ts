@@ -13,13 +13,13 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       ...{
         classes: ['abf', 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor-sheet.html',
-        width: 820,
-        height: 700,
+        width: 850,
+        height: 850,
         tabs: [
           {
             navSelector: '.sheet-tabs',
             contentSelector: '.sheet-body',
-            initial: 'psychic'
+            initial: 'main'
           }
         ]
       }
@@ -289,6 +289,18 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     });
     // Innate Psychic Powers
 
+    // Psychic Powers
+    this.buildCommonContextualMenu({
+      containerSelector: '#psychic-powers-context-menu-container',
+      rowSelector: '.psychic-power-row',
+      rowIdData: 'psychicPowerId'
+    });
+
+    html.find('[data-on-click="add-psychic-power"]').click(() => {
+      this.actor.addPsychicPower();
+    });
+    // Psychic Powers
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -395,7 +407,13 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
 
     if (unflattedChanges.data.dynamic.innatePsychicPowers) {
-      await this.actor.editInnatePsychicPowers(unflattedChanges.data.dynamic.innatePsychicPowers);
+      await this.actor.editInnatePsychicPowers(
+        unflattedChanges.data.dynamic.innatePsychicPowers
+      );
+    }
+
+    if (unflattedChanges.data.dynamic.psychicPowers) {
+      await this.actor.editPsychicPowers(unflattedChanges.data.dynamic.psychicPowers);
     }
   }
 

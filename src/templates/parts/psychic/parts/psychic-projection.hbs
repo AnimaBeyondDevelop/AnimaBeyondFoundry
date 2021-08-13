@@ -12,6 +12,8 @@
     "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
       class="projection"
       title=(localize "anima.ui.psychic.psychicProjection.projection.title")
+      rollable=true
+      rollableMessage=(manipulateString "toLowerCase" (localize "anima.ui.psychic.psychicProjection.title"))
       inputName="data.psychic.psychicProjection.value"
       inputValue=data.psychic.psychicProjection.value
     }}

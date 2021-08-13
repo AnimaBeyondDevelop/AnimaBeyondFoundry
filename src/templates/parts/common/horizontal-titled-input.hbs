@@ -25,6 +25,7 @@
       type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
       class='input {{#if this.secondaryInputName}}primary-input{{/if}}'
       value='{{this.inputValue}}'
+      {{#if (is 'eq' this.inputValue true)}}checked{{/if}}
     />
     {{#if this.secondaryInputName}}
       <input

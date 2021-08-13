@@ -265,7 +265,10 @@
   "dialogs.items.summon.content": "Nombre de la invocación",
   "dialogs.items.selectedSpell.content": "Nombre del conjuro seleccionado",
   "dialogs.items.spellMaintenance.content": "Nombre del conjuro mantenido",
-  "dialogs.items.metamagic.content": "Nombre de la metamagia",
+  "dialogs.items.psychicDiscipline.content": "Nombre de la disciplina",
+  "dialogs.items.mentalPattern.content": "Nombre del patrón mental",
+  "dialogs.items.innatePsychicPower.content": "Nombre del poder psíquico innato",
+  "dialogs.items.psychicPower.content": "Nombre del poder psíquico",
   "anima.ui.advantageSection.title": "Ventajas",
   "anima.ui.aspectSection.age.title": "Edad",
   "anima.ui.aspectSection.appearance.title": "Apariencia",
@@ -357,5 +360,11 @@
   "anima.ui.psychic.innatePsychicPower.power.title": "Poder",
   "anima.ui.psychic.innatePsychicPower.effect.title": "Efecto",
   "anima.ui.psychic.innatePsychicPower.value.title": "Valor",
-  "anima.ui.psychic.innatePsychicPower.amount.title": "Número de Innatos"
+  "anima.ui.psychic.innatePsychicPower.amount.title": "Número de Innatos",
+  "anima.ui.psychic.psychicPowers.title": "Poderes Psíquicos",
+  "anima.ui.psychic.psychicPowers.power.header.name.title": "Poder",
+  "anima.ui.psychic.psychicPowers.power.header.level.title": "Nivel",
+  "anima.ui.psychic.psychicPowers.power.footer.actionType.title": "Acción",
+  "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title": "Mant.",
+  "anima.ui.psychic.psychicPowers.power.footer.bonus.title": "Bono"
 }

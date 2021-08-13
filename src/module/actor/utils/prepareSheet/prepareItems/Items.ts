@@ -15,5 +15,6 @@ export enum Items {
   NOTE = 'note',
   PSYCHIC_DISCIPLINE = 'psychicDiscipline',
   MENTAL_PATTERN = 'mentalPattern',
-  INNATE_PSYCHIC_POWER = 'innatePsychicPower'
+  INNATE_PSYCHIC_POWER = 'innatePsychicPower',
+  PSYCHIC_POWER = 'psychicPower',
 }
