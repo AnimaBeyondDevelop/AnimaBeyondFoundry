@@ -1,18 +1,18 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
-  class="summons"
+  class="psychic-disciplines"
 }}
   {{>
   "systems/animabf/templates/parts/common/group-header.hbs"
-    title=(localize "anima.ui.mystic.summon.title")
-    addRowButtonData="add-summon"
+    title=(localize "anima.ui.psychic.psychicDiscipline.title")
+    addRowButtonData="add-psychic-discipline"
   }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
-    class="summons"
+    class="psychic-disciplines"
   }}
-    {{#each data.mystic.summons}}
-      <div data-summon-id='{{this._id}}' class='summon-row'>
+    {{#each data.psychic.psychicDisciplines}}
+      <div data-psychic-discipline-id='{{this._id}}' class='psychic-discipline-row'>
         <input
-          name='data.dynamic.summons.{{this._id}}.name'
+          name='data.dynamic.psychicDisciplines.{{this._id}}.name'
           type='text'
           class='input'
           value='{{this.name}}'

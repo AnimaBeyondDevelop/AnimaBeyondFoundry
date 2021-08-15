@@ -1,27 +1,34 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="spell-maintenances"
-  title=(localize "anima.ui.mystic.spellMaintenance.title")
-  addRowButtonData="add-spell-maintenance"
 }}
-  {{#each data.mystic.spellMaintenances}}
-    <div data-spell-maintenance-id='{{this._id}}' class='spell-maintenance-row'>
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="name"
-        title=(localize "anima.ui.mystic.spellMaintenance.name.title")
-        hideTitle=(is "gt" @index 0)
-        inputType="text"
-        inputName=(concat "data.dynamic.spellMaintenances." this._id ".name")
-        inputValue=this.name
-      }}
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="cost"
-        title=(localize "anima.ui.mystic.spellMaintenance.cost.title")
-        hideTitle=(is "gt" @index 0)
-        inputName=(concat "data.dynamic.spellMaintenances." this._id ".data.cost.value")
-        inputValue=this.data.cost.value
-      }}
-    </div>
-  {{/each}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.spellMaintenance.title")
+    addRowButtonData="add-spell-maintenance"
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="spell-maintenances"
+  }}
+    {{#each data.mystic.spellMaintenances}}
+      <div data-spell-maintenance-id='{{this._id}}' class='spell-maintenance-row'>
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.spellMaintenance.name.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.spellMaintenances." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="cost"
+          title=(localize "anima.ui.mystic.spellMaintenance.cost.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "data.dynamic.spellMaintenances." this._id ".data.cost.value")
+          inputValue=this.data.cost.value
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

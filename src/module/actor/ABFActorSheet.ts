@@ -13,8 +13,8 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       ...{
         classes: ['abf', 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor-sheet.html',
-        width: 820,
-        height: 700,
+        width: 850,
+        height: 850,
         tabs: [
           {
             navSelector: '.sheet-tabs',
@@ -253,6 +253,54 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     });
     // Notes
 
+    // Psychic Disciplines
+    this.buildCommonContextualMenu({
+      containerSelector: '#psychic-disciplines-context-menu-container',
+      rowSelector: '.psychic-discipline-row',
+      rowIdData: 'psychicDisciplineId'
+    });
+
+    html.find('[data-on-click="add-psychic-discipline"]').click(() => {
+      this.actor.addPsychicDiscipline();
+    });
+    // Psychic Disciplines
+
+    // Mental Patterns
+    this.buildCommonContextualMenu({
+      containerSelector: '#mental-patterns-context-menu-container',
+      rowSelector: '.mental-pattern-row',
+      rowIdData: 'mentalPatternId'
+    });
+
+    html.find('[data-on-click="add-mental-pattern"]').click(() => {
+      this.actor.addMentalPattern();
+    });
+    // Mental Patterns
+
+    // Innate Psychic Powers
+    this.buildCommonContextualMenu({
+      containerSelector: '#innate-psychic-powers-context-menu-container',
+      rowSelector: '.innate-psychic-power-row',
+      rowIdData: 'innatePsychicPowerId'
+    });
+
+    html.find('[data-on-click="add-innate-psychic-power"]').click(() => {
+      this.actor.addInnatePsychicPower();
+    });
+    // Innate Psychic Powers
+
+    // Psychic Powers
+    this.buildCommonContextualMenu({
+      containerSelector: '#psychic-powers-context-menu-container',
+      rowSelector: '.psychic-power-row',
+      rowIdData: 'psychicPowerId'
+    });
+
+    html.find('[data-on-click="add-psychic-power"]').click(() => {
+      this.actor.addPsychicPower();
+    });
+    // Psychic Powers
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -346,6 +394,26 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.notes) {
       await this.actor.editNotes(unflattedChanges.data.dynamic.notes);
+    }
+
+    if (unflattedChanges.data.dynamic.psychicDisciplines) {
+      await this.actor.editPsychicDisciplines(
+        unflattedChanges.data.dynamic.psychicDisciplines
+      );
+    }
+
+    if (unflattedChanges.data.dynamic.mentalPatterns) {
+      await this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
+    }
+
+    if (unflattedChanges.data.dynamic.innatePsychicPowers) {
+      await this.actor.editInnatePsychicPowers(
+        unflattedChanges.data.dynamic.innatePsychicPowers
+      );
+    }
+
+    if (unflattedChanges.data.dynamic.psychicPowers) {
+      await this.actor.editPsychicPowers(unflattedChanges.data.dynamic.psychicPowers);
     }
   }
 

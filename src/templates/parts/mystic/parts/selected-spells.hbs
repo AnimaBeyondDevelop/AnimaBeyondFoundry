@@ -1,27 +1,34 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="selected-spells"
-  title=(localize "anima.ui.mystic.selectedSpells.title")
-  addRowButtonData="add-selected-spell"
 }}
-  {{#each data.mystic.selectedSpells}}
-    <div data-selected-spell-id='{{this._id}}' class='selected-spell-row'>
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="name"
-        title=(localize "anima.ui.mystic.selectedSpells.name.title")
-        hideTitle=(is "gt" @index 0)
-        inputType="text"
-        inputName=(concat "data.dynamic.selectedSpells." this._id ".name")
-        inputValue=this.name
-      }}
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="cost"
-        title=(localize "anima.ui.mystic.selectedSpells.cost.title")
-        hideTitle=(is "gt" @index 0)
-        inputName=(concat "data.dynamic.selectedSpells." this._id ".data.cost.value")
-        inputValue=this.data.cost.value
-      }}
-    </div>
-  {{/each}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.selectedSpells.title")
+    addRowButtonData="add-selected-spell"
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="selected-spells"
+  }}
+    {{#each data.mystic.selectedSpells}}
+      <div data-selected-spell-id='{{this._id}}' class='selected-spell-row'>
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.selectedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.selectedSpells." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="cost"
+          title=(localize "anima.ui.mystic.selectedSpells.cost.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "data.dynamic.selectedSpells." this._id ".data.cost.value")
+          inputValue=this.data.cost.value
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

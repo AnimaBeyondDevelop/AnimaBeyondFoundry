@@ -1,27 +1,34 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="metamagics"
-  title=(localize "anima.ui.mystic.metamagic.title")
-  addRowButtonData="add-metamagic"
 }}
-  {{#each data.mystic.metamagics}}
-    <div data-metamagic-id='{{this._id}}' class='metamagic-row'>
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="name"
-        title=(localize "anima.ui.mystic.metamagic.name.title")
-        hideTitle=(is "gt" @index 0)
-        inputType="text"
-        inputName=(concat "data.dynamic.metamagics." this._id ".name")
-        inputValue=this.name
-      }}
-      {{>
-      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
-        class="grade"
-        title=(localize "anima.ui.mystic.metamagic.grade.title")
-        hideTitle=(is "gt" @index 0)
-        inputName=(concat "data.dynamic.metamagics." this._id ".data.grade.value")
-        inputValue=this.data.grade.value
-      }}
-    </div>
-  {{/each}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.metamagic.title")
+    addRowButtonData="add-metamagic"
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="metamagics"
+  }}
+    {{#each data.mystic.metamagics}}
+      <div data-metamagic-id='{{this._id}}' class='metamagic-row'>
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.metamagic.name.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.metamagics." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="grade"
+          title=(localize "anima.ui.mystic.metamagic.grade.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "data.dynamic.metamagics." this._id ".data.grade.value")
+          inputValue=this.data.grade.value
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

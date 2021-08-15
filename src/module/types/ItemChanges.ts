@@ -13,6 +13,10 @@ import { AdvantageChange } from './AdvantageChange';
 import { DisadvantageChange } from './DisadvantageChange';
 import { ContactChange } from './ContactChange';
 import { NoteChange } from './NoteChange';
+import { PsychicDisciplineChanges } from './PsychicDisciplineChanges';
+import { MentalPatternChanges } from './MentalPatternChanges';
+import { InnatePsychicPowerChanges } from './InnatePsychicPowerChanges';
+import { PsychicPowerChanges } from './PsychicPowerChanges';
 
 export type ItemChanges = {
   data: {
@@ -32,6 +36,10 @@ export type ItemChanges = {
       disadvantages: DisadvantageChange;
       contacts: ContactChange;
       notes: NoteChange;
+      psychicDisciplines: PsychicDisciplineChanges;
+      mentalPatterns: MentalPatternChanges;
+      innatePsychicPowers: InnatePsychicPowerChanges;
+      psychicPowers: PsychicPowerChanges;
     };
   };
 };

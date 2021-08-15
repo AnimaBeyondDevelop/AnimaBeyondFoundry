@@ -3,6 +3,7 @@ import { calculateExperienceHBSHelper } from './calculateExperienceHBSHelper';
 import { concatHBSHelper } from './concatHBSHelper';
 import { getKeyOfHBSHelper } from './getKeyOfHBSHelper';
 import { manipulateStringHBSHelper } from './manipulateStringHBSHelper';
+import { mathHBSHelper } from './mathHBSHelper';
 
 export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
 
@@ -12,7 +13,8 @@ export const registerHelpers = () => {
     isHBSHelper,
     calculateExperienceHBSHelper,
     getKeyOfHBSHelper,
-    manipulateStringHBSHelper
+    manipulateStringHBSHelper,
+    mathHBSHelper
   ];
 
   for (const helper of helpers) {

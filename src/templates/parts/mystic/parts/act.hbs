@@ -1,19 +1,26 @@
 {{#> "systems/animabf/templates/parts/common/group.hbs"
   class="act"
-  title=(localize "anima.ui.mystic.act.title")
 }}
   {{>
-  "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
-    class="main"
-    title=(localize "anima.ui.mystic.act.main.title")
-    inputName="data.mystic.act.main.value"
-    inputValue=data.mystic.act.main.value
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.mystic.act.title")
   }}
-  {{>
-  "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
-    class="alternative"
-    title=(localize "anima.ui.mystic.act.alternative.title")
-    inputName="data.mystic.act.alternative.value"
-    inputValue=data.mystic.act.alternative.value
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="act"
   }}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="main"
+      title=(localize "anima.ui.mystic.act.main.title")
+      inputName="data.mystic.act.main.value"
+      inputValue=data.mystic.act.main.value
+    }}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="alternative"
+      title=(localize "anima.ui.mystic.act.alternative.title")
+      inputName="data.mystic.act.alternative.value"
+      inputValue=data.mystic.act.alternative.value
+    }}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}
