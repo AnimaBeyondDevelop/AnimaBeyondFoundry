@@ -1,0 +1,22 @@
+<div class='group notes mt-3'>
+  <div class='group-header'>
+    <img
+      class='add-button'
+      data-on-click='add-note'
+      src='/systems/animabf/assets/images/boton-plus.png'
+    />
+    <h3 class='group-header-title'>{{localize 'anima.ui.notesSection.title'}}</h3>
+  </div>
+  <div id='note-context-menu-container' class='group-body'>
+    {{#each data.general.notes}}
+      <div data-note-id='{{this._id}}' class='note-row'>
+        <input
+          name='data.dynamic.notes.{{this._id}}.name'
+          type='text'
+          class='input'
+          value='{{this.name}}'
+        />
+      </div>
+    {{/each}}
+  </div>
+</div>

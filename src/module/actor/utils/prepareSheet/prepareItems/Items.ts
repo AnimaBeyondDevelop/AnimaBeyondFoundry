@@ -4,5 +4,13 @@ export enum Items {
   MAINTENANCES = 'maintenances',
   SELECTED = 'selected',
   METAMAGIC = 'metamagic',
-  INVOCATION = 'invocation'
+  INVOCATION = 'invocation',
+  LEVEL = 'level',
+  LANGUAGE = 'language',
+  ELAN = 'elan',
+  TITLE = 'title',
+  ADVANTAGE = 'advantage',
+  DISADVANTAGE = 'disadvantage',
+  CONTACT = 'contact',
+  NOTE = 'note'
 }

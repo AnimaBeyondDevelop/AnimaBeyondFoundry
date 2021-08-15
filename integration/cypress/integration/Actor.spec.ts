@@ -8,7 +8,7 @@ const fields = {
     secondaries: ['initiative', 'movement'],
     secondaries_resistances: ['phyr', 'disr', 'poir', 'magr', 'psyr']
   },
-  commonResources: ['lifePoints', 'fatigue'],
+  general: ['lifePoints', 'fatigue'],
   secondaries: {
     athletics: ['acrobatics', 'athleticism', 'ride', 'swim', 'climb', 'jump', 'piloting'],
     vigor: ['composure', 'featsOfStrength', 'withstandPain'],
@@ -114,21 +114,21 @@ describe('Anima Beyond Fantasy Actors', () => {
   it('common resources should be preserved', () => {
     cy.openActorSheet(actorName);
 
-    const commonResourcesMaxSelector = fields.commonResources.map(
-      value => `data.commonResources.${value}.max`
+    const generalMaxSelector = fields.general.map(
+      value => `data.general.${value}.max`
     );
 
-    const commonResourcesValueSelector = fields.commonResources.map(
-      value => `data.commonResources.${value}.value`
+    const generalValueSelector = fields.general.map(
+      value => `data.general.${value}.value`
     );
 
-    setValues(commonResourcesMaxSelector);
-    setValues(commonResourcesValueSelector);
+    setValues(generalMaxSelector);
+    setValues(generalValueSelector);
     cy.closeActorSheet();
 
     cy.openActorSheet(actorName);
-    checkValues(commonResourcesMaxSelector);
-    checkValues(commonResourcesValueSelector);
+    checkValues(generalMaxSelector);
+    checkValues(generalValueSelector);
 
     cy.closeActorSheet();
   });

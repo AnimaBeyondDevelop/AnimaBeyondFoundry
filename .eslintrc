@@ -6,6 +6,15 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "no-new": "off",
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-continue": "off",
+    "no-await-in-loop": "off",
     "no-restricted-syntax": "off",
     "@typescript-eslint/comma-dangle": ["off"],
     "import/no-cycle": ["off"],

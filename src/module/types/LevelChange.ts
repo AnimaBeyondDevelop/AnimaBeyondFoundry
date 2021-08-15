@@ -1,8 +1,8 @@
-export type SelectedSpelsChange = {
+export type LevelChanges = {
   [key: string]: {
     name: string;
     data: {
-      cost: number;
+      level: number;
     };
   };
 };

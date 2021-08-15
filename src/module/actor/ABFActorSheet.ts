@@ -42,7 +42,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
   ): Promise<ABFActor> {
     const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
 
-    this.updateItems(itemChanges);
+    await this.updateItems(itemChanges);
 
     return super._updateObject(event, actorChanges);
   }
@@ -80,6 +80,139 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addMetamagic();
     });
 
+    // Level
+    this.buildCommonContextualMenu({
+      containerSelector: '#level-context-menu-container',
+      rowSelector: '.level-row',
+      rowIdData: 'levelId'
+    });
+
+    html.find('[data-on-click="add-level"]').click(() => {
+      this.actor.addLevel();
+    });
+    // Level
+
+    // Language
+    this.buildCommonContextualMenu({
+      containerSelector: '#language-context-menu-container',
+      rowSelector: '.language-row',
+      rowIdData: 'languageId'
+    });
+
+    html.find('[data-on-click="add-language"]').click(() => {
+      this.actor.addLanguage();
+    });
+    // Language
+
+    // Elan
+    this.buildCommonContextualMenu({
+      containerSelector: '#elan-context-menu-container',
+      rowSelector: '.elan-row .base',
+      rowIdData: 'elanId',
+      otherItems: [
+        {
+          name: game.i18n.localize('contextualMenu.elan.options.addPower'),
+          icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
+          callback: target => {
+            const { elanId } = target[0].dataset;
+
+            if (!elanId) throw new Error('elanId missing');
+
+            this.actor.addElanPower(elanId);
+          }
+        }
+      ]
+    });
+
+    this.buildCommonContextualMenu({
+      containerSelector: '#elan-context-menu-container',
+      rowSelector: '.elan-row .powers',
+      rowIdData: 'elanPowerId',
+      deleteRowMessage: game.i18n.localize('contextualMenu.elan.options.deletePower'),
+      customCallbackFn: target => {
+        const { elanId } = target[0].dataset;
+
+        if (!elanId) {
+          throw new Error('Data id missing. Are you sure to set data-elan-id to rows?');
+        }
+
+        const { elanPowerId } = target[0].dataset;
+
+        if (!elanPowerId) {
+          throw new Error(
+            'Data id missing. Are you sure to set data-elan-power-id to rows?'
+          );
+        }
+
+        this.actor.removeElanPower(elanId, elanPowerId);
+      }
+    });
+
+    html.find('[data-on-click="add-elan"]').click(() => {
+      this.actor.addElan();
+    });
+    // Elan
+
+    // Titles
+    this.buildCommonContextualMenu({
+      containerSelector: '#title-context-menu-container',
+      rowSelector: '.title-row',
+      rowIdData: 'titleId'
+    });
+
+    html.find('[data-on-click="add-title"]').click(() => {
+      this.actor.addTitle();
+    });
+    // Titles
+
+    // Advantages
+    this.buildCommonContextualMenu({
+      containerSelector: '#advantage-context-menu-container',
+      rowSelector: '.advantage-row',
+      rowIdData: 'advantageId'
+    });
+
+    html.find('[data-on-click="add-advantage"]').click(() => {
+      this.actor.addAdvantage();
+    });
+    // Advantages
+
+    // Disadvantages
+    this.buildCommonContextualMenu({
+      containerSelector: '#disadvantage-context-menu-container',
+      rowSelector: '.disadvantage-row',
+      rowIdData: 'disadvantageId'
+    });
+
+    html.find('[data-on-click="add-disadvantage"]').click(() => {
+      this.actor.addDisadvantage();
+    });
+    // Disadvantages
+
+    // Contacts
+    this.buildCommonContextualMenu({
+      containerSelector: '#contact-context-menu-container',
+      rowSelector: '.contact-row',
+      rowIdData: 'contactId'
+    });
+
+    html.find('[data-on-click="add-contact"]').click(() => {
+      this.actor.addContact();
+    });
+    // Contacts
+
+    // Notes
+    this.buildCommonContextualMenu({
+      containerSelector: '#note-context-menu-container',
+      rowSelector: '.note-row',
+      rowIdData: 'noteId'
+    });
+
+    html.find('[data-on-click="add-note"]').click(() => {
+      this.actor.addNote();
+    });
+    // Notes
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -110,7 +243,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
   }
 
-  private updateItems(itemChanges: Record<string, unknown>) {
+  private async updateItems(itemChanges: Record<string, unknown>) {
     if (!itemChanges || Object.keys(itemChanges).length === 0) return;
 
     const unflattedChanges: ItemChanges = unflat(itemChanges);
@@ -138,5 +271,80 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     if (unflattedChanges.data.dynamic.metamagic) {
       this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagic);
     }
+
+    if (unflattedChanges.data.dynamic.levels) {
+      this.actor.editLevel(unflattedChanges.data.dynamic.levels);
+    }
+
+    if (unflattedChanges.data.dynamic.other_languages) {
+      this.actor.editLanguage(unflattedChanges.data.dynamic.other_languages);
+    }
+
+    if (unflattedChanges.data.dynamic.elan) {
+      this.actor.editElan(unflattedChanges.data.dynamic.elan);
+    }
+
+    if (unflattedChanges.data.dynamic.elan_power) {
+      await this.actor.editElanPower(unflattedChanges.data.dynamic.elan_power);
+    }
+
+    if (unflattedChanges.data.dynamic.titles) {
+      await this.actor.editTitles(unflattedChanges.data.dynamic.titles);
+    }
+
+    if (unflattedChanges.data.dynamic.advantages) {
+      await this.actor.editAdvantages(unflattedChanges.data.dynamic.advantages);
+    }
+
+    if (unflattedChanges.data.dynamic.disadvantages) {
+      await this.actor.editDisadvantages(unflattedChanges.data.dynamic.disadvantages);
+    }
+
+    if (unflattedChanges.data.dynamic.contacts) {
+      await this.actor.editContacts(unflattedChanges.data.dynamic.contacts);
+    }
+
+    if (unflattedChanges.data.dynamic.notes) {
+      await this.actor.editNotes(unflattedChanges.data.dynamic.notes);
+    }
   }
+
+  private buildCommonContextualMenu = ({
+    containerSelector,
+    rowSelector,
+    rowIdData,
+    deleteRowMessage = game.i18n.localize('contextualMenu.common.options.delete'),
+    customCallbackFn,
+    otherItems = []
+  }: {
+    containerSelector: string;
+    rowSelector: string;
+    rowIdData: string;
+    deleteRowMessage?: string;
+    customCallbackFn?: (target: JQuery) => void;
+    otherItems?: ContextMenu.Item[];
+  }) => {
+    return new ContextMenu($(containerSelector), rowSelector, [
+      {
+        name: deleteRowMessage,
+        icon: '<i class="fas fa-trash fa-fw"></i>',
+        callback: target => {
+          if (customCallbackFn) {
+            customCallbackFn(target);
+          } else {
+            const id = target[0].dataset[rowIdData];
+
+            if (!id) {
+              throw new Error(
+                `Data id missing. Are you sure to set ${rowIdData} in snake middle case to rows? example: data-elan-id`
+              );
+            }
+
+            this.actor.deleteOwnedItem(id);
+          }
+        }
+      },
+      ...otherItems
+    ]);
+  };
 }

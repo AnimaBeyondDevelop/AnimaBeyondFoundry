@@ -3,29 +3,47 @@
     "types": ["character"],
     "templates": [],
     "character": {
-      "description": {
-        "race": "",
-        "class": "",
-        "background": "",
-        "level": { "value": 0 },
-        "experience": { "value": 0 }
+      "general": {
+        "aspect": {
+          "hair": {
+            "value": ""
+          },
+          "eyes": { "value": "" },
+          "height": { "value": "" },
+          "weight": { "value": "" },
+          "age": { "value": "" },
+          "genre": { "value": "" },
+          "race": { "value": "" },
+          "appearance": {
+            "value": 0
+          },
+          "size": { "value": 0 }
+        },
+        "advantages": [],
+        "contacts": [],
+        "description": {
+          "value": ""
+        },
+        "disadvantages": [],
+        "elan": [],
+        "experience": { "current": 0, "next": 0 },
+        "fatigue": { "value": 0, "max": 0 },
+        "languages": {
+          "base": {
+            "value": ""
+          },
+          "others": []
+        },
+        "levels": [],
+        "lifePoints": { "value": 0, "max": 0 },
+        "notes": [],
+        "titles": []
       },
 
       "flags": {
         "magicUser": { "value": 0 },
         "hasInhumanity": { "value": 0 },
-        "fumblerange o algo asi": { "value": 0 }
-      },
-      "foundry special... algo": {
-        "vision": { "value": 0 }
-      },
-
-      "commonResources": {
-        "lifePoints": { "value": 0, "max": 0 },
-        "fatigue": { "value": 0, "max": 0 },
-        "destinyPoints": { "value": 0, "max": 0 },
-        "custom": { "value": 0, "max": 0 },
-        "sanity": { "value": 0, "max": 0 }
+        "fumblerange": { "value": 0 }
       },
 
       "characteristics": {
@@ -58,10 +76,10 @@
           "acrobatics": { "value": 0 },
           "athleticism": { "value": 0 },
           "ride": { "value": 0 },
-          "swim": {"value": 0},
+          "swim": { "value": 0 },
           "climb": { "value": 0 },
           "jump": { "value": 0 },
-          "piloting": {"value": 0}
+          "piloting": { "value": 0 }
         },
         "vigor": {
           "composure": { "value": 0 },
@@ -91,7 +109,7 @@
           "style": { "value": 0 },
           "intimidate": { "value": 0 },
           "leadership": { "value": 0 },
-          "persuasion":{"value": 0},
+          "persuasion": { "value": 0 },
           "trading": { "value": 0 },
           "streetwise": { "value": 0 },
           "etiquette": { "value": 0 }
@@ -109,15 +127,15 @@
           "art": { "value": 0 },
           "dance": { "value": 0 },
           "forging": { "value": 0 },
-          "runes":{"value": 0},
-          "alchemy": {"value": 0},
-          "animism":{"value": 0},
+          "runes": { "value": 0 },
+          "alchemy": { "value": 0 },
+          "animism": { "value": 0 },
           "music": { "value": 0 },
           "sleightOfHand": { "value": 0 },
-          "ritualCalligraphy":{"value": 0},
-          "jewelry":{"value": 0},
-          "tailoring":{"value": 0},
-          "constructMarionettes":{"value": 0}
+          "ritualCalligraphy": { "value": 0 },
+          "jewelry": { "value": 0 },
+          "tailoring": { "value": 0 },
+          "constructMarionettes": { "value": 0 }
         },
         "special": {
           "special": { "value": 0 }
@@ -151,31 +169,31 @@
 
       "mystic": {
         "zeon": { "value": 0, "max": 0, "accumulated": 0 },
-        "magicAcummulation": { "value": 0, "Alternative": 0},
-        "magicRegeneration": { "value": 0, "Total": 0},
-        "InnerPotential": {"value": 0, "Alternative": 0},
+        "magicAcummulation": { "value": 0, "Alternative": 0 },
+        "magicRegeneration": { "value": 0, "Total": 0 },
+        "InnerPotential": { "value": 0, "Alternative": 0 },
         "magicProjection": {
-          "Base": {"value": 0 },
+          "Base": { "value": 0 },
           "offensive": { "value": 0 },
           "defensive": { "value": 0 }
         },
-        "magicLevel": { 
-          "Spheres": { 
-            "Essence": { "value": 0 }, 
-            "water": { "value": 0 }, 
-            "Earth": { "value": 0 }, 
-            "Creation": { "value": 0 }, 
-            "Darkness": { "value": 0 }, 
-            "Necromancy": { "value": 0 }, 
-            "Light": { "value": 0 }, 
-            "Destruction": { "value": 0 }, 
-            "Air": { "value": 0 }, 
-            "Fire": { "value": 0 }, 
+        "magicLevel": {
+          "Spheres": {
+            "Essence": { "value": 0 },
+            "water": { "value": 0 },
+            "Earth": { "value": 0 },
+            "Creation": { "value": 0 },
+            "Darkness": { "value": 0 },
+            "Necromancy": { "value": 0 },
+            "Light": { "value": 0 },
+            "Destruction": { "value": 0 },
+            "Air": { "value": 0 },
+            "Fire": { "value": 0 },
             "Ilusion": { "value": 0 }
           },
           "Metamagic": { "value": 0 },
           "SeletedSpells": { "value": 0 },
-          "Total": {"use": 0, "Total": 0}
+          "Total": { "use": 0, "Total": 0 }
         },
         "freeAccessSpells": [],
         "maintenances": [],
@@ -194,87 +212,87 @@
       "domine": {
         "kiPoints": { "value": 0, "max": 0, "accumulated": 0 },
         "kiAccumulation": { "value": 0 },
-        "useOfKi": {"value": 0 },
-        "kiControl": {"value": 0},
-        "detectionOfKi": {"value": 0},
-        "erudition": {"value": 0},
-        "combatAura": {"value": 0},
-        "physicalDominion": {"value": 0},
-        "physicalChange": {"value": 0},
-        "superiorChange": {"value": 0},
-        "multiplicationOfBodies": {"value": 0},
-        "greaterMultiplicationOfBodies": {"value": 0},
-        "arcaneMultiplicationOfBodies": {"value": 0},
-        "magnitude": {"value": 0},
-        "arcaneMagnitude": {"value": 0},
-        "ageControl": {"value": 0},
-        "techniqueImitation": {"value": 0},
-        "technicForce": {"value": 0},
-        "eliminationOfWeight": {"value": 0},
-        "levitation": {"value": 0},
-        "objectMotion": {"value": 0},
-        "massMovement": {"value": 0},
-        "fly": {"value": 0},
-        "presenceExtrusion": {"value": 0},
-        "absorptionOfEnergy": {"value": 0},
-        "energyArmor": {"value": 0},
-        "greaterEnergyArmor": {"value": 0},
-        "arcaneEnergyArmor": {"value": 0},
-        "physicalShield": {"value": 0},
-        "auraExtrusion": {"value": 0},
-        "increasedReach": {"value": 0},
-        "elementalAttack": {"value": 0},
-        "fireAttack": {"value": 0},
-        "waterAttack": {"value": 0},
-        "airAttack": {"value": 0},
-        "earthAttack": {"value": 0},
-        "lightAttack": {"value": 0},
-        "darknessAttack": {"value": 0},
-        "increasedDamage": {"value": 0},
-        "increasedSpeed": {"value": 0},
-        "destructionByKi": {"value": 0},
-        "kiTransmission": {"value": 0},
-        "kiHealing": {"value": 0},
-        "superiorHealing": {"value": 0},
-        "stabilize": {"value": 0},
-        "vitalSacrifice": {"value": 0},
-        "useOfNecessaryEnergy": {"value": 0},
-        "kiConcealment": {"value": 0},
-        "auraOfConcealment": {"value": 0},
-        "falseDeath": {"value": 0},
-        "eliminationOfNecessities": {"value": 0},
-        "elementalImmunityFire": {"value": 0},
-        "elementalImmunityCold": {"value": 0},
-        "elementalImmunityLightning": {"value": 0},
-        "eliminationOfPenalties": {"value": 0},
-        "recovery": {"value": 0},
-        "restoreOthers": {"value": 0},
-        "characteristicAugmentation": {"value": 0},
-        "superiorCharacteristicAugmentation": {"value": 0},
-        "improvisedTechniques": {"value": 0},
-        "inhumanity": {"value": 0},
-        "zen": {"value": 0},
-        "useOfNemesis": {"value": 0},
-        "ArmorOfEmptiness": {"value": 0},
-        "Noth": {"value": 0},
-        "KiCancellation": {"value": 0},
-        "GreaterKiCancellation": {"value": 0},
-        "MagicCancellation": {"value": 0},
-        "GreaterMagicCancellation": {"value": 0},
-        "MatricesCancellation": {"value": 0},
-        "GreaterMatricesCancellation": {"value": 0},
-        "BindingCancellation": {"value": 0},
-        "EmptinessExtrusion": {"value": 0},
-        "BodyOfEmptiness": {"value": 0},
-        "NoNeeds": {"value": 0},
-        "MovementOfEmptiness": {"value": 0},
-        "FormOfEmptiness": {"value": 0},
-        "EssenceOfEmptiness": {"value": 0},
-        "OneWithNothing": {"value": 0},
-        "AuraOfEmptiness": {"value": 0},
-        "Undetectable": {"value": 0},
-        "InhumanityNemesis": {"value": 0},
-        "ZenNemesis": {"value": 0}
+        "useOfKi": { "value": 0 },
+        "kiControl": { "value": 0 },
+        "detectionOfKi": { "value": 0 },
+        "erudition": { "value": 0 },
+        "combatAura": { "value": 0 },
+        "physicalDominion": { "value": 0 },
+        "physicalChange": { "value": 0 },
+        "superiorChange": { "value": 0 },
+        "multiplicationOfBodies": { "value": 0 },
+        "greaterMultiplicationOfBodies": { "value": 0 },
+        "arcaneMultiplicationOfBodies": { "value": 0 },
+        "magnitude": { "value": 0 },
+        "arcaneMagnitude": { "value": 0 },
+        "ageControl": { "value": 0 },
+        "techniqueImitation": { "value": 0 },
+        "technicForce": { "value": 0 },
+        "eliminationOfWeight": { "value": 0 },
+        "levitation": { "value": 0 },
+        "objectMotion": { "value": 0 },
+        "massMovement": { "value": 0 },
+        "fly": { "value": 0 },
+        "presenceExtrusion": { "value": 0 },
+        "absorptionOfEnergy": { "value": 0 },
+        "energyArmor": { "value": 0 },
+        "greaterEnergyArmor": { "value": 0 },
+        "arcaneEnergyArmor": { "value": 0 },
+        "physicalShield": { "value": 0 },
+        "auraExtrusion": { "value": 0 },
+        "increasedReach": { "value": 0 },
+        "elementalAttack": { "value": 0 },
+        "fireAttack": { "value": 0 },
+        "waterAttack": { "value": 0 },
+        "airAttack": { "value": 0 },
+        "earthAttack": { "value": 0 },
+        "lightAttack": { "value": 0 },
+        "darknessAttack": { "value": 0 },
+        "increasedDamage": { "value": 0 },
+        "increasedSpeed": { "value": 0 },
+        "destructionByKi": { "value": 0 },
+        "kiTransmission": { "value": 0 },
+        "kiHealing": { "value": 0 },
+        "superiorHealing": { "value": 0 },
+        "stabilize": { "value": 0 },
+        "vitalSacrifice": { "value": 0 },
+        "useOfNecessaryEnergy": { "value": 0 },
+        "kiConcealment": { "value": 0 },
+        "auraOfConcealment": { "value": 0 },
+        "falseDeath": { "value": 0 },
+        "eliminationOfNecessities": { "value": 0 },
+        "elementalImmunityFire": { "value": 0 },
+        "elementalImmunityCold": { "value": 0 },
+        "elementalImmunityLightning": { "value": 0 },
+        "eliminationOfPenalties": { "value": 0 },
+        "recovery": { "value": 0 },
+        "restoreOthers": { "value": 0 },
+        "characteristicAugmentation": { "value": 0 },
+        "superiorCharacteristicAugmentation": { "value": 0 },
+        "improvisedTechniques": { "value": 0 },
+        "inhumanity": { "value": 0 },
+        "zen": { "value": 0 },
+        "useOfNemesis": { "value": 0 },
+        "ArmorOfEmptiness": { "value": 0 },
+        "Noth": { "value": 0 },
+        "KiCancellation": { "value": 0 },
+        "GreaterKiCancellation": { "value": 0 },
+        "MagicCancellation": { "value": 0 },
+        "GreaterMagicCancellation": { "value": 0 },
+        "MatricesCancellation": { "value": 0 },
+        "GreaterMatricesCancellation": { "value": 0 },
+        "BindingCancellation": { "value": 0 },
+        "EmptinessExtrusion": { "value": 0 },
+        "BodyOfEmptiness": { "value": 0 },
+        "NoNeeds": { "value": 0 },
+        "MovementOfEmptiness": { "value": 0 },
+        "FormOfEmptiness": { "value": 0 },
+        "EssenceOfEmptiness": { "value": 0 },
+        "OneWithNothing": { "value": 0 },
+        "AuraOfEmptiness": { "value": 0 },
+        "Undetectable": { "value": 0 },
+        "InhumanityNemesis": { "value": 0 },
+        "ZenNemesis": { "value": 0 }
       },
 
       "psychic": {
@@ -291,12 +309,20 @@
 
   "Item": {
     "types": [
-      "skill", 
-      "freeAccessSpell", 
+      "skill",
+      "freeAccessSpell",
       "maintenances",
       "selected",
       "metamagic",
-      "invocation"
+      "invocation",
+      "level",
+      "language",
+      "elan",
+      "title",
+      "advantage",
+      "disadvantage",
+      "contact",
+      "note"
     ],
 
     "freeAccessSpell": {
@@ -305,17 +331,27 @@
     "skill": {
       "value": 0
     },
-    "maintenances":{
+    "maintenances": {
       "cost": 0
     },
-    "selected":{
+    "selected": {
       "cost": 0
     },
-    "metamagic":{
+    "metamagic": {
       "grade": 0
     },
-    "invocation":{
+    "invocation": {
       "cost": 0
+    },
+    "level": {
+      "level": 0
+    },
+    "elan": {
+      "level": 0,
+      "powers": []
+    },
+    "contact": {
+      "description": ""
     }
   }
 }

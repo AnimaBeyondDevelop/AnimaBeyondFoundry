@@ -9,7 +9,8 @@
     "build:watch": "gulp watch",
     "clean": "gulp clean && gulp link --clean",
     "test": "jest src",
-    "prepare": "husky install",
+    "postinstall": "npx husky set .husky/pre-commit \"npm run hook:pre-commit\"",
+    "hook:pre-commit": "npm run test && lint-staged",
     "cypress:open": "cd integration && cypress open"
   },
   "engines": {
@@ -57,7 +58,10 @@
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "src/**/*.ts": "eslint --fix --cache"
+    "src/**/*.ts": "eslint --fix --cache",
+    "src/**/*.{ts,tsx}": [
+      "bash -c \"tsc --noEmit --pretty\""
+    ]
   },
   "sasslintConfig": "./.sass-lint.yml"
 }
