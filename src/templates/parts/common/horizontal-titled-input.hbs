@@ -7,7 +7,7 @@
             {{/if}}
             '
             {{#if this.rollable}}
-              data-roll="1d100xa+@{{getKeyOf this.inputName}}"
+              data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+@{{getKeyOf this.inputName}}"
               data-label="
               {{#if this.rollableMessage}}
                 {{this.rollableMessage}}
@@ -27,7 +27,7 @@
       value='{{this.inputValue}}'
       {{#if (is 'eq' this.inputValue true)}}checked{{/if}}
     />
-    {{#if this.secondaryInputName}}
+    {{#if this.hasSecondaryInput}}
       <input
         name='{{this.secondaryInputName}}'
         type='{{#if this.secondaryInputType}}{{this.secondaryInputType}}{{else}}number{{/if}}'

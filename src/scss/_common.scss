@@ -44,14 +44,15 @@
 
 .window-app .window-content {
   background: $light-cream;
+  overflow-x: auto;
 }
+
 .abf.sheet.actor {
   // ------------------------
   // ------ALL INPUTS-------
   // ------------------------
 
   // TODO: Remove this generic selector and set the class selector over all inputs
-  input,
   .input {
     font-family: inherit;
     border: none;
