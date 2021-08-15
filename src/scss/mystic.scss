@@ -1,0 +1,307 @@
+@import 'variable.scss';
+@import '_common.scss';
+
+.mystic-tab {
+  margin-top: 0.75rem;
+
+  // Grids
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column-gap: 1rem;
+
+  .first-column > .sub-columns {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: 1rem;
+  }
+
+  div .common-group,
+  .spheres {
+    &:first-child {
+      margin-top: 0;
+    }
+
+    margin-top: 0.75rem;
+  }
+  // Grids
+
+  // Magic Projection
+  .magic-projection {
+    .title {
+      font-weight: bold;
+      margin-top: 0.5rem;
+      margin-bottom: 0.25rem;
+
+      text-align: center;
+    }
+
+    .imbalance {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 0.5rem;
+    }
+  }
+  // Magic Projection
+
+  // Summoning
+  .summoning {
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1rem;
+    }
+  }
+  // Summoning
+
+  // Spheres
+  .spheres {
+    height: 100%;
+    width: 100%;
+    min-width: 20rem;
+
+    display: flex;
+    justify-content: center;
+
+    .spheres-container {
+      position: relative;
+      width: 20rem;
+      height: 31rem;
+
+      img {
+        border: none;
+      }
+
+      .title {
+        width: 10rem;
+
+        position: absolute;
+        top: -0.7%;
+        left: 24.5%;
+
+        font-size: 1.1rem;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .total {
+        position: absolute;
+        top: 91%;
+        left: 15%;
+
+        width: 7rem;
+      }
+
+      .used {
+        position: absolute;
+        top: 91%;
+        left: 53%;
+
+        width: 7rem;
+      }
+
+      .total,
+      .used {
+        .label {
+          color: white;
+        }
+
+        .input-container .input {
+          height: 1.3rem;
+        }
+      }
+
+      .sphere {
+        position: absolute;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 10rem;
+
+        &.essence-sphere {
+          top: 6.6%;
+          left: 24.9%;
+        }
+
+        &.water-sphere {
+          top: 19.4%;
+          left: -9.5%;
+        }
+
+        &.earth-sphere {
+          top: 19.3%;
+          left: 60.7%;
+        }
+
+        &.creation-sphere {
+          top: 29.3%;
+          left: 25.2%;
+        }
+
+        &.darkness-sphere {
+          top: 43.4%;
+          left: -9.5%;
+        }
+
+        &.necromancy-sphere {
+          top: 43.5%;
+          left: 24.9%;
+        }
+
+        &.light-sphere {
+          top: 43.4%;
+          left: 61.4%;
+        }
+
+        &.destruction-sphere {
+          top: 58%;
+          left: 25.2%;
+        }
+
+        &.air-sphere {
+          top: 63%;
+          left: -9.9%;
+        }
+
+        &.fire-sphere {
+          top: 62.9%;
+          left: 61.2%;
+        }
+
+        &.illusion-sphere {
+          top: 78%;
+          left: 25.2%;
+        }
+
+        .sphere-name {
+          font-weight: bold;
+          color: white;
+          font-size: 1.1rem;
+          letter-spacing: -0.05rem;
+
+          -webkit-text-stroke-color: $red;
+          -webkit-text-stroke-width: 0.035rem;
+
+          margin-bottom: 0;
+        }
+
+        .sphere-value {
+          margin-top: 0.1rem;
+          max-width: 2rem;
+          color: $black;
+          border: none;
+          border-radius: 50%;
+          background: transparent;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  // Spheres
+
+  // Free Access Spells
+  .free-access-spells {
+    .free-access-spell-row:first-child {
+      margin-top: 0;
+    }
+
+    .free-access-spell-row {
+      margin-top: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-column-gap: 0.1rem;
+
+      .spell .input-container {
+        width: 100%;
+      }
+    }
+  }
+  // Free Access Spells
+
+  // Spell Maintenances
+  .spell-maintenances {
+    .spell-maintenance-row:first-child {
+      margin-top: 0;
+    }
+
+    .spell-maintenance-row {
+      margin-top: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: 0.1rem;
+
+      .name .input-container {
+        width: 100%;
+      }
+    }
+  }
+  // Spell Maintenances
+
+  // Selected Spells
+  .selected-spells {
+    .selected-spell-row:first-child {
+      margin-top: 0;
+    }
+
+    .selected-spell-row {
+      margin-top: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: 0.1rem;
+
+      .name .input-container {
+        width: 100%;
+      }
+    }
+  }
+  // Selected Spells
+
+  // Summons
+  .summons {
+    .summon-row:first-child {
+      margin-top: 0;
+    }
+
+    .summon-row {
+      margin-top: 0.75rem;
+
+      .input {
+        border-radius: $border-radius;
+        background: $light-cream;
+        font-weight: bold;
+        padding: 0.25rem 0.5rem;
+
+        width: 100%;
+      }
+    }
+  }
+  // Summons
+
+  // Metamagics
+  .metamagics {
+    .metamagic-row:first-child {
+      margin-top: 0;
+    }
+
+    .metamagic-row {
+      margin-top: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: 0.1rem;
+
+      .name .input-container {
+        width: 100%;
+      }
+    }
+  }
+  // Metamagics
+}

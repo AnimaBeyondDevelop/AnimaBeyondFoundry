@@ -1,10 +1,10 @@
 export enum Items {
   SECONDARY_SKILL = 'skill',
   FREE_ACCESS_SPELL = 'freeAccessSpell',
-  MAINTENANCES = 'maintenances',
-  SELECTED = 'selected',
+  SPELL_MAINTENANCE = 'spellMaintenance',
+  SELECTED_SPELL = 'selectedSpell',
   METAMAGIC = 'metamagic',
-  INVOCATION = 'invocation',
+  SUMMON = 'summon',
   LEVEL = 'level',
   LANGUAGE = 'language',
   ELAN = 'elan',

@@ -13,7 +13,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       ...{
         classes: ['abf', 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor-sheet.html',
-        width: 600,
+        width: 820,
         height: 700,
         tabs: [
           {
@@ -60,25 +60,65 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.addSecondarySkillSlot();
     });
 
+    // Free Access Spells
+    this.buildCommonContextualMenu({
+      containerSelector: '#free-access-spells-context-menu-container',
+      rowSelector: '.free-access-spell-row',
+      rowIdData: 'freeAccessSpellId'
+    });
+
     html.find('[data-on-click="add-free-access-spell"]').click(() => {
-      this.actor.addFreeAccessSpellSlot();
+      this.actor.addFreeAccessSpell();
+    });
+    // Free Access Spells
+
+    // Spell Maintenances
+    this.buildCommonContextualMenu({
+      containerSelector: '#spell-maintenances-context-menu-container',
+      rowSelector: '.spell-maintenance-row',
+      rowIdData: 'spellMaintenanceId'
     });
 
-    html.find('[data-on-click="add-maintenance"]').click(() => {
-      this.actor.addMaintentances();
+    html.find('[data-on-click="add-spell-maintenance"]').click(() => {
+      this.actor.addSpellMaintenance();
+    });
+    // Spell Maintenances
+
+    // Selected Spells
+    this.buildCommonContextualMenu({
+      containerSelector: '#selected-spells-context-menu-container',
+      rowSelector: '.selected-spell-row',
+      rowIdData: 'selectedSpellId'
     });
 
-    html.find('[data-on-click="add-selected"]').click(() => {
-      this.actor.addSelectedSpells();
+    html.find('[data-on-click="add-selected-spell"]').click(() => {
+      this.actor.addSelectedSpell();
+    });
+    // Selected Spells
+
+    // Summons
+    this.buildCommonContextualMenu({
+      containerSelector: '#summons-context-menu-container',
+      rowSelector: '.summon-row',
+      rowIdData: 'summonId'
     });
 
-    html.find('[data-on-click="add-invocation"]').click(() => {
-      this.actor.addInvocation();
+    html.find('[data-on-click="add-summon"]').click(() => {
+      this.actor.addSummon();
+    });
+    // Summons
+
+    // Metamagic
+    this.buildCommonContextualMenu({
+      containerSelector: '#metamagics-context-menu-container',
+      rowSelector: '.metamagic-row',
+      rowIdData: 'metamagicId'
     });
 
     html.find('[data-on-click="add-metamagic"]').click(() => {
       this.actor.addMetamagic();
     });
+    // Metamagic
 
     // Level
     this.buildCommonContextualMenu({
@@ -256,20 +296,20 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       this.actor.editFreeAccessSpells(unflattedChanges.data.dynamic.freeAccessSpells);
     }
 
-    if (unflattedChanges.data.dynamic.maintenances) {
-      this.actor.editMaintentances(unflattedChanges.data.dynamic.maintenances);
+    if (unflattedChanges.data.dynamic.spellMaintenances) {
+      this.actor.editSpellMaintenance(unflattedChanges.data.dynamic.spellMaintenances);
     }
 
-    if (unflattedChanges.data.dynamic.selected) {
-      this.actor.editSelectedSpells(unflattedChanges.data.dynamic.selected);
+    if (unflattedChanges.data.dynamic.selectedSpells) {
+      this.actor.editSelectedSpell(unflattedChanges.data.dynamic.selectedSpells);
     }
 
-    if (unflattedChanges.data.dynamic.invocation) {
-      this.actor.editInvocation(unflattedChanges.data.dynamic.invocation);
+    if (unflattedChanges.data.dynamic.summons) {
+      this.actor.editSummon(unflattedChanges.data.dynamic.summons);
     }
 
-    if (unflattedChanges.data.dynamic.metamagic) {
-      this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagic);
+    if (unflattedChanges.data.dynamic.metamagics) {
+      this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagics);
     }
 
     if (unflattedChanges.data.dynamic.levels) {

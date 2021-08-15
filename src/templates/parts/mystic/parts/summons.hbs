@@ -1,0 +1,16 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="summons"
+  title=(localize "anima.ui.mystic.summon.title")
+  addRowButtonData="add-summon"
+}}
+  {{#each data.mystic.summons}}
+    <div data-summon-id='{{this._id}}' class='summon-row'>
+      <input
+        name='data.dynamic.summons.{{this._id}}.name'
+        type='text'
+        class='input'
+        value='{{this.name}}'
+      />
+    </div>
+  {{/each}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

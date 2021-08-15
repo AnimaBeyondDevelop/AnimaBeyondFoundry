@@ -8,10 +8,10 @@ export const attachSelectedSpells = (
 
   const { data } = newSheet.actor;
 
-  if (!data.mystic.selected) {
-    data.mystic.selected = [];
+  if (!data.mystic.selectedSpells) {
+    data.mystic.selectedSpells = [];
   } else {
-    data.mystic.selected.push(item);
+    data.mystic.selectedSpells.push(item);
   }
 
   return newSheet;

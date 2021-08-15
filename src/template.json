@@ -168,45 +168,50 @@
       },
 
       "mystic": {
+        "act": {
+          "main": {
+            "value": 0
+          },
+          "alternative": {
+            "value": 0
+          }
+        },
         "zeon": { "value": 0, "max": 0, "accumulated": 0 },
-        "magicAcummulation": { "value": 0, "Alternative": 0 },
-        "magicRegeneration": { "value": 0, "Total": 0 },
-        "InnerPotential": { "value": 0, "Alternative": 0 },
+        "magicRegeneration": { "value": 0, "total": 0 },
+        "innerPotential": { "value": 0, "alternative": 0 },
         "magicProjection": {
-          "Base": { "value": 0 },
+          "base": { "value": 0 },
           "offensive": { "value": 0 },
           "defensive": { "value": 0 }
         },
         "magicLevel": {
-          "Spheres": {
-            "Essence": { "value": 0 },
+          "spheres": {
+            "essence": { "value": 0 },
             "water": { "value": 0 },
-            "Earth": { "value": 0 },
-            "Creation": { "value": 0 },
-            "Darkness": { "value": 0 },
-            "Necromancy": { "value": 0 },
-            "Light": { "value": 0 },
-            "Destruction": { "value": 0 },
-            "Air": { "value": 0 },
-            "Fire": { "value": 0 },
-            "Ilusion": { "value": 0 }
+            "earth": { "value": 0 },
+            "creation": { "value": 0 },
+            "darkness": { "value": 0 },
+            "necromancy": { "value": 0 },
+            "light": { "value": 0 },
+            "destruction": { "value": 0 },
+            "air": { "value": 0 },
+            "fire": { "value": 0 },
+            "illusion": { "value": 0 }
           },
-          "Metamagic": { "value": 0 },
-          "SeletedSpells": { "value": 0 },
-          "Total": { "use": 0, "Total": 0 }
+          "total": { "value": 0 },
+          "used": { "value": 0 }
         },
-        "freeAccessSpells": [],
-        "maintenances": [],
-        "selected": [],
-        "metamagic": [],
         "summoning": {
-          "currenRitualBonus": { "value": 0 },
           "summon": { "value": 0 },
           "banish": { "value": 0 },
           "bind": { "value": 0 },
           "control": { "value": 0 }
         },
-        "invocation": []
+        "freeAccessSpells": [],
+        "spellMaintenances": [],
+        "selectedSpells": [],
+        "summons": [],
+        "metamagics": []
       },
 
       "domine": {
@@ -311,10 +316,10 @@
     "types": [
       "skill",
       "freeAccessSpell",
-      "maintenances",
-      "selected",
+      "spellMaintenance",
+      "selectedSpell",
       "metamagic",
-      "invocation",
+      "summon",
       "level",
       "language",
       "elan",
@@ -326,22 +331,35 @@
     ],
 
     "freeAccessSpell": {
-      "level": 0
+      "level": {
+        "value": 0
+      },
+      "cost": {
+        "value": 0
+      }
     },
     "skill": {
       "value": 0
     },
-    "maintenances": {
-      "cost": 0
+    "spellMaintenance": {
+      "cost": {
+        "value": 0
+      }
     },
-    "selected": {
-      "cost": 0
+    "selectedSpell": {
+      "cost": {
+        "value": 0
+      }
     },
     "metamagic": {
-      "grade": 0
+      "grade": {
+        "value": 0
+      }
     },
-    "invocation": {
-      "cost": 0
+    "summon": {
+      "cost": {
+        "value": 0
+      }
     },
     "level": {
       "level": 0

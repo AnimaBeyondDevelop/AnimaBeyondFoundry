@@ -3,7 +3,7 @@ export type FreeAccessSpellChange = {
   [key: string]: {
     name: string;
     data: {
-      level: number;
+      level: { value: number };
     };
   };
 };

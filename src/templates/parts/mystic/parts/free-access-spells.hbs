@@ -1,0 +1,35 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="free-access-spells"
+  title=(localize "anima.ui.mystic.freeAccessSpell.title")
+  addRowButtonData="add-free-access-spell"
+}}
+  {{#each data.mystic.freeAccessSpells}}
+    <div data-free-access-spell-id='{{this._id}}' class='free-access-spell-row'>
+      {{>
+      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+        class="level"
+        title=(localize "anima.ui.mystic.freeAccessSpell.level.title")
+        hideTitle=(is "gt" @index 0)
+        inputName=(concat "data.dynamic.freeAccessSpells." this._id ".data.level.value")
+        inputValue=this.data.level.value
+      }}
+      {{>
+      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+        class="spell"
+        title=(localize "anima.ui.mystic.freeAccessSpell.spell.title")
+        hideTitle=(is "gt" @index 0)
+        inputType="text"
+        inputName=(concat "data.dynamic.freeAccessSpells." this._id ".name")
+        inputValue=this.name
+      }}
+      {{>
+      "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+        class="cost"
+        title=(localize "anima.ui.mystic.freeAccessSpell.cost.title")
+        hideTitle=(is "gt" @index 0)
+        inputName=(concat "data.dynamic.freeAccessSpells." this._id ".data.cost.value")
+        inputValue=this.data.cost.value
+      }}
+    </div>
+  {{/each}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

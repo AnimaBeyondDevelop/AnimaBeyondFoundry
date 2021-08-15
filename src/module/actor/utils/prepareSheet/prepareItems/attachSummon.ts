@@ -1,6 +1,6 @@
 import { ABFActor } from '../../../ABFActor';
 
-export const attachMetamagic = (
+export const attachSummon = (
   originalSheet: ActorSheet.Data<ABFActor>,
   item: InnerDuplicated<Item.Data>
 ) => {
@@ -8,10 +8,10 @@ export const attachMetamagic = (
 
   const { data } = newSheet.actor;
 
-  if (!data.mystic.metamagic) {
-    data.mystic.metamagic = [];
+  if (!data.mystic.summons) {
+    data.mystic.summons = [];
   } else {
-    data.mystic.metamagic.push(item);
+    data.mystic.summons.push(item);
   }
 
   return newSheet;
