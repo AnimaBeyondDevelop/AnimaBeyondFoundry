@@ -13,12 +13,13 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       ...{
         classes: ['abf', 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor-sheet.hbs',
+        width: 900,
         height: 850,
         tabs: [
           {
             navSelector: '.sheet-tabs',
             contentSelector: '.sheet-body',
-            initial: 'main'
+            initial: 'domine'
           }
         ]
       }
@@ -300,6 +301,90 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     });
     // Psychic Powers
 
+    // Ki Skills
+    this.buildCommonContextualMenu({
+      containerSelector: '#ki-skills-context-menu-container',
+      rowSelector: '.ki-skill-row',
+      rowIdData: 'kiSkillId'
+    });
+
+    html.find('[data-on-click="add-ki-skill"]').click(() => {
+      this.actor.addKiSkill();
+    });
+    // Ki Skills
+
+    // Nemesis Skills
+    this.buildCommonContextualMenu({
+      containerSelector: '#nemesis-skills-context-menu-container',
+      rowSelector: '.nemesis-skill-row',
+      rowIdData: 'nemesisSkillId'
+    });
+
+    html.find('[data-on-click="add-nemesis-skill"]').click(() => {
+      this.actor.addNemesisSkill();
+    });
+    // Nemesis Skills
+
+    // Ars Magnus
+    this.buildCommonContextualMenu({
+      containerSelector: '#ars-magnus-context-menu-container',
+      rowSelector: '.ars-magnus-row',
+      rowIdData: 'arsMagnusId'
+    });
+
+    html.find('[data-on-click="add-ars-magnus"]').click(() => {
+      this.actor.addArsMagnus();
+    });
+    // Ars Magnus
+
+    // Martial Arts
+    this.buildCommonContextualMenu({
+      containerSelector: '#martial-arts-context-menu-container',
+      rowSelector: '.martial-art-row',
+      rowIdData: 'martialArtId'
+    });
+
+    html.find('[data-on-click="add-martial-art"]').click(() => {
+      this.actor.addMartialArt();
+    });
+    // Martial Arts
+
+    // Creatures
+    this.buildCommonContextualMenu({
+      containerSelector: '#creatures-context-menu-container',
+      rowSelector: '.creature-row',
+      rowIdData: 'creatureId'
+    });
+
+    html.find('[data-on-click="add-creature"]').click(() => {
+      this.actor.addCreature();
+    });
+    // Creatures
+
+    // Special Skills
+    this.buildCommonContextualMenu({
+      containerSelector: '#special-skills-context-menu-container',
+      rowSelector: '.special-skill-row',
+      rowIdData: 'specialSkillId'
+    });
+
+    html.find('[data-on-click="add-special-skill"]').click(() => {
+      this.actor.addSpecialSkill();
+    });
+    // Special Skills
+
+    // Techniques
+    this.buildCommonContextualMenu({
+      containerSelector: '#techniques-context-menu-container',
+      rowSelector: '.technique-row',
+      rowIdData: 'techniqueId'
+    });
+
+    html.find('[data-on-click="add-technique"]').click(() => {
+      this.actor.addTechnique();
+    });
+    // Techniques
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -376,43 +461,69 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
 
     if (unflattedChanges.data.dynamic.titles) {
-      await this.actor.editTitles(unflattedChanges.data.dynamic.titles);
+      this.actor.editTitles(unflattedChanges.data.dynamic.titles);
     }
 
     if (unflattedChanges.data.dynamic.advantages) {
-      await this.actor.editAdvantages(unflattedChanges.data.dynamic.advantages);
+      this.actor.editAdvantages(unflattedChanges.data.dynamic.advantages);
     }
 
     if (unflattedChanges.data.dynamic.disadvantages) {
-      await this.actor.editDisadvantages(unflattedChanges.data.dynamic.disadvantages);
+      this.actor.editDisadvantages(unflattedChanges.data.dynamic.disadvantages);
     }
 
     if (unflattedChanges.data.dynamic.contacts) {
-      await this.actor.editContacts(unflattedChanges.data.dynamic.contacts);
+      this.actor.editContacts(unflattedChanges.data.dynamic.contacts);
     }
 
     if (unflattedChanges.data.dynamic.notes) {
-      await this.actor.editNotes(unflattedChanges.data.dynamic.notes);
+      this.actor.editNotes(unflattedChanges.data.dynamic.notes);
     }
 
     if (unflattedChanges.data.dynamic.psychicDisciplines) {
-      await this.actor.editPsychicDisciplines(
-        unflattedChanges.data.dynamic.psychicDisciplines
-      );
+      this.actor.editPsychicDisciplines(unflattedChanges.data.dynamic.psychicDisciplines);
     }
 
     if (unflattedChanges.data.dynamic.mentalPatterns) {
-      await this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
+      this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
     }
 
     if (unflattedChanges.data.dynamic.innatePsychicPowers) {
-      await this.actor.editInnatePsychicPowers(
+      this.actor.editInnatePsychicPowers(
         unflattedChanges.data.dynamic.innatePsychicPowers
       );
     }
 
     if (unflattedChanges.data.dynamic.psychicPowers) {
-      await this.actor.editPsychicPowers(unflattedChanges.data.dynamic.psychicPowers);
+      this.actor.editPsychicPowers(unflattedChanges.data.dynamic.psychicPowers);
+    }
+
+    if (unflattedChanges.data.dynamic.kiSkills) {
+      this.actor.editKiSkills(unflattedChanges.data.dynamic.kiSkills);
+    }
+
+    if (unflattedChanges.data.dynamic.nemesisSkills) {
+      this.actor.editNemesisSkills(unflattedChanges.data.dynamic.nemesisSkills);
+    }
+
+    if (unflattedChanges.data.dynamic.arsMagnus) {
+      this.actor.editArsMagnus(unflattedChanges.data.dynamic.arsMagnus);
+    }
+
+    if (unflattedChanges.data.dynamic.martialArts) {
+      this.actor.editMartialArts(unflattedChanges.data.dynamic.martialArts);
+    }
+
+    if (unflattedChanges.data.dynamic.creatures) {
+      this.actor.editCreatures(unflattedChanges.data.dynamic.creatures);
+    }
+
+    if (unflattedChanges.data.dynamic.specialSkills) {
+      this.actor.editSpecialSkills(unflattedChanges.data.dynamic.specialSkills);
+    }
+
+    if (unflattedChanges.data.dynamic.techniques) {
+      this.actor.editTechniques(unflattedChanges.data.dynamic.techniques);
     }
   }
 

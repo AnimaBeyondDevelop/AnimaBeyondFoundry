@@ -21,6 +21,13 @@ import { PsychicDisciplineChanges } from '../types/PsychicDisciplineChanges';
 import { MentalPatternChanges } from '../types/MentalPatternChanges';
 import { InnatePsychicPowerChanges } from '../types/InnatePsychicPowerChanges';
 import { PsychicPowerChanges } from '../types/PsychicPowerChanges';
+import { KiSkillsChanges } from '../types/KiSkillsChanges';
+import { NemesisSkillsChanges } from '../types/NemesisSkillsChanges';
+import { ArsMagnusChanges } from '../types/ArsMagnusChanges';
+import { MartialArtsChanges } from '../types/MartialArtsChanges';
+import { CreaturesChanges } from '../types/CreaturesChanges';
+import { TechniquesChanges } from '../types/TechniquesChanges';
+import { SpecialSkillsChanges } from '../types/SpecialSkillsChanges';
 
 export class ABFActor extends Actor {
   prepareData() {
@@ -552,6 +559,247 @@ export class ABFActor extends Actor {
           actionType: { value: actionType },
           hasMaintenance: { value: hasMaintenance === true },
           bonus: { value: bonus }
+        }
+      });
+    }
+  }
+
+  public async addKiSkill(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.kiSkill.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.KI_SKILL
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editKiSkills(changes: KiSkillsChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addNemesisSkill(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.nemesisSkill.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.NEMESIS_SKILL
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editNemesisSkills(changes: NemesisSkillsChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addArsMagnus(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.arsMagnus.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.ARS_MAGNUS
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editArsMagnus(changes: ArsMagnusChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addMartialArt(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.martialArt.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.MARTIAL_ART,
+      data: {
+        grade: { value: '' }
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editMartialArts(changes: MartialArtsChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, grade } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: { grade: { value: grade } }
+      });
+    }
+  }
+
+  public async addCreature(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.creature.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.CREATURE,
+      data: {
+        earth: {
+          value: false
+        },
+        fire: {
+          value: false
+        },
+        metal: {
+          value: false
+        },
+        water: {
+          value: false
+        },
+        wood: {
+          value: false
+        }
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editCreatures(changes: CreaturesChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name, earth, fire, metal, water, wood
+      } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          earth: {
+            value: earth === true
+          },
+          fire: {
+            value: fire === true
+          },
+          metal: {
+            value: metal === true
+          },
+          water: {
+            value: water === true
+          },
+          wood: {
+            value: wood === true
+          }
+        }
+      });
+    }
+  }
+
+  public async addSpecialSkill(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.specialSkill.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.SPECIAL_SKILL
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editSpecialSkills(changes: SpecialSkillsChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addTechnique(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.technique.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.TECHNIQUE,
+      data: {
+        description: { value: '' },
+        level: { value: 0 },
+        strength: { value: 0 },
+        agility: { value: 0 },
+        dexterity: { value: 0 },
+        constitution: { value: 0 },
+        willPower: { value: 0 },
+        power: { value: 0 },
+        martialKnowledge: { value: 0 }
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editTechniques(changes: TechniquesChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name,
+        level,
+        constitution,
+        power,
+        willPower,
+        agility,
+        dexterity,
+        description,
+        martialKnowledge,
+        strength
+      } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: {
+          description: { value: description },
+          level: { value: level },
+          strength: { value: strength },
+          agility: { value: agility },
+          dexterity: { value: dexterity },
+          constitution: { value: constitution },
+          willPower: { value: willPower },
+          power: { value: power },
+          martialKnowledge: { value: martialKnowledge }
         }
       });
     }
