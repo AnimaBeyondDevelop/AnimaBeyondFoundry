@@ -5,6 +5,9 @@ const chalk = require('chalk');
 const archiver = require('archiver');
 const stringify = require('json-stringify-pretty-compact');
 const typescript = require('typescript');
+const through = require('through2');
+const prettier = require('prettier');
+const { execSync } = require('child_process');
 
 const ts = require('gulp-typescript');
 const less = require('gulp-less');
@@ -139,6 +142,59 @@ function buildTS() {
 }
 
 /**
+ * Build CharacterTemplate
+ */
+function buildTemplate() {
+  return gulp.src('src/module/actor/ABFActor.type.ts').pipe(
+    through.obj((file, enc, cb) => {
+      const originalContent = file.contents;
+
+      try {
+        const content = Buffer.from(file.contents).toString();
+
+        let typedCharacteristics = content.substr(
+          content.indexOf('{'),
+          content.lastIndexOf('}')
+        );
+
+        typedCharacteristics = typedCharacteristics.replace(/;}/g, '}');
+        typedCharacteristics = typedCharacteristics.replace(/;/g, ',');
+        typedCharacteristics = typedCharacteristics.replace(/number/g, '0');
+        typedCharacteristics = typedCharacteristics.replace(/string/g, "''");
+        typedCharacteristics = typedCharacteristics.replace(/boolean/g, 'false');
+        typedCharacteristics = typedCharacteristics.substr(
+          0,
+          typedCharacteristics.length - 2
+        );
+        typedCharacteristics = prettier.format(typedCharacteristics, { parser: 'json' });
+
+        file.contents = Buffer.from(typedCharacteristics);
+
+        const templatePath = 'src/template.json';
+
+        const template = fs.readJSONSync(templatePath);
+
+        template.Actor.character = JSON.parse(typedCharacteristics);
+
+        fs.writeJsonSync(templatePath, template);
+
+        execSync('prettier src/template.json --write');
+      } catch (e) {
+        console.log(
+          chalk.blueBright(
+            'Restoring original template.json content due the following fail:'
+          )
+        );
+        console.error(chalk.red(e.stack));
+        file.contents = originalContent;
+      }
+
+      cb(null, file);
+    })
+  );
+}
+
+/**
  * Build Less
  */
 function buildLess() {
@@ -185,6 +241,11 @@ async function copyFiles() {
  */
 function buildWatch() {
   gulp.watch('src/**/*.ts', { ignoreInitial: false }, buildTS);
+  gulp.watch(
+    'src/module/actor/ABFActor.type.ts',
+    { ignoreInitial: false },
+    buildTemplate
+  );
   gulp.watch('src/**/*.less', { ignoreInitial: false }, buildLess);
   gulp.watch('src/**/*.scss', { ignoreInitial: false }, buildSASS);
   gulp.watch(
