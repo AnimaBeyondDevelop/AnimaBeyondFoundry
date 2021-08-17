@@ -4,6 +4,14 @@
     "templates": [],
     "character": {
       "general": {
+        "modifiers": {
+          "physicalActions": {
+            "value": 0
+          },
+          "allActions": {
+            "value": 0
+          }
+        },
         "aspect": {
           "hair": {
             "value": ""
@@ -35,7 +43,6 @@
           "others": []
         },
         "levels": [],
-        "lifePoints": { "value": 0, "max": 0 },
         "notes": [],
         "titles": []
       },
@@ -48,26 +55,53 @@
 
       "characteristics": {
         "primaries": {
-          "agi": { "value": 0 },
-          "con": { "value": 0 },
-          "dex": { "value": 0 },
-          "str": { "value": 0 },
-          "int": { "value": 0 },
-          "per": { "value": 0 },
-          "pow": { "value": 0 },
-          "will": { "value": 0 }
+          "agility": { "value": 0 },
+          "constitution": { "value": 0 },
+          "dexterity": { "value": 0 },
+          "strength": { "value": 0 },
+          "intelligence": { "value": 0 },
+          "perception": { "value": 0 },
+          "power": { "value": 0 },
+          "willPower": { "value": 0 }
         },
         "secondaries": {
-          "initiative": { "value": 0 },
-          "resistances": {
-            "phyr": { "value": 0 },
-            "disr": { "value": 0 },
-            "poir": { "value": 0 },
-            "magr": { "value": 0 },
-            "psyr": { "value": 0 }
+          "lifePoints": {
+            "current": {
+              "value": 0
+            },
+            "max": {
+              "value": 0
+            }
           },
-          "movement": { "value": 0 },
-          "regeneration": { "value": 0 }
+          "initiative": {
+            "base": {
+              "value": 0
+            },
+            "primary": {
+              "value": 0
+            },
+            "secondary": {
+              "value": 0
+            }
+          },
+          "fatigue": {
+            "current": {
+              "value": 0
+            },
+            "max": {
+              "value": 0
+            }
+          },
+          "movement": {
+            "value": 0
+          },
+          "resistances": {
+            "physical": { "value": 0 },
+            "disease": { "value": 0 },
+            "poison": { "value": 0 },
+            "magic": { "value": 0 },
+            "psychic": { "value": 0 }
+          }
         }
       },
 
@@ -146,16 +180,10 @@
         "attack": { "value": 0 },
         "defense": { "value": 0 },
         "armor": {
-          "body": {
-            "cut": { "value": 0 },
-            "pierce": { "value": 0 },
-            "impact": { "value": 0 },
-            "heat": { "value": 0 },
-            "cold": { "value": 0 },
-            "electricity": { "value": 0 },
-            "energy": { "value": 0 }
+          "name": {
+            "value": ""
           },
-          "head": {
+          "at": {
             "cut": { "value": 0 },
             "pierce": { "value": 0 },
             "impact": { "value": 0 },

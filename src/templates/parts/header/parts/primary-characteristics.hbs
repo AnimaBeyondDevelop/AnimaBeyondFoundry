@@ -1,0 +1,22 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="characteristics"
+}}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="characteristics"
+  }}
+    {{#each data.characteristics.primaries as |char key|}}
+      {{>
+        "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        class="characteristic"
+        title=(localize (concat 'anima.ui.characteristics.' key))
+        rollable=true
+        rollableDice='1d10'
+        rollableMessage=(localize (concat 'anima.ui.characteristics.' key))
+        inputName=(concat "data.characteristics.primaries." key ".value")
+        inputValue=char.value
+        hasSecondaryInput=true
+        secondaryInputValue=char.mod
+      }}
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}
