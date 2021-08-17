@@ -1,13 +1,12 @@
 {
   "private": true,
-  "name": "AnimaBeyondFoundry",
+  "name": "anima-beyond-foundry",
   "version": "0.1.0",
   "description": "",
   "scripts": {
     "package": "gulp package",
-    "build": "gulp build && gulp link",
+    "build": "gulp build",
     "build:watch": "gulp watch",
-    "clean": "gulp clean && gulp link --clean",
     "test": "jest src",
     "postinstall": "npx husky set .husky/pre-commit \"npm run hook:pre-commit\"",
     "hook:pre-commit": "npm run test && lint-staged",

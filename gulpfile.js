@@ -303,61 +303,6 @@ async function clean() {
   }
 }
 
-/********************/
-/*		LINK		*/
-/********************/
-
-/**
- * Link build to User Data folder
- */
-async function linkUserData() {
-  const name = path.basename(path.resolve('.'));
-  const config = fs.readJSONSync('foundryconfig.json');
-
-  let destDir;
-  try {
-    if (
-      fs.existsSync(path.resolve('.', ROOT_PATH, 'module.json')) ||
-      fs.existsSync(path.resolve('.', 'src', 'module.json'))
-    ) {
-      destDir = 'modules';
-    } else if (
-      fs.existsSync(path.resolve('.', ROOT_PATH, 'system.json')) ||
-      fs.existsSync(path.resolve('.', 'src', 'system.json'))
-    ) {
-      destDir = 'systems';
-    } else {
-      throw Error(
-        `Could not find ${chalk.blueBright('module.json')} or ${chalk.blueBright(
-          'system.json'
-        )}`
-      );
-    }
-
-    let linkDir;
-    if (config.dataPath) {
-      if (!fs.existsSync(path.join(config.dataPath, 'Data')))
-        throw Error('User Data path invalid, no Data directory found');
-
-      linkDir = path.join(config.dataPath, 'Data', destDir, name);
-    } else {
-      throw Error('No User Data path defined in foundryconfig.json');
-    }
-
-    if (argv.clean || argv.c) {
-      console.log(chalk.yellow(`Removing build in ${chalk.blueBright(linkDir)}`));
-
-      await fs.remove(linkDir);
-    } else if (!fs.existsSync(linkDir)) {
-      console.log(chalk.green(`Copying build to ${chalk.blueBright(linkDir)}`));
-      await fs.symlink(path.resolve('./dist'), linkDir);
-    }
-    return Promise.resolve();
-  } catch (err) {
-    Promise.reject(err);
-  }
-}
-
 /*********************/
 /*		PACKAGE		 */
 /*********************/
@@ -527,7 +472,6 @@ const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
 exports.build = gulp.series(clean, execBuild);
 exports.watch = buildWatch;
 exports.clean = clean;
-exports.link = linkUserData;
 exports.package = packageBuild;
 exports.update = updateManifest;
 exports.publish = gulp.series(clean, updateManifest, execBuild, packageBuild, execGit);
