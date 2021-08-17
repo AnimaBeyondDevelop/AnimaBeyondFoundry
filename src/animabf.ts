@@ -4,24 +4,25 @@
  * Change this heading to be more descriptive to your system, or remove it.
  * Author: [your name]
  * Content License: [copyright and-or license] If using an existing system
- * 					you may want to put a (link to a) license or copyright
- * 					notice here (e.g. the OGL).
+ * you may want to put a (link to a) license or copyright
+ * notice here (e.g. the OGL).
  * Software License: [your license] Put your desired license here, which
- * 					 determines how others may use and modify your system
+ * determines how others may use and modify your system
  */
 
 // Import TypeScript modules
 import { registerSettings } from './module/utils/settings';
 import { preloadTemplates } from './module/utils/preloadTemplates';
-import ABFActorSheet from './module/ABFActorSheet';
+import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/ABFCombat';
-import { ABFActor } from './module/ABFActor';
+import { ABFActor } from './module/actor/ABFActor';
+import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 
 /* ------------------------------------ */
-/* Initialize system					*/
+/* Initialize system */
 /* ------------------------------------ */
-Hooks.once('init', async function () {
+Hooks.once('init', async () => {
   console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
 
   // Assign custom classes and constants here
@@ -51,15 +52,7 @@ Hooks.once('init', async function () {
   // Preload Handlebars templates
   await preloadTemplates();
 
-  Handlebars.registerHelper('concat', function () {
-    var outStr = '';
-    for (var arg in arguments) {
-      if (typeof arguments[arg] != 'object') {
-        outStr += arguments[arg];
-      }
-    }
-    return outStr;
-  });
+  registerHelpers();
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);
@@ -67,17 +60,17 @@ Hooks.once('init', async function () {
 });
 
 /* ------------------------------------ */
-/* Setup system							*/
+/* Setup system */
 /* ------------------------------------ */
-Hooks.once('setup', function () {
+Hooks.once('setup', () => {
   // Do anything after initialization but before
   // ready
 });
 
 /* ------------------------------------ */
-/* When ready							*/
+/* When ready */
 /* ------------------------------------ */
-Hooks.once('ready', function () {
+Hooks.once('ready', () => {
   // Do anything once the system is ready
 });
 

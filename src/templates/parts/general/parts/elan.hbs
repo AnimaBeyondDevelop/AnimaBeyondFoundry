@@ -1,0 +1,64 @@
+<div class='group elan mt-3'>
+  <div class='group-header'>
+    <img
+      class='add-button'
+      data-on-click='add-elan'
+      src='/systems/animabf/assets/images/boton-plus.png'
+    />
+    <h3 class='group-header-title'>{{localize 'anima.ui.elanSection.title'}}</h3>
+  </div>
+  <div id='elan-context-menu-container' class='group-body'>
+    {{#each data.general.elan as |elan|}}
+      <div class='elan-row'>
+        <div data-elan-id='{{elan._id}}' class='base flex'>
+          <p
+            data-on-click='add-elan-power'
+            data-elan-id='{{elan._id}}'
+            class='label gray mr-2 flex-1'
+          >{{localize 'anima.ui.elanSection.elanRow.name'}}</p>
+          <input
+            name='data.dynamic.elan.{{elan._id}}.name'
+            type='text'
+            class='input flex-3'
+            value='{{elan.name}}'
+          />
+          <p class='label gray ml-2 mr-2 flex-1'>{{localize
+              'anima.ui.elanSection.elanRow.level'
+            }}</p>
+          <input
+            name='data.dynamic.elan.{{elan._id}}.level'
+            type='text'
+            class='input flex-2'
+            value='{{elan.data.level}}'
+          />
+        </div>
+
+        {{#each elan.data.powers as |power|}}
+          <div
+            class='powers flex mt-1'
+            data-elan-id='{{elan._id}}'
+            data-elan-power-id='{{power._id}}'
+          >
+            <input
+              type='hidden'
+              name='data.dynamic.elan_power.{{power._id}}.elanId'
+              value='{{elan._id}}'
+            />
+            <input
+              name='data.dynamic.elan_power.{{power._id}}.name'
+              type='text'
+              class='input flex-4'
+              value='{{power.name}}'
+            />
+            <input
+              name='data.dynamic.elan_power.{{power._id}}.level'
+              type='text'
+              class='input flex-1'
+              value='{{power.level}}'
+            />
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+</div>

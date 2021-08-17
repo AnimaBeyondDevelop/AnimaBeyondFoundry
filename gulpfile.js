@@ -15,10 +15,6 @@ const argv = require('yargs').argv;
 
 sass.compiler = require('sass');
 
-const ENTRYFILE = 'animabf';
-
-const ROOT_PATH = `../${ENTRYFILE}`;
-
 function getConfig() {
   const configPath = path.resolve(process.cwd(), 'foundryconfig.json');
 
@@ -30,6 +26,8 @@ function getConfig() {
     return;
   }
 }
+
+const ROOT_PATH = `${getConfig().destPath ?? '..'}/animabf`;
 
 function getManifest() {
   const json = {};
@@ -151,10 +149,10 @@ function buildLess() {
  * Build SASS
  */
 function buildSASS() {
-	return gulp
-		.src('src/scss/animabf.scss')
-		.pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(ROOT_PATH));
+  return gulp
+    .src('src/scss/animabf.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(ROOT_PATH));
 }
 
 /**

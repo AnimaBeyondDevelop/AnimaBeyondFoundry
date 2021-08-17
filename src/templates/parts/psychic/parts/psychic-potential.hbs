@@ -1,0 +1,19 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="psychic-potential"
+}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.psychic.psychicPotential.title")
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="psychic-potential"
+  }}
+    {{>
+    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      class="potential"
+      title=(localize "anima.ui.psychic.psychicPotential.potential.title")
+      inputName="data.psychic.psychicPotential.value"
+      inputValue=data.psychic.psychicPotential.value
+    }}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

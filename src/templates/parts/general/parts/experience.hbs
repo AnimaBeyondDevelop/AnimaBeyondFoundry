@@ -1,0 +1,28 @@
+<div class='group experience'>
+  <div class='group-header'>
+    <h3 class='group-header-title'>{{localize 'anima.ui.experienceSection.title'}}</h3>
+  </div>
+  <div class='group-body'>
+    <div class='experience-bar'>
+      <div
+        class='current-experience'
+        style='width: {{calculateExperience data.general.experience.current data.general.experience.next }}%;'
+      ></div>
+    </div>
+    <div class='experience-values flex mt-1'>
+      <input
+        name='data.general.experience.current'
+        type='number'
+        class='input current-experience {{#is "gte" data.general.experience.current data.general.experience.next }}red{{/is}}'
+        value='{{data.general.experience.current}}'
+      />
+      /
+      <input
+        name='data.general.experience.next'
+        type='number'
+        class='input next-experience'
+        value='{{data.general.experience.next}}'
+      />
+    </div>
+  </div>
+</div>

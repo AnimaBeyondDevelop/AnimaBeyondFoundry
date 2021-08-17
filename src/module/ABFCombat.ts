@@ -1,4 +1,4 @@
-import { openModDialog } from './utils/openModDialog';
+import { openModDialog } from './utils/openDialog';
 
 export default class ABFCombat extends Combat {
   async nextRound() {
@@ -21,7 +21,7 @@ export default class ABFCombat extends Combat {
   ): Promise<Combat> {
     const mod = await openModDialog();
 
-    const formula = CONFIG.Combat.initiative.formula + `+ ${mod}`;
+    const formula = `${CONFIG.Combat.initiative.formula} + ${mod}`;
 
     return super.rollInitiative(ids, {
       formula,

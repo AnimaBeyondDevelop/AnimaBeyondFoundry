@@ -1,0 +1,39 @@
+<div class='{{this.class}} common-titled-input'>
+  {{#unless this.hideTitle}}
+    <p
+      class='label
+            {{#if this.rollable}}
+              rollable
+            {{/if}}
+            '
+            {{#if this.rollable}}
+              data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+@{{getKeyOf this.inputName}}"
+              data-label="
+              {{#if this.rollableMessage}}
+                {{this.rollableMessage}}
+              {{else}}
+                {{manipulateString "toLowerCase" this.title}}
+              {{/if}}
+              "
+            {{/if}}
+    >{{this.title}}</p>
+  {{/unless}}
+
+  <div class='input-container {{#if this.secondaryInputName}}big{{/if}}'>
+    <input
+      name='{{this.inputName}}'
+      type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
+      class='input {{#if this.secondaryInputName}}primary-input{{/if}}'
+      value='{{this.inputValue}}'
+      {{#if (is 'eq' this.inputValue true)}}checked{{/if}}
+    />
+    {{#if this.hasSecondaryInput}}
+      <input
+        name='{{this.secondaryInputName}}'
+        type='{{#if this.secondaryInputType}}{{this.secondaryInputType}}{{else}}number{{/if}}'
+        class='input secondary-input'
+        value='{{this.secondaryInputValue}}'
+      />
+    {{/if}}
+  </div>
+</div>

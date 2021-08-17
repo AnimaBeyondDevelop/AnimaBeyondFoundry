@@ -66,6 +66,4 @@ describe('ABFRoll', () => {
     expect(abfRollProxy.getRoll().results[0]).toBe(3);
     expect(abfRollProxy.getRoll().total).toBe(3 - 75);
   });
-
-
 });
