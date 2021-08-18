@@ -9,15 +9,15 @@
       "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
         class="max-life"
         title=(localize 'anima.ui.general.life.max.title')
-        inputName="data.general.lifePoints.max.value"
-        inputValue=data.general.lifePoints.max.value
+        inputName="data.characteristics.secondaries.lifePoints.max.value"
+        inputValue=data.characteristics.secondaries.lifePoints.max.value
       }}
       {{>
       "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
         class="current-life"
         title=(localize 'anima.ui.general.life.current.title')
-        inputName="data.general.lifePoints.current.value"
-        inputValue=data.general.lifePoints.current.value
+        inputName="data.characteristics.secondaries.lifePoints.current.value"
+        inputValue=data.characteristics.secondaries.lifePoints.current.value
       }}
     </div>
     <div class='initiative'>
@@ -28,24 +28,24 @@
           class="initiative-base"
           rollable=true
           title=(localize 'anima.ui.general.initiative.base.title')
-          inputName="data.general.initiative.base.value"
-          inputValue=data.general.initiative.base.value
+          inputName="data.characteristics.secondaries.initiative.base.value"
+          inputValue=data.characteristics.secondaries.initiative.base.value
         }}
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
           class="primary-initiative"
           rollable=true
           title=(localize 'anima.ui.general.initiative.primary.title')
-          inputName="data.general.initiative.primary.value"
-          inputValue=data.general.initiative.primary.value
+          inputName="data.characteristics.secondaries.initiative.primary.value"
+          inputValue=data.characteristics.secondaries.initiative.primary.value
         }}
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
           class="secondary-initiative"
           rollable=true
           title=(localize 'anima.ui.general.initiative.secondary.title')
-          inputName="data.general.initiative.secondary.value"
-          inputValue=data.general.initiative.secondary.value
+          inputName="data.characteristics.secondaries.initiative.secondary.value"
+          inputValue=data.characteristics.secondaries.initiative.secondary.value
         }}
       </div>
     </div>
@@ -54,18 +54,18 @@
       "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
         class="fatigue"
         title=(localize 'anima.ui.general.fatigue.title')
-        inputName="data.general.fatigue.current.value"
-        inputValue=data.general.fatigue.current.value
+        inputName="data.characteristics.secondaries.fatigue.current.value"
+        inputValue=data.characteristics.secondaries.fatigue.current.value
         hasSecondaryInput=true
-        secondaryInputName="data.general.fatigue.max.value"
-        secondaryInputValue=data.general.fatigue.max.value
+        secondaryInputName="data.characteristics.secondaries.fatigue.max.value"
+        secondaryInputValue=data.characteristics.secondaries.fatigue.max.value
       }}
       {{>
       "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.title')
-        inputName="data.general.movement.value"
-        inputValue=data.general.movement.value
+        inputName="data.characteristics.secondaries.movement.value"
+        inputValue=data.characteristics.secondaries.movement.value
       }}
     </div>
   {{/"systems/animabf/templates/parts/common/group-body.hbs"}}

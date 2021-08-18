@@ -1,0 +1,71 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="creatures"
+}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.domine.creatures.title")
+    addRowButtonData="add-creature"
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="creatures"
+  }}
+    {{#each data.domine.creatures}}
+      <div data-creature-id='{{this._id}}' class='creature-row'>
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.domine.creatures.name.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.creatures." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="fire"
+          title=(localize "anima.ui.domine.creatures.fire.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "data.dynamic.creatures." this._id ".fire")
+          inputValue=(is 'eq' this.data.fire.value true)
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="water"
+          title=(localize "anima.ui.domine.creatures.water.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "data.dynamic.creatures." this._id ".water")
+          inputValue=(is 'eq' this.data.water.value true)
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="earth"
+          title=(localize "anima.ui.domine.creatures.earth.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "data.dynamic.creatures." this._id ".earth")
+          inputValue=(is 'eq' this.data.earth.value true)
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="wood"
+          title=(localize "anima.ui.domine.creatures.wood.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "data.dynamic.creatures." this._id ".wood")
+          inputValue=(is 'eq' this.data.wood.value true)
+        }}
+        {{>
+        "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+          class="metal"
+          title=(localize "anima.ui.domine.creatures.metal.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "data.dynamic.creatures." this._id ".metal")
+          inputValue=(is 'eq' this.data.metal.value true)
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

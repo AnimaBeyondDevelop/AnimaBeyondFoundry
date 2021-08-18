@@ -17,4 +17,11 @@ export enum Items {
   MENTAL_PATTERN = 'mentalPattern',
   INNATE_PSYCHIC_POWER = 'innatePsychicPower',
   PSYCHIC_POWER = 'psychicPower',
+  KI_SKILL = 'kiSkill',
+  NEMESIS_SKILL = 'nemesisSkill',
+  ARS_MAGNUS = 'arsMagnus',
+  MARTIAL_ART = 'martialArt',
+  CREATURE = 'creature',
+  SPECIAL_SKILL = 'specialSkill',
+  TECHNIQUE = 'technique',
 }
