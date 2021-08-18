@@ -4,55 +4,30 @@
     "templates": [],
     "character": {
       "general": {
-        "modifiers": {
-          "physicalActions": {
-            "value": 0
-          },
-          "allActions": {
-            "value": 0
-          }
-        },
+        "modifiers": { "physicalActions": { "value": 0 }, "allActions": { "value": 0 } },
         "aspect": {
-          "hair": {
-            "value": ""
-          },
+          "hair": { "value": "" },
           "eyes": { "value": "" },
           "height": { "value": "" },
           "weight": { "value": "" },
           "age": { "value": "" },
           "genre": { "value": "" },
           "race": { "value": "" },
-          "appearance": {
-            "value": 0
-          },
+          "appearance": { "value": 0 },
           "size": { "value": 0 }
         },
         "advantages": [],
         "contacts": [],
-        "description": {
-          "value": ""
-        },
+        "description": { "value": "" },
         "disadvantages": [],
         "elan": [],
         "experience": { "current": 0, "next": 0 },
         "fatigue": { "value": 0, "max": 0 },
-        "languages": {
-          "base": {
-            "value": ""
-          },
-          "others": []
-        },
+        "languages": { "base": { "value": "" }, "others": [] },
         "levels": [],
         "notes": [],
         "titles": []
       },
-
-      "flags": {
-        "magicUser": { "value": 0 },
-        "hasInhumanity": { "value": 0 },
-        "fumblerange": { "value": 0 }
-      },
-
       "characteristics": {
         "primaries": {
           "agility": { "value": 0 },
@@ -65,36 +40,14 @@
           "willPower": { "value": 0 }
         },
         "secondaries": {
-          "lifePoints": {
-            "current": {
-              "value": 0
-            },
-            "max": {
-              "value": 0
-            }
-          },
+          "lifePoints": { "current": { "value": 0 }, "max": { "value": 0 } },
           "initiative": {
-            "base": {
-              "value": 0
-            },
-            "primary": {
-              "value": 0
-            },
-            "secondary": {
-              "value": 0
-            }
+            "base": { "value": 0 },
+            "primary": { "value": 0 },
+            "secondary": { "value": 0 }
           },
-          "fatigue": {
-            "current": {
-              "value": 0
-            },
-            "max": {
-              "value": 0
-            }
-          },
-          "movement": {
-            "value": 0
-          },
+          "fatigue": { "current": { "value": 0 }, "max": { "value": 0 } },
+          "movement": { "value": 0 },
           "resistances": {
             "physical": { "value": 0 },
             "disease": { "value": 0 },
@@ -104,7 +57,6 @@
           }
         }
       },
-
       "secondaries": {
         "athletics": {
           "acrobatics": { "value": 0 },
@@ -171,18 +123,13 @@
           "tailoring": { "value": 0 },
           "constructMarionettes": { "value": 0 }
         },
-        "special": {
-          "special": { "value": 0 }
-        }
+        "special": { "special": { "value": 0 } }
       },
-
       "combat": {
         "attack": { "value": 0 },
         "defense": { "value": 0 },
         "armor": {
-          "name": {
-            "value": ""
-          },
+          "name": { "value": "" },
           "at": {
             "cut": { "value": 0 },
             "pierce": { "value": 0 },
@@ -195,16 +142,8 @@
           }
         }
       },
-
       "mystic": {
-        "act": {
-          "main": {
-            "value": 0
-          },
-          "alternative": {
-            "value": 0
-          }
-        },
+        "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },
         "zeon": { "value": 0, "max": 0, "accumulated": 0 },
         "magicRegeneration": { "value": 0, "total": 0 },
         "innerPotential": { "value": 0, "alternative": 0 },
@@ -242,7 +181,6 @@
         "summons": [],
         "metamagics": []
       },
-
       "domine": {
         "kiSkills": [],
         "nemesisSkills": [],
@@ -267,14 +205,7 @@
             "wood": { "isActive": false }
           }
         },
-        "martialKnowledge": {
-          "used": {
-            "value": 0
-          },
-          "max": {
-            "value": 0
-          }
-        },
+        "martialKnowledge": { "used": { "value": 0 }, "max": { "value": 0 } },
         "kiAccumulation": {
           "strength": {
             "accumulated": { "value": 0 },
@@ -306,24 +237,13 @@
             "current": { "value": 0 },
             "total": { "value": 0 }
           },
-          "generic": {
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          }
+          "generic": { "current": { "value": 0 }, "total": { "value": 0 } }
         }
       },
-
       "psychic": {
         "psychicPotential": { "value": 0 },
         "psychicProjection": { "value": 0 },
-        "psychicPower": {
-          "used": {
-            "value": 0
-          },
-          "max": {
-            "value": 0
-          }
-        },
+        "psychicPower": { "used": { "value": 0 }, "max": { "value": 0 } },
         "psychicPowers": [],
         "psychicDisciplines": [],
         "mentalPatterns": [],
@@ -332,7 +252,6 @@
       }
     }
   },
-
   "Item": {
     "types": [
       "skill",
@@ -361,115 +280,36 @@
       "specialSkill",
       "technique"
     ],
-
-    "freeAccessSpell": {
-      "level": {
-        "value": 0
-      },
-      "cost": {
-        "value": 0
-      }
-    },
-    "skill": {
-      "value": 0
-    },
-    "spellMaintenance": {
-      "cost": {
-        "value": 0
-      }
-    },
-    "selectedSpell": {
-      "cost": {
-        "value": 0
-      }
-    },
-    "metamagic": {
-      "grade": {
-        "value": 0
-      }
-    },
-    "summon": {
-      "cost": {
-        "value": 0
-      }
-    },
-    "level": {
-      "level": 0
-    },
-    "elan": {
-      "level": 0,
-      "powers": []
-    },
-    "contact": {
-      "description": ""
-    },
-    "mentalPattern": {
-      "bonus": {
-        "value": 0
-      },
-      "penalty": {
-        "value": 0
-      }
-    },
-    "innatePsychicPower": {
-      "effect": {
-        "value": ""
-      },
-      "value": {
-        "value": 0
-      }
-    },
+    "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
+    "skill": { "value": 0 },
+    "spellMaintenance": { "cost": { "value": 0 } },
+    "selectedSpell": { "cost": { "value": 0 } },
+    "metamagic": { "grade": { "value": 0 } },
+    "summon": { "cost": { "value": 0 } },
+    "level": { "level": 0 },
+    "elan": { "level": 0, "powers": [] },
+    "contact": { "description": "" },
+    "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
+    "innatePsychicPower": { "effect": { "value": "" }, "value": { "value": 0 } },
     "psychicPower": {
-      "level": {
-        "value": 0
-      },
-      "actionType": {
-        "value": ""
-      },
-      "hasMaintenance": {
-        "value": false
-      },
-      "bonus": {
-        "value": 0
-      },
+      "level": { "value": 0 },
+      "actionType": { "value": "" },
+      "hasMaintenance": { "value": false },
+      "bonus": { "value": 0 },
       "effects": [
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        }
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" },
+        { "value": "" }
       ]
     },
-    "martialArt": {
-      "grade": {
-        "value": ""
-      }
-    },
+    "martialArt": { "grade": { "value": "" } },
     "creature": {
       "fire": { "value": "" },
       "water": { "value": "" },
@@ -478,30 +318,14 @@
       "metal": { "value": "" }
     },
     "technique": {
-      "description": {
-        "value": ""
-      },
-      "strength": {
-        "value": 0
-      },
-      "agility": {
-        "value": 0
-      },
-      "dexterity": {
-        "value": 0
-      },
-      "constitution": {
-        "value": 0
-      },
-      "willPower": {
-        "value": 0
-      },
-      "power": {
-        "value": 0
-      },
-      "martialKnowledge": {
-        "value": 0
-      }
+      "description": { "value": "" },
+      "strength": { "value": 0 },
+      "agility": { "value": 0 },
+      "dexterity": { "value": 0 },
+      "constitution": { "value": 0 },
+      "willPower": { "value": 0 },
+      "power": { "value": 0 },
+      "martialKnowledge": { "value": 0 }
     }
   }
 }

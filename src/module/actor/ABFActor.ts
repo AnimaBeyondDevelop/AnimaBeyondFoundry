@@ -28,8 +28,11 @@ import { MartialArtsChanges } from '../types/MartialArtsChanges';
 import { CreaturesChanges } from '../types/CreaturesChanges';
 import { TechniquesChanges } from '../types/TechniquesChanges';
 import { SpecialSkillsChanges } from '../types/SpecialSkillsChanges';
+import { Character } from './ABFActor.type';
 
-export class ABFActor extends Actor {
+export type CharacterData = Character & Actor.Data;
+
+export class ABFActor extends Actor<CharacterData> {
   prepareData() {
     super.prepareData();
 
