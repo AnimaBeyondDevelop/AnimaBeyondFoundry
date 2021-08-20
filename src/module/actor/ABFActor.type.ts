@@ -366,27 +366,40 @@ export type Character = {
       };
     };
     zeon: {
-      value: number;
-      max: number;
-      accumulated: number;
+      current: {
+        value: number;
+      };
+      max: {
+        value: number;
+      };
     };
-    magicRegeneration: {
-      value: number;
-      total: number;
+    zeonRegeneration: {
+      current: {
+        value: number;
+      };
+      max: {
+        value: number;
+      };
     };
-    innerPotential: {
-      value: number;
-      alternative: number;
+    innateMagic: {
+      main: {
+        value: number;
+      };
+      alternative: {
+        value: number;
+      };
     };
     magicProjection: {
-      base: {
+      final: {
         value: number;
       };
-      offensive: {
-        value: number;
-      };
-      defensive: {
-        value: number;
+      imbalance: {
+        offensive: {
+          value: number;
+        };
+        defensive: {
+          value: number;
+        };
       };
     };
     magicLevel: {
@@ -590,7 +603,7 @@ export type Character = {
     psychicProjection: {
       value: number;
     };
-    psychicPower: {
+    psychicPoints: {
       used: {
         value: number;
       };

@@ -526,7 +526,7 @@ export class ABFActor extends Actor<CharacterData> {
       type: Items.PSYCHIC_POWER,
       data: {
         level: { value: 0 },
-        effects: new Array(8).fill({ value: '' }),
+        effects: new Array(10).fill({ value: '' }),
         actionType: { value: '' },
         hasMaintenance: { value: false },
         bonus: { value: 0 }
