@@ -17,6 +17,13 @@ import { PsychicDisciplineChanges } from './PsychicDisciplineChanges';
 import { MentalPatternChanges } from './MentalPatternChanges';
 import { InnatePsychicPowerChanges } from './InnatePsychicPowerChanges';
 import { PsychicPowerChanges } from './PsychicPowerChanges';
+import { KiSkillsChanges } from './KiSkillsChanges';
+import { NemesisSkillsChanges } from './NemesisSkillsChanges';
+import { ArsMagnusChanges } from './ArsMagnusChanges';
+import { MartialArtsChanges } from './MartialArtsChanges';
+import { CreaturesChanges } from './CreaturesChanges';
+import { SpecialSkillsChanges } from './SpecialSkillsChanges';
+import { TechniquesChanges } from './TechniquesChanges';
 
 export type ItemChanges = {
   data: {
@@ -40,6 +47,13 @@ export type ItemChanges = {
       mentalPatterns: MentalPatternChanges;
       innatePsychicPowers: InnatePsychicPowerChanges;
       psychicPowers: PsychicPowerChanges;
+      kiSkills: KiSkillsChanges;
+      nemesisSkills: NemesisSkillsChanges;
+      arsMagnus: ArsMagnusChanges;
+      martialArts: MartialArtsChanges;
+      creatures: CreaturesChanges;
+      specialSkills: SpecialSkillsChanges;
+      techniques: TechniquesChanges;
     };
   };
 };

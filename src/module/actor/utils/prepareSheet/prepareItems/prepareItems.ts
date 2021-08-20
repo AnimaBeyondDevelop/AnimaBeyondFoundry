@@ -19,6 +19,13 @@ import { attachPsychicDisciplines } from './attachPsychicDisciplines';
 import { attachMentalPatterns } from './attachMentalPatterns';
 import { attachInnatePsychicPowers } from './attachInnatePsychicPowers';
 import { attachPsychicPowers } from './attachPsychicPowers';
+import { attachKiSkills } from './attachKiSkills';
+import { attachNemesisSkills } from './attachNemesisSkills';
+import { attachArsMagnus } from './attachArsMagnus';
+import { attachMartialArts } from './attachMartialArts';
+import { attachCreatures } from './attachCreatures';
+import { attachTechniques } from './attachTechniques';
+import { attachSpecialSkills } from './attachSpecialSkills';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -41,7 +48,14 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.PSYCHIC_DISCIPLINE,
     Items.MENTAL_PATTERN,
     Items.INNATE_PSYCHIC_POWER,
-    Items.PSYCHIC_POWER
+    Items.PSYCHIC_POWER,
+    Items.KI_SKILL,
+    Items.NEMESIS_SKILL,
+    Items.ARS_MAGNUS,
+    Items.MARTIAL_ART,
+    Items.CREATURE,
+    Items.SPECIAL_SKILL,
+    Items.TECHNIQUE,
   ].map(type => type.toString());
 
   for (const item of newData.items) {
@@ -102,6 +116,27 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.PSYCHIC_POWER:
           newData = attachPsychicPowers(newData, item);
+          break;
+        case Items.KI_SKILL:
+          newData = attachKiSkills(newData, item);
+          break;
+        case Items.NEMESIS_SKILL:
+          newData = attachNemesisSkills(newData, item);
+          break;
+        case Items.ARS_MAGNUS:
+          newData = attachArsMagnus(newData, item);
+          break;
+        case Items.MARTIAL_ART:
+          newData = attachMartialArts(newData, item);
+          break;
+        case Items.CREATURE:
+          newData = attachCreatures(newData, item);
+          break;
+        case Items.SPECIAL_SKILL:
+          newData = attachSpecialSkills(newData, item);
+          break;
+        case Items.TECHNIQUE:
+          newData = attachTechniques(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);
