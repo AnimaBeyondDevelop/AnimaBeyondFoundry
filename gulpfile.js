@@ -164,7 +164,7 @@ function buildTemplate() {
         typedCharacteristics = typedCharacteristics.replace(/boolean/g, 'false');
         typedCharacteristics = typedCharacteristics.substr(
           0,
-          typedCharacteristics.length - 2
+          typedCharacteristics.lastIndexOf(',')
         );
         typedCharacteristics = prettier.format(typedCharacteristics, { parser: 'json' });
 
