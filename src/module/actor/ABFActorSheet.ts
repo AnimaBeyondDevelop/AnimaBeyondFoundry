@@ -15,8 +15,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
         template: 'systems/animabf/templates/actor-sheet.hbs',
         width: 900,
         height: 850,
-        submitOnChange: false,
-        submitOnClose: true,
+        submitOnChange: true,
         tabs: [
           {
             navSelector: '.sheet-tabs',
