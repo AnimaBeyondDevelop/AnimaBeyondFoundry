@@ -1,0 +1,24 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class="combat-special-skills"
+}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize "anima.ui.combat.combatSpecialSkill.title")
+    addRowButtonData="add-combat-special-skill"
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class="combat-special-skill"
+  }}
+  {{log data.combat}}
+    {{#each data.combat.combatSpecialSkills}}
+      <div data-combat-special-skill-id='{{this._id}}' class='combat-special-skill-row'>
+        <input
+          name='data.dynamic.combatSpecialSkills.{{this._id}}.name'
+          type='text'
+          class='input'
+          value='{{this.name}}'
+        />
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

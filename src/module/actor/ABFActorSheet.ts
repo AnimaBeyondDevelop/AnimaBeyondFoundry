@@ -19,7 +19,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
           {
             navSelector: '.sheet-tabs',
             contentSelector: '.sheet-body',
-            initial: 'domine'
+            initial: 'main'
           }
         ]
       }
@@ -385,6 +385,54 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     });
     // Techniques
 
+    // CombarSpecialSkills
+    this.buildCommonContextualMenu({
+      containerSelector: '#combat-special-skill-context-menu-container',
+      rowSelector: '.combat-special-skill-row',
+      rowIdData: 'combatSpecialSkillId'
+    });
+
+    html.find('[data-on-click="add-combat-special-skill"]').click(() => {
+      this.actor.addCombatSpecialSkill();
+    });
+    // CombatSpecialskills
+
+    // CombatTables
+    this.buildCommonContextualMenu({
+      containerSelector: '#combat-table-context-menu-container',
+      rowSelector: '.combat-table-skill-row',
+      rowIdData: 'combatTableId'
+    });
+
+    html.find('[data-on-click="add-combat-table"]').click(() => {
+      this.actor.addCombatTable();
+    });
+    // combatTables
+
+    // Ammo
+    this.buildCommonContextualMenu({
+      containerSelector: '#ammo-context-menu-container',
+      rowSelector: '.ammo-row',
+      rowIdData: 'ammoId'
+    });
+
+    html.find('[data-on-click="add-ammo"]').click(() => {
+      this.actor.addAmmo();
+    });
+    // Ammo
+
+    // Weapon
+    this.buildCommonContextualMenu({
+      containerSelector: '#weapon-context-menu-container',
+      rowSelector: '.weapon-row',
+      rowIdData: 'weaponId'
+    });
+
+    html.find('[data-on-click="add-weapon"]').click(() => {
+      this.actor.addWeapon();
+    });
+    // Weapon
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -524,6 +572,22 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     if (unflattedChanges.data.dynamic.techniques) {
       this.actor.editTechniques(unflattedChanges.data.dynamic.techniques);
+    }
+
+    if (unflattedChanges.data.dynamic.combatSpecialSkills) {
+      this.actor.editCombatSpecialSkills(unflattedChanges.data.dynamic.combatSpecialSkills);
+    }
+
+    if (unflattedChanges.data.dynamic.combatTables) {
+      this.actor.editCombatTables(unflattedChanges.data.dynamic.combatTables);
+    }
+
+    if (unflattedChanges.data.dynamic.ammo) {
+      this.actor.editAmmo(unflattedChanges.data.dynamic.ammo);
+    }
+
+    if (unflattedChanges.data.dynamic.weapons) {
+      this.actor.editWeapons(unflattedChanges.data.dynamic.weapons);
     }
   }
 

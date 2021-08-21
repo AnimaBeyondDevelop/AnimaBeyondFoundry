@@ -26,6 +26,10 @@ import { attachMartialArts } from './attachMartialArts';
 import { attachCreatures } from './attachCreatures';
 import { attachTechniques } from './attachTechniques';
 import { attachSpecialSkills } from './attachSpecialSkills';
+import { attachCombatSpecialSkills } from './attachCombatSpecialSkills';
+import { attachCombatTables } from './attachCombatTables';
+import { attachAmmo } from './attachAmmo';
+import { attachWeapons } from './attachWeapons';
 
 export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
   let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(data));
@@ -56,6 +60,11 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.CREATURE,
     Items.SPECIAL_SKILL,
     Items.TECHNIQUE,
+    Items.COMBAT_SPECIAL_SKILL,
+    Items.COMBAT_TABLE,
+    Items.AMMO,
+    Items.WEAPON
+
   ].map(type => type.toString());
 
   for (const item of newData.items) {
@@ -137,6 +146,18 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.TECHNIQUE:
           newData = attachTechniques(newData, item);
+          break;
+        case Items.COMBAT_SPECIAL_SKILL:
+          newData = attachCombatSpecialSkills(newData, item);
+          break;
+        case Items.AMMO:
+          newData = attachAmmo(newData, item);
+          break;  
+        case Items.COMBAT_TABLE:
+          newData = attachCombatTables(newData, item);
+          break;
+        case Items.WEAPON:
+          newData = attachWeapons(newData, item);
           break;
         default:
           newData = attachCommonItem(newData, item);

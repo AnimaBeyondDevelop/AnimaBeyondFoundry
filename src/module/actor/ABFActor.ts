@@ -29,6 +29,10 @@ import { CreaturesChanges } from '../types/CreaturesChanges';
 import { TechniquesChanges } from '../types/TechniquesChanges';
 import { SpecialSkillsChanges } from '../types/SpecialSkillsChanges';
 import { Character } from './ABFActor.type';
+import { CombatSpecialSkillChanges } from '../types/CombatSpecialSkillChanges';
+import { CombatTableChanges } from '../types/CombatTableChanges';
+import { AmmoChanges } from '../types/AmmoChanges';
+import { WeaponChanges } from '../types/WeaponChanges';
 
 export type CharacterData = Character & Actor.Data;
 
@@ -803,6 +807,146 @@ export class ABFActor extends Actor<CharacterData> {
           willPower: { value: willPower },
           power: { value: power },
           martialKnowledge: { value: martialKnowledge }
+        }
+      });
+    }
+  }
+
+  public async addCombatSpecialSkill(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.combatSpecialSkills.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.COMBAT_SPECIAL_SKILL,     
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editCombatSpecialSkills(changes: CombatSpecialSkillChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name
+      } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addCombatTable(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.combatTable.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.COMBAT_TABLE,     
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editCombatTables(changes: CombatTableChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name
+      } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name
+      });
+    }
+  }
+
+  public async addAmmo(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.ammo.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.AMMO,     
+      data: { 
+        amount: { value: 0}
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editAmmo(changes: AmmoChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name,
+        data,
+      
+      } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data : {
+          amount: { value: data.amount }
+        }
+      });
+    }
+  }
+
+  public async addWeapon(): Promise<void> {
+    const name = await openDialog<string>({
+      content: game.i18n.localize('dialogs.items.weapons.content')
+    });
+
+    const itemData = {
+      name,
+      type: Items.WEAPON,     
+      data: { 
+        special: { value: 0 },
+        integrity: { value: 0 },
+        breaking: { value: 0 },
+        attack: { value: 0 },
+        block: { value: 0 },
+        damage: { value: 0 },
+        iniciative: { value: 0 },
+        critic: { 
+          primary: { value: "" },
+          secondary: { value: "" }
+        }
+      }
+    };
+
+    await this.createOwnedItem(itemData);
+  }
+
+  public editWeapons(changes: WeaponChanges) {
+    for (const id of Object.keys(changes)) {
+      const {
+        name,
+        data,
+      
+      } = changes[id];
+
+      this.updateOwnedItem({
+        _id: id,
+        name,
+        data: { 
+          special: { value: data.special },
+          integrity: { value: data.integrity },
+          breaking: { value: data.breaking },
+          attack: { value: data.attack },
+          block: { value: data.block },
+          damage: { value: data.damage },
+          iniciative: { value: data.iniciative },
+          critic: { 
+            primary: { value: data.critic.primary },
+            secondary: { value: data.critic.secondary }
+          }        
         }
       });
     }

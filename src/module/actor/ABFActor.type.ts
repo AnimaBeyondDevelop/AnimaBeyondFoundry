@@ -320,7 +320,10 @@ export type Character = {
     attack: {
       value: number;
     };
-    defense: {
+    block: {
+      value: number;
+    };
+    dodge: {
       value: number;
     };
     armor: {
@@ -354,6 +357,10 @@ export type Character = {
         };
       };
     };
+    specialSkills: [];
+    combatTables: [];
+    ammo: [];
+    weapons: [];
   };
 
   mystic: {

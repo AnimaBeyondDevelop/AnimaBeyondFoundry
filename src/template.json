@@ -127,7 +127,8 @@
       },
       "combat": {
         "attack": { "value": 0 },
-        "defense": { "value": 0 },
+        "block": { "value": 0 },
+        "dodge": { "value": 0 },
         "armor": {
           "name": { "value": "" },
           "at": {
@@ -140,7 +141,11 @@
             "cold": { "value": 0 },
             "energy": { "value": 0 }
           }
-        }
+        },
+        "specialSkills": [],
+        "combatTables": [],
+        "ammo": [],
+        "weapons": []
       },
       "mystic": {
         "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },
@@ -278,7 +283,11 @@
       "martialArt",
       "creature",
       "specialSkill",
-      "technique"
+      "technique",
+      "combatSpecialSkill",
+      "combatTable",
+      "ammo",
+      "weapon"
     ],
     "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
     "skill": { "value": 0 },
@@ -326,6 +335,17 @@
       "willPower": { "value": 0 },
       "power": { "value": 0 },
       "martialKnowledge": { "value": 0 }
+    },
+    "ammo": { "amount": { "value": 0 } },
+    "weapon": {
+      "special": { "value": 0 },
+      "integrity": { "value": 0 },
+      "breaking": { "value": 0 },
+      "attack": { "value": 0 },
+      "block": { "value": 0 },
+      "damage": { "value": 0 },
+      "iniciative": { "value": 0 },
+      "critic": { "primary": { "value": "" }, "secondary": { "value": "" } }
     }
   }
 }
