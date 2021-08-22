@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="selected-spells"
   }}
-    {{#each data.mystic.selectedSpells}}
+    {{#each data.data.mystic.selectedSpells}}
       <div data-selected-spell-id='{{this._id}}' class='selected-spell-row'>
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"

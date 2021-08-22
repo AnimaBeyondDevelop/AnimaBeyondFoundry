@@ -1,3 +1,4 @@
+import type { Options } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
 import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
@@ -12,7 +13,7 @@ export default class ABFFoundryRoll extends Roll {
   _formula: string;
   data: Record<string, unknown>;
 
-  terms: DicePool[];
+  terms: RollTerm[];
 
   constructor(formula: string, data?: Record<string, unknown>) {
     super(formula, data);
@@ -35,13 +36,14 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   getResults(): number[] {
-    return this.results.filter(res => typeof res === 'number') as number[];
+    return this.dice[0].results.map(res => res.result);
   }
 
-  evaluate({ minimize = false, maximize = false } = {}): this {
+  // TODO Evaluate not finished this | Promise<this>
+  evaluate(options?: Partial<Options>): any {
     super.evaluate();
 
-    this.abfRoll?.evaluate({ minimize, maximize });
+    this.abfRoll?.evaluate(options);
 
     return this;
   }

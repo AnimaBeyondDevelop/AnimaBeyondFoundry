@@ -21,7 +21,7 @@
         "description": { "value": "" },
         "disadvantages": [],
         "elan": [],
-        "experience": { "current": 0, "next": 0 },
+        "experience": { "current": { "value": 0 }, "next": { "value": 0 } },
         "fatigue": { "value": 0, "max": 0 },
         "languages": { "base": { "value": "" }, "others": [] },
         "levels": [],
@@ -123,7 +123,7 @@
           "tailoring": { "value": 0 },
           "constructMarionettes": { "value": 0 }
         },
-        "special": { "special": { "value": 0 } }
+        "others": []
       },
       "combat": {
         "attack": { "value": 0 },

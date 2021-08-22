@@ -10,7 +10,7 @@ export default class ABFFoundryRoll {
   _total: number;
 
   results: (number | string)[];
-  terms: DicePool[];
+  terms: RollTerm[];
 
   // Test variable
   static nextValue: number | null;
@@ -50,7 +50,7 @@ export default class ABFFoundryRoll {
     const value =
       ABFFoundryRoll.nextValue ?? Math.min(1, Math.floor(Math.random() * 100));
     const result = { result: value, active: true } as DiceTerm.Result;
-    const results = { results: [result] } as DicePool;
+    const results = { results: [result] } as unknown as RollTerm;
 
     this.results.push(value);
     this.terms.push(results);

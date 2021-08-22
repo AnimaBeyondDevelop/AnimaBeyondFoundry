@@ -10,6 +10,8 @@ export const openDialog = async <T = number>({
   content: string;
   placeholder?: string;
 }): Promise<T> => {
+  const referencedGame = game as Game;
+
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
       name: Templates.Dialog.ModDialog,
@@ -22,12 +24,12 @@ export const openDialog = async <T = number>({
 
   return new Promise(resolve => {
     new Dialog({
-      title: title ?? game.i18n.localize('dialogs.title'),
+      title: title ?? referencedGame.i18n.localize('dialogs.title'),
       content: dialogHTML,
       buttons: {
         submit: {
           icon: iconHTML,
-          label: game.i18n.localize('dialogs.continue'),
+          label: referencedGame.i18n.localize('dialogs.continue'),
           callback: (html: JQuery) => {
             const results = new FormDataExtended(html.find('form')[0], {}).toObject();
 
@@ -43,8 +45,10 @@ export const openDialog = async <T = number>({
 
 // Open the mod Dialog window. It returns resolver(html), which in turn returns the modifier
 export const openModDialog = async () => {
+  const referencedGame = game as Game;
+
   return openDialog({
-    content: game.i18n.localize('dialogs.mod.content'),
+    content: referencedGame.i18n.localize('dialogs.mod.content'),
     placeholder: '0'
   });
 };

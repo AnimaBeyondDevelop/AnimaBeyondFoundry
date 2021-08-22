@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="summons"
   }}
-    {{#each data.mystic.summons}}
+    {{#each data.data.mystic.summons}}
       <div data-summon-id='{{this._id}}' class='summon-row'>
         <input
           name='data.dynamic.summons.{{this._id}}.name'

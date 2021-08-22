@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="free-access-spells"
   }}
-    {{#each data.mystic.freeAccessSpells}}
+    {{#each data.data.mystic.freeAccessSpells}}
       <div data-free-access-spell-id='{{this._id}}' class='free-access-spell-row'>
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"

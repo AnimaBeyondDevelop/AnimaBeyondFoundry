@@ -6,6 +6,8 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "no-param-reassign": "off",
+    "object-curly-newline": "off",
     "no-new": "off",
     "no-console": [
       "error",

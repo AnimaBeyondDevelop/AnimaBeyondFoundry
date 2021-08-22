@@ -26,15 +26,12 @@ Hooks.once('init', async () => {
   console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
 
   // Assign custom classes and constants here
-  game.abf = {
-    abfRoll: ABFFoundryRoll,
-    abfActor: ABFActor
-  };
+  CONFIG.Actor.documentClass = ABFActor;
 
-  CONFIG.Dice.rolls.unshift(ABFFoundryRoll);
+  CONFIG.Dice.rolls = [ABFFoundryRoll];
 
   CONFIG.Combat = {
-    entityClass: ABFCombat,
+    documentClass: ABFCombat,
     collection: CombatEncounters,
     defeatedStatusId: 'dead',
     sidebarIcon: 'fas fa-fist-raised',
@@ -43,8 +40,6 @@ Hooks.once('init', async () => {
       decimals: 2
     }
   };
-
-  CONFIG.Actor.entityClass = ABFActor;
 
   // Register custom system settings
   registerSettings();

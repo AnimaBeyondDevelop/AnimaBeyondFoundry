@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="ki-skills"
   }}
-    {{#each data.domine.kiSkills}}
+    {{#each data.data.domine.kiSkills}}
       <div data-ki-skill-id='{{this._id}}' class='ki-skill-row'>
         <input
           name='data.dynamic.kiSkills.{{this._id}}.name'
