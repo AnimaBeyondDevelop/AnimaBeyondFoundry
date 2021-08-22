@@ -1,7 +1,7 @@
 @import 'variable.scss';
 
-.combat{
-  .first-row{
+.combat {
+  .first-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-column-gap: 0.1rem;
@@ -16,7 +16,7 @@
     }
 
     .combat-special-skill-row {
-      margin-top: 0.50rem;
+      margin-top: 0.5rem;
     }
   }
 }

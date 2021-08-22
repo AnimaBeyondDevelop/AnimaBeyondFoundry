@@ -4,15 +4,17 @@ import { concatHBSHelper } from './concatHBSHelper';
 import { getKeyOfHBSHelper } from './getKeyOfHBSHelper';
 import { manipulateStringHBSHelper } from './manipulateStringHBSHelper';
 import { mathHBSHelper } from './mathHBSHelper';
+import { getDifficultyFromIndexHBSHelper } from './getDifficultyFromIndexHBSHelper';
 
 export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
 
 export const registerHelpers = () => {
   const helpers: HandlebarsHelper<unknown>[] = [
-    concatHBSHelper,
-    isHBSHelper,
     calculateExperienceHBSHelper,
+    concatHBSHelper,
+    getDifficultyFromIndexHBSHelper,
     getKeyOfHBSHelper,
+    isHBSHelper,
     manipulateStringHBSHelper,
     mathHBSHelper
   ];

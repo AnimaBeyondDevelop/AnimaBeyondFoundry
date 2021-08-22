@@ -15,6 +15,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
         template: 'systems/animabf/templates/actor-sheet.hbs',
         width: 900,
         height: 850,
+        submitOnChange: true,
         tabs: [
           {
             navSelector: '.sheet-tabs',
@@ -575,7 +576,9 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
 
     if (unflattedChanges.data.dynamic.combatSpecialSkills) {
-      this.actor.editCombatSpecialSkills(unflattedChanges.data.dynamic.combatSpecialSkills);
+      this.actor.editCombatSpecialSkills(
+        unflattedChanges.data.dynamic.combatSpecialSkills
+      );
     }
 
     if (unflattedChanges.data.dynamic.combatTables) {

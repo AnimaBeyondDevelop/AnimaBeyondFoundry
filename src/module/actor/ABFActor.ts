@@ -530,7 +530,7 @@ export class ABFActor extends Actor<CharacterData> {
       type: Items.PSYCHIC_POWER,
       data: {
         level: { value: 0 },
-        effects: new Array(8).fill({ value: '' }),
+        effects: new Array(10).fill({ value: '' }),
         actionType: { value: '' },
         hasMaintenance: { value: false },
         bonus: { value: 0 }
@@ -819,7 +819,7 @@ export class ABFActor extends Actor<CharacterData> {
 
     const itemData = {
       name,
-      type: Items.COMBAT_SPECIAL_SKILL,     
+      type: Items.COMBAT_SPECIAL_SKILL
     };
 
     await this.createOwnedItem(itemData);
@@ -827,9 +827,7 @@ export class ABFActor extends Actor<CharacterData> {
 
   public editCombatSpecialSkills(changes: CombatSpecialSkillChanges) {
     for (const id of Object.keys(changes)) {
-      const {
-        name
-      } = changes[id];
+      const { name } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
@@ -845,7 +843,7 @@ export class ABFActor extends Actor<CharacterData> {
 
     const itemData = {
       name,
-      type: Items.COMBAT_TABLE,     
+      type: Items.COMBAT_TABLE
     };
 
     await this.createOwnedItem(itemData);
@@ -853,9 +851,7 @@ export class ABFActor extends Actor<CharacterData> {
 
   public editCombatTables(changes: CombatTableChanges) {
     for (const id of Object.keys(changes)) {
-      const {
-        name
-      } = changes[id];
+      const { name } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
@@ -871,9 +867,9 @@ export class ABFActor extends Actor<CharacterData> {
 
     const itemData = {
       name,
-      type: Items.AMMO,     
-      data: { 
-        amount: { value: 0}
+      type: Items.AMMO,
+      data: {
+        amount: { value: 0 }
       }
     };
 
@@ -882,16 +878,12 @@ export class ABFActor extends Actor<CharacterData> {
 
   public editAmmo(changes: AmmoChanges) {
     for (const id of Object.keys(changes)) {
-      const {
-        name,
-        data,
-      
-      } = changes[id];
+      const { name, data } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data : {
+        data: {
           amount: { value: data.amount }
         }
       });
@@ -905,18 +897,18 @@ export class ABFActor extends Actor<CharacterData> {
 
     const itemData = {
       name,
-      type: Items.WEAPON,     
-      data: { 
+      type: Items.WEAPON,
+      data: {
         special: { value: 0 },
         integrity: { value: 0 },
         breaking: { value: 0 },
         attack: { value: 0 },
         block: { value: 0 },
         damage: { value: 0 },
-        iniciative: { value: 0 },
-        critic: { 
-          primary: { value: "" },
-          secondary: { value: "" }
+        initiative: { value: 0 },
+        critic: {
+          primary: { value: '' },
+          secondary: { value: '' }
         }
       }
     };
@@ -926,27 +918,23 @@ export class ABFActor extends Actor<CharacterData> {
 
   public editWeapons(changes: WeaponChanges) {
     for (const id of Object.keys(changes)) {
-      const {
-        name,
-        data,
-      
-      } = changes[id];
+      const { name, data } = changes[id];
 
       this.updateOwnedItem({
         _id: id,
         name,
-        data: { 
+        data: {
           special: { value: data.special },
           integrity: { value: data.integrity },
           breaking: { value: data.breaking },
           attack: { value: data.attack },
           block: { value: data.block },
           damage: { value: data.damage },
-          iniciative: { value: data.iniciative },
-          critic: { 
+          initiative: { value: data.initiative },
+          critic: {
             primary: { value: data.critic.primary },
             secondary: { value: data.critic.secondary }
-          }        
+          }
         }
       });
     }

@@ -6,10 +6,10 @@ export type WeaponChanges = {
       integrity: number;
       breaking: number;
       attack: number;
-      block: number ;
+      block: number;
       damage: number;
-      iniciative: number;
-      critic:{
+      initiative: number;
+      critic: {
         primary: string;
         secondary: string;
       };

@@ -64,7 +64,6 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
     Items.COMBAT_TABLE,
     Items.AMMO,
     Items.WEAPON
-
   ].map(type => type.toString());
 
   for (const item of newData.items) {
@@ -152,7 +151,7 @@ export const prepareItems = (data: ActorSheet.Data<ABFActor>) => {
           break;
         case Items.AMMO:
           newData = attachAmmo(newData, item);
-          break;  
+          break;
         case Items.COMBAT_TABLE:
           newData = attachCombatTables(newData, item);
           break;

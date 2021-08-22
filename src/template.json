@@ -149,13 +149,12 @@
       },
       "mystic": {
         "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },
-        "zeon": { "value": 0, "max": 0, "accumulated": 0 },
-        "magicRegeneration": { "value": 0, "total": 0 },
-        "innerPotential": { "value": 0, "alternative": 0 },
+        "zeon": { "current": { "value": 0 }, "max": { "value": 0 } },
+        "zeonRegeneration": { "current": { "value": 0 }, "max": { "value": 0 } },
+        "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
         "magicProjection": {
-          "base": { "value": 0 },
-          "offensive": { "value": 0 },
-          "defensive": { "value": 0 }
+          "final": { "value": 0 },
+          "imbalance": { "offensive": { "value": 0 }, "defensive": { "value": 0 } }
         },
         "magicLevel": {
           "spheres": {
@@ -248,7 +247,7 @@
       "psychic": {
         "psychicPotential": { "value": 0 },
         "psychicProjection": { "value": 0 },
-        "psychicPower": { "used": { "value": 0 }, "max": { "value": 0 } },
+        "psychicPoints": { "used": { "value": 0 }, "max": { "value": 0 } },
         "psychicPowers": [],
         "psychicDisciplines": [],
         "mentalPatterns": [],
@@ -344,7 +343,7 @@
       "attack": { "value": 0 },
       "block": { "value": 0 },
       "damage": { "value": 0 },
-      "iniciative": { "value": 0 },
+      "initiative": { "value": 0 },
       "critic": { "primary": { "value": "" }, "secondary": { "value": "" } }
     }
   }
