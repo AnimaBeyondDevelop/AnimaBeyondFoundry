@@ -72,7 +72,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.selectedSpell.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.SELECTED_SPELL,
       data: { cost: { value: 0 } }
@@ -83,7 +83,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      await this.updateItem({ id, name, data });
+      await this.updateInnerItem({ id, type: ABFItems.SELECTED_SPELL, name, data });
     }
   }
 
@@ -92,7 +92,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.spellMaintenance.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.SPELL_MAINTENANCE,
       data: { cost: { value: 0 } }
@@ -103,7 +103,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      await this.updateItem({ id, name, data });
+      await this.updateInnerItem({ id, type: ABFItems.SPELL_MAINTENANCE, name, data });
     }
   }
 
@@ -311,7 +311,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.title.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.TITLE
     });
@@ -321,7 +321,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(titles)) {
       const { name } = titles[id];
 
-      await this.updateItem({ id, name });
+      await this.updateInnerItem({ id, type: ABFItems.TITLE, name });
     }
   }
 
@@ -368,7 +368,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.contact.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.CONTACT
     });
@@ -378,7 +378,12 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(contacts)) {
       const { name, description } = contacts[id];
 
-      await this.updateItem({ id, name, data: { description: { value: description } } });
+      await this.updateInnerItem({
+        id,
+        type: ABFItems.CONTACT,
+        name,
+        data: { description: { value: description } }
+      });
     }
   }
 
@@ -610,7 +615,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.creature.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.CREATURE,
       data: {
@@ -637,8 +642,9 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name, earth, fire, metal, water, wood } = changes[id];
 
-      await this.updateItem({
+      await this.updateInnerItem({
         id,
+        type: ABFItems.CREATURE,
         name,
         data: {
           earth: { value: earth },
@@ -656,7 +662,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.specialSkill.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.SPECIAL_SKILL
     });
@@ -666,7 +672,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await this.updateItem({ id, name });
+      await this.updateInnerItem({ id, type: ABFItems.SPECIAL_SKILL, name });
     }
   }
 
@@ -777,18 +783,19 @@ export class ABFActor extends Actor {
     const item = items.find(it => it._id === id);
 
     if (item) {
-      if (name) {
-        item.name = name;
-      }
-
-      if (data) {
-        item.data = data;
-      }
-
-      if (
+      const hasChanges =
         (!!name && name !== item.name) ||
-        JSON.stringify(data) !== JSON.stringify(item.data)
-      ) {
+        JSON.stringify(data) !== JSON.stringify(item.data);
+
+      if (hasChanges) {
+        if (name) {
+          item.name = name;
+        }
+
+        if (data) {
+          item.data = data;
+        }
+
         await this.update({
           data: getUpdateObjectFromPath(items, configuration.fieldPath)
         });

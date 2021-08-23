@@ -254,15 +254,10 @@
   "Item": {
     "types": [
       "freeAccessSpell",
-      "spellMaintenance",
-      "selectedSpell",
       "metamagic",
-      "summon",
       "language",
-      "title",
       "advantage",
       "disadvantage",
-      "contact",
       "note",
       "psychicDiscipline",
       "mentalPattern",
@@ -272,16 +267,10 @@
       "nemesisSkill",
       "arsMagnus",
       "martialArt",
-      "creature",
-      "specialSkill",
       "technique"
     ],
     "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
-    "spellMaintenance": { "cost": { "value": 0 } },
-    "selectedSpell": { "cost": { "value": 0 } },
     "metamagic": { "grade": { "value": 0 } },
-    "summon": { "cost": { "value": 0 } },
-    "contact": { "description": "" },
     "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
     "innatePsychicPower": { "effect": { "value": "" }, "value": { "value": 0 } },
     "psychicPower": {
@@ -303,13 +292,6 @@
       ]
     },
     "martialArt": { "grade": { "value": "" } },
-    "creature": {
-      "fire": { "value": "" },
-      "water": { "value": "" },
-      "earth": { "value": "" },
-      "wood": { "value": "" },
-      "metal": { "value": "" }
-    },
     "technique": {
       "description": { "value": "" },
       "strength": { "value": 0 },
