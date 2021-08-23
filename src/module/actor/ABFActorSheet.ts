@@ -45,7 +45,6 @@ export default class ABFActorSheet extends ActorSheet {
   getData() {
     const data = super.getData() as ActorSheet.Data;
 
-    console.trace();
     if (this.actor.data.type === 'character') {
       return prepareSheet(data);
     }
@@ -71,7 +70,9 @@ export default class ABFActorSheet extends ActorSheet {
     if (!this.options.editable) return;
 
     // Rollable abilities.
-    html.find('.rollable').click(this._onRoll.bind(this));
+    html.find('.rollable').click(e => {
+      this._onRoll(e);
+    });
 
     html.find('[data-on-click="add-secondary-skill"]').click(() => {
       this.actor.addSecondarySkillSlot();
@@ -466,11 +467,15 @@ export default class ABFActorSheet extends ActorSheet {
     }
 
     if (unflattedChanges.data.dynamic.freeAccessSpells) {
-      await this.actor.editFreeAccessSpells(unflattedChanges.data.dynamic.freeAccessSpells);
+      await this.actor.editFreeAccessSpells(
+        unflattedChanges.data.dynamic.freeAccessSpells
+      );
     }
 
     if (unflattedChanges.data.dynamic.spellMaintenances) {
-      await this.actor.editSpellMaintenance(unflattedChanges.data.dynamic.spellMaintenances);
+      await this.actor.editSpellMaintenance(
+        unflattedChanges.data.dynamic.spellMaintenances
+      );
     }
 
     if (unflattedChanges.data.dynamic.selectedSpells) {
@@ -522,7 +527,9 @@ export default class ABFActorSheet extends ActorSheet {
     }
 
     if (unflattedChanges.data.dynamic.psychicDisciplines) {
-      await this.actor.editPsychicDisciplines(unflattedChanges.data.dynamic.psychicDisciplines);
+      await this.actor.editPsychicDisciplines(
+        unflattedChanges.data.dynamic.psychicDisciplines
+      );
     }
 
     if (unflattedChanges.data.dynamic.mentalPatterns) {

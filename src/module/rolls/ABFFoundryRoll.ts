@@ -15,7 +15,15 @@ export default class ABFFoundryRoll extends Roll {
 
   terms: RollTerm[];
 
-  constructor(formula: string, data?: Record<string, unknown>) {
+  constructor(rawFormula: string, data?: Record<string, unknown>) {
+    let formula = rawFormula.trim();
+
+    // In FoundryVTT 0.8.8 I don't know why but the system inserts at the end a "+ "
+    // so here, if we found that the end of the formula is "+ " we remove it
+    if (formula.endsWith('+')) {
+      formula = formula.substr(0, formula.length - 1);
+    }
+
     super(formula, data);
 
     if (this.formula.includes('xa')) {
@@ -36,12 +44,14 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   getResults(): number[] {
-    return this.dice[0].results.map(res => res.result);
+    return this.dice.map(d => d.results.map(res => res.result)).flat();
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(options?: Partial<Options>): any {
-    super.evaluate();
+  evaluate(partialOptions?: Partial<Options>): any {
+    const options = { ...partialOptions, async: false };
+
+    super.evaluate(options);
 
     this.abfRoll?.evaluate(options);
 

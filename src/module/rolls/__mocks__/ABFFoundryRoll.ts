@@ -9,8 +9,7 @@ export default class ABFFoundryRoll {
   _rolled = false;
   _total: number;
 
-  results: (number | string)[];
-  terms: RollTerm[];
+  dice: DiceTerm[];
 
   // Test variable
   static nextValue: number | null;
@@ -19,8 +18,7 @@ export default class ABFFoundryRoll {
     this._formula = formula;
     this.data = data;
 
-    this.results = [];
-    this.terms = [];
+    this.dice = [];
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -41,7 +39,11 @@ export default class ABFFoundryRoll {
   }
 
   getResults(): number[] {
-    return this.results.map(res => parseInt(res.toString(), 10));
+    return this.dice.map(d => d.results.map(res => res.result)).flat();
+  }
+
+  get firstDice(): DiceTerm {
+    return this.dice[0];
   }
 
   evaluate() {
@@ -49,13 +51,13 @@ export default class ABFFoundryRoll {
 
     const value =
       ABFFoundryRoll.nextValue ?? Math.min(1, Math.floor(Math.random() * 100));
-    const result = { result: value, active: true } as DiceTerm.Result;
-    const results = { results: [result] } as unknown as RollTerm;
 
-    this.results.push(value);
-    this.terms.push(results);
+    const diceTerm = { results: [{ result: value, active: true }] } as DiceTerm;
 
-    this._total = this.getResults().reduce((val, curr) => val + curr);
+    this.dice.push(diceTerm);
+
+    this.recalculateTotal();
+
     this._rolled = true;
     ABFFoundryRoll.nextValue = null;
 
