@@ -7,9 +7,8 @@
     addRowButtonData="add-combat-special-skill"
   }}
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
-    class="combat-special-skill"
+    class="combat-special-skills"
   }}
-    {{log data.data.combat.combatSpecialSkills}}
     {{#each data.data.combat.combatSpecialSkills}}
       <div data-combat-special-skill-id='{{this._id}}' class='combat-special-skill-row'>
         <input

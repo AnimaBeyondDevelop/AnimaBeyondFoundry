@@ -430,7 +430,7 @@ export default class ABFActorSheet extends ActorSheet {
     // Combat Special Skills
     this.buildCommonContextualMenu({
       configuration: ATTACH_CONFIGURATIONS[ABFItems.COMBAT_SPECIAL_SKILL],
-      containerSelector: '#combat-special-skill-context-menu-container',
+      containerSelector: '#combat-special-skills-context-menu-container',
       rowSelector: '.combat-special-skill-row',
       rowIdData: 'combatSpecialSkillId'
     });
@@ -443,8 +443,8 @@ export default class ABFActorSheet extends ActorSheet {
     // Combat Tables
     this.buildCommonContextualMenu({
       configuration: ATTACH_CONFIGURATIONS[ABFItems.COMBAT_TABLE],
-      containerSelector: '#combat-table-context-menu-container',
-      rowSelector: '.combat-table-skill-row',
+      containerSelector: '#combat-tables-context-menu-container',
+      rowSelector: '.combat-table-row',
       rowIdData: 'combatTableId'
     });
 
@@ -469,7 +469,7 @@ export default class ABFActorSheet extends ActorSheet {
     // Weapon
     this.buildCommonContextualMenu({
       configuration: ATTACH_CONFIGURATIONS[ABFItems.WEAPON],
-      containerSelector: '#weapon-context-menu-container',
+      containerSelector: '#weapons-context-menu-container',
       rowSelector: '.weapon-row',
       rowIdData: 'weaponId'
     });

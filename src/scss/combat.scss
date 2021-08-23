@@ -19,4 +19,62 @@
       margin-top: 0.5rem;
     }
   }
+
+  .combat-tables {
+    .input {
+      @include input;
+    }
+    .combat-table-row:first-child {
+      margin-top: 0;
+    }
+
+    .combat-table-row {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .ammo {
+    .ammo-row:first-child {
+      margin-top: 0;
+    }
+
+    .ammo-row {
+      margin-top: 0.5rem;
+
+      .name {
+        .input-container {
+          width: 100%;
+        }
+      }
+
+      display: flex;
+    }
+  }
+
+  .weapons {
+    .input {
+      height: 1.2rem;
+    }
+
+    .weapon-row:first-child {
+      margin-top: 0;
+    }
+
+    .weapon-header {
+      .input-container {
+        width: 15rem;
+      }
+    }
+
+    .weapon-row {
+      margin-top: 0.5rem;
+      border-radius: $border-radius;
+      box-shadow: $card-box-shadow;
+
+      .group-body {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 }
