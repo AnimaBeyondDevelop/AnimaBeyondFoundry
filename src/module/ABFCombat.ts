@@ -1,3 +1,4 @@
+import type { InitiativeOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/clientDocuments/combat';
 import { openModDialog } from './utils/openDialog';
 
 export default class ABFCombat extends Combat {
@@ -14,11 +15,8 @@ export default class ABFCombat extends Combat {
     {
       updateTurn,
       messageOptions
-    }: {
-      messageOptions?: DeepPartial<ChatMessage.Data & { rollMode: Const.DiceRollMode }>;
-      updateTurn?: boolean;
-    } = {}
-  ): Promise<Combat> {
+    }: InitiativeOptions = {}
+  ): Promise<this> {
     const mod = await openModDialog();
 
     const formula = `${CONFIG.Combat.initiative.formula} + ${mod}`;

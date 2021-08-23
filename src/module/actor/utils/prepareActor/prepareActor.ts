@@ -1,13 +1,10 @@
+import type { ActorData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs';
 import { complementPrimaries } from './utils/complementPrimaries';
 
-import { CharacterData } from '../../ABFActor';
-
-export const prepareActor = (originalData: CharacterData): CharacterData => {
-  const newData: CharacterData = JSON.parse(JSON.stringify(originalData));
-
-  newData.data.characteristics.primaries = complementPrimaries(
-    newData.data.characteristics.primaries
+export const prepareActor = (data: ActorData): ActorData => {
+  data.data.characteristics.primaries = complementPrimaries(
+    data.data.characteristics.primaries
   );
 
-  return newData;
+  return data;
 };

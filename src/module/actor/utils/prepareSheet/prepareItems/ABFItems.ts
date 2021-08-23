@@ -1,4 +1,4 @@
-export enum Items {
+export enum ABFItems {
   SECONDARY_SKILL = 'skill',
   FREE_ACCESS_SPELL = 'freeAccessSpell',
   SPELL_MAINTENANCE = 'spellMaintenance',

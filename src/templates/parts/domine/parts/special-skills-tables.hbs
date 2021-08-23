@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="special-skills"
   }}
-    {{#each data.domine.specialSkills}}
+    {{#each data.data.domine.specialSkills}}
       <div data-special-skill-id='{{this._id}}' class='special-skill-row'>
         <input
           name='data.dynamic.specialSkills.{{this._id}}.name'

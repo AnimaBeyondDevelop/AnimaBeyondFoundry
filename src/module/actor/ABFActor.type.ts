@@ -1,4 +1,4 @@
-export type Character = {
+export type ABFActorDataSourceData = {
   general: {
     modifiers: {
       physicalActions: {
@@ -45,8 +45,8 @@ export type Character = {
     disadvantages: [];
     elan: [];
     experience: {
-      current: number;
-      next: number;
+      current: { value: number };
+      next: { value: number };
     };
     fatigue: {
       value: number;
@@ -309,11 +309,7 @@ export type Character = {
         value: number;
       };
     };
-    special: {
-      special: {
-        value: number;
-      };
-    };
+    others: [];
   };
 
   combat: {

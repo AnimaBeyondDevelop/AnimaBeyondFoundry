@@ -1,9 +1,8 @@
+/* eslint-disable class-methods-use-this */
 import { openDialog } from '../utils/openDialog';
 import { SkillChange } from '../types/SkillChange';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
 import { SelectedSpellsChange } from '../types/SelectedSpellsChange';
-import { prepareActor } from './utils/prepareActor/prepareActor';
-import { Items } from './utils/prepareSheet/prepareItems/Items';
 import { MetamagicChanges } from '../types/MetamagicChange';
 import { SummonChanges } from '../types/SummonChange';
 import { SpellMaintenancesChanges } from '../types/SpellMaintenancesChange';
@@ -28,205 +27,183 @@ import { MartialArtsChanges } from '../types/MartialArtsChanges';
 import { CreaturesChanges } from '../types/CreaturesChanges';
 import { TechniquesChanges } from '../types/TechniquesChanges';
 import { SpecialSkillsChanges } from '../types/SpecialSkillsChanges';
-import { Character } from './ABFActor.type';
 import { CombatSpecialSkillChanges } from '../types/CombatSpecialSkillChanges';
 import { CombatTableChanges } from '../types/CombatTableChanges';
 import { AmmoChanges } from '../types/AmmoChanges';
 import { WeaponChanges } from '../types/WeaponChanges';
+import { prepareActor } from './utils/prepareActor/prepareActor';
+import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
+import { ATTACH_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
+import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
+import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
 
-export type CharacterData = Character & Actor.Data;
+export class ABFActor extends Actor {
+  i18n: Localization;
 
-export class ABFActor extends Actor<CharacterData> {
-  prepareData() {
-    super.prepareData();
+  constructor(
+    data: ConstructorParameters<typeof foundry.documents.BaseActor>[0],
+    context: ConstructorParameters<typeof foundry.documents.BaseActor>[1]
+  ) {
+    super(data, context);
 
-    const actorData = this.data;
+    this.i18n = (game as Game).i18n;
+  }
 
-    if (actorData.type === 'character') {
-      this.data = prepareActor(actorData);
-    }
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    prepareActor(this.data);
   }
 
   public async addSummon(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.summon.content')
+      content: this.i18n.localize('dialogs.items.summon.content')
     });
 
-    const itemData = { name, type: Items.SUMMON, cost: { value: 0 } };
-
-    await this.createOwnedItem(itemData);
+    await this.createItem({ type: ABFItems.SUMMON, name });
   }
 
-  public editSummon(invocation: SummonChanges) {
+  public async editSummon(invocation: SummonChanges) {
     for (const id of Object.keys(invocation)) {
-      const { name, data } = invocation[id];
+      const { name } = invocation[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addSelectedSpell(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.selectedSpell.content')
+      content: this.i18n.localize('dialogs.items.selectedSpell.content')
     });
 
-    const itemData = { name, type: Items.SELECTED_SPELL, cost: { value: 0 } };
-
-    await this.createOwnedItem(itemData);
+    await this.createInnerItem({
+      name,
+      type: ABFItems.SELECTED_SPELL,
+      data: { cost: { value: 0 } }
+    });
   }
 
-  public editSelectedSpell(changes: SelectedSpellsChange) {
+  public async editSelectedSpell(changes: SelectedSpellsChange) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data
-      });
+      await this.updateInnerItem({ id, type: ABFItems.SELECTED_SPELL, name, data });
     }
   }
 
   public async addSpellMaintenance(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.spellMaintenance.content')
+      content: this.i18n.localize('dialogs.items.spellMaintenance.content')
     });
 
-    const itemData = { name, type: Items.SPELL_MAINTENANCE, cost: { value: 0 } };
-
-    await this.createOwnedItem(itemData);
+    await this.createInnerItem({
+      name,
+      type: ABFItems.SPELL_MAINTENANCE,
+      data: { cost: { value: 0 } }
+    });
   }
 
-  public editSpellMaintenance(changes: SpellMaintenancesChanges) {
+  public async editSpellMaintenance(changes: SpellMaintenancesChanges) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data
-      });
+      await this.updateInnerItem({ id, type: ABFItems.SPELL_MAINTENANCE, name, data });
     }
   }
 
   public async addFreeAccessSpell(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.freeAccessSpell.content')
+      content: this.i18n.localize('dialogs.items.freeAccessSpell.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.FREE_ACCESS_SPELL,
-      level: { value: 0 },
-      cost: { value: 0 }
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.FREE_ACCESS_SPELL,
+      data: { level: { value: 0 }, cost: { value: 0 } }
+    });
   }
 
-  public editFreeAccessSpells(changes: FreeAccessSpellChange) {
+  public async editFreeAccessSpells(changes: FreeAccessSpellChange) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data
-      });
+      await this.updateItem({ id, name, data });
     }
   }
 
   async addSecondarySkillSlot(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.secondarySkill.content')
+      content: this.i18n.localize('dialogs.items.secondarySkill.content')
     });
 
-    const itemData = { name, type: Items.SECONDARY_SKILL, value: 0 };
-
-    await this.createOwnedItem(itemData);
+    this.createInnerItem({
+      name,
+      type: ABFItems.SECONDARY_SKILL,
+      data: { level: { value: 0 } }
+    });
   }
 
   public editSecondarySkills(skillChanges: SkillChange) {
     for (const id of Object.keys(skillChanges)) {
-      const { value } = skillChanges[id].data;
+      const { data } = skillChanges[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        data: {
-          value
-        }
-      });
+      this.updateInnerItem({ id, type: ABFItems.SECONDARY_SKILL, data });
     }
   }
 
   public async addMetamagic(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.metamagic.content')
+      content: this.i18n.localize('dialogs.items.metamagic.content')
     });
 
-    const itemData = { name, type: Items.METAMAGIC, grade: { value: 0 } };
-
-    await this.createOwnedItem(itemData);
+    await this.createItem({
+      name,
+      type: ABFItems.METAMAGIC,
+      data: { grade: { value: 0 } }
+    });
   }
 
-  public editMetamagic(changes: MetamagicChanges) {
+  public async editMetamagic(changes: MetamagicChanges) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data
-      });
+      await this.updateItem({ id, name, data });
     }
   }
 
   public async addLevel(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.level.content')
+      content: this.i18n.localize('dialogs.items.level.content')
     });
 
-    const itemData = { name, type: Items.LEVEL, level: 0 };
-
-    await this.createOwnedItem(itemData);
+    this.createInnerItem({ type: ABFItems.LEVEL, name, data: { level: 0 } });
   }
 
-  public editLevel(level: LevelChanges) {
-    for (const id of Object.keys(level)) {
-      const { name, data } = level[id];
+  public editLevel(changes: LevelChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data: {
-          level: data.level
-        }
-      });
+      this.updateInnerItem({ type: ABFItems.LEVEL, id, name, data });
     }
   }
 
   public async addLanguage(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.language.content')
+      content: this.i18n.localize('dialogs.items.language.content')
     });
 
-    const itemData = { name, type: Items.LANGUAGE };
-
-    await this.createOwnedItem(itemData);
+    this.createEmbeddedDocuments('Item', [{ type: ABFItems.LANGUAGE, name }]);
   }
 
-  public editLanguage(language: LanguageChanges) {
-    for (const id of Object.keys(language)) {
-      const { name } = language[id];
+  public async editLanguage(changes: LanguageChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      const item = this.getEmbeddedDocument('Item', id);
+
+      if (item) {
+        await item.update({ name });
+      }
     }
   }
 
@@ -234,33 +211,30 @@ export class ABFActor extends Actor<CharacterData> {
     if (!elanId) throw new Error('elanId missing');
 
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.elan_power.content')
+      content: this.i18n.localize('dialogs.items.elan_power.content')
     });
 
     const power = { _id: nanoid(), name, level: 0 };
 
-    const elan = await this.getOwnedItem(elanId);
+    const elan = this.getInnerItem(ABFItems.ELAN, elanId);
 
-    if (!elan.data.data.powers) {
-      elan.data.data.powers = [power];
-    } else {
-      elan.data.data.powers.push(power);
+    if (elan) {
+      const { data } = elan;
+
+      const powers: any[] = [];
+
+      if (!data.powers) {
+        powers.push(power);
+      } else {
+        powers.push(...[...data.powers, power]);
+      }
+
+      await this.updateInnerItem({
+        type: ABFItems.ELAN,
+        id: elanId,
+        data: { ...elan.data, powers }
+      });
     }
-
-    await elan.update(elan.data);
-  }
-
-  public async removeElanPower(elanId: string, elanPowerId: string): Promise<void> {
-    if (!elanId) throw new Error('elanId missing');
-    if (!elanPowerId) throw new Error('elanPowerId missing');
-
-    const elan = await this.getOwnedItem(elanId);
-
-    elan.data.data.powers = elan.data.data.powers.filter(
-      power => power._id !== elanPowerId
-    );
-
-    await elan.update(elan.data);
   }
 
   public async editElanPower(elanPowers: ElanPowerChanges) {
@@ -269,252 +243,244 @@ export class ABFActor extends Actor<CharacterData> {
 
       if (!elanId) throw new Error('elanId missing');
 
-      const elan = await this.getOwnedItem(elanId);
+      const elan = this.getInnerItem(ABFItems.ELAN, elanId);
 
-      const elanPower = elan.data.data.powers.find(power => power._id === id);
+      if (elan) {
+        const elanPower = elan.data.powers.find(power => power._id === id);
 
-      if (elanPower.name === name && elanPower.level === level) continue;
+        if (elanPower.name === name && elanPower.level === level) continue;
 
-      elanPower.name = name;
-      elanPower.level = level;
+        elanPower.name = name;
+        elanPower.level = level;
 
-      await elan.update(elan.data);
+        this.updateInnerItem({
+          type: ABFItems.ELAN,
+          id,
+          data: { ...elan.data, powers: [...elan.data.powers] }
+        });
+      }
+    }
+  }
+
+  public async removeElanPower(elanId: string, elanPowerId: string): Promise<void> {
+    if (!elanId) throw new Error('elanId missing');
+    if (!elanPowerId) throw new Error('elanPowerId missing');
+
+    const elan = this.getInnerItem(ABFItems.ELAN, elanId);
+
+    if (elan) {
+      this.updateInnerItem({
+        type: ABFItems.ELAN,
+        id: elanId,
+        data: {
+          ...elan.data,
+          powers: elan.data.powers.filter(power => power._id !== elanPowerId)
+        }
+      });
     }
   }
 
   public async addElan(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.elan.content')
+      content: this.i18n.localize('dialogs.items.elan.content')
     });
 
-    const itemData = {
+    this.createInnerItem({
       name,
-      type: Items.ELAN,
-      level: 0,
-      powers: []
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.ELAN,
+      data: {
+        level: 0,
+        powers: []
+      }
+    });
   }
 
-  public editElan(elan: ElanChanges) {
-    for (const id of Object.keys(elan)) {
-      const { name, level } = elan[id];
+  public editElan(changes: ElanChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, level } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      const elan = this.getInnerItem(ABFItems.ELAN, id);
+
+      this.updateInnerItem({
+        type: ABFItems.ELAN,
+        id,
         name,
-        data: {
-          level
-        }
+        data: { ...elan.data, level }
       });
     }
   }
 
   public async addTitle(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.title.content')
+      content: this.i18n.localize('dialogs.items.title.content')
     });
 
-    const itemData = {
+    await this.createInnerItem({
       name,
-      type: Items.TITLE
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.TITLE
+    });
   }
 
-  public editTitles(titles: TitleChanges) {
+  public async editTitles(titles: TitleChanges) {
     for (const id of Object.keys(titles)) {
       const { name } = titles[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateInnerItem({ id, type: ABFItems.TITLE, name });
     }
   }
 
   public async addAdvantage(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.advantage.content')
+      content: this.i18n.localize('dialogs.items.advantage.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.ADVANTAGE
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.ADVANTAGE
+    });
   }
 
-  public editAdvantages(advantages: AdvantageChange) {
+  public async editAdvantages(advantages: AdvantageChange) {
     for (const id of Object.keys(advantages)) {
       const { name } = advantages[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addDisadvantage(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.disadvantage.content')
+      content: this.i18n.localize('dialogs.items.disadvantage.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.DISADVANTAGE
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.DISADVANTAGE
+    });
   }
 
-  public editDisadvantages(disadvantages: DisadvantageChange) {
+  public async editDisadvantages(disadvantages: DisadvantageChange) {
     for (const id of Object.keys(disadvantages)) {
       const { name } = disadvantages[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addContact(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.contact.content')
+      content: this.i18n.localize('dialogs.items.contact.content')
     });
 
-    const itemData = {
+    await this.createInnerItem({
       name,
-      type: Items.CONTACT
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.CONTACT
+    });
   }
 
-  public editContacts(contacts: ContactChange) {
+  public async editContacts(contacts: ContactChange) {
     for (const id of Object.keys(contacts)) {
       const { name, description } = contacts[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      await this.updateInnerItem({
+        id,
+        type: ABFItems.CONTACT,
         name,
-        data: { description }
+        data: { description: { value: description } }
       });
     }
   }
 
   public async addNote(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.note.content')
+      content: this.i18n.localize('dialogs.items.note.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.NOTE
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.NOTE
+    });
   }
 
-  public editNotes(notes: NoteChange) {
+  public async editNotes(notes: NoteChange) {
     for (const id of Object.keys(notes)) {
       const { name } = notes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addPsychicDiscipline(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.psychicDiscipline.content')
+      content: this.i18n.localize('dialogs.items.psychicDiscipline.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.PSYCHIC_DISCIPLINE
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.PSYCHIC_DISCIPLINE
+    });
   }
 
-  public editPsychicDisciplines(changes: PsychicDisciplineChanges) {
+  public async editPsychicDisciplines(changes: PsychicDisciplineChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addMentalPattern(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.mentalPattern.content')
+      content: this.i18n.localize('dialogs.items.mentalPattern.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.MENTAL_PATTERN,
+      type: ABFItems.MENTAL_PATTERN,
       data: {
         bonus: 0,
         penalty: 0
       }
-    };
-
-    await this.createOwnedItem(itemData);
+    });
   }
 
-  public editMentalPatterns(changes: MentalPatternChanges) {
+  public async editMentalPatterns(changes: MentalPatternChanges) {
     for (const id of Object.keys(changes)) {
       const { name, bonus, penalty } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      await this.updateItem({
+        id,
         name,
-        data: {
-          bonus,
-          penalty
-        }
+        data: { bonus: { value: bonus }, penalty: { value: penalty } }
       });
     }
   }
 
   public async addInnatePsychicPower(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.innatePsychicPower.content')
+      content: this.i18n.localize('dialogs.items.innatePsychicPower.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.INNATE_PSYCHIC_POWER,
+      type: ABFItems.INNATE_PSYCHIC_POWER,
       data: {
         effect: '',
         value: 0
       }
-    };
-
-    await this.createOwnedItem(itemData);
+    });
   }
 
-  public editInnatePsychicPowers(changes: InnatePsychicPowerChanges) {
+  public async editInnatePsychicPowers(changes: InnatePsychicPowerChanges) {
     for (const id of Object.keys(changes)) {
       const { name, effect, value } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      await this.updateItem({
+        id,
         name,
         data: {
-          effect,
-          value
+          effect: { value: effect },
+          value: { value }
         }
       });
     }
@@ -522,12 +488,12 @@ export class ABFActor extends Actor<CharacterData> {
 
   public async addPsychicPower(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.psychicPower.content')
+      content: this.i18n.localize('dialogs.items.psychicPower.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.PSYCHIC_POWER,
+      type: ABFItems.PSYCHIC_POWER,
       data: {
         level: { value: 0 },
         effects: new Array(10).fill({ value: '' }),
@@ -535,12 +501,10 @@ export class ABFActor extends Actor<CharacterData> {
         hasMaintenance: { value: false },
         bonus: { value: 0 }
       }
-    };
-
-    await this.createOwnedItem(itemData);
+    });
   }
 
-  public editPsychicPowers(changes: PsychicPowerChanges) {
+  public async editPsychicPowers(changes: PsychicPowerChanges) {
     for (const id of Object.keys(changes)) {
       const {
         name,
@@ -557,15 +521,15 @@ export class ABFActor extends Actor<CharacterData> {
         effects[key] = { value: effectsObject[key] };
       }
 
-      this.updateOwnedItem({
-        _id: id,
+      await this.updateItem({
+        id,
         name,
         data: {
-          level: { value: level },
-          effects,
+          bonus: { value: bonus },
           actionType: { value: actionType },
-          hasMaintenance: { value: hasMaintenance === true },
-          bonus: { value: bonus }
+          effects,
+          hasMaintenance: { value: hasMaintenance },
+          level: { value: level }
         }
       });
     }
@@ -573,112 +537,91 @@ export class ABFActor extends Actor<CharacterData> {
 
   public async addKiSkill(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.kiSkill.content')
+      content: this.i18n.localize('dialogs.items.kiSkill.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.KI_SKILL
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.KI_SKILL
+    });
   }
 
-  public editKiSkills(changes: KiSkillsChanges) {
+  public async editKiSkills(changes: KiSkillsChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addNemesisSkill(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.nemesisSkill.content')
+      content: this.i18n.localize('dialogs.items.nemesisSkill.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.NEMESIS_SKILL
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.NEMESIS_SKILL
+    });
   }
 
-  public editNemesisSkills(changes: NemesisSkillsChanges) {
+  public async editNemesisSkills(changes: NemesisSkillsChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addArsMagnus(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.arsMagnus.content')
+      content: this.i18n.localize('dialogs.items.arsMagnus.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.ARS_MAGNUS
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.ARS_MAGNUS
+    });
   }
 
-  public editArsMagnus(changes: ArsMagnusChanges) {
+  public async editArsMagnus(changes: ArsMagnusChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateItem({ id, name });
     }
   }
 
   public async addMartialArt(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.martialArt.content')
+      content: this.i18n.localize('dialogs.items.martialArt.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.MARTIAL_ART,
+      type: ABFItems.MARTIAL_ART,
       data: {
         grade: { value: '' }
       }
-    };
-
-    await this.createOwnedItem(itemData);
+    });
   }
 
-  public editMartialArts(changes: MartialArtsChanges) {
+  public async editMartialArts(changes: MartialArtsChanges) {
     for (const id of Object.keys(changes)) {
       const { name, grade } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name,
-        data: { grade: { value: grade } }
-      });
+      await this.updateItem({ id, name, data: { grade: { value: grade } } });
     }
   }
 
   public async addCreature(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.creature.content')
+      content: this.i18n.localize('dialogs.items.creature.content')
     });
 
-    const itemData = {
+    await this.createInnerItem({
       name,
-      type: Items.CREATURE,
+      type: ABFItems.CREATURE,
       data: {
         earth: {
           value: false
@@ -696,36 +639,23 @@ export class ABFActor extends Actor<CharacterData> {
           value: false
         }
       }
-    };
-
-    await this.createOwnedItem(itemData);
+    });
   }
 
-  public editCreatures(changes: CreaturesChanges) {
+  public async editCreatures(changes: CreaturesChanges) {
     for (const id of Object.keys(changes)) {
-      const {
-        name, earth, fire, metal, water, wood
-      } = changes[id];
+      const { name, earth, fire, metal, water, wood } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      await this.updateInnerItem({
+        id,
+        type: ABFItems.CREATURE,
         name,
         data: {
-          earth: {
-            value: earth === true
-          },
-          fire: {
-            value: fire === true
-          },
-          metal: {
-            value: metal === true
-          },
-          water: {
-            value: water === true
-          },
-          wood: {
-            value: wood === true
-          }
+          earth: { value: earth },
+          fire: { value: fire },
+          metal: { value: metal },
+          water: { value: water },
+          wood: { value: wood }
         }
       });
     }
@@ -733,36 +663,31 @@ export class ABFActor extends Actor<CharacterData> {
 
   public async addSpecialSkill(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.specialSkill.content')
+      content: this.i18n.localize('dialogs.items.specialSkill.content')
     });
 
-    const itemData = {
+    await this.createInnerItem({
       name,
-      type: Items.SPECIAL_SKILL
-    };
-
-    await this.createOwnedItem(itemData);
+      type: ABFItems.SPECIAL_SKILL
+    });
   }
 
-  public editSpecialSkills(changes: SpecialSkillsChanges) {
+  public async editSpecialSkills(changes: SpecialSkillsChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
-        name
-      });
+      await this.updateInnerItem({ id, type: ABFItems.SPECIAL_SKILL, name });
     }
   }
 
   public async addTechnique(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.technique.content')
+      content: this.i18n.localize('dialogs.items.technique.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
-      type: Items.TECHNIQUE,
+      type: ABFItems.TECHNIQUE,
       data: {
         description: { value: '' },
         level: { value: 0 },
@@ -774,12 +699,10 @@ export class ABFActor extends Actor<CharacterData> {
         power: { value: 0 },
         martialKnowledge: { value: 0 }
       }
-    };
-
-    await this.createOwnedItem(itemData);
+    });
   }
 
-  public editTechniques(changes: TechniquesChanges) {
+  public async editTechniques(changes: TechniquesChanges) {
     for (const id of Object.keys(changes)) {
       const {
         name,
@@ -794,43 +717,115 @@ export class ABFActor extends Actor<CharacterData> {
         strength
       } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      await this.updateItem({
+        id,
         name,
         data: {
-          description: { value: description },
           level: { value: level },
-          strength: { value: strength },
+          constitution: { value: constitution },
+          power: { value: power },
+          willPower: { value: willPower },
           agility: { value: agility },
           dexterity: { value: dexterity },
-          constitution: { value: constitution },
-          willPower: { value: willPower },
-          power: { value: power },
-          martialKnowledge: { value: martialKnowledge }
+          description: { value: description },
+          martialKnowledge: { value: martialKnowledge },
+          strength: { value: strength }
         }
       });
     }
   }
 
+  private async createItem({
+    type,
+    name,
+    data = {}
+  }: {
+    type: ABFItems;
+    name: string;
+    data?: unknown;
+  }) {
+    await this.createEmbeddedDocuments('Item', [{ type, name, data }]);
+  }
+
+  private async createInnerItem({
+    type,
+    name,
+    data = {}
+  }: {
+    type: ABFItems;
+    name: string;
+    data?: unknown;
+  }) {
+    const configuration = ATTACH_CONFIGURATIONS[type];
+
+    const items =
+      getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath) ?? [];
+
+    await this.update({
+      data: getUpdateObjectFromPath(
+        [...items, { _id: nanoid(), type, name, data }],
+        configuration.fieldPath
+      )
+    });
+  }
+
+  private async updateInnerItem({
+    type,
+    id,
+    name,
+    data = {}
+  }: {
+    type: ABFItems;
+    id: string;
+    name?: string;
+    data?: unknown;
+  }) {
+    const configuration = ATTACH_CONFIGURATIONS[type];
+
+    const items = getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath);
+
+    const item = items.find(it => it._id === id);
+
+    if (item) {
+      const hasChanges =
+        (!!name && name !== item.name) ||
+        JSON.stringify(data) !== JSON.stringify(item.data);
+
+      if (hasChanges) {
+        if (name) {
+          item.name = name;
+        }
+
+        if (data) {
+          item.data = data;
+        }
+
+        await this.update({
+          data: getUpdateObjectFromPath(items, configuration.fieldPath)
+        });
+      }
+    }
+  }
+
   public async addCombatSpecialSkill(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.combatSpecialSkills.content')
+      content: this.i18n.localize('dialogs.items.combatSpecialSkills.content')
     });
 
     const itemData = {
       name,
-      type: Items.COMBAT_SPECIAL_SKILL
+      type: ABFItems.COMBAT_SPECIAL_SKILL
     };
 
-    await this.createOwnedItem(itemData);
+    await this.createItem(itemData);
   }
 
   public editCombatSpecialSkills(changes: CombatSpecialSkillChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      this.updateItem({
+        id,
         name
       });
     }
@@ -838,23 +833,23 @@ export class ABFActor extends Actor<CharacterData> {
 
   public async addCombatTable(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.combatTable.content')
+      content: this.i18n.localize('dialogs.items.combatTable.content')
     });
 
     const itemData = {
       name,
-      type: Items.COMBAT_TABLE
+      type: ABFItems.COMBAT_TABLE
     };
 
-    await this.createOwnedItem(itemData);
+    await this.createItem(itemData);
   }
 
   public editCombatTables(changes: CombatTableChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      this.updateItem({
+        id,
         name
       });
     }
@@ -862,26 +857,26 @@ export class ABFActor extends Actor<CharacterData> {
 
   public async addAmmo(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.ammo.content')
+      content: this.i18n.localize('dialogs.items.ammo.content')
     });
 
     const itemData = {
       name,
-      type: Items.AMMO,
+      type: ABFItems.AMMO,
       data: {
         amount: { value: 0 }
       }
     };
 
-    await this.createOwnedItem(itemData);
+    await this.createItem(itemData);
   }
 
   public editAmmo(changes: AmmoChanges) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      this.updateItem({
+        id,
         name,
         data: {
           amount: { value: data.amount }
@@ -892,12 +887,12 @@ export class ABFActor extends Actor<CharacterData> {
 
   public async addWeapon(): Promise<void> {
     const name = await openDialog<string>({
-      content: game.i18n.localize('dialogs.items.weapons.content')
+      content: this.i18n.localize('dialogs.items.weapons.content')
     });
 
     const itemData = {
       name,
-      type: Items.WEAPON,
+      type: ABFItems.WEAPON,
       data: {
         special: { value: 0 },
         integrity: { value: 0 },
@@ -913,15 +908,15 @@ export class ABFActor extends Actor<CharacterData> {
       }
     };
 
-    await this.createOwnedItem(itemData);
+    await this.createItem(itemData);
   }
 
   public editWeapons(changes: WeaponChanges) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateOwnedItem({
-        _id: id,
+      this.updateItem({
+        id,
         name,
         data: {
           special: { value: data.special },
@@ -938,5 +933,44 @@ export class ABFActor extends Actor<CharacterData> {
         }
       });
     }
+  }
+
+  private async updateItem({
+    id,
+    name,
+    data = {}
+  }: {
+    id: string;
+    name?: string;
+    data?: unknown;
+  }) {
+    const item = this.getItem(id);
+
+    if (item) {
+      let updateObject: Record<string, unknown> = { data };
+
+      if (name) {
+        updateObject = { ...updateObject, name };
+      }
+
+      if (
+        (!!name && name !== item.name) ||
+        JSON.stringify(data) !== JSON.stringify(item.data.data)
+      ) {
+        await item.update(updateObject);
+      }
+    }
+  }
+
+  private getItem(itemId: string) {
+    return this.getEmbeddedDocument('Item', itemId);
+  }
+
+  private getInnerItem(type: ABFItems, itemId: string) {
+    const configuration = ATTACH_CONFIGURATIONS[type];
+
+    return getFieldValueFromPath<any>(this.data.data, configuration.fieldPath).find(
+      item => item._id === itemId
+    );
   }
 }

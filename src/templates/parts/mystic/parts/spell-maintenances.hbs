@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="spell-maintenances"
   }}
-    {{#each data.mystic.spellMaintenances}}
+    {{#each data.data.mystic.spellMaintenances}}
       <div data-spell-maintenance-id='{{this._id}}' class='spell-maintenance-row'>
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"

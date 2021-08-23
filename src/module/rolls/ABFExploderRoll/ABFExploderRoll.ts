@@ -9,19 +9,29 @@ export default class ABFExploderRoll extends ABFRoll {
   }
 
   public evaluate(): ABFFoundryRoll {
+    let lastOpenRange = this.DEFAULT_OPEN_RANGE;
+
     if (this.canExplode) {
-      this.explodeDice(this.DEFAULT_OPEN_RANGE);
+      lastOpenRange = this.explodeDice(this.DEFAULT_OPEN_RANGE);
     }
+
+    this.firstDice.results = this.firstDice.results.map(res => ({
+      ...res,
+      success: res.result >= lastOpenRange,
+      failure: res.result <= this.DEFAULT_FUMBLE_RANGE
+    }));
 
     return this.foundryRoll;
   }
 
-  private explodeDice(openRange: number) {
-    const newRoll = new ABFFoundryRoll(`1d100`).evaluate();
+  private explodeDice(openRange: number): number {
+    const newRoll = new ABFFoundryRoll('1d100').evaluate();
     const newResult = this.addRoll(newRoll);
 
     if (newResult >= Math.min(openRange, 100)) {
       this.explodeDice(openRange + 1);
     }
+
+    return openRange;
   }
 }

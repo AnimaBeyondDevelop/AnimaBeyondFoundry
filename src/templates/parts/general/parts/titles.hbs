@@ -8,7 +8,7 @@
     <h3 class='group-header-title'>{{localize 'anima.ui.titleSection.title'}}</h3>
   </div>
   <div id='title-context-menu-container' class='group-body'>
-    {{#each data.general.titles}}
+    {{#each data.data.general.titles}}
       <div data-title-id='{{this._id}}' class='title-row'>
         <input
           name='data.dynamic.titles.{{this._id}}.name'

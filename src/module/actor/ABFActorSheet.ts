@@ -1,12 +1,27 @@
 import { openModDialog } from '../utils/openDialog';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { ABFActor } from './ABFActor';
-import { prepareSheet } from './utils/prepareSheet/prepareSheet';
 import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
 import { ItemChanges } from '../types/ItemChanges';
 import { unflat } from '../../utils/unflat';
+import {
+  ATTACH_CONFIGURATIONS,
+  AttachConfiguration
+} from './utils/prepareSheet/prepareItems/constants';
+import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
+import { prepareSheet } from './utils/prepareSheet/prepareSheet';
+import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
+import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
 
-export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>> {
+export default class ABFActorSheet extends ActorSheet {
+  i18n: Localization;
+
+  constructor(object: ABFActor) {
+    super(object, {});
+
+    this.i18n = (game as Game).i18n;
+  }
+
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
@@ -27,8 +42,8 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     };
   }
 
-  getData(): ActorSheet.Data<ABFActor> {
-    const data = super.getData() as ActorSheet.Data<ABFActor>;
+  getData() {
+    const data = super.getData() as ActorSheet.Data;
 
     if (this.actor.data.type === 'character') {
       return prepareSheet(data);
@@ -40,7 +55,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
   protected async _updateObject(
     event: Event,
     formData: Record<string, unknown>
-  ): Promise<ABFActor> {
+  ): Promise<ABFActor | undefined> {
     const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
 
     await this.updateItems(itemChanges);
@@ -55,7 +70,9 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     if (!this.options.editable) return;
 
     // Rollable abilities.
-    html.find('.rollable').click(this._onRoll.bind(this));
+    html.find('.rollable').click(e => {
+      this._onRoll(e);
+    });
 
     html.find('[data-on-click="add-secondary-skill"]').click(() => {
       this.actor.addSecondarySkillSlot();
@@ -63,6 +80,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Free Access Spells
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.FREE_ACCESS_SPELL],
       containerSelector: '#free-access-spells-context-menu-container',
       rowSelector: '.free-access-spell-row',
       rowIdData: 'freeAccessSpellId'
@@ -75,6 +93,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Spell Maintenances
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.SPELL_MAINTENANCE],
       containerSelector: '#spell-maintenances-context-menu-container',
       rowSelector: '.spell-maintenance-row',
       rowIdData: 'spellMaintenanceId'
@@ -87,6 +106,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Selected Spells
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.SELECTED_SPELL],
       containerSelector: '#selected-spells-context-menu-container',
       rowSelector: '.selected-spell-row',
       rowIdData: 'selectedSpellId'
@@ -99,6 +119,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Summons
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.SUMMON],
       containerSelector: '#summons-context-menu-container',
       rowSelector: '.summon-row',
       rowIdData: 'summonId'
@@ -111,6 +132,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Metamagic
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.METAMAGIC],
       containerSelector: '#metamagics-context-menu-container',
       rowSelector: '.metamagic-row',
       rowIdData: 'metamagicId'
@@ -123,6 +145,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Level
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.LEVEL],
       containerSelector: '#level-context-menu-container',
       rowSelector: '.level-row',
       rowIdData: 'levelId'
@@ -135,6 +158,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Language
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.LANGUAGE],
       containerSelector: '#language-context-menu-container',
       rowSelector: '.language-row',
       rowIdData: 'languageId'
@@ -147,12 +171,13 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Elan
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.ELAN],
       containerSelector: '#elan-context-menu-container',
       rowSelector: '.elan-row .base',
       rowIdData: 'elanId',
       otherItems: [
         {
-          name: game.i18n.localize('contextualMenu.elan.options.addPower'),
+          name: this.i18n.localize('contextualMenu.elan.options.addPower'),
           icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
           callback: target => {
             const { elanId } = target[0].dataset;
@@ -169,7 +194,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       containerSelector: '#elan-context-menu-container',
       rowSelector: '.elan-row .powers',
       rowIdData: 'elanPowerId',
-      deleteRowMessage: game.i18n.localize('contextualMenu.elan.options.deletePower'),
+      deleteRowMessage: this.i18n.localize('contextualMenu.elan.options.deletePower'),
       customCallbackFn: target => {
         const { elanId } = target[0].dataset;
 
@@ -196,6 +221,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Titles
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.TITLE],
       containerSelector: '#title-context-menu-container',
       rowSelector: '.title-row',
       rowIdData: 'titleId'
@@ -208,6 +234,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Advantages
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.ADVANTAGE],
       containerSelector: '#advantage-context-menu-container',
       rowSelector: '.advantage-row',
       rowIdData: 'advantageId'
@@ -220,6 +247,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Disadvantages
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.DISADVANTAGE],
       containerSelector: '#disadvantage-context-menu-container',
       rowSelector: '.disadvantage-row',
       rowIdData: 'disadvantageId'
@@ -232,6 +260,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Contacts
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.CONTACT],
       containerSelector: '#contact-context-menu-container',
       rowSelector: '.contact-row',
       rowIdData: 'contactId'
@@ -244,6 +273,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Notes
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.NOTE],
       containerSelector: '#note-context-menu-container',
       rowSelector: '.note-row',
       rowIdData: 'noteId'
@@ -256,6 +286,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Psychic Disciplines
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.PSYCHIC_DISCIPLINE],
       containerSelector: '#psychic-disciplines-context-menu-container',
       rowSelector: '.psychic-discipline-row',
       rowIdData: 'psychicDisciplineId'
@@ -268,6 +299,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Mental Patterns
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.MENTAL_PATTERN],
       containerSelector: '#mental-patterns-context-menu-container',
       rowSelector: '.mental-pattern-row',
       rowIdData: 'mentalPatternId'
@@ -280,6 +312,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Innate Psychic Powers
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.INNATE_PSYCHIC_POWER],
       containerSelector: '#innate-psychic-powers-context-menu-container',
       rowSelector: '.innate-psychic-power-row',
       rowIdData: 'innatePsychicPowerId'
@@ -292,6 +325,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Psychic Powers
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.PSYCHIC_POWER],
       containerSelector: '#psychic-powers-context-menu-container',
       rowSelector: '.psychic-power-row',
       rowIdData: 'psychicPowerId'
@@ -304,6 +338,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Ki Skills
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.KI_SKILL],
       containerSelector: '#ki-skills-context-menu-container',
       rowSelector: '.ki-skill-row',
       rowIdData: 'kiSkillId'
@@ -316,6 +351,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Nemesis Skills
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.NEMESIS_SKILL],
       containerSelector: '#nemesis-skills-context-menu-container',
       rowSelector: '.nemesis-skill-row',
       rowIdData: 'nemesisSkillId'
@@ -328,6 +364,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Ars Magnus
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.ARS_MAGNUS],
       containerSelector: '#ars-magnus-context-menu-container',
       rowSelector: '.ars-magnus-row',
       rowIdData: 'arsMagnusId'
@@ -340,6 +377,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Martial Arts
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.MARTIAL_ART],
       containerSelector: '#martial-arts-context-menu-container',
       rowSelector: '.martial-art-row',
       rowIdData: 'martialArtId'
@@ -352,6 +390,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Creatures
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.CREATURE],
       containerSelector: '#creatures-context-menu-container',
       rowSelector: '.creature-row',
       rowIdData: 'creatureId'
@@ -364,6 +403,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Special Skills
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.SPECIAL_SKILL],
       containerSelector: '#special-skills-context-menu-container',
       rowSelector: '.special-skill-row',
       rowIdData: 'specialSkillId'
@@ -376,6 +416,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
 
     // Techniques
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.TECHNIQUE],
       containerSelector: '#techniques-context-menu-container',
       rowSelector: '.technique-row',
       rowIdData: 'techniqueId'
@@ -437,7 +478,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
-        this.actor.deleteOwnedItem(id);
+        WorldCollection.instance.delete(id);
       } else {
         console.warn(
           'Trying to delete a dynamic item but data-item-id was not set to the button. Cant delete the item.'
@@ -455,7 +496,7 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
       const label = dataset.label ? `Rolling ${dataset.label}` : '';
       const mod = await openModDialog();
       const formula = `${dataset.roll}+ ${mod}`;
-      const roll = new ABFFoundryRoll(formula, this.actor.data.data);
+      const roll = new ABFFoundryRoll(formula, this.actor.data.data as any);
 
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -470,39 +511,43 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     const unflattedChanges: ItemChanges = unflat(itemChanges);
 
     if (unflattedChanges.data.dynamic.skill) {
-      this.actor.editSecondarySkills(unflattedChanges.data.dynamic.skill);
+      await this.actor.editSecondarySkills(unflattedChanges.data.dynamic.skill);
     }
 
     if (unflattedChanges.data.dynamic.freeAccessSpells) {
-      this.actor.editFreeAccessSpells(unflattedChanges.data.dynamic.freeAccessSpells);
+      await this.actor.editFreeAccessSpells(
+        unflattedChanges.data.dynamic.freeAccessSpells
+      );
     }
 
     if (unflattedChanges.data.dynamic.spellMaintenances) {
-      this.actor.editSpellMaintenance(unflattedChanges.data.dynamic.spellMaintenances);
+      await this.actor.editSpellMaintenance(
+        unflattedChanges.data.dynamic.spellMaintenances
+      );
     }
 
     if (unflattedChanges.data.dynamic.selectedSpells) {
-      this.actor.editSelectedSpell(unflattedChanges.data.dynamic.selectedSpells);
+      await this.actor.editSelectedSpell(unflattedChanges.data.dynamic.selectedSpells);
     }
 
     if (unflattedChanges.data.dynamic.summons) {
-      this.actor.editSummon(unflattedChanges.data.dynamic.summons);
+      await this.actor.editSummon(unflattedChanges.data.dynamic.summons);
     }
 
     if (unflattedChanges.data.dynamic.metamagics) {
-      this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagics);
+      await this.actor.editMetamagic(unflattedChanges.data.dynamic.metamagics);
     }
 
     if (unflattedChanges.data.dynamic.levels) {
-      this.actor.editLevel(unflattedChanges.data.dynamic.levels);
+      await this.actor.editLevel(unflattedChanges.data.dynamic.levels);
     }
 
     if (unflattedChanges.data.dynamic.other_languages) {
-      this.actor.editLanguage(unflattedChanges.data.dynamic.other_languages);
+      await this.actor.editLanguage(unflattedChanges.data.dynamic.other_languages);
     }
 
     if (unflattedChanges.data.dynamic.elan) {
-      this.actor.editElan(unflattedChanges.data.dynamic.elan);
+      await this.actor.editElan(unflattedChanges.data.dynamic.elan);
     }
 
     if (unflattedChanges.data.dynamic.elan_power) {
@@ -510,69 +555,71 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
     }
 
     if (unflattedChanges.data.dynamic.titles) {
-      this.actor.editTitles(unflattedChanges.data.dynamic.titles);
+      await this.actor.editTitles(unflattedChanges.data.dynamic.titles);
     }
 
     if (unflattedChanges.data.dynamic.advantages) {
-      this.actor.editAdvantages(unflattedChanges.data.dynamic.advantages);
+      await this.actor.editAdvantages(unflattedChanges.data.dynamic.advantages);
     }
 
     if (unflattedChanges.data.dynamic.disadvantages) {
-      this.actor.editDisadvantages(unflattedChanges.data.dynamic.disadvantages);
+      await this.actor.editDisadvantages(unflattedChanges.data.dynamic.disadvantages);
     }
 
     if (unflattedChanges.data.dynamic.contacts) {
-      this.actor.editContacts(unflattedChanges.data.dynamic.contacts);
+      await this.actor.editContacts(unflattedChanges.data.dynamic.contacts);
     }
 
     if (unflattedChanges.data.dynamic.notes) {
-      this.actor.editNotes(unflattedChanges.data.dynamic.notes);
+      await this.actor.editNotes(unflattedChanges.data.dynamic.notes);
     }
 
     if (unflattedChanges.data.dynamic.psychicDisciplines) {
-      this.actor.editPsychicDisciplines(unflattedChanges.data.dynamic.psychicDisciplines);
+      await this.actor.editPsychicDisciplines(
+        unflattedChanges.data.dynamic.psychicDisciplines
+      );
     }
 
     if (unflattedChanges.data.dynamic.mentalPatterns) {
-      this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
+      await this.actor.editMentalPatterns(unflattedChanges.data.dynamic.mentalPatterns);
     }
 
     if (unflattedChanges.data.dynamic.innatePsychicPowers) {
-      this.actor.editInnatePsychicPowers(
+      await this.actor.editInnatePsychicPowers(
         unflattedChanges.data.dynamic.innatePsychicPowers
       );
     }
 
     if (unflattedChanges.data.dynamic.psychicPowers) {
-      this.actor.editPsychicPowers(unflattedChanges.data.dynamic.psychicPowers);
+      await this.actor.editPsychicPowers(unflattedChanges.data.dynamic.psychicPowers);
     }
 
     if (unflattedChanges.data.dynamic.kiSkills) {
-      this.actor.editKiSkills(unflattedChanges.data.dynamic.kiSkills);
+      await this.actor.editKiSkills(unflattedChanges.data.dynamic.kiSkills);
     }
 
     if (unflattedChanges.data.dynamic.nemesisSkills) {
-      this.actor.editNemesisSkills(unflattedChanges.data.dynamic.nemesisSkills);
+      await this.actor.editNemesisSkills(unflattedChanges.data.dynamic.nemesisSkills);
     }
 
     if (unflattedChanges.data.dynamic.arsMagnus) {
-      this.actor.editArsMagnus(unflattedChanges.data.dynamic.arsMagnus);
+      await this.actor.editArsMagnus(unflattedChanges.data.dynamic.arsMagnus);
     }
 
     if (unflattedChanges.data.dynamic.martialArts) {
-      this.actor.editMartialArts(unflattedChanges.data.dynamic.martialArts);
+      await this.actor.editMartialArts(unflattedChanges.data.dynamic.martialArts);
     }
 
     if (unflattedChanges.data.dynamic.creatures) {
-      this.actor.editCreatures(unflattedChanges.data.dynamic.creatures);
+      await this.actor.editCreatures(unflattedChanges.data.dynamic.creatures);
     }
 
     if (unflattedChanges.data.dynamic.specialSkills) {
-      this.actor.editSpecialSkills(unflattedChanges.data.dynamic.specialSkills);
+      await this.actor.editSpecialSkills(unflattedChanges.data.dynamic.specialSkills);
     }
 
     if (unflattedChanges.data.dynamic.techniques) {
-      this.actor.editTechniques(unflattedChanges.data.dynamic.techniques);
+      await this.actor.editTechniques(unflattedChanges.data.dynamic.techniques);
     }
 
     if (unflattedChanges.data.dynamic.combatSpecialSkills) {
@@ -595,13 +642,15 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
   }
 
   private buildCommonContextualMenu = ({
+    configuration,
     containerSelector,
     rowSelector,
     rowIdData,
-    deleteRowMessage = game.i18n.localize('contextualMenu.common.options.delete'),
+    deleteRowMessage = this.i18n.localize('contextualMenu.common.options.delete'),
     customCallbackFn,
     otherItems = []
   }: {
+    configuration?: AttachConfiguration;
     containerSelector: string;
     rowSelector: string;
     rowIdData: string;
@@ -625,7 +674,24 @@ export default class ABFActorSheet extends ActorSheet<ActorSheet.Data<ABFActor>>
               );
             }
 
-            this.actor.deleteOwnedItem(id);
+            if (configuration) {
+              let items = getFieldValueFromPath<any[]>(
+                this.actor.data.data,
+                configuration.fieldPath
+              );
+
+              items = items.filter(item => item._id !== id);
+
+              const dataToUpdate: any = {
+                data: getUpdateObjectFromPath(items, configuration.fieldPath)
+              };
+
+              if (this.actor.getEmbeddedDocument('Item', id)) {
+                this.actor.deleteEmbeddedDocuments('Item', [id]);
+              }
+
+              this.actor.update(dataToUpdate);
+            }
           }
         }
       },

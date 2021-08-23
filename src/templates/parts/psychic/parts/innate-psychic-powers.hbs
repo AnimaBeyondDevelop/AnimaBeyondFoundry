@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="innate-psychic-powers"
   }}
-    {{#each data.psychic.innatePsychicPowers}}
+    {{#each data.data.psychic.innatePsychicPowers}}
       <div data-innate-psychic-power-id='{{this._id}}' class='innate-psychic-power-row'>
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
@@ -28,7 +28,7 @@
           hideTitle=(is "gt" @index 0)
           inputType="text"
           inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".effect")
-          inputValue=this.data.effect
+          inputValue=this.data.effect.value
         }}
 
         {{>
@@ -37,7 +37,7 @@
           title=(localize "anima.ui.psychic.innatePsychicPower.value.title")
           hideTitle=(is "gt" @index 0)
           inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".value")
-          inputValue=this.data.value
+          inputValue=this.data.value.value
         }}
 
       </div>
@@ -49,7 +49,7 @@
       class="amount"
       title=(localize "anima.ui.psychic.innatePsychicPower.amount.title")
       inputName="data.psychic.innatePsychicPower.amount.value"
-      inputValue=data.psychic.innatePsychicPower.amount.value
+      inputValue=data.data.psychic.innatePsychicPower.amount.value
     }}
   {{/"systems/animabf/templates/parts/common/group-footer.hbs"}}
 {{/"systems/animabf/templates/parts/common/group.hbs"}}

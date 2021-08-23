@@ -2,7 +2,7 @@
 export type SkillChange = {
   [key: string]: {
     data: {
-      value: number;
+      level: { value: number };
     };
   };
 };

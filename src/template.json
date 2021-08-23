@@ -21,7 +21,7 @@
         "description": { "value": "" },
         "disadvantages": [],
         "elan": [],
-        "experience": { "current": 0, "next": 0 },
+        "experience": { "current": { "value": 0 }, "next": { "value": 0 } },
         "fatigue": { "value": 0, "max": 0 },
         "languages": { "base": { "value": "" }, "others": [] },
         "levels": [],
@@ -123,7 +123,7 @@
           "tailoring": { "value": 0 },
           "constructMarionettes": { "value": 0 }
         },
-        "special": { "special": { "value": 0 } }
+        "others": []
       },
       "combat": {
         "attack": { "value": 0 },
@@ -258,19 +258,11 @@
   },
   "Item": {
     "types": [
-      "skill",
       "freeAccessSpell",
-      "spellMaintenance",
-      "selectedSpell",
       "metamagic",
-      "summon",
-      "level",
       "language",
-      "elan",
-      "title",
       "advantage",
       "disadvantage",
-      "contact",
       "note",
       "psychicDiscipline",
       "mentalPattern",
@@ -280,8 +272,6 @@
       "nemesisSkill",
       "arsMagnus",
       "martialArt",
-      "creature",
-      "specialSkill",
       "technique",
       "combatSpecialSkill",
       "combatTable",
@@ -289,14 +279,7 @@
       "weapon"
     ],
     "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
-    "skill": { "value": 0 },
-    "spellMaintenance": { "cost": { "value": 0 } },
-    "selectedSpell": { "cost": { "value": 0 } },
     "metamagic": { "grade": { "value": 0 } },
-    "summon": { "cost": { "value": 0 } },
-    "level": { "level": 0 },
-    "elan": { "level": 0, "powers": [] },
-    "contact": { "description": "" },
     "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
     "innatePsychicPower": { "effect": { "value": "" }, "value": { "value": 0 } },
     "psychicPower": {
@@ -318,13 +301,6 @@
       ]
     },
     "martialArt": { "grade": { "value": "" } },
-    "creature": {
-      "fire": { "value": "" },
-      "water": { "value": "" },
-      "earth": { "value": "" },
-      "wood": { "value": "" },
-      "metal": { "value": "" }
-    },
     "technique": {
       "description": { "value": "" },
       "strength": { "value": 0 },

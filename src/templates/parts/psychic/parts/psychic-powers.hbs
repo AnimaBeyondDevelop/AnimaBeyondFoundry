@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="psychic-powers"
   }}
-    {{#each data.psychic.psychicPowers as |power|}}
+    {{#each data.data.psychic.psychicPowers as |power|}}
       <div data-psychic-power-id='{{power._id}}' class='psychic-power-row'>
         {{#> "systems/animabf/templates/parts/common/group.hbs"
           class="psychic-power"
