@@ -735,89 +735,15 @@ export class ABFActor extends Actor {
     }
   }
 
-  private async createItem({
-    type,
-    name,
-    data = {}
-  }: {
-    type: ABFItems;
-    name: string;
-    data?: unknown;
-  }) {
-    await this.createEmbeddedDocuments('Item', [{ type, name, data }]);
-  }
-
-  private async createInnerItem({
-    type,
-    name,
-    data = {}
-  }: {
-    type: ABFItems;
-    name: string;
-    data?: unknown;
-  }) {
-    const configuration = ATTACH_CONFIGURATIONS[type];
-
-    const items =
-      getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath) ?? [];
-
-    await this.update({
-      data: getUpdateObjectFromPath(
-        [...items, { _id: nanoid(), type, name, data }],
-        configuration.fieldPath
-      )
-    });
-  }
-
-  private async updateInnerItem({
-    type,
-    id,
-    name,
-    data = {}
-  }: {
-    type: ABFItems;
-    id: string;
-    name?: string;
-    data?: unknown;
-  }) {
-    const configuration = ATTACH_CONFIGURATIONS[type];
-
-    const items = getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath);
-
-    const item = items.find(it => it._id === id);
-
-    if (item) {
-      const hasChanges =
-        (!!name && name !== item.name) ||
-        JSON.stringify(data) !== JSON.stringify(item.data);
-
-      if (hasChanges) {
-        if (name) {
-          item.name = name;
-        }
-
-        if (data) {
-          item.data = data;
-        }
-
-        await this.update({
-          data: getUpdateObjectFromPath(items, configuration.fieldPath)
-        });
-      }
-    }
-  }
-
   public async addCombatSpecialSkill(): Promise<void> {
     const name = await openDialog<string>({
       content: this.i18n.localize('dialogs.items.combatSpecialSkills.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
       type: ABFItems.COMBAT_SPECIAL_SKILL
-    };
-
-    await this.createItem(itemData);
+    });
   }
 
   public editCombatSpecialSkills(changes: CombatSpecialSkillChanges) {
@@ -935,6 +861,40 @@ export class ABFActor extends Actor {
     }
   }
 
+  private async createItem({
+    type,
+    name,
+    data = {}
+  }: {
+    type: ABFItems;
+    name: string;
+    data?: unknown;
+  }) {
+    await this.createEmbeddedDocuments('Item', [{ type, name, data }]);
+  }
+
+  private async createInnerItem({
+    type,
+    name,
+    data = {}
+  }: {
+    type: ABFItems;
+    name: string;
+    data?: unknown;
+  }) {
+    const configuration = ATTACH_CONFIGURATIONS[type];
+
+    const items =
+      getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath) ?? [];
+
+    await this.update({
+      data: getUpdateObjectFromPath(
+        [...items, { _id: nanoid(), type, name, data }],
+        configuration.fieldPath
+      )
+    });
+  }
+
   private async updateItem({
     id,
     name,
@@ -958,6 +918,44 @@ export class ABFActor extends Actor {
         JSON.stringify(data) !== JSON.stringify(item.data.data)
       ) {
         await item.update(updateObject);
+      }
+    }
+  }
+
+  private async updateInnerItem({
+    type,
+    id,
+    name,
+    data = {}
+  }: {
+    type: ABFItems;
+    id: string;
+    name?: string;
+    data?: unknown;
+  }) {
+    const configuration = ATTACH_CONFIGURATIONS[type];
+
+    const items = getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath);
+
+    const item = items.find(it => it._id === id);
+
+    if (item) {
+      const hasChanges =
+        (!!name && name !== item.name) ||
+        JSON.stringify(data) !== JSON.stringify(item.data);
+
+      if (hasChanges) {
+        if (name) {
+          item.name = name;
+        }
+
+        if (data) {
+          item.data = data;
+        }
+
+        await this.update({
+          data: getUpdateObjectFromPath(items, configuration.fieldPath)
+        });
       }
     }
   }

@@ -353,7 +353,7 @@ export type ABFActorDataSourceData = {
         };
       };
     };
-    specialSkills: [];
+    combatSpecialSkills: [];
     combatTables: [];
     ammo: [];
     weapons: [];

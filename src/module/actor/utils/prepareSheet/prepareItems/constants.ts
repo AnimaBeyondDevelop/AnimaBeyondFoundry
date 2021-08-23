@@ -113,7 +113,7 @@ export const ATTACH_CONFIGURATIONS: {
     fieldPath: ['domine', 'techniques']
   },
   [ABFItems.COMBAT_SPECIAL_SKILL]: {
-    fieldPath: ['combat', 'specialSkills']
+    fieldPath: ['combat', 'combatSpecialSkills']
   },
   [ABFItems.COMBAT_TABLE]: {
     fieldPath: ['combat', 'combatTables']

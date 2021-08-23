@@ -142,7 +142,7 @@
             "energy": { "value": 0 }
           }
         },
-        "specialSkills": [],
+        "combatSpecialSkills": [],
         "combatTables": [],
         "ammo": [],
         "weapons": []

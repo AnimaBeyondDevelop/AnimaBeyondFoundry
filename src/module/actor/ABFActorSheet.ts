@@ -427,8 +427,9 @@ export default class ABFActorSheet extends ActorSheet {
     });
     // Techniques
 
-    // CombarSpecialSkills
+    // Combat Special Skills
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.COMBAT_SPECIAL_SKILL],
       containerSelector: '#combat-special-skill-context-menu-container',
       rowSelector: '.combat-special-skill-row',
       rowIdData: 'combatSpecialSkillId'
@@ -437,10 +438,11 @@ export default class ABFActorSheet extends ActorSheet {
     html.find('[data-on-click="add-combat-special-skill"]').click(() => {
       this.actor.addCombatSpecialSkill();
     });
-    // CombatSpecialskills
+    // Combat Special Skills
 
-    // CombatTables
+    // Combat Tables
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.COMBAT_TABLE],
       containerSelector: '#combat-table-context-menu-container',
       rowSelector: '.combat-table-skill-row',
       rowIdData: 'combatTableId'
@@ -449,10 +451,11 @@ export default class ABFActorSheet extends ActorSheet {
     html.find('[data-on-click="add-combat-table"]').click(() => {
       this.actor.addCombatTable();
     });
-    // combatTables
+    // Combat Tables
 
     // Ammo
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.AMMO],
       containerSelector: '#ammo-context-menu-container',
       rowSelector: '.ammo-row',
       rowIdData: 'ammoId'
@@ -465,6 +468,7 @@ export default class ABFActorSheet extends ActorSheet {
 
     // Weapon
     this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.WEAPON],
       containerSelector: '#weapon-context-menu-container',
       rowSelector: '.weapon-row',
       rowIdData: 'weaponId'
@@ -663,6 +667,12 @@ export default class ABFActorSheet extends ActorSheet {
         name: deleteRowMessage,
         icon: '<i class="fas fa-trash fa-fw"></i>',
         callback: target => {
+          if (!customCallbackFn && !configuration) {
+            console.warn(
+              `buildCommonContextualMenu: no custom callback and configuration set, could not delete the item: ${rowIdData}`
+            );
+          }
+
           if (customCallbackFn) {
             customCallbackFn(target);
           } else {
@@ -675,22 +685,22 @@ export default class ABFActorSheet extends ActorSheet {
             }
 
             if (configuration) {
-              let items = getFieldValueFromPath<any[]>(
-                this.actor.data.data,
-                configuration.fieldPath
-              );
-
-              items = items.filter(item => item._id !== id);
-
-              const dataToUpdate: any = {
-                data: getUpdateObjectFromPath(items, configuration.fieldPath)
-              };
-
               if (this.actor.getEmbeddedDocument('Item', id)) {
                 this.actor.deleteEmbeddedDocuments('Item', [id]);
-              }
+              } else {
+                let items = getFieldValueFromPath<any[]>(
+                  this.actor.data.data,
+                  configuration.fieldPath
+                );
 
-              this.actor.update(dataToUpdate);
+                items = items.filter(item => item._id !== id);
+
+                const dataToUpdate: any = {
+                  data: getUpdateObjectFromPath(items, configuration.fieldPath)
+                };
+
+                this.actor.update(dataToUpdate);
+              }
             }
           }
         }
