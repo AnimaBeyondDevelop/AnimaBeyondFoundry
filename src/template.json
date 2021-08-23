@@ -273,9 +273,7 @@
       "arsMagnus",
       "martialArt",
       "technique",
-      "combatSpecialSkill",
       "combatTable",
-      "ammo",
       "weapon"
     ],
     "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
@@ -311,7 +309,6 @@
       "power": { "value": 0 },
       "martialKnowledge": { "value": 0 }
     },
-    "ammo": { "amount": { "value": 0 } },
     "weapon": {
       "special": { "value": 0 },
       "integrity": { "value": 0 },

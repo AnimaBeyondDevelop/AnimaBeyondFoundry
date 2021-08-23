@@ -740,7 +740,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.combatSpecialSkills.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.COMBAT_SPECIAL_SKILL
     });
@@ -750,8 +750,9 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateItem({
+      this.updateInnerItem({
         id,
+        type: ABFItems.COMBAT_SPECIAL_SKILL,
         name
       });
     }
@@ -762,12 +763,10 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.combatTable.content')
     });
 
-    const itemData = {
+    await this.createItem({
       name,
       type: ABFItems.COMBAT_TABLE
-    };
-
-    await this.createItem(itemData);
+    });
   }
 
   public editCombatTables(changes: CombatTableChanges) {
@@ -786,23 +785,22 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.ammo.content')
     });
 
-    const itemData = {
+    await this.createInnerItem({
       name,
       type: ABFItems.AMMO,
       data: {
         amount: { value: 0 }
       }
-    };
-
-    await this.createItem(itemData);
+    });
   }
 
   public editAmmo(changes: AmmoChanges) {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      this.updateItem({
+      this.updateInnerItem({
         id,
+        type: ABFItems.AMMO,
         name,
         data: {
           amount: { value: data.amount }

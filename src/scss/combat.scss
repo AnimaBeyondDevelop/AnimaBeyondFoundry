@@ -1,6 +1,8 @@
 @import 'variable.scss';
 
 .combat {
+  margin-top: 0.75rem;
+
   .first-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
