@@ -20,8 +20,8 @@ describe('ABFRoll', () => {
 
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBe(2);
-    expect(abfRollProxy.getRoll().results[0]).toBe(90);
+    expect(abfRollProxy.firstDice.results.length).toBe(2);
+    expect(abfRollProxy.firstDice.results[0].result).toBe(90);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90);
   });
 
@@ -34,8 +34,8 @@ describe('ABFRoll', () => {
 
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBe(1);
-    expect(abfRollProxy.getRoll().results[0]).toBe(89);
+    expect(abfRollProxy.firstDice.results.length).toBe(1);
+    expect(abfRollProxy.firstDice.results[0].result).toBe(89);
     expect(abfRollProxy.getRoll().total).toBe(89);
   });
 
@@ -49,37 +49,37 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(91);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(1);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(1);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90 + 91);
 
     abfRollTesting.setNextValue(92);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(2);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(2);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90 + 91 + 92);
 
     abfRollTesting.setNextValue(93);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(3);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(3);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90 + 91 + 92 + 93);
 
     abfRollTesting.setNextValue(94);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(4);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(4);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90 + 91 + 92 + 93 + 94);
 
     abfRollTesting.setNextValue(95);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(5);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(5);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90 + 91 + 92 + 93 + 94 + 95);
 
     abfRollTesting.setNextValue(96);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(6);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(6);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(
       90 + 91 + 92 + 93 + 94 + 95 + 96
     );
@@ -87,7 +87,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(97);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(7);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(7);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(
       90 + 91 + 92 + 93 + 94 + 95 + 96 + 97
     );
@@ -95,7 +95,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(98);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(8);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(8);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(
       90 + 91 + 92 + 93 + 94 + 95 + 96 + 97 + 98
     );
@@ -103,7 +103,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(99);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(9);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(9);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(
       90 + 91 + 92 + 93 + 94 + 95 + 96 + 97 + 98 + 99
     );
@@ -111,7 +111,7 @@ describe('ABFRoll', () => {
     abfRollTesting.setNextValue(100);
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBeGreaterThan(10);
+    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(10);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(
       90 + 91 + 92 + 93 + 94 + 95 + 96 + 97 + 98 + 99 + 100
     );

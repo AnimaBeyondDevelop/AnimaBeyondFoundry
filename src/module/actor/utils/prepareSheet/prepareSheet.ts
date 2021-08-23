@@ -1,17 +1,12 @@
-import { ABFActor } from '../../ABFActor';
 import { prepareItems } from './prepareItems/prepareItems';
 
-export const prepareSheet = (
-  originalData: ActorSheet.Data<ABFActor>
-): ActorSheet.Data<ABFActor> => {
-  let newData: ActorSheet.Data<ABFActor> = JSON.parse(JSON.stringify(originalData));
-
+export const prepareSheet = (sheetData: ActorSheet.Data): ActorSheet.Data => {
   // Attach to the actor data the items like skills, free access spells, etc...
   // In resume, all items that are created dynamically in the actor
-  newData = prepareItems(newData);
+  sheetData = prepareItems(sheetData);
 
   // Synchronize sheet data with actor data
-  newData.data = newData.actor.data;
+  sheetData.data.data = sheetData.actor.data.data;
 
-  return newData;
+  return sheetData;
 };

@@ -8,7 +8,7 @@
     <h3 class='group-header-title'>{{localize 'anima.ui.contactSection.title'}}</h3>
   </div>
   <div id='contact-context-menu-container' class='group-body'>
-    {{#each data.general.contacts}}
+    {{#each data.data.general.contacts}}
       <div data-contact-id='{{this._id}}' class='contact-row flex'>
         <div class='contact-name flex flex-1 mr-3'>
           <p class='label'>{{localize 'anima.ui.contactSection.contactRow.name'}}</p>
@@ -22,11 +22,7 @@
           <p class='label'>{{localize
               'anima.ui.contactSection.contactRow.description'
             }}</p>
-          <textarea
-            name='data.dynamic.contacts.{{this._id}}.description'
-            class='input'
-            rows='2'
-          >{{this.data.description}}</textarea>
+          <textarea name='data.dynamic.contacts.{{this._id}}.description' class='input'>{{this.data.description.value}}</textarea>
         </div>
       </div>
     {{/each}}

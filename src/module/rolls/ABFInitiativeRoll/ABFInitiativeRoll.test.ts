@@ -20,8 +20,8 @@ describe('ABFRoll', () => {
 
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBe(2);
-    expect(abfRollProxy.getRoll().results[0]).toBe(90);
+    expect(abfRollProxy.getRoll().getResults().length).toBe(2);
+    expect(abfRollProxy.getRoll().getResults()[0]).toBe(90);
     expect(abfRollProxy.getRoll().total).toBeGreaterThan(90);
   });
 
@@ -34,8 +34,8 @@ describe('ABFRoll', () => {
 
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBe(1);
-    expect(abfRollProxy.getRoll().results[0]).toBe(1);
+    expect(abfRollProxy.getRoll().getResults().length).toBe(1);
+    expect(abfRollProxy.getRoll().getResults()[0]).toBe(1);
     expect(abfRollProxy.getRoll().total).toBe(1 - 125);
   });
 
@@ -48,8 +48,8 @@ describe('ABFRoll', () => {
 
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBe(1);
-    expect(abfRollProxy.getRoll().results[0]).toBe(2);
+    expect(abfRollProxy.getRoll().getResults().length).toBe(1);
+    expect(abfRollProxy.getRoll().getResults()[0]).toBe(2);
     expect(abfRollProxy.getRoll().total).toBe(2 - 100);
   });
 
@@ -62,8 +62,8 @@ describe('ABFRoll', () => {
 
     abfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().results.length).toBe(1);
-    expect(abfRollProxy.getRoll().results[0]).toBe(3);
+    expect(abfRollProxy.getRoll().getResults().length).toBe(1);
+    expect(abfRollProxy.getRoll().getResults()[0]).toBe(3);
     expect(abfRollProxy.getRoll().total).toBe(3 - 75);
   });
 });

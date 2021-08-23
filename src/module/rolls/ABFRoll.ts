@@ -1,37 +1,33 @@
+import type { Options } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
 import ABFFoundryRoll from './ABFFoundryRoll';
 
 export abstract class ABFRoll {
-  private readonly DEFAULT_FUMBLE = 3;
+  protected readonly DEFAULT_FUMBLE_RANGE = 3;
 
   constructor(protected readonly foundryRoll: ABFFoundryRoll) {}
 
   get fumbled() {
-    return this.foundryRoll.firstResult <= this.DEFAULT_FUMBLE;
+    return this.foundryRoll.firstResult <= this.DEFAULT_FUMBLE_RANGE;
   }
 
-  abstract evaluate({
-    minimize,
-    maximize
-  }: {
-    minimize?: boolean;
-    maximize?: boolean;
-  }): ABFFoundryRoll;
+  abstract evaluate(options?: Partial<Options>): ABFFoundryRoll;
 
   protected addRoll(newRoll: ABFFoundryRoll) {
-    const newResult = { result: newRoll.results[0] as number, active: true };
-
-    this.foundryRoll.results.push(newResult.result);
-
-    const pool = this.foundryRoll.terms[0];
-
-    pool.results.push(newResult);
+    this.firstDice.results.push({
+      result: newRoll.getResults()[0],
+      active: true
+    });
 
     this.foundryRoll.recalculateTotal();
 
-    return newRoll.results[0];
+    return newRoll.getResults()[0];
   }
 
   public getRoll(): ABFFoundryRoll {
     return this.foundryRoll;
+  }
+
+  get firstDice(): DiceTerm {
+    return this.foundryRoll.dice[0];
   }
 }

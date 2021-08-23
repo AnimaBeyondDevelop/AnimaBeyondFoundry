@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="mental-patterns"
   }}
-    {{#each data.psychic.mentalPatterns}}
+    {{#each data.data.psychic.mentalPatterns}}
       <div data-mental-pattern-id='{{this._id}}' class='mental-pattern-row'>
         {{>
         "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
@@ -27,7 +27,7 @@
           title=(localize "anima.ui.psychic.mentalPattern.bonus.title")
           hideTitle=(is "gt" @index 0)
           inputName=(concat "data.dynamic.mentalPatterns." this._id ".bonus")
-          inputValue=this.data.bonus
+          inputValue=this.data.bonus.value
         }}
 
         {{>
@@ -36,7 +36,7 @@
           title=(localize "anima.ui.psychic.mentalPattern.penalty.title")
           hideTitle=(is "gt" @index 0)
           inputName=(concat "data.dynamic.mentalPatterns." this._id ".penalty")
-          inputValue=this.data.penalty
+          inputValue=this.data.penalty.value
         }}
 
       </div>

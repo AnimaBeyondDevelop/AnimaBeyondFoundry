@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/parts/common/group-body.hbs"
     class="techniques"
   }}
-    {{#each data.domine.techniques as |technique|}}
+    {{#each data.data.domine.techniques as |technique|}}
       <div data-technique-id='{{technique._id}}' class='technique-row'>
         {{#> "systems/animabf/templates/parts/common/group.hbs"
           class="technique"

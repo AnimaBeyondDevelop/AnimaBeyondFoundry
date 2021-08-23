@@ -1,3 +1,4 @@
+import type { Options } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
 import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
@@ -12,9 +13,17 @@ export default class ABFFoundryRoll extends Roll {
   _formula: string;
   data: Record<string, unknown>;
 
-  terms: DicePool[];
+  terms: RollTerm[];
 
-  constructor(formula: string, data?: Record<string, unknown>) {
+  constructor(rawFormula: string, data?: Record<string, unknown>) {
+    let formula = rawFormula.trim();
+
+    // In FoundryVTT 0.8.8 I don't know why but the system inserts at the end a "+ "
+    // so here, if we found that the end of the formula is "+ " we remove it
+    if (formula.endsWith('+')) {
+      formula = formula.substr(0, formula.length - 1);
+    }
+
     super(formula, data);
 
     if (this.formula.includes('xa')) {
@@ -35,13 +44,16 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   getResults(): number[] {
-    return this.results.filter(res => typeof res === 'number') as number[];
+    return this.dice.map(d => d.results.map(res => res.result)).flat();
   }
 
-  evaluate({ minimize = false, maximize = false } = {}): this {
-    super.evaluate();
+  // TODO Evaluate not finished this | Promise<this>
+  evaluate(partialOptions?: Partial<Options>): any {
+    const options = { ...partialOptions, async: false };
 
-    this.abfRoll?.evaluate({ minimize, maximize });
+    super.evaluate(options);
+
+    this.abfRoll?.evaluate(options);
 
     return this;
   }

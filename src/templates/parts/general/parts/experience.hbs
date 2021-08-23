@@ -6,22 +6,22 @@
     <div class='experience-bar'>
       <div
         class='current-experience'
-        style='width: {{calculateExperience data.general.experience.current data.general.experience.next }}%;'
+        style='width: {{calculateExperience data.data.general.experience.current.value data.data.general.experience.next.value }}%;'
       ></div>
     </div>
     <div class='experience-values flex mt-1'>
       <input
-        name='data.general.experience.current'
+        name='data.general.experience.current.value'
         type='number'
-        class='input current-experience {{#is "gte" data.general.experience.current data.general.experience.next }}red{{/is}}'
-        value='{{data.general.experience.current}}'
+        class='input current-experience {{#is "gte" data.data.general.experience.current.value data.data.general.experience.next.value }}red{{/is}}'
+        value='{{data.data.general.experience.current.value}}'
       />
       /
       <input
-        name='data.general.experience.next'
+        name='data.general.experience.next.value'
         type='number'
         class='input next-experience'
-        value='{{data.general.experience.next}}'
+        value='{{data.data.general.experience.next.value}}'
       />
     </div>
   </div>
