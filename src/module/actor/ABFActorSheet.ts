@@ -427,6 +427,58 @@ export default class ABFActorSheet extends ActorSheet {
     });
     // Techniques
 
+    // Combat Special Skills
+    this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.COMBAT_SPECIAL_SKILL],
+      containerSelector: '#combat-special-skills-context-menu-container',
+      rowSelector: '.combat-special-skill-row',
+      rowIdData: 'combatSpecialSkillId'
+    });
+
+    html.find('[data-on-click="add-combat-special-skill"]').click(() => {
+      this.actor.addCombatSpecialSkill();
+    });
+    // Combat Special Skills
+
+    // Combat Tables
+    this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.COMBAT_TABLE],
+      containerSelector: '#combat-tables-context-menu-container',
+      rowSelector: '.combat-table-row',
+      rowIdData: 'combatTableId'
+    });
+
+    html.find('[data-on-click="add-combat-table"]').click(() => {
+      this.actor.addCombatTable();
+    });
+    // Combat Tables
+
+    // Ammo
+    this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.AMMO],
+      containerSelector: '#ammo-context-menu-container',
+      rowSelector: '.ammo-row',
+      rowIdData: 'ammoId'
+    });
+
+    html.find('[data-on-click="add-ammo"]').click(() => {
+      this.actor.addAmmo();
+    });
+    // Ammo
+
+    // Weapon
+    this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.WEAPON],
+      containerSelector: '#weapons-context-menu-container',
+      rowSelector: '.weapon-row',
+      rowIdData: 'weaponId'
+    });
+
+    html.find('[data-on-click="add-weapon"]').click(() => {
+      this.actor.addWeapon();
+    });
+    // Weapon
+
     html.find('[data-on-click="delete-item"]').click(e => {
       const id = e.currentTarget.dataset.itemId;
       if (id) {
@@ -573,6 +625,24 @@ export default class ABFActorSheet extends ActorSheet {
     if (unflattedChanges.data.dynamic.techniques) {
       await this.actor.editTechniques(unflattedChanges.data.dynamic.techniques);
     }
+
+    if (unflattedChanges.data.dynamic.combatSpecialSkills) {
+      this.actor.editCombatSpecialSkills(
+        unflattedChanges.data.dynamic.combatSpecialSkills
+      );
+    }
+
+    if (unflattedChanges.data.dynamic.combatTables) {
+      this.actor.editCombatTables(unflattedChanges.data.dynamic.combatTables);
+    }
+
+    if (unflattedChanges.data.dynamic.ammo) {
+      this.actor.editAmmo(unflattedChanges.data.dynamic.ammo);
+    }
+
+    if (unflattedChanges.data.dynamic.weapons) {
+      this.actor.editWeapons(unflattedChanges.data.dynamic.weapons);
+    }
   }
 
   private buildCommonContextualMenu = ({
@@ -597,6 +667,12 @@ export default class ABFActorSheet extends ActorSheet {
         name: deleteRowMessage,
         icon: '<i class="fas fa-trash fa-fw"></i>',
         callback: target => {
+          if (!customCallbackFn && !configuration) {
+            console.warn(
+              `buildCommonContextualMenu: no custom callback and configuration set, could not delete the item: ${rowIdData}`
+            );
+          }
+
           if (customCallbackFn) {
             customCallbackFn(target);
           } else {
@@ -609,22 +685,22 @@ export default class ABFActorSheet extends ActorSheet {
             }
 
             if (configuration) {
-              let items = getFieldValueFromPath<any[]>(
-                this.actor.data.data,
-                configuration.fieldPath
-              );
-
-              items = items.filter(item => item._id !== id);
-
-              const dataToUpdate: any = {
-                data: getUpdateObjectFromPath(items, configuration.fieldPath)
-              };
-
               if (this.actor.getEmbeddedDocument('Item', id)) {
                 this.actor.deleteEmbeddedDocuments('Item', [id]);
-              }
+              } else {
+                let items = getFieldValueFromPath<any[]>(
+                  this.actor.data.data,
+                  configuration.fieldPath
+                );
 
-              this.actor.update(dataToUpdate);
+                items = items.filter(item => item._id !== id);
+
+                const dataToUpdate: any = {
+                  data: getUpdateObjectFromPath(items, configuration.fieldPath)
+                };
+
+                this.actor.update(dataToUpdate);
+              }
             }
           }
         }

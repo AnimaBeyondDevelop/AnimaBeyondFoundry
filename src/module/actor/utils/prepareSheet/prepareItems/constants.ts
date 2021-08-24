@@ -25,7 +25,11 @@ export const VALID_ITEM_TYPES = [
   ABFItems.MARTIAL_ART,
   ABFItems.CREATURE,
   ABFItems.SPECIAL_SKILL,
-  ABFItems.TECHNIQUE
+  ABFItems.TECHNIQUE,
+  ABFItems.COMBAT_SPECIAL_SKILL,
+  ABFItems.COMBAT_TABLE,
+  ABFItems.AMMO,
+  ABFItems.WEAPON
 ].map(type => type.toString());
 
 export type AttachConfiguration = { fieldPath: string[] };
@@ -107,5 +111,17 @@ export const ATTACH_CONFIGURATIONS: {
   },
   [ABFItems.TECHNIQUE]: {
     fieldPath: ['domine', 'techniques']
+  },
+  [ABFItems.COMBAT_SPECIAL_SKILL]: {
+    fieldPath: ['combat', 'combatSpecialSkills']
+  },
+  [ABFItems.COMBAT_TABLE]: {
+    fieldPath: ['combat', 'combatTables']
+  },
+  [ABFItems.AMMO]: {
+    fieldPath: ['combat', 'ammo']
+  },
+  [ABFItems.WEAPON]: {
+    fieldPath: ['combat', 'weapons']
   }
 };

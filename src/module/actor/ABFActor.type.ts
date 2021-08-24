@@ -316,7 +316,10 @@ export type ABFActorDataSourceData = {
     attack: {
       value: number;
     };
-    defense: {
+    block: {
+      value: number;
+    };
+    dodge: {
       value: number;
     };
     armor: {
@@ -350,6 +353,10 @@ export type ABFActorDataSourceData = {
         };
       };
     };
+    combatSpecialSkills: [];
+    combatTables: [];
+    ammo: [];
+    weapons: [];
   };
 
   mystic: {

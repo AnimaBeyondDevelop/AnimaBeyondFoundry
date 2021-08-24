@@ -7,7 +7,6 @@ export const preloadTemplates = () => {
     Templates.Dialog.Icons.Accept,
 
     // Actor sheet parts
-    'systems/animabf/templates/parts/combat.html',
     'systems/animabf/templates/parts/header/header.hbs',
     'systems/animabf/templates/parts/header/parts/top.hbs',
     'systems/animabf/templates/parts/header/parts/actor-image.hbs',
@@ -36,6 +35,12 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/general/parts/description.hbs',
     'systems/animabf/templates/parts/general/parts/contacts.hbs',
     'systems/animabf/templates/parts/general/parts/notes.hbs',
+    'systems/animabf/templates/parts/combat/combat.hbs',
+    'systems/animabf/templates/parts/combat/parts/base-values.hbs',
+    'systems/animabf/templates/parts/combat/parts/combat-special-skills.hbs',
+    'systems/animabf/templates/parts/combat/parts/combat-tables.hbs',
+    'systems/animabf/templates/parts/combat/parts/ammo.hbs',
+    'systems/animabf/templates/parts/combat/parts/weapons.hbs',
     'systems/animabf/templates/parts/mystic/mystic.hbs',
     'systems/animabf/templates/parts/mystic/parts/act.hbs',
     'systems/animabf/templates/parts/mystic/parts/magic-projection.hbs',

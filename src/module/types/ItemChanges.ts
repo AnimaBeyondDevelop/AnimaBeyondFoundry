@@ -24,6 +24,10 @@ import { MartialArtsChanges } from './MartialArtsChanges';
 import { CreaturesChanges } from './CreaturesChanges';
 import { SpecialSkillsChanges } from './SpecialSkillsChanges';
 import { TechniquesChanges } from './TechniquesChanges';
+import { CombatSpecialSkillChanges } from './CombatSpecialSkillChanges';
+import { CombatTableChanges } from './CombatTableChanges';
+import { AmmoChanges } from './AmmoChanges';
+import { WeaponChanges } from './WeaponChanges';
 
 export type ItemChanges = {
   data: {
@@ -54,6 +58,10 @@ export type ItemChanges = {
       creatures: CreaturesChanges;
       specialSkills: SpecialSkillsChanges;
       techniques: TechniquesChanges;
+      combatSpecialSkills: CombatSpecialSkillChanges;
+      combatTables: CombatTableChanges;
+      ammo: AmmoChanges;
+      weapons: WeaponChanges;
     };
   };
 };

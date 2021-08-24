@@ -24,4 +24,8 @@ export enum ABFItems {
   CREATURE = 'creature',
   SPECIAL_SKILL = 'specialSkill',
   TECHNIQUE = 'technique',
+  COMBAT_SPECIAL_SKILL = 'combatSpecialSkill',
+  COMBAT_TABLE = 'combatTable',
+  AMMO = 'ammo',
+  WEAPON = 'weapon'
 }

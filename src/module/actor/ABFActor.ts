@@ -27,6 +27,10 @@ import { MartialArtsChanges } from '../types/MartialArtsChanges';
 import { CreaturesChanges } from '../types/CreaturesChanges';
 import { TechniquesChanges } from '../types/TechniquesChanges';
 import { SpecialSkillsChanges } from '../types/SpecialSkillsChanges';
+import { CombatSpecialSkillChanges } from '../types/CombatSpecialSkillChanges';
+import { CombatTableChanges } from '../types/CombatTableChanges';
+import { AmmoChanges } from '../types/AmmoChanges';
+import { WeaponChanges } from '../types/WeaponChanges';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
 import { ATTACH_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
@@ -731,6 +735,130 @@ export class ABFActor extends Actor {
     }
   }
 
+  public async addCombatSpecialSkill(): Promise<void> {
+    const name = await openDialog<string>({
+      content: this.i18n.localize('dialogs.items.combatSpecialSkills.content')
+    });
+
+    await this.createInnerItem({
+      name,
+      type: ABFItems.COMBAT_SPECIAL_SKILL
+    });
+  }
+
+  public editCombatSpecialSkills(changes: CombatSpecialSkillChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateInnerItem({
+        id,
+        type: ABFItems.COMBAT_SPECIAL_SKILL,
+        name
+      });
+    }
+  }
+
+  public async addCombatTable(): Promise<void> {
+    const name = await openDialog<string>({
+      content: this.i18n.localize('dialogs.items.combatTable.content')
+    });
+
+    await this.createItem({
+      name,
+      type: ABFItems.COMBAT_TABLE
+    });
+  }
+
+  public editCombatTables(changes: CombatTableChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name } = changes[id];
+
+      this.updateItem({
+        id,
+        name
+      });
+    }
+  }
+
+  public async addAmmo(): Promise<void> {
+    const name = await openDialog<string>({
+      content: this.i18n.localize('dialogs.items.ammo.content')
+    });
+
+    await this.createInnerItem({
+      name,
+      type: ABFItems.AMMO,
+      data: {
+        amount: { value: 0 }
+      }
+    });
+  }
+
+  public editAmmo(changes: AmmoChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
+
+      this.updateInnerItem({
+        id,
+        type: ABFItems.AMMO,
+        name,
+        data: {
+          amount: { value: data.amount }
+        }
+      });
+    }
+  }
+
+  public async addWeapon(): Promise<void> {
+    const name = await openDialog<string>({
+      content: this.i18n.localize('dialogs.items.weapons.content')
+    });
+
+    const itemData = {
+      name,
+      type: ABFItems.WEAPON,
+      data: {
+        special: { value: 0 },
+        integrity: { value: 0 },
+        breaking: { value: 0 },
+        attack: { value: 0 },
+        block: { value: 0 },
+        damage: { value: 0 },
+        initiative: { value: 0 },
+        critic: {
+          primary: { value: '' },
+          secondary: { value: '' }
+        }
+      }
+    };
+
+    await this.createItem(itemData);
+  }
+
+  public editWeapons(changes: WeaponChanges) {
+    for (const id of Object.keys(changes)) {
+      const { name, data } = changes[id];
+
+      this.updateItem({
+        id,
+        name,
+        data: {
+          special: { value: data.special },
+          integrity: { value: data.integrity },
+          breaking: { value: data.breaking },
+          attack: { value: data.attack },
+          block: { value: data.block },
+          damage: { value: data.damage },
+          initiative: { value: data.initiative },
+          critic: {
+            primary: { value: data.critic.primary },
+            secondary: { value: data.critic.secondary }
+          }
+        }
+      });
+    }
+  }
+
   private async createItem({
     type,
     name,
@@ -763,6 +891,33 @@ export class ABFActor extends Actor {
         configuration.fieldPath
       )
     });
+  }
+
+  private async updateItem({
+    id,
+    name,
+    data = {}
+  }: {
+    id: string;
+    name?: string;
+    data?: unknown;
+  }) {
+    const item = this.getItem(id);
+
+    if (item) {
+      let updateObject: Record<string, unknown> = { data };
+
+      if (name) {
+        updateObject = { ...updateObject, name };
+      }
+
+      if (
+        (!!name && name !== item.name) ||
+        JSON.stringify(data) !== JSON.stringify(item.data.data)
+      ) {
+        await item.update(updateObject);
+      }
+    }
   }
 
   private async updateInnerItem({
@@ -799,33 +954,6 @@ export class ABFActor extends Actor {
         await this.update({
           data: getUpdateObjectFromPath(items, configuration.fieldPath)
         });
-      }
-    }
-  }
-
-  private async updateItem({
-    id,
-    name,
-    data = {}
-  }: {
-    id: string;
-    name?: string;
-    data?: unknown;
-  }) {
-    const item = this.getItem(id);
-
-    if (item) {
-      let updateObject: Record<string, unknown> = { data };
-
-      if (name) {
-        updateObject = { ...updateObject, name };
-      }
-
-      if (
-        (!!name && name !== item.name) ||
-        JSON.stringify(data) !== JSON.stringify(item.data.data)
-      ) {
-        await item.update(updateObject);
       }
     }
   }

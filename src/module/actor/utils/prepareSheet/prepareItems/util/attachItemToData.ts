@@ -10,14 +10,16 @@ export const attachItemToData = (
   const configuration: AttachConfiguration = ATTACH_CONFIGURATIONS[item.type];
 
   if (configuration) {
-    const field = getFieldValueFromPath<unknown[]>(data, configuration.fieldPath);
+    const fieldValue = getFieldValueFromPath<unknown[]>(data, configuration.fieldPath);
 
-    if (!field) {
-      getFieldNodeFromPath<unknown[]>(data, configuration.fieldPath)[
-        configuration.fieldPath.length - 1
-      ] = [item];
+    if (!fieldValue) {
+      const fieldNode = getFieldNodeFromPath<unknown[]>(data, configuration.fieldPath);
+
+      const leafKey = configuration.fieldPath[configuration.fieldPath.length - 1];
+
+      fieldNode[leafKey] = [item];
     } else {
-      field.push(item);
+      fieldValue.push(item);
     }
   }
 };

@@ -23,6 +23,7 @@ import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
+  // eslint-disable-next-line no-console
   console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
 
   // Assign custom classes and constants here
