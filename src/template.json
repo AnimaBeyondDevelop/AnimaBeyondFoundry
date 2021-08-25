@@ -40,13 +40,13 @@
           "willPower": { "value": 0 }
         },
         "secondaries": {
-          "lifePoints": { "current": { "value": 0 }, "max": { "value": 0 } },
+          "lifePoints": { "value": 0, "max": 0 },
           "initiative": {
             "base": { "value": 0 },
             "primary": { "value": 0 },
             "secondary": { "value": 0 }
           },
-          "fatigue": { "current": { "value": 0 }, "max": { "value": 0 } },
+          "fatigue": { "value": 0, "max": 0 },
           "movement": { "value": 0 },
           "resistances": {
             "physical": { "value": 0 },
@@ -149,8 +149,8 @@
       },
       "mystic": {
         "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },
-        "zeon": { "current": { "value": 0 }, "max": { "value": 0 } },
-        "zeonRegeneration": { "current": { "value": 0 }, "max": { "value": 0 } },
+        "zeon": { "accumulated": 0, "value": 0, "max": 0 },
+        "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
         "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
         "magicProjection": {
           "final": { "value": 0 },
@@ -241,13 +241,13 @@
             "current": { "value": 0 },
             "total": { "value": 0 }
           },
-          "generic": { "current": { "value": 0 }, "total": { "value": 0 } }
+          "generic": { "value": 0, "max": 0 }
         }
       },
       "psychic": {
         "psychicPotential": { "value": 0 },
         "psychicProjection": { "value": 0 },
-        "psychicPoints": { "used": { "value": 0 }, "max": { "value": 0 } },
+        "psychicPoints": { "value": 0, "max": 0 },
         "psychicPowers": [],
         "psychicDisciplines": [],
         "mentalPatterns": [],

@@ -6,13 +6,14 @@
   .first-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-column-gap: 0.1rem;
+    grid-column-gap: 1rem;
   }
 
   .combat-special-skills {
     .input {
       @include input;
     }
+
     .combat-special-skill-row:first-child {
       margin-top: 0;
     }
@@ -54,6 +55,8 @@
   }
 
   .weapons {
+    margin-top: 0.75rem;
+
     .input {
       height: 1.2rem;
     }

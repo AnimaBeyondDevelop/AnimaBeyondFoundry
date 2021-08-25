@@ -92,12 +92,8 @@ export type ABFActorDataSourceData = {
     };
     secondaries: {
       lifePoints: {
-        current: {
-          value: number;
-        };
-        max: {
-          value: number;
-        };
+        value: number;
+        max: number;
       };
       initiative: {
         base: {
@@ -111,12 +107,8 @@ export type ABFActorDataSourceData = {
         };
       };
       fatigue: {
-        current: {
-          value: number;
-        };
-        max: {
-          value: number;
-        };
+        value: number;
+        max: number;
       };
       movement: {
         value: number;
@@ -369,18 +361,15 @@ export type ABFActorDataSourceData = {
       };
     };
     zeon: {
-      current: {
-        value: number;
-      };
-      max: {
-        value: number;
-      };
+      accumulated: number;
+      value: number;
+      max: number;
     };
     zeonRegeneration: {
-      current: {
+      base: {
         value: number;
       };
-      max: {
+      final: {
         value: number;
       };
     };
@@ -589,12 +578,8 @@ export type ABFActorDataSourceData = {
         };
       };
       generic: {
-        current: {
-          value: number;
-        };
-        total: {
-          value: number;
-        };
+        value: number;
+        max: number;
       };
     };
   };
@@ -607,12 +592,8 @@ export type ABFActorDataSourceData = {
       value: number;
     };
     psychicPoints: {
-      used: {
-        value: number;
-      };
-      max: {
-        value: number;
-      };
+      value: number;
+      max: number;
     };
     psychicPowers: [];
     psychicDisciplines: [];
