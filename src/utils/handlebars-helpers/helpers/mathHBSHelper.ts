@@ -1,4 +1,4 @@
-import { HandlebarsHelper } from './registerHelpers';
+import { HandlebarsHelper } from '../registerHelpers';
 
 export const mathHBSHelper: HandlebarsHelper<number> = {
   name: 'math',

@@ -12,17 +12,21 @@
       <div data-contact-id='{{this._id}}' class='contact-row flex'>
         <div class='contact-name flex flex-1 mr-3'>
           <p class='label'>{{localize 'anima.ui.contactSection.contactRow.name'}}</p>
-          <textarea
+          <input
             name='data.dynamic.contacts.{{this._id}}.name'
             class='input'
-            rows='2'
-          >{{this.name}}</textarea>
+            value='{{this.name}}'
+          />
         </div>
         <div class='contact-description flex flex-4'>
           <p class='label'>{{localize
               'anima.ui.contactSection.contactRow.description'
             }}</p>
-          <textarea name='data.dynamic.contacts.{{this._id}}.description' class='input'>{{this.data.description.value}}</textarea>
+          <input
+            name='data.dynamic.contacts.{{this._id}}.description'
+            class='input'
+            value='{{this.data.description.value}}'
+          />
         </div>
       </div>
     {{/each}}

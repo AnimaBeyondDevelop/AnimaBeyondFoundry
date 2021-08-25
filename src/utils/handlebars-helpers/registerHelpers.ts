@@ -1,10 +1,10 @@
-import { isHBSHelper } from './isHBSHelper';
-import { calculateExperienceHBSHelper } from './calculateExperienceHBSHelper';
-import { concatHBSHelper } from './concatHBSHelper';
-import { getKeyOfHBSHelper } from './getKeyOfHBSHelper';
-import { manipulateStringHBSHelper } from './manipulateStringHBSHelper';
-import { mathHBSHelper } from './mathHBSHelper';
-import { getDifficultyFromIndexHBSHelper } from './getDifficultyFromIndexHBSHelper';
+import { isHBSHelper } from './helpers/isHBSHelper';
+import { calculateExperienceHBSHelper } from './helpers/calculateExperienceHBSHelper';
+import { concatHBSHelper } from './helpers/concatHBSHelper';
+import { getKeyOfHBSHelper } from './helpers/getKeyOfHBSHelper';
+import { manipulateStringHBSHelper } from './helpers/manipulateStringHBSHelper';
+import { mathHBSHelper } from './helpers/mathHBSHelper';
+import { getDifficultyFromIndexHBSHelper } from './helpers/getDifficultyFromIndexHBSHelper';
 
 export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
 

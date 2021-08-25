@@ -311,7 +311,12 @@
     .group-body {
       .input {
         border: none;
+      }
+
+      .result {
+        font-weight: bold;
         height: 8rem;
+        overflow-y: scroll;
       }
     }
   }

@@ -1,4 +1,4 @@
-import { HandlebarsHelper } from './registerHelpers';
+import { HandlebarsHelper } from '../registerHelpers';
 
 export const concatHBSHelper: HandlebarsHelper<string> = {
   name: 'concat',

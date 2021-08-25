@@ -299,11 +299,18 @@
 
     .technique-row .technique {
       .technique-description {
+        @include input;
+
         margin-top: 0;
-        height: 5rem;
         width: 100%;
 
         border-radius: 0.5rem;
+      }
+
+      .result {
+        font-weight: bold;
+        height: 5rem;
+        overflow-y: scroll;
       }
 
       .technique-header {

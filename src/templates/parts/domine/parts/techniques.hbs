@@ -29,9 +29,12 @@
           {{#> "systems/animabf/templates/parts/common/group-body.hbs"
             class="technique"
           }}
-            <textarea
+            <input
               class='input technique-description'
-              name='{{concat "data.dynamic.techniques." technique._id ".description"}}'>{{technique.data.description.value}}</textarea>
+              name='{{concat "data.dynamic.techniques." technique._id ".description"}}' value='{{technique.data.description.value}}'>
+          <p class='result'>
+            {{technique.data.description.value}}
+          </p>
           {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
           {{#> "systems/animabf/templates/parts/common/group-footer.hbs"}}
             <div class='technique-footer'>
