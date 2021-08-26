@@ -25,15 +25,19 @@
       "path": "lang/en.json"
     }
   ],
+  "dependencies": [
+    {
+      "name": "Compendium Folders",
+      "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/082-update/module.json"
+    }
+  ],
+  "primaryTokenAttribute": "characteristics.secondaries.lifePoints",
   "gridDistance": 1,
   "gridUnits": "m",
-  "minimumCoreVersion": "0.5.0",
+  "minimumCoreVersion": "0.8.8",
   "compatibleCoreVersion": "0.8.8",
-  "url": "",
-  "manifest": "",
+  "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
+  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/develop/src/system.json?token=ABZDWT7DM3I57W4NMJLYWJTBE4ZYE",
   "download": "",
-  "license": "",
-  "readme": "",
-  "bugs": "",
-  "changelog": ""
+  "bugs": "https://docs.google.com/forms/d/e/1FAIpQLSeUTdTOjxMKarAd1eoHfpswyoIs-mvSElVGmv7sZGrEuBHWKA/viewform?usp=sf_link"
 }

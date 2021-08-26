@@ -1,7 +1,7 @@
 import { ABFItems } from './ABFItems';
 
 export const VALID_ITEM_TYPES = [
-  ABFItems.SECONDARY_SKILL,
+  ABFItems.SECONDARY_SPECIAL_SKILL,
   ABFItems.FREE_ACCESS_SPELL,
   ABFItems.SPELL_MAINTENANCE,
   ABFItems.SELECTED_SPELL,
@@ -37,8 +37,8 @@ export type AttachConfiguration = { fieldPath: string[] };
 export const ATTACH_CONFIGURATIONS: {
   [key in ABFItems]: AttachConfiguration;
 } = {
-  [ABFItems.SECONDARY_SKILL]: {
-    fieldPath: ['secondaries', 'others']
+  [ABFItems.SECONDARY_SPECIAL_SKILL]: {
+    fieldPath: ['secondaries', 'secondarySpecialSkills']
   },
   [ABFItems.FREE_ACCESS_SPELL]: {
     fieldPath: ['mystic', 'freeAccessSpells']

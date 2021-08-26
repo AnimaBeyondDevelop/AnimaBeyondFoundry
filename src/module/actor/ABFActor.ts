@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { openDialog } from '../utils/openDialog';
-import { SkillChange } from '../types/SkillChange';
+import { SecondarySpecialSkillChanges } from '../types/SecondarySpecialSkillChanges';
 import { FreeAccessSpellChange } from '../types/FreeAccessSpellChange';
 import { SelectedSpellsChange } from '../types/SelectedSpellsChange';
 import { MetamagicChanges } from '../types/MetamagicChange';
@@ -131,23 +131,23 @@ export class ABFActor extends Actor {
     }
   }
 
-  async addSecondarySkillSlot(): Promise<void> {
+  async addSecondarySpecialSkill(): Promise<void> {
     const name = await openDialog<string>({
       content: this.i18n.localize('dialogs.items.secondarySkill.content')
     });
 
     this.createInnerItem({
       name,
-      type: ABFItems.SECONDARY_SKILL,
+      type: ABFItems.SECONDARY_SPECIAL_SKILL,
       data: { level: { value: 0 } }
     });
   }
 
-  public editSecondarySkills(skillChanges: SkillChange) {
+  public editSecondarySpecialSkills(skillChanges: SecondarySpecialSkillChanges) {
     for (const id of Object.keys(skillChanges)) {
       const { data } = skillChanges[id];
 
-      this.updateInnerItem({ id, type: ABFItems.SECONDARY_SKILL, data });
+      this.updateInnerItem({ id, type: ABFItems.SECONDARY_SPECIAL_SKILL, data });
     }
   }
 

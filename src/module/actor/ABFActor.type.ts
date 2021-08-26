@@ -297,9 +297,6 @@ export type ABFActorDataSourceData = {
       tailoring: {
         value: number;
       };
-      constructMarionettes: {
-        value: number;
-      };
     };
     others: [];
   };

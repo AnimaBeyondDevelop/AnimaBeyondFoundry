@@ -35,6 +35,16 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/general/parts/description.hbs',
     'systems/animabf/templates/parts/general/parts/contacts.hbs',
     'systems/animabf/templates/parts/general/parts/notes.hbs',
+    'systems/animabf/templates/parts/secondaries/secondaries.hbs',
+    'systems/animabf/templates/parts/secondaries/common/secondary-skill.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/athletics.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/vigor.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/perception.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/intellectual.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/subterfuge.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/social.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/creative.hbs',
+    'systems/animabf/templates/parts/secondaries/parts/secondary-special-skills.hbs',
     'systems/animabf/templates/parts/combat/combat.hbs',
     'systems/animabf/templates/parts/combat/parts/base-values.hbs',
     'systems/animabf/templates/parts/combat/parts/combat-special-skills.hbs',
@@ -72,8 +82,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/psychic/parts/innate-psychic-powers.hbs',
     'systems/animabf/templates/parts/psychic/parts/psychic-points.hbs',
     'systems/animabf/templates/parts/psychic/parts/psychic-disciplines.hbs',
-    'systems/animabf/templates/parts/psychic/parts/psychic-powers.hbs',
-    'systems/animabf/templates/parts/secondaries.html'
+    'systems/animabf/templates/parts/psychic/parts/psychic-powers.hbs'
   ];
 
   return loadTemplates(templatePaths);

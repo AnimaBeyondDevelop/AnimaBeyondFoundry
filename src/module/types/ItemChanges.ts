@@ -1,4 +1,4 @@
-import { SkillChange } from './SkillChange';
+import { SecondarySpecialSkillChanges } from './SecondarySpecialSkillChanges';
 import { FreeAccessSpellChange } from './FreeAccessSpellChange';
 import { SelectedSpellsChange } from './SelectedSpellsChange';
 import { SummonChanges } from './SummonChange';
@@ -32,7 +32,7 @@ import { WeaponChanges } from './WeaponChanges';
 export type ItemChanges = {
   data: {
     dynamic: {
-      skill: SkillChange;
+      secondarySpecialSkills: SecondarySpecialSkillChanges;
       freeAccessSpells: FreeAccessSpellChange;
       spellMaintenances: SpellMaintenancesChanges;
       selectedSpells: SelectedSpellsChange;

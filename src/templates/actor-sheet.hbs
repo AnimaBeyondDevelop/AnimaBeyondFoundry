@@ -5,12 +5,12 @@
 
   {{!-- Character Sheet Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="main">{{localize "anima.main"}}</a>
-    <a class="item" data-tab="secondaries">{{localize "anima.secondaries"}}</a>
-    <a class="item" data-tab="combat">{{localize "anima.combat"}}</a>
-    <a class="item" data-tab="mystic">{{localize "anima.mystic"}}</a>
-    <a class="item" data-tab="domine">{{localize "anima.domine"}}</a>
-    <a class="item" data-tab="psychic">{{localize "anima.psychics"}}</a>
+    <a class="item" data-tab="main">{{localize "anima.ui.tabs.main"}}</a>
+    <a class="item" data-tab="secondaries">{{localize "anima.ui.tabs.secondaries"}}</a>
+    <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
+    <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>
+    <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>
+    <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>
   </nav>
 
   <section class="sheet-body">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="tab secondaries" data-group="primary" data-tab="secondaries">
-      {{> "systems/animabf/templates/parts/secondaries.html"}}
+      {{> "systems/animabf/templates/parts/secondaries/secondaries.hbs"}}
     </div>
 
     <div class="tab combat" data-group="primary" data-tab="combat">

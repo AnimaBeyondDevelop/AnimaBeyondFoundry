@@ -74,9 +74,18 @@ export default class ABFActorSheet extends ActorSheet {
       this._onRoll(e);
     });
 
-    html.find('[data-on-click="add-secondary-skill"]').click(() => {
-      this.actor.addSecondarySkillSlot();
+    // Secondary Special Skills
+    this.buildCommonContextualMenu({
+      configuration: ATTACH_CONFIGURATIONS[ABFItems.SECONDARY_SPECIAL_SKILL],
+      containerSelector: '#secondary-special-skills-context-menu-container',
+      rowSelector: '.secondary-special-skill-row',
+      rowIdData: 'secondarySpecialSkillId'
     });
+
+    html.find('[data-on-click="add-secondary-special-skill"]').click(() => {
+      this.actor.addSecondarySpecialSkill();
+    });
+    // Secondary Special Skills
 
     // Free Access Spells
     this.buildCommonContextualMenu({
@@ -514,8 +523,10 @@ export default class ABFActorSheet extends ActorSheet {
 
     const unflattedChanges: ItemChanges = unflat(itemChanges);
 
-    if (unflattedChanges.data.dynamic.skill) {
-      await this.actor.editSecondarySkills(unflattedChanges.data.dynamic.skill);
+    if (unflattedChanges.data.dynamic.secondarySpecialSkills) {
+      await this.actor.editSecondarySpecialSkills(
+        unflattedChanges.data.dynamic.secondarySpecialSkills
+      );
     }
 
     if (unflattedChanges.data.dynamic.freeAccessSpells) {

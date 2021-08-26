@@ -1,0 +1,22 @@
+{{#> "systems/animabf/templates/parts/common/group.hbs"
+  class=this.secondarySkillName
+}}
+  {{>
+  "systems/animabf/templates/parts/common/group-header.hbs"
+    title=(localize (concat "anima.ui.secondaries." this.secondarySkillName ".title"))
+  }}
+  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+    class=this.secondarySkillName
+  }}
+    {{#each this.secondarySkills as |atr key|}}
+      {{>
+      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        class="name"
+        title=(localize (concat "anima.ui.secondaries." key ".title"))
+        rollable=true
+        inputName=(concat "data.secondaries." ../this.secondarySkillName "." key ".value")
+        inputValue=atr.value
+      }}
+    {{/each}}
+  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/group.hbs"}}

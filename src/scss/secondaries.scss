@@ -1,102 +1,15 @@
 @import 'variable.scss';
 
-.ability {
+.secondaries {
   display: grid;
-  grid-template-areas:
-    'athletics intellectual subterfuge creative'
-    'vigor intellectual social creative'
-    'perception intellectual social special';
-  justify-content: space-evenly;
-  margin-top: 10px;
-  align-items: flex-start;
-  .group {
-    width: 150px;
-    background: $dark-cream;
-    border-radius: $border-radius;
-    margin-bottom: 15px;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-    align-items: flex-start;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 1rem;
 
-    div {
-      text-align: center;
-      width: 140px;
-      display: flex;
-      justify-content: space-evenly;
-      .input-value {
-        width: 45px !important;
-        height: 15px !important;
-        margin-bottom: 3px;
-        border-radius: $border-radius;
-        background: $light-cream;
-      }
-      label {
-        width: 85px;
-      }
+  div .common-group {
+    &:first-child {
+      margin-top: 0;
     }
-    .text-box,
-    .special-control {
-      text-align: center;
-      padding: 3px;
-      margin-bottom: 3px;
-      width: 150px;
-      color: $white;
-      border-radius: $border-radius;
-      background: $red;
-    }
-  }
-  .athletics {
-    grid-area: athletics;
-  }
-  .social {
-    grid-area: social;
-  }
-  .perception {
-    grid-area: perception;
-  }
-  .vigor {
-    grid-area: vigor;
-  }
-  .intellectual {
-    grid-area: intellectual;
-  }
-  .subterfuge {
-    grid-area: subterfuge;
-  }
-  .creative {
-    grid-area: creative;
-  }
-  .special {
-    grid-area: special;
-    .special-control {
-      text-align: center;
-      margin-bottom: 3px;
-      width: 150px;
-      color: $white;
-      border-radius: $border-radius;
-      background: $red;
-      .skillcreate {
-        height: 16px;
-        width: 26px;
-        margin-top: 2px;
-        img {
-          width: 16px;
-          border: none;
-        }
-      }
 
-      .text {
-        margin: 0;
-      }
-    }
-    div {
-      .input-value {
-        width: 35px !important;
-      }
-      .skill-controls {
-        font-size: 13px;
-      }
-    }
+    margin-top: 0.75rem;
   }
 }

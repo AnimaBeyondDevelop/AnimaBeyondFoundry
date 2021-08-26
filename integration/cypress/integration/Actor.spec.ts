@@ -56,8 +56,7 @@ const fields = {
       'sleightOfHand',
       'ritualCalligraphy',
       'jewelry',
-      'tailoring',
-      'constructMarionettes'
+      'tailoring'
     ]
   }
 };
