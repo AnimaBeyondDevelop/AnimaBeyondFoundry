@@ -40,7 +40,7 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   recalculateTotal(mod = 0) {
-    this._total = this.getResults().reduce((prev, curr) => prev + curr) + mod;
+    this._total = this._evaluateTotal() + mod;
   }
 
   getResults(): number[] {

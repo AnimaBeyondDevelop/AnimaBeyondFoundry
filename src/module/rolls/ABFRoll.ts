@@ -18,8 +18,6 @@ export abstract class ABFRoll {
       active: true
     });
 
-    this.foundryRoll.recalculateTotal();
-
     return newRoll.getResults()[0];
   }
 

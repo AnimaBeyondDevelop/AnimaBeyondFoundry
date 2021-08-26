@@ -21,6 +21,8 @@ export default class ABFExploderRoll extends ABFRoll {
       failure: res.result <= this.DEFAULT_FUMBLE_RANGE
     }));
 
+    this.foundryRoll.recalculateTotal();
+
     return this.foundryRoll;
   }
 
