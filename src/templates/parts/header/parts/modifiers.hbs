@@ -1,26 +1,26 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="modifiers"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.general.modifiers.title")
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="modifiers"
   }}
     {{>
-    "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
       class="physical"
       title=(localize "anima.ui.general.modifiers.physicalActions.title")
       inputName="data.general.modifiers.physicalActions.value"
       inputValue=data.data.general.modifiers.physicalActions.value
     }}
     {{>
-    "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
       class="all-actions"
       title=(localize "anima.ui.general.modifiers.allActions.title")
       inputName="data.general.modifiers.allActions.value"
       inputValue=data.data.general.modifiers.allActions.value
     }}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

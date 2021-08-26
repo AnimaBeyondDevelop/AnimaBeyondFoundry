@@ -1,23 +1,23 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="psychic-powers"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.psychic.psychicPowers.title")
     addRowButtonData="add-psychic-power"
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="psychic-powers"
   }}
     {{#each data.data.psychic.psychicPowers as |power|}}
       <div data-psychic-power-id='{{power._id}}' class='psychic-power-row'>
-        {{#> "systems/animabf/templates/parts/common/group.hbs"
+        {{#> "systems/animabf/templates/parts/common/ui/group.hbs"
           class="psychic-power"
         }}
-          {{#> "systems/animabf/templates/parts/common/group-header.hbs"}}
+          {{#> "systems/animabf/templates/parts/common/ui/group-header.hbs"}}
             <div class='psychic-power-header'>
               {{>
-              "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+              "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 title=(localize "anima.ui.psychic.psychicPowers.power.header.name.title")
                 inputType="text"
@@ -25,7 +25,7 @@
                 inputValue=power.name
               }}
               {{>
-              "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+              "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="level"
                 title=(localize "anima.ui.psychic.psychicPowers.power.header.level.title")
                 inputType="text"
@@ -33,8 +33,8 @@
                 inputValue=power.data.level.value
               }}
             </div>
-          {{/"systems/animabf/templates/parts/common/group-header.hbs"}}
-          {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+          {{/"systems/animabf/templates/parts/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
             class="psychic-power"
           }}
             {{#each power.data.effects as |effect|}}
@@ -53,11 +53,11 @@
                 />
               </div>
             {{/each}}
-          {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-          {{#> "systems/animabf/templates/parts/common/group-footer.hbs"}}
+          {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/parts/common/ui/group-footer.hbs"}}
             <div class='psychic-power-footer'>
               {{>
-              "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+              "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="action-type"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
                 inputType='text'
@@ -65,7 +65,7 @@
                 inputValue=power.data.actionType.value
               }}
               {{>
-              "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+              "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="has-maintenance"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
                 inputType="checkbox"
@@ -73,16 +73,16 @@
                 inputValue=(is 'eq' power.data.hasMaintenance.value true)
               }}
               {{>
-              "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+              "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="bonus"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
                 inputName=(concat "data.dynamic.psychicPowers." power._id ".bonus")
                 inputValue=power.data.bonus.value
               }}
             </div>
-          {{/"systems/animabf/templates/parts/common/group-footer.hbs"}}
-        {{/"systems/animabf/templates/parts/common/group.hbs"}}
+          {{/"systems/animabf/templates/parts/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/parts/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

@@ -1,15 +1,15 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="psychic-projection"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.psychic.psychicProjection.title")
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="psychic-projection"
   }}
     {{>
-    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
       class="projection"
       title=(localize "anima.ui.psychic.psychicProjection.projection.title")
       rollable=true
@@ -17,5 +17,5 @@
       inputName="data.psychic.psychicProjection.value"
       inputValue=data.data.psychic.psychicProjection.value
     }}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

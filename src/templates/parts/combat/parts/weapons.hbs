@@ -1,23 +1,23 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="weapons"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.weapons.title")
     addRowButtonData="add-weapon"
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="weapons"
   }}
     {{#each data.data.combat.weapons}}
       <div data-weapon-id='{{this._id}}' class='weapon-row'>
-        {{#> "systems/animabf/templates/parts/common/group.hbs"
+        {{#> "systems/animabf/templates/parts/common/ui/group.hbs"
           class="weapon"
         }}
-          {{#> "systems/animabf/templates/parts/common/group-header.hbs"}}
+          {{#> "systems/animabf/templates/parts/common/ui/group-header.hbs"}}
             <div class='weapon-header'>
               {{>
-              "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+              "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 title=(localize "anima.ui.combat.weapons.header.name.title")
                 inputType="text"
@@ -25,61 +25,61 @@
                 inputValue=this.name
               }}
             </div>
-          {{/"systems/animabf/templates/parts/common/group-header.hbs"}}
-          {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+          {{/"systems/animabf/templates/parts/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
             class="weapon"
           }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="special"
               title=(localize "anima.ui.combat.weapons.special.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.special")
               inputValue=this.data.special.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="integrity"
               title=(localize "anima.ui.combat.weapons.integrity.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.integrity")
               inputValue=this.data.integrity.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="breaking"
               title=(localize "anima.ui.combat.weapons.breaking.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.breaking")
               inputValue=this.data.breaking.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="attack"
               title=(localize "anima.ui.combat.weapons.attack.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.attack")
               inputValue=this.data.attack.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="block"
               title=(localize "anima.ui.combat.weapons.block.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.block")
               inputValue=this.data.block.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="damage"
               title=(localize "anima.ui.combat.weapons.damage.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.damage")
               inputValue=this.data.damage.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="initiative"
               title=(localize "anima.ui.combat.weapons.initiative.title")
               inputName=(concat "data.dynamic.weapons." this._id ".data.initiative")
               inputValue=this.data.initiative.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="critic-primary"
               title=(localize "anima.ui.combat.weapons.critic.primary.title")
               inputType="text"
@@ -87,16 +87,16 @@
               inputValue=this.data.critic.primary.value
             }}
             {{>
-            "systems/animabf/templates/parts/common/vertical-titled-input.hbs"
+            "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="critic-secondary"
               title=(localize "anima.ui.combat.weapons.critic.secondary.title")
               inputType="text"
               inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary")
               inputValue=this.data.critic.secondary.value
             }}
-          {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-        {{/"systems/animabf/templates/parts/common/group.hbs"}}
+          {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+        {{/"systems/animabf/templates/parts/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

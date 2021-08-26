@@ -1,16 +1,16 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="resistances"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.resistances.title")
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="resistances"
   }}
     {{#each data.data.characteristics.secondaries.resistances as |atr key|}}
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="resistance"
         title=(localize (concat 'anima.ui.resistances.' key))
         rollable=true
@@ -19,5 +19,5 @@
         inputValue=atr.value
       }}
     {{/each}}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

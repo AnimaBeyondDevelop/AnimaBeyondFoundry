@@ -1,15 +1,15 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="psychic-points"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.psychic.psychicPoints.title")
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="psychic-points"
   }}
     {{>
-    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
       class="power"
       title=(localize "anima.ui.psychic.psychicPoints.power.title")
       inputName="data.psychic.psychicPoints.value"
@@ -18,5 +18,5 @@
       secondaryInputName="data.psychic.psychicPoints.max"
       secondaryInputValue=data.data.psychic.psychicPoints.max
     }}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

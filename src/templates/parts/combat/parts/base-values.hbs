@@ -1,15 +1,15 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="base-values"
 }}
   {{>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.baseValues.title")
   }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="base-values"
   }}
     {{>
-    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
       class="attack"
       title=(localize "anima.ui.combat.baseValues.attack.title")
       rollable=true
@@ -17,7 +17,7 @@
       inputValue=data.data.combat.attack.value
     }}
     {{>
-    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
       class="block"
       title=(localize "anima.ui.combat.baseValues.block.title")
       rollable=true
@@ -25,12 +25,12 @@
       inputValue=data.data.combat.block.value
     }}
     {{>
-    "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+    "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
       class="dodge"
       title=(localize "anima.ui.combat.baseValues.dodge.title")
       rollable=true
       inputName="data.combat.dodge.value"
       inputValue=data.data.combat.dodge.value
     }}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

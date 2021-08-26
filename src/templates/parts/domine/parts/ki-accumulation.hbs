@@ -1,13 +1,13 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="ki-accumulation"
 }}
   {{#>
-  "systems/animabf/templates/parts/common/group-header.hbs"
+  "systems/animabf/templates/parts/common/ui/group-header.hbs"
   }}
     <p class='label accumulation'>{{localize "anima.ui.domine.kiAccumulation.accumulation.title"}}</p>
     <p class='label title'>{{localize "anima.ui.domine.kiAccumulation.title"}}</p>
-  {{/"systems/animabf/templates/parts/common/group-header.hbs"}}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{/"systems/animabf/templates/parts/common/ui/group-header.hbs"}}
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="ki-accumulation"
   }}
     <div class='red-background'></div>
@@ -15,7 +15,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.strength.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="strength-accumulation accumulation-row-accumulation"
         hideTitle=true
         inputName="data.domine.kiAccumulation.strength.accumulated.value"
@@ -23,7 +23,7 @@
       }}
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-strength-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.strength.current.value"
@@ -37,7 +37,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.agility.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="agility-accumulation accumulation-row-accumulation"
         hideTitle=true
         inputName="data.domine.kiAccumulation.agility.accumulated.value"
@@ -45,7 +45,7 @@
       }}
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-agility-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.agility.current.value"
@@ -59,7 +59,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.dexterity.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="dexterity-accumulation accumulation-row-accumulation"
         hideTitle=true
         inputName="data.domine.kiAccumulation.dexterity.accumulated.value"
@@ -67,7 +67,7 @@
       }}
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-dexterity-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.dexterity.current.value"
@@ -81,7 +81,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.constitution.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="constitution-accumulation accumulation-row-accumulation"
         hideTitle=true
         inputName="data.domine.kiAccumulation.constitution.accumulated.value"
@@ -89,7 +89,7 @@
       }}
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-constitution-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.constitution.current.value"
@@ -103,7 +103,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.willPower.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="willPower-accumulation accumulation-row-accumulation"
         hideTitle=true
         inputName="data.domine.kiAccumulation.willPower.accumulated.value"
@@ -111,7 +111,7 @@
       }}
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-willPower-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.willPower.current.value"
@@ -125,7 +125,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.power.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="power-accumulation accumulation-row-accumulation"
         hideTitle=true
         inputName="data.domine.kiAccumulation.power.accumulated.value"
@@ -133,7 +133,7 @@
       }}
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-power-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.power.current.value"
@@ -147,7 +147,7 @@
       <p class='label accumulation-row-title'>{{localize "anima.ui.domine.kiAccumulation.generic.title"}}</p>
 
       {{>
-      "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+      "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="current-generic-reserve accumulation-row-reserve"
         hideTitle=true
         inputName="data.domine.kiAccumulation.generic.value"
@@ -157,5 +157,5 @@
         secondaryInputValue=data.data.domine.kiAccumulation.generic.max
       }}
     </div>
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}

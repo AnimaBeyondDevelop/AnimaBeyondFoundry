@@ -1,12 +1,12 @@
-{{#> "systems/animabf/templates/parts/common/group.hbs"
+{{#> "systems/animabf/templates/parts/common/ui/group.hbs"
   class="characteristics"
 }}
-  {{#> "systems/animabf/templates/parts/common/group-body.hbs"
+  {{#> "systems/animabf/templates/parts/common/ui/group-body.hbs"
     class="characteristics"
   }}
     {{#each data.data.characteristics.primaries as |char key|}}
       {{>
-        "systems/animabf/templates/parts/common/horizontal-titled-input.hbs"
+        "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
         class="characteristic"
         title=(localize (concat 'anima.ui.characteristics.' key))
         rollable=true
@@ -18,5 +18,5 @@
         secondaryInputValue=char.mod
       }}
     {{/each}}
-  {{/"systems/animabf/templates/parts/common/group-body.hbs"}}
-{{/"systems/animabf/templates/parts/common/group.hbs"}}
+  {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/parts/common/ui/group.hbs"}}
