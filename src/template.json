@@ -258,27 +258,17 @@
   "Item": {
     "types": [
       "freeAccessSpell",
-      "metamagic",
-      "language",
       "advantage",
       "disadvantage",
       "note",
       "psychicDiscipline",
       "mentalPattern",
-      "innatePsychicPower",
       "psychicPower",
-      "kiSkill",
-      "nemesisSkill",
-      "arsMagnus",
-      "martialArt",
       "technique",
-      "combatTable",
       "weapon"
     ],
     "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
-    "metamagic": { "grade": { "value": 0 } },
     "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
-    "innatePsychicPower": { "effect": { "value": "" }, "value": { "value": 0 } },
     "psychicPower": {
       "level": { "value": 0 },
       "actionType": { "value": "" },
@@ -297,7 +287,6 @@
         { "value": "" }
       ]
     },
-    "martialArt": { "grade": { "value": "" } },
     "technique": {
       "description": { "value": "" },
       "strength": { "value": 0 },

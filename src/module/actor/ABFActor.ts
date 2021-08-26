@@ -156,7 +156,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.metamagic.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.METAMAGIC,
       data: { grade: { value: 0 } }
@@ -167,7 +167,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      await this.updateItem({ id, name, data });
+      await this.updateInnerItem({ id, type: ABFItems.METAMAGIC, name, data });
     }
   }
 
@@ -192,18 +192,14 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.language.content')
     });
 
-    this.createEmbeddedDocuments('Item', [{ type: ABFItems.LANGUAGE, name }]);
+    this.createInnerItem({ type: ABFItems.LANGUAGE, name });
   }
 
   public async editLanguage(changes: LanguageChanges) {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      const item = this.getEmbeddedDocument('Item', id);
-
-      if (item) {
-        await item.update({ name });
-      }
+      this.updateInnerItem({ type: ABFItems.LANGUAGE, id, name });
     }
   }
 
@@ -461,7 +457,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.innatePsychicPower.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.INNATE_PSYCHIC_POWER,
       data: {
@@ -475,8 +471,9 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name, effect, value } = changes[id];
 
-      await this.updateItem({
+      await this.updateInnerItem({
         id,
+        type: ABFItems.INNATE_PSYCHIC_POWER,
         name,
         data: {
           effect: { value: effect },
@@ -540,7 +537,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.kiSkill.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.KI_SKILL
     });
@@ -550,7 +547,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await this.updateItem({ id, name });
+      await this.updateInnerItem({ id, type: ABFItems.KI_SKILL, name });
     }
   }
 
@@ -559,7 +556,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.nemesisSkill.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.NEMESIS_SKILL
     });
@@ -569,7 +566,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await this.updateItem({ id, name });
+      await this.updateInnerItem({ id, type: ABFItems.NEMESIS_SKILL, name });
     }
   }
 
@@ -578,7 +575,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.arsMagnus.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.ARS_MAGNUS
     });
@@ -588,7 +585,7 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await this.updateItem({ id, name });
+      await this.updateInnerItem({ id, type: ABFItems.ARS_MAGNUS, name });
     }
   }
 
@@ -597,7 +594,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.martialArt.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.MARTIAL_ART,
       data: {
@@ -610,7 +607,12 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name, grade } = changes[id];
 
-      await this.updateItem({ id, name, data: { grade: { value: grade } } });
+      await this.updateInnerItem({
+        id,
+        type: ABFItems.MARTIAL_ART,
+        name,
+        data: { grade: { value: grade } }
+      });
     }
   }
 
@@ -763,7 +765,7 @@ export class ABFActor extends Actor {
       content: this.i18n.localize('dialogs.items.combatTable.content')
     });
 
-    await this.createItem({
+    await this.createInnerItem({
       name,
       type: ABFItems.COMBAT_TABLE
     });
@@ -773,8 +775,9 @@ export class ABFActor extends Actor {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      this.updateItem({
+      this.updateInnerItem({
         id,
+        type: ABFItems.COMBAT_TABLE,
         name
       });
     }
