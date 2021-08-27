@@ -145,7 +145,7 @@ function buildTS() {
  * Build CharacterTemplate
  */
 function buildTemplate() {
-  return gulp.src('src/module/actor/ABFActor.type.ts').pipe(
+  return gulp.src('src/module/types/Actor.ts').pipe(
     through.obj((file, enc, cb) => {
       const originalContent = file.contents;
 
@@ -243,7 +243,7 @@ async function copyFiles() {
 function buildWatch() {
   gulp.watch('src/**/*.ts', { ignoreInitial: false }, buildTS);
   gulp.watch(
-    'src/module/actor/ABFActor.type.ts',
+    'src/module/types/Actor.ts',
     { ignoreInitial: false },
     buildTemplate
   );

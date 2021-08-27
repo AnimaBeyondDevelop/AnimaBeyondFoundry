@@ -6,6 +6,10 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "@typescript-eslint/indent": "off",
+    "max-len": ["warn", { "code": 120 }],
+    "function-paren-newline": "off",
+    "implicit-arrow-linebreak": "off",
     "no-param-reassign": "off",
     "object-curly-newline": "off",
     "no-new": "off",

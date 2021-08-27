@@ -31,7 +31,7 @@
           }}
             <input
               class='input technique-description'
-              name='{{concat "data.dynamic.techniques." technique._id ".description"}}' value='{{technique.data.description.value}}'>
+              name='{{concat "data.dynamic.techniques." technique._id ".data.description.value"}}' value='{{technique.data.description.value}}'>
           <p class='result'>
             {{technique.data.description.value}}
           </p>
@@ -43,7 +43,7 @@
                 class="level"
                 title=(localize "anima.ui.domine.techniques.technique.footer.level.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".level")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.level.value")
                 inputValue=technique.data.level.value
               }}
               {{>
@@ -51,7 +51,7 @@
                 class="strength"
                 title=(localize "anima.ui.domine.techniques.technique.footer.strength.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".strength")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.strength.value")
                 inputValue=technique.data.strength.value
               }}
               {{>
@@ -59,7 +59,7 @@
                 class="agility"
                 title=(localize "anima.ui.domine.techniques.technique.footer.agility.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".agility")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.agility.value")
                 inputValue=technique.data.agility.value
               }}
               {{>
@@ -67,7 +67,7 @@
                 class="dexterity"
                 title=(localize "anima.ui.domine.techniques.technique.footer.dexterity.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".dexterity")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.dexterity.value")
                 inputValue=technique.data.dexterity.value
               }}
               {{>
@@ -75,7 +75,7 @@
                 class="constitution"
                 title=(localize "anima.ui.domine.techniques.technique.footer.constitution.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".constitution")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.constitution.value")
                 inputValue=technique.data.constitution.value
               }}
               {{>
@@ -83,7 +83,7 @@
                 class="willPower"
                 title=(localize "anima.ui.domine.techniques.technique.footer.willPower.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".willPower")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.willPower.value")
                 inputValue=technique.data.willPower.value
               }}
               {{>
@@ -91,7 +91,7 @@
                 class="power"
                 title=(localize "anima.ui.domine.techniques.technique.footer.power.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".power")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.power.value")
                 inputValue=technique.data.power.value
               }}
               {{>
@@ -99,7 +99,7 @@
                 class="martial-knowledge"
                 title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.techniques." technique._id ".martialKnowledge")
+                inputName=(concat "data.dynamic.techniques." technique._id ".data.martialKnowledge.value")
                 inputValue=technique.data.martialKnowledge.value
               }}
             </div>

@@ -29,7 +29,7 @@
                 class="level"
                 title=(localize "anima.ui.psychic.psychicPowers.power.header.level.title")
                 inputType="text"
-                inputName=(concat "data.dynamic.psychicPowers." power._id ".level")
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.level.value")
                 inputValue=power.data.level.value
               }}
             </div>
@@ -48,7 +48,7 @@
                 <input
                   type='text'
                   class='input'
-                  name='{{concat "data.dynamic.psychicPowers." power._id ".effects." @index}}'
+                  name='{{concat "data.dynamic.psychicPowers." power._id ".data.effects." @index}}'
                   value='{{effect.value}}'
                 />
               </div>
@@ -61,7 +61,7 @@
                 class="action-type"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
                 inputType='text'
-                inputName=(concat "data.dynamic.psychicPowers." power._id ".actionType")
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.actionType.value")
                 inputValue=power.data.actionType.value
               }}
               {{>
@@ -69,14 +69,14 @@
                 class="has-maintenance"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
                 inputType="checkbox"
-                inputName=(concat "data.dynamic.psychicPowers." power._id ".hasMaintenance")
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.hasMaintenance.value")
                 inputValue=(is 'eq' power.data.hasMaintenance.value true)
               }}
               {{>
               "systems/animabf/templates/parts/common/ui/horizontal-titled-input.hbs"
                 class="bonus"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
-                inputName=(concat "data.dynamic.psychicPowers." power._id ".bonus")
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.bonus.value")
                 inputValue=power.data.bonus.value
               }}
             </div>

@@ -1,4 +1,4 @@
-import { ABFActorDataSourceData } from '../../../../ABFActor.type';
+import { ABFActorDataSourceData } from '../../../../../types/Actor';
 
 export const getFieldValueFromPath = <T>(
   data: ABFActorDataSourceData,

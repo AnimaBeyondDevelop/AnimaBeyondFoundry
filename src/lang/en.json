@@ -277,7 +277,7 @@
   "dialogs.items.creature.content": "Creature name",
   "dialogs.items.disadvantage.content": "Disadvantage name",
   "dialogs.items.elan.content": "Elan name",
-  "dialogs.items.elan_power.content": "Power name",
+  "dialogs.items.elanPower.content": "Power name",
   "dialogs.items.freeAccessSpell.content": "Free access spell name",
   "dialogs.items.innatePsychicPower.content": "Innate psychic power name",
   "dialogs.items.kiSkill.content": "Ki skill name",

@@ -21,7 +21,7 @@
                 class="name"
                 title=(localize "anima.ui.combat.weapons.header.name.title")
                 inputType="text"
-                inputName=(concat "data.dynamic.combat.weapons." this._id ".name")
+                inputName=(concat "data.dynamic.weapons." this._id ".name")
                 inputValue=this.name
               }}
             </div>
@@ -33,49 +33,49 @@
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="special"
               title=(localize "anima.ui.combat.weapons.special.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.special")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.special.value")
               inputValue=this.data.special.value
             }}
             {{>
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="integrity"
               title=(localize "anima.ui.combat.weapons.integrity.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.integrity")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.integrity.value")
               inputValue=this.data.integrity.value
             }}
             {{>
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="breaking"
               title=(localize "anima.ui.combat.weapons.breaking.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.breaking")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.breaking.value")
               inputValue=this.data.breaking.value
             }}
             {{>
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="attack"
               title=(localize "anima.ui.combat.weapons.attack.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.attack")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.attack.value")
               inputValue=this.data.attack.value
             }}
             {{>
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="block"
               title=(localize "anima.ui.combat.weapons.block.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.block")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.block.value")
               inputValue=this.data.block.value
             }}
             {{>
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="damage"
               title=(localize "anima.ui.combat.weapons.damage.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.damage")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.damage.value")
               inputValue=this.data.damage.value
             }}
             {{>
             "systems/animabf/templates/parts/common/ui/vertical-titled-input.hbs"
               class="initiative"
               title=(localize "anima.ui.combat.weapons.initiative.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.initiative")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.initiative.value")
               inputValue=this.data.initiative.value
             }}
             {{>
@@ -83,7 +83,7 @@
               class="critic-primary"
               title=(localize "anima.ui.combat.weapons.critic.primary.title")
               inputType="text"
-              inputName=(concat "data.dynamic.weapons." this._id ".data.critic.primary")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.critic.primary.value")
               inputValue=this.data.critic.primary.value
             }}
             {{>
@@ -91,7 +91,7 @@
               class="critic-secondary"
               title=(localize "anima.ui.combat.weapons.critic.secondary.title")
               inputType="text"
-              inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary.value")
               inputValue=this.data.critic.secondary.value
             }}
           {{/"systems/animabf/templates/parts/common/ui/group-body.hbs"}}

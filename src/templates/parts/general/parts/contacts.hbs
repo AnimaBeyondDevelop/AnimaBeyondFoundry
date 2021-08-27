@@ -7,7 +7,7 @@
     />
     <h3 class='group-header-title'>{{localize 'anima.ui.contactSection.title'}}</h3>
   </div>
-  <div id='contact-context-menu-container' class='group-body'>
+  <div id='contacts-context-menu-container' class='group-body'>
     {{#each data.data.general.contacts}}
       <div data-contact-id='{{this._id}}' class='contact-row flex'>
         <div class='contact-name flex flex-1 mr-3'>
@@ -23,7 +23,7 @@
               'anima.ui.contactSection.contactRow.description'
             }}</p>
           <input
-            name='data.dynamic.contacts.{{this._id}}.description'
+            name='data.dynamic.contacts.{{this._id}}.data.description.value'
             class='input'
             value='{{this.data.description.value}}'
           />

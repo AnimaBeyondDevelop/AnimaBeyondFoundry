@@ -8,6 +8,7 @@ export enum ABFItems {
   LEVEL = 'level',
   LANGUAGE = 'language',
   ELAN = 'elan',
+  ELAN_POWER = 'elan_power',
   TITLE = 'title',
   ADVANTAGE = 'advantage',
   DISADVANTAGE = 'disadvantage',

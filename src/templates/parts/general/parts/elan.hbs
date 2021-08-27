@@ -26,10 +26,10 @@
               'anima.ui.elanSection.elanRow.level'
             }}</p>
           <input
-            name='data.dynamic.elan.{{elan._id}}.level'
+            name='data.dynamic.elan.{{elan._id}}.data.level.value'
             type='text'
             class='input flex-2'
-            value='{{elan.data.level}}'
+            value='{{elan.data.level.value}}'
           />
         </div>
 
@@ -41,7 +41,7 @@
           >
             <input
               type='hidden'
-              name='data.dynamic.elan_power.{{power._id}}.elanId'
+              name='data.dynamic.elan_power.{{power._id}}.data.elanId'
               value='{{elan._id}}'
             />
             <input
@@ -51,10 +51,10 @@
               value='{{power.name}}'
             />
             <input
-              name='data.dynamic.elan_power.{{power._id}}.level'
+              name='data.dynamic.elan_power.{{power._id}}.data.level.value'
               type='text'
               class='input flex-1'
-              value='{{power.level}}'
+              value='{{power.data.level.value}}'
             />
           </div>
         {{/each}}

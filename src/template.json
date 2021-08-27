@@ -41,11 +41,7 @@
         },
         "secondaries": {
           "lifePoints": { "value": 0, "max": 0 },
-          "initiative": {
-            "base": { "value": 0 },
-            "primary": { "value": 0 },
-            "secondary": { "value": 0 }
-          },
+          "initiative": { "base": { "value": 0 }, "primary": { "value": 0 }, "secondary": { "value": 0 } },
           "fatigue": { "value": 0, "max": 0 },
           "movement": { "value": 0 },
           "resistances": {
@@ -67,16 +63,8 @@
           "jump": { "value": 0 },
           "piloting": { "value": 0 }
         },
-        "vigor": {
-          "composure": { "value": 0 },
-          "featsOfStrength": { "value": 0 },
-          "withstandPain": { "value": 0 }
-        },
-        "perception": {
-          "notice": { "value": 0 },
-          "search": { "value": 0 },
-          "track": { "value": 0 }
-        },
+        "vigor": { "composure": { "value": 0 }, "featsOfStrength": { "value": 0 }, "withstandPain": { "value": 0 } },
+        "perception": { "notice": { "value": 0 }, "search": { "value": 0 }, "track": { "value": 0 } },
         "intellectual": {
           "animals": { "value": 0 },
           "science": { "value": 0 },
@@ -122,7 +110,7 @@
           "jewelry": { "value": 0 },
           "tailoring": { "value": 0 }
         },
-        "others": []
+        "secondarySpecialSkills": []
       },
       "combat": {
         "attack": { "value": 0 },
@@ -210,36 +198,12 @@
         },
         "martialKnowledge": { "used": { "value": 0 }, "max": { "value": 0 } },
         "kiAccumulation": {
-          "strength": {
-            "accumulated": { "value": 0 },
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          },
-          "agility": {
-            "accumulated": { "value": 0 },
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          },
-          "dexterity": {
-            "accumulated": { "value": 0 },
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          },
-          "constitution": {
-            "accumulated": { "value": 0 },
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          },
-          "willPower": {
-            "accumulated": { "value": 0 },
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          },
-          "power": {
-            "accumulated": { "value": 0 },
-            "current": { "value": 0 },
-            "total": { "value": 0 }
-          },
+          "strength": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "agility": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "dexterity": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "constitution": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "willPower": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "power": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
           "generic": { "value": 0, "max": 0 }
         }
       },
@@ -257,12 +221,12 @@
   },
   "Item": {
     "types": [
-      "freeAccessSpell",
       "advantage",
       "disadvantage",
+      "freeAccessSpell",
+      "mentalPattern",
       "note",
       "psychicDiscipline",
-      "mentalPattern",
       "psychicPower",
       "technique",
       "weapon"

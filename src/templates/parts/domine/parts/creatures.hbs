@@ -26,7 +26,7 @@
           title=(localize "anima.ui.domine.creatures.fire.title")
           hideTitle=(is "gt" @index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." this._id ".fire")
+          inputName=(concat "data.dynamic.creatures." this._id ".data.fire.value")
           inputValue=(is 'eq' this.data.fire.value true)
         }}
         {{>
@@ -35,7 +35,7 @@
           title=(localize "anima.ui.domine.creatures.water.title")
           hideTitle=(is "gt" @index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." this._id ".water")
+          inputName=(concat "data.dynamic.creatures." this._id ".data.water.value")
           inputValue=(is 'eq' this.data.water.value true)
         }}
         {{>
@@ -44,7 +44,7 @@
           title=(localize "anima.ui.domine.creatures.earth.title")
           hideTitle=(is "gt" @index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." this._id ".earth")
+          inputName=(concat "data.dynamic.creatures." this._id ".data.earth.value")
           inputValue=(is 'eq' this.data.earth.value true)
         }}
         {{>
@@ -53,7 +53,7 @@
           title=(localize "anima.ui.domine.creatures.wood.title")
           hideTitle=(is "gt" @index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." this._id ".wood")
+          inputName=(concat "data.dynamic.creatures." this._id ".data.wood.value")
           inputValue=(is 'eq' this.data.wood.value true)
         }}
         {{>
@@ -62,7 +62,7 @@
           title=(localize "anima.ui.domine.creatures.metal.title")
           hideTitle=(is "gt" @index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." this._id ".metal")
+          inputName=(concat "data.dynamic.creatures." this._id ".data.metal.value")
           inputValue=(is 'eq' this.data.metal.value true)
         }}
       </div>
