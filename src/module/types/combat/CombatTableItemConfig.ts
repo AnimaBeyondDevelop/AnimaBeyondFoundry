@@ -1,7 +1,7 @@
 import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../types';
+import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type CombatTableItemData = Record<string, never>;
 

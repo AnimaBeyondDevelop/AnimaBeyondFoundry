@@ -4,7 +4,20 @@ A veces queremos que un campo del actor sea dinámico, es decir, que queramos a�
 
 ## Pasos
 
-### Añadir el item al template.json
+### 1. Decidir si el elemento es interno o externo
+
+Los items pueden ser de dos tipos: **internos o externos**
+
+Los internos son aquellos que pertenecen al actor y que sus valores difieren entre diferentes actores, dos ejemplos:
+
+- Habilidades nuevas secundarias: el valor de una habilidad llamada "Cocina" puede ser diferente de un actor a otro
+- Arquetipos: cada actor puede tener un arquetipo distinto
+
+Los externos son aquellos que se podrían reutilizar entre actores, el ejemplo más clásico: las armas. Las armas pueden ser utilizadas por distintos actores independientemente, como por ejemplo, una espada.
+
+### 2. Añadir el item al template.json
+
+**NOTA: Si has decidido que tu item sea interno, sáltate este paso**
 
 El fichero `template.json` contiene la información de nuestro actor. Uno de los elementos que contiene son aquellos items que somos capaces de crear dinámicamente para el actor.
 
@@ -15,17 +28,7 @@ A la hora de escribir este documento los tipos que hay son los siguientes:
 ```json
 {
   "Item": {
-    "types": [
-      "consumable",
-      "misc",
-      "weapon",
-      "shield",
-      "ammunition",
-      "armor",
-      "helmet",
-      "skill",
-      "freeAccessSpell"
-    ]
+    "types": ["freeAccessSpell", "advantage"]
   }
 }
 ```
@@ -34,18 +37,17 @@ Una vez añadido al array la clave de nuestro nuevo item continuamos.
 
 **NOTA:** El nombre del elemento no debe contener caracteres especiales como barras o guiones medios.
 
-Un poco más abajo definiremos el contenido del `data` que tendrá nuestro item, tenemos dos ejemplos:
+Un poco más abajo definiremos el contenido del `data` que tendrá nuestro item, en caso de que solo tenga "nombre" no hace falta rellenar lo siguiente. Tenemos dos ejemplos:
 
 ```json
 {
   "freeAccessSpell": {
     "level": 0
-  },
-  "skill": {
-    "value": 0
   }
 }
 ```
+
+Si te fijas, `advantage`, no tiene definido un `data` y esto es porque Foundry por defecto ya nos da el nombre como un campo externo a su data (y obligatorio).
 
 Añadimos el nuestro debajo y ya solo nos queda un paso más: elegir en los datos del actor donde se van a "almacenar" nuestros nuevos items. Por ejemplo, si hacemos una búsqueda de `freeAccessSpell`, este se encontrará bajo `mystic`, uno de los campos de nuestro actor.
 
@@ -53,10 +55,10 @@ Añadimos el nuestro debajo y ya solo nos queda un paso más: elegir en los dato
 {
   "character": {
     "description": ...,
-    "flags": ...,
     "characteristics": ...,
     "secondaries": ...,
     "combat": ...,
+    "domine": ...,
     "mystic": {
       ...,
       "freeAccessSpells": [],
@@ -69,45 +71,46 @@ Añadimos el nuestro debajo y ya solo nos queda un paso más: elegir en los dato
 
 Una vez hecho esto, _listo_, ya hemos acabado con el `template.json`.
 
-## Añadir los métodos de creación y edición de nuestro item
+### 3. Añadir a ABFItems el nombre del item
 
-Nos vamos al fichero `ItemChanges` y definimos nuestro nuevo tipo, aquí veréis dos ejemplos: `SkillChange` y `FreeAccessSpellChange`. Cread vuestro nuevo tipo y modificad lo necesario.
+Existe un fichero llamado `ABFItems` que contiene todos los items que se pueden crear, aquí crearemos una nueva entrada cuyo valor tendrá que ser igual al nombre que le hayamos dado en el `template.json` en caso de que sea externo, o el que queramos si es interno.
 
-**NOTA**: Dentro de cada cambio hay un elemento que veréis representado como `[key: string]`, este apartado es **obligatorio para todos los items nuevos**.
-
-Una vez tengamos nuestro nuevo tipo de cambio nos vamos al fichero **ABFActor** y crearemos dos nuevos métodos: uno para crear el item, y otro para editarlo. Aquí hay un ejemplo para usar como plantilla: `addFreeAccessSpellSlot` y `editFreeAccessSpells`.
-
-Cread los vuestros propios y dadle un nombre apropiado.
-
-Ahora nos dirigimos a la clase `ABFActorSheet` y buscamos un método llamado `updateItems` en el cual cogiendo como referencia otros cambios, añadimos el nuestro, por ejemplo tenemos el de los hechizos de acceso libre:
+Por ejemplo, para los hechizos de libre creación:
 
 ```ts
-if (unflattedChanges.data.dynamic.freeAccessSpells) {
-  this.actor.editFreeAccessSpells(unflattedChanges.data.dynamic.freeAccessSpells);
+export enum ABFItems {
+  FREE_ACCESS_SPELL = 'freeAccessSpell'
 }
 ```
 
-Si os fijáis está llamando al método `editFreeAccessSpells`, nosotros sustituiremos todo lo relacionado con `freeAccessSpells` por nuestros métodos y nuestros tipos.
+### 4. Añadir la configuración de item
 
-### Añadir nuestros items al HTML
+En la carpeta `module/types` encontrarás varias subcarpetas que hacen referencia a donde se encuentra dichos items, por ejemplo: `mystic` o `psychic`
 
-Para esto es mejor seguir el ejemplo de otros elementos dinámicos, como por ejemplo el de las habilidades secundarias especiales: [https://github.com/Guote/AnimaBeyondFoundry/blob/c6500e43682605884f6f48cc9720effc850d69a5/src/templates/parts/secondaries.html#L112](https://github.com/Guote/AnimaBeyondFoundry/blob/c6500e43682605884f6f48cc9720effc850d69a5/src/templates/parts/secondaries.html#L112)
+Una vez localizada (o creada si no existe) la carpeta que alojará la configuración del nuevo item, creamos un fichero y escogemos uno de los dos templates a continuación dependiendo de lo que contenga el `data`.
 
-Como veréis ahí hay un atributo HTML llamado `data-on-click`, y en este caso, con el valor de: `add-secondary-skill`. Siguiendo el mismo patrón nostros le daremos el valor correspondiente a nuestro elemento nuevo
+En caso de que el nuevo item tenga solo nombre, recomiendo coger como template: `AdvantageItemConfig.ts`.
+En caso de que el nuevo item tenga más datos, recomiendo coger como template: `ContactItemConfig.ts`.
 
-No os olvidéis de añadir también un botón para eliminar el item, un poco más abajo del botón para añadir veremos un `data-on-click` con el valor de `delete-item`, usaremos el mismo patrón para nuestro nuevo elemento. Sobre este apartado es importante recalcar que el botón de eliminar debe tener otro atributo llamado `data-item-id` que debe contener el valor del id de nuestro item.
+Toda la información de los campos a crear está documentado en el fichero `Items.ts`
 
-### Añadir nuestros disparadores para los botones
+### 5. Añadir nuestro item a la lista de items disponibles
 
-Nos dirigimos nuevamente a la clase `ABFActorSheet` y buscamos el método `activateListeners`. Aquí cogemos como plantilla el disparador de adición de cualquier otro item y llamamos a nuestro método recien creado de crear nuestro nuevo item.
+En el fichero `module/actor/utils/prepareSheet/prepareItems/constants.ts` se encuentran dos objetos: `INTERNAL_ITEM_CONFIGURATION` y `ITEM_CONFIGURATIONS`
 
-### Crear un parseador del item a los datos del actor
+Añadimos a uno de los dos objetos nuestra nueva configuración de item.
 
-Para esto vamos a copiar uno de las funciones de cualquier otro item, por ejemplo, el de `attachFreeAccessSpell` y lo adecuamos a nuestras necesidades, dependiendo de donde queramos poner nuestro nuevo item.
+#### 6. Añadir, si es un elemento externo, su tipo a Foundry
 
-### Añadir el parseador de item a datos de actor
+**NOTA: Este paso es sólo si tu item es externo**
 
-Para este paso nos vamos a un fichero que se llama `prepareItems.ts` y añadimos nuestro nuevo item al array de `VALID_COLLECTIONS` y añadimos un nuevo case al switch llamando al método de attacheo creado anteriormente
+En el fichero `animabf.types.ts` se encuentra un tipo compuesto llamado `ABFItemsDataSource`, en él deberemos añadir nuestro nuevo item data source.
+
+### 7. Añadir nuestros items al HTML
+
+Para esto es mejor seguir el ejemplo de otros elementos dinámicos, como por ejemplo el de los hechizos de libre acceso: [https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/blob/develop/src/templates/parts/mystic/parts/free-access-spells.hbs](https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/blob/develop/src/templates/parts/mystic/parts/free-access-spells.hbs)
+
+Existen varios componentes reutilizables, recomiendo hacer una lectura de distintas partes HBS para comprenderlas mejor.
 
 ## Listo
 

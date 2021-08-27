@@ -1,5 +1,5 @@
 import { nanoid } from '../../../vendor/nanoid/nanoid';
-import { ABFItemBaseDataSource } from '../../../types';
+import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
