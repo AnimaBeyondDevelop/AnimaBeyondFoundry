@@ -319,9 +319,6 @@ export type ABFActorDataSourceData = {
         cut: {
           value: number;
         };
-        pierce: {
-          value: number;
-        };
         impact: {
           value: number;
         };
@@ -346,6 +343,7 @@ export type ABFActorDataSourceData = {
     combatTables: [];
     ammo: [];
     weapons: [];
+    armors: [];
   };
 
   mystic: {

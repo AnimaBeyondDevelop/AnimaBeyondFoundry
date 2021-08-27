@@ -80,4 +80,33 @@
       }
     }
   }
+
+  .armors {
+    margin-top: 0.75rem;
+
+    .input {
+      height: 1.2rem;
+    }
+
+    .armor-row:first-child {
+      margin-top: 0;
+    }
+
+    .armor-header {
+      .input-container {
+        width: 15rem;
+      }
+    }
+
+    .armor-row {
+      margin-top: 0.5rem;
+      border-radius: $border-radius;
+      box-shadow: $card-box-shadow;
+
+      .group-body {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 }

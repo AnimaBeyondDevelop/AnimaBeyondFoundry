@@ -28,6 +28,7 @@ import { TitleItemConfig } from '../../../../types/general/TitleItemConfig';
 import { WeaponItemConfig } from '../../../../types/combat/WeaponItemConfig';
 import { AmmoItemConfig } from '../../../../types/combat/AmmoItemConfig';
 import { ElanPowerItemConfig } from '../../../../types/general/ElanPowerItemConfig';
+import { ArmorItemConfig } from '../../../../types/combat/ArmorItemConfig';
 
 export const INTERNAL_ITEM_CONFIGURATIONS = {
   [AmmoItemConfig.type]: AmmoItemConfig,
@@ -55,6 +56,7 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
 
 export const ITEM_CONFIGURATIONS = {
   [AdvantageItemConfig.type]: AdvantageItemConfig,
+  [ArmorItemConfig.type]: ArmorItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
   [FreeAccessSpellItemConfig.type]: FreeAccessSpellItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,

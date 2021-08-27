@@ -50,6 +50,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/parts/combat/parts/combat-special-skills.hbs',
     'systems/animabf/templates/parts/combat/parts/combat-tables.hbs',
     'systems/animabf/templates/parts/combat/parts/ammo.hbs',
+    'systems/animabf/templates/parts/combat/parts/armors.hbs',
     'systems/animabf/templates/parts/combat/parts/weapons.hbs',
     'systems/animabf/templates/parts/mystic/mystic.hbs',
     'systems/animabf/templates/parts/mystic/parts/act.hbs',

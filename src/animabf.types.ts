@@ -9,6 +9,7 @@ import { PsychicDisciplineDataSource } from './module/types/psychic/PsychicDisci
 import { PsychicPowerDataSource } from './module/types/psychic/PsychicPowerItemConfig';
 import { TechniqueDataSource } from './module/types/domine/TechniqueItemConfig';
 import { WeaponDataSource } from './module/types/combat/WeaponItemConfig';
+import { ArmorDataSource } from './module/types/combat/ArmorItemConfig';
 
 export type ABFItemBaseDataSource<T, D> = {
   _id: string;
@@ -19,6 +20,7 @@ export type ABFItemBaseDataSource<T, D> = {
 
 export type ABFItemsDataSource =
   | AdvantageDataSource
+  | ArmorDataSource
   | DisadvantageDataSource
   | FreeAccessSpellDataSource
   | MentalPatternDataSource
