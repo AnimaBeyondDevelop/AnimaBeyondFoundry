@@ -21,6 +21,7 @@
 
   <div class='input-container {{#if this.secondaryInputName}}big{{/if}}'>
     <input
+      {{#if this.disabled}}disabled{{/if}}
       name='{{this.inputName}}'
       type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
       class='input {{#if this.secondaryInputName}}primary-input{{/if}}'
