@@ -20,6 +20,7 @@ export type ArmorChanges = ItemChanges<ArmorItemData>;
 export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   type: ABFItems.ARMOR,
   isInternal: false,
+  hasSheet: true,
   fieldPath: ['combat', 'armors'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.armors as ArmorChanges;

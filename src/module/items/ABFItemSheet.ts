@@ -18,6 +18,7 @@ export default class ABFItemSheet extends ItemSheet {
 
   getHeightFromType(): number {
     switch (this.item.data.type) {
+      case ABFItems.ARMOR:
       case ABFItems.WEAPON:
         return 154;
       default:
