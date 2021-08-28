@@ -28,8 +28,7 @@ export const FreeAccessSpellItemConfig: ABFItemConfig<FreeAccessSpellDataSource,
   selectors: {
     addItemButtonSelector: 'add-free-access-spell',
     containerSelector: '#free-access-spells-context-menu-container',
-    rowSelector: '.free-access-spell-row',
-    rowIdData: 'freeAccessSpellId'
+    rowSelector: '.free-access-spell-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

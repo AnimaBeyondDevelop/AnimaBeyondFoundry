@@ -1,23 +1,23 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="techniques"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.domine.techniques.title")
     addRowButtonData="add-technique"
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="techniques"
   }}
     {{#each data.data.domine.techniques as |technique|}}
-      <div data-technique-id='{{technique._id}}' class='technique-row'>
-        {{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+      <div data-item-id='{{technique._id}}' class='technique-row'>
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="technique"
         }}
-          {{#> "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='technique-header'>
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 title=(localize "anima.ui.domine.techniques.technique.header.name.title")
                 inputType="text"
@@ -25,8 +25,8 @@
                 inputValue=technique.name
               }}
             </div>
-          {{/"systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
-          {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="technique"
           }}
             <input
@@ -35,11 +35,11 @@
           <p class='result'>
             {{technique.data.description.value}}
           </p>
-          {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-          {{#> "systems/animabf/templates/actor/parts/common/ui/group-footer.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='technique-footer'>
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="level"
                 title=(localize "anima.ui.domine.techniques.technique.footer.level.title")
                 inputType='text'
@@ -47,7 +47,7 @@
                 inputValue=technique.data.level.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="strength"
                 title=(localize "anima.ui.domine.techniques.technique.footer.strength.title")
                 inputType='text'
@@ -55,7 +55,7 @@
                 inputValue=technique.data.strength.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="agility"
                 title=(localize "anima.ui.domine.techniques.technique.footer.agility.title")
                 inputType='text'
@@ -63,7 +63,7 @@
                 inputValue=technique.data.agility.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="dexterity"
                 title=(localize "anima.ui.domine.techniques.technique.footer.dexterity.title")
                 inputType='text'
@@ -71,7 +71,7 @@
                 inputValue=technique.data.dexterity.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="constitution"
                 title=(localize "anima.ui.domine.techniques.technique.footer.constitution.title")
                 inputType='text'
@@ -79,7 +79,7 @@
                 inputValue=technique.data.constitution.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="willPower"
                 title=(localize "anima.ui.domine.techniques.technique.footer.willPower.title")
                 inputType='text'
@@ -87,7 +87,7 @@
                 inputValue=technique.data.willPower.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="power"
                 title=(localize "anima.ui.domine.techniques.technique.footer.power.title")
                 inputType='text'
@@ -95,7 +95,7 @@
                 inputValue=technique.data.power.value
               }}
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="martial-knowledge"
                 title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
                 inputType='text'
@@ -103,9 +103,9 @@
                 inputValue=technique.data.martialKnowledge.value
               }}
             </div>
-          {{/"systems/animabf/templates/actor/parts/common/ui/group-footer.hbs"}}
-        {{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

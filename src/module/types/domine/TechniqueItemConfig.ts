@@ -29,8 +29,7 @@ export const TechniqueItemConfig: ABFItemConfig<TechniqueDataSource, TechniqueCh
   selectors: {
     addItemButtonSelector: 'add-technique',
     containerSelector: '#techniques-context-menu-container',
-    rowSelector: '.technique-row',
-    rowIdData: 'techniqueId'
+    rowSelector: '.technique-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

@@ -22,8 +22,7 @@ export const MentalPatternItemConfig: ABFItemConfig<MentalPatternDataSource, Men
   selectors: {
     addItemButtonSelector: 'add-mental-pattern',
     containerSelector: '#mental-patterns-context-menu-container',
-    rowSelector: '.mental-pattern-row',
-    rowIdData: 'mentalPatternId'
+    rowSelector: '.mental-pattern-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

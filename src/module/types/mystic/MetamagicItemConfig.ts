@@ -21,8 +21,7 @@ export const MetamagicItemConfig: ABFItemConfig<MetamagicDataSource, MetamagicCh
   selectors: {
     addItemButtonSelector: 'add-metamagic',
     containerSelector: '#metamagics-context-menu-container',
-    rowSelector: '.metamagic-row',
-    rowIdData: 'metamagicId'
+    rowSelector: '.metamagic-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

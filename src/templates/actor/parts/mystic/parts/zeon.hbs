@@ -1,15 +1,15 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="zeon"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.zeon.title")
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="zeon"
   }}
     {{>
-    "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="final"
       title=(localize "anima.ui.mystic.zeon.final.title")
       inputName="data.mystic.zeon.value"
@@ -19,11 +19,11 @@
       secondaryInputValue=data.data.mystic.zeon.max
     }}
     {{>
-    "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="accumulated"
       title=(localize "anima.ui.mystic.zeon.accumulated.title")
       inputName="data.mystic.zeon.accumulated.value"
       inputValue=data.data.mystic.zeon.accumulated.value
     }}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

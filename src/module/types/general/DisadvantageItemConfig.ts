@@ -19,8 +19,7 @@ export const DisadvantageItemConfig: ABFItemConfig<DisadvantageDataSource, Disad
   selectors: {
     addItemButtonSelector: 'add-disadvantage',
     containerSelector: '#disadvantages-context-menu-container',
-    rowSelector: '.disadvantage-row',
-    rowIdData: 'disadvantageId'
+    rowSelector: '.disadvantage-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

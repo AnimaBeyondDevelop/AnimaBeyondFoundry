@@ -21,8 +21,7 @@ export const SpellMaintenanceItemConfig: ABFItemConfig<SpellMaintenanceDataSourc
   selectors: {
     addItemButtonSelector: 'add-spell-maintenance',
     containerSelector: '#spell-maintenances-context-menu-container',
-    rowSelector: '.spell-maintenance-row',
-    rowIdData: 'spellMaintenanceId'
+    rowSelector: '.spell-maintenance-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

@@ -21,8 +21,7 @@ export const SelectedSpellItemConfig: ABFItemConfig<SelectedSpellDataSource, Sel
   selectors: {
     addItemButtonSelector: 'add-selected-spell',
     containerSelector: '#selected-spells-context-menu-container',
-    rowSelector: '.selected-spell-row',
-    rowIdData: 'selectedSpellId'
+    rowSelector: '.selected-spell-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

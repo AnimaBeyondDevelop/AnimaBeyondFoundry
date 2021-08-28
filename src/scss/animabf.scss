@@ -1,13 +1,7 @@
-@import 'spacing-helpers.scss';
-@import 'display-helpers.scss';
+@import 'util/spacing-helpers.scss';
+@import 'util/display-helpers.scss';
 @import 'variable.scss';
 @import '_common.scss';
 
-@import 'actor-sheet.scss';
-@import 'header.scss';
-@import 'general.scss';
-@import 'secondaries.scss';
-@import 'combat.scss';
-@import 'mystic.scss';
-@import 'domine.scss';
-@import 'psychic.scss';
+@import 'actor/actor-sheet.scss';
+@import 'items/items-sheet.scss';

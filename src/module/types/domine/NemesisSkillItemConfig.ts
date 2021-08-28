@@ -19,8 +19,7 @@ export const NemesisSkillItemConfig: ABFItemConfig<NemesisSkillDataSource, Nemes
   selectors: {
     addItemButtonSelector: 'add-nemesis-skill',
     containerSelector: '#nemesis-skills-context-menu-container',
-    rowSelector: '.nemesis-skill-row',
-    rowIdData: 'nemesisSkillId'
+    rowSelector: '.nemesis-skill-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

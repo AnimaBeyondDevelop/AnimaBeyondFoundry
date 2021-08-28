@@ -1,23 +1,23 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="armors"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.armors.title")
     addRowButtonData="add-armor"
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="armors"
   }}
     {{#each data.data.combat.armors}}
-      <div data-armor-id='{{this._id}}' class='armor-row'>
-        {{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+      <div data-item-id='{{this._id}}' class='armor-row'>
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="armor"
         }}
-          {{#> "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='armor-header'>
               {{>
-              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 title=(localize "anima.ui.combat.armors.header.name.title")
                 inputType="text"
@@ -25,62 +25,62 @@
                 inputValue=this.name
               }}
             </div>
-          {{/"systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
-          {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="armor"
           }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="cut"
               title=(localize "anima.ui.combat.armors.cut.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.cut.value")
               inputValue=this.data.cut.value
             }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="impact"
               title=(localize "anima.ui.combat.armors.impact.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.impact.value")
               inputValue=this.data.impact.value
             }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="thrust"
               title=(localize "anima.ui.combat.armors.thrust.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.thrust.value")
               inputValue=this.data.thrust.value
             }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="heat"
               title=(localize "anima.ui.combat.armors.heat.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.heat.value")
               inputValue=this.data.heat.value
             }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="electricity"
               title=(localize "anima.ui.combat.armors.electricity.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.electricity.value")
               inputValue=this.data.electricity.value
             }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="cold"
               title=(localize "anima.ui.combat.armors.cold.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.cold.value")
               inputValue=this.data.cold.value
             }}
             {{>
-            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="energy"
               title=(localize "anima.ui.combat.armors.energy.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.energy.value")
               inputValue=this.data.energy.value
             }}
-          {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-        {{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

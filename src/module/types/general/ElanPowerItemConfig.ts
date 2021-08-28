@@ -22,8 +22,7 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
   selectors: {
     addItemButtonSelector: 'add-elan',
     containerSelector: '#elan-context-menu-container',
-    rowSelector: '.elan-row .powers',
-    rowIdData: 'elanId'
+    rowSelector: '.elan-row .powers'
   },
   onCreate: async (actor, elanId): Promise<void> => {
     if (typeof elanId !== 'string') throw new Error('elanId missing');

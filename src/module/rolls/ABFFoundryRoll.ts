@@ -10,12 +10,9 @@ import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 export default class ABFFoundryRoll extends Roll {
   private readonly abfRoll: ABFRoll | undefined;
 
-  _formula: string;
   data: Record<string, unknown>;
 
-  terms: RollTerm[];
-
-  constructor(rawFormula: string, data?: Record<string, unknown>) {
+  constructor(rawFormula: string, data?: Record<string, unknown>, options?: Partial<RollTerm.EvaluationOptions>) {
     let formula = rawFormula.trim();
 
     // In FoundryVTT 0.8.8 I don't know why but the system inserts at the end a "+ "
@@ -24,7 +21,7 @@ export default class ABFFoundryRoll extends Roll {
       formula = formula.substr(0, formula.length - 1);
     }
 
-    super(formula, data);
+    super(formula, data, options);
 
     if (this.formula.includes('xa')) {
       this.abfRoll = new ABFExploderRoll(this);

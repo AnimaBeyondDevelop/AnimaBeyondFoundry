@@ -30,8 +30,7 @@ export const CreatureItemConfig: ABFItemConfig<CreatureDataSource, CreatureChang
   selectors: {
     addItemButtonSelector: 'add-creature',
     containerSelector: '#creatures-context-menu-container',
-    rowSelector: '.creature-row',
-    rowIdData: 'creatureId'
+    rowSelector: '.creature-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

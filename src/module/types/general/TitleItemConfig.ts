@@ -19,8 +19,7 @@ export const TitleItemConfig: ABFItemConfig<TitleDataSource, TitleChanges> = {
   selectors: {
     addItemButtonSelector: 'add-title',
     containerSelector: '#titles-context-menu-container',
-    rowSelector: '.title-row',
-    rowIdData: 'titleId'
+    rowSelector: '.title-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

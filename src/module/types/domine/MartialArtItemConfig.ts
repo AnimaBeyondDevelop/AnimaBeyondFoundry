@@ -21,8 +21,7 @@ export const MartialArtItemConfig: ABFItemConfig<MartialArtDataSource, MartialAr
   selectors: {
     addItemButtonSelector: 'add-martial-art',
     containerSelector: '#martial-arts-context-menu-container',
-    rowSelector: '.martial-art-row',
-    rowIdData: 'martialArtId'
+    rowSelector: '.martial-art-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

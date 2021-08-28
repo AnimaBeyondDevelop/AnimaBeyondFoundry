@@ -21,8 +21,7 @@ export const LevelItemConfig: ABFItemConfig<LevelDataSource, LevelChanges> = {
   selectors: {
     addItemButtonSelector: 'add-level',
     containerSelector: '#levels-context-menu-container',
-    rowSelector: '.level-row',
-    rowIdData: 'levelId'
+    rowSelector: '.level-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

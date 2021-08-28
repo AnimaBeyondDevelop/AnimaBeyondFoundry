@@ -4,7 +4,7 @@ import { ABFItemConfig, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type AmmoItemData = {
-  amount: { value: number }
+  amount: { value: number };
 };
 
 export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
@@ -21,8 +21,7 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
   selectors: {
     addItemButtonSelector: 'add-ammo',
     containerSelector: '#ammo-context-menu-container',
-    rowSelector: '.ammo-row',
-    rowIdData: 'ammoId'
+    rowSelector: '.ammo-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

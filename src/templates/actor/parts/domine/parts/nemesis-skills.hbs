@@ -1,16 +1,16 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="nemesis-skills"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.domine.nemesisSkills.title")
     addRowButtonData="add-nemesis-skill"
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="nemesis-skills"
   }}
     {{#each data.data.domine.nemesisSkills}}
-      <div data-nemesis-skill-id='{{this._id}}' class='nemesis-skill-row'>
+      <div data-item-id='{{this._id}}' class='nemesis-skill-row'>
         <input
           name='data.dynamic.nemesisSkills.{{this._id}}.name'
           type='text'
@@ -19,5 +19,5 @@
         />
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

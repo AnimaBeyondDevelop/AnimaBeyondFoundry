@@ -1,0 +1,13 @@
+@import '../../variable';
+
+.base-item {
+  display: flex;
+
+  .base-item-image {
+    margin-bottom: 0.75rem;
+
+    img {
+      border-radius: 1rem;
+    }
+  }
+}

@@ -119,7 +119,7 @@ export default class ABFActorSheet extends ActorSheet {
 
   private buildCommonContextualMenu = (itemConfig: ABFItemConfig<unknown, ItemChanges<unknown>>) => {
     const {
-      selectors: { containerSelector, rowSelector, rowIdData },
+      selectors: { containerSelector, rowSelector },
       fieldPath
     } = itemConfig;
 
@@ -131,6 +131,28 @@ export default class ABFActorSheet extends ActorSheet {
 
     const otherItems = itemConfig.contextMenuConfig?.buildExtraOptionsInContextMenu?.(this.actor) ?? [];
 
+    if (!itemConfig.isInternal && itemConfig.hasSheet) {
+      otherItems.push({
+        name: 'Editar',
+        icon: '<i class="fas fa-edit fa-fw"></i>',
+        callback: target => {
+          const { itemId } = target[0].dataset;
+
+          if (itemId) {
+            const item = this.actor.items.get(itemId);
+
+            if (item?.sheet) {
+              item.sheet.render(true);
+            } else {
+              console.warn('Item sheet was not found for item:', item);
+            }
+          } else {
+            console.warn('Item ID was not found for target:', target);
+          }
+        }
+      });
+    }
+
     return new ContextMenu($(containerSelector), rowSelector, [
       {
         name: deleteRowMessage,
@@ -138,19 +160,17 @@ export default class ABFActorSheet extends ActorSheet {
         callback: target => {
           if (!customCallbackFn && !fieldPath) {
             console.warn(
-              `buildCommonContextualMenu: no custom callback and configuration set, could not delete the item: ${rowIdData}`
+              `buildCommonContextualMenu: no custom callback and configuration set, could not delete the item: ${itemConfig.type}`
             );
           }
 
           if (customCallbackFn) {
             customCallbackFn(this.actor, target);
           } else {
-            const id = target[0].dataset[rowIdData];
+            const id = target[0].dataset.itemId;
 
             if (!id) {
-              throw new Error(
-                `Data id missing. Are you sure to set ${rowIdData} in snake middle case to rows? example: data-elan-id`
-              );
+              throw new Error('Data id missing. Are you sure to set data-item-id to rows?');
             }
 
             if (fieldPath) {

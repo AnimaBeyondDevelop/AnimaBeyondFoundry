@@ -18,6 +18,7 @@ import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/ABFCombat';
 import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
+import ABFItemSheet from './module/items/ABFItemSheet';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -53,6 +54,11 @@ Hooks.once('init', async () => {
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);
   Actors.registerSheet('abf', ABFActorSheet, { makeDefault: true });
+
+  Items.unregisterSheet('core', ItemSheet);
+  Items.registerSheet('abf', ABFItemSheet, {
+    makeDefault: true
+  });
 });
 
 /* ------------------------------------ */

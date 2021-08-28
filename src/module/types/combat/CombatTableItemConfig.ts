@@ -19,8 +19,7 @@ export const CombatTableItemConfig: ABFItemConfig<CombatTableDataSource, CombatT
   selectors: {
     addItemButtonSelector: 'add-combat-table',
     containerSelector: '#combat-tables-context-menu-container',
-    rowSelector: '.combat-table-row',
-    rowIdData: 'combatTableId'
+    rowSelector: '.combat-table-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

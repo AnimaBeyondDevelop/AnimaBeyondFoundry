@@ -25,8 +25,7 @@ export const InnatePsychicPowerItemConfig: ABFItemConfig<InnatePsychicPowerDataS
   selectors: {
     addItemButtonSelector: 'add-innate-psychic-power',
     containerSelector: '#innate-psychic-powers-context-menu-container',
-    rowSelector: '.innate-psychic-power-row',
-    rowIdData: 'innatePsychicPowerId'
+    rowSelector: '.innate-psychic-power-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

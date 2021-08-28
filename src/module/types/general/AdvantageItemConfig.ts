@@ -19,8 +19,7 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
   selectors: {
     addItemButtonSelector: 'add-advantage',
     containerSelector: '#advantages-context-menu-container',
-    rowSelector: '.advantage-row',
-    rowIdData: 'advantageId'
+    rowSelector: '.advantage-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

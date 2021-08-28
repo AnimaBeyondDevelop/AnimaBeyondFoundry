@@ -1,19 +1,19 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="common-resources"
 }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="common-resources"
   }}
     <div class='life'>
       {{>
-      "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="max-life"
         title=(localize 'anima.ui.general.life.max.title')
         inputName="data.characteristics.secondaries.lifePoints.max"
         inputValue=data.data.characteristics.secondaries.lifePoints.max
       }}
       {{>
-      "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="current-life"
         title=(localize 'anima.ui.general.life.current.title')
         inputName="data.characteristics.secondaries.lifePoints.value"
@@ -24,7 +24,7 @@
       <h4 class='initiative-title'>{{localize 'anima.ui.general.initiative.title'}}</h4>
       <div class='initiative-values'>
         {{>
-        "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="initiative-base"
           rollable=true
           title=(localize 'anima.ui.general.initiative.base.title')
@@ -32,7 +32,7 @@
           inputValue=data.data.characteristics.secondaries.initiative.base.value
         }}
         {{>
-        "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="primary-initiative"
           rollable=true
           title=(localize 'anima.ui.general.initiative.primary.title')
@@ -40,7 +40,7 @@
           inputValue=data.data.characteristics.secondaries.initiative.primary.value
         }}
         {{>
-        "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="secondary-initiative"
           rollable=true
           title=(localize 'anima.ui.general.initiative.secondary.title')
@@ -51,7 +51,7 @@
     </div>
     <div class='fatigue-movement'>
       {{>
-      "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="fatigue"
         title=(localize 'anima.ui.general.fatigue.title')
         inputName="data.characteristics.secondaries.fatigue.value"
@@ -61,12 +61,12 @@
         secondaryInputValue=data.data.characteristics.secondaries.fatigue.max
       }}
       {{>
-      "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.title')
         inputName="data.characteristics.secondaries.movement.value"
         inputValue=data.data.characteristics.secondaries.movement.value
       }}
     </div>
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

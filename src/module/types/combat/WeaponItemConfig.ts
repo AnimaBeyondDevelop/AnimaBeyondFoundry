@@ -24,6 +24,7 @@ export type WeaponChanges = ItemChanges<WeaponItemData>;
 export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = {
   type: ABFItems.WEAPON,
   isInternal: false,
+  hasSheet: true,
   fieldPath: ['combat', 'weapons'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.weapons as WeaponChanges;
@@ -31,8 +32,7 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
   selectors: {
     addItemButtonSelector: 'add-weapon',
     containerSelector: '#weapons-context-menu-container',
-    rowSelector: '.weapon-row',
-    rowIdData: 'weaponId'
+    rowSelector: '.weapon-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

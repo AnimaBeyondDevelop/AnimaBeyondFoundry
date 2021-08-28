@@ -1,18 +1,18 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="secondary-special-skills"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.secondaries.secondarySpecialSkills.title")
     addRowButtonData="add-secondary-special-skill"
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="secondary-special-skills"
   }}
     {{#each data.data.secondaries.secondarySpecialSkills}}
-      <div data-secondary-special-skill-id='{{this._id}}' class='secondary-special-skill-row'>
+      <div data-item-id='{{this._id}}' class='secondary-special-skill-row'>
         {{>
-        "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="level"
           rollable=true
           title=this.name
@@ -21,5 +21,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

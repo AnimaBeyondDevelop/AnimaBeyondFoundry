@@ -27,8 +27,7 @@ export const SecondarySpecialSkillItemConfig: ABFItemConfig<
   selectors: {
     addItemButtonSelector: 'add-secondary-special-skill',
     containerSelector: '#secondary-special-skills-context-menu-container',
-    rowSelector: '.secondary-special-skill-row',
-    rowIdData: 'secondarySpecialSkillId'
+    rowSelector: '.secondary-special-skill-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

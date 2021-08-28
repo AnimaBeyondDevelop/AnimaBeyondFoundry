@@ -22,8 +22,7 @@ export const CombatSpecialSkillItemConfig: ABFItemConfig<CombatSpecialSkillDataS
   selectors: {
     addItemButtonSelector: 'add-combat-special-skill',
     containerSelector: '#combat-special-skills-context-menu-container',
-    rowSelector: '.combat-special-skill-row',
-    rowIdData: 'combatSpecialSkillId'
+    rowSelector: '.combat-special-skill-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

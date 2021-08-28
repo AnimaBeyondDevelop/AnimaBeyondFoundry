@@ -16,6 +16,11 @@ export type ABFItemConfig<D, C> = {
   isInternal: boolean;
 
   /**
+   * Indicate if the item has sheet to be edited
+   */
+  hasSheet?: boolean;
+
+  /**
    * Path where the item are located inside actor data, for example:
    * In data.data.combat.weapons are located the weapons
    * This field value must be: ['combat', 'weapons']
@@ -47,11 +52,6 @@ export type ABFItemConfig<D, C> = {
      * CSS class of each row that locate one single item
      */
     rowSelector: string;
-
-    /**
-     * Name of the data set that will be use to extract the id of the item
-     */
-    rowIdData: string;
   };
 
   /**

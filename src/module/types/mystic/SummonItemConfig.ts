@@ -19,8 +19,7 @@ export const SummonItemConfig: ABFItemConfig<SummonDataSource, SummonChanges> = 
   selectors: {
     addItemButtonSelector: 'add-summon',
     containerSelector: '#summons-context-menu-container',
-    rowSelector: '.summon-row',
-    rowIdData: 'summonId'
+    rowSelector: '.summon-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

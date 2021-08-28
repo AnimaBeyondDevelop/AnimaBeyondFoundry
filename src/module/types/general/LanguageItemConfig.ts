@@ -19,8 +19,7 @@ export const LanguageItemConfig: ABFItemConfig<LanguageDataSource, LanguageChang
   selectors: {
     addItemButtonSelector: 'add-language',
     containerSelector: '#languages-context-menu-container',
-    rowSelector: '.language-row',
-    rowIdData: 'languageId'
+    rowSelector: '.language-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

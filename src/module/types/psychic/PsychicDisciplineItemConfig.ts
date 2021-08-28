@@ -19,8 +19,7 @@ export const PsychicDisciplineItemConfig: ABFItemConfig<PsychicDisciplineDataSou
   selectors: {
     addItemButtonSelector: 'add-psychic-discipline',
     containerSelector: '#psychic-disciplines-context-menu-container',
-    rowSelector: '.psychic-discipline-row',
-    rowIdData: 'psychicDisciplineId'
+    rowSelector: '.psychic-discipline-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

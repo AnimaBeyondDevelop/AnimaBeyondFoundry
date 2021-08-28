@@ -22,8 +22,7 @@ export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
   selectors: {
     addItemButtonSelector: 'add-elan',
     containerSelector: '#elan-context-menu-container',
-    rowSelector: '.elan-row .base',
-    rowIdData: 'elanId'
+    rowSelector: '.elan-row .base'
   },
   contextMenuConfig: {
     buildExtraOptionsInContextMenu: actor => [

@@ -25,8 +25,7 @@ export const PsychicPowerItemConfig: ABFItemConfig<PsychicPowerDataSource, Psych
   selectors: {
     addItemButtonSelector: 'add-psychic-power',
     containerSelector: '#psychic-powers-context-menu-container',
-    rowSelector: '.psychic-power-row',
-    rowIdData: 'psychicPowerId'
+    rowSelector: '.psychic-power-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

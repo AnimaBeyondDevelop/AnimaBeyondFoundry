@@ -1,18 +1,18 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="selected-spells"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.selectedSpells.title")
     addRowButtonData="add-selected-spell"
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="selected-spells"
   }}
     {{#each data.data.mystic.selectedSpells}}
-      <div data-selected-spell-id='{{this._id}}' class='selected-spell-row'>
+      <div data-item-id='{{this._id}}' class='selected-spell-row'>
         {{>
-        "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.mystic.selectedSpells.name.title")
           hideTitle=(is "gt" @index 0)
@@ -21,7 +21,7 @@
           inputValue=this.name
         }}
         {{>
-        "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="cost"
           title=(localize "anima.ui.mystic.selectedSpells.cost.title")
           hideTitle=(is "gt" @index 0)
@@ -30,5 +30,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

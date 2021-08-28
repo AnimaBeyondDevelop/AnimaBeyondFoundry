@@ -19,8 +19,7 @@ export const KiSkillItemConfig: ABFItemConfig<KiSkillDataSource, KiSkillChanges>
   selectors: {
     addItemButtonSelector: 'add-ki-skill',
     containerSelector: '#ki-skills-context-menu-container',
-    rowSelector: '.ki-skill-row',
-    rowIdData: 'kiSkillId'
+    rowSelector: '.ki-skill-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

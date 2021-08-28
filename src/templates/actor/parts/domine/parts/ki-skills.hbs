@@ -1,16 +1,16 @@
-{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="ki-skills"
 }}
   {{>
-  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.domine.kiSkills.title")
     addRowButtonData="add-ki-skill"
   }}
-  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="ki-skills"
   }}
     {{#each data.data.domine.kiSkills}}
-      <div data-ki-skill-id='{{this._id}}' class='ki-skill-row'>
+      <div data-item-id='{{this._id}}' class='ki-skill-row'>
         <input
           name='data.dynamic.kiSkills.{{this._id}}.name'
           type='text'
@@ -19,5 +19,5 @@
         />
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

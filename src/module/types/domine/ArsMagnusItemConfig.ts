@@ -19,8 +19,7 @@ export const ArsMagnusItemConfig: ABFItemConfig<ArsMagnusDataSource, ArsMagnusCh
   selectors: {
     addItemButtonSelector: 'add-ars-magnus',
     containerSelector: '#ars-magnus-context-menu-container',
-    rowSelector: '.ars-magnus-row',
-    rowIdData: 'arsMagnusId'
+    rowSelector: '.ars-magnus-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

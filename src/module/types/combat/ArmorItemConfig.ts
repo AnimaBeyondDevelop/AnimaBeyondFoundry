@@ -27,8 +27,7 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   selectors: {
     addItemButtonSelector: 'add-armor',
     containerSelector: '#armors-context-menu-container',
-    rowSelector: '.armor-row',
-    rowIdData: 'armorId'
+    rowSelector: '.armor-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;

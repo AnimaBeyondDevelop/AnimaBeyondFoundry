@@ -21,8 +21,7 @@ export const ContactItemConfig: ABFItemConfig<ContactDataSource, ContactChanges>
   selectors: {
     addItemButtonSelector: 'add-contact',
     containerSelector: '#contacts-context-menu-container',
-    rowSelector: '.contact-row',
-    rowIdData: 'contactId'
+    rowSelector: '.contact-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
