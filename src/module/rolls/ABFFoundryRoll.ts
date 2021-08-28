@@ -2,6 +2,7 @@ import type { Options } from '@league-of-foundry-developers/foundry-vtt-types/sr
 import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
+import ABFControlRoll from './ABFControlRoll/ABFControlRoll';
 
 /**
  * This class represents the entrypoint of Foundry
@@ -27,8 +28,12 @@ export default class ABFFoundryRoll extends Roll {
       this.abfRoll = new ABFExploderRoll(this);
     }
 
-    if (this.formula.includes('Turno')) {
+    if (this.formula.includes('Initiative')) {
       this.abfRoll = new ABFInitiativeRoll(this);
+    }
+
+    if (this.formula.includes('ControlRoll')) {
+      this.abfRoll = new ABFControlRoll(this);
     }
   }
 

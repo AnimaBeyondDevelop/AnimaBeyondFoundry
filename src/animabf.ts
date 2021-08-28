@@ -38,7 +38,7 @@ Hooks.once('init', async () => {
     defeatedStatusId: 'dead',
     sidebarIcon: 'fas fa-fist-raised',
     initiative: {
-      formula: '1d100xaTurno + @characteristics.secondaries.initiative.value',
+      formula: '1d100xaInitiative + @characteristics.secondaries.initiative.value',
       decimals: 2
     }
   };

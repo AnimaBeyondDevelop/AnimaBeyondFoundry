@@ -10,7 +10,9 @@ export abstract class ABFRoll {
     return this.foundryRoll.firstResult <= this.DEFAULT_FUMBLE_RANGE;
   }
 
-  abstract evaluate(options?: Partial<Options>): ABFFoundryRoll;
+  get firstDice(): DiceTerm {
+    return this.foundryRoll.dice[0];
+  }
 
   protected addRoll(newRoll: ABFFoundryRoll) {
     this.firstDice.results.push({
@@ -25,7 +27,5 @@ export abstract class ABFRoll {
     return this.foundryRoll;
   }
 
-  get firstDice(): DiceTerm {
-    return this.foundryRoll.dice[0];
-  }
+  abstract evaluate(options?: Partial<Options>): ABFFoundryRoll;
 }
