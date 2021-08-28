@@ -1,0 +1,22 @@
+{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+  class="martial-knowledge"
+}}
+  {{>
+  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+    title=(localize "anima.ui.domine.martialKnowledge.title")
+  }}
+  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+    class="martial-knowledge"
+  }}
+    {{>
+    "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+      class="knowledge"
+      title=(localize "anima.ui.domine.martialKnowledge.mk.title")
+      inputName="data.domine.martialKnowledge.used.value"
+      inputValue=data.data.domine.martialKnowledge.used.value
+      hasSecondaryInput=true
+      secondaryInputName="data.domine.martialKnowledge.max.value"
+      secondaryInputValue=data.data.domine.martialKnowledge.max.value
+    }}
+  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}

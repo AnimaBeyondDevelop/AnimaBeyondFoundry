@@ -1,0 +1,42 @@
+{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+  class="magic-projection"
+}}
+  {{>
+  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.magicProjection.title")
+  }}
+  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+    class="magic-projection"
+  }}
+    {{>
+    "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+      class="final"
+      title=(localize "anima.ui.mystic.magicProjection.final.title")
+      rollable=true
+      rollableMessage=(localize "anima.ui.mystic.magicProjection.final.rollMessage")
+      inputName="data.mystic.magicProjection.final.value"
+      inputValue=data.data.mystic.magicProjection.final.value
+    }}
+    <h3 class='title'>{{localize "anima.ui.mystic.magicProjection.imbalance.title"}}</h3>
+    <div class='imbalance'>
+      {{>
+      "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        class="offensive"
+        title=(localize "anima.ui.mystic.magicProjection.offensive.title")
+        rollable=true
+        rollableMessage=(localize "anima.ui.mystic.magicProjection.offensive.rollMessage")
+        inputName="data.mystic.magicProjection.imbalance.offensive.value"
+        inputValue=data.data.mystic.magicProjection.imbalance.offensive.value
+      }}
+      {{>
+      "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+        class="defensive"
+        title=(localize "anima.ui.mystic.magicProjection.defensive.title")
+        rollable=true
+        rollableMessage=(localize "anima.ui.mystic.magicProjection.defensive.rollMessage")
+        inputName="data.mystic.magicProjection.imbalance.defensive.value"
+        inputValue=data.data.mystic.magicProjection.imbalance.defensive.value
+      }}
+    </div>
+  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}

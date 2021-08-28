@@ -1,0 +1,88 @@
+{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+  class="psychic-powers"
+}}
+  {{>
+  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+    title=(localize "anima.ui.psychic.psychicPowers.title")
+    addRowButtonData="add-psychic-power"
+  }}
+  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+    class="psychic-powers"
+  }}
+    {{#each data.data.psychic.psychicPowers as |power|}}
+      <div data-psychic-power-id='{{power._id}}' class='psychic-power-row'>
+        {{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+          class="psychic-power"
+        }}
+          {{#> "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
+            <div class='psychic-power-header'>
+              {{>
+              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+                class="name"
+                title=(localize "anima.ui.psychic.psychicPowers.power.header.name.title")
+                inputType="text"
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".name")
+                inputValue=power.name
+              }}
+              {{>
+              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+                class="level"
+                title=(localize "anima.ui.psychic.psychicPowers.power.header.level.title")
+                inputType="text"
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.level.value")
+                inputValue=power.data.level.value
+              }}
+            </div>
+          {{/"systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+            class="psychic-power"
+          }}
+            {{#each power.data.effects as |effect|}}
+              <div class='effect-row'>
+                <input
+                  type='text'
+                  class='input'
+                  disabled
+                  value='{{getDifficultyFromIndex @index}}'
+                />
+                <input
+                  type='text'
+                  class='input'
+                  name='{{concat "data.dynamic.psychicPowers." power._id ".data.effects." @index}}'
+                  value='{{effect.value}}'
+                />
+              </div>
+            {{/each}}
+          {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/actor/parts/common/ui/group-footer.hbs"}}
+            <div class='psychic-power-footer'>
+              {{>
+              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+                class="action-type"
+                title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
+                inputType='text'
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.actionType.value")
+                inputValue=power.data.actionType.value
+              }}
+              {{>
+              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+                class="has-maintenance"
+                title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
+                inputType="checkbox"
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.hasMaintenance.value")
+                inputValue=(is 'eq' power.data.hasMaintenance.value true)
+              }}
+              {{>
+              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+                class="bonus"
+                title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
+                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.bonus.value")
+                inputValue=power.data.bonus.value
+              }}
+            </div>
+          {{/"systems/animabf/templates/actor/parts/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}

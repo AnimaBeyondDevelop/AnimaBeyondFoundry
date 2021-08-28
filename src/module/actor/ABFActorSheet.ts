@@ -23,7 +23,7 @@ export default class ABFActorSheet extends ActorSheet {
       ...super.defaultOptions,
       ...{
         classes: ['abf', 'sheet', 'actor'],
-        template: 'systems/animabf/templates/actor-sheet.hbs',
+        template: 'systems/animabf/templates/actor/actor-sheet.hbs',
         width: 900,
         height: 850,
         submitOnChange: true,

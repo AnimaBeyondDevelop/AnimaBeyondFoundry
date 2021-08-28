@@ -1,0 +1,106 @@
+{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+  class="weapons"
+}}
+  {{>
+  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+    title=(localize "anima.ui.combat.weapons.title")
+    addRowButtonData="add-weapon"
+  }}
+  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+    class="weapons"
+  }}
+    {{#each data.data.combat.weapons}}
+      <div data-weapon-id='{{this._id}}' class='weapon-row'>
+        {{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+          class="weapon"
+        }}
+          {{#> "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
+            <div class='weapon-header'>
+              {{>
+              "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+                class="name"
+                title=(localize "anima.ui.combat.weapons.header.name.title")
+                inputType="text"
+                inputName=(concat "data.dynamic.weapons." this._id ".name")
+                inputValue=this.name
+              }}
+            </div>
+          {{/"systems/animabf/templates/actor/parts/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+            class="weapon"
+          }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="special"
+              title=(localize "anima.ui.combat.weapons.special.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.special.value")
+              inputValue=this.data.special.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="integrity"
+              title=(localize "anima.ui.combat.weapons.integrity.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.integrity.value")
+              inputValue=this.data.integrity.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="breaking"
+              title=(localize "anima.ui.combat.weapons.breaking.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.breaking.value")
+              inputValue=this.data.breaking.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="attack"
+              title=(localize "anima.ui.combat.weapons.attack.title")
+              rollable=true
+              rollableMessage=(concat (localize "anima.ui.combat.weapons.attack.roll.message") this.name)
+              inputName=(concat "data.dynamic.weapons." this._id ".data.attack.value")
+              inputValue=this.data.attack.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="block"
+              title=(localize "anima.ui.combat.weapons.block.title")
+              rollable=true
+              rollableMessage=(concat (localize "anima.ui.combat.weapons.block.roll.message") this.name)
+              inputName=(concat "data.dynamic.weapons." this._id ".data.block.value")
+              inputValue=this.data.block.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="damage"
+              title=(localize "anima.ui.combat.weapons.damage.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.damage.value")
+              inputValue=this.data.damage.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="initiative"
+              title=(localize "anima.ui.combat.weapons.initiative.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.initiative.value")
+              inputValue=this.data.initiative.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="critic-primary"
+              title=(localize "anima.ui.combat.weapons.critic.primary.title")
+              inputType="text"
+              inputName=(concat "data.dynamic.weapons." this._id ".data.critic.primary.value")
+              inputValue=this.data.critic.primary.value
+            }}
+            {{>
+            "systems/animabf/templates/actor/parts/common/ui/vertical-titled-input.hbs"
+              class="critic-secondary"
+              title=(localize "anima.ui.combat.weapons.critic.secondary.title")
+              inputType="text"
+              inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary.value")
+              inputValue=this.data.critic.secondary.value
+            }}
+          {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+        {{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}

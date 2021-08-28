@@ -1,0 +1,50 @@
+{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+  class="summoning"
+}}
+  {{>
+  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.summoning.title")
+  }}
+  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+    class="summoning"
+  }}
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+          class="summon"
+          title=(localize "anima.ui.mystic.summoning.summon.title")
+          rollable=true
+          inputName="data.mystic.summoning.summon.value"
+          inputValue=data.data.mystic.summoning.summon.value
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+          class="bind"
+          title=(localize "anima.ui.mystic.summoning.bind.title")
+          rollable=true
+          inputName="data.mystic.summoning.bind.value"
+          inputValue=data.data.mystic.summoning.bind.value
+        }}
+      </div>
+      <div>
+        {{>
+        "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+          class="control"
+          title=(localize "anima.ui.mystic.summoning.control.title")
+          rollable=true
+          inputName="data.mystic.summoning.control.value"
+          inputValue=data.data.mystic.summoning.control.value
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+          class="banish"
+          title=(localize "anima.ui.mystic.summoning.banish.title")
+          rollable=true
+          inputName="data.mystic.summoning.banish.value"
+          inputValue=data.data.mystic.summoning.banish.value
+        }}
+      </div>
+    </div>
+  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}

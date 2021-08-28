@@ -120,7 +120,6 @@
           "name": { "value": "" },
           "at": {
             "cut": { "value": 0 },
-            "pierce": { "value": 0 },
             "impact": { "value": 0 },
             "thrust": { "value": 0 },
             "heat": { "value": 0 },
@@ -132,7 +131,8 @@
         "combatSpecialSkills": [],
         "combatTables": [],
         "ammo": [],
-        "weapons": []
+        "weapons": [],
+        "armors": []
       },
       "mystic": {
         "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },

@@ -1,0 +1,26 @@
+{{#> "systems/animabf/templates/actor/parts/common/ui/group.hbs"
+  class="act"
+}}
+  {{>
+  "systems/animabf/templates/actor/parts/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.act.title")
+  }}
+  {{#> "systems/animabf/templates/actor/parts/common/ui/group-body.hbs"
+    class="act"
+  }}
+    {{>
+    "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+      class="main"
+      title=(localize "anima.ui.mystic.act.main.title")
+      inputName="data.mystic.act.main.value"
+      inputValue=data.data.mystic.act.main.value
+    }}
+    {{>
+    "systems/animabf/templates/actor/parts/common/ui/horizontal-titled-input.hbs"
+      class="alternative"
+      title=(localize "anima.ui.mystic.act.alternative.title")
+      inputName="data.mystic.act.alternative.value"
+      inputValue=data.data.mystic.act.alternative.value
+    }}
+  {{/"systems/animabf/templates/actor/parts/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/actor/parts/common/ui/group.hbs"}}
