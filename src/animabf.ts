@@ -29,7 +29,7 @@ Hooks.once('init', async () => {
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
 
-  CONFIG.Dice.rolls = [ABFFoundryRoll];
+  CONFIG.Dice.rolls.push(ABFFoundryRoll);
 
   CONFIG.Combat = {
     documentClass: ABFCombat,
