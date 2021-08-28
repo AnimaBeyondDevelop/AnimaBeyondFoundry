@@ -4,7 +4,7 @@ import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 
 export type WeaponItemData = {
-  special: { value: number };
+  special: { value: string };
   integrity: { value: number };
   breaking: { value: number };
   attack: { value: number };
@@ -45,7 +45,7 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
       name,
       type: ABFItems.WEAPON,
       data: {
-        special: { value: 0 },
+        special: { value: '' },
         integrity: { value: 0 },
         breaking: { value: 0 },
         attack: { value: 0 },

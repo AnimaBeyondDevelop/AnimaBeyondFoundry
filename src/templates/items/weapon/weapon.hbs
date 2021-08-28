@@ -21,6 +21,7 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="special"
         title=(localize "anima.ui.combat.weapons.special.title")
+        inputType="text"
         inputName=(concat "data.special.value")
         inputValue=data.data.special.value
       }}
@@ -42,8 +43,6 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="attack"
         title=(localize "anima.ui.combat.weapons.attack.title")
-        rollable=true
-        rollableMessage=(concat (localize "anima.ui.combat.weapons.attack.roll.message") data.name)
         inputName=(concat "data.attack.value")
         inputValue=data.data.attack.value
       }}
@@ -51,8 +50,6 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="block"
         title=(localize "anima.ui.combat.weapons.block.title")
-        rollable=true
-        rollableMessage=(concat (localize "anima.ui.combat.weapons.block.roll.message") data.name)
         inputName=(concat "data.block.value")
         inputValue=data.data.block.value
       }}
