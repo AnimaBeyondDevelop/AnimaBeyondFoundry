@@ -311,10 +311,7 @@ export type ABFActorDataSourceData = {
     dodge: {
       value: number;
     };
-    armor: {
-      name: {
-        value: string;
-      };
+    totalArmor: {
       at: {
         cut: {
           value: number;

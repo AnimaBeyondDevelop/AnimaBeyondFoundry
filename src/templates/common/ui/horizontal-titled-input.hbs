@@ -30,6 +30,7 @@
     />
     {{#if this.hasSecondaryInput}}
       <input
+        {{#if this.disableSecondaryInput}}disabled{{/if}}
         name='{{this.secondaryInputName}}'
         type='{{#if this.secondaryInputType}}{{this.secondaryInputType}}{{else}}number{{/if}}'
         class='input secondary-input'

@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import { nanoid } from '../../vendor/nanoid/nanoid';
-import { prepareActor } from './utils/prepareActor/prepareActor';
 import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
 import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
 import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
@@ -16,12 +15,6 @@ export class ABFActor extends Actor {
     super(data, context);
 
     this.i18n = (game as Game).i18n;
-  }
-
-  prepareDerivedData() {
-    super.prepareDerivedData();
-
-    prepareActor(this.data);
   }
 
   public async createItem({ type, name, data = {} }: { type: ABFItems; name: string; data?: unknown }) {

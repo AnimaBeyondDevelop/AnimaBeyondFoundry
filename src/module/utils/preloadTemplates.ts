@@ -18,7 +18,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/header/header.hbs',
     'systems/animabf/templates/actor/parts/header/parts/top.hbs',
     'systems/animabf/templates/actor/parts/header/parts/actor-image.hbs',
-    'systems/animabf/templates/actor/parts/header/parts/armor.hbs',
+    'systems/animabf/templates/actor/parts/header/parts/total-armor.hbs',
     'systems/animabf/templates/actor/parts/header/parts/common-resources.hbs',
     'systems/animabf/templates/actor/parts/header/parts/modifiers.hbs',
     'systems/animabf/templates/actor/parts/header/parts/primary-characteristics.hbs',

@@ -116,8 +116,7 @@
         "attack": { "value": 0 },
         "block": { "value": 0 },
         "dodge": { "value": 0 },
-        "armor": {
-          "name": { "value": "" },
+        "totalArmor": {
           "at": {
             "cut": { "value": 0 },
             "impact": { "value": 0 },
