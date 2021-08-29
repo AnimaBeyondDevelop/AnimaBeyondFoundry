@@ -9,8 +9,6 @@ export const preloadTemplates = () => {
     // Items sheet parts
     'systems/animabf/templates/items/base/base-sheet.hbs',
     'systems/animabf/templates/items/base/parts/item-image.hbs',
-    'systems/animabf/templates/items/base/parts/item-name.hbs',
-    'systems/animabf/templates/items/base/parts/item-name.hbs',
     'systems/animabf/templates/items/weapon/weapon.hbs',
     'systems/animabf/templates/items/armor/armor.hbs',
 
