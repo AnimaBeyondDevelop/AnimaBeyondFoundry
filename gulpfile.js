@@ -9,6 +9,8 @@ const through = require('through2');
 const prettier = require('prettier');
 const { execSync } = require('child_process');
 
+const readlineSync = require('readline-sync');
+
 const ts = require('gulp-typescript');
 const less = require('gulp-less');
 const sass = require('gulp-sass');
@@ -30,7 +32,13 @@ function getConfig() {
   }
 }
 
-const ROOT_PATH = `${getConfig().destPath ?? '..'}/animabf`;
+let ROOT_PATH;
+
+if (argv.release) {
+  ROOT_PATH = `dist/`;
+} else {
+  ROOT_PATH = `${getConfig().destPath ?? '..'}/animabf`;
+}
 
 function getManifest() {
   const json = {};
@@ -66,15 +74,10 @@ function createTransformer() {
    * @param {typescript.Node} node
    */
   function shouldMutateModuleSpecifier(node) {
-    if (!typescript.isImportDeclaration(node) && !typescript.isExportDeclaration(node))
-      return false;
+    if (!typescript.isImportDeclaration(node) && !typescript.isExportDeclaration(node)) return false;
     if (node.moduleSpecifier === undefined) return false;
     if (!typescript.isStringLiteral(node.moduleSpecifier)) return false;
-    if (
-      !node.moduleSpecifier.text.startsWith('./') &&
-      !node.moduleSpecifier.text.startsWith('../')
-    )
-      return false;
+    if (!node.moduleSpecifier.text.startsWith('./') && !node.moduleSpecifier.text.startsWith('../')) return false;
     if (path.extname(node.moduleSpecifier.text) !== '') return false;
     return true;
   }
@@ -91,9 +94,7 @@ function createTransformer() {
       function visitor(node) {
         if (shouldMutateModuleSpecifier(node)) {
           if (typescript.isImportDeclaration(node)) {
-            const newModuleSpecifier = typescript.createLiteral(
-              `${node.moduleSpecifier.text}.js`
-            );
+            const newModuleSpecifier = typescript.createLiteral(`${node.moduleSpecifier.text}.js`);
             return typescript.updateImportDeclaration(
               node,
               node.decorators,
@@ -102,9 +103,7 @@ function createTransformer() {
               newModuleSpecifier
             );
           } else if (typescript.isExportDeclaration(node)) {
-            const newModuleSpecifier = typescript.createLiteral(
-              `${node.moduleSpecifier.text}.js`
-            );
+            const newModuleSpecifier = typescript.createLiteral(`${node.moduleSpecifier.text}.js`);
             return typescript.updateExportDeclaration(
               node,
               node.decorators,
@@ -152,20 +151,14 @@ function buildTemplate() {
       try {
         const content = Buffer.from(file.contents).toString();
 
-        let typedCharacteristics = content.substr(
-          content.indexOf('{'),
-          content.lastIndexOf('}')
-        );
+        let typedCharacteristics = content.substr(content.indexOf('{'), content.lastIndexOf('}'));
 
         typedCharacteristics = typedCharacteristics.replace(/;}/g, '}');
         typedCharacteristics = typedCharacteristics.replace(/;/g, ',');
         typedCharacteristics = typedCharacteristics.replace(/number/g, '0');
         typedCharacteristics = typedCharacteristics.replace(/string/g, "''");
         typedCharacteristics = typedCharacteristics.replace(/boolean/g, 'false');
-        typedCharacteristics = typedCharacteristics.substr(
-          0,
-          typedCharacteristics.lastIndexOf(',')
-        );
+        typedCharacteristics = typedCharacteristics.substr(0, typedCharacteristics.lastIndexOf(','));
         typedCharacteristics = prettier.format(typedCharacteristics, { parser: 'json' });
 
         file.contents = Buffer.from(typedCharacteristics);
@@ -180,11 +173,7 @@ function buildTemplate() {
 
         execSync('prettier src/template.json --write');
       } catch (e) {
-        console.log(
-          chalk.blueBright(
-            'Restoring original template.json content due the following fail:'
-          )
-        );
+        console.log(chalk.blueBright('Restoring original template.json content due the following fail:'));
         console.error(chalk.red(e.stack));
         file.contents = originalContent;
       }
@@ -205,26 +194,14 @@ function buildLess() {
  * Build SASS
  */
 function buildSASS() {
-  return gulp
-    .src('src/scss/animabf.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(ROOT_PATH));
+  return gulp.src('src/scss/animabf.scss').pipe(sass().on('error', sass.logError)).pipe(gulp.dest(ROOT_PATH));
 }
 
 /**
  * Copy static files
  */
 async function copyFiles() {
-  const statics = [
-    'lang',
-    'fonts',
-    'assets',
-    'templates',
-    'packs',
-    'module.json',
-    'system.json',
-    'template.json'
-  ];
+  const statics = ['lang', 'fonts', 'assets', 'templates', 'packs', 'module.json', 'system.json', 'template.json'];
   try {
     for (const file of statics) {
       if (fs.existsSync(path.join('src', file))) {
@@ -242,11 +219,7 @@ async function copyFiles() {
  */
 function buildWatch() {
   gulp.watch('src/**/*.ts', { ignoreInitial: false }, buildTS);
-  gulp.watch(
-    'src/module/types/Actor.ts',
-    { ignoreInitial: false },
-    buildTemplate
-  );
+  gulp.watch('src/module/types/Actor.ts', { ignoreInitial: false }, buildTemplate);
   gulp.watch('src/**/*.less', { ignoreInitial: false }, buildLess);
   gulp.watch('src/**/*.scss', { ignoreInitial: false }, buildSASS);
   gulp.watch(
@@ -284,10 +257,7 @@ async function clean() {
   }
 
   // If the project uses Less or SASS
-  if (
-    fs.existsSync(path.join('src', `${name}.less`)) ||
-    fs.existsSync(path.join('src', `${name}.scss`))
-  ) {
+  if (fs.existsSync(path.join('src', `${name}.scss`))) {
     files.push('fonts', `${name}.css`);
   }
 
@@ -328,7 +298,7 @@ async function packageBuild() {
       fs.ensureDirSync('package');
 
       // Initialize the zip file
-      const zipName = `${manifest.file.name}-v${manifest.file.version}.zip`;
+      const zipName = `${manifest.file.name}.zip`;
       const zipFile = fs.createWriteStream(path.join('package', zipName));
       const zip = archiver('zip', { zlib: { level: 9 } });
 
@@ -371,70 +341,21 @@ function updateManifest(cb) {
 
   if (!config) cb(Error(chalk.red('foundryconfig.json not found')));
   if (!manifest) cb(Error(chalk.red('Manifest JSON not found')));
-  if (!rawURL || !repoURL)
-    cb(Error(chalk.red('Repository URLs not configured in foundryconfig.json')));
+  if (!rawURL || !repoURL) cb(Error(chalk.red('Repository URLs not configured in foundryconfig.json')));
 
   try {
-    const version = argv.update || argv.u;
-
-    /* Update version */
-
-    const versionMatch = /^(\d{1,}).(\d{1,}).(\d{1,})$/;
-    const currentVersion = manifest.file.version;
-    let targetVersion = '';
-
-    if (!version) {
-      cb(Error('Missing version number'));
-    }
-
-    if (versionMatch.test(version)) {
-      targetVersion = version;
-    } else {
-      targetVersion = currentVersion.replace(
-        versionMatch,
-        (substring, major, minor, patch) => {
-          console.log(substring, Number(major) + 1, Number(minor) + 1, Number(patch) + 1);
-          if (version === 'major') {
-            return `${Number(major) + 1}.0.0`;
-          } else if (version === 'minor') {
-            return `${major}.${Number(minor) + 1}.0`;
-          } else if (version === 'patch') {
-            return `${major}.${minor}.${Number(patch) + 1}`;
-          } else {
-            return '';
-          }
-        }
-      );
-    }
-
-    if (targetVersion === '') {
-      return cb(Error(chalk.red('Error: Incorrect version arguments.')));
-    }
-
-    if (targetVersion === currentVersion) {
-      return cb(
-        Error(chalk.red('Error: Target version is identical to current version.'))
-      );
-    }
-    console.log(`Updating version number to '${targetVersion}'`);
-
-    packageJson.version = targetVersion;
-    manifest.file.version = targetVersion;
+    manifest.file.version = packageJson.version;
 
     /* Update URLs */
 
-    const result = `${rawURL}/v${manifest.file.version}/package/${manifest.file.name}-v${manifest.file.version}.zip`;
+    const result = `${rawURL}/releases/download/${manifest.file.version}/${manifest.file.name}.zip`;
 
     manifest.file.url = repoURL;
-    manifest.file.manifest = `${rawURL}/master/${manifestRoot}/${manifest.name}`;
+    manifest.file.manifest = `${rawURL}/main/${manifestRoot}/${manifest.name}`;
     manifest.file.download = result;
 
-    const prettyProjectJson = stringify(manifest.file, {
-      maxLength: 35,
-      indent: '\t'
-    });
+    const prettyProjectJson = prettier.format(stringify(manifest.file), { parser: 'json' });
 
-    fs.writeJSONSync('package.json', packageJson, { spaces: '\t' });
     fs.writeFileSync(path.join(manifest.root, manifest.name), prettyProjectJson, 'utf8');
 
     return cb();
@@ -443,31 +364,43 @@ function updateManifest(cb) {
   }
 }
 
-function gitAdd() {
-  return gulp.src('package').pipe(git.add({ args: '--no-all' }));
-}
-
 function gitCommit() {
   return gulp.src('./*').pipe(
-    git.commit(`v${getManifest().file.version}`, {
-      args: '-a',
+    git.commit(`update: v${getManifest().file.version}`, {
+      args: '-a --no-verify',
       disableAppendPaths: true
     })
   );
 }
 
-function gitTag() {
-  const manifest = getManifest();
-  return git.tag(
-    `v${manifest.file.version}`,
-    `Updated to ${manifest.file.version}`,
-    err => {
-      if (err) throw err;
+function ensureGitBranch(cb) {
+  git.revParse({ args: '--abbrev-ref HEAD' }, function (err, branch) {
+    if (branch !== 'main') {
+      cb(new Error(chalk.red("Publishing only can be done 'main' branch")));
     }
-  );
+
+    return cb();
+  });
 }
 
-const execGit = gulp.series(gitAdd, gitCommit, gitTag);
+function gitTag(cb) {
+  const manifest = getManifest();
+  return git.tag(`v${manifest.file.version}`, `Updated to ${manifest.file.version}`, err => {
+    if (err) cb(err);
+  });
+}
+
+function showDisclaimer(cb) {
+  const packageJson = fs.readJSONSync('package.json');
+
+  readlineSync.question(
+    `Do you want to publish a new version? New version will be ${packageJson.version}, so make sure that this version is not already published :`
+  );
+
+  cb();
+}
+
+const execGit = gulp.series(gitCommit, gitTag);
 
 const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
 
@@ -476,4 +409,4 @@ exports.watch = buildWatch;
 exports.clean = clean;
 exports.package = packageBuild;
 exports.update = updateManifest;
-exports.publish = gulp.series(clean, updateManifest, execBuild, packageBuild, execGit);
+exports.publish = gulp.series(ensureGitBranch, showDisclaimer, execGit, clean, updateManifest, execBuild, packageBuild);

@@ -7,3 +7,6 @@ foundryconfig.json
 /integration/cypress.env.json
 
 .husky/
+
+dist/
+package/

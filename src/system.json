@@ -3,27 +3,14 @@
   "title": "Anima Beyond Fantasy",
   "description": "",
   "version": "1.0.1",
-  "authors": [
-    {
-      "name": "Linkaynn",
-      "url": "https://www.jeseromero.com"
-    }
-  ],
+  "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
   "scripts": [],
   "esmodules": ["animabf.js"],
   "styles": ["animabf.css"],
   "packs": [],
   "languages": [
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
-    },
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
+    { "lang": "es", "name": "Español", "path": "lang/es.json" },
+    { "lang": "en", "name": "English", "path": "lang/en.json" }
   ],
   "dependencies": [
     {
@@ -37,7 +24,7 @@
   "minimumCoreVersion": "0.8.8",
   "compatibleCoreVersion": "0.8.8",
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
-  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/develop/src/system.json",
-  "download": "",
+  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
+  "download": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/1.0.1/animabf.zip",
   "bugs": "https://docs.google.com/forms/d/e/1FAIpQLSeUTdTOjxMKarAd1eoHfpswyoIs-mvSElVGmv7sZGrEuBHWKA/viewform?usp=sf_link"
 }

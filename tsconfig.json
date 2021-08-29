@@ -6,7 +6,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "outDir": "dist"
   },
   "include": ["src"],
   "exclude": ["./**/.*.test.*", "./**/__mocks__"]
