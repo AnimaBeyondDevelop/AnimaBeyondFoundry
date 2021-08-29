@@ -348,7 +348,7 @@ function updateManifest(cb) {
 
     /* Update URLs */
 
-    const result = `${rawURL}/releases/download/v${manifest.file.version}/${manifest.file.name}.zip`;
+    const result = `${repoURL}/releases/download/v${manifest.file.version}/${manifest.file.name}.zip`;
 
     manifest.file.url = repoURL;
     manifest.file.manifest = `${rawURL}/main/${manifestRoot}/${manifest.name}`;
