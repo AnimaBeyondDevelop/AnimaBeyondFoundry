@@ -1,0 +1,9 @@
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  isVertical=true
+  class=this.class
+  title=this.title
+  inputName=this.inputName
+}}
+  <option {{#if (is "eq" this.inputValue 'one-handed')}}selected{{/if}} value='one-handed'>{{localize 'anima.ui.weapons.one-handed.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'two-handed')}}selected{{/if}} value='two-handed'>{{localize 'anima.ui.weapons.two-handed.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

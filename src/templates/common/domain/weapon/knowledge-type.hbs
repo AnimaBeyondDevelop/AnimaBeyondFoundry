@@ -1,0 +1,11 @@
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  isVertical=true
+  class=this.class
+  title=this.title
+  inputName=this.inputName
+}}
+  <option {{#if (is "eq" this.inputValue 'known')}}selected{{/if}} value='known'>{{localize 'anima.ui.weapons.known.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'similar')}}selected{{/if}} value='similar'>{{localize 'anima.ui.weapons.similar.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'mixed')}}selected{{/if}} value='mixed'>{{localize 'anima.ui.weapons.mixed.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'different')}}selected{{/if}} value='different'>{{localize 'anima.ui.weapons.different.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

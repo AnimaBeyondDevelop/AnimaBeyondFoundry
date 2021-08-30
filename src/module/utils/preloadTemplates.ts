@@ -6,6 +6,22 @@ export const preloadTemplates = () => {
     Templates.Dialog.ModDialog,
     Templates.Dialog.Icons.Accept,
 
+    // Common parts
+    'systems/animabf/templates/common/ui/horizontal-titled-input.hbs',
+    'systems/animabf/templates/common/ui/vertical-titled-input.hbs',
+    'systems/animabf/templates/common/ui/group.hbs',
+    'systems/animabf/templates/common/ui/group-header.hbs',
+    'systems/animabf/templates/common/ui/group-header-title.hbs',
+    'systems/animabf/templates/common/ui/group-body.hbs',
+    'systems/animabf/templates/common/ui/group-footer.hbs',
+    'systems/animabf/templates/common/ui/add-item-button.hbs',
+    'systems/animabf/templates/common/ui/custom-select.hbs',
+
+    // Domain parts
+    'systems/animabf/templates/common/domain/weapon/select-critic.hbs',
+    'systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs',
+    'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs',
+
     // Items sheet parts
     'systems/animabf/templates/items/base/base-sheet.hbs',
     'systems/animabf/templates/items/base/parts/item-image.hbs',
@@ -21,14 +37,6 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/header/parts/modifiers.hbs',
     'systems/animabf/templates/actor/parts/header/parts/primary-characteristics.hbs',
     'systems/animabf/templates/actor/parts/header/parts/resistances.hbs',
-    'systems/animabf/templates/common/ui/horizontal-titled-input.hbs',
-    'systems/animabf/templates/common/ui/vertical-titled-input.hbs',
-    'systems/animabf/templates/common/ui/group.hbs',
-    'systems/animabf/templates/common/ui/group-header.hbs',
-    'systems/animabf/templates/common/ui/group-header-title.hbs',
-    'systems/animabf/templates/common/ui/group-body.hbs',
-    'systems/animabf/templates/common/ui/group-footer.hbs',
-    'systems/animabf/templates/common/ui/add-item-button.hbs',
     'systems/animabf/templates/actor/parts/general/general.hbs',
     'systems/animabf/templates/actor/parts/general/parts/level.hbs',
     'systems/animabf/templates/actor/parts/general/parts/language.hbs',

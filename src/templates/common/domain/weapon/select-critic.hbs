@@ -1,0 +1,14 @@
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  isVertical=true
+  class=this.class
+  title=this.title
+  inputName=this.inputName
+}}
+  <option {{#if (is "eq" this.inputValue 'cut')}}selected{{/if}} value='cut'>{{localize 'anima.ui.armor.at.cut.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'impact')}}selected{{/if}} value='impact'>{{localize 'anima.ui.armor.at.impact.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'thrust')}}selected{{/if}} value='thrust'>{{localize 'anima.ui.armor.at.thrust.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'heat')}}selected{{/if}} value='heat'>{{localize 'anima.ui.armor.at.heat.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'electricity')}}selected{{/if}} value='electricity'>{{localize 'anima.ui.armor.at.electricity.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'cold')}}selected{{/if}} value='cold'>{{localize 'anima.ui.armor.at.cold.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'energy')}}selected{{/if}} value='energy'>{{localize 'anima.ui.armor.at.energy.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

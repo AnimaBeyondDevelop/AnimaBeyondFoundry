@@ -11,6 +11,16 @@ export type WeaponItemData = {
   block: { value: number };
   damage: { value: number };
   initiative: { value: number };
+  initiativeBase: { value: number };
+  presence: { value: number };
+  size: { value: number };
+  fueRequired: { value: string };
+  quality: { value: number };
+  oneOrTwoHanded: { value: string };
+  isRanged: { value: boolean };
+  range: { value: number };
+  cadence: { value: string };
+  knowledgeType: { value: string };
   critic: {
     primary: { value: string };
     secondary: { value: string };
@@ -41,7 +51,7 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
       content: i18n.localize('dialogs.items.weapons.content')
     });
 
-    const itemData = {
+    const itemData: Omit<WeaponDataSource, '_id'> = {
       name,
       type: ABFItems.WEAPON,
       data: {
@@ -52,6 +62,16 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
         block: { value: 0 },
         damage: { value: 0 },
         initiative: { value: 0 },
+        initiativeBase: { value: 0 },
+        presence: { value: 0 },
+        size: { value: 0 },
+        fueRequired: { value: '' },
+        quality: { value: 0 },
+        oneOrTwoHanded: { value: '' },
+        isRanged: { value: false },
+        cadence: { value: '' },
+        range: { value: 0 },
+        knowledgeType: { value: '' },
         critic: {
           primary: { value: '' },
           secondary: { value: '' }

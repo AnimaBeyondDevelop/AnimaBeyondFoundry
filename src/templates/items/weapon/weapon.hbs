@@ -17,13 +17,33 @@
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="weapon-item-dialog"
     }}
+      {{> 'systems/animabf/templates/common/domain/weapon/select-critic.hbs'
+        class="critic-primary"
+        title=(localize "anima.ui.combat.weapons.critic.primary.title")
+        inputName=(concat "data.critic.primary.value")
+        inputValue=data.data.critic.primary.value
+      }}
+      {{#unless (is 'eq' data.data.isRanged.value true)}}
+        {{> 'systems/animabf/templates/common/domain/weapon/select-critic.hbs'
+          class="critic-secondary"
+          title=(localize "anima.ui.combat.weapons.critic.secondary.title")
+          inputName=(concat "data.critic.secondary.value")
+          inputValue=data.data.critic.secondary.value
+        }}
+      {{/unless}}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="special"
-        title=(localize "anima.ui.combat.weapons.special.title")
-        inputType="text"
-        inputName=(concat "data.special.value")
-        inputValue=data.data.special.value
+        class="presence"
+        title=(localize "anima.ui.combat.weapons.presence.title")
+        inputName=(concat "data.presence.value")
+        inputValue=data.data.presence.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="size"
+        title=(localize "anima.ui.combat.weapons.size.title")
+        inputName=(concat "data.size.value")
+        inputValue=data.data.size.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -41,20 +61,6 @@
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="attack"
-        title=(localize "anima.ui.combat.weapons.attack.title")
-        inputName=(concat "data.attack.value")
-        inputValue=data.data.attack.value
-      }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="block"
-        title=(localize "anima.ui.combat.weapons.block.title")
-        inputName=(concat "data.block.value")
-        inputValue=data.data.block.value
-      }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="damage"
         title=(localize "anima.ui.combat.weapons.damage.title")
         inputName=(concat "data.damage.value")
@@ -62,26 +68,44 @@
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="initiative"
-        title=(localize "anima.ui.combat.weapons.initiative.title")
-        inputName=(concat "data.initiative.value")
-        inputValue=data.data.initiative.value
+        class="initiative-base"
+        title=(localize "anima.ui.combat.weapons.initiativeBase.title")
+        inputName=(concat "data.initiativeBase.value")
+        inputValue=data.data.initiativeBase.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="critic-primary"
-        title=(localize "anima.ui.combat.weapons.critic.primary.title")
+        class="fue-required"
+        title=(localize "anima.ui.combat.weapons.fueRequired.title")
         inputType="text"
-        inputName=(concat "data.critic.primary.value")
-        inputValue=data.data.critic.primary.value
+        inputName=(concat "data.fueRequired.value")
+        inputValue=data.data.fueRequired.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="critic-secondary"
-        title=(localize "anima.ui.combat.weapons.critic.secondary.title")
+        class="is-ranged"
+        title=(localize "anima.ui.combat.weapons.isRanged.title")
+        inputType="checkbox"
+        inputName=(concat "data.isRanged.value")
+        inputValue=(is 'eq' data.data.isRanged.value true)
+      }}
+      {{#if (is 'eq' data.data.isRanged.value true)}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="cadence"
+          inputType="text"
+          title=(localize "anima.ui.combat.weapons.cadence.title")
+          inputName=(concat "data.cadence.value")
+          inputValue=data.data.cadence.value
+        }}
+      {{/if}}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="special"
+        title=(localize "anima.ui.combat.weapons.special.title")
         inputType="text"
-        inputName=(concat "data.critic.secondary.value")
-        inputValue=data.data.critic.secondary.value
+        inputName=(concat "data.special.value")
+        inputValue=data.data.special.value
       }}
     {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}

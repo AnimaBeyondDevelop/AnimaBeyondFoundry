@@ -1,0 +1,9 @@
+<div class='common-titled-input {{#if this.isVertical}}vertical{{/if}} {{this.class}}'>
+  {{#unless this.hideTitle}}
+    <p class='label'>{{this.title}}</p>
+  {{/unless}}
+
+  <select class='input' name='{{this.inputName}}'>
+    {{> @partial-block}}
+  </select>
+</div>

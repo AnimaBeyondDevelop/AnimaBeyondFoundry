@@ -272,14 +272,27 @@
       "martialKnowledge": { "value": 0 }
     },
     "weapon": {
-      "special": { "value": 0 },
+      "special": { "value": "" },
       "integrity": { "value": 0 },
       "breaking": { "value": 0 },
       "attack": { "value": 0 },
       "block": { "value": 0 },
       "damage": { "value": 0 },
       "initiative": { "value": 0 },
-      "critic": { "primary": { "value": "" }, "secondary": { "value": "" } }
+      "initiativeBase": { "value": 0 },
+      "presence": { "value": 0 },
+      "size": { "value": 0 },
+      "fueRequired": { "value": "" },
+      "quality": { "value": 0 },
+      "oneOrTwoHanded": { "value": "" },
+      "isRanged": { "value": false },
+      "cadence": { "value": "" },
+      "range": { "value": 0 },
+      "knowledgeType": { "value": "" },
+      "critic": {
+        "primary": { "value": "" },
+        "secondary": { "value": "" }
+      }
     }
   }
 }

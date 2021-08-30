@@ -23,7 +23,26 @@
 
     .group-body {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+
+      .common-titled-input {
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        margin: 0.5rem;
+      }
+
+      .special {
+        .input-container {
+          width: 10rem;
+        }
+      }
     }
   }
 

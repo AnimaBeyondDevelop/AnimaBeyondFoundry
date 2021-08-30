@@ -55,10 +55,6 @@
   .weapons {
     margin-top: 0.75rem;
 
-    .input {
-      height: 1.2rem;
-    }
-
     .weapon-row:first-child {
       margin-top: 0;
     }
@@ -76,7 +72,21 @@
 
       .group-body {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+
+        .special {
+          .input-container {
+            width: 10rem;
+          }
+        }
+
+        .attack, .block, .damage, .initiative, .fue-required, .quality {
+          .input-container {
+            width: 2.75rem;
+          }
+        }
+
       }
     }
   }
