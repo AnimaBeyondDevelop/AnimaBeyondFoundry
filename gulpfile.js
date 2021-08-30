@@ -380,21 +380,37 @@ function gitPushTagsAndCreateRelease(cb) {
   const manifest = getManifest();
 
   git.push('origin', `v${manifest.file.version}`, { args: ' --tags' }, function (err) {
-    if (err) throw err;
+    if (!err) {
+      readlineSync.question(
+        chalk.blue(
+          `Wait until create new release, click here to access directly: https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${manifest.file.version}&tag=v${manifest.file.version}\n\nRemember to upload de package ${manifest.file.name}.zip allocated in package folder`
+        )
+      );
+
+      cb();
+    } else {
+      throw cb(err);
+    }
   });
+}
 
-  readlineSync.question(
-    `Wait until create new release, click here to access directly: https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${manifest.file.version}&tag=v${manifest.file.version}\nRemember to upload de package ${manifest.file.name}.zip allocated in package folder`
-  );
-
-  cb();
+function gitPush(cb) {
+  git.push('origin', 'main', { args: ' --tags' }, function (err) {
+    if (!err) {
+      cb();
+    } else {
+      throw cb(err);
+    }
+  });
 }
 
 function showDisclaimer(cb) {
   const packageJson = fs.readJSONSync('package.json');
 
   readlineSync.question(
-    `Do you want to publish a new version? New version will be ${packageJson.version}, so make sure that this version is not already published :`
+    chalk.magenta(
+      `Do you want to publish a new version? New version will be ${packageJson.version}, so make sure that this version is not already published :`
+    )
   );
 
   cb();
@@ -418,5 +434,6 @@ exports.publish = gulp.series(
   packageBuild,
   gitTag,
   gitPushTagsAndCreateRelease,
-  clean
+  clean,
+  gitPush
 );
