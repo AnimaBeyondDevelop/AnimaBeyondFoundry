@@ -1,0 +1,22 @@
+@import 'variable';
+
+@mixin group-header {
+  text-align: center;
+  padding: 3px;
+  color: $white;
+  border-radius: $border-radius;
+  background: $red;
+  font-weight: 600;
+}
+
+@mixin group-body {
+  background: $dark-cream;
+  border-radius: $border-radius;
+}
+
+@mixin input {
+  border-radius: $border-radius;
+  background: $light-cream;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+}

@@ -1,7 +1,8 @@
 @import 'util/spacing-helpers.scss';
 @import 'util/display-helpers.scss';
+@import 'mixin.scss';
 @import 'variable.scss';
-@import '_common.scss';
+@import 'common.scss';
 
 @import 'actor/actor-sheet.scss';
 @import 'items/items-sheet.scss';
