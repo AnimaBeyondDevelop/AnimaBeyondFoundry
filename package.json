@@ -4,10 +4,10 @@
   "version": "1.0.4",
   "description": "",
   "scripts": {
-    "package": "gulp package",
     "build": "gulp build",
     "build:watch": "gulp watch",
     "clean": "gulp clean",
+    "package": "gulp package --release",
     "publish": "gulp publish --release",
     "test": "jest src",
     "postinstall": "npx husky set .husky/pre-commit \"npm run hook:pre-commit\"",

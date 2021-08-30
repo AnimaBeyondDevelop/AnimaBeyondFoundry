@@ -4,6 +4,7 @@
   title=this.title
   inputName=this.inputName
 }}
+  <option {{#if (is "eq" this.inputValue '-')}}selected{{/if}} value='-'></option>
   <option {{#if (is "eq" this.inputValue 'cut')}}selected{{/if}} value='cut'>{{localize 'anima.ui.armor.at.cut.title'}}</option>
   <option {{#if (is "eq" this.inputValue 'impact')}}selected{{/if}} value='impact'>{{localize 'anima.ui.armor.at.impact.title'}}</option>
   <option {{#if (is "eq" this.inputValue 'thrust')}}selected{{/if}} value='thrust'>{{localize 'anima.ui.armor.at.thrust.title'}}</option>

@@ -289,10 +289,7 @@
       "cadence": { "value": "" },
       "range": { "value": 0 },
       "knowledgeType": { "value": "" },
-      "critic": {
-        "primary": { "value": "" },
-        "secondary": { "value": "" }
-      }
+      "critic": { "primary": { "value": "" }, "secondary": { "value": "" } }
     }
   }
 }
