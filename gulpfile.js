@@ -354,6 +354,8 @@ function ensureNewVersion(cb) {
         )
       )
     );
+  } else {
+    cb();
   }
 }
 
@@ -361,9 +363,9 @@ function ensureGitBranch(cb) {
   git.revParse({ args: '--abbrev-ref HEAD' }, function (err, branch) {
     if (branch !== 'main') {
       cb(new Error(chalk.red("Publishing only can be done 'main' branch")));
+    } else {
+      cb();
     }
-
-    return cb();
   });
 }
 
