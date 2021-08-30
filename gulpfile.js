@@ -15,6 +15,9 @@ const ts = require('gulp-typescript');
 const less = require('gulp-less');
 const sass = require('gulp-sass');
 const git = require('gulp-git');
+const rimraf = require('rimraf');
+
+const rimrafAsync = path => new Promise(resolve => rimraf(path, resolve));
 
 const argv = require('yargs').argv;
 
@@ -237,42 +240,8 @@ function buildWatch() {
  * Remove built files from `dist` folder
  * while ignoring source files
  */
-async function clean() {
-  const name = path.basename(path.resolve('.'));
-  const files = [];
-
-  // If the project uses TypeScript
-  if (fs.existsSync(path.join('src', `${name}.ts`))) {
-    files.push(
-      'lang',
-      'templates',
-      'assets',
-      'module',
-      'packs',
-      `${name}.js`,
-      'module.json',
-      'system.json',
-      'template.json'
-    );
-  }
-
-  // If the project uses Less or SASS
-  if (fs.existsSync(path.join('src', `${name}.scss`))) {
-    files.push('fonts', `${name}.css`);
-  }
-
-  console.log(' ', chalk.yellow('Files to clean:'));
-  console.log('   ', chalk.blueBright(files.join('\n    ')));
-
-  // Attempt to remove the files
-  try {
-    for (const filePath of files) {
-      await fs.remove(path.join(ROOT_PATH, filePath));
-    }
-    return Promise.resolve();
-  } catch (err) {
-    Promise.reject(err);
-  }
+async function clean(cb) {
+  Promise.all([rimrafAsync(ROOT_PATH), rimrafAsync('./package'), rimrafAsync('./dist')]).then(cb);
 }
 
 /*********************/
@@ -373,6 +342,21 @@ function gitCommit() {
   );
 }
 
+function ensureNewVersion(cb) {
+  const packageJson = fs.readJSONSync('package.json');
+  const manifest = getManifest();
+
+  if (manifest.file.version === packageJson.version) {
+    cb(
+      Error(
+        chalk.red(
+          `Error: package.json version is the same as the manifest: ${packageJson.version}. Update it in the package.json and retry again.`
+        )
+      )
+    );
+  }
+}
+
 function ensureGitBranch(cb) {
   git.revParse({ args: '--abbrev-ref HEAD' }, function (err, branch) {
     if (branch !== 'main') {
@@ -390,6 +374,20 @@ function gitTag(cb) {
   });
 }
 
+function gitPushTagsAndCreateRelease(cb) {
+  const manifest = getManifest();
+
+  git.push('origin', `v${manifest.file.version}`, { args: ' --tags' }, function (err) {
+    if (err) throw err;
+  });
+
+  readlineSync.question(
+    `Wait until create new release, click here to access directly: https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${manifest.file.version}&tag=v${manifest.file.version}\nRemember to upload de package ${manifest.file.name}.zip allocated in package folder`
+  );
+
+  cb();
+}
+
 function showDisclaimer(cb) {
   const packageJson = fs.readJSONSync('package.json');
 
@@ -400,8 +398,6 @@ function showDisclaimer(cb) {
   cb();
 }
 
-const execGit = gulp.series(gitCommit, gitTag);
-
 const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
 
 exports.build = gulp.series(clean, execBuild);
@@ -409,4 +405,16 @@ exports.watch = buildWatch;
 exports.clean = clean;
 exports.package = packageBuild;
 exports.update = updateManifest;
-exports.publish = gulp.series(ensureGitBranch, showDisclaimer, execGit, clean, updateManifest, execBuild, packageBuild);
+exports.publish = gulp.series(
+  ensureGitBranch,
+  ensureNewVersion,
+  showDisclaimer,
+  gitCommit,
+  clean,
+  updateManifest,
+  execBuild,
+  packageBuild,
+  gitTag,
+  gitPushTagsAndCreateRelease,
+  clean
+);
