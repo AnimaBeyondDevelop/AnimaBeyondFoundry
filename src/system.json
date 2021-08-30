@@ -2,7 +2,7 @@
   "name": "animabf",
   "title": "Anima Beyond Fantasy",
   "description": "",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
   "scripts": [],
   "esmodules": ["animabf.js"],
@@ -25,6 +25,6 @@
   "compatibleCoreVersion": "0.8.8",
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
-  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.0.3/animabf.zip",
+  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.0.4/animabf.zip",
   "bugs": "https://docs.google.com/forms/d/e/1FAIpQLSeUTdTOjxMKarAd1eoHfpswyoIs-mvSElVGmv7sZGrEuBHWKA/viewform?usp=sf_link"
 }
