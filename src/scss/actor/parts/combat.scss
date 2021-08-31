@@ -81,22 +81,22 @@
           }
         }
 
-        .attack, .block, .damage, .initiative, .fue-required, .quality {
+        .attack,
+        .block,
+        .damage,
+        .initiative,
+        .fue-required,
+        .quality {
           .input-container {
             width: 2.75rem;
           }
         }
-
       }
     }
   }
 
   .armors {
     margin-top: 0.75rem;
-
-    .input {
-      height: 1.2rem;
-    }
 
     .armor-row:first-child {
       margin-top: 0;
@@ -115,7 +115,22 @@
 
       .group-body {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+
+        .cut,
+        .impact,
+        .thrust,
+        .heat,
+        .electricity,
+        .cold,
+        .energy,
+        .quality,
+        .final-movement-restriction {
+          .input-container {
+            width: 2.75rem;
+          }
+        }
       }
     }
   }

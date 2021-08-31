@@ -18,8 +18,10 @@ export default class ABFItemSheet extends ItemSheet {
 
   getWidthFromType(): number {
     switch (this.item.data.type) {
+      case ABFItems.ARMOR:
+        return 1000;
       case ABFItems.WEAPON:
-        return 1300;
+        return 815;
       default:
         return 900;
     }
@@ -29,7 +31,7 @@ export default class ABFItemSheet extends ItemSheet {
     switch (this.item.data.type) {
       case ABFItems.WEAPON:
       case ABFItems.ARMOR:
-        return 165;
+        return 235;
       default:
         return 450;
     }

@@ -26,16 +26,16 @@ export const calculateTotalArmor = (data: ABFActorDataSourceData): ABFActorDataS
     }
   };
 
-  const armors = data.combat.armors as ArmorDataSource[];
+  const equippedArmors = (data.combat.armors as ArmorDataSource[]).filter(armor => armor.data.equipped.value);
 
-  if (armors.length > 0) {
-    totalArmor.at.cold.value = calculateTA(armors.map(armor => armor.data.cold.value));
-    totalArmor.at.cut.value = calculateTA(armors.map(armor => armor.data.cut.value));
-    totalArmor.at.electricity.value = calculateTA(armors.map(armor => armor.data.electricity.value));
-    totalArmor.at.energy.value = calculateTA(armors.map(armor => armor.data.energy.value));
-    totalArmor.at.heat.value = calculateTA(armors.map(armor => armor.data.heat.value));
-    totalArmor.at.impact.value = calculateTA(armors.map(armor => armor.data.impact.value));
-    totalArmor.at.thrust.value = calculateTA(armors.map(armor => armor.data.thrust.value));
+  if (equippedArmors.length > 0) {
+    totalArmor.at.cold.value = calculateTA(equippedArmors.map(armor => armor.data.cold.value));
+    totalArmor.at.cut.value = calculateTA(equippedArmors.map(armor => armor.data.cut.value));
+    totalArmor.at.electricity.value = calculateTA(equippedArmors.map(armor => armor.data.electricity.value));
+    totalArmor.at.energy.value = calculateTA(equippedArmors.map(armor => armor.data.energy.value));
+    totalArmor.at.heat.value = calculateTA(equippedArmors.map(armor => armor.data.heat.value));
+    totalArmor.at.impact.value = calculateTA(equippedArmors.map(armor => armor.data.impact.value));
+    totalArmor.at.thrust.value = calculateTA(equippedArmors.map(armor => armor.data.thrust.value));
   }
 
   return totalArmor;

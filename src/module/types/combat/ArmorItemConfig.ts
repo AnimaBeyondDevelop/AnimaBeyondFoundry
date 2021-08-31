@@ -11,6 +11,15 @@ export type ArmorItemData = {
   electricity: { value: number };
   cold: { value: number };
   energy: { value: number };
+  integrity: { value: number };
+  presence: { value: number };
+  wearArmorRequirement: { value: number };
+  movementRestriction: { base: { value: number }; final: { value: number } };
+  naturalPenalty: { value: number };
+  type: { value: string };
+  localization: { value: string };
+  quality: { value: number };
+  equipped: { value: boolean };
 };
 
 export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
@@ -37,7 +46,7 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
       content: i18n.localize('dialogs.items.armors.content')
     });
 
-    const itemData = {
+    const itemData: Omit<ArmorDataSource, '_id'> = {
       name,
       type: ABFItems.ARMOR,
       data: {
@@ -47,7 +56,16 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
         heat: { value: 0 },
         electricity: { value: 0 },
         cold: { value: 0 },
-        energy: { value: 0 }
+        energy: { value: 0 },
+        integrity: { value: 0 },
+        presence: { value: 0 },
+        wearArmorRequirement: { value: 0 },
+        movementRestriction: { base: { value: 0 }, final: { value: 0 } },
+        naturalPenalty: { value: 0 },
+        type: { value: '' },
+        localization: { value: '' },
+        quality: { value: 0 },
+        equipped: { value: false }
       }
     };
 

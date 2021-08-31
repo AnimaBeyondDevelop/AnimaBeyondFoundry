@@ -1,0 +1,10 @@
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  isVertical=true
+  class=this.class
+  title=this.title
+  inputName=this.inputName
+}}
+  <option {{#if (is "eq" this.inputValue 'soft')}}selected{{/if}} value='soft'>{{localize 'anima.ui.combat.armors.type.soft.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'hard')}}selected{{/if}} value='hard'>{{localize 'anima.ui.combat.armors.type.hard.title'}}</option>
+  <option {{#if (is "eq" this.inputValue 'natural')}}selected{{/if}} value='natural'>{{localize 'anima.ui.combat.armors.type.natural.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
