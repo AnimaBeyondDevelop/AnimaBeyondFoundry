@@ -1,24 +1,39 @@
-<div class='mystic-tab'>
-  <div class='first-column'>
-    <div class='sub-columns'>
-      <div>
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/act.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/magic-projection.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/zeon-regeneration.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/innate-magic.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/zeon.hbs"}}
-      </div>
-      <div>
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/summoning.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/mystic/parts/spheres.hbs"}}
+<div class='mystic'>
+  <nav class="mystic-tabs tabs secondary-tab" data-group="primary">
+    <a class="item" data-tab="mystic-main">{{localize "anima.ui.mystic.tabs.main"}}</a>
+    <a class="item" data-tab="mystic-spells">{{localize "anima.ui.mystic.tabs.secondaries"}}</a>
+  </nav>
+  <section class='mystic-body'>
+    <div class='tab active' data-group="primary" data-tab="mystic-main">
+      <div class='mystic-main-tab'>
+        <div class='first-column'>
+          <div class='sub-columns'>
+            <div>
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/act.hbs"}}
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/magic-projection.hbs"}}
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/zeon-regeneration.hbs"}}
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/innate-magic.hbs"}}
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/zeon.hbs"}}
+            </div>
+            <div>
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/summoning.hbs"}}
+              {{> "systems/animabf/templates/actor/parts/mystic/parts/spheres.hbs"}}
+            </div>
+          </div>
+        </div>
+        <div class='second-column'>
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/free-access-spells.hbs"}}
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs"}}
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs"}}
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/summons.hbs"}}
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/metamagics.hbs"}}
+        </div>
       </div>
     </div>
-  </div>
-  <div class='second-column'>
-    {{> "systems/animabf/templates/actor/parts/mystic/parts/free-access-spells.hbs"}}
-    {{> "systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs"}}
-    {{> "systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs"}}
-    {{> "systems/animabf/templates/actor/parts/mystic/parts/summons.hbs"}}
-    {{> "systems/animabf/templates/actor/parts/mystic/parts/metamagics.hbs"}}
-  </div>
+
+    <div class='tab' data-group="primary" data-tab="mystic-spells">
+      <div class='mystic-spells-tab'>
+      </div>
+    </div>
+  </section>
 </div>

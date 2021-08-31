@@ -4,25 +4,30 @@
   display: flex;
   flex-direction: column;
 
-  .sheet-tabs {
-	margin-top: 0.75rem !important;
-	margin-bottom: 0.75rem !important;
+  .sheet-tabs,
+  .mystic-tabs {
+    &.secondary-tab {
+      margin-top: 0;
+    }
 
-	border-top: 1px solid $red !important;
-	border-bottom: 1px solid $red !important;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
 
-	.item {
-	  background: transparent;
-	  border-radius: $border-radius;
-	  color: $black;
-	  font-weight: 600;
-	}
+    border-top: 1px solid $red;
+    border-bottom: 1px solid $red;
 
-	.active {
-	  text-shadow: none;
-	  background-color: $red;
-	  color: $white;
-	  font-weight: 600;
-	}
+    .item {
+      background: transparent;
+      border-radius: $border-radius;
+      color: $black;
+      font-weight: 600;
+    }
+
+    .active {
+      text-shadow: none;
+      background-color: $red;
+      color: $white;
+      font-weight: 600;
+    }
   }
 }
