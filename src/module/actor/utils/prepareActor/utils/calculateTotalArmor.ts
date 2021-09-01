@@ -26,7 +26,7 @@ export const calculateTotalArmor = (data: ABFActorDataSourceData): ABFActorDataS
     }
   };
 
-  const equippedArmors = (data.combat.armors as ArmorDataSource[]).filter(armor => armor.data.equipped.value);
+  const equippedArmors = (data.combat.armors as ArmorDataSource[]).filter(armor => armor.data.equipped?.value);
 
   if (equippedArmors.length > 0) {
     totalArmor.at.cold.value = calculateTA(equippedArmors.map(armor => armor.data.cold.value));
