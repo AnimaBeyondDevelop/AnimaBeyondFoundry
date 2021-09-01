@@ -1,11 +1,11 @@
 <div class='{{this.class}} grade-row'>
-  <p class='label grade-name'>{{localize this.grade.name.value}}</p>
+  <p class='label grade-name'>{{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}</p>
   {{>
   "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="int-required"
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.intRequired.title")
-    inputName=(concat "data.dynamic.spells." this.spellId ".data.grades." this.gradeName ".intRequired.value")
+    inputName=this.intRequiredInputName
     inputValue=this.grade.intRequired.value
   }}
   {{>
@@ -13,7 +13,7 @@
     class="zeon"
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.zeon.title")
-    inputName=(concat "data.dynamic.spells." this.spellId ".data.grades." this.gradeName ".zeon.value")
+    inputName=this.zeonInputName
     inputValue=this.grade.zeon.value
   }}
   {{>
@@ -22,7 +22,7 @@
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.maintenanceCost.title")
     inputType="text"
-    inputName=(concat "data.dynamic.spells." this.spellId ".data.grades." this.gradeName ".maintenanceCost.value")
+    inputName=this.maintenanceCostInputName
     inputValue=this.grade.maintenanceCost.value
   }}
   {{>
@@ -31,7 +31,7 @@
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.description.title")
     inputType="text"
-    inputName=(concat "data.dynamic.spells." this.spellId ".data.grades." this.gradeName ".description.value")
+    inputName=this.descriptionInputName
     inputValue=this.grade.description.value
   }}
 </div>

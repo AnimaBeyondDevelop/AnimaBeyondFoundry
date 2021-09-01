@@ -1,5 +1,6 @@
 import { ABFItems } from '../actor/utils/prepareSheet/prepareItems/ABFItems';
 import ABFItem from './ABFItem';
+import { ABFConfig } from '../ABFConfig';
 
 export default class ABFItemSheet extends ItemSheet {
   static get defaultOptions() {
@@ -18,6 +19,7 @@ export default class ABFItemSheet extends ItemSheet {
 
   getWidthFromType(): number {
     switch (this.item.data.type) {
+      case ABFItems.SPELL:
       case ABFItems.ARMOR:
         return 1000;
       case ABFItems.WEAPON:
@@ -29,12 +31,22 @@ export default class ABFItemSheet extends ItemSheet {
 
   getHeightFromType(): number {
     switch (this.item.data.type) {
+      case ABFItems.SPELL:
+        return 350;
       case ABFItems.WEAPON:
       case ABFItems.ARMOR:
         return 235;
       default:
         return 450;
     }
+  }
+
+  getData() {
+    const data = super.getData() as ItemSheet.Data & { config?: typeof ABFConfig };
+
+    data.config = CONFIG.config;
+
+    return data;
   }
 
   get template() {

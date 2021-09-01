@@ -39,6 +39,7 @@ export type SpellChanges = ItemChanges<SpellItemData>;
 export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
   type: ABFItems.SPELL,
   isInternal: false,
+  hasSheet: true,
   fieldPath: ['mystic', 'spells'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.spells as SpellChanges;

@@ -52,6 +52,10 @@
             "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
               class="base-grade"
               spellId=spell._id
+              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.intRequired.value")
+              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.zeon.value")
+              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.maintenanceCost.value")
+              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.description.value")
               gradeName='base'
               grade=spell.data.grades.base
             }}
@@ -60,6 +64,10 @@
               class="intermediate-grade"
               spellId=spell._id
               hideTitle=true
+              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.intRequired.value")
+              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.zeon.value")
+              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.maintenanceCost.value")
+              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.description.value")
               gradeName='intermediate'
               grade=spell.data.grades.intermediate
             }}
@@ -68,6 +76,10 @@
               class="advanced-grade"
               spellId=spell._id
               hideTitle=true
+              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.intRequired.value")
+              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.zeon.value")
+              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.maintenanceCost.value")
+              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.description.value")
               gradeName='advanced'
               grade=spell.data.grades.advanced
             }}
@@ -76,6 +88,10 @@
               class="arcane-grade"
               spellId=spell._id
               hideTitle=true
+              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.intRequired.value")
+              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.zeon.value")
+              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.maintenanceCost.value")
+              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.description.value")
               gradeName='arcane'
               grade=spell.data.grades.arcane
             }}

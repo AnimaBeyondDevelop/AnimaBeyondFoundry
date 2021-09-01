@@ -30,6 +30,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/items/base/parts/item-image.hbs',
     'systems/animabf/templates/items/weapon/weapon.hbs',
     'systems/animabf/templates/items/armor/armor.hbs',
+    'systems/animabf/templates/items/spell/spell.hbs',
 
     // Actor sheet parts
     'systems/animabf/templates/actor/parts/header/header.hbs',

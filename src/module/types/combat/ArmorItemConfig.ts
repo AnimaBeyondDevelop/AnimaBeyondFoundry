@@ -19,7 +19,7 @@ export type ArmorItemData = {
   type: { value: string };
   localization: { value: string };
   quality: { value: number };
-  equipped: { value: boolean };
+  equipped?: { value: boolean };
 };
 
 export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
