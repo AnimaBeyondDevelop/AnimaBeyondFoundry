@@ -443,7 +443,7 @@ export type ABFActorDataSourceData = {
         value: number;
       };
     };
-    freeAccessSpells: [];
+    spells: [];
     spellMaintenances: [];
     selectedSpells: [];
     summons: [];

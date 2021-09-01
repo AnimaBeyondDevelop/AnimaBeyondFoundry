@@ -8,15 +8,11 @@ import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/const
 import { prepareSheet } from './utils/prepareSheet/prepareSheet';
 import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
 import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
+import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
+import { ABFConfig } from '../ABFConfig';
 
 export default class ABFActorSheet extends ActorSheet {
   i18n: Localization;
-
-  constructor(object: ABFActor) {
-    super(object, {});
-
-    this.i18n = (game as Game).i18n;
-  }
 
   static get defaultOptions() {
     return {
@@ -31,7 +27,7 @@ export default class ABFActorSheet extends ActorSheet {
           {
             navSelector: '.sheet-tabs',
             contentSelector: '.sheet-body',
-            initial: 'mystic'
+            initial: 'main'
           },
           {
             navSelector: '.mystic-tabs',
@@ -43,12 +39,36 @@ export default class ABFActorSheet extends ActorSheet {
     };
   }
 
+  constructor(actor: ABFActor, options?: Partial<ActorSheet.Options>) {
+    super(actor, options);
+
+    this.i18n = (game as Game).i18n;
+
+    this.position.width = this.getWidthDependingFromContent();
+  }
+
+  async close(options?: FormApplication.CloseOptions): Promise<void> {
+    super.close(options);
+
+    this.position.width = this.getWidthDependingFromContent();
+  }
+
+  getWidthDependingFromContent(): number {
+    if (this.actor.items.filter(i => i.type === ABFItems.SPELL).length > 0) {
+      return 1300;
+    }
+
+    return 900;
+  }
+
   getData() {
-    const data = super.getData() as ActorSheet.Data;
+    let data = super.getData() as ActorSheet.Data & { config?: typeof ABFConfig };
 
     if (this.actor.data.type === 'character') {
-      return prepareSheet(data);
+      data = prepareSheet(data);
     }
+
+    data.config = CONFIG.config;
 
     return data;
   }

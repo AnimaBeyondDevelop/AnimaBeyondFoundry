@@ -1,6 +1,6 @@
 export enum ABFItems {
   SECONDARY_SPECIAL_SKILL = 'skill',
-  FREE_ACCESS_SPELL = 'freeAccessSpell',
+  SPELL = 'spell',
   SPELL_MAINTENANCE = 'spellMaintenance',
   SELECTED_SPELL = 'selectedSpell',
   METAMAGIC = 'metamagic',

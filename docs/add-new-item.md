@@ -28,7 +28,7 @@ A la hora de escribir este documento los tipos que hay son los siguientes:
 ```json
 {
   "Item": {
-    "types": ["freeAccessSpell", "advantage"]
+    "types": ["spell", "advantage"]
   }
 }
 ```
@@ -41,7 +41,7 @@ Un poco más abajo definiremos el contenido del `data` que tendrá nuestro item,
 
 ```json
 {
-  "freeAccessSpell": {
+  "spell": {
     "level": 0
   }
 }
@@ -49,7 +49,7 @@ Un poco más abajo definiremos el contenido del `data` que tendrá nuestro item,
 
 Si te fijas, `advantage`, no tiene definido un `data` y esto es porque Foundry por defecto ya nos da el nombre como un campo externo a su data (y obligatorio).
 
-Añadimos el nuestro debajo y ya solo nos queda un paso más: elegir en los datos del actor donde se van a "almacenar" nuestros nuevos items. Por ejemplo, si hacemos una búsqueda de `freeAccessSpell`, este se encontrará bajo `mystic`, uno de los campos de nuestro actor.
+Añadimos el nuestro debajo y ya solo nos queda un paso más: elegir en los datos del actor donde se van a "almacenar" nuestros nuevos items. Por ejemplo, si hacemos una búsqueda de `spell`, este se encontrará bajo `mystic`, uno de los campos de nuestro actor.
 
 ```json
 {
@@ -61,7 +61,7 @@ Añadimos el nuestro debajo y ya solo nos queda un paso más: elegir en los dato
     "domine": ...,
     "mystic": {
       ...,
-      "freeAccessSpells": [],
+      "spells": [],
       ...
     },
     ...
@@ -79,7 +79,7 @@ Por ejemplo, para los hechizos de libre creación:
 
 ```ts
 export enum ABFItems {
-  FREE_ACCESS_SPELL = 'freeAccessSpell'
+  SPELL = 'spell'
 }
 ```
 
@@ -108,7 +108,7 @@ En el fichero `animabf.types.ts` se encuentra un tipo compuesto llamado `ABFItem
 
 ### 7. Añadir nuestros items al HTML
 
-Para esto es mejor seguir el ejemplo de otros elementos dinámicos, como por ejemplo el de los hechizos de libre acceso: [https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/blob/develop/src/templates/parts/mystic/parts/free-access-spells.hbs](https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/blob/develop/src/templates/parts/mystic/parts/free-access-spells.hbs)
+Para esto es mejor seguir el ejemplo de otros elementos dinámicos, como por ejemplo el de los hechizos: [https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/blob/develop/src/templates/parts/mystic/parts/spells.hbs](https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/blob/develop/src/templates/parts/mystic/parts/spells.hbs)
 
 Existen varios componentes reutilizables, recomiendo hacer una lectura de distintas partes HBS para comprenderlas mejor.
 

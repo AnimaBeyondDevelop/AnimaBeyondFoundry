@@ -165,7 +165,7 @@
           "bind": { "value": 0 },
           "control": { "value": 0 }
         },
-        "freeAccessSpells": [],
+        "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],
         "summons": [],
@@ -223,7 +223,7 @@
       "advantage",
       "armor",
       "disadvantage",
-      "freeAccessSpell",
+      "spell",
       "mentalPattern",
       "note",
       "psychicDiscipline",
@@ -241,7 +241,43 @@
       "cold": { "value": 0 },
       "energy": { "value": 0 }
     },
-    "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
+    "spell": {
+      "level": { "value": 0 },
+      "via": { "value": "" },
+      "spellType": { "value": "" },
+      "actionType": { "value": "" },
+      "hasDailyMaintenance": { "value": false },
+      "grades": {
+        "base": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        },
+        "intermediate": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        },
+        "advanced": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        },
+        "arcane": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        }
+      }
+    },
     "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
     "psychicPower": {
       "level": { "value": 0 },

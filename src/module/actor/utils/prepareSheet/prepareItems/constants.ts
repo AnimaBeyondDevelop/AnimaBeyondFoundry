@@ -5,7 +5,7 @@ import { CombatTableItemConfig } from '../../../../types/combat/CombatTableItemC
 import { ContactItemConfig } from '../../../../types/general/ContactItemConfig';
 import { CreatureItemConfig } from '../../../../types/domine/CreatureItemConfig';
 import { DisadvantageItemConfig } from '../../../../types/general/DisadvantageItemConfig';
-import { FreeAccessSpellItemConfig } from '../../../../types/mystic/FreeAccessSpellItemConfig';
+import { SpellItemConfig } from '../../../../types/mystic/SpellItemConfig';
 import { ElanItemConfig } from '../../../../types/general/ElanItemConfig';
 import { InnatePsychicPowerItemConfig } from '../../../../types/psychic/InnatePsychicPowerItemConfig';
 import { KiSkillItemConfig } from '../../../../types/domine/KiSkillItemConfig';
@@ -58,7 +58,7 @@ export const ITEM_CONFIGURATIONS = {
   [AdvantageItemConfig.type]: AdvantageItemConfig,
   [ArmorItemConfig.type]: ArmorItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
-  [FreeAccessSpellItemConfig.type]: FreeAccessSpellItemConfig,
+  [SpellItemConfig.type]: SpellItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,
   [NoteItemConfig.type]: NoteItemConfig,
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,

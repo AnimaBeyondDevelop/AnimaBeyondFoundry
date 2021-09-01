@@ -16,6 +16,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/common/ui/group-footer.hbs',
     'systems/animabf/templates/common/ui/add-item-button.hbs',
     'systems/animabf/templates/common/ui/custom-select.hbs',
+    'systems/animabf/templates/common/ui/custom-select-choices.hbs',
 
     // Domain parts
     'systems/animabf/templates/common/domain/weapon/select-critic.hbs',
@@ -76,7 +77,8 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/zeon.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/summoning.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spheres.hbs',
-    'systems/animabf/templates/actor/parts/mystic/parts/free-access-spells.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/spells/spells.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/summons.hbs',

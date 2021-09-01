@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /**
  * This is your TypeScript entry file for Foundry VTT.
  * Register custom settings, sheets, and constants using the Foundry API.
@@ -19,6 +20,7 @@ import ABFCombat from './module/ABFCombat';
 import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
+import { ABFConfig } from './module/ABFConfig';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -29,6 +31,8 @@ Hooks.once('init', async () => {
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
+
+  CONFIG.config = ABFConfig;
 
   CONFIG.Dice.rolls.push(ABFFoundryRoll);
 
