@@ -105,6 +105,14 @@
             inputName="data.actionType.value"
             inputValue=data.data.actionType.value
           }}
+          {{>
+          'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+            class="has-daily-maintenance"
+            title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")
+            inputType="checkbox"
+            inputName=(concat "data.hasDailyMaintenance.value")
+            inputValue=(is 'eq' data.data.hasDailyMaintenance.value true)
+          }}
         </div>
       {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
     {{/"systems/animabf/templates/common/ui/group.hbs"}}
