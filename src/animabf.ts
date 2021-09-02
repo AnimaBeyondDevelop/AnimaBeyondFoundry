@@ -36,15 +36,11 @@ Hooks.once('init', async () => {
 
   CONFIG.Dice.rolls.push(ABFFoundryRoll);
 
-  CONFIG.Combat = {
-    documentClass: ABFCombat,
-    collection: CombatEncounters,
-    defeatedStatusId: 'dead',
-    sidebarIcon: 'fas fa-fist-raised',
-    initiative: {
-      formula: '1d100xaInitiative + @characteristics.secondaries.initiative.value',
-      decimals: 2
-    }
+  CONFIG.Combat.documentClass = ABFCombat;
+
+  CONFIG.Combat.initiative = {
+    formula: '1d100xaturn + @characteristics.secondaries.initiative.value',
+    decimals: 2
   };
 
   // Register custom system settings
