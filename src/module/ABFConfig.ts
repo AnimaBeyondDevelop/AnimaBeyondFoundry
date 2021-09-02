@@ -44,11 +44,11 @@ ABFConfig.iterables = {
       war: 'anima.ui.mystic.spell.via.war.title',
       water: 'anima.ui.mystic.spell.via.water.title'
     },
-    spellTypes: {
+    actionTypes: {
       active: 'anima.ui.mystic.spell.actionType.active.title',
       passive: 'anima.ui.mystic.spell.actionType.passive.title'
     },
-    actionTypes: {
+    spellTypes: {
       attack: 'anima.ui.mystic.spell.spellType.attack.title',
       defense: 'anima.ui.mystic.spell.spellType.defense.title',
       animatic: 'anima.ui.mystic.spell.spellType.animatic.title',
