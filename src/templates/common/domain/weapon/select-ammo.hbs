@@ -1,0 +1,11 @@
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  isVertical=true
+  class=this.class
+  title=this.title
+  inputName=this.inputName
+}}
+  <option {{#if (is "eq" this.inputValue undefined)}}selected{{/if}} value='{{undefined}}'>-</option>
+  {{#each this.ammo}}
+    <option {{#if (is "eq" ../this.inputValue this._id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

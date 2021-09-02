@@ -2,6 +2,7 @@ import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
+import { AmmoDataSource } from './AmmoItemConfig';
 
 export enum WeaponCritic {
   NONE = '-',
@@ -51,6 +52,8 @@ export type WeaponItemData = {
   manageabilityType: { value: ManageabilityType };
   shotType: { value: ShotType };
   isRanged: { value: boolean };
+  ammoId?: string;
+  ammo?: AmmoDataSource;
   range: {
     base: { value: number };
     final: { value: number };
@@ -157,5 +160,15 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
     } else {
       (data.combat.weapons as WeaponDataSource[]) = [item];
     }
+
+    (data.combat.weapons as WeaponDataSource[]) = (data.combat.weapons as WeaponDataSource[]).map(weapon => {
+      if (weapon.data.isRanged && typeof weapon.data.ammoId === 'string' && !!weapon.data.ammoId) {
+        const ammo = data.combat.ammo as AmmoDataSource[];
+
+        weapon.data.ammo = ammo.find(i => i._id === weapon.data.ammoId);
+      }
+
+      return weapon;
+    });
   }
 };

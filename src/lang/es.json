@@ -70,6 +70,7 @@
   "anima.ui.combat.combatTables.title": "Tablas de combate",
   "anima.ui.combat.finalArmor.title": "Armadura final",
   "anima.ui.combat.weapons.attack.roll.message": "ataque con ",
+  "anima.ui.combat.weapons.ammo.title": "Munición",
   "anima.ui.combat.weapons.attack.title": "Ataque",
   "anima.ui.combat.weapons.block.roll.message": "parada con ",
   "anima.ui.combat.weapons.block.title": "Parada",

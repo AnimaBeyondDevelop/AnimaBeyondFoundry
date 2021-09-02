@@ -21,6 +21,7 @@ export const preloadTemplates = () => {
     // Domain parts
     'systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs',
     'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs',
+    'systems/animabf/templates/common/domain/weapon/select-ammo.hbs',
     'systems/animabf/templates/common/domain/armor/select-armor-type.hbs',
     'systems/animabf/templates/common/domain/armor/select-armor-localization.hbs',
 
