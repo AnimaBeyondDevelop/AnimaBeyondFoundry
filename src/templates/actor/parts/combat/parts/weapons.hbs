@@ -30,16 +30,20 @@
             class="weapon"
           }}
             {{>
-            "systems/animabf/templates/common/domain/weapon/select-critic.hbs"
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
               class="critic-primary"
+              isVertical=true
               title=(localize "anima.ui.combat.weapons.critic.primary.title")
+              choices=../../../this.config.iterables.combat.weapon.criticTypes
               inputName=(concat "data.dynamic.weapons." this._id ".data.critic.primary.value")
               inputValue=this.data.critic.primary.value
             }}
             {{#if (or (is 'eq' this.data.isRanged.value false) (is 'eq' this.data.shotType.value 'throw'))}}
               {{>
-              "systems/animabf/templates/common/domain/weapon/select-critic.hbs"
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="critic-secondary"
+                isVertical=true
+                choices=../../../this.config.iterables.combat.weapon.criticTypes
                 title=(localize "anima.ui.combat.weapons.critic.secondary.title")
                 inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary.value")
                 inputValue=this.data.critic.secondary.value

@@ -19,7 +19,6 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/common/ui/custom-select-choices.hbs',
 
     // Domain parts
-    'systems/animabf/templates/common/domain/weapon/select-critic.hbs',
     'systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs',
     'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs',
     'systems/animabf/templates/common/domain/armor/select-armor-type.hbs',

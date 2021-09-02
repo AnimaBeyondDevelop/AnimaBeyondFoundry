@@ -3,6 +3,17 @@ import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 
+export enum WeaponCritic {
+  NONE = '-',
+  CUT = 'cut',
+  IMPACT = 'impact',
+  THRUST = 'thrust',
+  HEAT = 'heat',
+  ELECTRICITY = 'electricity',
+  COLD = 'cold',
+  ENERGY = 'energy'
+}
+
 export enum ManageabilityType {
   ONE_HAND = 'one_hand',
   TWO_HAND = 'two_hands',
@@ -48,8 +59,8 @@ export type WeaponItemData = {
   reload: { value: number };
   weaponFue: { value: number };
   critic: {
-    primary: { value: string };
-    secondary: { value: string };
+    primary: { value: WeaponCritic };
+    secondary: { value: WeaponCritic };
   };
 };
 
@@ -114,8 +125,8 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
         reload: { value: 0 },
         weaponFue: { value: 0 },
         critic: {
-          primary: { value: '' },
-          secondary: { value: '' }
+          primary: { value: WeaponCritic.NONE },
+          secondary: { value: WeaponCritic.NONE }
         }
       }
     };

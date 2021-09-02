@@ -22,6 +22,7 @@
   "anima.ui.combat.ammo.name.title": "Nombre",
   "anima.ui.combat.ammo.title": "Munición",
   "anima.ui.combat.armors.at.cold.title": "FRI",
+  "anima.ui.combat.armors.at.none.title": "-",
   "anima.ui.combat.armors.at.cut.title": "FIL",
   "anima.ui.combat.armors.at.electricity.title": "ELE",
   "anima.ui.combat.armors.at.energy.title": "ENE",

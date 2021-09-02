@@ -22,6 +22,7 @@
   "anima.ui.combat.ammo.name.title": "Name",
   "anima.ui.combat.ammo.title": "Ammo",
   "anima.ui.combat.armors.at.cold.title": "COL",
+  "anima.ui.combat.armors.at.none.title": "-",
   "anima.ui.combat.armors.at.cut.title": "CUT",
   "anima.ui.combat.armors.at.electricity.title": "ELE",
   "anima.ui.combat.armors.at.energy.title": "ENE",
