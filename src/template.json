@@ -318,7 +318,7 @@
       "initiativeBase": { "value": 0 },
       "presence": { "value": 0 },
       "size": { "value": 0 },
-      "fueRequired": { "value": "" },
+      "strRequired": { "value": "" },
       "quality": { "value": 0 },
       "oneOrTwoHanded": { "value": "" },
       "isRanged": { "value": false },

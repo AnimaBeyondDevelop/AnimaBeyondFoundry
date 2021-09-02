@@ -19,7 +19,7 @@
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
-                title=(localize "anima.ui.combat.weapons.header.name.title")
+                hideTitle=true
                 inputType="text"
                 inputName=(concat "data.dynamic.weapons." this._id ".name")
                 inputValue=this.name
@@ -36,7 +36,7 @@
               inputName=(concat "data.dynamic.weapons." this._id ".data.critic.primary.value")
               inputValue=this.data.critic.primary.value
             }}
-            {{#unless (is 'eq' this.data.isRanged.value true)}}
+            {{#if (or (is 'eq' this.data.isRanged.value false) (is 'eq' this.data.shotType.value 'throw'))}}
               {{>
               "systems/animabf/templates/common/domain/weapon/select-critic.hbs"
                 class="critic-secondary"
@@ -44,7 +44,7 @@
                 inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary.value")
                 inputValue=this.data.critic.secondary.value
               }}
-            {{/unless}}
+            {{/if}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="quality"
@@ -52,20 +52,15 @@
               inputName=(concat "data.dynamic.weapons." this._id ".data.quality.value")
               inputValue=this.data.quality.value
             }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="fue-required"
-              title=(localize "anima.ui.combat.weapons.fueRequired.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.fueRequired.value")
-              inputValue=this.data.fueRequired.value
-            }}
-            {{>
-            "systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs"
-              class="one-or-two-handed"
-              title=(localize "anima.ui.combat.weapons.oneOrTwoHanded.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.oneOrTwoHanded.value")
-              inputValue=this.data.oneOrTwoHanded.value
-            }}
+            {{#if (is 'eq' this.data.manageabilityType.value 'one_or_two_hands')}}
+              {{>
+              "systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs"
+                class="one-or-two-handed"
+                title=(localize "anima.ui.combat.weapons.oneOrTwoHanded.title")
+                inputName=(concat "data.dynamic.weapons." this._id ".data.oneOrTwoHanded.value")
+                inputValue=this.data.oneOrTwoHanded.value
+              }}
+            {{/if}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="attack"
@@ -89,17 +84,17 @@
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="damage"
-              title=(localize "anima.ui.combat.weapons.damage.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.damage.value")
-              inputValue=this.data.damage.value
+              title=(localize "anima.ui.combat.weapons.damage.final.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.damage.final.value")
+              inputValue=this.data.damage.final.value
             }}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="initiative"
               rollable=true
-              title=(localize "anima.ui.combat.weapons.initiative.title")
-              inputName=(concat "data.dynamic.weapons." this._id ".data.initiative.value")
-              inputValue=this.data.initiative.value
+              title=(localize "anima.ui.combat.weapons.initiative.final.title")
+              inputName=(concat "data.dynamic.weapons." this._id ".data.initiative.final.value")
+              inputValue=this.data.initiative.final.value
             }}
             {{> 'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs'
               class="knowledge-type"
@@ -111,16 +106,9 @@
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="range"
-                title=(localize "anima.ui.combat.weapons.range.title")
-                inputName=(concat "data.dynamic.weapons." this._id ".data.range.value")
-                inputValue=this.data.range.value
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="cadence"
-                title=(localize "anima.ui.combat.weapons.cadence.title")
-                inputName=(concat "data.dynamic.weapons." this._id ".data.cadence.value")
-                inputValue=this.data.cadence.value
+                title=(localize "anima.ui.combat.weapons.range.final.title")
+                inputName=(concat "data.dynamic.weapons." this._id ".data.range.final.value")
+                inputValue=this.data.range.final.value
               }}
             {{/if}}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

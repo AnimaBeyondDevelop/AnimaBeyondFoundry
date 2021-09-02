@@ -7,7 +7,7 @@
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
-          title=(localize "anima.ui.combat.weapons.header.name.title")
+          hideTitle=true
           inputType="text"
           inputName=(concat "name")
           inputValue=data.name
@@ -23,14 +23,14 @@
         inputName=(concat "data.critic.primary.value")
         inputValue=data.data.critic.primary.value
       }}
-      {{#unless (is 'eq' data.data.isRanged.value true)}}
+      {{#if (or (is 'eq' data.data.isRanged.value false) (is 'eq' data.data.shotType.value 'throw'))}}
         {{> 'systems/animabf/templates/common/domain/weapon/select-critic.hbs'
           class="critic-secondary"
           title=(localize "anima.ui.combat.weapons.critic.secondary.title")
           inputName=(concat "data.critic.secondary.value")
           inputValue=data.data.critic.secondary.value
         }}
-      {{/unless}}
+      {{/if}}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="presence"
@@ -62,25 +62,44 @@
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="damage"
-        title=(localize "anima.ui.combat.weapons.damage.title")
-        inputName=(concat "data.damage.value")
-        inputValue=data.data.damage.value
+        title=(localize "anima.ui.combat.weapons.damage.base.title")
+        inputName=(concat "data.damage.base.value")
+        inputValue=data.data.damage.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
-        title=(localize "anima.ui.combat.weapons.initiativeBase.title")
-        inputName=(concat "data.initiativeBase.value")
-        inputValue=data.data.initiativeBase.value
+        title=(localize "anima.ui.combat.weapons.initiative.base.title")
+        inputName=(concat "data.initiative.base.value")
+        inputValue=data.data.initiative.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="fue-required"
-        title=(localize "anima.ui.combat.weapons.fueRequired.title")
-        inputType="text"
-        inputName=(concat "data.fueRequired.value")
-        inputValue=data.data.fueRequired.value
+      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="manageability-type"
+        isVertical=true
+        choices=config.iterables.combat.weapon.manageabilityTypes
+        title=(localize "anima.ui.combat.weapon.manageabilityType.title")
+        inputName="data.manageabilityType.value"
+        inputValue=data.data.manageabilityType.value
       }}
+      {{#if (or (is 'eq' data.data.manageabilityType.value 'one_hand') (is 'eq' data.data.manageabilityType.value 'one_or_two_hands'))}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="fue-required"
+          title=(localize "anima.ui.combat.weapons.strRequired.oneHand.title")
+          inputName=(concat "data.strRequired.oneHand.value")
+          inputValue=data.data.strRequired.oneHand.value
+        }}
+      {{/if}}
+      {{#if (or (is 'eq' data.data.manageabilityType.value 'two_hands') (is 'eq' data.data.manageabilityType.value 'one_or_two_hands'))}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="fue-required-two-hands"
+          title=(localize "anima.ui.combat.weapons.strRequired.twoHands.title")
+          inputName=(concat "data.strRequired.twoHands.value")
+          inputValue=data.data.strRequired.twoHands.value
+        }}
+      {{/if}}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="is-ranged"
@@ -91,13 +110,32 @@
       }}
       {{#if (is 'eq' data.data.isRanged.value true)}}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-          class="cadence"
-          inputType="text"
-          title=(localize "anima.ui.combat.weapons.cadence.title")
-          inputName=(concat "data.cadence.value")
-          inputValue=data.data.cadence.value
+        'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+          class="shot-type"
+          isVertical=true
+          choices=config.iterables.combat.weapon.shotTypes
+          title=(localize "anima.ui.combat.weapon.shotType.title")
+          inputName="data.shotType.value"
+          inputValue=data.data.shotType.value
         }}
+        {{#if (is 'eq' data.data.shotType.value 'throw')}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="cadence"
+            inputType="text"
+            title=(localize "anima.ui.combat.weapons.cadence.title")
+            inputName=(concat "data.cadence.value")
+            inputValue=data.data.cadence.value
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="range"
+            title=(localize "anima.ui.combat.weapons.range.base.title")
+            inputName=(concat "data.range.base.value")
+            inputValue=data.data.range.base.value
+          }}
+        {{/if}}
       {{/if}}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

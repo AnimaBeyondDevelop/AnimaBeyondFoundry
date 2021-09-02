@@ -3,24 +3,50 @@ import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 
+export enum ManageabilityType {
+  ONE_HAND = 'one_hand',
+  TWO_HAND = 'two_hands',
+  ONE_OR_TWO_HAND = 'one_or_two_hands'
+}
+
+export enum ShotType {
+  SHOT = 'shot',
+  THROW = 'throw'
+}
+
 export type WeaponItemData = {
   special: { value: string };
   integrity: { value: number };
   breaking: { value: number };
   attack: { value: number };
   block: { value: number };
-  damage: { value: number };
-  initiative: { value: number };
-  initiativeBase: { value: number };
+  damage: {
+    base: { value: number };
+    final: { value: number };
+  };
+  initiative: {
+    base: { value: number };
+    final: { value: number };
+  };
   presence: { value: number };
   size: { value: number };
-  fueRequired: { value: string };
+  strRequired: {
+    oneHand: { value: number };
+    twoHands: { value: number };
+  };
   quality: { value: number };
   oneOrTwoHanded: { value: string };
-  isRanged: { value: boolean };
-  range: { value: number };
-  cadence: { value: string };
   knowledgeType: { value: string };
+  manageabilityType: { value: ManageabilityType };
+  shotType: { value: ShotType };
+  isRanged: { value: boolean };
+  range: {
+    base: { value: number };
+    final: { value: number };
+  };
+  cadence: { value: string };
+  reload: { value: number };
+  weaponFue: { value: number };
   critic: {
     primary: { value: string };
     secondary: { value: string };
@@ -60,18 +86,33 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
         breaking: { value: 0 },
         attack: { value: 0 },
         block: { value: 0 },
-        damage: { value: 0 },
-        initiative: { value: 0 },
-        initiativeBase: { value: 0 },
+        damage: {
+          base: { value: 0 },
+          final: { value: 0 }
+        },
+        initiative: {
+          base: { value: 0 },
+          final: { value: 0 }
+        },
         presence: { value: 0 },
         size: { value: 0 },
-        fueRequired: { value: '' },
+        strRequired: {
+          oneHand: { value: 0 },
+          twoHands: { value: 0 }
+        },
         quality: { value: 0 },
         oneOrTwoHanded: { value: '' },
+        knowledgeType: { value: '' },
+        manageabilityType: { value: ManageabilityType.ONE_HAND },
+        shotType: { value: ShotType.SHOT },
         isRanged: { value: false },
         cadence: { value: '' },
-        range: { value: 0 },
-        knowledgeType: { value: '' },
+        range: {
+          base: { value: 0 },
+          final: { value: 0 }
+        },
+        reload: { value: 0 },
+        weaponFue: { value: 0 },
         critic: {
           primary: { value: '' },
           secondary: { value: '' }

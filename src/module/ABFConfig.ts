@@ -1,6 +1,21 @@
+import { ManageabilityType, ShotType } from './types/combat/WeaponItemConfig';
+
 export const ABFConfig: Record<string, any> = {};
 
 ABFConfig.iterables = {
+  combat: {
+    weapon: {
+      manageabilityTypes: {
+        [ManageabilityType.ONE_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneHand.title',
+        [ManageabilityType.TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.twoHand.title',
+        [ManageabilityType.ONE_OR_TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneOrTwoHand.title'
+      },
+      shotTypes: {
+        [ShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
+        [ShotType.THROW]: 'anima.ui.combat.weapon.shotType.throw.title'
+      }
+    }
+  },
   mystic: {
     vias: {
       air: 'anima.ui.mystic.spell.via.air.title',
