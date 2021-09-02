@@ -67,27 +67,35 @@ export type ABFActorDataSourceData = {
     primaries: {
       agility: {
         value: number;
+        mod: number;
       };
       constitution: {
         value: number;
+        mod: number;
       };
       dexterity: {
         value: number;
+        mod: number;
       };
       strength: {
         value: number;
+        mod: number;
       };
       intelligence: {
         value: number;
+        mod: number;
       };
       perception: {
         value: number;
+        mod: number;
       };
       power: {
         value: number;
+        mod: number;
       };
       willPower: {
         value: number;
+        mod: number;
       };
     };
     secondaries: {

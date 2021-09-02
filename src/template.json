@@ -30,14 +30,14 @@
       },
       "characteristics": {
         "primaries": {
-          "agility": { "value": 0 },
-          "constitution": { "value": 0 },
-          "dexterity": { "value": 0 },
-          "strength": { "value": 0 },
-          "intelligence": { "value": 0 },
-          "perception": { "value": 0 },
-          "power": { "value": 0 },
-          "willPower": { "value": 0 }
+          "agility": { "value": 0, "mod": 0 },
+          "constitution": { "value": 0, "mod": 0 },
+          "dexterity": { "value": 0, "mod": 0 },
+          "strength": { "value": 0, "mod": 0 },
+          "intelligence": { "value": 0, "mod": 0 },
+          "perception": { "value": 0, "mod": 0 },
+          "power": { "value": 0, "mod": 0 },
+          "willPower": { "value": 0, "mod": 0 }
         },
         "secondaries": {
           "lifePoints": { "value": 0, "max": 0 },
