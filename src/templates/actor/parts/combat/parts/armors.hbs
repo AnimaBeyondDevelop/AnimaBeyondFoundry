@@ -93,13 +93,6 @@
               inputValue=this.data.movementRestriction.final.value
             }}
             {{>
-            'systems/animabf/templates/common/domain/armor/select-armor-localization.hbs'
-              class="localization"
-              title=(localize "anima.ui.combat.armors.localization.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.localization.value")
-              inputValue=this.data.localization.value
-            }}
-            {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="equipped"
               title=(localize "anima.ui.combat.armors.equipped.title")
