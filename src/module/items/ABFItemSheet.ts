@@ -37,6 +37,8 @@ export default class ABFItemSheet extends ItemSheet {
         return 300;
       case ABFItems.ARMOR:
         return 235;
+      case ABFItems.AMMO:
+        return 144;
       default:
         return 450;
     }

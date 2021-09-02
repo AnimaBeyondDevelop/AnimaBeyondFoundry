@@ -12,6 +12,7 @@ import { WeaponDataSource } from './module/types/combat/WeaponItemConfig';
 import { ArmorDataSource } from './module/types/combat/ArmorItemConfig';
 import ABFItem from './module/items/ABFItem';
 import { ABFConfig } from './module/ABFConfig';
+import { AmmoDataSource } from './module/types/combat/AmmoItemConfig';
 
 export type ABFItemBaseDataSource<T, D> = {
   _id: string;
@@ -21,6 +22,7 @@ export type ABFItemBaseDataSource<T, D> = {
 };
 
 export type ABFItemsDataSource =
+  | AmmoDataSource
   | AdvantageDataSource
   | ArmorDataSource
   | DisadvantageDataSource

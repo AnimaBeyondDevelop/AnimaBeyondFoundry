@@ -16,6 +16,10 @@
   }
 
   .input {
+    &[type='select'] {
+      height: 1.5rem;
+    }
+
     font-family: inherit;
     border: none;
     ::-webkit-input-placeholder {

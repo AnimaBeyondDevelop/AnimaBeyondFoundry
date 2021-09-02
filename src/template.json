@@ -221,6 +221,7 @@
   "Item": {
     "types": [
       "advantage",
+      "ammo",
       "armor",
       "disadvantage",
       "spell",
@@ -231,6 +232,15 @@
       "technique",
       "weapon"
     ],
+    "ammo": {
+      "amount": { "value": 0 },
+      "damage": { "value": 0 },
+      "critic": { "value": "-" },
+      "integrity": { "value": 0 },
+      "breaking": { "value": 0 },
+      "presence": { "value": 0 },
+      "special": { "value": "" }
+    },
     "armor": {
       "cut": { "value": 0 },
       "pierce": { "value": 0 },

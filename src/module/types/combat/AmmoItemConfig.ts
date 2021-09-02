@@ -2,9 +2,16 @@ import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { WeaponCritic } from './WeaponItemConfig';
 
 export type AmmoItemData = {
   amount: { value: number };
+  damage: { value: number };
+  critic: { value: WeaponCritic };
+  integrity: { value: number };
+  breaking: { value: number };
+  presence: { value: number };
+  special: { value: string };
 };
 
 export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
@@ -13,7 +20,8 @@ export type AmmoChanges = ItemChanges<AmmoItemData>;
 
 export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
   type: ABFItems.AMMO,
-  isInternal: true,
+  isInternal: false,
+  hasSheet: true,
   fieldPath: ['combat', 'ammo'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.ammo as AmmoChanges;
@@ -30,21 +38,28 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
       content: i18n.localize('dialogs.items.ammo.content')
     });
 
-    await actor.createInnerItem({
+    const itemData: Omit<AmmoDataSource, '_id'> = {
       name,
       type: ABFItems.AMMO,
       data: {
-        amount: { value: 0 }
+        amount: { value: 0 },
+        damage: { value: 0 },
+        critic: { value: WeaponCritic.NONE },
+        integrity: { value: 0 },
+        breaking: { value: 0 },
+        presence: { value: 0 },
+        special: { value: '' }
       }
-    });
+    };
+
+    await actor.createItem(itemData);
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateInnerItem({
+      actor.updateItem({
         id,
-        type: ABFItems.AMMO,
         name,
         data: {
           amount: { value: data.amount }

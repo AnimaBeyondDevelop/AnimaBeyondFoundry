@@ -31,7 +31,6 @@ import { ElanPowerItemConfig } from '../../../../types/general/ElanPowerItemConf
 import { ArmorItemConfig } from '../../../../types/combat/ArmorItemConfig';
 
 export const INTERNAL_ITEM_CONFIGURATIONS = {
-  [AmmoItemConfig.type]: AmmoItemConfig,
   [ArsMagnusItemConfig.type]: ArsMagnusItemConfig,
   [CombatSpecialSkillItemConfig.type]: CombatSpecialSkillItemConfig,
   [CombatTableItemConfig.type]: CombatTableItemConfig,
@@ -55,6 +54,7 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
 };
 
 export const ITEM_CONFIGURATIONS = {
+  [AmmoItemConfig.type]: AmmoItemConfig,
   [AdvantageItemConfig.type]: AdvantageItemConfig,
   [ArmorItemConfig.type]: ArmorItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,

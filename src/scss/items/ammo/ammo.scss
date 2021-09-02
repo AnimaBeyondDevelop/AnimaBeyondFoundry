@@ -1,0 +1,58 @@
+@import '../../variable';
+
+.base-item {
+  display: flex;
+
+  .first-column {
+    width: 6.3rem;
+    height: 6.3rem;
+  }
+
+  .second-column {
+    width: 100%;
+  }
+
+  .ammo-item-dialog {
+    padding-left: 1rem;
+
+    .group-header {
+      .input-container {
+        width: 10rem;
+      }
+    }
+
+    .group-body {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+
+      .common-titled-input {
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        margin: 0.5rem;
+      }
+
+      .special {
+        .input-container {
+          width: 10rem;
+        }
+      }
+    }
+  }
+
+  .base-item-image {
+    margin-bottom: 0.75rem;
+
+    img {
+      border-radius: 1rem;
+      width: 6.3rem;
+      height: 6.3rem;
+    }
+  }
+}
