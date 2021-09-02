@@ -4,6 +4,7 @@ import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
 import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
 import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
 import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
+import { prepareActor } from './utils/prepareActor/prepareActor';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -15,6 +16,12 @@ export class ABFActor extends Actor {
     super(data, context);
 
     this.i18n = (game as Game).i18n;
+  }
+
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    prepareActor(this);
   }
 
   public async createItem({ type, name, data = {} }: { type: ABFItems; name: string; data?: unknown }) {

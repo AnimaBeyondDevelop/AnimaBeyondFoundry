@@ -9,14 +9,16 @@ export default class ABFCombat extends Combat {
     return super.nextRound();
   }
 
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    this.combatants.forEach(combatant => {
+      combatant.actor?.prepareDerivedData();
+    });
+  }
+
   // Modify rollInitiative so that it asks for modifiers
-  async rollInitiative(
-    ids: string[] | string,
-    {
-      updateTurn,
-      messageOptions
-    }: InitiativeOptions = {}
-  ): Promise<this> {
+  async rollInitiative(ids: string[] | string, { updateTurn, messageOptions }: InitiativeOptions = {}): Promise<this> {
     const mod = await openModDialog();
 
     const formula = `${CONFIG.Combat.initiative.formula} + ${mod}`;

@@ -5,7 +5,6 @@ import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
 import { ABFItemConfig, DynamicChanges, ItemChanges } from '../types/Items';
 import { unflat } from '../../utils/unflat';
 import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
-import { prepareSheet } from './utils/prepareSheet/prepareSheet';
 import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
 import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
@@ -62,10 +61,13 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   getData() {
-    let data = super.getData() as ActorSheet.Data & { config?: typeof ABFConfig };
+    const data = super.getData() as ActorSheet.Data & { config?: typeof ABFConfig };
 
     if (this.actor.data.type === 'character') {
-      data = prepareSheet(data);
+      data.actor.prepareDerivedData();
+
+      // Yes, a lot of datas, I know. This is Foundry VTT, welcome if you see this
+      data.data.data = data.actor.data.data;
     }
 
     data.config = CONFIG.config;

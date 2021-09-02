@@ -1,19 +1,16 @@
 import { ITEM_CONFIGURATIONS } from './constants';
+import { ABFActor } from '../../../ABFActor';
 
-export const prepareItems = (sheetData: ActorSheet.Data) => {
-  for (const item of sheetData.items) {
+export const prepareItems = (actor: ABFActor) => {
+  for (const item of actor.items.values()) {
     const configuration = ITEM_CONFIGURATIONS[item.type];
 
     if (configuration) {
-      item.img = item.img || CONST.DEFAULT_TOKEN;
+      const { data } = actor.data;
 
-      const { data } = sheetData.actor.data;
-
-      configuration.onAttach?.(data, item as any);
+      configuration.onAttach?.(data, item.data as any);
     } else {
       console.warn(`Item with ${item.type} unrecognized. Skipping...`, { item });
     }
   }
-
-  return sheetData;
 };
