@@ -1,5 +1,5 @@
 import { ITEM_CONFIGURATIONS } from './constants';
-import { ABFActor } from '../../../ABFActor';
+import { ABFActor } from '../../ABFActor';
 
 export const prepareItems = (actor: ABFActor) => {
   for (const item of actor.items.values()) {

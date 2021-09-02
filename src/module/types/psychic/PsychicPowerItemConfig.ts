@@ -1,5 +1,5 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
-import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
+import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 

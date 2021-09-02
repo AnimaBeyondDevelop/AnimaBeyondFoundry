@@ -1,4 +1,4 @@
-import { ABFItems } from '../actor/utils/prepareSheet/prepareItems/ABFItems';
+import { ABFItems } from './ABFItems';
 import ABFItem from './ABFItem';
 import { ABFConfig } from '../ABFConfig';
 

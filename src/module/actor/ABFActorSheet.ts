@@ -4,10 +4,10 @@ import { ABFActor } from './ABFActor';
 import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
 import { ABFItemConfig, DynamicChanges, ItemChanges } from '../types/Items';
 import { unflat } from '../../utils/unflat';
-import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
-import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
-import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
-import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
+import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareItems/constants';
+import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
+import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
+import { ABFItems } from '../items/ABFItems';
 import { ABFConfig } from '../ABFConfig';
 
 export default class ABFActorSheet extends ActorSheet {

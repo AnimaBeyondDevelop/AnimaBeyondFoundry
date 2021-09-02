@@ -1,6 +1,6 @@
 import { complementPrimaries } from './utils/complementPrimaries';
 import { ABFActor } from '../../ABFActor';
-import { prepareItems } from '../prepareSheet/prepareItems/prepareItems';
+import { prepareItems } from '../prepareItems/prepareItems';
 import { calculateTotalArmor } from './utils/calculateTotalArmor';
 
 const DERIVED_DATA_FUNCTIONS = [complementPrimaries, calculateTotalArmor];

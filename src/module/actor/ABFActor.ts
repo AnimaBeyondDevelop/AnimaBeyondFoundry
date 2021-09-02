@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this */
 import { nanoid } from '../../vendor/nanoid/nanoid';
-import { ABFItems } from './utils/prepareSheet/prepareItems/ABFItems';
-import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
-import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
-import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
+import { ABFItems } from '../items/ABFItems';
+import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareItems/constants';
+import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
+import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 
 export class ABFActor extends Actor {
