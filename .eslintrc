@@ -6,6 +6,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "class-methods-use-this": "off",
     "@typescript-eslint/indent": "off",
     "max-len": ["warn", { "code": 120 }],
     "function-paren-newline": "off",

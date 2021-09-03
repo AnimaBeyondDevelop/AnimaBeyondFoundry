@@ -38,6 +38,10 @@ export default class ABFActorSheet extends ActorSheet {
     };
   }
 
+  get template() {
+    return 'systems/animabf/templates/actor/actor-sheet.hbs';
+  }
+
   constructor(actor: ABFActor, options?: Partial<ActorSheet.Options>) {
     super(actor, options);
 
