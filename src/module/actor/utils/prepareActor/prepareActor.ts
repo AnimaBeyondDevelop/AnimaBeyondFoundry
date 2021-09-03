@@ -1,9 +1,10 @@
-import { complementPrimaries } from './utils/complementPrimaries';
 import { ABFActor } from '../../ABFActor';
 import { prepareItems } from '../prepareItems/prepareItems';
-import { calculateTotalArmor } from './utils/calculateTotalArmor';
+import { calculateWeaponsData } from './calculations/items/weapon/calculateWeaponsData';
+import { complementPrimaries } from './calculations/complementPrimaries';
+import { calculateTotalArmor } from './calculations/calculateTotalArmor';
 
-const DERIVED_DATA_FUNCTIONS = [complementPrimaries, calculateTotalArmor];
+const DERIVED_DATA_FUNCTIONS = [complementPrimaries, calculateTotalArmor, calculateWeaponsData];
 
 export const prepareActor = (actor: ABFActor) => {
   prepareItems(actor);

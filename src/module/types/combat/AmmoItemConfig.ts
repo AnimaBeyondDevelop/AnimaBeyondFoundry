@@ -18,6 +18,16 @@ export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
 
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 
+const INITIAL_AMMO_DATA = {
+  amount: { value: 0 },
+  damage: { value: 0 },
+  critic: { value: WeaponCritic.NONE },
+  integrity: { value: 0 },
+  breaking: { value: 0 },
+  presence: { value: 0 },
+  special: { value: '' }
+};
+
 export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
   type: ABFItems.AMMO,
   isInternal: false,
@@ -41,15 +51,7 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
     const itemData: Omit<AmmoDataSource, '_id'> = {
       name,
       type: ABFItems.AMMO,
-      data: {
-        amount: { value: 0 },
-        damage: { value: 0 },
-        critic: { value: WeaponCritic.NONE },
-        integrity: { value: 0 },
-        breaking: { value: 0 },
-        presence: { value: 0 },
-        special: { value: '' }
-      }
+      data: INITIAL_AMMO_DATA
     };
 
     await actor.createItem(itemData);
@@ -61,14 +63,14 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
       actor.updateItem({
         id,
         name,
-        data: {
-          amount: { value: data.amount }
-        }
+        data
       });
     }
   },
   onAttach: (data, item) => {
     const items = data.combat.ammo as AmmoDataSource[];
+
+    item.data = foundry.utils.mergeObject(item.data, INITIAL_AMMO_DATA, { overwrite: false });
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);

@@ -26,6 +26,25 @@ export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemDat
 
 export type ArmorChanges = ItemChanges<ArmorItemData>;
 
+const INITIAL_ARMOR_DATA = {
+  cut: { value: 0 },
+  impact: { value: 0 },
+  thrust: { value: 0 },
+  heat: { value: 0 },
+  electricity: { value: 0 },
+  cold: { value: 0 },
+  energy: { value: 0 },
+  integrity: { value: 0 },
+  presence: { value: 0 },
+  wearArmorRequirement: { value: 0 },
+  movementRestriction: { base: { value: 0 }, final: { value: 0 } },
+  naturalPenalty: { value: 0 },
+  type: { value: '' },
+  localization: { value: '' },
+  quality: { value: 0 },
+  equipped: { value: false }
+};
+
 export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   type: ABFItems.ARMOR,
   isInternal: false,
@@ -49,24 +68,7 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
     const itemData: Omit<ArmorDataSource, '_id'> = {
       name,
       type: ABFItems.ARMOR,
-      data: {
-        cut: { value: 0 },
-        impact: { value: 0 },
-        thrust: { value: 0 },
-        heat: { value: 0 },
-        electricity: { value: 0 },
-        cold: { value: 0 },
-        energy: { value: 0 },
-        integrity: { value: 0 },
-        presence: { value: 0 },
-        wearArmorRequirement: { value: 0 },
-        movementRestriction: { base: { value: 0 }, final: { value: 0 } },
-        naturalPenalty: { value: 0 },
-        type: { value: '' },
-        localization: { value: '' },
-        quality: { value: 0 },
-        equipped: { value: false }
-      }
+      data: INITIAL_ARMOR_DATA
     };
 
     await actor.createItem(itemData);
@@ -84,6 +86,8 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   },
   onAttach: (data, item) => {
     const items = data.combat.armors as ArmorDataSource[];
+
+    item.data = foundry.utils.mergeObject(item.data, INITIAL_ARMOR_DATA, { overwrite: false });
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);

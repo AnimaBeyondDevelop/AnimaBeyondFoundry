@@ -4,6 +4,18 @@ import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
 
+export enum EquippedHandType {
+  ONE_HANDED = 'one-handed',
+  TWO_HANDED = 'two-handed'
+}
+
+export enum WeaponKnowledgeType {
+  KNOWN = 'known',
+  SIMILAR = 'similar',
+  MIXED = 'mixed',
+  DIFFERENT = 'different'
+}
+
 export enum WeaponCritic {
   NONE = '-',
   CUT = 'cut',
@@ -26,40 +38,37 @@ export enum ShotType {
   THROW = 'throw'
 }
 
+type DerivedField = {
+  base: { value: number };
+  final: { value: number };
+};
+
 export type WeaponItemData = {
   special: { value: string };
-  integrity: { value: number };
-  breaking: { value: number };
+  integrity: DerivedField;
+  breaking: DerivedField;
   attack: { value: number };
   block: { value: number };
-  damage: {
-    base: { value: number };
-    final: { value: number };
-  };
-  initiative: {
-    base: { value: number };
-    final: { value: number };
-  };
-  presence: { value: number };
+  damage: DerivedField;
+  initiative: DerivedField;
+  presence: DerivedField;
   size: { value: number };
   strRequired: {
     oneHand: { value: number };
     twoHands: { value: number };
   };
   quality: { value: number };
-  oneOrTwoHanded: { value: string };
-  knowledgeType: { value: string };
+  oneOrTwoHanded: { value: EquippedHandType };
+  knowledgeType: { value: WeaponKnowledgeType };
   manageabilityType: { value: ManageabilityType };
   shotType: { value: ShotType };
+  hasOwnStr: { value: boolean };
   isRanged: { value: boolean };
   ammoId?: string;
   ammo?: AmmoDataSource;
-  range: {
-    base: { value: number };
-    final: { value: number };
-  };
+  range: DerivedField;
   cadence: { value: string };
-  reload: { value: number };
+  reload: DerivedField;
   weaponFue: { value: number };
   critic: {
     primary: { value: WeaponCritic };
@@ -70,6 +79,58 @@ export type WeaponItemData = {
 export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItemData>;
 
 export type WeaponChanges = ItemChanges<WeaponItemData>;
+
+const INITIAL_WEAPON_DATA = {
+  special: { value: '' },
+  hasOwnStr: { value: false },
+  integrity: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  breaking: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  attack: { value: 0 },
+  block: { value: 0 },
+  damage: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  initiative: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  presence: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  size: { value: 0 },
+  strRequired: {
+    oneHand: { value: 0 },
+    twoHands: { value: 0 }
+  },
+  quality: { value: 0 },
+  oneOrTwoHanded: { value: EquippedHandType.ONE_HANDED },
+  knowledgeType: { value: WeaponKnowledgeType.KNOWN },
+  manageabilityType: { value: ManageabilityType.ONE_HAND },
+  shotType: { value: ShotType.SHOT },
+  isRanged: { value: false },
+  cadence: { value: '' },
+  range: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  reload: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  weaponFue: { value: 0 },
+  critic: {
+    primary: { value: WeaponCritic.NONE },
+    secondary: { value: WeaponCritic.NONE }
+  }
+};
 
 export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = {
   type: ABFItems.WEAPON,
@@ -94,44 +155,7 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
     const itemData: Omit<WeaponDataSource, '_id'> = {
       name,
       type: ABFItems.WEAPON,
-      data: {
-        special: { value: '' },
-        integrity: { value: 0 },
-        breaking: { value: 0 },
-        attack: { value: 0 },
-        block: { value: 0 },
-        damage: {
-          base: { value: 0 },
-          final: { value: 0 }
-        },
-        initiative: {
-          base: { value: 0 },
-          final: { value: 0 }
-        },
-        presence: { value: 0 },
-        size: { value: 0 },
-        strRequired: {
-          oneHand: { value: 0 },
-          twoHands: { value: 0 }
-        },
-        quality: { value: 0 },
-        oneOrTwoHanded: { value: '' },
-        knowledgeType: { value: '' },
-        manageabilityType: { value: ManageabilityType.ONE_HAND },
-        shotType: { value: ShotType.SHOT },
-        isRanged: { value: false },
-        cadence: { value: '' },
-        range: {
-          base: { value: 0 },
-          final: { value: 0 }
-        },
-        reload: { value: 0 },
-        weaponFue: { value: 0 },
-        critic: {
-          primary: { value: WeaponCritic.NONE },
-          secondary: { value: WeaponCritic.NONE }
-        }
-      }
+      data: INITIAL_WEAPON_DATA
     };
 
     await actor.createItem(itemData);
@@ -148,7 +172,11 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
     }
   },
   onAttach: (data, item) => {
-    const items = data.combat.weapons as WeaponDataSource[];
+    const combat = data.combat as { weapons: WeaponDataSource[]; ammo: AmmoDataSource[] };
+
+    const items = combat.weapons;
+
+    item.data = foundry.utils.mergeObject(item.data, INITIAL_WEAPON_DATA, { overwrite: false });
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -158,12 +186,12 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
         items.push(item);
       }
     } else {
-      (data.combat.weapons as WeaponDataSource[]) = [item];
+      combat.weapons = [item];
     }
 
-    (data.combat.weapons as WeaponDataSource[]) = (data.combat.weapons as WeaponDataSource[]).map(weapon => {
+    combat.weapons = combat.weapons.map(weapon => {
       if (weapon.data.isRanged && typeof weapon.data.ammoId === 'string' && !!weapon.data.ammoId) {
-        const ammo = data.combat.ammo as AmmoDataSource[];
+        const ammo = combat.ammo as AmmoDataSource[];
 
         weapon.data.ammo = ammo.find(i => i._id === weapon.data.ammoId);
       }

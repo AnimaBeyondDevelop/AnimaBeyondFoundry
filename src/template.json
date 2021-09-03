@@ -323,19 +323,22 @@
       "breaking": { "value": 0 },
       "attack": { "value": 0 },
       "block": { "value": 0 },
-      "damage": { "value": 0 },
-      "initiative": { "value": 0 },
-      "initiativeBase": { "value": 0 },
+      "damage": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
       "presence": { "value": 0 },
       "size": { "value": 0 },
-      "strRequired": { "value": "" },
+      "strRequired": { "oneHand": { "value": 0 }, "twoHands": { "value": 0 } },
       "quality": { "value": 0 },
-      "oneOrTwoHanded": { "value": "" },
+      "oneOrTwoHanded": { "value": "one-handed" },
+      "knowledgeType": { "value": "known" },
+      "manageabilityType": { "value": "one_hand" },
+      "shotType": { "value": "throw" },
       "isRanged": { "value": false },
+      "range": { "base": { "value": 0 }, "final": { "value": 0 } },
       "cadence": { "value": "" },
-      "range": { "value": 0 },
-      "knowledgeType": { "value": "" },
-      "critic": { "primary": { "value": "" }, "secondary": { "value": "" } }
+      "reload": { "value": 0 },
+      "weaponFue": { "value": 0 },
+      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     }
   }
 }
