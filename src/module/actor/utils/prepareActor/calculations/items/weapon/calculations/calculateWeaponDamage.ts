@@ -1,7 +1,15 @@
 import { WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { getWeaponBaseDamage } from '../util/getWeaponBaseDamage';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
 
-export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) =>
-  getWeaponBaseDamage(weapon) + calculateWeaponStrengthModifier(weapon, data) + weapon.data.quality.value * 2;
+export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
+  const getDamage = () => {
+    if (weapon.data.isRanged.value) {
+      return weapon.data.ammo?.data.damage.final.value ?? 0;
+    }
+
+    return weapon.data.damage.base.value + weapon.data.quality.value * 2;
+  };
+
+  return Math.max(getDamage() + calculateWeaponStrengthModifier(weapon, data), 0);
+};

@@ -17,7 +17,7 @@ export const calculateWeaponsData = (data: ABFActorDataSourceData) => {
     weapon.data.attack.value = calculateWeaponAttack(weapon, data);
     weapon.data.block.value = calculateWeaponBlock(weapon, data);
     weapon.data.initiative.final.value = calculateWeaponInitiative(weapon, data);
-    weapon.data.damage.final.value = Math.max(calculateWeaponDamage(weapon, data), 0);
+    weapon.data.damage.final.value = calculateWeaponDamage(weapon, data);
     weapon.data.integrity.final.value = calculateWeaponIntegrity(weapon);
     weapon.data.breaking.final.value = calculateWeaponBreaking(weapon, data);
     weapon.data.presence.final.value = calculateWeaponPresence(weapon);

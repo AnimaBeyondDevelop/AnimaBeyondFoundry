@@ -115,3 +115,8 @@ export type DynamicChanges = {
     };
   };
 };
+
+export type DerivedField = {
+  base: { value: number };
+  final: { value: number };
+};

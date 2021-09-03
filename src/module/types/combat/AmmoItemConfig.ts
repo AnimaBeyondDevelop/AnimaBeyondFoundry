@@ -1,16 +1,17 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { WeaponCritic } from './WeaponItemConfig';
 
 export type AmmoItemData = {
   amount: { value: number };
-  damage: { value: number };
+  damage: DerivedField;
   critic: { value: WeaponCritic };
-  integrity: { value: number };
-  breaking: { value: number };
-  presence: { value: number };
+  integrity: DerivedField;
+  breaking: DerivedField;
+  presence: DerivedField;
+  quality: { value: number };
   special: { value: string };
 };
 
@@ -18,13 +19,14 @@ export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
 
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 
-const INITIAL_AMMO_DATA = {
+const INITIAL_AMMO_DATA: AmmoItemData = {
   amount: { value: 0 },
-  damage: { value: 0 },
+  damage: { base: { value: 0 }, final: { value: 0 } },
   critic: { value: WeaponCritic.NONE },
-  integrity: { value: 0 },
-  breaking: { value: 0 },
-  presence: { value: 0 },
+  quality: { value: 0 },
+  integrity: { base: { value: 0 }, final: { value: 0 } },
+  breaking: { base: { value: 0 }, final: { value: 0 } },
+  presence: { base: { value: 0 }, final: { value: 0 } },
   special: { value: '' }
 };
 

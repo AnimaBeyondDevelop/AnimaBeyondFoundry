@@ -21,14 +21,48 @@
           inputValue=this.name
         }}
         {{>
-        'systems/animabf/templates/common/ui/custom-select-choices.hbs'
-          class="critic"
-          choices=../config.iterables.combat.weapon.criticTypes
-          isVertical=true
-          title=(localize "anima.ui.combat.ammo.critic.title")
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="quality"
+          title=(localize "anima.ui.combat.ammo.quality.title")
           hideTitle=(is "gt" @index 0)
-          inputName=(concat "data.dynamic.ammo." this._id ".data.critic.value")
-          inputValue=this.data.critic.value
+          inputName=(concat "data.dynamic.ammo." this._id ".data.quality.value")
+          inputValue=this.data.quality.value
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="presence"
+          title=(localize "anima.ui.combat.ammo.presence.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputName=(concat "data.dynamic.ammo." this._id ".data.presence.final.value")
+          inputValue=this.data.presence.final.value
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="damage"
+          title=(localize "anima.ui.combat.ammo.damage.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputName=(concat "data.dynamic.ammo." this._id ".data.damage.final.value")
+          inputValue=this.data.damage.final.value
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="breaking"
+          title=(localize "anima.ui.combat.ammo.breaking.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputName=(concat "data.dynamic.ammo." this._id ".data.breaking.final.value")
+          inputValue=this.data.breaking.final.value
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="integrity"
+          title=(localize "anima.ui.combat.ammo.integrity.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputName=(concat "data.dynamic.ammo." this._id ".data.integrity.final.value")
+          inputValue=this.data.integrity.final.value
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

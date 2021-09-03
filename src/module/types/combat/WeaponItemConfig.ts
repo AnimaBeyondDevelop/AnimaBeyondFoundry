@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
 
 export enum EquippedHandType {
@@ -37,11 +37,6 @@ export enum ShotType {
   SHOT = 'shot',
   THROW = 'throw'
 }
-
-type DerivedField = {
-  base: { value: number };
-  final: { value: number };
-};
 
 export type WeaponItemData = {
   special: { value: string };
