@@ -5,6 +5,7 @@ import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareItems/constants';
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
 import { prepareActor } from './utils/prepareActor/prepareActor';
+import { INITIAL_ACTOR_DATA } from './constants';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -20,6 +21,8 @@ export class ABFActor extends Actor {
 
   prepareDerivedData() {
     super.prepareDerivedData();
+
+    this.data.data = foundry.utils.mergeObject(this.data.data, INITIAL_ACTOR_DATA, { overwrite: false });
 
     prepareActor(this);
   }

@@ -1,21 +1,22 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 
 export type ArmorItemData = {
-  cut: { value: number };
-  impact: { value: number };
-  thrust: { value: number };
-  heat: { value: number };
-  electricity: { value: number };
-  cold: { value: number };
-  energy: { value: number };
-  integrity: { value: number };
-  presence: { value: number };
-  wearArmorRequirement: { value: number };
-  movementRestriction: { base: { value: number }; final: { value: number } };
-  naturalPenalty: { value: number };
+  cut: DerivedField;
+  impact: DerivedField;
+  thrust: DerivedField;
+  heat: DerivedField;
+  electricity: DerivedField;
+  cold: DerivedField;
+  energy: DerivedField;
+  integrity: DerivedField;
+  presence: DerivedField;
+  wearArmorRequirement: DerivedField;
+  movementRestriction: DerivedField;
+  naturalPenalty: DerivedField;
+  isEnchanted: { value: boolean };
   type: { value: string };
   localization: { value: string };
   quality: { value: number };
@@ -26,19 +27,22 @@ export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemDat
 
 export type ArmorChanges = ItemChanges<ArmorItemData>;
 
-const INITIAL_ARMOR_DATA = {
-  cut: { value: 0 },
-  impact: { value: 0 },
-  thrust: { value: 0 },
-  heat: { value: 0 },
-  electricity: { value: 0 },
-  cold: { value: 0 },
-  energy: { value: 0 },
-  integrity: { value: 0 },
-  presence: { value: 0 },
-  wearArmorRequirement: { value: 0 },
-  movementRestriction: { base: { value: 0 }, final: { value: 0 } },
-  naturalPenalty: { value: 0 },
+const derivedFieldInitialData = { base: { value: 0 }, final: { value: 0 } };
+
+const INITIAL_ARMOR_DATA: ArmorItemData = {
+  cut: derivedFieldInitialData,
+  impact: derivedFieldInitialData,
+  thrust: derivedFieldInitialData,
+  heat: derivedFieldInitialData,
+  electricity: derivedFieldInitialData,
+  cold: derivedFieldInitialData,
+  energy: derivedFieldInitialData,
+  integrity: derivedFieldInitialData,
+  presence: derivedFieldInitialData,
+  wearArmorRequirement: derivedFieldInitialData,
+  movementRestriction: derivedFieldInitialData,
+  naturalPenalty: derivedFieldInitialData,
+  isEnchanted: { value: false },
   type: { value: '' },
   localization: { value: '' },
   quality: { value: 0 },

@@ -31,52 +31,11 @@
           }}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="cut"
-              title=(localize "anima.ui.combat.armors.at.cut.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.cut.value")
-              inputValue=this.data.cut.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="impact"
-              title=(localize "anima.ui.combat.armors.at.impact.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.impact.value")
-              inputValue=this.data.impact.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="thrust"
-              title=(localize "anima.ui.combat.armors.at.thrust.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.thrust.value")
-              inputValue=this.data.thrust.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="heat"
-              title=(localize "anima.ui.combat.armors.at.heat.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.heat.value")
-              inputValue=this.data.heat.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="electricity"
-              title=(localize "anima.ui.combat.armors.at.electricity.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.electricity.value")
-              inputValue=this.data.electricity.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="cold"
-              title=(localize "anima.ui.combat.armors.at.cold.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.cold.value")
-              inputValue=this.data.cold.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="energy"
-              title=(localize "anima.ui.combat.armors.at.energy.title")
-              inputName=(concat "data.dynamic.armors." this._id ".data.energy.value")
-              inputValue=this.data.energy.value
+              class="equipped"
+              title=(localize "anima.ui.combat.armors.equipped.title")
+              inputType="checkbox"
+              inputName=(concat "data.dynamic.armors." this._id ".data.equipped.value")
+              inputValue=(is 'eq' this.data.equipped.value true)
             }}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -87,18 +46,91 @@
             }}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="cut"
+              title=(localize "anima.ui.combat.armors.at.cut.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.cut.final.value")
+              inputValue=this.data.cut.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="impact"
+              title=(localize "anima.ui.combat.armors.at.impact.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.impact.final.value")
+              inputValue=this.data.impact.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="thrust"
+              title=(localize "anima.ui.combat.armors.at.thrust.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.thrust.final.value")
+              inputValue=this.data.thrust.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="heat"
+              title=(localize "anima.ui.combat.armors.at.heat.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.heat.final.value")
+              inputValue=this.data.heat.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="electricity"
+              title=(localize "anima.ui.combat.armors.at.electricity.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.electricity.final.value")
+              inputValue=this.data.electricity.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="cold"
+              title=(localize "anima.ui.combat.armors.at.cold.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.cold.final.value")
+              inputValue=this.data.cold.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="energy"
+              title=(localize "anima.ui.combat.armors.at.energy.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.energy.final.value")
+              inputValue=this.data.energy.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="integrity"
+              title=(localize "anima.ui.combat.armors.integrity.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.integrity.final.value")
+              inputValue=this.data.integrity.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="final-movement-restriction"
               title=(localize "anima.ui.combat.armors.movementRestriction.final.title")
+              disabled=true
               inputName=(concat "data.dynamic.armors." this._id ".data.movementRestriction.final.value")
               inputValue=this.data.movementRestriction.final.value
             }}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="equipped"
-              title=(localize "anima.ui.combat.armors.equipped.title")
-              inputType="checkbox"
-              inputName=(concat "data.dynamic.armors." this._id ".data.equipped.value")
-              inputValue=(is 'eq' this.data.equipped.value true)
+              class="presence"
+              title=(localize "anima.ui.combat.armors.presence.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.presence.final.value")
+              inputValue=this.data.presence.final.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="final-natural-penalty"
+              title=(localize "anima.ui.combat.armors.naturalPenalty.title")
+              disabled=true
+              inputName=(concat "data.dynamic.armors." this._id ".data.naturalPenalty.final.value")
+              inputValue=this.data.naturalPenalty.final.value
             }}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}

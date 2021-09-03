@@ -26,7 +26,7 @@
         secondaryInputValue=data.data.characteristics.secondaries.fatigue.max
       }}
     </div>
-    <div class='initiative'>
+    <div class='second-row'>
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
@@ -37,19 +37,11 @@
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="primary-initiative"
-        rollable=true
-        title=(localize 'anima.ui.general.initiative.primary.title')
-        inputName="data.characteristics.secondaries.initiative.primary.value"
-        inputValue=data.data.characteristics.secondaries.initiative.primary.value
-      }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="secondary-initiative"
-        rollable=true
-        title=(localize 'anima.ui.general.initiative.secondary.title')
-        inputName="data.characteristics.secondaries.initiative.secondary.value"
-        inputValue=data.data.characteristics.secondaries.initiative.secondary.value
+        class="natural-penalty"
+        disabled=true
+        title=(localize 'anima.ui.general.naturalPenalty.title')
+        inputName="data.general.modifiers.naturalPenalty.value"
+        inputValue=data.data.general.modifiers.naturalPenalty.value
       }}
     </div>
     <div class='movements'>

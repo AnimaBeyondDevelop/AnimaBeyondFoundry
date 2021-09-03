@@ -7,6 +7,9 @@ export type ABFActorDataSourceData = {
       allActions: {
         value: number;
       };
+      naturalPenalty: {
+        value: number;
+      };
     };
     aspect: {
       hair: {
@@ -105,12 +108,6 @@ export type ABFActorDataSourceData = {
       };
       initiative: {
         base: {
-          value: number;
-        };
-        primary: {
-          value: number;
-        };
-        secondary: {
           value: number;
         };
       };
@@ -317,6 +314,9 @@ export type ABFActorDataSourceData = {
       value: number;
     };
     dodge: {
+      value: number;
+    };
+    wearArmor: {
       value: number;
     };
     totalArmor: {
