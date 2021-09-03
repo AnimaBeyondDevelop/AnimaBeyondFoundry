@@ -19,7 +19,7 @@ export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
 
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 
-const INITIAL_AMMO_DATA: AmmoItemData = {
+export const INITIAL_AMMO_DATA: AmmoItemData = {
   amount: { value: 0 },
   damage: { base: { value: 0 }, final: { value: 0 } },
   critic: { value: WeaponCritic.NONE },

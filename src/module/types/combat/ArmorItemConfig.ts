@@ -29,7 +29,7 @@ export type ArmorChanges = ItemChanges<ArmorItemData>;
 
 const derivedFieldInitialData = { base: { value: 0 }, final: { value: 0 } };
 
-const INITIAL_ARMOR_DATA: ArmorItemData = {
+export const INITIAL_ARMOR_DATA: ArmorItemData = {
   cut: derivedFieldInitialData,
   impact: derivedFieldInitialData,
   thrust: derivedFieldInitialData,
