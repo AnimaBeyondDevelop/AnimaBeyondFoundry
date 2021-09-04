@@ -38,8 +38,9 @@
               inputValue=(is 'eq' this.data.equipped.value true)
             }}
             {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            'systems/animabf/templates/common/domain/select-quality.hbs'
               class="quality"
+              isVertical=true
               title=(localize "anima.ui.combat.armors.quality.title")
               inputName=(concat "data.dynamic.armors." this._id ".data.quality.value")
               inputValue=this.data.quality.value

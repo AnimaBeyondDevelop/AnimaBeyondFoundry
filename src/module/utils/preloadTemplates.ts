@@ -24,6 +24,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/common/domain/weapon/select-ammo.hbs',
     'systems/animabf/templates/common/domain/armor/select-armor-type.hbs',
     'systems/animabf/templates/common/domain/armor/select-armor-localization.hbs',
+    'systems/animabf/templates/common/domain/select-quality.hbs',
 
     // Items sheet parts
     'systems/animabf/templates/items/base/base-sheet.hbs',

@@ -80,6 +80,13 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   protected async _updateObject(event: Event, formData: Record<string, unknown>): Promise<ABFActor | undefined> {
+    // We have to parse all qualities in order to convert from it selectable to integers to make calculations
+    Object.keys(formData).forEach(key => {
+      if (key.includes('quality')) {
+        formData[key] = parseInt(formData[key] as string, 10);
+      }
+    });
+
     const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
 
     await this.updateItems(itemChanges);

@@ -21,10 +21,11 @@
           inputValue=this.name
         }}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        'systems/animabf/templates/common/domain/select-quality.hbs'
           class="quality"
           title=(localize "anima.ui.combat.ammo.quality.title")
           hideTitle=(is "gt" @index 0)
+          isVertical=true
           inputName=(concat "data.dynamic.ammo." this._id ".data.quality.value")
           inputValue=this.data.quality.value
         }}
