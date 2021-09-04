@@ -17,7 +17,6 @@ export enum WeaponKnowledgeType {
 }
 
 export enum WeaponCritic {
-  NONE = '-',
   CUT = 'cut',
   IMPACT = 'impact',
   THRUST = 'thrust',
@@ -26,6 +25,12 @@ export enum WeaponCritic {
   COLD = 'cold',
   ENERGY = 'energy'
 }
+
+export enum NoneWeaponCritic {
+  NONE = '-'
+}
+
+export type OptionalWeaponCritic = WeaponCritic | NoneWeaponCritic;
 
 export enum ManageabilityType {
   ONE_HAND = 'one_hand',
@@ -67,7 +72,7 @@ export type WeaponItemData = {
   weaponFue: { value: number };
   critic: {
     primary: { value: WeaponCritic };
-    secondary: { value: WeaponCritic };
+    secondary: { value: OptionalWeaponCritic };
   };
 };
 
@@ -122,8 +127,8 @@ export const INITIAL_WEAPON_DATA = {
   },
   weaponFue: { value: 0 },
   critic: {
-    primary: { value: WeaponCritic.NONE },
-    secondary: { value: WeaponCritic.NONE }
+    primary: { value: WeaponCritic.CUT },
+    secondary: { value: NoneWeaponCritic.NONE }
   }
 };
 

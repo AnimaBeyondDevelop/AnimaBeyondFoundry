@@ -1,19 +1,24 @@
-import { ManageabilityType, ShotType, WeaponCritic } from './types/combat/WeaponItemConfig';
+import { ManageabilityType, NoneWeaponCritic, ShotType, WeaponCritic } from './types/combat/WeaponItemConfig';
 
 export const ABFConfig: Record<string, any> = {};
+
+const criticTypes = {
+  [WeaponCritic.CUT]: 'anima.ui.combat.armors.at.cut.title',
+  [WeaponCritic.IMPACT]: 'anima.ui.combat.armors.at.impact.title',
+  [WeaponCritic.THRUST]: 'anima.ui.combat.armors.at.thrust.title',
+  [WeaponCritic.HEAT]: 'anima.ui.combat.armors.at.heat.title',
+  [WeaponCritic.ELECTRICITY]: 'anima.ui.combat.armors.at.electricity.title',
+  [WeaponCritic.COLD]: 'anima.ui.combat.armors.at.cold.title',
+  [WeaponCritic.ENERGY]: 'anima.ui.combat.armors.at.energy.title'
+};
 
 ABFConfig.iterables = {
   combat: {
     weapon: {
-      criticTypes: {
-        [WeaponCritic.NONE]: 'anima.ui.combat.armors.at.none.title',
-        [WeaponCritic.CUT]: 'anima.ui.combat.armors.at.cut.title',
-        [WeaponCritic.IMPACT]: 'anima.ui.combat.armors.at.impact.title',
-        [WeaponCritic.THRUST]: 'anima.ui.combat.armors.at.thrust.title',
-        [WeaponCritic.HEAT]: 'anima.ui.combat.armors.at.heat.title',
-        [WeaponCritic.ELECTRICITY]: 'anima.ui.combat.armors.at.electricity.title',
-        [WeaponCritic.COLD]: 'anima.ui.combat.armors.at.cold.title',
-        [WeaponCritic.ENERGY]: 'anima.ui.combat.armors.at.energy.title'
+      criticTypes,
+      criticTypesWithNone: {
+        [NoneWeaponCritic.NONE]: 'anima.ui.combat.armors.at.none.title',
+        ...criticTypes
       },
       manageabilityTypes: {
         [ManageabilityType.ONE_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneHand.title',

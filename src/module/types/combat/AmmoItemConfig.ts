@@ -22,7 +22,7 @@ export type AmmoChanges = ItemChanges<AmmoItemData>;
 export const INITIAL_AMMO_DATA: AmmoItemData = {
   amount: { value: 0 },
   damage: { base: { value: 0 }, final: { value: 0 } },
-  critic: { value: WeaponCritic.NONE },
+  critic: { value: WeaponCritic.CUT },
   quality: { value: 0 },
   integrity: { base: { value: 0 }, final: { value: 0 } },
   breaking: { base: { value: 0 }, final: { value: 0 } },
