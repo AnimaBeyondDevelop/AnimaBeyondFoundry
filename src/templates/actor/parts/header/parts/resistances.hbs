@@ -16,8 +16,14 @@
         rollable=true
         rollableDice='1d100'
         rollableMessage=(localize (concat 'anima.ui.resistances.' key))
-        inputName=(concat "data.characteristics.secondaries.resistances." key ".value")
-        inputValue=atr.value
+        inputName=(concat "data.characteristics.secondaries.resistances." key ".base.value")
+        inputValue=atr.base.value
+        hasSecondaryInput=false
+        rollSecondaryInput=true
+        addTooltips=true
+        disableSecondaryInput=true
+        secondaryInputName=(concat "data.characteristics.secondaries.resistances." key ".base.value")
+        secondaryInputValue=atr.final.value
       }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

@@ -133,19 +133,44 @@ export type ABFActorDataSourceData = {
       };
       resistances: {
         physical: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         disease: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         poison: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         magic: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         psychic: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
       };
     };
