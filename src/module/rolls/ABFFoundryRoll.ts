@@ -3,17 +3,16 @@ import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 import ABFControlRoll from './ABFControlRoll/ABFControlRoll';
+import { ABFActorDataSourceData } from '../types/Actor';
 
 /**
  * This class represents the entrypoint of Foundry
  * We must never add our logic here, all of it must be placed in its own class like ABFExploredRoll
  */
-export default class ABFFoundryRoll extends Roll {
+export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
   private readonly abfRoll: ABFRoll | undefined;
 
-  data: Record<string, unknown>;
-
-  constructor(rawFormula: string, data?: Record<string, unknown>, options?: Partial<RollTerm.EvaluationOptions>) {
+  constructor(rawFormula: string, data?: ABFActorDataSourceData, options?: Partial<RollTerm.EvaluationOptions>) {
     let formula = rawFormula.trim();
 
     // In FoundryVTT 0.8.8 I don't know why but the system inserts at the end a "+ "
@@ -23,6 +22,10 @@ export default class ABFFoundryRoll extends Roll {
     }
 
     super(formula, data, options);
+
+    if (data) {
+      this.data = data;
+    }
 
     if (this.formula.includes('xa')) {
       this.abfRoll = new ABFExploderRoll(this);
