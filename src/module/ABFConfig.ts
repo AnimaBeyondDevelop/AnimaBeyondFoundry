@@ -1,4 +1,5 @@
 import { ManageabilityType, NoneWeaponCritic, ShotType, WeaponCritic } from './types/combat/WeaponItemConfig';
+import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig';
 
 export const ABFConfig: Record<string, any> = {};
 
@@ -72,6 +73,12 @@ ABFConfig.iterables = {
       effect: 'anima.ui.mystic.spell.spellType.effect.title',
       automatic: 'anima.ui.mystic.spell.spellType.automatic.title',
       detection: 'anima.ui.mystic.spell.spellType.detection.title'
+    }
+  },
+  psychic: {
+    actionTypes: {
+      [PsychicPowerActionTypes.ACTIVE]: 'anima.ui.psychic.psychicPowers.actionType.active.title',
+      [PsychicPowerActionTypes.PASSIVE]: 'anima.ui.psychic.psychicPowers.actionType.passive.title'
     }
   }
 };

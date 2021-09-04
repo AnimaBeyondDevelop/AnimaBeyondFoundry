@@ -80,7 +80,7 @@ export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItem
 
 export type WeaponChanges = ItemChanges<WeaponItemData>;
 
-export const INITIAL_WEAPON_DATA = {
+export const INITIAL_WEAPON_DATA: WeaponItemData = {
   special: { value: '' },
   hasOwnStr: { value: false },
   integrity: {

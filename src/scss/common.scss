@@ -47,8 +47,13 @@
       position: relative;
 
       &.retracted {
-        .group-body, .group-footer {
+        .group-body,
+        .group-footer {
           display: none !important;
+
+          * {
+            box-shadow: none !important;
+          }
         }
       }
 

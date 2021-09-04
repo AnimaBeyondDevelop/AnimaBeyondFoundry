@@ -33,6 +33,11 @@ export default class ABFActorSheet extends ActorSheet {
             navSelector: '.mystic-tabs',
             contentSelector: '.mystic-body',
             initial: 'mystic-main'
+          },
+          {
+            navSelector: '.psychic-tabs',
+            contentSelector: '.psychic-body',
+            initial: 'psychic-main'
           }
         ]
       }
@@ -117,7 +122,7 @@ export default class ABFActorSheet extends ActorSheet {
           [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
         };
 
-        this.render();
+        this.actor.update({ data: { ui } });
       }
     });
 

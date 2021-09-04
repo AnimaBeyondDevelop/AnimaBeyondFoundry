@@ -3,12 +3,17 @@ import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 
+export enum PsychicPowerActionTypes {
+  ACTIVE = 'active',
+  PASSIVE = 'passive'
+}
+
 export type PsychicPowerItemData = {
-  level: { value: string };
+  level: { value: number };
   effects: string[];
-  actionType: { value: string };
-  hasMaintenance: { value: unknown };
-  bonus: { value: string };
+  actionType: { value: PsychicPowerActionTypes };
+  hasMaintenance: { value: boolean };
+  bonus: { value: number };
 };
 
 export type PsychicPowerDataSource = ABFItemBaseDataSource<ABFItems.PSYCHIC_POWER, PsychicPowerItemData>;
@@ -34,16 +39,18 @@ export const PsychicPowerItemConfig: ABFItemConfig<PsychicPowerDataSource, Psych
       content: i18n.localize('dialogs.items.psychicPower.content')
     });
 
+    const data: PsychicPowerItemData = {
+      level: { value: 0 },
+      effects: new Array(10).fill({ value: '' }),
+      actionType: { value: PsychicPowerActionTypes.ACTIVE },
+      hasMaintenance: { value: false },
+      bonus: { value: 0 }
+    };
+
     await actor.createItem({
       name,
       type: ABFItems.PSYCHIC_POWER,
-      data: {
-        level: { value: 0 },
-        effects: new Array(10).fill({ value: '' }),
-        actionType: { value: '' },
-        hasMaintenance: { value: false },
-        bonus: { value: 0 }
-      }
+      data
     });
   },
   onUpdate: async (actor, changes): Promise<void> => {

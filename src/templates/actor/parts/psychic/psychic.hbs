@@ -1,19 +1,31 @@
-<div class='psychic-tab'>
-  <div class='first-column'>
-    <div class='sub-columns'>
-      <div>
-        {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-potential.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-projection.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-points.hbs"}}
-      </div>
-      <div>
-        {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-disciplines.hbs"}}
+<div class='psychic'>
+  <nav class="psychic-tabs tabs secondary-tab" data-group="secondary">
+    <a class="item active" data-tab="psychic-main">{{localize "anima.ui.psychic.tabs.main"}}</a>
+    <a class="item" data-tab="psychic-powers">{{localize "anima.ui.psychic.tabs.secondaries"}}</a>
+  </nav>
+
+  <section class='psychic-body'>
+    <div class='tab' data-group="secondary" data-tab="psychic-main">
+      <div class='psychic-main-tab'>
+        <div class='first-row'>
+          <div>
+            {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-potential.hbs"}}
+            {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-projection.hbs"}}
+            {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-points.hbs"}}
+          </div>
+          <div>
+            {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-disciplines.hbs"}}
+          </div>
+        </div>
+        {{> "systems/animabf/templates/actor/parts/psychic/parts/mental-patterns.hbs"}}
+        {{> "systems/animabf/templates/actor/parts/psychic/parts/innate-psychic-powers.hbs"}}
       </div>
     </div>
-    {{> "systems/animabf/templates/actor/parts/psychic/parts/mental-patterns.hbs"}}
-    {{> "systems/animabf/templates/actor/parts/psychic/parts/innate-psychic-powers.hbs"}}
-  </div>
-  <div class='second-column'>
-    {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs"}}
-  </div>
+
+    <div class='tab' data-group="secondary" data-tab="psychic-powers">
+      <div class='psychic-powers-tab'>
+        {{> "systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs"}}
+      </div>
+    </div>
+  </section>
 </div>
