@@ -6,6 +6,7 @@ import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObje
 import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { INITIAL_ACTOR_DATA } from './constants';
+import ABFActorSheet from './ABFActorSheet';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -55,6 +56,10 @@ export class ABFActor extends Actor {
         await item.update(updateObject);
       }
     }
+  }
+
+  protected _getSheetClass(): ConstructorOf<FormApplication> | null {
+    return ABFActorSheet as unknown as ConstructorOf<FormApplication>;
   }
 
   public async updateInnerItem({
