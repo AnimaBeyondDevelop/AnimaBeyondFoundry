@@ -13,6 +13,8 @@
       <div data-item-id='{{spell._id}}' class='spell-row'>
         {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="spell"
+          contractible=true
+          contractibleItemId=spell._id
         }}
           {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='spell-header'>

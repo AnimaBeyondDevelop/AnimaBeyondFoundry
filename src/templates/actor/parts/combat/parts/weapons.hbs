@@ -13,6 +13,8 @@
       <div data-item-id='{{this._id}}' class='weapon-row'>
         {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="weapon"
+          contractible=true
+          contractibleItemId=this._id
         }}
           {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='weapon-header'>

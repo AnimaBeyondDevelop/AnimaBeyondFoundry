@@ -1,4 +1,7 @@
 export type ABFActorDataSourceData = {
+  ui: {
+    contractibleItems: {};
+  };
   general: {
     modifiers: {
       physicalActions: {

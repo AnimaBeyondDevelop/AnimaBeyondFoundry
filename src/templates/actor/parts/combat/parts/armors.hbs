@@ -13,13 +13,14 @@
       <div data-item-id='{{this._id}}' class='armor-row'>
         {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="armor"
+          contractible=true
+          contractibleItemId=this._id
         }}
           {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='armor-header'>
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
-                title=(localize "anima.ui.combat.armors.header.name.title")
                 inputType="text"
                 inputName=(concat "data.dynamic.armors." this._id ".name")
                 inputValue=this.name

@@ -1,3 +1,16 @@
-<div class='common-group {{this.class}}'>
+<div class='common-group {{this.class}} {{#if this.contractible}}contractible-group {{#if (is 'eq' (lookup xRoot.data.data.ui.contractibleItems this.contractibleItemId) true)}}retracted{{/if}}{{/if}}'>
+  {{#if this.contractible}}
+    <img
+      class='contractible-button {{#if (is 'eq' (lookup xRoot.data.data.ui.contractibleItems this.contractibleItemId) true)}}retracted{{/if}}'
+      data-contractible-item-id='{{this.contractibleItemId}}'
+      src='/systems/animabf/assets/images/expand-up.png'
+    />
+    <input
+      type='hidden'
+      name='data.ui.contractibleItems.{{this.contractibleItemId}}'
+      value='{{is 'eq' (lookup xRoot.data.data.ui.contractibleItems this.contractibleItemId) true}}'
+    />
+  {{/if}}
+
   {{> @partial-block}}
 </div>

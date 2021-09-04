@@ -1,6 +1,9 @@
 import { ABFActorDataSourceData } from '../types/Actor';
 
 export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
+  ui: {
+    contractibleItems: {}
+  },
   general: {
     modifiers: {
       physicalActions: {
@@ -131,45 +134,45 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       resistances: {
         physical: {
-        base: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
-        final: {
-          value: 0
-        }
-      },
         disease: {
-        base: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
-        final: {
-          value: 0
-        }
-      },
         poison: {
-        base: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
-        final: {
-          value: 0
-        }
-      },
         magic: {
-        base: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
-        final: {
-          value: 0
-        }
-      },
         psychic: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         }
-      }
       }
     }
   },

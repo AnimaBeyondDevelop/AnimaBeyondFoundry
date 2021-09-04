@@ -12,6 +12,8 @@ const criticTypes = {
   [WeaponCritic.ENERGY]: 'anima.ui.combat.armors.at.energy.title'
 };
 
+ABFConfig.ui = {};
+
 ABFConfig.iterables = {
   combat: {
     weapon: {

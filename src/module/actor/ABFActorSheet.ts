@@ -9,6 +9,7 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
 import { ABFConfig } from '../ABFConfig';
+import { ABFActorDataSourceData } from '../types/Actor';
 
 export default class ABFActorSheet extends ActorSheet {
   i18n: Localization;
@@ -103,6 +104,21 @@ export default class ABFActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find('.rollable').click(e => {
       this._onRoll(e);
+    });
+
+    html.find('.contractible-button').click(e => {
+      const { contractibleItemId } = e.currentTarget.dataset;
+
+      if (contractibleItemId) {
+        const ui = this.actor.data.data.ui as ABFActorDataSourceData['ui'];
+
+        ui.contractibleItems = {
+          ...ui.contractibleItems,
+          [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
+        };
+
+        this.render();
+      }
     });
 
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {

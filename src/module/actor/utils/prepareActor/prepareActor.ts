@@ -29,6 +29,13 @@ const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
 export const prepareActor = (actor: ABFActor) => {
   prepareItems(actor);
 
+  // We need to parse to boolean because Foundry saves booleans as string
+  for (const key of Object.keys(actor.data.data.ui.contractibleItems)) {
+    if (typeof actor.data.data.ui.contractibleItems[key] === 'string') {
+      actor.data.data.ui.contractibleItems[key] = actor.data.data.ui.contractibleItems[key] === 'true';
+    }
+  }
+
   const { data } = actor.data;
 
   for (const fn of DERIVED_DATA_FUNCTIONS) {
