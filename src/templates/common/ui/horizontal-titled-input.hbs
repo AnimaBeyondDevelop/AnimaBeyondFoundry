@@ -21,6 +21,7 @@
 
   <div class='input-container {{#if this.secondaryInputName}}big{{/if}}'>
     <input
+      {{#if this.addTooltips}}title='Base'{{/if}}
       {{#if this.disabled}}disabled{{/if}}
       name='{{this.inputName}}'
       type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
@@ -30,6 +31,7 @@
     />
     {{#if this.hasSecondaryInput}}
       <input
+        {{#if this.addTooltips}}title='Final'{{/if}}
         {{#if this.disableSecondaryInput}}disabled{{/if}}
         name='{{this.secondaryInputName}}'
         type='{{#if this.secondaryInputType}}{{this.secondaryInputType}}{{else}}number{{/if}}'
