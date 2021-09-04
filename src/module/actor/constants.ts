@@ -627,10 +627,20 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
   mystic: {
     act: {
       main: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       alternative: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     zeon: {
@@ -655,6 +665,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       }
     },
     magicProjection: {
+      base: {
+        value: 0
+      },
       final: {
         value: 0
       },
@@ -712,16 +725,36 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     },
     summoning: {
       summon: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       banish: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       bind: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       control: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     spells: [],
@@ -859,10 +892,20 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
 
   psychic: {
     psychicPotential: {
-      value: 0
+      base: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     psychicProjection: {
-      value: 0
+      base: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     psychicPoints: {
       value: 0,

@@ -147,11 +147,15 @@
         "armors": []
       },
       "mystic": {
-        "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },
+        "act": {
+          "main": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "alternative": { "base": { "value": 0 }, "final": { "value": 0 } }
+        },
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
         "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
         "magicProjection": {
+          "base": { "value": 0 },
           "final": { "value": 0 },
           "imbalance": { "offensive": { "value": 0 }, "defensive": { "value": 0 } }
         },
@@ -173,10 +177,10 @@
           "used": { "value": 0 }
         },
         "summoning": {
-          "summon": { "value": 0 },
-          "banish": { "value": 0 },
-          "bind": { "value": 0 },
-          "control": { "value": 0 }
+          "summon": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "banish": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "bind": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "control": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "spells": [],
         "spellMaintenances": [],
@@ -220,8 +224,8 @@
         }
       },
       "psychic": {
-        "psychicPotential": { "value": 0 },
-        "psychicProjection": { "value": 0 },
+        "psychicPotential": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "psychicProjection": { "base": { "value": 0 }, "final": { "value": 0 } },
         "psychicPoints": { "value": 0, "max": 0 },
         "psychicPowers": [],
         "psychicDisciplines": [],

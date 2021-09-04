@@ -629,10 +629,20 @@ export type ABFActorDataSourceData = {
   mystic: {
     act: {
       main: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       alternative: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     zeon: {
@@ -657,6 +667,9 @@ export type ABFActorDataSourceData = {
       };
     };
     magicProjection: {
+      base: {
+        value: number;
+      };
       final: {
         value: number;
       };
@@ -714,16 +727,36 @@ export type ABFActorDataSourceData = {
     };
     summoning: {
       summon: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       banish: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       bind: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       control: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     spells: [];
@@ -861,10 +894,20 @@ export type ABFActorDataSourceData = {
 
   psychic: {
     psychicPotential: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     psychicProjection: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     psychicPoints: {
       value: number;
