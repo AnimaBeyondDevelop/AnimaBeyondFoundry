@@ -37,7 +37,7 @@
                 {{>
                 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                   class="via"
-                  choices=../../this.config.iterables.mystic.vias
+                  choices=xRoot.config.iterables.mystic.vias
                   title=(localize "anima.ui.mystic.spell.via.title")
                   inputName=(concat "data.dynamic.spells." spell._id ".data.via.value")
                   inputValue=spell.data.via.value
@@ -101,7 +101,7 @@
               {{>
               'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="spell-type"
-                choices=../../this.config.iterables.mystic.spellTypes
+                choices=xRoot.config.iterables.mystic.spellTypes
                 title=(localize "anima.ui.mystic.spell.spellType.title")
                 inputName=(concat "data.dynamic.spells." spell._id ".data.spellType.value")
                 inputValue=spell.data.spellType.value
@@ -109,7 +109,7 @@
               {{>
               'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="action-type"
-                choices=../../this.config.iterables.mystic.actionTypes
+                choices=xRoot.config.iterables.mystic.actionTypes
                 title=(localize "anima.ui.mystic.spell.actionType.title")
                 inputName=(concat "data.dynamic.spells." spell._id ".data.actionType.value")
                 inputValue=spell.data.actionType.value

@@ -77,3 +77,27 @@ Hooks.once('ready', () => {
 });
 
 // Add any additional hooks if necessary
+
+// This function allow us to use xRoot in templates to extract the root object in Handlebars template
+// So, instead to do ../../../ etc... to obtain rootFolder, use xRoot instead
+// https://handlebarsjs.com/guide/expressions.html#path-expressions
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
+  if (name.indexOf('xRoot') === 0) {
+    return 'data.root';
+  }
+
+  if (/^[0-9]+$/.test(name)) {
+    return `${parent}[${name}]`;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (Handlebars.JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
+    return `${parent}.${name}`;
+  }
+
+  return `${parent}['${name}']`;
+};

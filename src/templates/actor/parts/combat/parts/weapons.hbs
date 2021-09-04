@@ -35,7 +35,7 @@
               isVertical=true
               disabled=true
               title=(localize "anima.ui.combat.weapons.critic.primary.title")
-              choices=../../../this.config.iterables.combat.weapon.criticTypes
+              choices=xRoot.config.iterables.combat.weapon.criticTypes
               inputName=(concat "data.dynamic.weapons." this._id ".data.critic.primary.value")
               inputValue=this.data.critic.primary.value
             }}
@@ -45,7 +45,7 @@
                 class="critic-secondary"
                 isVertical=true
                 disabled=true
-                choices=../../../this.config.iterables.combat.weapon.criticTypesWithNone
+                choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
                 title=(localize "anima.ui.combat.weapons.critic.secondary.title")
                 inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary.value")
                 inputValue=this.data.critic.secondary.value
@@ -162,7 +162,7 @@
                   class="ammo"
                   isVertical=true
                   title=(localize "anima.ui.combat.weapons.ammo.title")
-                  ammo=../../../this.data.data.combat.ammo
+                  ammo=xRoot.data.data.combat.ammo
                   inputName=(concat "data.dynamic.weapons." this._id ".data.ammoId")
                   inputValue=this.data.ammoId
                 }}
