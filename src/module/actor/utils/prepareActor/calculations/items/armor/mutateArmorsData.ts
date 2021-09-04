@@ -7,7 +7,7 @@ import { calculateArmorMovementRestriction } from './calculations/calculateArmor
 import { calculateArmorNaturalPenalty } from './calculations/calculateArmorNaturalPenalty';
 import { calculateArmorWearArmorRequirement } from './calculations/calculateArmorWearArmorRequirement';
 
-export const calculateArmorsData = (data: ABFActorDataSourceData) => {
+export const mutateArmorsData = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { armors: ArmorDataSource[] };
 
   combat.armors = combat.armors

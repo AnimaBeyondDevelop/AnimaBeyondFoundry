@@ -6,7 +6,7 @@ import { calculateAttributeModifier } from '../util/calculateAttributeModifier';
  * calculated based on its value
  * @param data
  */
-export const calculatePrimaryModifiers = (data: ABFActorDataSourceData) => {
+export const mutatePrimaryModifiers = (data: ABFActorDataSourceData) => {
   const { primaries } = data.characteristics;
 
   for (const primaryKey of Object.keys(primaries)) {

@@ -1,27 +1,29 @@
 import { ABFActor } from '../../ABFActor';
 import { prepareItems } from '../prepareItems/prepareItems';
-import { calculateWeaponsData } from './calculations/items/weapon/calculateWeaponsData';
-import { calculatePrimaryModifiers } from './calculations/actor/calculatePrimaryModifiers';
-import { calculateTotalArmor } from './calculations/actor/calculateTotalArmor';
-import { calculateAmmoData } from './calculations/items/ammo/calculateAmmoData';
-import { calculateArmorsData } from './calculations/items/armor/calculateArmorsData';
-import { calculateNaturalPenalty } from './calculations/actor/natural-penalty/calculateNaturalPenalty';
-import { calculateSecondariesData } from './calculations/actor/secondaries/calculateSecondariesData';
-import { calculatePenalties } from './calculations/actor/modifiers/calculatePenalties';
-import { calculateCombatData } from './calculations/actor/combat/calculateCombatData';
+import { mutateWeaponsData } from './calculations/items/weapon/mutateWeaponsData';
+import { mutatePrimaryModifiers } from './calculations/actor/mutatePrimaryModifiers';
+import { mutateTotalArmor } from './calculations/actor/mutateTotalArmor';
+import { mutateAmmoData } from './calculations/items/ammo/mutateAmmoData';
+import { mutateArmorsData } from './calculations/items/armor/mutateArmorsData';
+import { mutateNaturalPenalty } from './calculations/actor/natural-penalty/mutateNaturalPenalty';
+import { mutateSecondariesData } from './calculations/actor/secondaries/mutateSecondariesData';
+import { mutatePenalties } from './calculations/actor/modifiers/mutatePenalties';
+import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
 import { ABFActorDataSourceData } from '../../../types/Actor';
+import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
-  calculatePrimaryModifiers,
-  calculatePenalties,
-  calculateCombatData,
-  calculateArmorsData,
-  calculateTotalArmor,
-  calculateNaturalPenalty,
-  calculateSecondariesData,
-  calculateAmmoData,
-  calculateWeaponsData
+  mutatePrimaryModifiers,
+  mutateMovementType,
+  mutatePenalties,
+  mutateCombatData,
+  mutateArmorsData,
+  mutateTotalArmor,
+  mutateNaturalPenalty,
+  mutateSecondariesData,
+  mutateAmmoData,
+  mutateWeaponsData
 ];
 
 export const prepareActor = (actor: ABFActor) => {

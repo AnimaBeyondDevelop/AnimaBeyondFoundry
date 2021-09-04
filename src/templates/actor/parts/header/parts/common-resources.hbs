@@ -47,7 +47,16 @@
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
+        title=(localize 'anima.ui.general.movementType.title')
+        disabled=true
+        inputName="data.characteristics.secondaries.movementType.value"
+        inputValue=data.data.characteristics.secondaries.movementType.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="movement"
         title=(localize 'anima.ui.general.movement.title')
+        disabled=true
         inputName="data.characteristics.secondaries.movement.value"
         inputValue=data.data.characteristics.secondaries.movement.value
       }}

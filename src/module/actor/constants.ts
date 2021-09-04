@@ -123,6 +123,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0,
         max: 0
       },
+      movementType: {
+        value: 0
+      },
       movement: {
         value: 0
       },

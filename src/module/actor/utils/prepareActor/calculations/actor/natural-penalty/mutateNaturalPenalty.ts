@@ -3,7 +3,7 @@ import { calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty } from './cal
 import { calculateWearArmorNaturalPenalty } from './calculations/calculateWearArmorNaturalPenalty';
 import { calculateEquippedArmorsPenalty } from './calculations/calculateEquippedArmorsPenalty';
 
-export const calculateNaturalPenalty = (data: ABFActorDataSourceData) => {
+export const mutateNaturalPenalty = (data: ABFActorDataSourceData) => {
   const wearArmorNaturalPenalty = calculateWearArmorNaturalPenalty(data);
   let armorsNaturalPenalty = calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty(data);
 

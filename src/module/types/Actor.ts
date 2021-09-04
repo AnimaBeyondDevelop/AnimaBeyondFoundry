@@ -125,6 +125,9 @@ export type ABFActorDataSourceData = {
         value: number;
         max: number;
       };
+      movementType: {
+        value: number;
+      };
       movement: {
         value: number;
       };

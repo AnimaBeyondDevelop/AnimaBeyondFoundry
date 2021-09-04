@@ -47,6 +47,7 @@
           "lifePoints": { "value": 0, "max": 0 },
           "initiative": { "base": { "value": 0 } },
           "fatigue": { "value": 0, "max": 0 },
+          "movementType": { "value": 0 },
           "movement": { "value": 0 },
           "resistances": {
             "physical": { "value": 0 },

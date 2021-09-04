@@ -13,7 +13,7 @@ const calculateTA = (tas: number[]): number => {
   return maxTa! + Math.floor(sumOtherTas / 2);
 };
 
-export const calculateTotalArmor = (data: ABFActorDataSourceData) => {
+export const mutateTotalArmor = (data: ABFActorDataSourceData) => {
   const totalArmor: ABFActorDataSourceData['combat']['totalArmor'] = {
     at: {
       cold: { value: 0 },

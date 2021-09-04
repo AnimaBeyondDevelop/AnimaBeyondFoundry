@@ -1,6 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 
-export const calculateCombatData = (data: ABFActorDataSourceData) => {
+export const mutateCombatData = (data: ABFActorDataSourceData) => {
   data.combat.attack.final.value =
     data.combat.attack.base.value +
     data.general.modifiers.allActions.final.value +

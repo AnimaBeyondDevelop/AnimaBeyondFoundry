@@ -8,7 +8,7 @@ const SECONDARIES_AFFECTED_BY_ALL_PHYSIC_PENALTIES = ['acrobatics', 'athleticism
 const SECONDARIES_AFFECTED_BY_ARMOR_PHYSIC_PENALTY = ['featsOfStrength', 'dance'];
 const SECONDARIES_AFFECTED_BY_WEAR_ARMOR_PHYSIC_PENALTY = ['ride', 'piloting'];
 
-export const calculateSecondariesData = (data: ABFActorDataSourceData) => {
+export const mutateSecondariesData = (data: ABFActorDataSourceData) => {
   const { secondaries } = data;
 
   for (const rawSecondaryKey of Object.keys(secondaries)) {

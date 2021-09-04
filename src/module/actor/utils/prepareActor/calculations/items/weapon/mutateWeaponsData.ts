@@ -10,7 +10,7 @@ import { calculateWeaponBreaking } from './calculations/calculateWeaponBreaking'
 import { calculateWeaponPresence } from './calculations/calculateWeaponPresence';
 import { calculateWeaponRange } from './calculations/calculateWeaponRange';
 
-export const calculateWeaponsData = (data: ABFActorDataSourceData) => {
+export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };
 
   combat.weapons = combat.weapons

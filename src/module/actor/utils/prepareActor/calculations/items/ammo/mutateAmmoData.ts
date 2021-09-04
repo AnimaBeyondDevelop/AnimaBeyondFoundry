@@ -5,7 +5,7 @@ import { calculateAmmoIntegrity } from './calculations/calculateAmmoIntegrity';
 import { calculateAmmoBreaking } from './calculations/calculateAmmoBreaking';
 import { calculateAmmoDamage } from './calculations/calculateAmmoDamage';
 
-export const calculateAmmoData = (data: ABFActorDataSourceData) => {
+export const mutateAmmoData = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { ammo: AmmoDataSource[] };
 
   combat.ammo = combat.ammo
