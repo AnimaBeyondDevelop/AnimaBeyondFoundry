@@ -5,10 +5,20 @@ export type ABFActorDataSourceData = {
         value: number;
       };
       allActions: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       naturalPenalty: {
-        value: number;
+        byArmors: {
+          value: number;
+        };
+        byWearArmorRequirement: {
+          value: number;
+        };
       };
     };
     aspect: {
@@ -141,166 +151,416 @@ export type ABFActorDataSourceData = {
   secondaries: {
     athletics: {
       acrobatics: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       athleticism: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       ride: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       swim: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       climb: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       jump: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       piloting: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     vigor: {
       composure: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       featsOfStrength: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       withstandPain: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     perception: {
       notice: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       search: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       track: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     intellectual: {
       animals: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       science: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       law: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       herbalLore: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       history: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       tactics: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       medicine: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       memorize: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       navigation: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       occult: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       appraisal: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       magicAppraisal: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     social: {
       style: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       intimidate: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       leadership: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       persuasion: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       trading: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       streetwise: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       etiquette: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     subterfuge: {
       lockPicking: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       disguise: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       hide: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       theft: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       stealth: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       trapLore: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       poisons: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     creative: {
       art: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       dance: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       forging: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       runes: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       alchemy: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       animism: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       music: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       sleightOfHand: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       ritualCalligraphy: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       jewelry: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       tailoring: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     secondarySpecialSkills: [];
@@ -308,13 +568,28 @@ export type ABFActorDataSourceData = {
 
   combat: {
     attack: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     block: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     dodge: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     wearArmor: {
       value: number;

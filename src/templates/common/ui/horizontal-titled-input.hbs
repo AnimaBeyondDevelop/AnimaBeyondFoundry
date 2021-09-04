@@ -7,7 +7,7 @@
             {{/if}}
             '
             {{#if this.rollable}}
-              data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+{{this.inputValue}}"
+      data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+{{#if this.rollSecondaryInput}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}"
               data-label="
               {{#if this.rollableMessage}}
                 {{this.rollableMessage}}

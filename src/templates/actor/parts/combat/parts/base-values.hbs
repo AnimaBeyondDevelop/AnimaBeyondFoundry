@@ -13,24 +13,39 @@
       class="attack"
       title=(localize "anima.ui.combat.baseValues.attack.title")
       rollable=true
-      inputName="data.combat.attack.value"
-      inputValue=data.data.combat.attack.value
+      inputName="data.combat.attack.base.value"
+      inputValue=data.data.combat.attack.base.value
+      rollSecondaryInput=true
+      hasSecondaryInput=true
+      disableSecondaryInput=true
+      secondaryInputName="data.combat.attack.final.value"
+      secondaryInputValue=data.data.combat.attack.final.value
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="block"
       title=(localize "anima.ui.combat.baseValues.block.title")
       rollable=true
-      inputName="data.combat.block.value"
-      inputValue=data.data.combat.block.value
+      inputName="data.combat.block.base.value"
+      inputValue=data.data.combat.block.base.value
+      rollSecondaryInput=true
+      hasSecondaryInput=true
+      disableSecondaryInput=true
+      secondaryInputName="data.combat.block.final.value"
+      secondaryInputValue=data.data.combat.block.final.value
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="dodge"
       title=(localize "anima.ui.combat.baseValues.dodge.title")
       rollable=true
-      inputName="data.combat.dodge.value"
-      inputValue=data.data.combat.dodge.value
+      inputName="data.combat.dodge.base.value"
+      inputValue=data.data.combat.dodge.base.value
+      rollSecondaryInput=true
+      hasSecondaryInput=true
+      disableSecondaryInput=true
+      secondaryInputName="data.combat.dodge.final.value"
+      secondaryInputValue=data.data.combat.dodge.final.value
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"

@@ -7,10 +7,16 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       },
       allActions: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       naturalPenalty: {
-        value: 0
+        byArmors: { value: 0 },
+        byWearArmorRequirement: { value: 0 }
       }
     },
     aspect: {
@@ -143,166 +149,416 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
   secondaries: {
     athletics: {
       acrobatics: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       athleticism: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       ride: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       swim: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       climb: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       jump: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       piloting: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     vigor: {
       composure: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       featsOfStrength: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       withstandPain: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     perception: {
       notice: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       search: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       track: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     intellectual: {
       animals: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       science: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       law: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       herbalLore: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       history: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       tactics: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       medicine: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       memorize: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       navigation: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       occult: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       appraisal: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       magicAppraisal: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     social: {
       style: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       intimidate: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       leadership: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       persuasion: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       trading: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       streetwise: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       etiquette: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     subterfuge: {
       lockPicking: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       disguise: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       hide: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       theft: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       stealth: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       trapLore: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       poisons: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     creative: {
       art: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       dance: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       forging: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       runes: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       alchemy: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       animism: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       music: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       sleightOfHand: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       ritualCalligraphy: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       jewelry: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
       tailoring: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     secondarySpecialSkills: []
@@ -310,13 +566,28 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
 
   combat: {
     attack: {
-      value: 0
+      base: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     block: {
-      value: 0
+      base: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     dodge: {
-      value: 0
+      base: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     wearArmor: {
       value: 0

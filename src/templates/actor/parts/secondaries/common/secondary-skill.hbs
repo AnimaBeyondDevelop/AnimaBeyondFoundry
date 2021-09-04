@@ -14,8 +14,13 @@
         class="name"
         title=(localize (concat "anima.ui.secondaries." key ".title"))
         rollable=true
-        inputName=(concat "data.secondaries." ../this.secondarySkillName "." key ".value")
-        inputValue=atr.value
+        rollSecondaryInput=true
+        inputName=(concat "data.secondaries." ../this.secondarySkillName "." key ".base.value")
+        inputValue=atr.base.value
+        hasSecondaryInput=true
+        disableSecondaryInput=true
+        secondaryInputName=(concat "data.secondaries." ../this.secondarySkillName "." key ".final.value")
+        secondaryInputValue=atr.final.value
       }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

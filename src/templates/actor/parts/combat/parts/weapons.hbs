@@ -44,6 +44,7 @@
               'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="critic-secondary"
                 isVertical=true
+                disabled=true
                 choices=../../../this.config.iterables.combat.weapon.criticTypes
                 title=(localize "anima.ui.combat.weapons.critic.secondary.title")
                 inputName=(concat "data.dynamic.weapons." this._id ".data.critic.secondary.value")
@@ -156,16 +157,16 @@
                   inputName=(concat "data.dynamic.weapons." this._id ".data.reload.final.value")
                   inputValue=this.data.reload.final.value
                 }}
+                {{>
+                'systems/animabf/templates/common/domain/weapon/select-ammo.hbs'
+                  class="ammo"
+                  isVertical=true
+                  title=(localize "anima.ui.combat.weapons.ammo.title")
+                  ammo=../../../this.data.data.combat.ammo
+                  inputName=(concat "data.dynamic.weapons." this._id ".data.ammoId")
+                  inputValue=this.data.ammoId
+                }}
               {{/if}}
-              {{>
-              'systems/animabf/templates/common/domain/weapon/select-ammo.hbs'
-                class="ammo"
-                isVertical=true
-                title=(localize "anima.ui.combat.weapons.ammo.title")
-                ammo=../../../this.data.data.combat.ammo
-                inputName=(concat "data.dynamic.weapons." this._id ".data.ammoId")
-                inputValue=this.data.ammoId
-              }}
             {{/if}}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}
