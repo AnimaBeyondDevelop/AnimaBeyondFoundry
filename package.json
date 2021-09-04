@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "anima-beyond-foundry",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "",
   "scripts": {
     "build": "gulp build",
