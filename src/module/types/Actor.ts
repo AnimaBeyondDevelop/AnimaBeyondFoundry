@@ -854,10 +854,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -865,10 +865,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -876,10 +876,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -887,10 +887,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -898,10 +898,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -909,10 +909,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };

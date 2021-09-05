@@ -216,12 +216,12 @@
         },
         "martialKnowledge": { "used": { "value": 0 }, "max": { "value": 0 } },
         "kiAccumulation": {
-          "strength": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "agility": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "dexterity": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "constitution": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "willPower": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "power": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "strength": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "agility": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "dexterity": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "constitution": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "willPower": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "power": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
           "generic": { "value": 0, "max": 0 }
         }
       },

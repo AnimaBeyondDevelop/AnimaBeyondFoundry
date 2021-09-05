@@ -141,11 +141,11 @@
       display: flex;
 
       .accumulation {
-        padding-left: 3rem;
+        padding-left: 3.5rem;
       }
 
       .title {
-        margin-left: 3rem;
+        margin-left: 3.5rem;
       }
 
       .label {
@@ -175,6 +175,14 @@
 
         margin-bottom: 0.4rem;
 
+        .input-container {
+          width: 2.5rem;
+
+          &.big {
+            width: 4rem;
+          }
+        }
+
         &:last-child {
           margin-bottom: 0;
         }
@@ -182,12 +190,17 @@
         &.generic-accumulation-row {
           height: 1.5rem;
 
+          .input-container.big {
+            width: 6rem;
+          }
+
           .accumulation-row-title {
             width: auto;
             padding-right: 1.1rem;
             font-size: 1.1rem;
             padding-left: 1rem;
-            margin-right: 3.1rem;
+
+            margin-right: 2.5rem;
 
             background-color: $red;
             border-radius: 1rem;
@@ -214,14 +227,8 @@
         }
 
         .accumulation-row-accumulation {
-          margin-left: 1rem;
-          margin-right: 2rem;
-        }
-
-        .accumulation-row-reserve {
-          .input-container {
-            width: 5rem;
-          }
+          margin-left: 1.5rem;
+          margin-right: 3rem;
         }
       }
     }
@@ -268,7 +275,7 @@
 
         .seal-row-title {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
 
           color: white;
@@ -276,7 +283,7 @@
           font-size: 1rem;
           width: 100%;
 
-          margin: 0;
+          margin: 0 0 0 1rem;
         }
 
         .common-titled-input {
@@ -339,9 +346,13 @@
       }
 
       .technique-footer {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-column-gap: 0.25rem;
+        width: 100%;
+
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+
+        display: flex;
+        justify-content: space-between;
 
         .input-container {
           width: 2rem;

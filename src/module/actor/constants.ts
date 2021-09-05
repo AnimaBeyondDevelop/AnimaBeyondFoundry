@@ -852,10 +852,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         accumulated: {
           value: 0
         },
-        current: {
+        base: {
           value: 0
         },
-        total: {
+        final: {
           value: 0
         }
       },
@@ -863,10 +863,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         accumulated: {
           value: 0
         },
-        current: {
+        base: {
           value: 0
         },
-        total: {
+        final: {
           value: 0
         }
       },
@@ -874,10 +874,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         accumulated: {
           value: 0
         },
-        current: {
+        base: {
           value: 0
         },
-        total: {
+        final: {
           value: 0
         }
       },
@@ -885,10 +885,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         accumulated: {
           value: 0
         },
-        current: {
+        base: {
           value: 0
         },
-        total: {
+        final: {
           value: 0
         }
       },
@@ -896,10 +896,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         accumulated: {
           value: 0
         },
-        current: {
+        base: {
           value: 0
         },
-        total: {
+        final: {
           value: 0
         }
       },
@@ -907,10 +907,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         accumulated: {
           value: 0
         },
-        current: {
+        base: {
           value: 0
         },
-        total: {
+        final: {
           value: 0
         }
       },
