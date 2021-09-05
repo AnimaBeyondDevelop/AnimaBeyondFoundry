@@ -21,10 +21,16 @@ export default class ABFCombat extends Combat {
   async rollInitiative(ids: string[] | string, { updateTurn, messageOptions }: InitiativeOptions = {}): Promise<this> {
     const mod = await openModDialog();
 
-    return super.rollInitiative(ids, {
-      formula: `1d100xaturn + ${this.combatant.actor?.data.data.characteristics.secondaries.initiative.base.value} + ${mod}`,
-      updateTurn,
-      messageOptions
-    });
+    for (const id of ids) {
+      const combatant = this.data.combatants.get(id);
+
+      super.rollInitiative(id, {
+        formula: `1d100xaturn + ${combatant?.actor?.data.data.characteristics.secondaries.initiative.final.value} + ${mod}`,
+        updateTurn,
+        messageOptions
+      });
+    }
+
+    return this;
   }
 }
