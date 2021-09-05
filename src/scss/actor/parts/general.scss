@@ -391,6 +391,18 @@
 
       .note-row {
         margin-top: 0.75rem;
+
+        .editor {
+          @include input;
+
+          font-weight: inherit;
+
+          height: 15rem;
+          width: 100%;
+
+          margin-top: 0;
+          border-radius: 0.5rem;
+        }
       }
     }
   }
