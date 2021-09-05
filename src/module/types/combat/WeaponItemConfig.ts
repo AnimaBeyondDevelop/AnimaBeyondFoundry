@@ -4,7 +4,7 @@ import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
 
-export enum EquippedHandType {
+export enum WeaponEquippedHandType {
   ONE_HANDED = 'one-handed',
   TWO_HANDED = 'two-handed'
 }
@@ -32,15 +32,21 @@ export enum NoneWeaponCritic {
 
 export type OptionalWeaponCritic = WeaponCritic | NoneWeaponCritic;
 
-export enum ManageabilityType {
+export enum WeaponManageabilityType {
   ONE_HAND = 'one_hand',
   TWO_HAND = 'two_hands',
   ONE_OR_TWO_HAND = 'one_or_two_hands'
 }
 
-export enum ShotType {
+export enum WeaponShotType {
   SHOT = 'shot',
   THROW = 'throw'
+}
+
+export enum WeaponSize {
+  NORMAL = 'normal',
+  ENORMOUS = 'enormous',
+  GIANT = 'giant'
 }
 
 export type WeaponItemData = {
@@ -52,16 +58,16 @@ export type WeaponItemData = {
   damage: DerivedField;
   initiative: DerivedField;
   presence: DerivedField;
-  size: { value: number };
+  size: { value: WeaponSize };
   strRequired: {
     oneHand: { value: number };
     twoHands: { value: number };
   };
   quality: { value: number };
-  oneOrTwoHanded: { value: EquippedHandType };
+  oneOrTwoHanded: { value: WeaponEquippedHandType };
   knowledgeType: { value: WeaponKnowledgeType };
-  manageabilityType: { value: ManageabilityType };
-  shotType: { value: ShotType };
+  manageabilityType: { value: WeaponManageabilityType };
+  shotType: { value: WeaponShotType };
   hasOwnStr: { value: boolean };
   isRanged: { value: boolean };
   ammoId?: string;
@@ -105,16 +111,16 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
     base: { value: 0 },
     final: { value: 0 }
   },
-  size: { value: 0 },
+  size: { value: WeaponSize.NORMAL },
   strRequired: {
     oneHand: { value: 0 },
     twoHands: { value: 0 }
   },
   quality: { value: 0 },
-  oneOrTwoHanded: { value: EquippedHandType.ONE_HANDED },
+  oneOrTwoHanded: { value: WeaponEquippedHandType.ONE_HANDED },
   knowledgeType: { value: WeaponKnowledgeType.KNOWN },
-  manageabilityType: { value: ManageabilityType.ONE_HAND },
-  shotType: { value: ShotType.SHOT },
+  manageabilityType: { value: WeaponManageabilityType.ONE_HAND },
+  shotType: { value: WeaponShotType.SHOT },
   isRanged: { value: false },
   cadence: { value: '' },
   range: {

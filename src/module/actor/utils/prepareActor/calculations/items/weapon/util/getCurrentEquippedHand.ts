@@ -1,11 +1,11 @@
-import { EquippedHandType, ManageabilityType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponEquippedHandType, WeaponManageabilityType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 
-export const getCurrentEquippedHand = (weapon: WeaponDataSource): EquippedHandType => {
+export const getCurrentEquippedHand = (weapon: WeaponDataSource): WeaponEquippedHandType => {
   switch (weapon.data.manageabilityType.value) {
-    case ManageabilityType.ONE_HAND:
-      return EquippedHandType.ONE_HANDED;
-    case ManageabilityType.TWO_HAND:
-      return EquippedHandType.TWO_HANDED;
+    case WeaponManageabilityType.ONE_HAND:
+      return WeaponEquippedHandType.ONE_HANDED;
+    case WeaponManageabilityType.TWO_HAND:
+      return WeaponEquippedHandType.TWO_HANDED;
     default:
       return weapon.data.oneOrTwoHanded.value;
   }

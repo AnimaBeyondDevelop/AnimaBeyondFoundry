@@ -1,5 +1,5 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { INITIAL_WEAPON_DATA, ShotType, WeaponDataSource } from '../../../../../../types/combat/WeaponItemConfig';
+import { INITIAL_WEAPON_DATA, WeaponShotType, WeaponDataSource } from '../../../../../../types/combat/WeaponItemConfig';
 import { calculateWeaponAttack } from './calculations/calculateWeaponAttack';
 import { calculateWeaponBlock } from './calculations/calculateWeaponBlock';
 import { calculateWeaponInitiative } from './calculations/calculateWeaponInitiative';
@@ -30,7 +30,7 @@ export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
       if (weapon.data.isRanged.value) {
         weapon.data.range.final.value = calculateWeaponRange(weapon, data);
 
-        if (weapon.data.shotType.value === ShotType.SHOT) {
+        if (weapon.data.shotType.value === WeaponShotType.SHOT) {
           weapon.data.reload.final.value = calculateWeaponReload(weapon, data);
 
           if (weapon.data.ammo) {

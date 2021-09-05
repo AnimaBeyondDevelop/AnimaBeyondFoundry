@@ -1,13 +1,13 @@
-import { EquippedHandType, ManageabilityType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponEquippedHandType, WeaponManageabilityType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 
 export const getStrengthRequirement = (weapon: WeaponDataSource) => {
   switch (weapon.data.manageabilityType.value) {
-    case ManageabilityType.ONE_HAND:
+    case WeaponManageabilityType.ONE_HAND:
       return weapon.data.strRequired.oneHand.value;
-    case ManageabilityType.TWO_HAND:
+    case WeaponManageabilityType.TWO_HAND:
       return weapon.data.strRequired.twoHands.value;
     default:
-      if (weapon.data.oneOrTwoHanded.value === EquippedHandType.ONE_HANDED) {
+      if (weapon.data.oneOrTwoHanded.value === WeaponEquippedHandType.ONE_HANDED) {
         return weapon.data.strRequired.oneHand.value;
       }
 

@@ -45,10 +45,12 @@
         inputValue=data.data.presence.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
         class="size"
+        isVertical=true
+        choices=config.iterables.combat.weapon.sizes
         title=(localize "anima.ui.combat.weapons.size.title")
-        inputName=(concat "data.size.value")
+        inputName="data.size.value"
         inputValue=data.data.size.value
       }}
       {{>

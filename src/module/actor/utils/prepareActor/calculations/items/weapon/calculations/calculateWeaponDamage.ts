@@ -1,10 +1,10 @@
-import { ShotType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponShotType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
 
 export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const getDamage = () => {
-    if (weapon.data.isRanged.value && weapon.data.shotType.value === ShotType.SHOT) {
+    if (weapon.data.isRanged.value && weapon.data.shotType.value === WeaponShotType.SHOT) {
       return weapon.data.ammo?.data.damage.final.value ?? 0;
     }
 

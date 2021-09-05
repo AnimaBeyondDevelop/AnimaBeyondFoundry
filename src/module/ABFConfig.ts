@@ -1,4 +1,10 @@
-import { ManageabilityType, NoneWeaponCritic, ShotType, WeaponCritic } from './types/combat/WeaponItemConfig';
+import {
+  WeaponManageabilityType,
+  NoneWeaponCritic,
+  WeaponShotType,
+  WeaponCritic,
+  WeaponSize
+} from './types/combat/WeaponItemConfig';
 import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig';
 
 export const ABFConfig: Record<string, any> = {};
@@ -18,19 +24,24 @@ ABFConfig.ui = {};
 ABFConfig.iterables = {
   combat: {
     weapon: {
+      sizes: {
+        [WeaponSize.NORMAL]: 'anima.ui.combat.weapon.size.normal.title',
+        [WeaponSize.ENORMOUS]: 'anima.ui.combat.weapon.size.enormous.title',
+        [WeaponSize.GIANT]: 'anima.ui.combat.weapon.size.giant.title'
+      },
       criticTypes,
       criticTypesWithNone: {
         [NoneWeaponCritic.NONE]: 'anima.ui.combat.armors.at.none.title',
         ...criticTypes
       },
       manageabilityTypes: {
-        [ManageabilityType.ONE_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneHand.title',
-        [ManageabilityType.TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.twoHand.title',
-        [ManageabilityType.ONE_OR_TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneOrTwoHand.title'
+        [WeaponManageabilityType.ONE_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneHand.title',
+        [WeaponManageabilityType.TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.twoHand.title',
+        [WeaponManageabilityType.ONE_OR_TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneOrTwoHand.title'
       },
       shotTypes: {
-        [ShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
-        [ShotType.THROW]: 'anima.ui.combat.weapon.shotType.throw.title'
+        [WeaponShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
+        [WeaponShotType.THROW]: 'anima.ui.combat.weapon.shotType.throw.title'
       }
     }
   },
