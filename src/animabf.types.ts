@@ -13,6 +13,7 @@ import { ArmorDataSource } from './module/types/combat/ArmorItemConfig';
 import ABFItem from './module/items/ABFItem';
 import { ABFConfig } from './module/ABFConfig';
 import { AmmoDataSource } from './module/types/combat/AmmoItemConfig';
+import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 
 export type ABFItemBaseDataSource<T, D> = {
   _id: string;
@@ -42,6 +43,10 @@ interface ABFActorDataSource {
 type ABFActorsDataSource = ABFActorDataSource;
 
 declare global {
+  interface Window {
+    ABFFoundryRoll: typeof ABFFoundryRoll;
+  }
+
   interface CONFIG {
     config: typeof ABFConfig;
   }
