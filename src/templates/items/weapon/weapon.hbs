@@ -95,8 +95,12 @@
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="fue-required"
           title=(localize "anima.ui.combat.weapons.strRequired.oneHand.title")
-          inputName=(concat "data.strRequired.oneHand.value")
-          inputValue=data.data.strRequired.oneHand.value
+          inputName=(concat "data.strRequired.oneHand.base.value")
+          inputValue=data.data.strRequired.oneHand.base.value
+          hasSecondaryInput=true
+          disableSecondaryInput=true
+          secondaryInputName=(concat "data.strRequired.oneHand.final.value")
+          secondaryInputValue=data.data.strRequired.oneHand.final.value
         }}
       {{/if}}
       {{#if (or (is 'eq' data.data.manageabilityType.value 'two_hands') (is 'eq' data.data.manageabilityType.value 'one_or_two_hands'))}}
@@ -104,8 +108,12 @@
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="fue-required-two-hands"
           title=(localize "anima.ui.combat.weapons.strRequired.twoHands.title")
-          inputName=(concat "data.strRequired.twoHands.value")
-          inputValue=data.data.strRequired.twoHands.value
+          inputName=(concat "data.strRequired.twoHands.base.value")
+          inputValue=data.data.strRequired.twoHands.base.value
+          hasSecondaryInput=true
+          disableSecondaryInput=true
+          secondaryInputName=(concat "data.strRequired.twoHands.final.value")
+          secondaryInputValue=data.data.strRequired.twoHands.final.value
         }}
       {{/if}}
       {{>

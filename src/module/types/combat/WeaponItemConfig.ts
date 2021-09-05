@@ -3,6 +3,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
+import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
 
 export enum WeaponEquippedHandType {
   ONE_HANDED = 'one-handed',
@@ -60,8 +61,8 @@ export type WeaponItemData = {
   presence: DerivedField;
   size: { value: WeaponSize };
   strRequired: {
-    oneHand: { value: number };
-    twoHands: { value: number };
+    oneHand: DerivedField;
+    twoHands: DerivedField;
   };
   quality: { value: number };
   oneOrTwoHanded: { value: WeaponEquippedHandType };
@@ -113,8 +114,14 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
   },
   size: { value: WeaponSize.NORMAL },
   strRequired: {
-    oneHand: { value: 0 },
-    twoHands: { value: 0 }
+    oneHand: {
+      base: { value: 0 },
+      final: { value: 0 }
+    },
+    twoHands: {
+      base: { value: 0 },
+      final: { value: 0 }
+    }
   },
   quality: { value: 0 },
   oneOrTwoHanded: { value: WeaponEquippedHandType.ONE_HANDED },
@@ -204,5 +211,8 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
 
       return weapon;
     });
+  },
+  prepareItem(data) {
+    mutateWeapon(data);
   }
 };

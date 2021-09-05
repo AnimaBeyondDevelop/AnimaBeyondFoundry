@@ -1,6 +1,7 @@
 import { ABFItems } from '../items/ABFItems';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFActorDataSourceData } from './Actor';
+import ABFItem from '../items/ABFItem';
 
 export type ABFItemConfig<D, C> = {
   /**
@@ -99,6 +100,12 @@ export type ABFItemConfig<D, C> = {
    * @param target
    */
   onDelete?: (actor: ABFActor, target: JQuery) => void;
+
+  /**
+   * Method to calculate derived data
+   * @param data
+   */
+  prepareItem?(data: ABFItem);
 };
 
 export type ItemChanges<T = undefined> = {

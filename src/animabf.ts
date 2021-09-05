@@ -21,6 +21,7 @@ import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
+import ABFItem from './module/items/ABFItem';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -43,6 +44,8 @@ Hooks.once('init', async () => {
     formula: '1d100xaturn + @characteristics.secondaries.initiative.value',
     decimals: 2
   };
+
+  CONFIG.Item.documentClass = ABFItem;
 
   // Register custom system settings
   registerSettings();

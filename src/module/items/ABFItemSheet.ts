@@ -48,6 +48,11 @@ export default class ABFItemSheet extends ItemSheet {
   getData() {
     const data = super.getData() as ItemSheet.Data & { config?: typeof ABFConfig };
 
+    data.item.prepareDerivedData();
+
+    // Yes, a lot of datas, I know. This is Foundry VTT, welcome if you see this
+    data.data.data = data.item.data.data;
+
     data.config = CONFIG.config;
 
     return data;
