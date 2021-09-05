@@ -21,10 +21,8 @@ export default class ABFCombat extends Combat {
   async rollInitiative(ids: string[] | string, { updateTurn, messageOptions }: InitiativeOptions = {}): Promise<this> {
     const mod = await openModDialog();
 
-    const formula = `${CONFIG.Combat.initiative.formula} + ${mod}`;
-
     return super.rollInitiative(ids, {
-      formula,
+      formula: `1d100xaturn + ${this.combatant.actor?.data.data.characteristics.secondaries.initiative.base.value} + ${mod}`,
       updateTurn,
       messageOptions
     });
