@@ -50,6 +50,12 @@
       margin-top: 0;
     }
 
+    .group-body {
+      max-height: 10.2rem;
+      overflow: hidden;
+      overflow-y: scroll;
+    }
+
     .ammo-row {
       margin-top: 0.5rem;
 

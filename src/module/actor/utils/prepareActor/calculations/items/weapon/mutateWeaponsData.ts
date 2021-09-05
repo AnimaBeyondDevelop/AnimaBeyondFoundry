@@ -2,13 +2,13 @@ import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 import { INITIAL_WEAPON_DATA, WeaponShotType, WeaponDataSource } from '../../../../../../types/combat/WeaponItemConfig';
 import { calculateWeaponAttack } from './calculations/calculateWeaponAttack';
 import { calculateWeaponBlock } from './calculations/calculateWeaponBlock';
-import { calculateWeaponInitiative } from './calculations/calculateWeaponInitiative';
 import { calculateWeaponDamage } from './calculations/calculateWeaponDamage';
 import { calculateWeaponReload } from './calculations/calculateWeaponReload';
 import { calculateWeaponIntegrity } from './calculations/calculateWeaponIntegrity';
 import { calculateWeaponBreaking } from './calculations/calculateWeaponBreaking';
 import { calculateWeaponPresence } from './calculations/calculateWeaponPresence';
 import { calculateWeaponRange } from './calculations/calculateWeaponRange';
+import { calculateWeaponInitiative } from './calculations/calculateWeaponInitiative';
 
 export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };
@@ -21,7 +21,7 @@ export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
     .map(weapon => {
       weapon.data.attack.value = calculateWeaponAttack(weapon, data);
       weapon.data.block.value = calculateWeaponBlock(weapon, data);
-      weapon.data.initiative.final.value = calculateWeaponInitiative(weapon, data);
+      weapon.data.initiative.final.value = calculateWeaponInitiative(weapon);
       weapon.data.damage.final.value = calculateWeaponDamage(weapon, data);
       weapon.data.integrity.final.value = calculateWeaponIntegrity(weapon);
       weapon.data.breaking.final.value = calculateWeaponBreaking(weapon, data);

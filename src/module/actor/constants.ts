@@ -120,6 +120,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       initiative: {
         base: {
           value: 0
+        },
+        final: {
+          value: 0
         }
       },
       fatigue: {

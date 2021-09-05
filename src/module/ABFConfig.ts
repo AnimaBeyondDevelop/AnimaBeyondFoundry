@@ -3,7 +3,7 @@ import {
   NoneWeaponCritic,
   WeaponShotType,
   WeaponCritic,
-  WeaponSize
+  WeaponSizeProportion, WeaponSize
 } from './types/combat/WeaponItemConfig';
 import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig';
 
@@ -25,9 +25,14 @@ ABFConfig.iterables = {
   combat: {
     weapon: {
       sizes: {
-        [WeaponSize.NORMAL]: 'anima.ui.combat.weapon.size.normal.title',
-        [WeaponSize.ENORMOUS]: 'anima.ui.combat.weapon.size.enormous.title',
-        [WeaponSize.GIANT]: 'anima.ui.combat.weapon.size.giant.title'
+        [WeaponSize.SMALL]: 'anima.ui.combat.weapon.size.small.title',
+        [WeaponSize.MEDIUM]: 'anima.ui.combat.weapon.size.medium.title',
+        [WeaponSize.BIG]: 'anima.ui.combat.weapon.size.big.title'
+      },
+      sizeProportions: {
+        [WeaponSizeProportion.NORMAL]: 'anima.ui.combat.weapon.sizeProportion.normal.title',
+        [WeaponSizeProportion.ENORMOUS]: 'anima.ui.combat.weapon.sizeProportion.enormous.title',
+        [WeaponSizeProportion.GIANT]: 'anima.ui.combat.weapon.sizeProportion.giant.title'
       },
       criticTypes,
       criticTypesWithNone: {

@@ -1,15 +1,10 @@
-import { WeaponDataSource, WeaponSize } from '../../../../../../../types/combat/WeaponItemConfig';
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { calculateWeaponInitiativeActionPenalty } from '../util/calculateWeaponInitiativeActionPenalty';
+import { WeaponDataSource, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
 
-export const calculateWeaponInitiative = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
-  let initiative =
-    data.characteristics.secondaries.initiative.base.value +
-    weapon.data.initiative.base.value +
-    calculateWeaponInitiativeActionPenalty(data);
+export const calculateWeaponInitiative = (weapon: WeaponDataSource) => {
+  let initiative = weapon.data.initiative.base.value + weapon.data.quality.value;
 
   // This depends on the size of the character but right now is not automatized
-  if (weapon.data.size.value !== WeaponSize.NORMAL) {
+  if (weapon.data.sizeProportion.value !== WeaponSizeProportion.NORMAL) {
     initiative -= 40;
   }
 

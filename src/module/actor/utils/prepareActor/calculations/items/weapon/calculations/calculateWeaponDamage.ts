@@ -1,15 +1,15 @@
-import { WeaponDataSource, WeaponShotType, WeaponSize } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource, WeaponShotType, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
 
 const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
-  if (weapon.data.size.value === WeaponSize.ENORMOUS) {
+  if (weapon.data.sizeProportion.value === WeaponSizeProportion.ENORMOUS) {
     damage *= 1.5;
 
     damage = Math.floor(damage / 5) * 5;
   }
 
-  if (weapon.data.size.value === WeaponSize.GIANT) {
+  if (weapon.data.sizeProportion.value === WeaponSizeProportion.GIANT) {
     damage *= 2;
   }
 

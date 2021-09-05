@@ -45,12 +45,20 @@ export enum WeaponShotType {
 }
 
 export enum WeaponSize {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  BIG = 'big'
+}
+
+export enum WeaponSizeProportion {
   NORMAL = 'normal',
   ENORMOUS = 'enormous',
   GIANT = 'giant'
 }
 
 export type WeaponItemData = {
+  equipped: { value: boolean };
+  isShield: { value: boolean };
   special: { value: string };
   integrity: DerivedField;
   breaking: DerivedField;
@@ -60,6 +68,7 @@ export type WeaponItemData = {
   initiative: DerivedField;
   presence: DerivedField;
   size: { value: WeaponSize };
+  sizeProportion: { value: WeaponSizeProportion };
   strRequired: {
     oneHand: DerivedField;
     twoHands: DerivedField;
@@ -88,6 +97,8 @@ export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItem
 export type WeaponChanges = ItemChanges<WeaponItemData>;
 
 export const INITIAL_WEAPON_DATA: WeaponItemData = {
+  equipped: { value: false },
+  isShield: { value: false },
   special: { value: '' },
   hasOwnStr: { value: false },
   integrity: {
@@ -112,7 +123,8 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
     base: { value: 0 },
     final: { value: 0 }
   },
-  size: { value: WeaponSize.NORMAL },
+  size: { value: WeaponSize.MEDIUM },
+  sizeProportion: { value: WeaponSizeProportion.NORMAL },
   strRequired: {
     oneHand: {
       base: { value: 0 },

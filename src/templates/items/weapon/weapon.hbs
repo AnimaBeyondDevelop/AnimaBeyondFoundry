@@ -45,6 +45,14 @@
         inputValue=data.data.presence.base.value
       }}
       {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="is-shield"
+        title=(localize "anima.ui.combat.weapons.isShield.title")
+        inputType="checkbox"
+        inputName=(concat "data.isShield.value")
+        inputValue=(is 'eq' data.data.isShield.value true)
+      }}
+      {{>
       'systems/animabf/templates/common/ui/custom-select-choices.hbs'
         class="size"
         isVertical=true
@@ -52,6 +60,15 @@
         title=(localize "anima.ui.combat.weapons.size.title")
         inputName="data.size.value"
         inputValue=data.data.size.value
+      }}
+      {{>
+      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="size-proportion"
+        isVertical=true
+        choices=config.iterables.combat.weapon.sizeProportions
+        title=(localize "anima.ui.combat.weapons.sizeProportion.title")
+        inputName="data.sizeProportion.value"
+        inputValue=data.data.sizeProportion.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

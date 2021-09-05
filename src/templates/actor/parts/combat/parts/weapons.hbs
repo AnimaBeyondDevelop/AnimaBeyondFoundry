@@ -116,6 +116,14 @@
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='weapon-footer'>
               {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="equipped"
+                title=(localize "anima.ui.combat.weapons.equipped.title")
+                inputType="checkbox"
+                inputName=(concat "data.dynamic.weapons." this._id ".data.equipped.value")
+                inputValue=(is 'eq' this.data.equipped.value true)
+              }}
+              {{>
               'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="critic-primary"
                 isVertical=true

@@ -123,6 +123,9 @@ export type ABFActorDataSourceData = {
         base: {
           value: number;
         };
+        final: {
+          value: number;
+        };
       };
       fatigue: {
         value: number;

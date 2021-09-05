@@ -1,4 +1,4 @@
-import { WeaponDataSource, WeaponSize } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponBreakingFromStrength } from '../util/getWeaponBreakingFromStrength';
 
@@ -10,11 +10,11 @@ export const calculateWeaponBreaking = (weapon: WeaponDataSource, data: ABFActor
     getWeaponBreakingFromStrength(strength) +
     Math.floor((weapon.data.quality.value / 5) * 2);
 
-  if (weapon.data.size.value === WeaponSize.ENORMOUS) {
+  if (weapon.data.sizeProportion.value === WeaponSizeProportion.ENORMOUS) {
     breaking += 3;
   }
 
-  if (weapon.data.size.value === WeaponSize.ENORMOUS) {
+  if (weapon.data.sizeProportion.value === WeaponSizeProportion.ENORMOUS) {
     breaking += 8;
   }
 
