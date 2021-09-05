@@ -10,7 +10,18 @@ export enum PsychicPowerActionTypes {
 
 export type PsychicPowerItemData = {
   level: { value: number };
-  effects: string[];
+  effects: {
+    20: { value: string };
+    40: { value: string };
+    80: { value: string };
+    120: { value: string };
+    140: { value: string };
+    180: { value: string };
+    240: { value: string };
+    280: { value: string };
+    320: { value: string };
+    440: { value: string };
+  };
   actionType: { value: PsychicPowerActionTypes };
   hasMaintenance: { value: boolean };
   bonus: { value: number };
@@ -41,7 +52,18 @@ export const PsychicPowerItemConfig: ABFItemConfig<PsychicPowerDataSource, Psych
 
     const data: PsychicPowerItemData = {
       level: { value: 0 },
-      effects: new Array(10).fill({ value: '' }),
+      effects: {
+        20: { value: '' },
+        40: { value: '' },
+        80: { value: '' },
+        120: { value: '' },
+        140: { value: '' },
+        180: { value: '' },
+        240: { value: '' },
+        280: { value: '' },
+        320: { value: '' },
+        440: { value: '' }
+      },
       actionType: { value: PsychicPowerActionTypes.ACTIVE },
       hasMaintenance: { value: false },
       bonus: { value: 0 }
@@ -57,21 +79,10 @@ export const PsychicPowerItemConfig: ABFItemConfig<PsychicPowerDataSource, Psych
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      const { effects: effectsObject } = data;
-
-      const effects = [];
-
-      for (const key of Object.keys(effectsObject)) {
-        effects[key] = { value: effectsObject[key] };
-      }
-
       await actor.updateItem({
         id,
         name,
-        data: {
-          ...data,
-          effects
-        }
+        data
       });
     }
   },

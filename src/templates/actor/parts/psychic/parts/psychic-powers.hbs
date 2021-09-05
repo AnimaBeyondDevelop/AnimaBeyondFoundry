@@ -51,18 +51,18 @@
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="psychic-power"
           }}
-            {{#each power.data.effects as |effect|}}
+            {{#each power.data.effects as |effect key|}}
               <div class='effect-row'>
                 <input
                   type='text'
                   class='input difficulty'
                   disabled
-                  value='{{getDifficultyFromIndex @index}}'
+                  value='{{key}}'
                 />
                 <input
                   type='text'
                   class='input description'
-                  name='{{concat "data.dynamic.psychicPowers." power._id ".data.effects." @index}}'
+                  name='{{concat "data.dynamic.psychicPowers." power._id ".data.effects." key ".value"}}'
                   value='{{effect.value}}'
                 />
               </div>

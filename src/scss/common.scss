@@ -46,9 +46,18 @@
     & .contractible-group {
       position: relative;
 
-      &.retracted {
-        .group-body,
-        .group-footer {
+      &.contracted {
+        &.contract-footer {
+          .group-footer {
+            display: none !important;
+
+            * {
+              box-shadow: none !important;
+            }
+          }
+        }
+
+        .group-body {
           display: none !important;
 
           * {
@@ -75,7 +84,7 @@
           background-color: $light-gray;
         }
 
-        &.retracted {
+        &.contracted {
           transform: rotate(180deg);
         }
       }
