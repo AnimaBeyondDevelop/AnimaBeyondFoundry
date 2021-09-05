@@ -315,19 +315,16 @@
     }
 
     .technique-row .technique {
-      .technique-description {
+      .editor {
         @include input;
 
-        margin-top: 0;
+        font-weight: inherit;
+
+        height: 10rem;
         width: 100%;
 
+        margin-top: 0;
         border-radius: 0.5rem;
-      }
-
-      .result {
-        font-weight: bold;
-        height: 5rem;
-        overflow-y: scroll;
       }
 
       .technique-header {
