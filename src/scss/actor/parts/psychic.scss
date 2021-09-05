@@ -11,6 +11,14 @@
       grid-column-gap: 1rem;
     }
 
+    .second-row {
+      margin-top: 0.5rem;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1rem;
+    }
+
     div .common-group {
       &:first-child {
         margin-top: 0;

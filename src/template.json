@@ -159,7 +159,10 @@
         "magicProjection": {
           "base": { "value": 0 },
           "final": { "value": 0 },
-          "imbalance": { "offensive": { "value": 0 }, "defensive": { "value": 0 } }
+          "imbalance": {
+            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+          }
         },
         "magicLevel": {
           "spheres": {

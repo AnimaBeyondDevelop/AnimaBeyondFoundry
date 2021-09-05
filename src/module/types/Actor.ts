@@ -711,10 +711,20 @@ export type ABFActorDataSourceData = {
       };
       imbalance: {
         offensive: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         defensive: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
       };
     };

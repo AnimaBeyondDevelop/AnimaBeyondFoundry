@@ -709,10 +709,20 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       imbalance: {
         offensive: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         defensive: {
-          value: 0
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         }
       }
     },

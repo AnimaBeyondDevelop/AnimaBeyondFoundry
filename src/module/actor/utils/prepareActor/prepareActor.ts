@@ -11,6 +11,8 @@ import { mutatePenalties } from './calculations/actor/modifiers/mutatePenalties'
 import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
 import { ABFActorDataSourceData } from '../../../types/Actor';
 import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
+import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
+import { mutatePsychicData } from './calculations/actor/psychic/mutateMysticData';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
@@ -23,7 +25,9 @@ const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
   mutateNaturalPenalty,
   mutateSecondariesData,
   mutateAmmoData,
-  mutateWeaponsData
+  mutateWeaponsData,
+  mutateMysticData,
+  mutatePsychicData
 ];
 
 export const prepareActor = (actor: ABFActor) => {
