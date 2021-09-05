@@ -129,7 +129,12 @@ export type ABFActorDataSourceData = {
         max: number;
       };
       movementType: {
-        value: number;
+        mod: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       movement: {
         value: number;

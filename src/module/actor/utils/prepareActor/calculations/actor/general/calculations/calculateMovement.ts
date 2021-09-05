@@ -1,7 +1,9 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 
 export const calculateMovement = (data: ABFActorDataSourceData): number => {
-  switch (data.characteristics.secondaries.movementType.value) {
+  const movementType = data.characteristics.secondaries.movementType.final.value;
+
+  switch (movementType) {
     case 0:
       return 1;
     case 1:

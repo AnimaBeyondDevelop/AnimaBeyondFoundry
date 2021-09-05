@@ -50,9 +50,12 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movementType.title')
-        disabled=true
-        inputName="data.characteristics.secondaries.movementType.value"
-        inputValue=data.data.characteristics.secondaries.movementType.value
+        inputName="data.characteristics.secondaries.movementType.mod.value"
+        inputValue=data.data.characteristics.secondaries.movementType.mod.value
+        hasSecondaryInput=true
+        disableSecondaryInput=true
+        secondaryInputName="data.characteristics.secondaries.movementType.final.value"
+        secondaryInputValue=data.data.characteristics.secondaries.movementType.final.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
