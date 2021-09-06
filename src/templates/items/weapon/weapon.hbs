@@ -179,9 +179,13 @@
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="weapon-fue"
-              title=(localize "anima.ui.combat.weapons.weaponFue.title")
-              inputName=(concat "data.weaponFue.value")
-              inputValue=data.data.weaponFue.value
+              title=(localize "anima.ui.combat.weapons.weaponStrength.title")
+              inputName=(concat "data.weaponStrength.base.value")
+              inputValue=data.data.weaponStrength.base.value
+              hasSecondaryInput=true
+              disableSecondaryInput=true
+              secondaryInputName=(concat "data.weaponStrength.final.value")
+              secondaryInputValue=data.data.weaponStrength.final.value
             }}
           {{/if}}
           {{>

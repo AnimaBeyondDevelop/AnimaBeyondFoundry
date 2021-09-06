@@ -8,7 +8,7 @@ export const calculateStrengthRequiredPenalty = (weapon: WeaponDataSource, data:
   let strengthDifference;
 
   if (weapon.data.isRanged.value && weapon.data.shotType.value === WeaponShotType.THROW) {
-    strengthDifference = weapon.data.weaponFue.value - actorStrength;
+    strengthDifference = weapon.data.weaponStrength.final.value - actorStrength;
   } else {
     strengthDifference = getStrengthRequirement(weapon) - actorStrength;
   }

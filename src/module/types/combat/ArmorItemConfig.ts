@@ -3,6 +3,13 @@ import { ABFItems } from '../../items/ABFItems';
 import { openDialog } from '../../utils/openDialog';
 import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 
+export enum ArmorLocation {
+  COMPLETE = 'complete',
+  NIGHTDRESS = 'nightdress',
+  BREASPLATE = 'breastplate',
+  HEAD = 'head'
+}
+
 export type ArmorItemData = {
   cut: DerivedField;
   impact: DerivedField;
@@ -18,9 +25,9 @@ export type ArmorItemData = {
   naturalPenalty: DerivedField;
   isEnchanted: { value: boolean };
   type: { value: string };
-  localization: { value: string };
+  localization: { value: ArmorLocation };
   quality: { value: number };
-  equipped?: { value: boolean };
+  equipped: { value: boolean };
 };
 
 export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
@@ -44,7 +51,7 @@ export const INITIAL_ARMOR_DATA: ArmorItemData = {
   naturalPenalty: derivedFieldInitialData,
   isEnchanted: { value: false },
   type: { value: '' },
-  localization: { value: '' },
+  localization: { value: ArmorLocation.BREASPLATE },
   quality: { value: 0 },
   equipped: { value: false }
 };

@@ -85,7 +85,7 @@ export type WeaponItemData = {
   range: DerivedField;
   cadence: { value: string };
   reload: DerivedField;
-  weaponFue: { value: number };
+  weaponStrength: DerivedField;
   critic: {
     primary: { value: WeaponCritic };
     secondary: { value: OptionalWeaponCritic };
@@ -150,7 +150,10 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
     base: { value: 0 },
     final: { value: 0 }
   },
-  weaponFue: { value: 0 },
+  weaponStrength: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
   critic: {
     primary: { value: WeaponCritic.CUT },
     secondary: { value: NoneWeaponCritic.NONE }

@@ -128,7 +128,7 @@
   "anima.ui.combat.weapons.strRequired.oneHand.title": "STR req.",
   "anima.ui.combat.weapons.strRequired.twoHands.title": "2H STR req.",
   "anima.ui.combat.weapons.title": "Weapons",
-  "anima.ui.combat.weapons.weaponFue.title": "Weapon STR",
+  "anima.ui.combat.weapons.weaponStrength.title": "Weapon STR",
   "anima.ui.contactSection.contactRow.description": "Description",
   "anima.ui.contactSection.contactRow.name": "Name",
   "anima.ui.contactSection.title": "Contacts",

@@ -359,7 +359,7 @@
       "range": { "base": { "value": 0 }, "final": { "value": 0 } },
       "cadence": { "value": "" },
       "reload": { "value": 0 },
-      "weaponFue": { "value": 0 },
+      "weaponStrength": { "value": 0 },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     }
   }
