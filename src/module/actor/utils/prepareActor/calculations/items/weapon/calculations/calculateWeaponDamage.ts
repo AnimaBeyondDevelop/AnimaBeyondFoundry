@@ -34,7 +34,7 @@ export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDa
 
         ammoDamage += ammo.data.quality.value * 2;
 
-        return ammoDamage;
+        return ammoDamage + weaponStrengthModifier;
       }
 
       return 0;

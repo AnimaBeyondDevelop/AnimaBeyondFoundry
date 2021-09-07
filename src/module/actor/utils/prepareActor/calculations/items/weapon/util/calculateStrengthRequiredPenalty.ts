@@ -5,13 +5,7 @@ import { getStrengthRequirement } from './getStrengthRequirement';
 export const calculateStrengthRequiredPenalty = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const actorStrength = data.characteristics.primaries.strength.value;
 
-  let strengthDifference;
-
-  if (weapon.data.hasOwnStr.value) {
-    strengthDifference = weapon.data.weaponStrength.final.value - actorStrength;
-  } else {
-    strengthDifference = getStrengthRequirement(weapon) - actorStrength;
-  }
+  const strengthDifference = getStrengthRequirement(weapon) - actorStrength;
 
   return strengthDifference > 0 ? -(strengthDifference * 10) : 0;
 };
