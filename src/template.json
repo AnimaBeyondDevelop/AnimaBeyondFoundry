@@ -123,7 +123,8 @@
           "sleightOfHand": { "base": { "value": 0 }, "final": { "value": 0 } },
           "ritualCalligraphy": { "base": { "value": 0 }, "final": { "value": 0 } },
           "jewelry": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "tailoring": { "base": { "value": 0 }, "final": { "value": 0 } }
+          "tailoring": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "puppetMaking": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "secondarySpecialSkills": []
       },

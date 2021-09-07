@@ -601,6 +601,14 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         final: {
           value: 0
         }
+      },
+      puppetMaking: {
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       }
     },
     secondarySpecialSkills: []

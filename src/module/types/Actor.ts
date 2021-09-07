@@ -602,6 +602,14 @@ export type ABFActorDataSourceData = {
           value: number;
         };
       };
+      puppetMaking: {
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
+      };
     };
     secondarySpecialSkills: [];
   };
