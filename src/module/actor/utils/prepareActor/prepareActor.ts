@@ -12,7 +12,7 @@ import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
 import { ABFActorDataSourceData } from '../../../types/Actor';
 import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
 import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
-import { mutatePsychicData } from './calculations/actor/psychic/mutateMysticData';
+import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicData';
 import { mutateInitiative } from './calculations/actor/mutateInitiative';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another

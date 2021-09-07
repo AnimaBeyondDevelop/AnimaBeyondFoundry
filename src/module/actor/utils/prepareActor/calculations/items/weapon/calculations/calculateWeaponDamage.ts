@@ -1,4 +1,8 @@
-import { WeaponDataSource, WeaponShotType, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import {
+  WeaponDataSource,
+  WeaponShotType,
+  WeaponSizeProportion
+} from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
 
@@ -18,6 +22,8 @@ const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
 
 export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const getDamage = () => {
+    const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
+
     if (weapon.data.isRanged.value && weapon.data.shotType.value === WeaponShotType.SHOT) {
       const { ammo } = weapon.data;
 
@@ -34,7 +40,7 @@ export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDa
       return 0;
     }
 
-    const baseDamage = weapon.data.damage.base.value + calculateWeaponStrengthModifier(weapon, data);
+    const baseDamage = weapon.data.damage.base.value + weaponStrengthModifier;
 
     return addSizeModifier(weapon, baseDamage) + weapon.data.quality.value * 2;
   };

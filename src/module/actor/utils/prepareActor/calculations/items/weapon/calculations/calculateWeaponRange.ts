@@ -3,7 +3,10 @@ import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponRangeFromStrength } from '../util/getWeaponRangeFromStrength';
 
 export const calculateWeaponRange = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
-  const strength = data.characteristics.primaries.strength.value;
+  const strength = weapon.data.hasOwnStr.value
+    ? weapon.data.weaponStrength.final.value
+    : data.characteristics.primaries.strength.value;
+
   const baseRange = weapon.data.range.base.value;
 
   const rangeFromStrength = getWeaponRangeFromStrength(strength);

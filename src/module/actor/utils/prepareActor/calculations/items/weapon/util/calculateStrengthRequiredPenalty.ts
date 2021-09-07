@@ -1,4 +1,4 @@
-import { WeaponShotType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getStrengthRequirement } from './getStrengthRequirement';
 
@@ -7,7 +7,7 @@ export const calculateStrengthRequiredPenalty = (weapon: WeaponDataSource, data:
 
   let strengthDifference;
 
-  if (weapon.data.isRanged.value && weapon.data.shotType.value === WeaponShotType.THROW) {
+  if (weapon.data.hasOwnStr.value) {
     strengthDifference = weapon.data.weaponStrength.final.value - actorStrength;
   } else {
     strengthDifference = getStrengthRequirement(weapon) - actorStrength;

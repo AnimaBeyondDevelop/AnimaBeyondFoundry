@@ -1,10 +1,12 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { ArmorDataSource } from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource, ArmorType } from '../../../../../../../types/combat/ArmorItemConfig';
 
 export const calculateEquippedArmorsPenalty = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { armors: ArmorDataSource[] };
 
-  const equippedArmors = combat.armors.filter(armor => armor.data.equipped?.value);
+  const equippedArmorsNonNatural = combat.armors.filter(
+    armor => armor.data.equipped.value && armor.data.type.value !== ArmorType.NATURAL
+  );
 
-  return Math.min(0, (equippedArmors.length - 1) * -20);
+  return Math.min(0, (equippedArmorsNonNatural.length - 1) * -20);
 };

@@ -9,6 +9,7 @@ export const prepareItems = (actor: ABFActor) => {
       const { data } = actor.data;
 
       configuration.onAttach?.(data, item.data as any);
+      configuration.prepareItem?.(item);
     } else {
       console.warn(`Item with ${item.type} unrecognized. Skipping...`, { item });
     }

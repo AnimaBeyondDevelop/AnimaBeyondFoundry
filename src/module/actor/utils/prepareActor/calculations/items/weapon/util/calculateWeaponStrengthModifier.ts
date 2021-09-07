@@ -1,4 +1,4 @@
-import { WeaponEquippedHandType, WeaponShotType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource, WeaponEquippedHandType } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getCurrentEquippedHand } from './getCurrentEquippedHand';
 import { calculateAttributeModifier } from '../../../util/calculateAttributeModifier';
@@ -9,7 +9,7 @@ export const calculateWeaponStrengthModifier = (weapon: WeaponDataSource, data: 
 
   const equippedHandMultiplier = hasOnlyOneEquippedHandMultiplier ? 1 : 2;
 
-  if (weapon.data.isRanged.value && weapon.data.shotType.value === WeaponShotType.SHOT && weapon.data.hasOwnStr.value) {
+  if (weapon.data.hasOwnStr.value) {
     return calculateAttributeModifier(weapon.data.weaponStrength.final.value);
   }
 

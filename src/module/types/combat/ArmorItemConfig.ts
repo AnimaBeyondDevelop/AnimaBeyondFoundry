@@ -6,8 +6,14 @@ import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
 export enum ArmorLocation {
   COMPLETE = 'complete',
   NIGHTDRESS = 'nightdress',
-  BREASPLATE = 'breastplate',
+  BREASTPLATE = 'breastplate',
   HEAD = 'head'
+}
+
+export enum ArmorType {
+  SOFT = 'soft',
+  HARD = 'hard',
+  NATURAL = 'natural'
 }
 
 export type ArmorItemData = {
@@ -24,7 +30,7 @@ export type ArmorItemData = {
   movementRestriction: DerivedField;
   naturalPenalty: DerivedField;
   isEnchanted: { value: boolean };
-  type: { value: string };
+  type: { value: ArmorType };
   localization: { value: ArmorLocation };
   quality: { value: number };
   equipped: { value: boolean };
@@ -50,8 +56,8 @@ export const INITIAL_ARMOR_DATA: ArmorItemData = {
   movementRestriction: derivedFieldInitialData,
   naturalPenalty: derivedFieldInitialData,
   isEnchanted: { value: false },
-  type: { value: '' },
-  localization: { value: ArmorLocation.BREASPLATE },
+  type: { value: ArmorType.SOFT },
+  localization: { value: ArmorLocation.BREASTPLATE },
   quality: { value: 0 },
   equipped: { value: false }
 };
