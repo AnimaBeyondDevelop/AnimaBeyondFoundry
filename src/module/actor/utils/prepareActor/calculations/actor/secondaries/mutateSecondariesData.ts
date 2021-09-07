@@ -3,6 +3,8 @@ import { DerivedField } from '../../../../../../types/Items';
 import { calculateSecondaryStealth } from './calculations/calculateSecondaryStealth';
 import { calculateSecondarySwim } from './calculations/calculateSecondarySwim';
 import { calculateSecondaryHide } from './calculations/calculateSecondaryHide';
+import { calculateSecondaryNotice } from './calculations/calculateSecondaryNotice';
+import { calculateSecondarySearch } from './calculations/calculateSecondarySearch';
 
 const SECONDARIES_AFFECTED_BY_ALL_PHYSIC_PENALTIES = ['acrobatics', 'athleticism', 'climb', 'jump'];
 const SECONDARIES_AFFECTED_BY_ARMOR_PHYSIC_PENALTY = ['featsOfStrength', 'dance'];
@@ -25,6 +27,10 @@ export const mutateSecondariesData = (data: ABFActorDataSourceData) => {
         secondary.final.value = calculateSecondaryHide(data);
       } else if (key === 'swim') {
         secondary.final.value = calculateSecondarySwim(data);
+      } else if (key === 'notice') {
+        secondary.final.value = calculateSecondaryNotice(data);
+      } else if (key === 'search') {
+        secondary.final.value = calculateSecondarySearch(data);
       } else {
         secondary.final.value = secondary.base.value + data.general.modifiers.allActions.final.value;
 

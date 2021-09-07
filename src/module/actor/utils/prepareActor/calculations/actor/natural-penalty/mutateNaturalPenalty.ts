@@ -1,11 +1,11 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty } from './calculations/calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty';
+import { calculateNonHelmetArmorsNaturalPenalty } from './calculations/calculateNonHelmetArmorsNaturalPenalty';
 import { calculateWearArmorNaturalPenalty } from './calculations/calculateWearArmorNaturalPenalty';
 import { calculateEquippedArmorsPenalty } from './calculations/calculateEquippedArmorsPenalty';
 
 export const mutateNaturalPenalty = (data: ABFActorDataSourceData) => {
   const wearArmorNaturalPenalty = calculateWearArmorNaturalPenalty(data);
-  let armorsNaturalPenalty = calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty(data);
+  let armorsNaturalPenalty = calculateNonHelmetArmorsNaturalPenalty(data);
 
   if (wearArmorNaturalPenalty > 0) {
     armorsNaturalPenalty += wearArmorNaturalPenalty;

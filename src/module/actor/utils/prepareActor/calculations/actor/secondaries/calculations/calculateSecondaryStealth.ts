@@ -1,6 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateEquippedArmorsPenalty } from '../../natural-penalty/calculations/calculateEquippedArmorsPenalty';
-import { calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty } from '../../natural-penalty/calculations/calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty';
+import { calculateNonHelmetArmorsNaturalPenalty } from '../../natural-penalty/calculations/calculateNonHelmetArmorsNaturalPenalty';
 import { calculateWearArmorNaturalPenalty } from '../../natural-penalty/calculations/calculateWearArmorNaturalPenalty';
 
 export const calculateSecondaryStealth = (data: ABFActorDataSourceData): number => {
@@ -8,7 +8,7 @@ export const calculateSecondaryStealth = (data: ABFActorDataSourceData): number 
 
   const wearArmorNaturalPenalty = calculateWearArmorNaturalPenalty(data);
 
-  const naturalPenaltyWithoutEquippedArmorsPenalty = calculateArmorsNaturalPenaltyWithoutEquippedArmorsPenalty(data);
+  const naturalPenaltyWithoutEquippedArmorsPenalty = calculateNonHelmetArmorsNaturalPenalty(data);
 
   const armorPenalty =
     Math.min(
