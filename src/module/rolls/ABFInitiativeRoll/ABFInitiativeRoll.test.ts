@@ -1,6 +1,7 @@
 import ABFInitiativeRoll from './ABFInitiativeRoll';
 import ABFRollTesting from '../__mocks__/ABFFoundryRoll';
 import ABFFoundryRoll from '../ABFFoundryRoll';
+import { nextValueService } from '../__mocks__/nextValueService';
 
 jest.mock('../ABFFoundryRoll');
 
@@ -11,9 +12,13 @@ function getRoll(formula: string) {
 }
 
 describe('ABFRoll', () => {
+  beforeEach(() => {
+    nextValueService.setNextValue(undefined);
+  });
+
   test('must explode roll if first result is bigger or equals to 90', () => {
     const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
-    abfRollTesting.setNextValue(90);
+    nextValueService.setNextValue(90);
     abfRollTesting.evaluate();
 
     const abfRollProxy = new ABFInitiativeRoll(abfRoll);
@@ -27,7 +32,7 @@ describe('ABFRoll', () => {
 
   test('must penalize if roll is 1', () => {
     const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
-    abfRollTesting.setNextValue(1);
+    nextValueService.setNextValue(1);
     abfRollTesting.evaluate();
 
     const abfRollProxy = new ABFInitiativeRoll(abfRoll);
@@ -41,7 +46,7 @@ describe('ABFRoll', () => {
 
   test('must penalize if roll is 2', () => {
     const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
-    abfRollTesting.setNextValue(2);
+    nextValueService.setNextValue(2);
     abfRollTesting.evaluate();
 
     const abfRollProxy = new ABFInitiativeRoll(abfRoll);
@@ -55,7 +60,7 @@ describe('ABFRoll', () => {
 
   test('must penalize if roll is 3', () => {
     const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
-    abfRollTesting.setNextValue(3);
+    nextValueService.setNextValue(3);
     abfRollTesting.evaluate();
 
     const abfRollProxy = new ABFInitiativeRoll(abfRoll);

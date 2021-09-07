@@ -44,6 +44,10 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
     return this.getResults()[0];
   }
 
+  get lastResult() {
+    return this.getResults()[this.getResults().length - 1];
+  }
+
   recalculateTotal(mod = 0) {
     this._total = this._evaluateTotal() + mod;
   }

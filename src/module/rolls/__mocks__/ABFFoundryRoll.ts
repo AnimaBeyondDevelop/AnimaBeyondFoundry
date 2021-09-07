@@ -2,6 +2,8 @@
  * Custom implementation of Roll from foundry.js
  * Test methods are unique methods used for unit testing
  */
+import { nextValueService } from './nextValueService';
+
 export default class ABFFoundryRoll {
   _formula: string;
   data: Record<string, unknown> | undefined;
@@ -21,11 +23,6 @@ export default class ABFFoundryRoll {
     this.dice = [];
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  setNextValue(nextValue: number) {
-    ABFFoundryRoll.nextValue = nextValue;
-  }
-
   recalculateTotal(mod = 0) {
     this._total = this.getResults().reduce((prev, curr) => prev + curr) + mod;
   }
@@ -36,6 +33,10 @@ export default class ABFFoundryRoll {
 
   get firstResult() {
     return this.getResults()[0];
+  }
+
+  get lastResult() {
+    return this.getResults()[this.getResults().length - 1];
   }
 
   getResults(): number[] {
@@ -49,8 +50,7 @@ export default class ABFFoundryRoll {
   evaluate() {
     if (this._rolled) throw new Error('Already rolled');
 
-    const value =
-      ABFFoundryRoll.nextValue ?? Math.min(1, Math.floor(Math.random() * 100));
+    const value = nextValueService.getNextValue() ?? Math.min(1, Math.floor(Math.random() * 100));
 
     const diceTerm = { results: [{ result: value, active: true }] } as DiceTerm;
 
@@ -59,7 +59,7 @@ export default class ABFFoundryRoll {
     this.recalculateTotal();
 
     this._rolled = true;
-    ABFFoundryRoll.nextValue = null;
+    nextValueService.setNextValue(undefined);
 
     return this;
   }
