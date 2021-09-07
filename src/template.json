@@ -3,6 +3,7 @@
     "types": ["character"],
     "templates": [],
     "character": {
+      "version": 0,
       "ui": { "contractibleItems": {} },
       "general": {
         "modifiers": {

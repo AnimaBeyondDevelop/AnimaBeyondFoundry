@@ -1,4 +1,5 @@
 export type ABFActorDataSourceData = {
+  version: number;
   ui: {
     contractibleItems: {};
   };

@@ -1,6 +1,9 @@
 import { ABFActorDataSourceData } from '../types/Actor';
 
+const CURRENT_ACTOR_VERSION = 1;
+
 export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
+  version: CURRENT_ACTOR_VERSION,
   ui: {
     contractibleItems: {}
   },
