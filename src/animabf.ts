@@ -16,7 +16,7 @@ import { registerSettings } from './module/utils/settings';
 import { preloadTemplates } from './module/utils/preloadTemplates';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
-import ABFCombat from './module/ABFCombat';
+import ABFCombat from './module/combat/ABFCombat';
 import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
