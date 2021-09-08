@@ -1,41 +1,37 @@
-<div class='group elan mt-3'>
-  <div class='group-header'>
-    <img
-      class='add-button'
-      data-on-click='add-elan'
-      src='/systems/animabf/assets/icons/game-icons.net/ffffff/sbed/add.svg'
-    />
-    <h3 class='group-header-title'>{{localize 'anima.ui.elanSection.title'}}</h3>
-  </div>
-  <div id='elan-context-menu-container' class='group-body'>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="elan"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.elanSection.title')
+    addRowButtonData="add-elan"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="elan"
+  }}
     {{#each data.data.general.elan as |elan|}}
       <div class='elan-row'>
-        <div data-item-id='{{elan._id}}' class='base flex'>
-          <p
-            data-on-click='add-elan-power'
-            data-elan-id='{{elan._id}}'
-            class='label gray mr-2 flex-1'
-          >{{localize 'anima.ui.elanSection.elanRow.name'}}</p>
-          <input
-            name='data.dynamic.elan.{{elan._id}}.name'
-            type='text'
-            class='input flex-3'
-            value='{{elan.name}}'
-          />
-          <p class='label gray ml-2 mr-2 flex-1'>{{localize
-              'anima.ui.elanSection.elanRow.level'
-            }}</p>
-          <input
-            name='data.dynamic.elan.{{elan._id}}.data.level.value'
-            type='text'
-            class='input flex-2'
-            value='{{elan.data.level.value}}'
-          />
+        <div data-item-id='{{elan._id}}' class='base'>
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="name"
+            title=(localize 'anima.ui.elanSection.elanRow.name')
+            inputType="text"
+            inputName=(concat "data.dynamic.elan." elan._id ".name")
+            inputValue=elan.name
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="level"
+            title=(localize 'anima.ui.elanSection.elanRow.level')
+            inputName=(concat "data.dynamic.elan." elan._id ".data.level.value")
+            inputValue=elan.data.level.value
+          }}
         </div>
 
         {{#each elan.data.powers as |power|}}
           <div
-            class='powers flex mt-1'
+            class='powers mt-1'
             data-elan-id='{{elan._id}}'
             data-elan-power-id='{{power._id}}'
           >
@@ -44,21 +40,25 @@
               name='data.dynamic.elan_power.{{power._id}}.data.elanId'
               value='{{elan._id}}'
             />
-            <input
-              name='data.dynamic.elan_power.{{power._id}}.name'
-              type='text'
-              class='input flex-4'
-              value='{{power.name}}'
-            />
-            <input
-              name='data.dynamic.elan_power.{{power._id}}.data.level.value'
-              type='text'
-              class='input flex-1'
-              value='{{power.data.level.value}}'
-            />
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="elan-power-name"
+              hideTitle=true
+              inputType="text"
+              inputName=(concat "data.dynamic.elan_power." power._id ".name")
+              inputValue=power.name
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="elan-power-level"
+              hideTitle=true
+              inputType="text"
+              inputName=(concat "data.dynamic.elan_power." power._id ".data.level.value")
+              inputValue=power.data.level.value
+            }}
           </div>
         {{/each}}
       </div>
     {{/each}}
-  </div>
-</div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -35,6 +35,11 @@ export default class ABFActorSheet extends ActorSheet {
             initial: 'mystic-main'
           },
           {
+            navSelector: '.general-tabs',
+            contentSelector: '.general-body',
+            initial: 'general-first'
+          },
+          {
             navSelector: '.psychic-tabs',
             contentSelector: '.psychic-body',
             initial: 'psychic-main'

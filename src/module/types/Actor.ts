@@ -4,15 +4,15 @@ export type ABFActorDataSourceData = {
     contractibleItems: {};
     tabVisibility: {
       mystic: {
-        value: boolean
-      },
+        value: boolean;
+      };
       domine: {
-        value: boolean
-      },
+        value: boolean;
+      };
       psychic: {
-        value: boolean
-      }
-    }
+        value: boolean;
+      };
+    };
   };
   general: {
     modifiers: {
@@ -59,7 +59,7 @@ export type ABFActorDataSourceData = {
         value: string;
       };
       appearance: {
-        value: number;
+        value: string;
       };
       size: {
         value: number;
@@ -67,6 +67,18 @@ export type ABFActorDataSourceData = {
     };
     advantages: [];
     contacts: [];
+    inventory: [];
+    money: {
+      cooper: {
+        value: number;
+      };
+      silver: {
+        value: number;
+      };
+      gold: {
+        value: number;
+      };
+    };
     description: {
       value: string;
     };

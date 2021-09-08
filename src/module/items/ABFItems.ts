@@ -29,5 +29,6 @@ export enum ABFItems {
   COMBAT_TABLE = 'combatTable',
   AMMO = 'ammo',
   WEAPON = 'weapon',
-  ARMOR = 'armor'
+  ARMOR = 'armor',
+  INVENTORY_ITEM = 'inventoryItem',
 }

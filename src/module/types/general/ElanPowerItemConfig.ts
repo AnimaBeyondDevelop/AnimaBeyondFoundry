@@ -20,7 +20,7 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
     return changes.data.dynamic.elan_power as ElanPowerChanges;
   },
   selectors: {
-    addItemButtonSelector: 'add-elan',
+    addItemButtonSelector: 'add-elan-power',
     containerSelector: '#elan-context-menu-container',
     rowSelector: '.elan-row .powers'
   },
@@ -84,9 +84,9 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
 
           actor.updateInnerItem({
             type: ABFItems.ELAN,
-            id,
+            id: elanId,
             data: { ...elan.data, powers: [...powers] }
-          });
+          }, true);
         }
       }
     }

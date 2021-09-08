@@ -14,7 +14,6 @@ import { mutateMovementType } from './calculations/actor/general/mutateMovementT
 import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
 import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicData';
 import { mutateInitiative } from './calculations/actor/mutateInitiative';
-import { INITIAL_ACTOR_DATA } from '../../constants';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
@@ -34,13 +33,6 @@ const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
 ];
 
 export const prepareActor = (actor: ABFActor) => {
-  if (actor.data.data.version !== INITIAL_ACTOR_DATA.version) {
-    // eslint-disable-next-line no-console
-    console.log(`Upgrading actor from version ${actor.data.data.version} to ${INITIAL_ACTOR_DATA.version}`);
-
-    actor.data.data.version = INITIAL_ACTOR_DATA.version;
-  }
-
   prepareItems(actor);
 
   // We need to parse to boolean because Foundry saves booleans as string

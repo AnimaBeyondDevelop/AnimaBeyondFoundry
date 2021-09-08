@@ -55,6 +55,8 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/general/parts/description.hbs',
     'systems/animabf/templates/actor/parts/general/parts/contacts.hbs',
     'systems/animabf/templates/actor/parts/general/parts/notes.hbs',
+    'systems/animabf/templates/actor/parts/general/parts/inventory-items.hbs',
+    'systems/animabf/templates/actor/parts/general/parts/money.hbs',
     'systems/animabf/templates/actor/parts/secondaries/secondaries.hbs',
     'systems/animabf/templates/actor/parts/secondaries/common/secondary-skill.hbs',
     'systems/animabf/templates/actor/parts/secondaries/parts/athletics.hbs',

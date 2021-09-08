@@ -1,403 +1,135 @@
 @import '../../variable';
+@import '../../variable';
 
-.main-tab {
-  // Grids
-  width: 100%;
-
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-column-gap: 1rem;
-
-  .second-column > .sub-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 1rem;
+.general {
+  .input {
+    @include input;
   }
-  // Grids
 
-  // Main styles
-  .group {
+  .first-tab {
+    // Grids
     width: 100%;
 
-    .group-header {
-      @include group-header;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-column-gap: 1rem;
 
-      position: relative;
-      z-index: 1;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-height: 1.7rem;
-      padding-right: 0.5rem;
-
-      .group-header-title {
-        font-weight: bold;
-        width: 100%;
-        margin: 0;
-      }
-
-      .add-button {
-        justify-self: start;
-        padding: 0.125rem;
-        border: none;
-        cursor: pointer;
-      }
-
-      .input {
-        justify-self: end;
-
-        width: 2.8rem;
-        height: 1rem;
-      }
-    }
-
-    .group-body {
-      @include group-body;
-
-      margin-top: -1.5rem;
-      padding: 2rem 0.5rem 0.5rem;
-
-      .input {
-        width: 100%;
-        height: 1.5rem;
-      }
-    }
-
-    .input {
-      border-radius: $border-radius;
-      background: $light-cream;
-      font-weight: bold;
-      padding: 0.25rem 0.5rem;
-    }
-
-    .add-button {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-    }
-
-    .label {
-      font-weight: bold;
-
-      &.gray {
-        color: $light-gray;
-      }
-    }
-  }
-
-  // Main styles
-
-  // Level
-  .level {
-    .group-body {
-      .level-row:first-child {
+    div .common-group {
+      &:first-child {
         margin-top: 0;
+      }
+
+      margin-top: 0.75rem;
+    }
+    // Grids
+
+    // Level
+    .level {
+      .group-header {
+        position: relative;
+        .input {
+          height: 1.2rem;
+          width: 2.25rem;
+          position: absolute;
+          right: 0.5rem;
+        }
       }
 
       .level-row {
-        margin-top: 0.25rem;
-
-        & .input {
-          &:first-child {
-            flex: 3.7;
-            margin-right: 0.5rem;
-          }
-
-          flex: 1;
-        }
-      }
-    }
-  }
-  // Level
-
-  // Language
-  .language {
-    .group-body {
-      .base-language {
-        align-items: center;
-      }
-
-      .language-row {
-        margin-top: 0.25rem;
-
-        .input {
-          width: 100%;
-        }
-      }
-    }
-  }
-  // Language
-
-  // Elan
-  .elan {
-    .group-header-title {
-      padding-right: 2rem;
-    }
-
-    .group-body {
-      .elan-row:first-child {
-        margin-top: 0;
-      }
-
-      .elan-row {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-
-        margin-top: 0.75rem;
-
-        .base {
-          align-items: center;
-        }
-
-        .powers {
-          & .input {
-            &:first-child {
-              margin-right: 0.5rem;
-            }
-          }
-        }
-      }
-    }
-  }
-  // Elan
-
-  // Titles
-  .titles {
-    .group-header-title {
-      padding-right: 2rem;
-    }
-
-    .group-body {
-      .title-row:first-child {
-        margin-top: 0;
-      }
-
-      .title-row {
-        margin-top: 0.75rem;
-      }
-    }
-  }
-  // Titles
-
-  // Experience
-  @keyframes experience-bar {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  .experience {
-    .group-body {
-      .experience-bar,
-      .experience-bar .current-experience {
-        height: 0.5rem;
-        border-radius: 0.25rem;
-      }
-
-      .experience-bar {
-        position: relative;
-        background-color: $light-cream;
-        overflow: hidden;
-
-        .current-experience {
-          position: absolute;
-          left: 0;
-          top: 0;
-
-          background-color: $red;
-
-          animation: experience-bar 300ms ease-in-out;
-        }
-      }
-
-      .input {
-        background-color: transparent;
-        height: 1rem;
-
-        &.current-experience {
-          text-align: end;
-        }
-
-        &.red {
-          color: $red;
-        }
-      }
-    }
-  }
-  // Experience
-
-  // Advantages
-  .advantages {
-    .group-header-title {
-      padding-right: 2rem;
-    }
-
-    .group-body {
-      .advantage-row:first-child {
-        margin-top: 0;
-      }
-
-      .advantage-row {
-        margin-top: 0.75rem;
-      }
-    }
-  }
-  // Advantages
-
-  // Disadvantages
-  .disadvantages {
-    .group-header-title {
-      padding-right: 2rem;
-    }
-
-    .group-body {
-      .disadvantage-row:first-child {
-        margin-top: 0;
-      }
-
-      .disadvantage-row {
-        margin-top: 0.75rem;
-      }
-    }
-  }
-  // Disadvantages
-
-  // Aspect
-  .aspect {
-    .group-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      .hair,
-      .eyes,
-      .height,
-      .weight,
-      .age,
-      .genre,
-      .race,
-      .appearance,
-      .size {
-        align-items: center;
-        margin-top: 0.5rem;
-
-        .label {
-          margin: 0;
-          margin-right: 0.25rem;
-        }
-      }
-
-      .aspect-row:first-child {
-        margin-top: 0;
-      }
-
-      .aspect-row {
-        margin-top: 0.75rem;
-      }
-    }
-  }
-  // Aspect
-
-  // Description
-  .description {
-    .group-body {
-      .editor {
-        @include input;
-
-        font-weight: inherit;
-
-        height: 15rem;
-        width: 100%;
-
-        margin-top: 0;
-        border-radius: 0.5rem;
-      }
-    }
-  }
-  // Description
-
-  // Contacts
-  .contacts {
-    .group-header-title {
-      padding-right: 2rem;
-    }
-
-    .group-body {
-      .contact-row:first-child {
-        margin-top: 0;
-      }
-
-      .contact-row {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-
-        margin-top: 0.75rem;
-
-        .label {
-          color: $black;
-          text-align: center;
-
+        &:first-child {
           margin-top: 0;
         }
 
-        .contact-name,
-        .contact-description {
-          flex-direction: column;
-          align-items: center;
-          justify-content: start;
+        margin-top: 0.25rem;
 
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        grid-column-gap: 0.5rem;
+
+        .name .input-container {
           width: 100%;
+        }
+      }
+    }
+    // Level
 
-          flex: 1;
+    // Aspect
+    .aspect {
+      .group-body {
+        .input-container {
+          width: 8rem;
         }
 
-        .contact-name {
-          .input {
-            border: none;
-            height: auto;
-          }
-        }
-
-        .contact-description {
-          flex: 2.5;
-
-          .input {
-            border: none;
-            height: auto;
+        .age,
+        .size {
+          .input-container {
+            width: 2.5rem;
           }
         }
       }
     }
-  }
-  // Contacts
+    // Aspect
 
-  // Notes
-  ._notes {
-    .group-header-title {
-      padding-right: 2rem;
-    }
-
-    .group-body {
-      .note-row:first-child {
-        margin-top: 0;
+    // Experience
+    @keyframes experience-bar {
+      0% {
+        transform: translateX(-100%);
       }
 
-      .note-row {
-        margin-top: 0.75rem;
+      100% {
+        transform: translateX(0);
+      }
+    }
 
+    .experience {
+      .group-body {
+        .experience-bar,
+        .experience-bar .current-experience {
+          height: 0.5rem;
+          border-radius: 0.25rem;
+        }
+
+        .experience-bar {
+          position: relative;
+          background-color: $light-cream;
+          overflow: hidden;
+
+          .current-experience {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            background-color: $red;
+
+            animation: experience-bar 300ms ease-in-out;
+          }
+        }
+
+        .input {
+          background-color: transparent;
+          height: 1rem;
+
+          &.current-experience {
+            text-align: end;
+          }
+
+          &.red {
+            color: $red;
+          }
+        }
+      }
+    }
+    // Experience
+
+    // Description
+    .description {
+      .group-body {
         .editor {
           @include input;
 
           font-weight: inherit;
 
-          height: 15rem;
+          height: 27.3rem;
           width: 100%;
 
           margin-top: 0;
@@ -405,6 +137,208 @@
         }
       }
     }
+    // Description
   }
-  // Notes
+
+  .second-tab {
+    // Grids
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 2fr 4fr;
+    grid-column-gap: 1rem;
+
+    div .common-group {
+      &:first-child {
+        margin-top: 0;
+      }
+
+      margin-top: 0.75rem;
+    }
+    // Grids
+
+    // Language
+    .languages {
+      .group-header {
+        position: relative;
+        .input {
+          height: 1.2rem;
+          width: 2.25rem;
+          position: absolute;
+          right: 0.5rem;
+        }
+      }
+
+      .group-body {
+        .base-language {
+          align-items: center;
+        }
+
+        .language-row {
+          margin-top: 0.25rem;
+
+          .input-container {
+            width: 100%;
+          }
+        }
+      }
+    }
+    // Language
+
+    // Advantages
+    .advantages {
+      .group-body {
+        .advantage-row:first-child {
+          margin-top: 0;
+        }
+
+        .advantage-row {
+          margin-top: 0.75rem;
+        }
+      }
+    }
+    // Advantages
+
+    // Disadvantages
+    .disadvantages {
+      .group-body {
+        .disadvantage-row:first-child {
+          margin-top: 0;
+        }
+
+        .disadvantage-row {
+          margin-top: 0.75rem;
+        }
+      }
+    }
+    // Disadvantages
+
+    // Elan
+    .elan {
+      .group-body {
+        .elan-row:first-child {
+          margin-top: 0;
+        }
+
+        .elan-row {
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+          padding: 0.5rem;
+          border-radius: 0.5rem;
+
+          margin-top: 0.75rem;
+
+          .base,
+          .powers {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            grid-column-gap: 0.5rem;
+
+            .name .input-container,
+            .elan-power-name .input-container {
+              width: 100%;
+            }
+          }
+
+          .powers .input-container {
+            margin-top: 0.5rem;
+          }
+        }
+      }
+    }
+    // Elan
+
+    // Contacts
+    .contacts {
+      .group-body {
+        .contact-row:first-child {
+          margin-top: 0;
+        }
+
+        .contact-row {
+          margin-top: 0.75rem;
+
+          display: grid;
+          grid-template-columns: 2fr 5fr;
+          grid-column-gap: 0.5rem;
+
+          .name,
+          .description {
+            .input-container {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    // Contacts
+
+    // Titles
+    .titles {
+      .group-body {
+        .title-row:first-child {
+          margin-top: 0;
+        }
+
+        .title-row {
+          margin-top: 0.75rem;
+        }
+      }
+    }
+    // Titles
+
+    // Notes
+    ._notes {
+      .group-body {
+        .note-row:first-child {
+          margin-top: 0;
+        }
+
+        .note-row {
+          margin-top: 0.75rem;
+
+          .editor {
+            @include input;
+
+            font-weight: inherit;
+
+            height: 15rem;
+            width: 100%;
+
+            margin-top: 0;
+            border-radius: 0.5rem;
+          }
+        }
+      }
+    }
+    // Notes
+  }
+
+  .third-tab {
+    // Grids
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: 1rem;
+
+    .inventory-items {
+      .group-body {
+        .inventory-item-row:first-child {
+          margin-top: 0;
+        }
+
+        .inventory-item-row {
+          margin-top: 0.75rem;
+
+          display: grid;
+          grid-template-columns: 3fr 1fr 1fr;
+          grid-column-gap: 0.5rem;
+
+          .name .input-container {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
 }

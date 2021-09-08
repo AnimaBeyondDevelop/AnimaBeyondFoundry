@@ -1,9 +1,7 @@
 import { ABFActorDataSourceData } from '../types/Actor';
 
-const CURRENT_ACTOR_VERSION = 1;
-
 export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
-  version: CURRENT_ACTOR_VERSION,
+  version: 1,
   ui: {
     contractibleItems: {},
     tabVisibility: {
@@ -59,7 +57,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: ''
       },
       appearance: {
-        value: 0
+        value: ''
       },
       size: {
         value: 0
@@ -67,6 +65,18 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     },
     advantages: [],
     contacts: [],
+    inventory: [],
+    money: {
+      cooper: {
+        value: 0
+      },
+      silver: {
+        value: 0
+      },
+      gold: {
+        value: 0
+      }
+    },
     description: {
       value: ''
     },

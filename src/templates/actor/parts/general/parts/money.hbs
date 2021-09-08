@@ -1,0 +1,33 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="money"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.moneySection.title')
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="money"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="cooper"
+      title=(localize 'anima.ui.moneySection.cooper.title')
+      inputName="data.general.money.cooper.value"
+      inputValue=data.data.general.money.cooper.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="silver"
+      title=(localize 'anima.ui.moneySection.silver.title')
+      inputName="data.general.money.silver.value"
+      inputValue=data.data.general.money.silver.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="gold"
+      title=(localize 'anima.ui.moneySection.gold.title')
+      inputName="data.general.money.gold.value"
+      inputValue=data.data.general.money.gold.value
+    }}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

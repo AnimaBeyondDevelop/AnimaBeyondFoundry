@@ -1,8 +1,13 @@
-<div class='group description mt-3'>
-  <div class='group-header'>
-    <h3 class='group-header-title'>{{localize 'anima.ui.descriptionSection.title'}}</h3>
-  </div>
-  <div class='group-body'>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="description"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.descriptionSection.title')
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="description"
+  }}
     {{editor content=data.data.general.description.value target="data.general.description.value" button=true owner=true editable=true}}
-  </div>
-</div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

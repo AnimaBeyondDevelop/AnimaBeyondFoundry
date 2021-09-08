@@ -1,32 +1,43 @@
-<div class='group language mt-3'>
-  <div class='group-header'>
-    <img
-      class='add-button'
-      data-on-click='add-language'
-      src='/systems/animabf/assets/icons/game-icons.net/ffffff/sbed/add.svg'
-    />
-    <h3 class='group-header-title'>{{localize 'anima.ui.languageSection.title'}}</h3>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="languages"
+}}
+  {{#>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/add-item-button.hbs"
+      data="add-language"
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/group-header-title.hbs"
+      title=(localize 'anima.ui.languageSection.title')
+    }}
     <input type='number' class='input' />
-  </div>
-  <div id='languages-context-menu-container' class='group-body'>
-    <div class='base-language flex'>
-      <p class='label ml-2 mr-2'>{{localize 'anima.ui.languageSection.base'}}</p>
-      <input
-        name='data.general.languages.base.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.languages.base.value}}'
-      />
+  {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="languages"
+  }}
+    <div class='base-language'>
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="name"
+        title=(localize 'anima.ui.languageSection.base')
+        inputType="text"
+        inputName="data.general.languages.base.value"
+        inputValue=data.data.general.languages.base.value
+      }}
     </div>
     {{#each data.data.general.languages.others}}
       <div data-item-id='{{this._id}}' class='language-row'>
-        <input
-          name='data.dynamic.other_languages.{{this._id}}.name'
-          type='text'
-          class='input'
-          value='{{this.name}}'
-        />
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="name"
+          hideTitle=true
+          inputType="text"
+          inputName=(concat "data.dynamic.languages." this._id ".name")
+          inputValue=this.name
+        }}
       </div>
     {{/each}}
-  </div>
-</div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

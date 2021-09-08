@@ -1,8 +1,13 @@
-<div class='group experience'>
-  <div class='group-header'>
-    <h3 class='group-header-title'>{{localize 'anima.ui.experienceSection.title'}}</h3>
-  </div>
-  <div class='group-body'>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="experience"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.experienceSection.title')
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="experience"
+  }}
     <div class='experience-bar'>
       <div
         class='current-experience'
@@ -24,5 +29,5 @@
         value='{{data.data.general.experience.next.value}}'
       />
     </div>
-  </div>
-</div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

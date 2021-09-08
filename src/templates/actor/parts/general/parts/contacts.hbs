@@ -1,34 +1,35 @@
-<div class='group contacts mt-3'>
-  <div class='group-header'>
-    <img
-      class='add-button'
-      data-on-click='add-contact'
-      src='/systems/animabf/assets/icons/game-icons.net/ffffff/sbed/add.svg'
-    />
-    <h3 class='group-header-title'>{{localize 'anima.ui.contactSection.title'}}</h3>
-  </div>
-  <div id='contacts-context-menu-container' class='group-body'>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="contacts"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.contactSection.title')
+    addRowButtonData="add-contact"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="contacts"
+  }}
     {{#each data.data.general.contacts}}
-      <div data-item-id='{{this._id}}' class='contact-row flex'>
-        <div class='contact-name flex flex-1 mr-3'>
-          <p class='label'>{{localize 'anima.ui.contactSection.contactRow.name'}}</p>
-          <input
-            name='data.dynamic.contacts.{{this._id}}.name'
-            class='input'
-            value='{{this.name}}'
-          />
-        </div>
-        <div class='contact-description flex flex-4'>
-          <p class='label'>{{localize
-              'anima.ui.contactSection.contactRow.description'
-            }}</p>
-          <input
-            name='data.dynamic.contacts.{{this._id}}.data.description.value'
-            class='input'
-            value='{{this.data.description.value}}'
-          />
-        </div>
+      <div data-item-id='{{this._id}}' class='contact-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize 'anima.ui.contactSection.contactRow.name')
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.contacts." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="description"
+          title=(localize 'anima.ui.contactSection.contactRow.description')
+          hideTitle=(is "gt" @index 0)
+          inputType="text"
+          inputName=(concat "data.dynamic.contacts." this._id ".data.description.value")
+          inputValue=this.data.description.value
+        }}
       </div>
     {{/each}}
-  </div>
-</div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

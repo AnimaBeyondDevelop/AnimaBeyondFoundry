@@ -29,6 +29,7 @@ import { WeaponItemConfig } from '../../../types/combat/WeaponItemConfig';
 import { AmmoItemConfig } from '../../../types/combat/AmmoItemConfig';
 import { ElanPowerItemConfig } from '../../../types/general/ElanPowerItemConfig';
 import { ArmorItemConfig } from '../../../types/combat/ArmorItemConfig';
+import { InventoryItemItemConfig } from '../../../types/general/InventoryItemItemConfig';
 
 export const INTERNAL_ITEM_CONFIGURATIONS = {
   [ArsMagnusItemConfig.type]: ArsMagnusItemConfig,
@@ -50,7 +51,8 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [SpecialSkillItemConfig.type]: SpecialSkillItemConfig,
   [SpellMaintenanceItemConfig.type]: SpellMaintenanceItemConfig,
   [SummonItemConfig.type]: SummonItemConfig,
-  [TitleItemConfig.type]: TitleItemConfig
+  [TitleItemConfig.type]: TitleItemConfig,
+  [InventoryItemItemConfig.type]: InventoryItemItemConfig
 };
 
 export const ITEM_CONFIGURATIONS = {

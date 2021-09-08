@@ -20,7 +20,7 @@ export const LevelItemConfig: ABFItemConfig<LevelDataSource, LevelChanges> = {
   },
   selectors: {
     addItemButtonSelector: 'add-level',
-    containerSelector: '#levels-context-menu-container',
+    containerSelector: '#level-context-menu-container',
     rowSelector: '.level-row'
   },
   onCreate: async (actor): Promise<void> => {

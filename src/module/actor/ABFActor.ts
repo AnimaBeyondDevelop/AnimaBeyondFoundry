@@ -18,6 +18,13 @@ export class ABFActor extends Actor {
     super(data, context);
 
     this.i18n = (game as Game).i18n;
+
+    if (this.data.data.version !== INITIAL_ACTOR_DATA.version) {
+      // eslint-disable-next-line no-console
+      console.log(`AnimaBF | Upgrading actor ${this.data.name} (${this.data._id}) from version ${this.data.data.version} to ${INITIAL_ACTOR_DATA.version}`);
+
+      this.data.update({ data: { version: INITIAL_ACTOR_DATA.version } });
+    }
   }
 
   prepareDerivedData() {
@@ -62,17 +69,20 @@ export class ABFActor extends Actor {
     return ABFActorSheet as unknown as ConstructorOf<FormApplication>;
   }
 
-  public async updateInnerItem({
-    type,
-    id,
-    name,
-    data = {}
-  }: {
-    type: ABFItems;
-    id: string;
-    name?: string;
-    data?: unknown;
-  }) {
+  public async updateInnerItem(
+    {
+      type,
+      id,
+      name,
+      data = {}
+    }: {
+      type: ABFItems;
+      id: string;
+      name?: string;
+      data?: unknown;
+    },
+    forceSave = false
+  ) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
     const items = getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath);
@@ -80,7 +90,8 @@ export class ABFActor extends Actor {
     const item = items.find(it => it._id === id);
 
     if (item) {
-      const hasChanges = (!!name && name !== item.name) || JSON.stringify(data) !== JSON.stringify(item.data);
+      const hasChanges =
+        forceSave || (!!name && name !== item.name) || JSON.stringify(data) !== JSON.stringify(item.data);
 
       if (hasChanges) {
         if (name) {
