@@ -7,12 +7,31 @@
   "scripts": [],
   "esmodules": ["animabf.js"],
   "styles": ["animabf.css"],
-  "packs": [],
+  "packs": [
+    {
+      "name": "weapons",
+      "label": "(ES) Armas",
+      "system": "animabf",
+      "path": "./packs/weapons_es.db",
+      "entity": "Item"
+    },
+    {
+      "name": "armors",
+      "label": "(ES) Armaduras",
+      "system": "animabf",
+      "path": "./packs/armors_es.db",
+      "entity": "Item"
+    }
+  ],
   "languages": [
     { "lang": "es", "name": "Español", "path": "lang/es.json" },
     { "lang": "en", "name": "English", "path": "lang/en.json" }
   ],
   "dependencies": [
+    {
+      "name": "libWrapper",
+      "manifest": "https://raw.githubusercontent.com/ruipin/fvtt-lib-wrapper/master/module.json"
+    },
     {
       "name": "Compendium Folders",
       "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/082-update/module.json"
