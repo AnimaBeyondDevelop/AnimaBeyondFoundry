@@ -7,6 +7,7 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
+import { Log } from '../../utils/Log';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -20,8 +21,7 @@ export class ABFActor extends Actor {
     this.i18n = (game as Game).i18n;
 
     if (this.data.data.version !== INITIAL_ACTOR_DATA.version) {
-      // eslint-disable-next-line no-console
-      console.log(`AnimaBF | Upgrading actor ${this.data.name} (${this.data._id}) from version ${this.data.data.version} to ${INITIAL_ACTOR_DATA.version}`);
+      Log.log(`Upgrading actor ${this.data.name} (${this.data._id}) from version ${this.data.data.version} to ${INITIAL_ACTOR_DATA.version}`);
 
       this.data.update({ data: { version: INITIAL_ACTOR_DATA.version } });
     }

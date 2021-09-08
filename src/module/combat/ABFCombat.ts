@@ -1,5 +1,5 @@
 import type { InitiativeOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/clientDocuments/combat';
-import { openModDialog } from '../utils/openDialog';
+import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
 export default class ABFCombat extends Combat {
   async nextRound() {

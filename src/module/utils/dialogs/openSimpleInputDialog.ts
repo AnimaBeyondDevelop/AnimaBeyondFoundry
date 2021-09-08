@@ -1,7 +1,7 @@
-import { renderTemplates } from './renderTemplates';
-import { Templates } from './constants';
+import { renderTemplates } from '../renderTemplates';
+import { Templates } from '../constants';
 
-export const openDialog = async <T = number>({
+export const openSimpleInputDialog = async <T = number>({
   title,
   content,
   placeholder = ''
@@ -47,7 +47,7 @@ export const openDialog = async <T = number>({
 export const openModDialog = async () => {
   const referencedGame = game as Game;
 
-  return openDialog({
+  return openSimpleInputDialog({
     content: referencedGame.i18n.localize('dialogs.mod.content'),
     placeholder: '0'
   });

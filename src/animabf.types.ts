@@ -14,6 +14,7 @@ import ABFItem from './module/items/ABFItem';
 import { ABFConfig } from './module/ABFConfig';
 import { AmmoDataSource } from './module/types/combat/AmmoItemConfig';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
+import { damageCalculatorFunction } from './module/macros/damageCalculator/damageCalculatorFunction';
 
 export type ABFItemBaseDataSource<T, D> = {
   _id: string;
@@ -44,6 +45,10 @@ type ABFActorsDataSource = ABFActorDataSource;
 
 declare global {
   interface Window {
+    ABFMacros: {
+      damageCalculator: typeof damageCalculatorFunction;
+    };
+
     ABFFoundryRoll: typeof ABFFoundryRoll;
   }
 

@@ -1,9 +1,9 @@
-import { openModDialog } from '../utils/openDialog';
+import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { ABFActor } from './ABFActor';
 import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
 import { ABFItemConfig, DynamicChanges, ItemChanges } from '../types/Items';
-import { unflat } from '../../utils/unflat';
+import { unflat } from './utils/unflat';
 import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareItems/constants';
 import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
@@ -111,6 +111,10 @@ export default class ABFActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    const handler = ev => this._onDragStart(ev);
+
+    // Find all items on the character sheet.
+
     // Rollable abilities.
     html.find('.rollable').click(e => {
       this._onRoll(e);
@@ -133,6 +137,12 @@ export default class ABFActorSheet extends ActorSheet {
 
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
       this.buildCommonContextualMenu(item);
+
+      html.find(item.selectors.rowSelector).each((_, row) => {
+        // Add draggable attribute and dragstart listener.
+        row.setAttribute('draggable', 'true');
+        row.addEventListener('dragstart', handler, false);
+      });
 
       html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
         item.onCreate(this.actor);

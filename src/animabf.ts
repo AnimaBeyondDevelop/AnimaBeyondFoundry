@@ -12,8 +12,8 @@
  */
 
 // Import TypeScript modules
-import { registerSettings } from './module/utils/settings';
-import { preloadTemplates } from './module/utils/preloadTemplates';
+import { registerSettings } from './utils/registerSettings';
+import { preloadTemplates } from './utils/preloadTemplates';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
@@ -22,18 +22,25 @@ import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
+import { createAnimaBFMacro } from './module/macros/createAnimaBFMacro';
+import { damageCalculatorFunction } from './module/macros/damageCalculator/damageCalculatorFunction';
+import { registerDefaultMacros } from './utils/registerDefaultMacros';
+import { Log } from './utils/Log';
 
 /* ------------------------------------ */
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-  // eslint-disable-next-line no-console
-  console.log('AnimaBeyondFoundry | Initializing AnimaBeyondFoundry');
+  Log.log('Initializing system');
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
 
   CONFIG.config = ABFConfig;
+
+  window.ABFMacros = {
+    damageCalculator: damageCalculatorFunction
+  };
 
   window.ABFFoundryRoll = ABFFoundryRoll;
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
@@ -77,7 +84,10 @@ Hooks.once('setup', () => {
 /* When ready */
 /* ------------------------------------ */
 Hooks.once('ready', () => {
-  // Do anything once the system is ready
+  // Register macros
+  registerDefaultMacros();
+
+  Hooks.on('hotbarDrop', (bar, data, slot) => createAnimaBFMacro(data, slot));
 });
 
 // Add any additional hooks if necessary

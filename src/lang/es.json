@@ -1,5 +1,10 @@
 {
   "anima.ui.advantageSection.title": "Ventajas",
+  "macros.damageCalculator.dialog.title": "Calculadora de daño",
+  "macros.damageCalculator.dialog.attack.title": "Ataque",
+  "macros.damageCalculator.dialog.defense.title": "Defensa",
+  "macros.damageCalculator.dialog.ta.title": "TA",
+  "macros.damageCalculator.dialog.damage.title": "Daño",
   "anima.ui.aspectSection.age.title": "Edad",
   "anima.ui.aspectSection.appearance.title": "Apariencia",
   "anima.ui.aspectSection.eyes.title": "Ojos",

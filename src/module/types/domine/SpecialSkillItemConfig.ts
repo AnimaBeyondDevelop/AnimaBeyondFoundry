@@ -1,5 +1,5 @@
 import { ABFItems } from '../../items/ABFItems';
-import { openDialog } from '../../utils/openDialog';
+import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
@@ -24,7 +24,7 @@ export const SpecialSkillItemConfig: ABFItemConfig<SpecialSkillDataSource, Speci
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openDialog<string>({
+    const name = await openSimpleInputDialog<string>({
       content: i18n.localize('dialogs.items.specialSkill.content')
     });
 

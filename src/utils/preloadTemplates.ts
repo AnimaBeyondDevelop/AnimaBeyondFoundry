@@ -1,11 +1,12 @@
-import { Templates } from './constants';
+import { Templates } from '../module/utils/constants';
 
 export const preloadTemplates = () => {
   const templatePaths = [
-    // Add paths to "systems/AnimaBeyondFoundry/templates"
     Templates.Dialog.ModDialog,
+    Templates.Dialog.DamageCalculator,
     Templates.Dialog.Icons.Accept,
 
+    // TODO Add paths to "systems/AnimaBeyondFoundry/templates"
     // Common parts
     'systems/animabf/templates/common/ui/horizontal-titled-input.hbs',
     'systems/animabf/templates/common/ui/vertical-titled-input.hbs',
@@ -108,7 +109,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-disciplines.hbs',
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs',
     'systems/animabf/templates/actor/parts/settings/settings.hbs',
-    'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs',
+    'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs'
   ];
 
   return loadTemplates(templatePaths);
