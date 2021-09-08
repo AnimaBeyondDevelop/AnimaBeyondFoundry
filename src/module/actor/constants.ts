@@ -5,7 +5,18 @@ const CURRENT_ACTOR_VERSION = 1;
 export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
   version: CURRENT_ACTOR_VERSION,
   ui: {
-    contractibleItems: {}
+    contractibleItems: {},
+    tabVisibility: {
+      mystic: {
+        value: true
+      },
+      domine: {
+        value: true
+      },
+      psychic: {
+        value: true
+      }
+    }
   },
   general: {
     modifiers: {

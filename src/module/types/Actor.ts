@@ -2,6 +2,17 @@ export type ABFActorDataSourceData = {
   version: number;
   ui: {
     contractibleItems: {};
+    tabVisibility: {
+      mystic: {
+        value: boolean
+      },
+      domine: {
+        value: boolean
+      },
+      psychic: {
+        value: boolean
+      }
+    }
   };
   general: {
     modifiers: {

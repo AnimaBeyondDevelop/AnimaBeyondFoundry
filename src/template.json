@@ -4,7 +4,10 @@
     "templates": [],
     "character": {
       "version": 0,
-      "ui": { "contractibleItems": {} },
+      "ui": {
+        "contractibleItems": {},
+        "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false } }
+      },
       "general": {
         "modifiers": {
           "physicalActions": { "value": 0 },

@@ -37,6 +37,8 @@ export const prepareActor = (actor: ABFActor) => {
   if (actor.data.data.version !== INITIAL_ACTOR_DATA.version) {
     // eslint-disable-next-line no-console
     console.log(`Upgrading actor from version ${actor.data.data.version} to ${INITIAL_ACTOR_DATA.version}`);
+
+    actor.data.data.version = INITIAL_ACTOR_DATA.version;
   }
 
   prepareItems(actor);

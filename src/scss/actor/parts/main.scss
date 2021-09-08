@@ -9,7 +9,14 @@
   .psychic-tabs {
     &.secondary-tab {
       margin-top: 0;
+      height: 1.2rem;
     }
+
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: inherit;
 
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
@@ -22,6 +29,20 @@
       border-radius: $border-radius;
       color: $black;
       font-weight: 600;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &[data-tab='settings'] {
+        flex: 0.5;
+
+        img {
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+        }
+      }
     }
 
     .active {

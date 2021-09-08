@@ -7,6 +7,10 @@
 }
 
 .abf.sheet.actor {
+  img {
+    border: none;
+  }
+
   .rollable {
     cursor: pointer;
     &:hover,

@@ -104,7 +104,9 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/psychic/parts/innate-psychic-powers.hbs',
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-points.hbs',
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-disciplines.hbs',
-    'systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs'
+    'systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs',
+    'systems/animabf/templates/actor/parts/settings/settings.hbs',
+    'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs',
   ];
 
   return loadTemplates(templatePaths);

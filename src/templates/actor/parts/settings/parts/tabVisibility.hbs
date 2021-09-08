@@ -1,0 +1,36 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="tab-visibility"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.settings.tabVisibility.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="tab-visibility"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="mystic"
+      title=(localize "anima.ui.settings.tabVisibility.mystic.title")
+      inputType="checkbox"
+      inputName="data.ui.tabVisibility.mystic.value"
+      inputValue=(is 'eq' data.data.ui.tabVisibility.mystic.value true)
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="domine"
+      title=(localize "anima.ui.settings.tabVisibility.domine.title")
+      inputType="checkbox"
+      inputName="data.ui.tabVisibility.domine.value"
+      inputValue=(is 'eq' data.data.ui.tabVisibility.domine.value true)
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="psychic"
+      title=(localize "anima.ui.settings.tabVisibility.psychic.title")
+      inputType="checkbox"
+      inputName="data.ui.tabVisibility.psychic.value"
+      inputValue=(is 'eq' data.data.ui.tabVisibility.psychic.value true)
+    }}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
