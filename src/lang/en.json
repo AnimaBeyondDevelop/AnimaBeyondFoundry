@@ -5,6 +5,8 @@
   "macros.damageCalculator.dialog.defense.title": "Defense",
   "macros.damageCalculator.dialog.ta.title": "AT",
   "macros.damageCalculator.dialog.damage.title": "Damage",
+  "anima.ui.systemSettings.roundDamageInMultiplesOf5.title": "¿Round damage calculator damage result in multiples of 5?",
+  "anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title": "Those numbers that are not multiples of 5 will be rounded to near 5 multiple. For example: 22 will be rounded to 20 adn 13 to 15",
   "anima.ui.aspectSection.age.title": "Age",
   "anima.ui.aspectSection.appearance.title": "Appearance",
   "anima.ui.aspectSection.eyes.title": "Eyes",

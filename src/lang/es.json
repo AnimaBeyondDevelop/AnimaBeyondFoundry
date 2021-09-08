@@ -1,5 +1,7 @@
 {
   "anima.ui.advantageSection.title": "Ventajas",
+  "anima.ui.systemSettings.roundDamageInMultiplesOf5.title": "¿Redondear el daño resultante de la calculadora de daño en múltiplos de 5?",
+  "anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title": "Aquellos números que no sean múltiplos de 5 se redondearán al múltiplo más cercano de 5. P.E: 22 se redondeará a 20 y 13 a 15",
   "macros.damageCalculator.dialog.title": "Calculadora de daño",
   "macros.damageCalculator.dialog.attack.title": "Ataque",
   "macros.damageCalculator.dialog.defense.title": "Defensa",

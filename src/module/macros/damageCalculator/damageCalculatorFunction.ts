@@ -41,6 +41,8 @@ const calculateResult = (attack, defense, at, damage) => {
   return (damage * (attack - (defense + at * 10 + 20))) / 100;
 };
 
+const roundTo5Multiples = x => Math.round(x / 5) * 5;
+
 export const damageCalculatorFunction = async () => {
   const results = await openDialog();
 
@@ -59,7 +61,11 @@ export const damageCalculatorFunction = async () => {
     return;
   }
 
-  const result = calculateResult(attack, defense, at, damage);
+  let result = calculateResult(attack, defense, at, damage);
+
+  if ((game as Game).settings.get('animabf', 'roundDamageInMultiplesOf5')) {
+    result = roundTo5Multiples(result);
+  }
 
   let final = `<div>HA: ${attack}, HD: ${defense}, at: ${at}, Daño Base: ${damage}</div>`;
 
