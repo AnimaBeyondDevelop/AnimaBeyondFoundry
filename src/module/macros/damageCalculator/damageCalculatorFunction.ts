@@ -38,10 +38,21 @@ const calculateResult = (attack, defense, at, damage) => {
   if (defense > attack) {
     return (defense - attack) / 2;
   }
+
   return (damage * (attack - (defense + at * 10 + 20))) / 100;
 };
 
 const roundTo5Multiples = x => Math.round(x / 5) * 5;
+
+export const calculateDamage = (attack: number, defense: number, at: number, damage: number): number => {
+  let result = calculateResult(attack, defense, at, damage);
+
+  if ((game as Game).settings.get('animabf', 'roundDamageInMultiplesOf5')) {
+    result = roundTo5Multiples(result);
+  }
+
+  return result;
+};
 
 export const damageCalculatorFunction = async () => {
   const results = await openDialog();
@@ -61,18 +72,14 @@ export const damageCalculatorFunction = async () => {
     return;
   }
 
-  let result = calculateResult(attack, defense, at, damage);
-
-  if ((game as Game).settings.get('animabf', 'roundDamageInMultiplesOf5')) {
-    result = roundTo5Multiples(result);
-  }
+  const result = calculateDamage(attack, defense, at, damage);
 
   let final = `<div>HA: ${attack}, HD: ${defense}, at: ${at}, Daño Base: ${damage}</div>`;
 
   if (defense > attack) {
-    final = `${final}<h2>Bono al contraataque: <span style="color:#ff1515">${result}</span></h2>`;
+    final = `${final}<h2>Bono al contraataque: <span style='color:#ff1515'>${result}</span></h2>`;
   } else {
-    final = `${final}<h2>Daño final: <span style="color:#ff1515">${result}</span></h2>`;
+    final = `${final}<h2>Daño final: <span style='color:#ff1515'>${result}</span></h2>`;
   }
 
   const typedGame = game as Game;

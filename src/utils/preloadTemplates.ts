@@ -4,7 +4,12 @@ export const preloadTemplates = () => {
   const templatePaths = [
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
+    Templates.Dialog.Combat.UserCombatAttackDialog,
+    Templates.Dialog.Combat.UserCombatDefenseDialog,
+    Templates.Dialog.Combat.CombatRequestDialog,
+    Templates.Dialog.Combat.GMCombatDialog,
     Templates.Dialog.Icons.Accept,
+    Templates.Dialog.Icons.Cancel,
 
     // TODO Add paths to "systems/AnimaBeyondFoundry/templates"
     // Common parts
@@ -18,6 +23,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/common/ui/add-item-button.hbs',
     'systems/animabf/templates/common/ui/custom-select.hbs',
     'systems/animabf/templates/common/ui/custom-select-choices.hbs',
+    'systems/animabf/templates/common/ui/loading-indicator.hbs',
 
     // Domain parts
     'systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs',

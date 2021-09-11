@@ -26,6 +26,7 @@ import { createAnimaBFMacro } from './module/macros/createAnimaBFMacro';
 import { damageCalculatorFunction } from './module/macros/damageCalculator/damageCalculatorFunction';
 import { registerDefaultMacros } from './utils/registerDefaultMacros';
 import { Log } from './utils/Log';
+import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -87,6 +88,8 @@ Hooks.once('ready', () => {
   // Register macros
   registerDefaultMacros();
 
+  registerCombatWebsocketRoutes();
+
   Hooks.on('hotbarDrop', (bar, data, slot) => createAnimaBFMacro(data, slot));
 });
 
@@ -98,6 +101,7 @@ Hooks.once('ready', () => {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+// eslint-disable-next-line func-names
 Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
   if (name.indexOf('xRoot') === 0) {
     return 'data.root';

@@ -15,6 +15,7 @@ import { ABFConfig } from './module/ABFConfig';
 import { AmmoDataSource } from './module/types/combat/AmmoItemConfig';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import { damageCalculatorFunction } from './module/macros/damageCalculator/damageCalculatorFunction';
+import { WSUserCombatManager } from './module/combat/websocket/ws-combat/user/WSUserCombatManager';
 
 export type ABFItemBaseDataSource<T, D> = {
   _id: string;
@@ -50,6 +51,10 @@ declare global {
     };
 
     ABFFoundryRoll: typeof ABFFoundryRoll;
+
+    Websocket: {
+      sendAttack: typeof WSUserCombatManager.prototype.sendAttack;
+    };
   }
 
   interface CONFIG {

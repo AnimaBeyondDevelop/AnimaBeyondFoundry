@@ -16,6 +16,10 @@ export const isHBSHelper: HandlebarsHelper<void> = {
       return options.inverse?.(this) ?? false;
     };
 
+    if (op === 'neq') {
+      return val1 !== val2 ? getTruthyFn() : getFalsyFn();
+    }
+
     if (op === 'eq') {
       return val1 === val2 ? getTruthyFn() : getFalsyFn();
     }

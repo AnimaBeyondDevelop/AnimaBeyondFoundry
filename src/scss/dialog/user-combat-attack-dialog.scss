@@ -1,0 +1,42 @@
+@import '../variable';
+
+.user-combat-attack-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &.allowed {
+    width: 500px;
+    height: 220px;
+  }
+
+  .group-body {
+    .attack-sent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .label {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .waiting-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+
+      .label {
+        margin-top: 1rem;
+        text-align: center;
+      }
+    }
+  }
+}

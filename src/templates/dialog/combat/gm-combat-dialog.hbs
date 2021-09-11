@@ -1,0 +1,140 @@
+<form class='{{cssClass}} gm-combat-dialog' autocomplete='off'>
+  <div class='combatants'>
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="attack-values"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title="Attacker"
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="attack-values"
+      }}
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.attacker.actor.img}}' data-edit='img' title='{{this.attacker.actor.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.attacker.actor.name}}
+          </p>
+        </div>
+
+        {{#if this.attacker.isReady}}
+          <div class='values'>
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="attack"
+              title="Attack"
+              disabled=true
+              inputValue=this.attacker.attack
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="damage"
+              title="Damage"
+              disabled=true
+              inputValue=this.attacker.damage
+            }}
+          </div>
+        {{else}}
+          <div class='waiting-row'>
+            {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+            <p class='label'>Waiting to send the attack...</p>
+          </div>
+        {{/if}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+
+    <div class='versus-label'>
+      <p class='label'>VS</p>
+    </div>
+
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="defender-values"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title="Defender"
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="defender-values"
+      }}
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.defender.actor.img}}' data-edit='img' title='{{this.defender.actor.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.defender.actor.name}}
+          </p>
+        </div>
+
+        {{#if this.attacker.isReady}}
+          {{#if this.defender.isReady}}
+            <div class='values'>
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="defense"
+                title="Defense"
+                disabled=true
+                inputValue=this.defender.defense
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="at"
+                title="AT"
+                disabled=true
+                inputValue=this.defender.at
+              }}
+            </div>
+          {{else}}
+            <div class='waiting-row'>
+              {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+              <p class='label'>Waiting to send the defense...</p>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class='waiting-row'>
+            {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+            <p class='label'>Waiting the attacker to send the attack...</p>
+          </div>
+        {{/if}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  </div>
+
+  {{#if this.calculations}}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="combat-result"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title="Result"
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="combat-result"
+      }}
+        {{#if this.calculations.canCounter}}
+          <p class='label counter'>{{this.defender.actor.name}} can count the attack from {{this.attacker.actor.name}} with {{this.calculations.value}}!</p>
+          <div class='ready-buttons'>
+            <button class='dialog-button'>
+              Make count
+            </button>
+            <button class='dialog-button cancel-button'>
+              Cancel
+            </button>
+          </div>
+        {{else}}
+          <p class='label result'>{{this.attacker.actor.name}} makes {{this.calculations.value}} of damage to {{this.defender.actor.name}}!</p>
+          <div class='ready-buttons'>
+            <button class='dialog-button'>
+              Apply damage
+            </button>
+            <button class='dialog-button cancel-button'>
+              Cancel
+            </button>
+          </div>
+        {{/if}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/if}}
+</form>
