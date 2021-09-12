@@ -1,0 +1,89 @@
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.attacking.mod.title')
+  disabled=this.attackSent
+  inputName="attacker.combat.modifier"
+  inputValue=this.attacker.combat.modifier
+}}
+{{#if this.ui.hasFatiguePoints}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.attacking.fatigue.title')
+    disabled=this.attackSent
+    inputName="attacker.combat.fatigueUsed"
+    inputValue=this.attacker.combat.fatigueUsed
+  }}
+    <option {{#if (is "eq" 0 this.attacker.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
+
+    {{#iterateNumber this.attacker.actor.data.data.characteristics.secondaries.fatigue.value}}
+      <option {{#if (is "eq" (math this "+" 1) ../this.attacker.combat.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+    {{/iterateNumber}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  <p class='label no-fatigue'>Yo dont have enough fatigue points to use</p>
+{{/if}}
+
+{{#if this.attacker.combat.unarmed}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.attacking.weapon.title')
+    disabled=true
+  }}
+    <option>Unarmed</option>
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.attacking.weapon.title')
+    disabled=this.attackSent
+    inputName='attacker.combat.weaponUsed'
+  }}
+    {{#each this.attacker.actor.data.data.combat.weapons}}
+      <option {{#if (is "eq" this._id ../this.attacker.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}} with {{this.data.attack.value}} attack</option>
+    {{/each}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
+{{#unless this.attacker.combat.unarmed}}
+  {{#if this.ui.weaponHasSecondaryCritic}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'macros.combat.dialog.attacking.weapon.critic.title')
+      disabled=this.attackSent
+      inputName='attacker.combat.criticSelected'
+    }}
+      <option {{#if (is "eq" this.attacker.combat.weapon.data.critic.primary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.data.critic.primary.value}}'>{{this.attacker.combat.weapon.data.critic.primary.value}}</option>
+      <option {{#if (is "eq" this.attacker.combat.weapon.data.critic.secondary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.data.critic.secondary.value}}'>{{this.attacker.combat.weapon.data.critic.secondary.value}}</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{else}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'macros.combat.dialog.attacking.weapon.critic.title')
+      disabled=true
+      inputName='attacker.combat.criticSelected'
+    }}
+      <option selected value='{{this.attacker.combat.weapon.data.critic.primary.value}}'>{{this.attacker.combat.weapon.data.critic.primary.value}}</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{/if}}
+{{/unless}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.attacking.damage.title')
+  inputName="attacker.combat.damage.special"
+  inputValue=this.attacker.combat.damage.special
+  disabled=this.attackSent
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.combat.damage.final"
+  secondaryInputValue=this.attacker.combat.damage.final
+}}
+
+
+{{#if this.attackSent}}
+  <div class='attack-sent'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      Attack sent. Waiting for combat results...
+    </p>
+  </div>
+{{else}}
+  <button class='send-attack'>
+    Send attack
+  </button>
+{{/if}}

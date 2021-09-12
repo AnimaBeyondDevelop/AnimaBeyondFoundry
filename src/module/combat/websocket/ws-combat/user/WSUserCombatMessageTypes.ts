@@ -1,5 +1,6 @@
 import { ABFWSGMNotification, ABFWSGMRequest } from '../gm/WSGMCombatMessageTypes';
-import { WeaponCritic } from '../../../../types/combat/WeaponItemConfig';
+import { UserCombatAttackResult } from '../../dialogs/UserCombatAttackDialog';
+import { UserCombatDefenseResult } from '../../dialogs/UserCombatDefenseDialog';
 
 export enum UserMessageTypes {
   RequestToAttack = 'UserRequestToAttackRequest',
@@ -9,6 +10,7 @@ export enum UserMessageTypes {
 
 export type UserRequestToAttackMessage = {
   type: UserMessageTypes.RequestToAttack;
+  senderId: string;
   payload: {
     attackerId: string;
     defenderId: string;
@@ -17,21 +19,12 @@ export type UserRequestToAttackMessage = {
 
 export type UserAttackMessage = {
   type: UserMessageTypes.Attack;
-  combatId: string;
-  payload: {
-    attackValue: number;
-    damageValue: number;
-    critic: WeaponCritic;
-  };
+  payload: UserCombatAttackResult;
 };
 
 export type UserDefendMessage = {
   type: UserMessageTypes.Defend;
-  combatId: string;
-  payload: {
-    defenseValue: number;
-    atValue: number;
-  };
+  payload: UserCombatDefenseResult;
 };
 
 export type ABFWSUserRequest = ABFWSGMNotification;

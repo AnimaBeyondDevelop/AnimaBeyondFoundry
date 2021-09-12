@@ -1,12 +1,9 @@
-import {
-  UserAttackMessage,
-  UserDefendMessage,
-  UserRequestToAttackMessage
-} from '../user/WSUserCombatMessageTypes';
-import { WeaponCritic } from '../../../../types/combat/WeaponItemConfig';
+import { UserAttackMessage, UserDefendMessage, UserRequestToAttackMessage } from '../user/WSUserCombatMessageTypes';
+import { UserCombatAttackResult } from '../../dialogs/UserCombatAttackDialog';
 
 export enum GMMessageTypes {
   Attack = 'GMAttack',
+  CounterAttack = 'GMCounterAttack',
   RequestToAttackResponse = 'GMRequestToAttackResponse',
   CancelCombat = 'GMCancelCombat'
 }
@@ -16,7 +13,16 @@ export type GMAttackMessage = {
   combatId: string;
   payload: {
     attackerId: string;
-    critic: WeaponCritic;
+    defenderId: string;
+    result: UserCombatAttackResult;
+  };
+};
+
+export type GMCounterAttackMessage = {
+  type: GMMessageTypes.CounterAttack;
+  combatId: string;
+  payload: {
+    attackerId: string;
     defenderId: string;
   };
 };
@@ -28,16 +34,17 @@ export type GMCancelCombatMessage = {
 
 export type GMRequestToAttackResponseMessage = {
   type: GMMessageTypes.RequestToAttackResponse;
-  combatId?: string;
+  toUserId: string;
   payload: {
     allowed: boolean;
     alreadyInACombat?: boolean;
   };
 };
 
-export type ABFWSGMRequest = GMRequestToAttackResponseMessage | GMAttackMessage | GMCancelCombatMessage;
+export type ABFWSGMRequest =
+  | GMRequestToAttackResponseMessage
+  | GMAttackMessage
+  | GMCounterAttackMessage
+  | GMCancelCombatMessage;
 
-export type ABFWSGMNotification =
-  | UserRequestToAttackMessage
-  | UserDefendMessage
-  | UserAttackMessage;
+export type ABFWSGMNotification = UserRequestToAttackMessage | UserDefendMessage | UserAttackMessage;

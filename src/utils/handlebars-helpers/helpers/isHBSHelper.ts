@@ -1,13 +1,9 @@
+/* eslint-disable eqeqeq */
 import { HandlebarsHelper } from '../registerHelpers';
 
 export const isHBSHelper: HandlebarsHelper<void> = {
   name: 'is',
-  fn: (
-    op: unknown,
-    val1: string | number,
-    val2: string | number,
-    options: { fn; inverse }
-  ) => {
+  fn: (op: unknown, val1: string | number, val2: string | number, options: { fn; inverse }) => {
     const getTruthyFn = () => {
       return options.fn?.(this) ?? true;
     };
@@ -17,11 +13,11 @@ export const isHBSHelper: HandlebarsHelper<void> = {
     };
 
     if (op === 'neq') {
-      return val1 !== val2 ? getTruthyFn() : getFalsyFn();
+      return val1 != val2 ? getTruthyFn() : getFalsyFn();
     }
 
     if (op === 'eq') {
-      return val1 === val2 ? getTruthyFn() : getFalsyFn();
+      return val1 == val2 ? getTruthyFn() : getFalsyFn();
     }
 
     if (op === 'gt') {

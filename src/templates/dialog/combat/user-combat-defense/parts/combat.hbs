@@ -1,0 +1,69 @@
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.attacking.mod.title')
+  disabled=this.defenseSent
+  inputName="defender.combat.modifier"
+  inputValue=this.defender.combat.modifier
+}}
+
+{{#if (is "eq" this.attacker.attackType "combat")}}
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title="AT"
+    disabled=this.defenseSent
+    inputName="defender.combat.at.special"
+    inputValue=this.defender.combat.at.special
+    hasSecondaryInput=true
+    disableSecondaryInput=true
+    secondaryInputName="defender.combat.at.final"
+    secondaryInputValue=this.defender.combat.at.final
+  }}
+{{/if}}
+
+{{#if this.ui.hasFatiguePoints}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.attacking.fatigue.title')
+    disabled=this.defenseSent
+    inputName="defender.combat.fatigue"
+    inputValue=this.defender.combat.fatigue
+  }}
+    <option {{#if (is "eq" 0 this.defender.combat.fatigue)}}selected{{/if}} value='0'>0</option>
+
+    {{#iterateNumber this.defender.actor.data.data.characteristics.secondaries.fatigue.value}}
+      <option {{#if (is "eq" (math this "+" 1) ../this.defender.combat.fatigue)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+    {{/iterateNumber}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  <p class='label no-fatigue'>Yo dont have enough fatigue points to use</p>
+{{/if}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  class="defense-amount"
+  title="Defense number"
+  disabled=this.defenseSent
+  inputName='defender.combat.defenseCount'
+}}
+  <option value="0">1ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option value="30">2ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option value="50">3ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option value="70">4ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option value="90">5ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#if this.defenseSent}}
+  <div class='defense-sent'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      Defense sent. Waiting for combat results...
+    </p>
+  </div>
+{{else}}
+  <div class='defense-buttons'>
+    <button class='send-defense' data-type='dodge'>
+      Dodge attack
+    </button>
+    <button class='send-defense' data-type='block'>
+      Block attack
+    </button>
+  </div>
+{{/if}}

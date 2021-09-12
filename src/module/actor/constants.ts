@@ -86,10 +86,6 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       current: { value: 0 },
       next: { value: 0 }
     },
-    fatigue: {
-      value: 0,
-      max: 0
-    },
     languages: {
       base: {
         value: ''

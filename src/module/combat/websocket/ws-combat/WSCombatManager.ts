@@ -10,7 +10,7 @@ export abstract class WSCombatManager<M, N> {
   }
 
   protected findActorById(actorId: string): ABFActor {
-    return this.game.actors?.find(a => a.id === actorId) as ABFActor;
+    return this.game.scenes?.current?.tokens.map(t => t.actor)?.find(u => u?.id === actorId) as ABFActor;
   }
 
   abstract receive(msg: N);

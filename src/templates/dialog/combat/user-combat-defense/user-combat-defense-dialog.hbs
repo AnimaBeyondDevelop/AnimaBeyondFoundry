@@ -1,0 +1,33 @@
+<form class='{{cssClass}} user-combat-defense-dialog' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="defense-values"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(concat "Defending from " this.attacker.actor.name)
+    }}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="defense-values"
+    }}
+      <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
+        <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>
+        <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>
+      </nav>
+
+      <section class="sheet-body">
+        <div class="tab combat" data-group="primary" data-tab="combat">
+          {{> 'systems/animabf/templates/dialog/combat/user-combat-defense/parts/combat.hbs' this=this}}
+        </div>
+
+        <div class="tab mystic" data-group="primary" data-tab="mystic">
+          {{> 'systems/animabf/templates/dialog/combat/user-combat-defense/parts/mystic.hbs' this=this}}
+        </div>
+
+        <div class="tab psychic" data-group="primary" data-tab="psychic">
+          {{> 'systems/animabf/templates/dialog/combat/user-combat-defense/parts/psychic.hbs' this=this}}
+        </div>
+      </section>
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>

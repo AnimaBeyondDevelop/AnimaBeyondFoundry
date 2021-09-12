@@ -1,7 +1,12 @@
 import { Log } from '../../../../../utils/Log';
 import { WSCombatManager } from '../WSCombatManager';
 import { ABFActor } from '../../../../actor/ABFActor';
-import { GMAttackMessage, GMMessageTypes, GMRequestToAttackResponseMessage } from '../gm/WSGMCombatMessageTypes';
+import {
+  GMAttackMessage,
+  GMCounterAttackMessage,
+  GMMessageTypes,
+  GMRequestToAttackResponseMessage
+} from '../gm/WSGMCombatMessageTypes';
 import {
   ABFWSUserNotification,
   ABFWSUserRequest,
@@ -14,9 +19,8 @@ import { UserCombatAttackDialog } from '../../dialogs/UserCombatAttackDialog';
 import { UserCombatDefenseDialog } from '../../dialogs/UserCombatDefenseDialog';
 
 export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWSUserNotification> {
-  private combatId: string | undefined;
-
   private attackDialog: UserCombatAttackDialog | undefined;
+  private defenseDialog: UserCombatDefenseDialog | undefined;
 
   public constructor(game: Game) {
     super(game);
@@ -32,10 +36,13 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
         this.manageAttackRequestResponse(msg);
         break;
       case GMMessageTypes.CancelCombat:
-        this.manageCancelCombat(msg);
+        this.manageCancelCombat();
         break;
       case GMMessageTypes.Attack:
         this.manageDefend(msg);
+        break;
+      case GMMessageTypes.CounterAttack:
+        this.manageCounterAttack(msg);
         break;
       default:
         Log.warn('Unknown message', msg);
@@ -43,22 +50,25 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
   }
 
   private endCombat() {
-    this.combatId = undefined;
-
     if (this.attackDialog) {
       this.attackDialog.close({ force: true });
 
       this.attackDialog = undefined;
     }
+
+    if (this.defenseDialog) {
+      this.defenseDialog.close({ force: true });
+
+      this.defenseDialog = undefined;
+    }
   }
 
-  private manageCancelCombat(msg) {
-    if (msg.combatId && msg.combatId !== this.combatId) {
-      // The message is not for us
-      return;
-    }
-
+  private manageCancelCombat() {
     this.endCombat();
+  }
+
+  get user() {
+    return this.game.user!;
   }
 
   public async sendAttack() {
@@ -92,32 +102,22 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
           if (user.character?.id && target.actor?.id) {
             const msg: UserRequestToAttackMessage = {
               type: UserMessageTypes.RequestToAttack,
+              senderId: user.id,
               payload: { attackerId: user.character.id, defenderId: target.actor.id }
             };
 
             this.emit(msg);
 
-            this.attackDialog = new UserCombatAttackDialog(
-              {
-                attacker: { actor: user.character },
-                defender: { actor: target.actor }
-              },
-              {
-                onAttack: attackValues => {
-                  const newMsg: UserAttackMessage = {
-                    type: UserMessageTypes.Attack,
-                    combatId: this.combatId!,
-                    payload: {
-                      attackValue: attackValues.attack,
-                      damageValue: attackValues.damage,
-                      critic: attackValues.critic
-                    }
-                  };
+            this.attackDialog = new UserCombatAttackDialog(user.character, target.actor, {
+              onAttack: result => {
+                const newMsg: UserAttackMessage = {
+                  type: UserMessageTypes.Attack,
+                  payload: result
+                };
 
-                  this.emit(newMsg);
-                }
+                this.emit(newMsg);
               }
-            );
+            });
           }
         }
       });
@@ -126,12 +126,39 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     }
   }
 
+  private async manageCounterAttack(msg: GMCounterAttackMessage) {
+    const { attackerId, defenderId } = msg.payload;
+
+    if (this.actor.id !== attackerId) {
+      return;
+    }
+
+    const attacker = this.actor;
+    const defender = this.findActorById(defenderId);
+
+    this.attackDialog = new UserCombatAttackDialog(
+      attacker,
+      defender,
+      {
+        onAttack: result => {
+          const newMsg: UserAttackMessage = {
+            type: UserMessageTypes.Attack,
+            payload: result
+          };
+
+          this.emit(newMsg);
+        }
+      },
+      true
+    );
+  }
+
   private async manageAttackRequestResponse(msg: GMRequestToAttackResponseMessage) {
+    if (msg.toUserId !== this.user.id) return;
+
     if (!this.attackDialog) return;
 
     if (msg.payload.allowed) {
-      this.combatId = msg.combatId;
-
       this.attackDialog.updatePermissions(msg.payload.allowed);
     } else {
       this.endCombat();
@@ -148,30 +175,28 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
   }
 
   private async manageDefend(msg: GMAttackMessage) {
-    if (msg.combatId && msg.combatId !== this.combatId) {
-      // The message is not for us
+    const { result, attackerId, defenderId } = msg.payload;
+
+    if (this.actor.id !== defenderId) {
       return;
     }
 
-    if (this.actor.id !== msg.payload.defenderId) {
-      return;
-    }
-
-    const attacker = this.findActorById(msg.payload.attackerId);
+    const attacker = this.findActorById(attackerId);
     const defender = this.actor;
 
     try {
-      new UserCombatDefenseDialog(
+      this.defenseDialog = new UserCombatDefenseDialog(
         {
-          attacker: { actor: attacker, critic: msg.payload.critic },
-          defender: { actor: defender }
+          actor: attacker,
+          attackType: result.type,
+          critic: result.type === 'combat' ? result.values.criticSelected : undefined
         },
+        defender,
         {
-          onDefense: defenseValues => {
+          onDefense: res => {
             const newMsg: UserDefendMessage = {
               type: UserMessageTypes.Defend,
-              combatId: msg.combatId,
-              payload: { defenseValue: defenseValues.defense, atValue: defenseValues.at }
+              payload: res
             };
 
             this.emit(newMsg);

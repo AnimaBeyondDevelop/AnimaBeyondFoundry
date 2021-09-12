@@ -21,7 +21,9 @@ export class ABFActor extends Actor {
     this.i18n = (game as Game).i18n;
 
     if (this.data.data.version !== INITIAL_ACTOR_DATA.version) {
-      Log.log(`Upgrading actor ${this.data.name} (${this.data._id}) from version ${this.data.data.version} to ${INITIAL_ACTOR_DATA.version}`);
+      Log.log(
+        `Upgrading actor ${this.data.name} (${this.data._id}) from version ${this.data.data.version} to ${INITIAL_ACTOR_DATA.version}`
+      );
 
       this.data.update({ data: { version: INITIAL_ACTOR_DATA.version } });
     }
@@ -33,6 +35,30 @@ export class ABFActor extends Actor {
     this.data.data = foundry.utils.mergeObject(this.data.data, INITIAL_ACTOR_DATA, { overwrite: false });
 
     prepareActor(this);
+  }
+
+  applyFatigue(fatigueUsed: number) {
+    const newFatigue = this.data.data.characteristics.secondaries.fatigue.value - fatigueUsed;
+
+    this.update({
+      data: {
+        characteristics: {
+          secondaries: { fatigue: { value: newFatigue } }
+        }
+      }
+    });
+  }
+
+  applyDamage(damage: number) {
+    const newLifePoints = this.data.data.characteristics.secondaries.lifePoints.value - damage;
+
+    this.update({
+      data: {
+        characteristics: {
+          secondaries: { lifePoints: { value: newLifePoints } }
+        }
+      }
+    });
   }
 
   public async createItem({ type, name, data = {} }: { type: ABFItems; name: string; data?: unknown }) {

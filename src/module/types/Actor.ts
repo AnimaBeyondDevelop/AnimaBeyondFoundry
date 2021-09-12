@@ -88,10 +88,6 @@ export type ABFActorDataSourceData = {
       current: { value: number };
       next: { value: number };
     };
-    fatigue: {
-      value: number;
-      max: number;
-    };
     languages: {
       base: {
         value: string;

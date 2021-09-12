@@ -6,7 +6,12 @@
   justify-content: center;
   align-items: center;
 
-  width: 700px;
+  width: auto !important;
+  height: auto !important;
+
+  .window-content {
+    width: 700px;
+  }
 
   .versus-label {
     display: flex;
@@ -31,7 +36,7 @@
     .group-body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: start;
       align-items: center;
       height: 100%;
 
@@ -56,10 +61,28 @@
         }
       }
 
+      .attack-type,
+      .defense-type {
+        font-size: 1.5rem;
+      }
+
       .values {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .input-container {
+          width: 100%;
+        }
+
+        .common-titled-input {
+          flex-basis: calc(33% - 1rem);
+          margin: 0.5rem;
+        }
+
+        .weapon-used {
+          flex-basis: 50%;
+        }
       }
 
       .waiting-row {
@@ -90,9 +113,7 @@
       }
 
       .ready-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 1rem;
+        display: flex;
 
         .dialog-button {
           &.warn {

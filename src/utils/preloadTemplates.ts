@@ -1,11 +1,17 @@
 import { Templates } from '../module/utils/constants';
 
 export const preloadTemplates = () => {
-  const templatePaths = [
+  const templatePaths: string[] = [
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
-    Templates.Dialog.Combat.UserCombatAttackDialog,
-    Templates.Dialog.Combat.UserCombatDefenseDialog,
+    Templates.Dialog.Combat.UserCombatAttackDialog.main,
+    Templates.Dialog.Combat.UserCombatAttackDialog.parts.combat,
+    Templates.Dialog.Combat.UserCombatAttackDialog.parts.mystic,
+    Templates.Dialog.Combat.UserCombatAttackDialog.parts.psychic,
+    Templates.Dialog.Combat.UserCombatDefenseDialog.main,
+    Templates.Dialog.Combat.UserCombatDefenseDialog.parts.combat,
+    Templates.Dialog.Combat.UserCombatDefenseDialog.parts.mystic,
+    Templates.Dialog.Combat.UserCombatDefenseDialog.parts.psychic,
     Templates.Dialog.Combat.CombatRequestDialog,
     Templates.Dialog.Combat.GMCombatDialog,
     Templates.Dialog.Icons.Accept,

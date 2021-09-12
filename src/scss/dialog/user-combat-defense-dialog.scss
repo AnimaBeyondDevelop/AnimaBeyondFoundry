@@ -6,8 +6,12 @@
   justify-content: center;
   align-items: center;
 
-  width: 525px;
-  height: 300px;
+  width: auto !important;
+  height: auto !important;
+
+  .window-content {
+    width: 550px;
+  }
 
   .group-body {
     .defense-sent {

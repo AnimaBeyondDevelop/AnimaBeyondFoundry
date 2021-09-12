@@ -20,21 +20,208 @@
         </div>
 
         {{#if this.attacker.isReady}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="custom-modifier"
+            title="Attacker custom modifier"
+            inputName="attacker.customModifier"
+            inputValue=this.attacker.customModifier
+          }}
+
+
+          <p class='attack-type label'>
+            {{this.attacker.result.type}}
+          </p>
+
           <div class='values'>
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="attack"
-              title="Attack"
-              disabled=true
-              inputValue=this.attacker.attack
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="damage"
-              title="Damage"
-              disabled=true
-              inputValue=this.attacker.damage
-            }}
+            {{#if (is "eq" this.attacker.result.type 'combat')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="modifier"
+                title="Modifier"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.modifier
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="fatigue"
+                title="Used fatigue"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.fatigueUsed
+              }}
+              {{#unless this.attacker.result.values.unarmed}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-used"
+                  title="Weapon used"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.weapon.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-attack"
+                  title="Weapon attack"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.attack
+                }}
+              {{else}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-used"
+                  title="Weapon used"
+                  inputType="text"
+                  disabled=true
+                  inputValue="Unarmed"
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-attack"
+                  title="Attack"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.attack
+                }}
+              {{/unless}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="critic"
+                title="Critic"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.criticSelected
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="damage"
+                title="Damage"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.damage
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="roll"
+                title="Rolled"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.roll
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="total"
+                title="Total"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.total
+              }}
+            {{/if}}
+
+            {{#if (is "eq" this.attacker.result.type 'mystic')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="modifier"
+                title="Modifier"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.modifier
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="magic-projection"
+                title="Magic projection"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.magicProjection
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="spell-used"
+                title="Spell used"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.spell.name
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="spell-grade"
+                title="Spell grade"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.spellGrade
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="roll"
+                title="Rolled"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.roll
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="total"
+                title="Total"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.total
+              }}
+            {{/if}}
+
+            {{#if (is "eq" this.attacker.result.type 'psychic')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="modifier"
+                title="Modifier"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.modifier
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="psychic-projection"
+                title="Psychic projection"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.psychicProjection
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="psychic-potential"
+                title="Psychic potential"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.psychicPotential
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="power-used"
+                title="Power used"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.power.name
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="roll"
+                title="Rolled"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.roll
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="total"
+                title="Total"
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.total
+              }}
+            {{/if}}
+
           </div>
         {{else}}
           <div class='waiting-row'>
@@ -70,21 +257,173 @@
 
         {{#if this.attacker.isReady}}
           {{#if this.defender.isReady}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="custom-modifier"
+              title="Defender custom modifier"
+              inputName="defender.customModifier"
+              inputValue=this.defender.customModifier
+            }}
+
+            <p class='defense-type label'>
+              {{this.defender.result.type}}
+            </p>
+
             <div class='values'>
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="defense"
-                title="Defense"
-                disabled=true
-                inputValue=this.defender.defense
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="at"
-                title="AT"
-                disabled=true
-                inputValue=this.defender.at
-              }}
+              {{#if (is "eq" this.defender.result.type 'combat')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="modifier"
+                  title="Modifier"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.modifier
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="combat-defense-type"
+                  inputType="text"
+                  title="Defense type"
+                  disabled=true
+                  inputValue=this.defender.result.values.type
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="fatigue"
+                  title="Used fatigue"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.fatigue
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="defense-count"
+                  title="Defense count"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.defenseCount
+                }}
+                {{#if (is 'neq' this.defender.result.values.at undefined)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="at-value"
+                    title="AT value"
+                    inputType="text"
+                    disabled=true
+                    inputValue=this.defender.result.values.at
+                  }}
+                {{/if}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="defense"
+                  title="Total"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'mystic')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="modifier"
+                  title="Modifier"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.modifier
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="magic-projection"
+                  title="Magic projection"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.magicProjection
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="spell-used"
+                  title="Spell used"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.spell.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="spell-grade"
+                  title="Spell grade"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.spellGrade
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="roll"
+                  title="Rolled"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.roll
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="total"
+                  title="Total"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'psychic')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="modifier"
+                  title="Modifier"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.modifier
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="psychic-projection"
+                  title="Psychic projection"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.psychicProjection
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="psychic-potential"
+                  title="Psychic potential"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.psychicPotential
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="power-used"
+                  title="Power used"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.power.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="roll"
+                  title="Rolled"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.roll
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="total"
+                  title="Total"
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
             </div>
           {{else}}
             <div class='waiting-row'>
@@ -113,26 +452,110 @@
       {{#> "systems/animabf/templates/common/ui/group-body.hbs"
         class="combat-result"
       }}
-        {{#if this.calculations.canCounter}}
-          <p class='label counter'>{{this.defender.actor.name}} can count the attack from {{this.attacker.actor.name}} with {{this.calculations.value}}!</p>
-          <div class='ready-buttons'>
-            <button class='dialog-button'>
-              Make count
-            </button>
-            <button class='dialog-button cancel-button'>
-              Cancel
-            </button>
-          </div>
-        {{else}}
-          <p class='label result'>{{this.attacker.actor.name}} makes {{this.calculations.value}} of damage to {{this.defender.actor.name}}!</p>
-          <div class='ready-buttons'>
-            <button class='dialog-button'>
-              Apply damage
-            </button>
-            <button class='dialog-button cancel-button'>
-              Cancel
-            </button>
-          </div>
+        {{#if (is "eq" this.calculations.type 'combat')}}
+          {{#if this.calculations.values.canCounter}}
+            <p class='label counter'>{{this.defender.actor.name}} can count the attack from {{this.attacker.actor.name}} with {{this.calculations.values.value}}!</p>
+            <div class='ready-buttons'>
+              {{#unless this.ui.isCounter}}
+                <button title='This option will execute a new attack from the defender' class='dialog-button make-counter'>
+                  Counter attack
+                </button>
+              {{/unless}}
+              <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                Apply and close
+              </button>
+              <button class='dialog-button cancel-button'>
+                Cancel
+              </button>
+            </div>
+          {{else}}
+            <p class='label result'>{{this.attacker.actor.name}} makes {{this.calculations.values.value}} of damage to {{this.defender.actor.name}}!</p>
+            <div class='ready-buttons'>
+              {{#if (is 'gt' this.calculations.values.value 0)}}
+                <button title='Apply changes in actors such as fatigue points used or damage in case' class='dialog-button apply-damage'>
+                  Apply damage and fatigue
+                </button>
+              {{/if}}
+              <button class='dialog-button cancel-button'>
+                Cancel
+              </button>
+            </div>
+          {{/if}}
+        {{/if}}
+
+        {{#if (is "eq" this.calculations.type 'supernatural')}}
+          {{#if (is "eq" this.defender.result.type 'combat')}}
+            {{#if this.calculations.values.hit}}
+              <p class='label counter'>{{this.attacker.actor.name}} hits with supernatural powers to {{this.defender.actor.name}}!</p>
+              <div class='ready-buttons'>
+                <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                  Apply and close
+                </button>
+                <button class='dialog-button cancel-button'>
+                  Cancel
+                </button>
+              </div>
+            {{else}}
+              <p class='label result'>{{this.defender.actor.name}} {{#if (is "eq" this.attacker.defender.result.type 'dodge')}}dodges{{else}}blocks{{/if}} the supernatural attack from {{this.attacker.actor.name}}!</p>
+              <div class='ready-buttons'>
+                <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                  Apply and close
+                </button>
+                <button class='dialog-button cancel-button'>
+                  Cancel
+                </button>
+              </div>
+            {{/if}}
+          {{/if}}
+
+
+          {{#if (is "eq" this.defender.result.type 'mystic')}}
+            {{#if this.calculations.values.hit}}
+              <p class='label counter'>{{this.attacker.actor.name}} hits with {{this.attacker.result.spell.name}} to {{this.defender.actor.name}} with {{this.attacker.result.values.spellGrade}} grade!</p>
+              <div class='ready-buttons'>
+                <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                  Apply and close
+                </button>
+                <button class='dialog-button cancel-button'>
+                  Cancel
+                </button>
+              </div>
+            {{else}}
+              <p class='label result'>{{this.defender.actor.name}} stops the attack from {{this.attacker.actor.name}} with the spell {{this.defender.result.spell.name}} in grade {{this.defender.result.values.spellGrade}}!</p>
+              <div class='ready-buttons'>
+                <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                  Apply and close
+                </button>
+                <button class='dialog-button cancel-button'>
+                  Cancel
+                </button>
+              </div>
+            {{/if}}
+          {{/if}}
+
+          {{#if (is "eq" this.defender.result.type 'psychic')}}
+            {{#if this.calculations.values.hit}}
+              <p class='label counter'>{{this.attacker.actor.name}} hits with {{this.attacker.result.power.name}} to {{this.defender.actor.name}} with {{this.attacker.result.values.psychicPotential}} of potential!</p>
+              <div class='ready-buttons'>
+                <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                  Apply and close
+                </button>
+                <button class='dialog-button cancel-button'>
+                  Cancel
+                </button>
+              </div>
+            {{else}}
+              <p class='label result'>{{this.defender.actor.name}} stops the attack from {{this.attacker.actor.name}} with the power {{this.defender.result.power.name}} with {{this.defender.result.values.psychicPotential}} of potential!</p>
+              <div class='ready-buttons'>
+                <button title='Apply changes in actors such as fatigue points used' class='dialog-button apply-values'>
+                  Apply and close
+                </button>
+                <button class='dialog-button cancel-button'>
+                  Cancel
+                </button>
+              </div>
+            {{/if}}
+          {{/if}}
         {{/if}}
       {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
     {{/"systems/animabf/templates/common/ui/group.hbs"}}
