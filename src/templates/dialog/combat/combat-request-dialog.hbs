@@ -1,6 +1,6 @@
 <div class='{{cssClass}} combat-request'>
   <p class='label title'>
-    {{this.data.attacker.name}} requests permission to attack {{this.data.defender.name}}
+    {{concat this.data.attacker.name (localize 'macros.combat.dialog.requestPermission.title') this.data.defender.name}}
   </p>
   <div class='combatants'>
     {{#> "systems/animabf/templates/common/ui/group.hbs"

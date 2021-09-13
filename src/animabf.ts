@@ -23,10 +23,9 @@ import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
 import { createAnimaBFMacro } from './module/macros/createAnimaBFMacro';
-import { damageCalculatorFunction } from './module/macros/damageCalculator/damageCalculatorFunction';
-import { registerDefaultMacros } from './utils/registerDefaultMacros';
 import { Log } from './utils/Log';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
+import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -38,10 +37,6 @@ Hooks.once('init', async () => {
   CONFIG.Actor.documentClass = ABFActor;
 
   CONFIG.config = ABFConfig;
-
-  window.ABFMacros = {
-    damageCalculator: damageCalculatorFunction
-  };
 
   window.ABFFoundryRoll = ABFFoundryRoll;
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
@@ -85,10 +80,9 @@ Hooks.once('setup', () => {
 /* When ready */
 /* ------------------------------------ */
 Hooks.once('ready', () => {
-  // Register macros
-  registerDefaultMacros();
-
   registerCombatWebsocketRoutes();
+
+  attachCustomMacroBar();
 
   Hooks.on('hotbarDrop', (bar, data, slot) => createAnimaBFMacro(data, slot));
 });

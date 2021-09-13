@@ -1,8 +1,8 @@
-import { ABFActor } from '../../../actor/ABFActor';
-import { Templates } from '../../../utils/constants';
-import ABFFoundryRoll from '../../../rolls/ABFFoundryRoll';
-import { WeaponCritic } from '../../../types/combat/WeaponItemConfig';
-import { UserCombatAttackResult } from './UserCombatAttackDialog';
+import { ABFActor } from '../../actor/ABFActor';
+import { Templates } from '../../utils/constants';
+import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
+import { WeaponCritic } from '../../types/combat/WeaponItemConfig';
+import { UserCombatAttackResult } from './CombatAttackDialog';
 
 type SpecialField = {
   special: number;
@@ -123,7 +123,7 @@ const getInitialData = (
   defenseSent: false
 });
 
-export class UserCombatDefenseDialog extends FormApplication<FormApplication.Options, UserCombatDefenseDialogData> {
+export class CombatDefenseDialog extends FormApplication<FormApplication.Options, UserCombatDefenseDialogData> {
   private data: UserCombatDefenseDialogData;
 
   constructor(
@@ -142,13 +142,13 @@ export class UserCombatDefenseDialog extends FormApplication<FormApplication.Opt
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ['user-combat-attack-dialog'],
+      classes: ['abf-dialog combat-defense-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: 525,
       height: 240,
       resizable: true,
-      template: Templates.Dialog.Combat.UserCombatDefenseDialog.main,
+      template: Templates.Dialog.Combat.CombatDefenseDialog.main,
       title: 'Defending',
       tabs: [
         {

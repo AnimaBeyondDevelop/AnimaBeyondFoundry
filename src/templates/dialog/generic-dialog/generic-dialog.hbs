@@ -1,0 +1,12 @@
+<form class='{{this.class}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  }}
+    {{{this.content}}}
+
+    <div class='buttons'>
+      {{#each this.buttons}}
+        <button id='{{this.id}}' class='abf-button'>{{this.content}}</button>
+      {{/each}}
+    </div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+</form>

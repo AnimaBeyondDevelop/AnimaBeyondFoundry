@@ -1,8 +1,10 @@
+import { ABFDialogs } from '../dialogs/ABFDialogs';
+
 export const createAnimaBFMacro = async (data, slot): Promise<void> => {
   if (data.type !== 'Item') return;
 
   if (!('data' in data)) {
-    ui.notifications?.warn('You can only create macro buttons for owned Items');
+    ABFDialogs.prompt('You can only create macro buttons for owned Items');
 
     return;
   }

@@ -1,21 +1,12 @@
-import { ABFActor } from '../../../actor/ABFActor';
-import { calculateDamage } from '../../../macros/damageCalculator/damageCalculatorFunction';
-import { UserCombatAttackResult } from './UserCombatAttackDialog';
-import { UserCombatDefenseResult } from './UserCombatDefenseDialog';
-import { WeaponDataSource } from '../../../types/combat/WeaponItemConfig';
-import { PsychicPowerDataSource } from '../../../types/psychic/PsychicPowerItemConfig';
-import { SpellDataSource } from '../../../types/mystic/SpellItemConfig';
+import { ABFActor } from '../../actor/ABFActor';
+import { calculateDamage } from '../../macros/functions/damageCalculatorMacro';
+import { UserCombatAttackResult } from './CombatAttackDialog';
+import { UserCombatDefenseResult } from './CombatDefenseDialog';
+import { WeaponDataSource } from '../../types/combat/WeaponItemConfig';
+import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
+import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import CloseOptions = FormApplication.CloseOptions;
-
-type CombatCalculations = {
-  type: 'combat';
-  values: { canCounter: boolean; value: number };
-};
-
-type SupernaturalCalculations = {
-  type: 'supernatural';
-  values: { hit: boolean };
-};
+import { Log } from '../../../utils/Log';
 
 type GMCombatDialogData = {
   ui: {
@@ -40,7 +31,12 @@ type GMCombatDialogData = {
       power?: PsychicPowerDataSource;
     };
   };
-  calculations?: CombatCalculations | SupernaturalCalculations;
+  calculations?: {
+    winner: ABFActor;
+    canCounter: boolean;
+    difference: number;
+    damage?: number;
+  };
 };
 
 const getInitialData = (attacker: ABFActor, defender: ABFActor, isCounter = false): GMCombatDialogData => ({
@@ -80,7 +76,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ['gm-combat-dialog'],
+      classes: ['abf-dialog gm-combat-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       height: 600,
@@ -122,18 +118,15 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     html.find('.apply-values').click(() => {
       this.applyValuesIfBeAble();
 
-      this.close();
-    });
-
-    html.find('.apply-damage').click(() => {
-      this.applyValuesIfBeAble();
-
       if (
         this.data.attacker.result?.type === 'combat' &&
-        this.data.calculations?.type === 'combat' &&
-        this.data.calculations?.values.value > 0
+        this.data.defender.result?.type === 'combat' &&
+        this.data.calculations &&
+        this.data.calculations.difference > 0 &&
+        this.data.calculations.damage !== undefined &&
+        this.data.calculations?.damage > 5
       ) {
-        this.defender.applyDamage(this.data.calculations?.values.value);
+        this.defender.applyDamage(this.data.calculations.damage);
       }
 
       this.close();
@@ -162,6 +155,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     if (result.type === 'mystic') {
       const spells = this.attacker.data.data.mystic.spells as SpellDataSource[];
 
+      Log.log(spells, result.values.spellUsed);
       this.data.attacker.result.spell = spells.find(w => w._id === result.values.spellUsed)!;
     }
 
@@ -203,29 +197,28 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
       const attackerTotal = attacker.result.values.total + this.data.attacker.customModifier;
       const defenderTotal = defender.result.values.total + this.data.defender.customModifier;
 
+      const winner = attackerTotal > defenderTotal ? attacker.actor : defender.actor;
+
+      let canCounter = false;
+      let damage;
+
       if (attacker.result.type === 'combat' && defender.result.type === 'combat') {
-        const result = calculateDamage(
+        damage = calculateDamage(
           attackerTotal,
           defenderTotal,
           defender.result.values.at!,
           attacker.result.values.damage
         );
 
-        this.data.calculations = {
-          type: 'combat',
-          values: {
-            canCounter: defenderTotal > attackerTotal,
-            value: result
-          }
-        };
-      } else {
-        this.data.calculations = {
-          type: 'supernatural',
-          values: {
-            hit: attackerTotal > defenderTotal
-          }
-        };
+        canCounter = defenderTotal > attackerTotal;
       }
+
+      this.data.calculations = {
+        difference: attackerTotal - defenderTotal,
+        canCounter,
+        winner,
+        damage
+      };
     }
 
     return this.data;

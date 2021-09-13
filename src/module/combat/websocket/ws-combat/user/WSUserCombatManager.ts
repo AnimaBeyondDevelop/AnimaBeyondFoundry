@@ -15,12 +15,14 @@ import {
   UserMessageTypes,
   UserRequestToAttackMessage
 } from './WSUserCombatMessageTypes';
-import { UserCombatAttackDialog } from '../../dialogs/UserCombatAttackDialog';
-import { UserCombatDefenseDialog } from '../../dialogs/UserCombatDefenseDialog';
+import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
+import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
+import { PromptDialog } from '../../../../dialogs/PromptDialog';
+import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 
 export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWSUserNotification> {
-  private attackDialog: UserCombatAttackDialog | undefined;
-  private defenseDialog: UserCombatDefenseDialog | undefined;
+  private attackDialog: CombatAttackDialog | undefined;
+  private defenseDialog: CombatDefenseDialog | undefined;
 
   public constructor(game: Game) {
     super(game);
@@ -71,7 +73,15 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     return this.game.user!;
   }
 
-  public async sendAttack() {
+  get character(): ABFActor | undefined {
+    const actor = this.game.scenes?.active?.tokens.find(t => t.data.actorId === this.user.character?.id)?.actor;
+
+    if (actor) return actor;
+
+    return undefined;
+  }
+
+  public async sendAttackRequest() {
     const { user } = this.game;
 
     if (!user) return;
@@ -79,36 +89,35 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     const { targets } = user;
 
     if (targets.ids.length === 0) {
-      ui.notifications?.warn('You have to select one target');
+      ABFDialogs.prompt('You have to select one target');
       return;
     }
 
     if (targets.ids.length > 1) {
-      ui.notifications?.warn('You have to select only one target');
+      ABFDialogs.prompt('You have to select only one target');
       return;
     }
 
     const target = targets.values().next().value as Token;
 
     if (!target.actor?.id) {
-      ui.notifications?.warn('Target do not have any actor associated');
+      ABFDialogs.prompt('Target do not have any actor associated');
       return;
     }
 
-    if (user.character?.id) {
-      await Dialog.confirm({
-        content: `Do you want to attack ${target.actor.name}?`,
-        yes: () => {
-          if (user.character?.id && target.actor?.id) {
+    if (this.character?.id) {
+      await ABFDialogs.confirm('Confirm attack', `Do you want to attack ${target.actor.name}?`, {
+        onConfirm: () => {
+          if (this.character?.id && target.actor?.id) {
             const msg: UserRequestToAttackMessage = {
               type: UserMessageTypes.RequestToAttack,
               senderId: user.id,
-              payload: { attackerId: user.character.id, defenderId: target.actor.id }
+              payload: { attackerId: this.character.id, defenderId: target.actor.id }
             };
 
             this.emit(msg);
 
-            this.attackDialog = new UserCombatAttackDialog(user.character, target.actor, {
+            this.attackDialog = new CombatAttackDialog(this.character!, target.actor, {
               onAttack: result => {
                 const newMsg: UserAttackMessage = {
                   type: UserMessageTypes.Attack,
@@ -122,7 +131,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
         }
       });
     } else {
-      ui.notifications?.warn("You don't have selected any character");
+      ABFDialogs.prompt("You don't have selected any character");
     }
   }
 
@@ -136,7 +145,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     const attacker = this.actor;
     const defender = this.findActorById(defenderId);
 
-    this.attackDialog = new UserCombatAttackDialog(
+    this.attackDialog = new CombatAttackDialog(
       attacker,
       defender,
       {
@@ -163,14 +172,13 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     } else {
       this.endCombat();
 
-      Dialog.prompt({
-        content: `Your attack request have been rejected. ${
+      new PromptDialog(
+        `Your attack request have been rejected. ${
           msg.payload.alreadyInACombat
             ? 'GM is already involved in a combat, wait your turn and try to attack again.'
             : ''
-        }`,
-        callback: () => {}
-      });
+        }`
+      );
     }
   }
 
@@ -185,7 +193,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     const defender = this.actor;
 
     try {
-      this.defenseDialog = new UserCombatDefenseDialog(
+      this.defenseDialog = new CombatDefenseDialog(
         {
           actor: attacker,
           attackType: result.type,

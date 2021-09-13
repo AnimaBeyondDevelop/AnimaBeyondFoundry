@@ -1,6 +1,6 @@
 import { ABFWSGMNotification, ABFWSGMRequest } from '../gm/WSGMCombatMessageTypes';
-import { UserCombatAttackResult } from '../../dialogs/UserCombatAttackDialog';
-import { UserCombatDefenseResult } from '../../dialogs/UserCombatDefenseDialog';
+import { UserCombatAttackResult } from '../../../../dialogs/combat/CombatAttackDialog';
+import { UserCombatDefenseResult } from '../../../../dialogs/combat/CombatDefenseDialog';
 
 export enum UserMessageTypes {
   RequestToAttack = 'UserRequestToAttackRequest',

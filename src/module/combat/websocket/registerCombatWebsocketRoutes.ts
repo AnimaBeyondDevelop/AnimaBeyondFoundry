@@ -8,14 +8,18 @@ export const registerCombatWebsocketRoutes = () => {
   if (tgame.user?.isGM) {
     Log.log('Initialized Combat Manager as GM');
 
-    new WSGMCombatManager(tgame);
+    const combatManager = new WSGMCombatManager(tgame);
+
+    window.Websocket = {
+      sendAttack: () => combatManager.sendAttack()
+    };
   } else {
     Log.log('Initialized Combat Manager as User');
 
     const combatManager = new WSUserCombatManager(tgame);
 
     window.Websocket = {
-      sendAttack: () => combatManager.sendAttack()
+      sendAttackRequest: () => combatManager.sendAttackRequest()
     };
   }
 };

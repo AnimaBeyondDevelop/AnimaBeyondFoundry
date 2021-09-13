@@ -1,6 +1,6 @@
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize 'macros.combat.dialog.attacking.mod.title')
+  title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.defenseSent
   inputName="defender.combat.modifier"
   inputValue=this.defender.combat.modifier
@@ -9,7 +9,7 @@
 {{#if (is "eq" this.attacker.attackType "combat")}}
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-    title="AT"
+    title=(localize 'macros.combat.dialog.at.title')
     disabled=this.defenseSent
     inputName="defender.combat.at.special"
     inputValue=this.defender.combat.at.special
@@ -22,7 +22,7 @@
 
 {{#if this.ui.hasFatiguePoints}}
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-    title=(localize 'macros.combat.dialog.attacking.fatigue.title')
+    title=(localize 'macros.combat.dialog.fatigue.title')
     disabled=this.defenseSent
     inputName="defender.combat.fatigue"
     inputValue=this.defender.combat.fatigue
@@ -34,12 +34,12 @@
     {{/iterateNumber}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{else}}
-  <p class='label no-fatigue'>Yo dont have enough fatigue points to use</p>
+  <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
 {{/if}}
 
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  class="defense-amount"
-  title="Defense number"
+  class="defense-count"
+  title=(localize 'macros.combat.dialog.defenseCount.title')
   disabled=this.defenseSent
   inputName='defender.combat.defenseCount'
 }}
@@ -54,16 +54,16 @@
   <div class='defense-sent'>
     {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
-      Defense sent. Waiting for combat results...
+      {{localize 'macros.combat.dialog.defenseSent.title'}}
     </p>
   </div>
 {{else}}
   <div class='defense-buttons'>
-    <button class='send-defense' data-type='dodge'>
-      Dodge attack
+    <button class='abf-button send-defense' data-type='dodge'>
+      {{localize 'macros.combat.dialog.dodgeButton.title'}}
     </button>
-    <button class='send-defense' data-type='block'>
-      Block attack
+    <button class='abf-button send-defense' data-type='block'>
+      {{localize 'macros.combat.dialog.blockButton.title'}}
     </button>
   </div>
 {{/if}}

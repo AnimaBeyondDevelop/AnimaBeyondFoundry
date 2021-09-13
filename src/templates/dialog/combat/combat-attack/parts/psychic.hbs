@@ -1,6 +1,6 @@
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize 'macros.combat.dialog.attacking.mod.title')
+  title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.attackSent
   inputName="attacker.psychic.modifier"
   inputValue=this.attacker.psychic.modifier
@@ -8,7 +8,7 @@
 
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title="Psychic projection"
+  title=(localize 'macros.combat.dialog.psychicProjection.title')
   disabled=this.attackSent
   inputName="attacker.psychic.psychicProjection"
   inputValue=this.attacker.psychic.psychicProjection
@@ -16,7 +16,7 @@
 
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title="Psychic potential"
+  title=(localize 'macros.combat.dialog.psychicPotential.title')
   disabled=this.attackSent
   inputName="attacker.psychic.psychicPotential.special"
   inputValue=this.attacker.psychic.psychicPotential.special
@@ -27,7 +27,7 @@
 }}
 
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title="Power"
+  title=(localize 'macros.combat.dialog.psychicPower.title')
   disabled=this.attackSent
   inputName='attacker.psychic.powerUsed'
 }}
@@ -41,11 +41,11 @@
   <div class='psychic-attack-sent'>
     {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
-      Psychic attack sent. Waiting for combat results...
+      {{localize 'macros.combat.dialog.attackSent.title'}}
     </p>
   </div>
 {{else}}
-  <button class='send-psychic-attack'>
-    Send psychic attack
+  <button class='abf-button send-psychic-attack'>
+    {{localize 'macros.combat.dialog.attackButton.title'}}
   </button>
 {{/if}}

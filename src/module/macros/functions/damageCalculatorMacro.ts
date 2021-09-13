@@ -1,5 +1,7 @@
 import { renderTemplates } from '../../utils/renderTemplates';
 import { Templates } from '../../utils/constants';
+import { ABFDialogs } from '../../dialogs/ABFDialogs';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const openDialog = async (): Promise<{ [key: string]: unknown }> => {
   const [dialogHTML, iconHTML] = await renderTemplates(
@@ -47,14 +49,14 @@ const roundTo5Multiples = x => Math.round(x / 5) * 5;
 export const calculateDamage = (attack: number, defense: number, at: number, damage: number): number => {
   let result = calculateResult(attack, defense, at, damage);
 
-  if ((game as Game).settings.get('animabf', 'roundDamageInMultiplesOf5')) {
+  if ((game as Game).settings.get('animabf', ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5)) {
     result = roundTo5Multiples(result);
   }
 
   return result;
 };
 
-export const damageCalculatorFunction = async () => {
+export const damageCalculatorMacro = async () => {
   const results = await openDialog();
 
   const attack = results['damage-calculator-attack-input'];
@@ -68,7 +70,7 @@ export const damageCalculatorFunction = async () => {
     typeof at !== 'number' ||
     typeof damage !== 'number'
   ) {
-    ui.notifications?.warn('One of the fields is empty or is not a number');
+    ABFDialogs.prompt('One of the fields is empty or is not a number');
     return;
   }
 

@@ -4,18 +4,19 @@ export const preloadTemplates = () => {
   const templatePaths: string[] = [
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
-    Templates.Dialog.Combat.UserCombatAttackDialog.main,
-    Templates.Dialog.Combat.UserCombatAttackDialog.parts.combat,
-    Templates.Dialog.Combat.UserCombatAttackDialog.parts.mystic,
-    Templates.Dialog.Combat.UserCombatAttackDialog.parts.psychic,
-    Templates.Dialog.Combat.UserCombatDefenseDialog.main,
-    Templates.Dialog.Combat.UserCombatDefenseDialog.parts.combat,
-    Templates.Dialog.Combat.UserCombatDefenseDialog.parts.mystic,
-    Templates.Dialog.Combat.UserCombatDefenseDialog.parts.psychic,
+    Templates.Dialog.Combat.CombatAttackDialog.main,
+    Templates.Dialog.Combat.CombatAttackDialog.parts.combat,
+    Templates.Dialog.Combat.CombatAttackDialog.parts.mystic,
+    Templates.Dialog.Combat.CombatAttackDialog.parts.psychic,
+    Templates.Dialog.Combat.CombatDefenseDialog.main,
+    Templates.Dialog.Combat.CombatDefenseDialog.parts.combat,
+    Templates.Dialog.Combat.CombatDefenseDialog.parts.mystic,
+    Templates.Dialog.Combat.CombatDefenseDialog.parts.psychic,
     Templates.Dialog.Combat.CombatRequestDialog,
     Templates.Dialog.Combat.GMCombatDialog,
     Templates.Dialog.Icons.Accept,
     Templates.Dialog.Icons.Cancel,
+    Templates.CustomHotBar,
 
     // TODO Add paths to "systems/AnimaBeyondFoundry/templates"
     // Common parts

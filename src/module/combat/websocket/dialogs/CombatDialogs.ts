@@ -1,49 +1,23 @@
 import { renderTemplates } from '../../../utils/renderTemplates';
 import { Templates } from '../../../utils/constants';
 import { ABFActor } from '../../../actor/ABFActor';
+import { GenericDialog } from '../../../dialogs/GenericDialog';
 
 const openCombatRequestDialog = async ({ attacker, defender }: { attacker: ABFActor; defender: ABFActor }) => {
-  const [dialogHTML, acceptIconHTML, cancelIconHTML] = await renderTemplates(
-    {
-      name: Templates.Dialog.Combat.CombatRequestDialog,
-      context: { data: { attacker, defender } }
-    },
-    {
-      name: Templates.Dialog.Icons.Accept
-    },
-    {
-      name: Templates.Dialog.Icons.Cancel
-    }
-  );
+  const [dialogHTML] = await renderTemplates({
+    name: Templates.Dialog.Combat.CombatRequestDialog,
+    context: { data: { attacker, defender } }
+  });
 
   return new Promise<void>((resolve, reject) => {
-    new Dialog(
-      {
-        title: 'Attack request',
-        content: dialogHTML,
-        close: () => {
-          reject();
-        },
-        buttons: {
-          cancel: {
-            icon: cancelIconHTML,
-            label: 'Reject',
-            callback: () => {
-              reject();
-            }
-          },
-          accept: {
-            icon: acceptIconHTML,
-            label: 'Accept',
-            callback: () => {
-              resolve();
-            }
-          }
-        },
-        default: 'accept'
-      },
-      { width: 722, height: 420 }
-    ).render(true);
+    new GenericDialog({
+      content: dialogHTML,
+      onClose: () => reject(),
+      buttons: [
+        { id: 'on-confirm-button', fn: () => resolve(), content: 'Accept' },
+        { id: 'on-cancel-button', fn: () => reject(), content: 'Cancel' }
+      ]
+    });
   });
 };
 

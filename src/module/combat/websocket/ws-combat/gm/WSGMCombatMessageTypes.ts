@@ -1,5 +1,5 @@
 import { UserAttackMessage, UserDefendMessage, UserRequestToAttackMessage } from '../user/WSUserCombatMessageTypes';
-import { UserCombatAttackResult } from '../../dialogs/UserCombatAttackDialog';
+import { UserCombatAttackResult } from '../../../../dialogs/combat/CombatAttackDialog';
 
 export enum GMMessageTypes {
   Attack = 'GMAttack',
@@ -10,7 +10,6 @@ export enum GMMessageTypes {
 
 export type GMAttackMessage = {
   type: GMMessageTypes.Attack;
-  combatId: string;
   payload: {
     attackerId: string;
     defenderId: string;
@@ -20,7 +19,6 @@ export type GMAttackMessage = {
 
 export type GMCounterAttackMessage = {
   type: GMMessageTypes.CounterAttack;
-  combatId: string;
   payload: {
     attackerId: string;
     defenderId: string;

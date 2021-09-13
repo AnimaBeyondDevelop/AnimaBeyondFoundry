@@ -1,0 +1,50 @@
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.modifier.title')
+  disabled=this.attackSent
+  inputName="attacker.mystic.modifier"
+  inputValue=this.attacker.mystic.modifier
+}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.magicProjection.title')
+  disabled=this.attackSent
+  inputName='attacker.mystic.magicProjectionType'
+}}
+  <option {{#if (is "eq" this.attacker.mystic.magicProjectionType 'normal')}}selected{{/if}} value='normal'>{{concat (localize 'macros.combat.dialog.magicProjection.normal.title') " (" this.attacker.actor.data.data.mystic.magicProjection.final.value ")" }}</option>
+  <option {{#if (is "eq" this.attacker.mystic.magicProjectionType 'offensive')}}selected{{/if}} value='offensive'>{{concat (localize 'macros.combat.dialog.magicProjection.offensive.title') " (" this.attacker.actor.data.data.mystic.magicProjection.imbalance.offensive.final.value ")" }}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.spell.title')
+  disabled=this.attackSent
+  inputName='attacker.mystic.spellUsed'
+}}
+  {{#each this.attacker.actor.data.data.mystic.spells}}
+    <option {{#if (is "eq" this._id ../this.attacker.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.spellGrade.title')
+  disabled=this.attackSent
+  inputName='attacker.mystic.spellGrade'
+}}
+  <option {{#if (is "eq" this.attacker.mystic.spellGrade 'base')}}selected{{/if}} value='base'>{{localize 'macros.combat.dialog.spellGrade.base.title'}}</option>
+  <option {{#if (is "eq" this.attacker.mystic.spellGrade 'intermediate')}}selected{{/if}} value='intermediate'>{{localize 'macros.combat.dialog.spellGrade.intermediate.title'}}</option>
+  <option {{#if (is "eq" this.attacker.mystic.spellGrade 'advanced')}}selected{{/if}} value='advanced'>{{localize 'macros.combat.dialog.spellGrade.advanced.title'}}</option>
+  <option {{#if (is "eq" this.attacker.mystic.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'macros.combat.dialog.spellGrade.arcane.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#if this.attackSent}}
+  <div class='mystic-attack-sent'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      {{localize 'macros.combat.dialog.attackSent.title'}}
+    </p>
+  </div>
+{{else}}
+  <button class='abf-button send-mystic-attack'>
+    {{localize 'macros.combat.dialog.attackButton.title'}}
+  </button>
+{{/if}}

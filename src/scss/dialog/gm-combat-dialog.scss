@@ -10,7 +10,7 @@
   height: auto !important;
 
   .window-content {
-    width: 700px;
+    width: 1000px;
   }
 
   .versus-label {
@@ -80,8 +80,39 @@
           margin: 0.5rem;
         }
 
-        .weapon-used {
-          flex-basis: 50%;
+        .weapon-used,
+        .spell-used,
+        .power-used {
+          flex-basis: 33%;
+        }
+
+        .fatigue,
+        .at-value,
+        .defense-count {
+          flex-basis: 20%;
+
+          .input-container {
+            width: 2.25rem;
+          }
+        }
+
+        .modifier,
+        .dodge-value,
+        .block-value,
+        .critic,
+        .psychic-projection,
+        .magic-projection,
+        .psychic-potential,
+        .damage,
+        .roll,
+        .total,
+        .spell-grade,
+        .weapon-attack {
+          flex-basis: 2%;
+
+          .input-container {
+            width: 3rem;
+          }
         }
       }
 
@@ -105,11 +136,27 @@
     width: 100%;
     margin-top: 1rem;
 
+    .assault-values {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      width: 100%;
+
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+
+      .common-titled-input {
+        flex-basis: 50%;
+      }
+    }
+
     .group-body {
       .label {
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: bold;
+        &.title {
+          text-align: center;
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
       }
 
       .ready-buttons {

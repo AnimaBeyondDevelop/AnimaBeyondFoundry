@@ -14,8 +14,8 @@ import ABFItem from './module/items/ABFItem';
 import { ABFConfig } from './module/ABFConfig';
 import { AmmoDataSource } from './module/types/combat/AmmoItemConfig';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
-import { damageCalculatorFunction } from './module/macros/damageCalculator/damageCalculatorFunction';
 import { WSUserCombatManager } from './module/combat/websocket/ws-combat/user/WSUserCombatManager';
+import { WSGMCombatManager } from './module/combat/websocket/ws-combat/gm/WSGMCombatManager';
 
 export type ABFItemBaseDataSource<T, D> = {
   _id: string;
@@ -46,14 +46,11 @@ type ABFActorsDataSource = ABFActorDataSource;
 
 declare global {
   interface Window {
-    ABFMacros: {
-      damageCalculator: typeof damageCalculatorFunction;
-    };
-
     ABFFoundryRoll: typeof ABFFoundryRoll;
 
     Websocket: {
-      sendAttack: typeof WSUserCombatManager.prototype.sendAttack;
+      sendAttack?: typeof WSGMCombatManager.prototype.sendAttack;
+      sendAttackRequest?: typeof WSUserCombatManager.prototype.sendAttackRequest;
     };
   }
 
