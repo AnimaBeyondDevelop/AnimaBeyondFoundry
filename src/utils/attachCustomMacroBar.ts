@@ -2,7 +2,6 @@ import { renderTemplates } from '../module/utils/renderTemplates';
 import { Templates } from '../module/utils/constants';
 import { ABFMacros } from '../module/macros/ABFMacros';
 import { ABFSettingsKeys } from './registerSettings';
-import { ConfirmationDialog } from '../module/dialogs/ConfirmationDialog';
 import { Log } from './Log';
 import { PromptDialog } from '../module/dialogs/PromptDialog';
 
@@ -67,8 +66,20 @@ export const attachCustomMacroBar = async () => {
     }
   }
 
+  document.addEventListener('keyup', () => {
+    for (const config of defaultMacroConfigs) {
+      if (config.macroSelectorId) {
+        $(config.macroSelectorId).removeClass('hover');
+      }
+    }
+  });
+
   document.addEventListener('keydown', e => {
     for (const config of defaultMacroConfigs) {
+      if (e.ctrlKey && config.macroSelectorId) {
+        $(config.macroSelectorId).addClass('hover');
+      }
+
       if (config.hotkey(e)) {
         e.preventDefault();
 

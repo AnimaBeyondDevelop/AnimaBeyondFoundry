@@ -2,6 +2,9 @@ import { ABFActor } from '../../actor/ABFActor';
 import { Templates } from '../../utils/constants';
 import { NoneWeaponCritic, WeaponCritic, WeaponDataSource } from '../../types/combat/WeaponItemConfig';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
+import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
+import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 type SpecialField = {
   special: number;
@@ -10,11 +13,14 @@ type SpecialField = {
 
 export type UserCombatAttackDialogData = {
   ui: {
+    isGM: boolean;
     hasFatiguePoints: boolean;
     weaponHasSecondaryCritic: boolean | undefined;
   };
   attacker: {
     actor: ABFActor;
+    showRoll: boolean;
+    counterAttackBonus: number | undefined;
     combat: {
       modifier: number;
       fatigueUsed: number;
@@ -86,41 +92,56 @@ export type UserCombatAttackResult =
   | UserCombatAttackMysticResult
   | UserCombatAttackPsychicResult;
 
-const getInitialData = (attacker: ABFActor, defender: ABFActor): UserCombatAttackDialogData => ({
-  ui: {
-    hasFatiguePoints: attacker.data.data.characteristics.secondaries.fatigue.value > 0,
-    weaponHasSecondaryCritic: undefined
-  },
-  attacker: {
-    actor: attacker,
-    combat: {
-      fatigueUsed: 0,
-      modifier: 0,
-      unarmed: false,
-      weaponUsed: undefined,
-      criticSelected: undefined,
-      weapon: undefined,
-      damage: { special: 0, final: 0 }
+const getInitialData = (
+  attacker: ABFActor,
+  defender: ABFActor,
+  options: { allowed?: boolean; counterAttackBonus?: number } = {}
+): UserCombatAttackDialogData => {
+  const showRollByDefault = !!(game as Game).settings.get(
+    'animabf',
+    ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
+  );
+  const isGM = !!(game as Game).user?.isGM;
+
+  return {
+    ui: {
+      isGM,
+      hasFatiguePoints: attacker.data.data.characteristics.secondaries.fatigue.value > 0,
+      weaponHasSecondaryCritic: undefined
     },
-    mystic: {
-      modifier: 0,
-      magicProjectionType: 'normal',
-      spellUsed: undefined,
-      spellGrade: 'base'
+    attacker: {
+      actor: attacker,
+      showRoll: !isGM || showRollByDefault,
+      counterAttackBonus: options.counterAttackBonus,
+      combat: {
+        fatigueUsed: 0,
+        modifier: 0,
+        unarmed: false,
+        weaponUsed: undefined,
+        criticSelected: undefined,
+        weapon: undefined,
+        damage: { special: 0, final: 0 }
+      },
+      mystic: {
+        modifier: 0,
+        magicProjectionType: 'normal',
+        spellUsed: undefined,
+        spellGrade: 'base'
+      },
+      psychic: {
+        modifier: 0,
+        psychicProjection: attacker.data.data.psychic.psychicProjection.final.value,
+        psychicPotential: { special: 0, final: attacker.data.data.psychic.psychicProjection.final.value },
+        powerUsed: undefined
+      }
     },
-    psychic: {
-      modifier: 0,
-      psychicProjection: attacker.data.data.psychic.psychicProjection.final.value,
-      psychicPotential: { special: 0, final: attacker.data.data.psychic.psychicProjection.final.value },
-      powerUsed: undefined
-    }
-  },
-  defender: {
-    actor: defender
-  },
-  attackSent: false,
-  allowed: false
-});
+    defender: {
+      actor: defender
+    },
+    attackSent: false,
+    allowed: false
+  };
+};
 
 export class CombatAttackDialog extends FormApplication<FormApplication.Options, UserCombatAttackDialogData> {
   private data: UserCombatAttackDialogData;
@@ -131,11 +152,11 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
     private hooks: {
       onAttack: (attackValues: UserCombatAttackResult) => void;
     },
-    allowed = false
+    options: { allowed?: boolean; counterAttackBonus?: number } = {}
   ) {
-    super(getInitialData(attacker, defender));
+    super(getInitialData(attacker, defender, options));
 
-    this.data = getInitialData(attacker, defender);
+    this.data = getInitialData(attacker, defender, options);
 
     const weapons = this.attacker.data.data.combat.weapons as WeaponDataSource[];
 
@@ -145,7 +166,7 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
       this.data.attacker.combat.unarmed = true;
     }
 
-    this.data.allowed = (game as Game).user?.isGM || allowed;
+    this.data.allowed = (game as Game).user?.isGM || (options.allowed ?? false);
 
     this.render(true);
   }
@@ -200,14 +221,37 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
       const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.data.attacker.combat;
 
       if (typeof damage !== 'undefined') {
-        const roll = new ABFFoundryRoll('1d100xa');
+        const attack = weapon ? weapon.data.attack.value : this.attacker.data.data.combat.attack.final.value;
+
+        const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
+
+        const roll = new ABFFoundryRoll(
+          `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
+        );
 
         roll.roll();
 
-        const attack = weapon ? weapon.data.attack.value : this.attacker.data.data.combat.attack.final.value;
+        if (this.data.attacker.showRoll) {
+          const { i18n } = game as Game;
+
+          const flavor = weapon
+            ? i18n.format('macros.combat.dialog.physicalAttack.title', {
+                weapon: weapon?.name,
+                target: this.defender.name
+              })
+            : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
+                target: this.defender.name
+              });
+
+          roll.toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.attacker }),
+            flavor
+          });
+        }
+
         const critic = criticSelected ?? WeaponCritic.IMPACT;
 
-        const total = roll.total! + attack + (modifier ?? 0) + (fatigueUsed ?? 0) * 15;
+        const rolled = roll.total! - counterAttackBonus - attack - (modifier ?? 0) - (fatigueUsed ?? 0) * 15;
 
         this.hooks.onAttack({
           type: 'combat',
@@ -219,8 +263,8 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
             criticSelected: critic,
             modifier,
             fatigueUsed,
-            roll: roll.total!,
-            total
+            roll: rolled,
+            total: roll.total!
           }
         });
 
@@ -239,10 +283,30 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
             ? this.attacker.data.data.mystic.magicProjection.final.value
             : this.attacker.data.data.mystic.magicProjection.imbalance.offensive.final.value;
 
-        const roll = new ABFFoundryRoll('1d100xa');
+        const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
+
+        const roll = new ABFFoundryRoll(`1d100xa + ${counterAttackBonus} + ${magicProjection} + ${modifier ?? 0}`);
         roll.roll();
 
-        const total = roll.total! + magicProjection + (modifier ?? 0);
+        if (this.data.attacker.showRoll) {
+          const { i18n } = game as Game;
+
+          const spells = this.attacker.data.data.mystic.spells as SpellDataSource[];
+
+          const spell = spells.find(w => w._id === spellUsed)!;
+
+          const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
+            spell: spell.name,
+            target: this.defender.name
+          });
+
+          roll.toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.attacker }),
+            flavor
+          });
+        }
+
+        const rolled = roll.total! - counterAttackBonus - magicProjection - (modifier ?? 0);
 
         this.hooks.onAttack({
           type: 'mystic',
@@ -251,8 +315,8 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
             spellUsed,
             spellGrade,
             magicProjection,
-            roll: roll.total!,
-            total
+            roll: rolled,
+            total: roll.total!
           }
         });
 
@@ -266,10 +330,32 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
       const { powerUsed, modifier, psychicPotential, psychicProjection } = this.data.attacker.psychic;
 
       if (powerUsed) {
-        const psychicProjectionRoll = new ABFFoundryRoll('1d100xa');
+        const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
+
+        const psychicProjectionRoll = new ABFFoundryRoll(
+          `1d100xa + ${counterAttackBonus} + ${psychicProjection} + ${modifier ?? 0}`
+        );
         psychicProjectionRoll.roll();
 
-        const total = psychicProjectionRoll.total! + psychicProjection + (modifier ?? 0);
+        if (this.data.attacker.showRoll) {
+          const { i18n } = game as Game;
+
+          const powers = this.attacker.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
+
+          const power = powers.find(w => w._id === powerUsed)!;
+
+          const flavor = i18n.format('macros.combat.dialog.psychicAttack.title', {
+            power: power.name,
+            target: this.defender.name
+          });
+
+          psychicProjectionRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.attacker }),
+            flavor
+          });
+        }
+
+        const rolled = psychicProjectionRoll.total! - counterAttackBonus - psychicProjection - (modifier ?? 0);
 
         const psychicPotentialRoll = new ABFFoundryRoll('1d100xa');
         psychicPotentialRoll.roll();
@@ -281,8 +367,8 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
             powerUsed,
             psychicPotential: psychicPotential.final + psychicPotentialRoll.total!,
             psychicProjection,
-            roll: psychicProjectionRoll.total!,
-            total
+            roll: rolled,
+            total: psychicProjectionRoll.total!
           }
         });
 

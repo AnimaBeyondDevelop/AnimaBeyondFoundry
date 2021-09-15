@@ -36,24 +36,39 @@ const openDialog = async (): Promise<{ [key: string]: unknown }> => {
   });
 };
 
-const calculateResult = (attack, defense, at, damage) => {
-  if (defense > attack) {
-    return (defense - attack) / 2;
-  }
-
+const calculateDamage = (attack, defense, at, damage) => {
   return (damage * (attack - (defense + at * 10 + 20))) / 100;
 };
 
 const roundTo5Multiples = x => Math.round(x / 5) * 5;
 
-export const calculateDamage = (attack: number, defense: number, at: number, damage: number): number => {
-  let result = calculateResult(attack, defense, at, damage);
+const calculateCounterAttackBonus = (attack, defense) => {
+  return roundTo5Multiples((defense - attack) / 2);
+};
 
-  if ((game as Game).settings.get('animabf', ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5)) {
-    result = roundTo5Multiples(result);
+const canCounterAttack = (attack, defense) => defense > attack;
+
+export const calculateCombatResult = (
+  attack: number,
+  defense: number,
+  at: number,
+  damage: number
+): { canCounterAttack: true; counterAttackBonus: number } | { canCounterAttack: false; damage: number } => {
+  const needToRound = (game as Game).settings.get('animabf', ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5);
+
+  if (canCounterAttack(attack, defense)) {
+    return {
+      canCounterAttack: true,
+      counterAttackBonus: calculateCounterAttackBonus(attack, defense)
+    };
   }
 
-  return result;
+  const result = calculateDamage(attack, defense, at, damage);
+
+  return {
+    canCounterAttack: false,
+    damage: needToRound ? roundTo5Multiples(result) : result
+  };
 };
 
 export const damageCalculatorMacro = async () => {
@@ -74,14 +89,14 @@ export const damageCalculatorMacro = async () => {
     return;
   }
 
-  const result = calculateDamage(attack, defense, at, damage);
+  const result = calculateCombatResult(attack, defense, at, damage);
 
   let final = `<div>HA: ${attack}, HD: ${defense}, at: ${at}, Daño Base: ${damage}</div>`;
 
-  if (defense > attack) {
-    final = `${final}<h2>Bono al contraataque: <span style='color:#ff1515'>${result}</span></h2>`;
+  if (result.canCounterAttack) {
+    final = `${final}<h2>Bono al contraataque: <span style='color:#ff1515'>${result.counterAttackBonus}</span></h2>`;
   } else {
-    final = `${final}<h2>Daño final: <span style='color:#ff1515'>${result}</span></h2>`;
+    final = `${final}<h2>Daño final: <span style='color:#ff1515'>${result.damage}</span></h2>`;
   }
 
   const typedGame = game as Game;

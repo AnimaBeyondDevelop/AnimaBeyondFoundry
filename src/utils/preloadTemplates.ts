@@ -17,6 +17,7 @@ export const preloadTemplates = () => {
     Templates.Dialog.Icons.Accept,
     Templates.Dialog.Icons.Cancel,
     Templates.CustomHotBar,
+    Templates.Chat.CombatResult,
 
     // TODO Add paths to "systems/AnimaBeyondFoundry/templates"
     // Common parts

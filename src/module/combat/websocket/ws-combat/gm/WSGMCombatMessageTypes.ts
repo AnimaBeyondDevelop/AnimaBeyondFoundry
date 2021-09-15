@@ -22,6 +22,7 @@ export type GMCounterAttackMessage = {
   payload: {
     attackerId: string;
     defenderId: string;
+    counterAttackBonus?: number;
   };
 };
 

@@ -16,6 +16,26 @@
           {{#if (is 'gt' this.attacker.actor.data.data.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
         </nav>
 
+        {{#if this.ui.isGM}}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            title=(localize 'macros.combat.dialog.showRoll.title')
+            disabled=this.attackSent
+            inputType="checkbox"
+            inputName="attacker.showRoll"
+            inputValue=(is 'eq' this.attacker.showRoll true)
+          }}
+        {{/if}}
+
+        {{#if this.attacker.counterAttackBonus}}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            title=(localize 'macros.combat.dialog.counterAttackBonus.title')
+            disabled=true
+            inputValue=this.attacker.counterAttackBonus
+          }}
+        {{/if}}
+
         <section class="sheet-body">
           <div class="tab combat" data-group="primary" data-tab="combat">
             {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs' this=this}}

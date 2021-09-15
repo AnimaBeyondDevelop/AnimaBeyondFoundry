@@ -15,6 +15,17 @@
         {{#if (is 'gt' this.defender.actor.data.data.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
       </nav>
 
+      {{#if this.ui.isGM}}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          title=(localize 'macros.combat.dialog.showRoll.title')
+          disabled=this.defenseSent
+          inputType="checkbox"
+          inputName="defender.showRoll"
+          inputValue=(is 'eq' this.defender.showRoll true)
+        }}
+      {{/if}}
+
       <section class="sheet-body">
         <div class="tab combat" data-group="primary" data-tab="combat">
           {{> 'systems/animabf/templates/dialog/combat/combat-defense/parts/combat.hbs' this=this}}

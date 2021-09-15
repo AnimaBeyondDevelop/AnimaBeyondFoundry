@@ -28,5 +28,8 @@ export const Templates = {
       Cancel: 'systems/animabf/templates/dialog/parts/cancel-icon.hbs'
     }
   },
-  CustomHotBar: 'systems/animabf/templates/custom-hotbar/custom-hotbar.hbs'
+  CustomHotBar: 'systems/animabf/templates/custom-hotbar/custom-hotbar.hbs',
+  Chat: {
+    CombatResult: 'systems/animabf/templates/chat/combat-result.hbs'
+  }
 };

@@ -17,7 +17,8 @@
       width: 3.2rem;
       height: 3.2rem;
 
-      &:hover {
+      &:hover,
+      &.hover {
         img {
           filter: invert(1);
         }

@@ -71,5 +71,6 @@ declare global {
   interface DocumentClassConfig {
     Actor: typeof ABFActor;
     Item: typeof ABFItem;
+    Roll: typeof ABFFoundryRoll;
   }
 }

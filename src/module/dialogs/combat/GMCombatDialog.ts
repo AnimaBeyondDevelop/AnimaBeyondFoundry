@@ -1,12 +1,13 @@
 import { ABFActor } from '../../actor/ABFActor';
-import { calculateDamage } from '../../macros/functions/damageCalculatorMacro';
+import { calculateCombatResult } from '../../macros/functions/damageCalculatorMacro';
 import { UserCombatAttackResult } from './CombatAttackDialog';
 import { UserCombatDefenseResult } from './CombatDefenseDialog';
 import { WeaponDataSource } from '../../types/combat/WeaponItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
-import CloseOptions = FormApplication.CloseOptions;
 import { Log } from '../../../utils/Log';
+import { Templates } from '../../utils/constants';
+import CloseOptions = FormApplication.CloseOptions;
 
 type GMCombatDialogData = {
   ui: {
@@ -16,6 +17,7 @@ type GMCombatDialogData = {
     actor: ABFActor;
     isReady: boolean;
     customModifier: number;
+    counterAttackBonus?: number;
     result?: UserCombatAttackResult & {
       weapon?: WeaponDataSource;
       spell?: SpellDataSource;
@@ -31,21 +33,33 @@ type GMCombatDialogData = {
       power?: PsychicPowerDataSource;
     };
   };
-  calculations?: {
-    winner: ABFActor;
-    canCounter: boolean;
-    difference: number;
-    damage?: number;
-  };
+  calculations?:
+    | {
+        winner: ABFActor;
+        canCounter: false;
+        difference: number;
+        damage?: number;
+      }
+    | {
+        winner: ABFActor;
+        canCounter: true;
+        difference: number;
+        counterAttackBonus: number;
+      };
 };
 
-const getInitialData = (attacker: ABFActor, defender: ABFActor, isCounter = false): GMCombatDialogData => ({
+const getInitialData = (
+  attacker: ABFActor,
+  defender: ABFActor,
+  options: { isCounter?: boolean; counterAttackBonus?: number } = {}
+): GMCombatDialogData => ({
   ui: {
-    isCounter
+    isCounter: options.isCounter ?? false
   },
   attacker: {
     actor: attacker,
     customModifier: 0,
+    counterAttackBonus: options.counterAttackBonus,
     isReady: false
   },
   defender: {
@@ -63,13 +77,13 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     defender: ABFActor,
     private hooks: {
       onClose: () => Promise<void> | void;
-      onCounterAttack: () => Promise<void> | void;
+      onCounterAttack: (bonus: number) => Promise<void> | void;
     },
-    isCounter = false
+    options: { isCounter?: boolean; counterAttackBonus?: number } = {}
   ) {
-    super(getInitialData(attacker, defender, isCounter));
+    super(getInitialData(attacker, defender, options));
 
-    this.data = getInitialData(attacker, defender, isCounter);
+    this.data = getInitialData(attacker, defender, options);
 
     this.render(true);
   }
@@ -112,25 +126,54 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     html.find('.make-counter').click(() => {
       this.applyValuesIfBeAble();
 
-      this.hooks.onCounterAttack();
+      if (this.data.calculations?.canCounter) {
+        this.hooks.onCounterAttack(this.data.calculations.counterAttackBonus);
+      }
     });
 
     html.find('.apply-values').click(() => {
       this.applyValuesIfBeAble();
 
-      if (
-        this.data.attacker.result?.type === 'combat' &&
-        this.data.defender.result?.type === 'combat' &&
-        this.data.calculations &&
-        this.data.calculations.difference > 0 &&
-        this.data.calculations.damage !== undefined &&
-        this.data.calculations?.damage > 5
-      ) {
-        this.defender.applyDamage(this.data.calculations.damage);
+      if (!this.data.calculations?.canCounter && this.canApplyDamage) {
+        this.defender.applyDamage(this.data.calculations!.damage!);
       }
 
       this.close();
     });
+
+    html.find('.show-results').click(async () => {
+      this.applyValuesIfBeAble();
+
+      const data: Record<string, any> = {
+        attacker: this.attacker,
+        defender: this.defender,
+        result: this.data.calculations?.difference,
+        canCounter: this.data.calculations?.canCounter
+      };
+
+      if (this.data.calculations?.canCounter) {
+        data.bonus = this.data.calculations.counterAttackBonus;
+      } else {
+        data.damage = this.data.calculations?.damage;
+      }
+
+      await renderTemplate(Templates.Chat.CombatResult, data).then(content => {
+        ChatMessage.create({
+          content
+        });
+      });
+    });
+  }
+  get canApplyDamage() {
+    return (
+      this.data.attacker.result?.type === 'combat' &&
+      this.data.defender.result?.type === 'combat' &&
+      this.data.calculations &&
+      this.data.calculations.difference > 0 &&
+      !this.data.calculations.canCounter &&
+      this.data.calculations.damage !== undefined &&
+      this.data.calculations?.damage > 0
+    );
   }
 
   private applyValuesIfBeAble() {
@@ -199,26 +242,36 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
 
       const winner = attackerTotal > defenderTotal ? attacker.actor : defender.actor;
 
-      let canCounter = false;
-      let damage;
-
       if (attacker.result.type === 'combat' && defender.result.type === 'combat') {
-        damage = calculateDamage(
+        const combatResult = calculateCombatResult(
           attackerTotal,
           defenderTotal,
           defender.result.values.at!,
           attacker.result.values.damage
         );
 
-        canCounter = defenderTotal > attackerTotal;
+        if (combatResult.canCounterAttack) {
+          this.data.calculations = {
+            difference: attackerTotal - defenderTotal,
+            canCounter: true,
+            winner,
+            counterAttackBonus: combatResult.counterAttackBonus
+          };
+        } else {
+          this.data.calculations = {
+            difference: attackerTotal - defenderTotal,
+            canCounter: false,
+            winner,
+            damage: combatResult.damage
+          };
+        }
+      } else {
+        this.data.calculations = {
+          difference: attackerTotal - defenderTotal,
+          canCounter: false,
+          winner
+        };
       }
-
-      this.data.calculations = {
-        difference: attackerTotal - defenderTotal,
-        canCounter,
-        winner,
-        damage
-      };
     }
 
     return this.data;

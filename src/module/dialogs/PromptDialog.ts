@@ -9,7 +9,7 @@ export class PromptDialog extends GenericDialog {
         {
           id: 'on-confirm-button',
           fn: onAccept,
-          content: 'Accept'
+          content: (game as Game).i18n.localize('dialogs.accept')
         }
       ]
     });

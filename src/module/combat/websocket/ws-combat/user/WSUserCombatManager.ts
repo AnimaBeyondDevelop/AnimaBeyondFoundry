@@ -28,10 +28,6 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     super(game);
   }
 
-  get actor(): ABFActor {
-    return this.game.user!.character!;
-  }
-
   receive(msg) {
     switch (msg.type) {
       case GMMessageTypes.RequestToAttackResponse:
@@ -89,60 +85,64 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     const { targets } = user;
 
     if (targets.ids.length === 0) {
-      ABFDialogs.prompt('You have to select one target');
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.oneTarget.title'));
       return;
     }
 
     if (targets.ids.length > 1) {
-      ABFDialogs.prompt('You have to select only one target');
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.multipleTargets.title'));
       return;
     }
 
     const target = targets.values().next().value as Token;
 
     if (!target.actor?.id) {
-      ABFDialogs.prompt('Target do not have any actor associated');
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.withoutActor.title'));
       return;
     }
 
     if (this.character?.id) {
-      await ABFDialogs.confirm('Confirm attack', `Do you want to attack ${target.actor.name}?`, {
-        onConfirm: () => {
-          if (this.character?.id && target.actor?.id) {
-            const msg: UserRequestToAttackMessage = {
-              type: UserMessageTypes.RequestToAttack,
-              senderId: user.id,
-              payload: { attackerId: this.character.id, defenderId: target.actor.id }
-            };
+      await ABFDialogs.confirm(
+        this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
+        this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: target.actor.name }),
+        {
+          onConfirm: () => {
+            if (this.character?.id && target.actor?.id) {
+              const msg: UserRequestToAttackMessage = {
+                type: UserMessageTypes.RequestToAttack,
+                senderId: user.id,
+                payload: { attackerId: this.character.id, defenderId: target.actor.id }
+              };
 
-            this.emit(msg);
+              this.emit(msg);
 
-            this.attackDialog = new CombatAttackDialog(this.character!, target.actor, {
-              onAttack: result => {
-                const newMsg: UserAttackMessage = {
-                  type: UserMessageTypes.Attack,
-                  payload: result
-                };
+              this.attackDialog = new CombatAttackDialog(this.character!, target.actor, {
+                onAttack: result => {
+                  const newMsg: UserAttackMessage = {
+                    type: UserMessageTypes.Attack,
+                    payload: result
+                  };
 
-                this.emit(newMsg);
-              }
-            });
+                  this.emit(newMsg);
+                }
+              });
+            }
           }
         }
-      });
+      );
     } else {
-      ABFDialogs.prompt("You don't have selected any character");
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.noSelectedActor.title'));
     }
   }
 
   private async manageCounterAttack(msg: GMCounterAttackMessage) {
     const { attackerId, defenderId } = msg.payload;
 
-    if (this.actor.id !== attackerId) {
+    if (this.character?.id !== attackerId) {
       return;
     }
 
-    const attacker = this.actor;
+    const attacker = this.character;
     const defender = this.findActorById(defenderId);
 
     this.attackDialog = new CombatAttackDialog(
@@ -158,7 +158,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
           this.emit(newMsg);
         }
       },
-      true
+      { allowed: true, counterAttackBonus: msg.payload.counterAttackBonus }
     );
   }
 
@@ -172,25 +172,23 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     } else {
       this.endCombat();
 
-      new PromptDialog(
-        `Your attack request have been rejected. ${
-          msg.payload.alreadyInACombat
-            ? 'GM is already involved in a combat, wait your turn and try to attack again.'
-            : ''
-        }`
-      );
+      if (msg.payload.alreadyInACombat) {
+        new PromptDialog(this.game.i18n.localize('macros.combat.dialog.error.alreadyInCombat.title'));
+      } else {
+        new PromptDialog(this.game.i18n.localize('macros.combat.dialog.error.requestRejected.title'));
+      }
     }
   }
 
   private async manageDefend(msg: GMAttackMessage) {
     const { result, attackerId, defenderId } = msg.payload;
 
-    if (this.actor.id !== defenderId) {
+    if (this.character?.id !== defenderId) {
       return;
     }
 
     const attacker = this.findActorById(attackerId);
-    const defender = this.actor;
+    const defender = this.character;
 
     try {
       this.defenseDialog = new CombatDefenseDialog(

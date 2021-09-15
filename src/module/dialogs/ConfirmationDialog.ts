@@ -20,8 +20,8 @@ export class ConfirmationDialog extends GenericDialog {
     <p class='body'>${body}</p>
 `,
       buttons: [
-        { id: 'on-confirm-button', fn: onConfirm, content: 'Accept' },
-        { id: 'on-cancel-button', fn: onCancel, content: 'Cancel' }
+        { id: 'on-cancel-button', fn: onCancel, content: (game as Game).i18n.localize('dialogs.cancel') },
+        { id: 'on-confirm-button', fn: onConfirm, content: (game as Game).i18n.localize('dialogs.accept') }
       ]
     });
   }

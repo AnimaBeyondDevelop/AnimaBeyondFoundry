@@ -21,6 +21,7 @@ import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDia
 import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
 import { ABFActor } from '../../../../actor/ABFActor';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
+import { canOwnerRecieveMessage } from './util/canOwnerRecieveMessage';
 
 export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNotification> {
   private combat: GMCombatDialog | undefined;
@@ -56,7 +57,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
 
       const critic = msg.payload.type === 'combat' ? msg.payload.values.criticSelected : undefined;
 
-      if (defender.hasPlayerOwner) {
+      if (canOwnerRecieveMessage(defender)) {
         const newMsg: GMAttackMessage = {
           type: GMMessageTypes.Attack,
           payload: { attackerId: attacker.id!, defenderId: defender.id!, result: msg.payload }
@@ -137,52 +138,56 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
     const selectedActor = this.game.scenes?.current?.tokens.find(t => (t.object as any)?._controlled)?.actor;
 
     if (targets.ids.length === 0) {
-      ABFDialogs.prompt('You have to select one target');
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.oneTarget.title'));
       return;
     }
 
     if (targets.ids.length > 1) {
-      ABFDialogs.prompt('You have to select only one target');
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.multipleTargets.title'));
       return;
     }
 
     const target = targets.values().next().value as Token;
 
     if (!target.actor?.id) {
-      ABFDialogs.prompt('Target do not have any actor associated');
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.withoutActor.title'));
       return;
     }
 
     if (selectedActor?.id) {
-      await ABFDialogs.confirm('Confirm attack', `Do you want to attack ${target.actor.name}?`, {
-        onConfirm: () => {
-          if (selectedActor?.id && target.actor?.id) {
-            this.combat = this.createNewCombat(selectedActor!, target.actor);
+      await ABFDialogs.confirm(
+        this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
+        this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: target.actor.name }),
+        {
+          onConfirm: () => {
+            if (selectedActor?.id && target.actor?.id) {
+              this.combat = this.createNewCombat(selectedActor!, target.actor);
 
-            this.attackDialog = new CombatAttackDialog(selectedActor!, target.actor, {
-              onAttack: result => {
-                this.combat?.updateAttackerData(result);
+              this.attackDialog = new CombatAttackDialog(selectedActor!, target.actor, {
+                onAttack: result => {
+                  this.combat?.updateAttackerData(result);
 
-                this.attackDialog?.close({ force: true });
-                this.attackDialog = undefined;
+                  this.attackDialog?.close({ force: true });
+                  this.attackDialog = undefined;
 
-                const newMsg: GMAttackMessage = {
-                  type: GMMessageTypes.Attack,
-                  payload: {
-                    attackerId: selectedActor!.id!,
-                    defenderId: target.actor!.id!,
-                    result
-                  }
-                };
+                  const newMsg: GMAttackMessage = {
+                    type: GMMessageTypes.Attack,
+                    payload: {
+                      attackerId: selectedActor!.id!,
+                      defenderId: target.actor!.id!,
+                      result
+                    }
+                  };
 
-                this.emit(newMsg);
-              }
-            });
+                  this.emit(newMsg);
+                }
+              });
+            }
           }
         }
-      });
+      );
     } else {
-      ABFDialogs.prompt("You don't have selected any character");
+      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.noSelectedActor.title'));
     }
   }
 
@@ -240,7 +245,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
       onClose: () => {
         this.endCombat();
       },
-      onCounterAttack: () => {
+      onCounterAttack: bonus => {
         this.endCombat();
 
         this.combat = new GMCombatDialog(
@@ -254,35 +259,40 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
               this.endCombat();
             }
           },
-          true
+          { isCounter: true, counterAttackBonus: bonus }
         );
 
-        if (defender.hasPlayerOwner) {
+        if (canOwnerRecieveMessage(defender)) {
           const newMsg: GMCounterAttackMessage = {
             type: GMMessageTypes.CounterAttack,
-            payload: { attackerId: defender.id!, defenderId: attacker.id! }
+            payload: { attackerId: defender.id!, defenderId: attacker.id!, counterAttackBonus: bonus }
           };
 
           this.emit(newMsg);
         } else {
-          this.attackDialog = new CombatAttackDialog(defender, attacker, {
-            onAttack: result => {
-              this.attackDialog?.close({ force: true });
+          this.attackDialog = new CombatAttackDialog(
+            defender,
+            attacker,
+            {
+              onAttack: result => {
+                this.attackDialog?.close({ force: true });
 
-              this.attackDialog = undefined;
+                this.attackDialog = undefined;
 
-              if (this.combat) {
-                this.combat.updateAttackerData(result);
+                if (this.combat) {
+                  this.combat.updateAttackerData(result);
 
-                const newMsg: GMAttackMessage = {
-                  type: GMMessageTypes.Attack,
-                  payload: { attackerId: defender.id!, defenderId: attacker.id!, result }
-                };
+                  const newMsg: GMAttackMessage = {
+                    type: GMMessageTypes.Attack,
+                    payload: { attackerId: defender.id!, defenderId: attacker.id!, result }
+                  };
 
-                this.emit(newMsg);
+                  this.emit(newMsg);
+                }
               }
-            }
-          });
+            },
+            { counterAttackBonus: bonus }
+          );
         }
       }
     });

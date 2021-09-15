@@ -491,8 +491,25 @@
               inputValue=this.calculations.damage
             }}
           {{/if}}
+          {{#if this.calculations.canCounter}}
+            {{#unless this.ui.isCounter}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="counterattack-bonus"
+                title=(localize 'macros.combat.dialog.counterAttackBonus.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.calculations.counterAttackBonus
+              }}
+            {{/unless}}
+          {{/if}}
         </div>
         <div class='ready-buttons'>
+          {{#if (or this.calculations.canCounter (is 'gt' this.calculations.damage 0))}}
+            <button class='abf-button show-results'>
+              {{localize 'macros.combat.dialog.showResultsButton.title'}}
+            </button>
+          {{/if}}
           {{#if this.calculations.canCounter}}
             {{#unless this.ui.isCounter}}
               <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}' class='abf-button make-counter'>
