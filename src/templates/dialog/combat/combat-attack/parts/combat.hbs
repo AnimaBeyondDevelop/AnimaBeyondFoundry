@@ -36,7 +36,7 @@
     inputName='attacker.combat.weaponUsed'
   }}
     {{#each this.attacker.actor.data.data.combat.weapons}}
-      <option {{#if (is "eq" this._id ../this.attacker.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}} with {{this.data.attack.value}} attack</option>
+      <option {{#if (is "eq" this._id ../this.attacker.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{localize 'macros.combat.dialog.weaponRow.title' name=this.name value=this.data.attack.value}}</option>
     {{/each}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{/if}}

@@ -25,6 +25,14 @@
   border-radius: 0.5rem;
   overflow: hidden;
 
+  &.no-close {
+    .window-header {
+      .header-button {
+        display: none !important;
+      }
+    }
+  }
+
   .window-header {
     width: 100%;
     background-color: $red;

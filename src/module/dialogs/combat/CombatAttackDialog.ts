@@ -179,14 +179,14 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog combat-attack-dialog'],
+      classes: ['abf-dialog combat-attack-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: null,
       height: null,
       resizable: true,
       template: Templates.Dialog.Combat.CombatAttackDialog.main,
-      title: 'Attacking',
+      title: (game as Game).i18n.localize('macros.combat.dialog.modal.attack.title'),
       tabs: [
         {
           navSelector: '.sheet-tabs',

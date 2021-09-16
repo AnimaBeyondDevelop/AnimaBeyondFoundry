@@ -159,14 +159,14 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog combat-defense-dialog'],
+      classes: ['abf-dialog combat-defense-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: 525,
       height: 240,
       resizable: true,
       template: Templates.Dialog.Combat.CombatDefenseDialog.main,
-      title: 'Defending',
+      title: (game as Game).i18n.localize('macros.combat.dialog.defending.defend.title'),
       tabs: [
         {
           navSelector: '.sheet-tabs',
@@ -252,8 +252,8 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
       if (spellUsed) {
         const magicProjection =
           magicProjectionType === 'normal'
-            ? this.attackerActor.data.data.mystic.magicProjection.final.value
-            : this.attackerActor.data.data.mystic.magicProjection.imbalance.defensive.final.value;
+            ? this.defenderActor.data.data.mystic.magicProjection.final.value
+            : this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.final.value;
 
         const roll = new ABFFoundryRoll(`1d100xa + ${modifier ?? 0}`);
         roll.roll();
