@@ -18,7 +18,7 @@ export const NoteItemConfig: ABFItemConfig<NoteDataSource, NoteChanges> = {
   },
   selectors: {
     addItemButtonSelector: 'add-note',
-    containerSelector: '#notes-context-menu-container',
+    containerSelector: '#_notes-context-menu-container',
     rowSelector: '.note-row'
   },
   onCreate: async (actor): Promise<void> => {
