@@ -1,5 +1,5 @@
 import { ABFActorDataSourceData } from '../../../../../types/Actor';
-import { ArmorDataSource } from '../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource, ArmorLocation } from '../../../../../types/combat/ArmorItemConfig';
 
 const calculateTA = (tas: number[]): number => {
   if (tas.length === 0) return 0;
@@ -26,7 +26,9 @@ export const mutateTotalArmor = (data: ABFActorDataSourceData) => {
     }
   };
 
-  const equippedArmors = (data.combat.armors as ArmorDataSource[]).filter(armor => armor.data.equipped?.value);
+  const equippedArmors = (data.combat.armors as ArmorDataSource[]).filter(
+    armor => armor.data.equipped.value && armor.data.localization.value !== ArmorLocation.HEAD
+  );
 
   if (equippedArmors.length > 0) {
     totalArmor.at.cold.value = calculateTA(equippedArmors.map(armor => armor.data.cold.final.value));
