@@ -1,13 +1,12 @@
-import { ABFActor } from '../../actor/ABFActor';
 import { calculateCombatResult } from '../../macros/functions/damageCalculatorMacro';
 import { UserCombatAttackResult } from './CombatAttackDialog';
 import { UserCombatDefenseResult } from './CombatDefenseDialog';
 import { WeaponDataSource } from '../../types/combat/WeaponItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
-import { Log } from '../../../utils/Log';
 import { Templates } from '../../utils/constants';
 import CloseOptions = FormApplication.CloseOptions;
+import { ABFActor } from '../../actor/ABFActor';
 
 type GMCombatDialogData = {
   ui: {
@@ -15,6 +14,7 @@ type GMCombatDialogData = {
   };
   attacker: {
     actor: ABFActor;
+    token: TokenDocument;
     isReady: boolean;
     customModifier: number;
     counterAttackBonus?: number;
@@ -26,6 +26,7 @@ type GMCombatDialogData = {
   };
   defender: {
     actor: ABFActor;
+    token: TokenDocument;
     isReady: boolean;
     customModifier: number;
     result?: UserCombatDefenseResult & {
@@ -35,13 +36,13 @@ type GMCombatDialogData = {
   };
   calculations?:
     | {
-        winner: ABFActor;
+        winner: TokenDocument;
         canCounter: false;
         difference: number;
         damage?: number;
       }
     | {
-        winner: ABFActor;
+        winner: TokenDocument;
         canCounter: true;
         difference: number;
         counterAttackBonus: number;
@@ -49,32 +50,39 @@ type GMCombatDialogData = {
 };
 
 const getInitialData = (
-  attacker: ABFActor,
-  defender: ABFActor,
+  attacker: TokenDocument,
+  defender: TokenDocument,
   options: { isCounter?: boolean; counterAttackBonus?: number } = {}
-): GMCombatDialogData => ({
-  ui: {
-    isCounter: options.isCounter ?? false
-  },
-  attacker: {
-    actor: attacker,
-    customModifier: 0,
-    counterAttackBonus: options.counterAttackBonus,
-    isReady: false
-  },
-  defender: {
-    actor: defender,
-    customModifier: 0,
-    isReady: false
-  }
-});
+): GMCombatDialogData => {
+  const attackerActor = attacker.actor!;
+  const defenderActor = defender.actor!;
+
+  return {
+    ui: {
+      isCounter: options.isCounter ?? false
+    },
+    attacker: {
+      token: attacker,
+      actor: attackerActor,
+      customModifier: 0,
+      counterAttackBonus: options.counterAttackBonus,
+      isReady: false
+    },
+    defender: {
+      token: defender,
+      actor: defenderActor,
+      customModifier: 0,
+      isReady: false
+    }
+  };
+};
 
 export class GMCombatDialog extends FormApplication<FormApplication.Options, GMCombatDialogData> {
   private data: GMCombatDialogData;
 
   constructor(
-    attacker: ABFActor,
-    defender: ABFActor,
+    attacker: TokenDocument,
+    defender: TokenDocument,
     private hooks: {
       onClose: () => Promise<void> | void;
       onCounterAttack: (bonus: number) => Promise<void> | void;
@@ -100,12 +108,20 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     });
   }
 
-  get attacker() {
-    return this.data.attacker.actor;
+  get attackerActor() {
+    return this.data.attacker.token.actor!;
   }
 
-  get defender() {
-    return this.data.defender.actor;
+  get defenderActor() {
+    return this.data.defender.token.actor!;
+  }
+
+  get attackerToken() {
+    return this.data.attacker.token;
+  }
+
+  get defenderToken() {
+    return this.data.defender.token;
   }
 
   async close(options: CloseOptions & { executeHook: boolean } = { executeHook: true }): Promise<void> {
@@ -135,7 +151,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
       this.applyValuesIfBeAble();
 
       if (!this.data.calculations?.canCounter && this.canApplyDamage) {
-        this.defender.applyDamage(this.data.calculations!.damage!);
+        this.defenderActor.applyDamage(this.data.calculations!.damage!);
       }
 
       this.close();
@@ -145,8 +161,8 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
       this.applyValuesIfBeAble();
 
       const data: Record<string, any> = {
-        attacker: this.attacker,
-        defender: this.defender,
+        attacker: this.attackerActor,
+        defender: this.defenderActor,
         result: this.data.calculations?.difference,
         canCounter: this.data.calculations?.canCounter
       };
@@ -178,11 +194,11 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
 
   private applyValuesIfBeAble() {
     if (this.data.attacker.result?.type === 'combat') {
-      this.attacker.applyFatigue(this.data.attacker.result.values.fatigueUsed);
+      this.attackerActor.applyFatigue(this.data.attacker.result.values.fatigueUsed);
     }
 
     if (this.data.defender.result?.type === 'combat') {
-      this.defender.applyFatigue(this.data.defender.result.values.fatigue);
+      this.defenderActor.applyFatigue(this.data.defender.result.values.fatigue);
     }
   }
 
@@ -190,20 +206,19 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     this.data.attacker.result = result;
 
     if (result.type === 'combat') {
-      const weapons = this.attacker.data.data.combat.weapons as WeaponDataSource[];
+      const weapons = this.attackerActor.data.data.combat.weapons as WeaponDataSource[];
 
       this.data.attacker.result.weapon = weapons.find(w => w._id === result.values.weaponUsed)!;
     }
 
     if (result.type === 'mystic') {
-      const spells = this.attacker.data.data.mystic.spells as SpellDataSource[];
+      const spells = this.attackerActor.data.data.mystic.spells as SpellDataSource[];
 
-      Log.log(spells, result.values.spellUsed);
       this.data.attacker.result.spell = spells.find(w => w._id === result.values.spellUsed)!;
     }
 
     if (result.type === 'psychic') {
-      const powers = this.attacker.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
+      const powers = this.attackerActor.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
 
       this.data.attacker.result.power = powers.find(w => w._id === result.values.powerUsed)!;
     }
@@ -215,13 +230,13 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     this.data.defender.result = result;
 
     if (result.type === 'mystic') {
-      const spells = this.defender.data.data.mystic.spells as SpellDataSource[];
+      const spells = this.defenderActor.data.data.mystic.spells as SpellDataSource[];
 
       this.data.defender.result.spell = spells.find(w => w._id === result.values.spellUsed)!;
     }
 
     if (result.type === 'psychic') {
-      const powers = this.defender.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
+      const powers = this.defenderActor.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
 
       this.data.defender.result.power = powers.find(w => w._id === result.values.powerUsed)!;
     }
@@ -240,7 +255,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
       const attackerTotal = attacker.result.values.total + this.data.attacker.customModifier;
       const defenderTotal = defender.result.values.total + this.data.defender.customModifier;
 
-      const winner = attackerTotal > defenderTotal ? attacker.actor : defender.actor;
+      const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       if (attacker.result.type === 'combat' && defender.result.type === 'combat') {
         const combatResult = calculateCombatResult(

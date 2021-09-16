@@ -1,6 +1,5 @@
 import { Log } from '../../../../../utils/Log';
 import { WSCombatManager } from '../WSCombatManager';
-import { ABFActor } from '../../../../actor/ABFActor';
 import {
   GMAttackMessage,
   GMCounterAttackMessage,
@@ -19,6 +18,9 @@ import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialo
 import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
+import { getTargetToken } from '../util/getTargetToken';
+import { assertCurrentScene } from '../util/assertCurrentScene';
+import { assertGMActive } from '../util/assertGMActive';
 
 export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWSUserNotification> {
   private attackDialog: CombatAttackDialog | undefined;
@@ -47,7 +49,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     }
   }
 
-  private endCombat() {
+  endCombat() {
     if (this.attackDialog) {
       this.attackDialog.close({ force: true });
 
@@ -65,85 +67,81 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     this.endCombat();
   }
 
-  get user() {
+  get user(): User {
     return this.game.user!;
   }
 
-  get character(): ABFActor | undefined {
-    const actor = this.game.scenes?.active?.tokens.find(t => t.data.actorId === this.user.character?.id)?.actor;
+  get token(): TokenDocument {
+    if (!this.user.character?.id) {
+      const message = this.game.i18n.localize('macros.combat.dialog.error.noSelectedActor.title');
+      ABFDialogs.prompt(message);
 
-    if (actor) return actor;
+      throw new Error(message);
+    }
 
-    return undefined;
+    const token = this.game.scenes?.current?.tokens.find(t => t.data.actorId === this.user.character!.id);
+
+    if (!token?.id) {
+      const message = this.game.i18n.localize('macros.combat.dialog.error.noTokenInCurrentScene.title');
+      ABFDialogs.prompt(message);
+
+      throw new Error(message);
+    }
+
+    return token;
+  }
+
+  private isMyToken(tokenId): boolean {
+    return this.token.id === tokenId;
   }
 
   public async sendAttackRequest() {
+    assertGMActive();
+    assertCurrentScene();
+
     const { user } = this.game;
 
     if (!user) return;
 
     const { targets } = user;
 
-    if (targets.ids.length === 0) {
-      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.oneTarget.title'));
-      return;
-    }
+    const targetToken = getTargetToken(this.token, targets);
 
-    if (targets.ids.length > 1) {
-      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.multipleTargets.title'));
-      return;
-    }
-
-    const target = targets.values().next().value as Token;
-
-    if (!target.actor?.id) {
-      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.withoutActor.title'));
-      return;
-    }
-
-    if (this.character?.id) {
-      await ABFDialogs.confirm(
-        this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
-        this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: target.actor.name }),
-        {
-          onConfirm: () => {
-            if (this.character?.id && target.actor?.id) {
-              const msg: UserRequestToAttackMessage = {
-                type: UserMessageTypes.RequestToAttack,
-                senderId: user.id,
-                payload: { attackerId: this.character.id, defenderId: target.actor.id }
-              };
-
-              this.emit(msg);
-
-              this.attackDialog = new CombatAttackDialog(this.character!, target.actor, {
-                onAttack: result => {
-                  const newMsg: UserAttackMessage = {
-                    type: UserMessageTypes.Attack,
-                    payload: result
-                  };
-
-                  this.emit(newMsg);
-                }
-              });
-            }
+    await ABFDialogs.confirm(
+      this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
+      this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: targetToken.name }),
+      {
+        onConfirm: () => {
+          if (this.token?.id && targetToken.id) {
+            const msg: UserRequestToAttackMessage = {
+              type: UserMessageTypes.RequestToAttack,
+              senderId: user.id,
+              payload: { attackerTokenId: this.token.id, defenderTokenId: targetToken.id }
+            };
+            this.emit(msg);
+            this.attackDialog = new CombatAttackDialog(this.token!, targetToken!, {
+              onAttack: result => {
+                const newMsg: UserAttackMessage = {
+                  type: UserMessageTypes.Attack,
+                  payload: result
+                };
+                this.emit(newMsg);
+              }
+            });
           }
         }
-      );
-    } else {
-      ABFDialogs.prompt(this.game.i18n.localize('macros.combat.dialog.error.noSelectedActor.title'));
-    }
+      }
+    );
   }
-
   private async manageCounterAttack(msg: GMCounterAttackMessage) {
-    const { attackerId, defenderId } = msg.payload;
+    const { attackerTokenId, defenderTokenId } = msg.payload;
 
-    if (this.character?.id !== attackerId) {
+    if (!this.isMyToken(attackerTokenId)) {
       return;
     }
 
-    const attacker = this.character;
-    const defender = this.findActorById(defenderId);
+    const attacker = this.token;
+    const defender = this.findTokenById(defenderTokenId);
 
     this.attackDialog = new CombatAttackDialog(
       attacker,
@@ -181,19 +179,19 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
   }
 
   private async manageDefend(msg: GMAttackMessage) {
-    const { result, attackerId, defenderId } = msg.payload;
+    const { result, attackerTokenId, defenderTokenId } = msg.payload;
 
-    if (this.character?.id !== defenderId) {
+    if (!this.isMyToken(defenderTokenId)) {
       return;
     }
 
-    const attacker = this.findActorById(attackerId);
-    const defender = this.character;
+    const attacker = this.findTokenById(attackerTokenId);
+    const defender = this.token;
 
     try {
       this.defenseDialog = new CombatDefenseDialog(
         {
-          actor: attacker,
+          token: attacker,
           attackType: result.type,
           critic: result.type === 'combat' ? result.values.criticSelected : undefined
         },

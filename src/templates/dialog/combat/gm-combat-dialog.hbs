@@ -481,7 +481,7 @@
             disabled=true
             inputValue=this.calculations.difference
           }}
-          {{#if (and (not this.calculations.canCounter) this.calculations.damage)}}
+          {{#if (and (not this.calculations.canCounter) this.calculations.damage (is 'gt' this.calculations.damage 0))}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="damage-deal"

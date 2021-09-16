@@ -1,6 +1,6 @@
-import { ABFActor } from '../../../../../actor/ABFActor';
+import { ABFActor } from '../../../../actor/ABFActor';
 
-export const canOwnerRecieveMessage = (actor: ABFActor): boolean => {
+export const canOwnerReceiveMessage = (actor: ABFActor): boolean => {
   const tgame = game as Game;
 
   if (!actor.hasPlayerOwner || !actor.id) {
@@ -9,5 +9,5 @@ export const canOwnerRecieveMessage = (actor: ABFActor): boolean => {
 
   const user = tgame.users?.filter(e => !!e.character).find(e => e.character?.id === actor.id);
 
-  return !!(user && user.active);
+  return !!user?.active;
 };

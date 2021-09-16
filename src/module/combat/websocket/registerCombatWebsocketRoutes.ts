@@ -11,7 +11,14 @@ export const registerCombatWebsocketRoutes = () => {
     const combatManager = new WSGMCombatManager(tgame);
 
     window.Websocket = {
-      sendAttack: () => combatManager.sendAttack()
+      sendAttack: async () => {
+        try {
+          combatManager.sendAttack();
+        } catch (e) {
+          Log.error(e);
+          combatManager.endCombat();
+        }
+      }
     };
   } else {
     Log.log('Initialized Combat Manager as User');
@@ -19,7 +26,14 @@ export const registerCombatWebsocketRoutes = () => {
     const combatManager = new WSUserCombatManager(tgame);
 
     window.Websocket = {
-      sendAttackRequest: () => combatManager.sendAttackRequest()
+      sendAttackRequest: async () => {
+        try {
+          combatManager.sendAttackRequest();
+        } catch (e) {
+          Log.error(e);
+          combatManager.endCombat();
+        }
+      }
     };
   }
 };

@@ -1,10 +1,10 @@
-import { ABFActor } from '../../actor/ABFActor';
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { UserCombatAttackResult } from './CombatAttackDialog';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
+import { ABFActor } from '../../actor/ABFActor';
 
 type SpecialField = {
   special: number;
@@ -18,11 +18,13 @@ export type UserCombatDefenseDialogData = {
   };
   attacker: {
     actor: ABFActor;
+    token: TokenDocument;
     attackType: UserCombatAttackResult['type'];
     critic?: WeaponCritic;
   };
   defender: {
     actor: ABFActor;
+    token: TokenDocument;
     showRoll: boolean;
     combat: {
       modifier: number;
@@ -89,23 +91,28 @@ export type UserCombatDefenseResult =
   | UserCombatDefensePsychicResult;
 
 const getInitialData = (
-  attacker: { actor: ABFActor; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
-  defender: ABFActor
+  attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
+  defender: TokenDocument
 ): UserCombatDefenseDialogData => {
   const isGM = !!(game as Game).user?.isGM;
+
+  const attackerActor = attacker.token.actor!;
+  const defenderActor = defender.actor!;
 
   return {
     ui: {
       isGM,
-      hasFatiguePoints: defender.data.data.characteristics.secondaries.fatigue.value > 0
+      hasFatiguePoints: defenderActor.data.data.characteristics.secondaries.fatigue.value > 0
     },
     attacker: {
-      actor: attacker.actor,
+      token: attacker.token,
+      actor: attackerActor,
       attackType: attacker.attackType,
       critic: attacker.critic
     },
     defender: {
-      actor: defender,
+      token: defender,
+      actor: defenderActor,
       showRoll: !isGM,
       combat: {
         fatigue: 0,
@@ -124,8 +131,8 @@ const getInitialData = (
       },
       psychic: {
         modifier: 0,
-        psychicPotential: { special: 0, final: defender.data.data.psychic.psychicPotential.final.value },
-        psychicProjection: defender.data.data.psychic.psychicProjection.final.value,
+        psychicPotential: { special: 0, final: defenderActor.data.data.psychic.psychicPotential.final.value },
+        psychicProjection: defenderActor.data.data.psychic.psychicProjection.final.value,
         powerUsed: undefined
       }
     },
@@ -137,8 +144,8 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
   private data: UserCombatDefenseDialogData;
 
   constructor(
-    attacker: { actor: ABFActor; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
-    defender: ABFActor,
+    attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
+    defender: TokenDocument,
     private hooks: {
       onDefense: (attackValues: UserCombatDefenseResult) => void;
     }
@@ -170,12 +177,12 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
     });
   }
 
-  get attacker() {
-    return this.data.attacker.actor;
+  get attackerActor() {
+    return this.data.attacker.token.actor!;
   }
 
-  get defender() {
-    return this.data.defender.actor;
+  get defenderActor() {
+    return this.data.defender.token.actor!;
   }
 
   async close(options?: FormApplication.CloseOptions): Promise<void> {
@@ -197,8 +204,8 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
 
       const value =
         e.currentTarget.dataset.type === 'dodge'
-          ? this.defender.data.data.combat.dodge.final.value
-          : this.defender.data.data.combat.block.final.value;
+          ? this.defenderActor.data.data.combat.dodge.final.value
+          : this.defenderActor.data.data.combat.block.final.value;
 
       const roll = new ABFFoundryRoll(
         `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${defenseCount ?? 0} + ${value}`
@@ -210,11 +217,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
         const { i18n } = game as Game;
 
         const flavor = i18n.format(`macros.combat.dialog.physicalDefense.${type}.title`, {
-          target: this.attacker.name
+          target: this.attackerActor.name
         });
 
         roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ actor: this.defender }),
+          speaker: ChatMessage.getSpeaker({ actor: this.defenderActor }),
           flavor
         });
       }
@@ -245,8 +252,8 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
       if (spellUsed) {
         const magicProjection =
           magicProjectionType === 'normal'
-            ? this.attacker.data.data.mystic.magicProjection.final.value
-            : this.attacker.data.data.mystic.magicProjection.imbalance.defensive.final.value;
+            ? this.attackerActor.data.data.mystic.magicProjection.final.value
+            : this.attackerActor.data.data.mystic.magicProjection.imbalance.defensive.final.value;
 
         const roll = new ABFFoundryRoll(`1d100xa + ${modifier ?? 0}`);
         roll.roll();
@@ -254,17 +261,17 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
         if (this.data.defender.showRoll) {
           const { i18n } = game as Game;
 
-          const spells = this.defender.data.data.mystic.spells as SpellDataSource[];
+          const spells = this.defenderActor.data.data.mystic.spells as SpellDataSource[];
 
           const spell = spells.find(w => w._id === spellUsed)!;
 
           const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
             spell: spell.name,
-            target: this.attacker.name
+            target: this.attackerActor.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.defender }),
+            speaker: ChatMessage.getSpeaker({ actor: this.defenderActor }),
             flavor
           });
         }
@@ -299,17 +306,17 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
         if (this.data.defender.showRoll) {
           const { i18n } = game as Game;
 
-          const powers = this.defender.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
+          const powers = this.defenderActor.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
 
           const power = powers.find(w => w._id === powerUsed)!;
 
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
             power: power.name,
-            target: this.attacker.name
+            target: this.attackerActor.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.defender }),
+            speaker: ChatMessage.getSpeaker({ actor: this.defenderActor }),
             flavor
           });
         }
@@ -335,36 +342,36 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
     });
   }
   getData(): Promise<UserCombatDefenseDialogData> | UserCombatDefenseDialogData {
-    this.data.ui.hasFatiguePoints = this.defender.data.data.characteristics.secondaries.fatigue.value > 0;
+    this.data.ui.hasFatiguePoints = this.defenderActor.data.data.characteristics.secondaries.fatigue.value > 0;
 
     this.data.defender.psychic.psychicPotential.final =
       this.data.defender.psychic.psychicPotential.special +
-      this.defender.data.data.psychic.psychicPotential.final.value;
+      this.defenderActor.data.data.psychic.psychicPotential.final.value;
 
     let at;
 
     if (this.data.attacker.attackType === 'combat') {
       switch (this.data.attacker.critic) {
         case WeaponCritic.CUT:
-          at = this.defender.data.data.combat.totalArmor.at.cut.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.cut.value;
           break;
         case WeaponCritic.IMPACT:
-          at = this.defender.data.data.combat.totalArmor.at.impact.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.impact.value;
           break;
         case WeaponCritic.THRUST:
-          at = this.defender.data.data.combat.totalArmor.at.thrust.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.thrust.value;
           break;
         case WeaponCritic.HEAT:
-          at = this.defender.data.data.combat.totalArmor.at.heat.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.heat.value;
           break;
         case WeaponCritic.ELECTRICITY:
-          at = this.defender.data.data.combat.totalArmor.at.electricity.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.electricity.value;
           break;
         case WeaponCritic.COLD:
-          at = this.defender.data.data.combat.totalArmor.at.cold.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.cold.value;
           break;
         case WeaponCritic.ENERGY:
-          at = this.defender.data.data.combat.totalArmor.at.energy.value;
+          at = this.defenderActor.data.data.combat.totalArmor.at.energy.value;
           break;
         default:
           at = undefined;

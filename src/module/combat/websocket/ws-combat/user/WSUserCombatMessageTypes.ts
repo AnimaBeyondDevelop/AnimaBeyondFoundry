@@ -12,8 +12,8 @@ export type UserRequestToAttackMessage = {
   type: UserMessageTypes.RequestToAttack;
   senderId: string;
   payload: {
-    attackerId: string;
-    defenderId: string;
+    attackerTokenId: string;
+    defenderTokenId: string;
   };
 };
 

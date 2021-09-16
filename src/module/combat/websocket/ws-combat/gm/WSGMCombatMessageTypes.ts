@@ -11,8 +11,8 @@ export enum GMMessageTypes {
 export type GMAttackMessage = {
   type: GMMessageTypes.Attack;
   payload: {
-    attackerId: string;
-    defenderId: string;
+    attackerTokenId: string;
+    defenderTokenId: string;
     result: UserCombatAttackResult;
   };
 };
@@ -20,8 +20,8 @@ export type GMAttackMessage = {
 export type GMCounterAttackMessage = {
   type: GMMessageTypes.CounterAttack;
   payload: {
-    attackerId: string;
-    defenderId: string;
+    attackerTokenId: string;
+    defenderTokenId: string;
     counterAttackBonus?: number;
   };
 };
