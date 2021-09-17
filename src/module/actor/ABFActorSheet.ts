@@ -10,6 +10,7 @@ import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObje
 import { ABFItems } from '../items/ABFItems';
 import { ABFConfig } from '../ABFConfig';
 import { ABFActorDataSourceData } from '../types/Actor';
+import { ABFDialogs } from '../dialogs/ABFDialogs';
 
 export default class ABFActorSheet extends ActorSheet {
   i18n: Localization;
@@ -148,17 +149,6 @@ export default class ABFActorSheet extends ActorSheet {
         item.onCreate(this.actor);
       });
     }
-
-    html.find('[data-on-click="delete-item"]').click(e => {
-      const id = e.currentTarget.dataset.itemId;
-      if (id) {
-        WorldCollection.instance.delete(id);
-      } else {
-        console.warn(
-          'Trying to delete a dynamic item but data-item-id was not set to the button. Cant delete the item.'
-        );
-      }
-    });
   }
 
   async _onRoll(event) {
@@ -207,7 +197,7 @@ export default class ABFActorSheet extends ActorSheet {
 
     if (!itemConfig.isInternal && itemConfig.hasSheet) {
       otherItems.push({
-        name: 'Editar',
+        name: this.i18n.localize('contextualMenu.common.options.edit'),
         icon: '<i class="fas fa-edit fa-fw"></i>',
         callback: target => {
           const { itemId } = target[0].dataset;
@@ -228,6 +218,7 @@ export default class ABFActorSheet extends ActorSheet {
     }
 
     return new ContextMenu($(containerSelector), rowSelector, [
+      ...otherItems,
       {
         name: deleteRowMessage,
         icon: '<i class="fas fa-trash fa-fw"></i>',
@@ -247,25 +238,32 @@ export default class ABFActorSheet extends ActorSheet {
               throw new Error('Data id missing. Are you sure to set data-item-id to rows?');
             }
 
-            if (fieldPath) {
-              if (this.actor.getEmbeddedDocument('Item', id)) {
-                this.actor.deleteEmbeddedDocuments('Item', [id]);
-              } else {
-                let items = getFieldValueFromPath<any[]>(this.actor.data.data, fieldPath);
+            ABFDialogs.confirm(
+              this.i18n.localize('dialogs.items.delete.title'),
+              this.i18n.localize('dialogs.items.delete.body'),
+              {
+                onConfirm: () => {
+                  if (fieldPath) {
+                    if (this.actor.getEmbeddedDocument('Item', id)) {
+                      this.actor.deleteEmbeddedDocuments('Item', [id]);
+                    } else {
+                      let items = getFieldValueFromPath<any[]>(this.actor.data.data, fieldPath);
 
-                items = items.filter(item => item._id !== id);
+                      items = items.filter(item => item._id !== id);
 
-                const dataToUpdate: any = {
-                  data: getUpdateObjectFromPath(items, fieldPath)
-                };
+                      const dataToUpdate: any = {
+                        data: getUpdateObjectFromPath(items, fieldPath)
+                      };
 
-                this.actor.update(dataToUpdate);
+                      this.actor.update(dataToUpdate);
+                    }
+                  }
+                }
               }
-            }
+            );
           }
         }
-      },
-      ...otherItems
+      }
     ]);
   };
 }
