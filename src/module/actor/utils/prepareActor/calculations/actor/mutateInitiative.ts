@@ -18,6 +18,9 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
 
   const equippedShield = equippedWeapons.find(weapon => weapon.data.isShield.value);
 
+  // We rest 20 because people is used to put as base unarmed initiative
+  initiative.final.value -= 20;
+
   if (equippedShield) {
     if (equippedShield.data.size.value === WeaponSize.SMALL) {
       initiative.final.value -= 15;
