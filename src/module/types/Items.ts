@@ -127,3 +127,8 @@ export type DerivedField = {
   base: { value: number };
   final: { value: number };
 };
+
+export type SpecialField = {
+  special: { value: number };
+  final: { value: number };
+};

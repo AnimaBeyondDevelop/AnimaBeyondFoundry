@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
+import { ABFItemConfig, DerivedField, ItemChanges, SpecialField } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
 import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
 
@@ -62,8 +62,8 @@ export type WeaponItemData = {
   special: { value: string };
   integrity: DerivedField;
   breaking: DerivedField;
-  attack: { value: number };
-  block: { value: number };
+  attack: SpecialField;
+  block: SpecialField;
   damage: DerivedField;
   initiative: DerivedField;
   presence: DerivedField;
@@ -109,8 +109,14 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
     base: { value: 0 },
     final: { value: 0 }
   },
-  attack: { value: 0 },
-  block: { value: 0 },
+  attack: {
+    special: { value: 0 },
+    final: { value: 0 }
+  },
+  block: {
+    special: { value: 0 },
+    final: { value: 0 }
+  },
   damage: {
     base: { value: 0 },
     final: { value: 0 }

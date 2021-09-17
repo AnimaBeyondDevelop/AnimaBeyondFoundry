@@ -89,7 +89,12 @@
       box-shadow: $card-box-shadow;
 
       .attack,
-      .block,
+      .block {
+        .input {
+          border: 1px white solid;
+        }
+      }
+
       .damage,
       .integrity,
       .breaking,

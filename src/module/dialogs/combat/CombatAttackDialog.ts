@@ -227,7 +227,7 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
       const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.data.attacker.combat;
 
       if (typeof damage !== 'undefined') {
-        const attack = weapon ? weapon.data.attack.value : this.attackerActor.data.data.combat.attack.final.value;
+        const attack = weapon ? weapon.data.attack.final.value : this.attackerActor.data.data.combat.attack.final.value;
 
         const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
 

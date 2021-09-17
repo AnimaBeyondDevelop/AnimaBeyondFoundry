@@ -145,22 +145,30 @@
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="attack"
-                disabled=true
                 title=(localize "anima.ui.combat.weapons.attack.title")
-                rollable=true
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.attack.roll.message") this.name)
-                inputName=(concat "data.dynamic.weapons." this._id ".data.attack.value")
-                inputValue=this.data.attack.value
+                inputName=(concat "data.dynamic.weapons." this._id ".data.attack.special.value")
+                inputValue=this.data.attack.special.value
+                rollable=true
+                rollSecondaryInput=true
+                hasSecondaryInput=true
+                addTooltips=true
+                disableSecondaryInput=true
+                secondaryInputValue=this.data.attack.final.value
               }}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="block"
-                disabled=true
                 title=(localize "anima.ui.combat.weapons.block.title")
-                rollable=true
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.block.roll.message") this.name)
-                inputName=(concat "data.dynamic.weapons." this._id ".data.block.value")
-                inputValue=this.data.block.value
+                inputName=(concat "data.dynamic.weapons." this._id ".data.block.special.value")
+                inputValue=this.data.block.special.value
+                rollable=true
+                rollSecondaryInput=true
+                hasSecondaryInput=true
+                addTooltips=true
+                disableSecondaryInput=true
+                secondaryInputValue=this.data.block.final.value
               }}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

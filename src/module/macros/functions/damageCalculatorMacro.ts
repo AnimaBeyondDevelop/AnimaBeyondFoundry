@@ -36,7 +36,7 @@ const openDialog = async (): Promise<{ [key: string]: unknown }> => {
   });
 };
 
-const calculateDamage = (attack, defense, at, damage) => {
+const calculateDamage = (attack: number, defense: number, at: number, damage: number) => {
   const damageRoundedToCeil5Multiplier = Math.ceil(damage / 10) * 10;
 
   return (damageRoundedToCeil5Multiplier * (attack - (defense + at * 10 + 20))) / 100;
@@ -44,11 +44,11 @@ const calculateDamage = (attack, defense, at, damage) => {
 
 const roundTo5Multiples = x => Math.round(x / 5) * 5;
 
-const calculateCounterAttackBonus = (attack, defense) => {
+const calculateCounterAttackBonus = (attack: number, defense: number) => {
   return roundTo5Multiples((defense - attack) / 2);
 };
 
-const canCounterAttack = (attack, defense) => defense > attack;
+const canCounterAttack = (attack: number, defense: number) => defense > attack;
 
 export const calculateCombatResult = (
   attack: number,

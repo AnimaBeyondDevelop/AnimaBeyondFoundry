@@ -19,8 +19,8 @@ export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
       return weapon;
     })
     .map(weapon => {
-      weapon.data.attack.value = calculateWeaponAttack(weapon, data);
-      weapon.data.block.value = calculateWeaponBlock(weapon, data);
+      weapon.data.attack.final.value = calculateWeaponAttack(weapon, data);
+      weapon.data.block.final.value = calculateWeaponBlock(weapon, data);
       weapon.data.initiative.final.value = calculateWeaponInitiative(weapon);
       weapon.data.damage.final.value = calculateWeaponDamage(weapon, data);
       weapon.data.integrity.final.value = calculateWeaponIntegrity(weapon);
