@@ -28,11 +28,9 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
     }
   }
 
-  if (firstTwoWeapons.length === 0) {
-    initiative.final.value += 20;
-  } else if (firstTwoWeapons.length === 1) {
+  if (firstTwoWeapons.length === 1) {
     initiative.final.value += firstTwoWeapons[0].data.initiative.final.value;
-  } else {
+  } else if (firstTwoWeapons.length === 2) {
     const leftWeapon = firstTwoWeapons[0].data;
     const rightWeapon = firstTwoWeapons[1].data;
 
