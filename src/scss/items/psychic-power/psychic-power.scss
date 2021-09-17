@@ -1,0 +1,108 @@
+@import '../../variable';
+
+.base-item {
+  display: flex;
+
+  .first-column {
+    width: 6.3rem;
+    height: 6.3rem;
+  }
+
+  .second-column {
+    width: 100%;
+  }
+
+  .psychic-power-item-dialog {
+    width: calc(100% - 0.5rem);
+    height: 100%;
+
+    margin: 0.5rem;
+
+    .input {
+      height: 1.25rem;
+    }
+
+    .psychic-power {
+      .effect-row:first-child {
+        margin-top: 0;
+      }
+
+      .effect-row:last-child {
+        margin-bottom: 0.5rem;
+      }
+
+      .effect-row {
+        display: flex;
+
+        margin-top: 0.5rem;
+
+        .difficulty {
+          margin-right: 0.5rem;
+          width: 3rem;
+        }
+
+        .description {
+          width: 100%;
+        }
+
+        .input {
+          @include input;
+
+          text-align: center;
+          height: 1rem;
+        }
+      }
+
+      .psychic-power-header {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+
+        width: 100%;
+
+        .first-row {
+          width: 100%;
+
+          .name .input-container {
+            width: 100%;
+          }
+        }
+
+        .second-row {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          .level,
+          .action-type {
+            .input {
+              height: 1.5rem;
+            }
+          }
+        }
+      }
+
+      .psychic-power-footer {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+
+        .input {
+          height: 1.5rem;
+        }
+      }
+    }
+
+    .base-item-image {
+      margin-bottom: 0.75rem;
+
+      img {
+        border-radius: 1rem;
+        width: 6.3rem;
+        height: 6.3rem;
+      }
+    }
+  }
+}

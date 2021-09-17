@@ -1,0 +1,81 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="psychic-power-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="psychic-power"
+    }}
+      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+        <div class='psychic-power-header'>
+          <div class='first-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="name"
+              hideTitle=true
+              inputType="text"
+              inputName=(concat "name")
+              inputValue=data.name
+            }}
+          </div>
+          <div class='second-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="level"
+              title=(localize "anima.ui.psychic.psychicPowers.power.header.level.title")
+              inputType="text"
+              inputName=(concat "data.level.value")
+              inputValue=data.data.level.value
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="action-type"
+              choices=xRoot.config.iterables.psychic.actionTypes
+              title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
+              inputName=(concat "data.actionType.value")
+              inputValue=data.data.actionType.value
+            }}
+          </div>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="psychic-power"
+      }}
+        {{#each data.data.effects as |effect key|}}
+          <div class='effect-row'>
+            <input
+              type='text'
+              class='input difficulty'
+              disabled
+              value='{{key}}'
+            />
+            <input
+              type='text'
+              class='input description'
+              name='{{concat "data.effects." key ".value"}}'
+              value='{{effect.value}}'
+            />
+          </div>
+        {{/each}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+        <div class='psychic-power-footer'>
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="has-maintenance"
+            title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
+            inputType="checkbox"
+            inputName=(concat "data.hasMaintenance.value")
+            inputValue=(is 'eq' data.data.hasMaintenance.value true)
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="bonus"
+            title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
+            inputName=(concat "data.bonus.value")
+            inputValue=data.data.bonus.value
+          }}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

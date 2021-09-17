@@ -34,6 +34,7 @@ export type PsychicPowerChanges = ItemChanges<PsychicPowerItemData>;
 export const PsychicPowerItemConfig: ABFItemConfig<PsychicPowerDataSource, PsychicPowerChanges> = {
   type: ABFItems.PSYCHIC_POWER,
   isInternal: false,
+  hasSheet: true,
   fieldPath: ['psychic', 'psychicPowers'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.psychicPowers as PsychicPowerChanges;
