@@ -36,6 +36,17 @@ export type ABFActorDataSourceData = {
         };
       };
     };
+    destinyPoints: {
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
+    };
+    presence: {
+      value: number;
+    },
     aspect: {
       hair: {
         value: string;

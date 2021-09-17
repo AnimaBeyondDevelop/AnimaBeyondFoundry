@@ -34,6 +34,17 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         byWearArmorRequirement: { value: 0 }
       }
     },
+    destinyPoints: {
+      base: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
+    },
+    presence: {
+      value: 0
+    },
     aspect: {
       hair: {
         value: ''

@@ -2,10 +2,6 @@
 @import '../../variable';
 
 .general {
-  .input {
-    @include input;
-  }
-
   .first-tab {
     // Grids
     width: 100%;
@@ -27,7 +23,10 @@
     .level {
       .group-header {
         position: relative;
+
         .input {
+          @include input;
+
           height: 1.2rem;
           width: 2.25rem;
           position: absolute;
@@ -82,6 +81,10 @@
     }
 
     .experience {
+      .input {
+        @include input;
+      }
+
       .group-body {
         .experience-bar,
         .experience-bar .current-experience {
@@ -161,7 +164,9 @@
     .languages {
       .group-header {
         position: relative;
+
         .input {
+          @include input;
           height: 1.2rem;
           width: 2.25rem;
           position: absolute;
