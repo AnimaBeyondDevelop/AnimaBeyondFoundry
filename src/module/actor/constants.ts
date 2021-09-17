@@ -169,7 +169,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         }
       },
       movement: {
-        normal: {
+        maximum: {
           value: 0
         },
         running: {

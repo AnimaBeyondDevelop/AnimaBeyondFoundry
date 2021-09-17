@@ -171,7 +171,7 @@ export type ABFActorDataSourceData = {
         };
       };
       movement: {
-        normal: {
+        maximum: {
           value: number;
         };
         running: {

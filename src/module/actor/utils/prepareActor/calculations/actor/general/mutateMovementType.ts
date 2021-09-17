@@ -17,7 +17,7 @@ export const mutateMovementType = (data: ABFActorDataSourceData) => {
 
   movementType.final.value = Math.max(0, movementType.final.value);
 
-  data.characteristics.secondaries.movement.normal.value = calculateMovementInMetersFromMovementType(
+  data.characteristics.secondaries.movement.maximum.value = calculateMovementInMetersFromMovementType(
     movementType.final.value
   );
   data.characteristics.secondaries.movement.running.value = calculateMovementInMetersFromMovementType(

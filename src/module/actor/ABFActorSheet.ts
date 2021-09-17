@@ -20,7 +20,7 @@ export default class ABFActorSheet extends ActorSheet {
       ...{
         classes: ['abf', 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor/actor-sheet.hbs',
-        width: 900,
+        width: 1000,
         height: 850,
         submitOnChange: true,
         tabs: [
@@ -72,7 +72,7 @@ export default class ABFActorSheet extends ActorSheet {
       return 1300;
     }
 
-    return 900;
+    return 1000;
   }
 
   getData() {

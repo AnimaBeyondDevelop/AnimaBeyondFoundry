@@ -57,10 +57,10 @@
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
-        title=(localize 'anima.ui.general.movement.normal.title')
+        title=(localize 'anima.ui.general.movement.maximum.title')
         disabled=true
-        inputName="data.characteristics.secondaries.movement.normal.value"
-        inputValue=data.data.characteristics.secondaries.movement.normal.value
+        inputName="data.characteristics.secondaries.movement.maximum.value"
+        inputValue=data.data.characteristics.secondaries.movement.maximum.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -75,7 +75,7 @@
         class="movement"
         title=(localize 'anima.ui.general.movement.quarter.title')
         disabled=true
-        inputValue=(math data.data.characteristics.secondaries.movement.normal.value "/" 4)
+        inputValue=(math data.data.characteristics.secondaries.movement.maximum.value "/" 4)
       }}
     </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

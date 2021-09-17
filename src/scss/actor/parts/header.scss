@@ -17,8 +17,7 @@
     }
 
     .third-column .sub-column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       grid-column-gap: 0.5rem;
 
       margin-bottom: 0.2rem;
@@ -133,6 +132,8 @@
 
   // Resistances
   .resistances {
+    max-width: 12rem;
+
     .group-body {
       height: 100%;
       display: flex;
