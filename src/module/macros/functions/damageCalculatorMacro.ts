@@ -37,7 +37,9 @@ const openDialog = async (): Promise<{ [key: string]: unknown }> => {
 };
 
 const calculateDamage = (attack, defense, at, damage) => {
-  return (damage * (attack - (defense + at * 10 + 20))) / 100;
+  const damageRoundedToCeil5Multiplier = Math.ceil(damage / 10) * 10;
+
+  return (damageRoundedToCeil5Multiplier * (attack - (defense + at * 10 + 20))) / 100;
 };
 
 const roundTo5Multiples = x => Math.round(x / 5) * 5;

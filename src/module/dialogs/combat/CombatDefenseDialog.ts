@@ -255,7 +255,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
             ? this.defenderActor.data.data.mystic.magicProjection.final.value
             : this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.final.value;
 
-        const roll = new ABFFoundryRoll(`1d100xa + ${modifier ?? 0}`);
+        const roll = new ABFFoundryRoll(`1d100xa + ${magicProjection} + ${modifier ?? 0}`);
         roll.roll();
 
         if (this.data.defender.showRoll) {
@@ -276,7 +276,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
           });
         }
 
-        const rolled = roll.total! - (modifier ?? 0);
+        const rolled = roll.total! - magicProjection - (modifier ?? 0);
 
         this.hooks.onDefense({
           type: 'mystic',
@@ -300,7 +300,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
       const { psychicProjection, psychicPotential, powerUsed, modifier } = this.data.defender.psychic;
 
       if (powerUsed) {
-        const roll = new ABFFoundryRoll(`1d100xa + ${modifier ?? 0}`);
+        const roll = new ABFFoundryRoll(`1d100xa + ${psychicProjection} + ${modifier ?? 0}`);
         roll.roll();
 
         if (this.data.defender.showRoll) {
@@ -321,7 +321,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
           });
         }
 
-        const rolled = roll.total! - (modifier ?? 0);
+        const rolled = roll.total! - psychicProjection - (modifier ?? 0);
 
         this.hooks.onDefense({
           type: 'psychic',

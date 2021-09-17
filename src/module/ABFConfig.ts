@@ -64,6 +64,7 @@ ABFConfig.iterables = {
       emptiness: 'anima.ui.mystic.spell.via.emptiness.title',
       essence: 'anima.ui.mystic.spell.via.essence.title',
       fire: 'anima.ui.mystic.spell.via.fire.title',
+      freeAccess: 'anima.ui.mystic.spell.via.freeAccess.title',
       illusion: 'anima.ui.mystic.spell.via.illusion.title',
       knowledge: 'anima.ui.mystic.spell.via.knowledge.title',
       light: 'anima.ui.mystic.spell.via.light.title',
