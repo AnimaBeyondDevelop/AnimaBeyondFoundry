@@ -1,8 +1,4 @@
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-
-export const calculateMovement = (data: ABFActorDataSourceData): number => {
-  const movementType = data.characteristics.secondaries.movementType.final.value;
-
+export const calculateMovementInMetersFromMovementType = (movementType: number): number => {
   switch (movementType) {
     case 0:
       return 1;

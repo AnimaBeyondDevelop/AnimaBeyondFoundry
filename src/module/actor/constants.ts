@@ -158,7 +158,12 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         }
       },
       movement: {
-        value: 0
+        normal: {
+          value: 0
+        },
+        running: {
+          value: 0
+        }
       },
       resistances: {
         physical: {

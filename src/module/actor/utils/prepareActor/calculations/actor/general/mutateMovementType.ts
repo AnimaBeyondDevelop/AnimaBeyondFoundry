@@ -1,5 +1,5 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { calculateMovement } from './calculations/calculateMovement';
+import { calculateMovementInMetersFromMovementType } from './calculations/calculateMovementInMetersFromMovementType';
 import { ArmorDataSource } from '../../../../../../types/combat/ArmorItemConfig';
 
 export const mutateMovementType = (data: ABFActorDataSourceData) => {
@@ -7,16 +7,20 @@ export const mutateMovementType = (data: ABFActorDataSourceData) => {
 
   const armorsMovementRestrictions = armors.reduce((prev, curr) => prev + curr.data.movementRestriction.final.value, 0);
 
-  data.characteristics.secondaries.movementType.final.value =
-    data.characteristics.secondaries.movementType.mod.value +
+  const { movementType } = data.characteristics.secondaries;
+
+  movementType.final.value =
+    movementType.mod.value +
     data.characteristics.primaries.agility.value +
     Math.min(0, data.general.modifiers.allActions.base.value) +
     armorsMovementRestrictions;
 
-  data.characteristics.secondaries.movementType.final.value = Math.max(
-    0,
-    data.characteristics.secondaries.movementType.final.value
-  );
+  movementType.final.value = Math.max(0, movementType.final.value);
 
-  data.characteristics.secondaries.movement.value = calculateMovement(data);
+  data.characteristics.secondaries.movement.normal.value = calculateMovementInMetersFromMovementType(
+    movementType.final.value
+  );
+  data.characteristics.secondaries.movement.running.value = calculateMovementInMetersFromMovementType(
+    Math.max(0, movementType.final.value - 2)
+  );
 };

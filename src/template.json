@@ -54,7 +54,7 @@
           "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
           "fatigue": { "value": 0, "max": 0 },
           "movementType": { "mod": { "value": 0 }, "final": { "value": 0 } },
-          "movement": { "value": 0 },
+          "movement": { "normal": { "value": 0 }, "running": { "value": 0 } },
           "resistances": {
             "physical": { "base": { "value": 0 }, "final": { "value": 0 } },
             "disease": { "base": { "value": 0 }, "final": { "value": 0 } },

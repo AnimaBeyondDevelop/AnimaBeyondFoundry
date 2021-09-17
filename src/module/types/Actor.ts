@@ -160,7 +160,12 @@ export type ABFActorDataSourceData = {
         };
       };
       movement: {
-        value: number;
+        normal: {
+          value: number;
+        };
+        running: {
+          value: number;
+        };
       };
       resistances: {
         physical: {

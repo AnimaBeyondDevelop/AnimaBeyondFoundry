@@ -57,17 +57,25 @@
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
-        title=(localize 'anima.ui.general.movement.title')
+        title=(localize 'anima.ui.general.movement.normal.title')
         disabled=true
-        inputName="data.characteristics.secondaries.movement.value"
-        inputValue=data.data.characteristics.secondaries.movement.value
+        inputName="data.characteristics.secondaries.movement.normal.value"
+        inputValue=data.data.characteristics.secondaries.movement.normal.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="running"
+        title=(localize 'anima.ui.general.movement.running.title')
+        disabled=true
+        inputName="data.characteristics.secondaries.movement.running.value"
+        inputValue=data.data.characteristics.secondaries.movement.running.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.quarter.title')
         disabled=true
-        inputValue=(math data.data.characteristics.secondaries.movement.value "/" 4)
+        inputValue=(math data.data.characteristics.secondaries.movement.normal.value "/" 4)
       }}
     </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
