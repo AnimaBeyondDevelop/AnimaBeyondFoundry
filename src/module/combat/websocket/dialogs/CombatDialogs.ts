@@ -14,8 +14,8 @@ const openCombatRequestDialog = async ({ attacker, defender }: { attacker: ABFAc
       content: dialogHTML,
       onClose: () => reject(),
       buttons: [
-        { id: 'on-cancel-button', fn: () => reject(), content: (game as Game).i18n.localize('dialogs.cancel') },
-        { id: 'on-confirm-button', fn: () => resolve(), content: (game as Game).i18n.localize('dialogs.accept') }
+        { id: 'on-confirm-button', fn: () => resolve(), content: (game as Game).i18n.localize('dialogs.accept') },
+        { id: 'on-cancel-button', fn: () => reject(), content: (game as Game).i18n.localize('dialogs.cancel') }
       ]
     });
   });
