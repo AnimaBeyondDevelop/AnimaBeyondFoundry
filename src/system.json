@@ -22,6 +22,20 @@
       "system": "animabf",
       "path": "./packs/armors_es.db",
       "entity": "Item"
+    },
+    {
+      "name": "magic",
+      "label": "(ES) Magia",
+      "system": "animabf",
+      "path": "./packs/magic_es.db",
+      "entity": "Item"
+    },
+    {
+      "name": "advantages-disadvantages",
+      "label": "(ES) Ventajas y Desventajas",
+      "system": "animabf",
+      "path": "./packs/advantages-disadvantages_es.db",
+      "entity": "Item"
     }
   ],
   "languages": [
