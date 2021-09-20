@@ -1,13 +1,52 @@
 export type ABFActorDataSourceData = {
+  version: number;
+  ui: {
+    contractibleItems: {};
+    tabVisibility: {
+      mystic: {
+        value: boolean;
+      };
+      domine: {
+        value: boolean;
+      };
+      psychic: {
+        value: boolean;
+      };
+    };
+  };
   general: {
     modifiers: {
       physicalActions: {
         value: number;
       };
       allActions: {
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
+      };
+      naturalPenalty: {
+        byArmors: {
+          value: number;
+        };
+        byWearArmorRequirement: {
+          value: number;
+        };
+      };
+    };
+    destinyPoints: {
+      base: {
+        value: number;
+      };
+      final: {
         value: number;
       };
     };
+    presence: {
+      value: number;
+    },
     aspect: {
       hair: {
         value: string;
@@ -31,7 +70,7 @@ export type ABFActorDataSourceData = {
         value: string;
       };
       appearance: {
-        value: number;
+        value: string;
       };
       size: {
         value: number;
@@ -39,6 +78,18 @@ export type ABFActorDataSourceData = {
     };
     advantages: [];
     contacts: [];
+    inventory: [];
+    money: {
+      cooper: {
+        value: number;
+      };
+      silver: {
+        value: number;
+      };
+      gold: {
+        value: number;
+      };
+    };
     description: {
       value: string;
     };
@@ -47,10 +98,6 @@ export type ABFActorDataSourceData = {
     experience: {
       current: { value: number };
       next: { value: number };
-    };
-    fatigue: {
-      value: number;
-      max: number;
     };
     languages: {
       base: {
@@ -67,27 +114,35 @@ export type ABFActorDataSourceData = {
     primaries: {
       agility: {
         value: number;
+        mod: number;
       };
       constitution: {
         value: number;
+        mod: number;
       };
       dexterity: {
         value: number;
+        mod: number;
       };
       strength: {
         value: number;
+        mod: number;
       };
       intelligence: {
         value: number;
+        mod: number;
       };
       perception: {
         value: number;
+        mod: number;
       };
       power: {
         value: number;
+        mod: number;
       };
       willPower: {
         value: number;
+        mod: number;
       };
     };
     secondaries: {
@@ -99,10 +154,7 @@ export type ABFActorDataSourceData = {
         base: {
           value: number;
         };
-        primary: {
-          value: number;
-        };
-        secondary: {
+        final: {
           value: number;
         };
       };
@@ -110,24 +162,62 @@ export type ABFActorDataSourceData = {
         value: number;
         max: number;
       };
+      movementType: {
+        mod: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
+      };
       movement: {
-        value: number;
+        maximum: {
+          value: number;
+        };
+        running: {
+          value: number;
+        };
       };
       resistances: {
         physical: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         disease: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         poison: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         magic: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         psychic: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
       };
     };
@@ -136,166 +226,424 @@ export type ABFActorDataSourceData = {
   secondaries: {
     athletics: {
       acrobatics: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       athleticism: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       ride: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       swim: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       climb: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       jump: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       piloting: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     vigor: {
       composure: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       featsOfStrength: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       withstandPain: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     perception: {
       notice: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       search: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       track: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     intellectual: {
       animals: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       science: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       law: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       herbalLore: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       history: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       tactics: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       medicine: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       memorize: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       navigation: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       occult: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       appraisal: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       magicAppraisal: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     social: {
       style: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       intimidate: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       leadership: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       persuasion: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       trading: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       streetwise: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       etiquette: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     subterfuge: {
       lockPicking: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       disguise: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       hide: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       theft: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       stealth: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       trapLore: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       poisons: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     creative: {
       art: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       dance: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       forging: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       runes: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       alchemy: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       animism: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       music: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       sleightOfHand: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       ritualCalligraphy: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       jewelry: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       tailoring: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
+      };
+      puppetMaking: {
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     secondarySpecialSkills: [];
@@ -303,12 +651,30 @@ export type ABFActorDataSourceData = {
 
   combat: {
     attack: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     block: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     dodge: {
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
+    };
+    wearArmor: {
       value: number;
     };
     totalArmor: {
@@ -346,10 +712,20 @@ export type ABFActorDataSourceData = {
   mystic: {
     act: {
       main: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       alternative: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
     zeon: {
@@ -374,15 +750,28 @@ export type ABFActorDataSourceData = {
       };
     };
     magicProjection: {
+      base: {
+        value: number;
+      };
       final: {
         value: number;
       };
       imbalance: {
         offensive: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
         defensive: {
-          value: number;
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
         };
       };
     };
@@ -431,19 +820,39 @@ export type ABFActorDataSourceData = {
     };
     summoning: {
       summon: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       banish: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       bind: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
       control: {
-        value: number;
+        base: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
       };
     };
-    freeAccessSpells: [];
+    spells: [];
     spellMaintenances: [];
     selectedSpells: [];
     summons: [];
@@ -507,10 +916,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -518,10 +927,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -529,10 +938,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -540,10 +949,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -551,10 +960,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -562,10 +971,10 @@ export type ABFActorDataSourceData = {
         accumulated: {
           value: number;
         };
-        current: {
+        base: {
           value: number;
         };
-        total: {
+        final: {
           value: number;
         };
       };
@@ -578,10 +987,20 @@ export type ABFActorDataSourceData = {
 
   psychic: {
     psychicPotential: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     psychicProjection: {
-      value: number;
+      base: {
+        value: number;
+      };
+      final: {
+        value: number;
+      };
     };
     psychicPoints: {
       value: number;

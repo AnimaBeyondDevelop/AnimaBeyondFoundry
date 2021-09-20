@@ -1,0 +1,90 @@
+@import '../variable';
+
+.combat-attack-dialog {
+  height: auto !important;
+
+  width: 550px;
+
+  .window-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .common-group {
+    height: 100%;
+  }
+
+  .sheet-tabs {
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: inherit;
+
+    margin-bottom: 0.75rem;
+
+    border-top: 1px solid $red;
+    border-bottom: 1px solid $red;
+
+    .item {
+      background: transparent;
+      border-radius: $border-radius;
+      color: $black;
+      font-weight: 600;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .active {
+      text-shadow: none;
+      background-color: $red;
+      color: $white;
+      font-weight: 600;
+    }
+  }
+
+  .group-body {
+    overflow-y: scroll;
+
+    height: 100%;
+
+    .attack-sent,
+    .mystic-attack-sent,
+    .psychic-attack-sent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      margin-top: 2rem;
+
+      .label {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .waiting-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+
+      .label {
+        margin-top: 1rem;
+        text-align: center;
+      }
+    }
+
+    .abf-button {
+      margin-top: 2rem;
+    }
+  }
+}

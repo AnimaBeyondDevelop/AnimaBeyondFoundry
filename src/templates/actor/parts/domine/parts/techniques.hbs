@@ -13,6 +13,8 @@
       <div data-item-id='{{technique._id}}' class='technique-row'>
         {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="technique"
+          contractible=true
+          contractibleItemId=technique._id
         }}
           {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='technique-header'>
@@ -29,12 +31,7 @@
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="technique"
           }}
-            <input
-              class='input technique-description'
-              name='{{concat "data.dynamic.techniques." technique._id ".data.description.value"}}' value='{{technique.data.description.value}}'>
-          <p class='result'>
-            {{technique.data.description.value}}
-          </p>
+            {{editor content=technique.data.description.value target=(concat "data.dynamic.techniques." technique._id ".data.description.value") button=true owner=true editable=true}}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='technique-footer'>

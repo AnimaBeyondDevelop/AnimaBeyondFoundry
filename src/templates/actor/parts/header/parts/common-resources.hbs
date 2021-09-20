@@ -12,6 +12,8 @@
         inputName="data.characteristics.secondaries.lifePoints.value"
         inputValue=data.data.characteristics.secondaries.lifePoints.value
         hasSecondaryInput=true
+        addTooltips=true
+        addTooltips=true
         secondaryInputName="data.characteristics.secondaries.lifePoints.max"
         secondaryInputValue=data.data.characteristics.secondaries.lifePoints.max
       }}
@@ -25,8 +27,6 @@
         secondaryInputName="data.characteristics.secondaries.fatigue.max"
         secondaryInputValue=data.data.characteristics.secondaries.fatigue.max
       }}
-    </div>
-    <div class='initiative'>
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
@@ -34,38 +34,48 @@
         title=(localize 'anima.ui.general.initiative.base.title')
         inputName="data.characteristics.secondaries.initiative.base.value"
         inputValue=data.data.characteristics.secondaries.initiative.base.value
-      }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="primary-initiative"
-        rollable=true
-        title=(localize 'anima.ui.general.initiative.primary.title')
-        inputName="data.characteristics.secondaries.initiative.primary.value"
-        inputValue=data.data.characteristics.secondaries.initiative.primary.value
-      }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="secondary-initiative"
-        rollable=true
-        title=(localize 'anima.ui.general.initiative.secondary.title')
-        inputName="data.characteristics.secondaries.initiative.secondary.value"
-        inputValue=data.data.characteristics.secondaries.initiative.secondary.value
+        hasSecondaryInput=true
+        disableSecondaryInput=true
+        rollSecondaryInput=true
+        addTooltips=true
+        secondaryInputName="data.characteristics.secondaries.initiative.final.value"
+        secondaryInputValue=data.data.characteristics.secondaries.initiative.final.value
       }}
     </div>
     <div class='movements'>
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
-        title=(localize 'anima.ui.general.movement.title')
-        inputName="data.characteristics.secondaries.movement.value"
-        inputValue=data.data.characteristics.secondaries.movement.value
+        title=(localize 'anima.ui.general.movementType.title')
+        inputName="data.characteristics.secondaries.movementType.mod.value"
+        inputValue=data.data.characteristics.secondaries.movementType.mod.value
+        hasSecondaryInput=true
+        disableSecondaryInput=true
+        secondaryInputName="data.characteristics.secondaries.movementType.final.value"
+        secondaryInputValue=data.data.characteristics.secondaries.movementType.final.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="movement"
+        title=(localize 'anima.ui.general.movement.maximum.title')
+        disabled=true
+        inputName="data.characteristics.secondaries.movement.maximum.value"
+        inputValue=data.data.characteristics.secondaries.movement.maximum.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="running"
+        title=(localize 'anima.ui.general.movement.running.title')
+        disabled=true
+        inputName="data.characteristics.secondaries.movement.running.value"
+        inputValue=data.data.characteristics.secondaries.movement.running.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.quarter.title')
         disabled=true
-        inputValue=(math data.data.characteristics.secondaries.movement.value "/" 4)
+        inputValue=(math data.data.characteristics.secondaries.movement.maximum.value "/" 4)
       }}
     </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

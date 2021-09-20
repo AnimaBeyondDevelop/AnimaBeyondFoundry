@@ -1,0 +1,23 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="destiny-points"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.general.destinyPoints.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="destiny-points"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="final"
+      title=(localize "anima.ui.general.destinyPoints.title")
+      inputName="data.general.destinyPoints.base.value"
+      inputValue=data.data.general.destinyPoints.base.value
+      hasSecondaryInput=true
+      addTooltips=true
+      secondaryInputName="data.general.destinyPoints.final.value"
+      secondaryInputValue=data.data.general.destinyPoints.final.value
+    }}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

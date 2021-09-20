@@ -1,88 +1,84 @@
-<div class='group aspect'>
-  <div class='group-header'>
-    <h3 class='group-header-title'>{{localize 'anima.ui.aspectSection.title'}}</h3>
-  </div>
-  <div class='group-body'>
-    <div class='hair flex mr-1'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.hair.title'}}</p>
-      <input
-        name='data.general.aspect.hair.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.hair.value}}'
-      />
-    </div>
-    <div class='eyes flex'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.eyes.title'}}</p>
-      <input
-        name='data.general.aspect.eyes.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.eyes.value}}'
-      />
-    </div>
-    <div class='height flex mr-1'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.height.title'}}</p>
-      <input
-        name='data.general.aspect.height.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.height.value}}'
-      />
-    </div>
-    <div class='weight flex'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.weight.title'}}</p>
-      <input
-        name='data.general.aspect.weight.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.weight.value}}'
-      />
-    </div>
-    <div class='age flex mr-1'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.age.title'}}</p>
-      <input
-        name='data.general.aspect.age.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.age.value}}'
-      />
-    </div>
-    <div class='genre flex'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.genre.title'}}</p>
-      <input
-        name='data.general.aspect.genre.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.genre.value}}'
-      />
-    </div>
-    <div class='race flex mr-1'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.race.title'}}</p>
-      <input
-        name='data.general.aspect.race.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.race.value}}'
-      />
-    </div>
-    <div class='appearance flex'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.appearance.title'}}</p>
-      <input
-        name='data.general.aspect.appearance.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.appearance.value}}'
-      />
-    </div>
-    <div class='size flex'>
-      <p class='label'>{{localize 'anima.ui.aspectSection.size.title'}}</p>
-      <input
-        name='data.general.aspect.size.value'
-        type='text'
-        class='input'
-        value='{{data.data.general.aspect.size.value}}'
-      />
-    </div>
-  </div>
-</div>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="aspect"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.aspectSection.title')
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="aspect"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="hair"
+      title=(localize 'anima.ui.aspectSection.hair.title')
+      inputType="text"
+      inputName="data.general.aspect.hair.value"
+      inputValue=data.data.general.aspect.hair.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="eyes"
+      title=(localize 'anima.ui.aspectSection.eyes.title')
+      inputType="text"
+      inputName="data.general.aspect.eyes.value"
+      inputValue=data.data.general.aspect.eyes.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="height"
+      title=(localize 'anima.ui.aspectSection.height.title')
+      inputType="text"
+      inputName="data.general.aspect.height.value"
+      inputValue=data.data.general.aspect.height.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="weight"
+      title=(localize 'anima.ui.aspectSection.weight.title')
+      inputType="text"
+      inputName="data.general.aspect.weight.value"
+      inputValue=data.data.general.aspect.weight.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="genre"
+      title=(localize 'anima.ui.aspectSection.genre.title')
+      inputType="text"
+      inputName="data.general.aspect.genre.value"
+      inputValue=data.data.general.aspect.genre.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="race"
+      title=(localize 'anima.ui.aspectSection.race.title')
+      inputType="text"
+      inputName="data.general.aspect.race.value"
+      inputValue=data.data.general.aspect.race.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="appearance"
+      title=(localize 'anima.ui.aspectSection.appearance.title')
+      inputType="text"
+      inputName="data.general.aspect.appearance.value"
+      inputValue=data.data.general.aspect.appearance.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="age"
+      title=(localize 'anima.ui.aspectSection.age.title')
+      inputType="text"
+      inputName="data.general.aspect.age.value"
+      inputValue=data.data.general.aspect.age.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="size"
+      title=(localize 'anima.ui.aspectSection.size.title')
+      inputType="text"
+      inputName="data.general.aspect.size.value"
+      inputValue=data.data.general.aspect.size.value
+    }}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -1,198 +1,207 @@
 @import '../../variable';
 
-.psychic-tab {
-  // Grids
-  width: 100%;
+.psychic {
+  .psychic-main-tab {
+    // Grids
+    width: 100%;
 
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  grid-column-gap: 1rem;
-
-  .first-column > .sub-columns {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-column-gap: 1rem;
-  }
-
-  div .common-group {
-    &:first-child {
-      margin-top: 0;
-    }
-
-    margin-top: 0.75rem;
-  }
-  // Grids
-
-  // Psychic Disciplines
-  .psychic-disciplines {
-    .psychic-discipline-row:first-child {
-      margin-top: 0;
-    }
-
-    .psychic-discipline-row {
-      margin-top: 0.75rem;
-
-      .input {
-        border-radius: $border-radius;
-        background: $light-cream;
-        font-weight: bold;
-        padding: 0.25rem 0.5rem;
-
-        width: 100%;
-      }
-    }
-  }
-  // Psychic Disciplines
-
-  // Mental Patterns
-  .mental-patterns {
-    .mental-pattern-row:first-child {
-      margin-top: 0;
-    }
-
-    .mental-pattern-row {
-      margin-top: 0.75rem;
-
+    .first-row {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      grid-column-gap: 0.1rem;
-
-      .input-container {
-        width: 100%;
-      }
-
-      .input {
-        border-radius: $border-radius;
-        background: $light-cream;
-        font-weight: bold;
-        padding: 0.25rem 0.5rem;
-      }
-    }
-  }
-  // Mental Patterns
-
-  // Innate Psychic Powers
-  .innate-psychic-powers {
-    .innate-psychic-power-row:first-child {
-      margin-top: 0;
+      grid-template-columns: 1fr 2fr;
+      grid-column-gap: 1rem;
     }
 
-    .innate-psychic-power-row:last-child {
-      margin-bottom: 0.5rem;
-    }
-
-    .innate-psychic-power-row {
-      margin-top: 0.75rem;
-
-      display: grid;
-      grid-template-columns: 2fr 3fr 1fr;
-      grid-column-gap: 0.1rem;
-
-      .input-container {
-        width: 100%;
-      }
-    }
-
-    .group-footer {
-      width: 15rem;
-
-      display: flex;
-      justify-content: center;
-    }
-  }
-  // Mental Patterns
-
-  // Psychic Powers
-  .psychic-powers {
-    .psychic-power-row:first-child {
-      margin-top: 0;
-    }
-
-    .psychic-power-row {
+    .second-row {
       margin-top: 0.5rem;
-      border-radius: $border-radius;
-      box-shadow: $card-box-shadow;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1rem;
     }
 
-    .psychic-power-row:last-child {
-      margin-bottom: 0.5rem;
-    }
-
-    .psychic-power-row .psychic-power {
-      .effect-row:first-child {
+    div .common-group {
+      &:first-child {
         margin-top: 0;
       }
 
-      .effect-row:last-child {
+      margin-top: 0.75rem;
+    }
+    // Grids
+
+    // Psychic Disciplines
+    .psychic-disciplines {
+      .psychic-discipline-row:first-child {
+        margin-top: 0;
+      }
+
+      .psychic-discipline-row {
+        margin-top: 0.75rem;
+
+        .input {
+          border-radius: $border-radius;
+          background: $light-cream;
+          font-weight: bold;
+          padding: 0.25rem 0.5rem;
+
+          width: 100%;
+        }
+      }
+    }
+    // Psychic Disciplines
+
+    // Mental Patterns
+    .mental-patterns {
+      .mental-pattern-row:first-child {
+        margin-top: 0;
+      }
+
+      .mental-pattern-row {
+        margin-top: 0.75rem;
+
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-column-gap: 0.1rem;
+
+        .input-container {
+          width: 100%;
+        }
+
+        .input {
+          border-radius: $border-radius;
+          background: $light-cream;
+          font-weight: bold;
+          padding: 0.25rem 0.5rem;
+        }
+      }
+    }
+    // Mental Patterns
+
+    // Innate Psychic Powers
+    .innate-psychic-powers {
+      .innate-psychic-power-row:first-child {
+        margin-top: 0;
+      }
+
+      .innate-psychic-power-row:last-child {
         margin-bottom: 0.5rem;
       }
 
-      .effect-row {
+      .innate-psychic-power-row {
+        margin-top: 0.75rem;
+
         display: grid;
-        grid-template-columns: 1fr 5fr;
+        grid-template-columns: 2fr 3fr 1fr;
         grid-column-gap: 0.1rem;
 
-        margin-top: 0.5rem;
-
-        .input {
-          @include input;
-
-          text-align: center;
-          height: 1rem;
+        .input-container {
+          width: 100%;
         }
       }
 
-      .psychic-power-header {
+      .group-footer {
+        width: 15rem;
+
         display: flex;
-
-        padding: 0 0.5rem;
-
-        .name {
-          margin-right: 0.75rem;
-
-          .input {
-            width: 10rem;
-          }
-        }
-
-        .level {
-          .input {
-            width: 2rem;
-          }
-        }
-
-        .input {
-          height: 1rem;
-        }
-      }
-
-      .psychic-power-footer {
-        display: grid;
-        grid-template-columns: 2fr 1fr 2fr;
-        grid-column-gap: 0.1rem;
-
-        .label {
-          margin-left: 0.5rem;
-        }
-
-        .action-type,
-        .bonus {
-          .input {
-            height: 1rem;
-            width: 3rem;
-          }
-        }
-
-        .has-maintenance .input {
-          width: auto;
-          margin-bottom: 0.125rem;
-        }
-      }
-
-      .input-container {
-        width: 100%;
+        justify-content: center;
       }
     }
+    // Mental Patterns
   }
-  // Psychic Powers
+
+  .psychic-powers-tab {
+    // Psychic Powers
+    .psychic-powers {
+      & > .group-body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .psychic-power-row {
+        width: calc(50% - 1rem);
+        height: 100%;
+
+        margin: 0.5rem;
+        border-radius: $border-radius;
+        box-shadow: $card-box-shadow;
+
+        .input {
+          height: 1.25rem;
+        }
+      }
+
+      .psychic-power-row .psychic-power {
+        .effect-row:first-child {
+          margin-top: 0;
+        }
+
+        .effect-row:last-child {
+          margin-bottom: 0.5rem;
+        }
+
+        .effect-row {
+          display: flex;
+
+          margin-top: 0.5rem;
+
+          .difficulty {
+            margin-right: 0.5rem;
+            width: 3rem;
+          }
+
+          .description {
+            width: 100%;
+          }
+
+          .input {
+            @include input;
+
+            text-align: center;
+            height: 1rem;
+          }
+        }
+
+        .psychic-power-header {
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+
+          width: 100%;
+
+          .first-row {
+            width: 100%;
+
+            .name .input-container {
+              width: 100%;
+            }
+          }
+
+          .second-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .level,
+            .action-type {
+              .input {
+                height: 1.5rem;
+              }
+            }
+          }
+        }
+
+        .psychic-power-footer {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+
+          .input {
+            height: 1.5rem;
+          }
+        }
+      }
+    }
+    // Psychic Powers
+  }
 }

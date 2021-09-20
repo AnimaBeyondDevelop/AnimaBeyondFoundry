@@ -1,0 +1,20 @@
+.confirmation-dialog, .prompt-dialog {
+  height: 100%;
+  width: 100%;
+
+  .title {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .body {
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 1.125rem;
+    text-align: center;
+  }
+}

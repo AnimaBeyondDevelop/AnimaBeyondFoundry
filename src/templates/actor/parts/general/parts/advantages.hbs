@@ -1,13 +1,14 @@
-<div class='group advantages mt-3'>
-  <div class='group-header'>
-    <img
-      class='add-button'
-      data-on-click='add-advantage'
-      src='/systems/animabf/assets/images/boton-plus.png'
-    />
-    <h3 class='group-header-title'>{{localize 'anima.ui.advantageSection.title'}}</h3>
-  </div>
-  <div id='advantages-context-menu-container' class='group-body'>
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="advantages"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize 'anima.ui.advantageSection.title')
+    addRowButtonData="add-advantage"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="advantages"
+  }}
     {{#each data.data.general.advantages}}
       <div data-item-id='{{this._id}}' class='advantage-row'>
         <input
@@ -18,5 +19,5 @@
         />
       </div>
     {{/each}}
-  </div>
-</div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

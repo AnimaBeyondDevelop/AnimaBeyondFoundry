@@ -1,5 +1,5 @@
-import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
-import { openDialog } from '../../utils/openDialog';
+import { ABFItems } from '../../items/ABFItems';
+import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
@@ -18,13 +18,13 @@ export const NoteItemConfig: ABFItemConfig<NoteDataSource, NoteChanges> = {
   },
   selectors: {
     addItemButtonSelector: 'add-note',
-    containerSelector: '#notes-context-menu-container',
+    containerSelector: '#_notes-context-menu-container',
     rowSelector: '.note-row'
   },
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openDialog<string>({
+    const name = await openSimpleInputDialog<string>({
       content: i18n.localize('dialogs.items.note.content')
     });
 

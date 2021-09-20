@@ -1,0 +1,18 @@
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  class=this.class
+  isVertical=this.isVertical
+  title=this.title
+  hideTitle=this.hideTitle
+  inputName=this.inputName
+  inputValue=this.inputValue
+}}
+  <option {{#if (is "eq" this.inputValue -10)}}selected{{/if}} value="-10">-10</option>
+  <option {{#if (is "eq" this.inputValue -5)}}selected{{/if}} value="-5">-5</option>
+  <option {{#if (is "eq" this.inputValue 0)}}selected{{/if}} value="0">0</option>
+  <option {{#if (is "eq" this.inputValue 5)}}selected{{/if}} value="5">5</option>
+  <option {{#if (is "eq" this.inputValue 10)}}selected{{/if}} value="10">10</option>
+  <option {{#if (is "eq" this.inputValue 15)}}selected{{/if}} value="15">15</option>
+  <option {{#if (is "eq" this.inputValue 20)}}selected{{/if}} value="20">20</option>
+  <option {{#if (is "eq" this.inputValue 25)}}selected{{/if}} value="25">25</option>
+  <option {{#if (is "eq" this.inputValue 30)}}selected{{/if}} value="30">30</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

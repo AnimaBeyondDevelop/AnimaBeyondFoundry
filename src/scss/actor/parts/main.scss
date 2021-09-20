@@ -4,25 +4,53 @@
   display: flex;
   flex-direction: column;
 
-  .sheet-tabs {
-	margin-top: 0.75rem !important;
-	margin-bottom: 0.75rem !important;
+  .sheet-tabs,
+  .mystic-tabs,
+  .psychic-tabs,
+  .general-tabs {
+    &.secondary-tab {
+      margin-top: 0;
+      height: 1.2rem;
+    }
 
-	border-top: 1px solid $red !important;
-	border-bottom: 1px solid $red !important;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: inherit;
 
-	.item {
-	  background: transparent;
-	  border-radius: $border-radius;
-	  color: $black;
-	  font-weight: 600;
-	}
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
 
-	.active {
-	  text-shadow: none;
-	  background-color: $red;
-	  color: $white;
-	  font-weight: 600;
-	}
+    border-top: 1px solid $red;
+    border-bottom: 1px solid $red;
+
+    .item {
+      background: transparent;
+      border-radius: $border-radius;
+      color: $black;
+      font-weight: 600;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &[data-tab='settings'] {
+        flex: 0.5;
+
+        img {
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .active {
+      text-shadow: none;
+      background-color: $red;
+      color: $white;
+      font-weight: 600;
+    }
   }
 }

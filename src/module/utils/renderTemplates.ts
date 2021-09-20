@@ -1,6 +1,6 @@
 export type Templates = {
   name: string;
-  context?: { [k: string]: string };
+  context?: Record<string, unknown>;
 };
 
 /**
@@ -8,7 +8,5 @@ export type Templates = {
  * @param templates
  */
 export const renderTemplates = (...templates: Templates[]): Promise<string[]> => {
-  return Promise.all(
-    templates.map(template => renderTemplate(template.name, template.context ?? {}))
-  );
+  return Promise.all(templates.map(template => renderTemplate(template.name, template.context ?? {})));
 };

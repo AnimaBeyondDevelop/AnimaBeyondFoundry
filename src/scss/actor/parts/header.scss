@@ -12,12 +12,12 @@
     .first-column {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
     }
 
     .third-column .sub-column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       grid-column-gap: 0.5rem;
 
       margin-bottom: 0.2rem;
@@ -30,9 +30,6 @@
 
     img {
       border-radius: 1rem;
-
-      width: 10rem;
-      height: 10rem;
     }
   }
   // Actor image
@@ -90,9 +87,9 @@
 
   // Modifiers
   .modifiers {
-    .group-body {
+    .first-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       grid-column-gap: 1rem;
     }
   }
@@ -100,9 +97,15 @@
 
   // Characteristics
   .characteristics {
+    height: 100%;
+
     .group-body {
       margin-top: 0;
       padding: 0.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       .characteristic {
         margin-bottom: 0.265rem;
@@ -127,36 +130,37 @@
   }
   // Characteristics
 
+  // Resistances
+  .resistances {
+    max-width: 12rem;
+
+    .group-body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+  // Resistances
+
   // Common resources
   .common-resources {
     .group-body {
       margin-top: 0;
       padding: 0.5rem;
 
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
       .movements {
         margin-top: 0.5rem;
 
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 0.5rem;
-      }
-
-      .initiative {
-        margin-top: 0.5rem;
-
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-column-gap: 0.5rem;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-column-gap: 0.25rem;
       }
 
       .first-row {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-column-gap: 0.5rem;
 
         margin-top: 0.5rem;
       }

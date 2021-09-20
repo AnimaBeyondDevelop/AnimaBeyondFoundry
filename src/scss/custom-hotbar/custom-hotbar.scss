@@ -1,0 +1,56 @@
+.custom-action-bar {
+  z-index: 70;
+  position: fixed;
+  bottom: 100px;
+  left: 240px;
+
+  height: 52px;
+
+  .macros {
+    display: flex;
+
+    .custom-macro {
+      position: relative;
+      cursor: pointer;
+
+      border-radius: 0.5rem;
+      width: 3.2rem;
+      height: 3.2rem;
+
+      &:hover,
+      &.hover {
+        img {
+          filter: invert(1);
+        }
+
+        .shortcut {
+          background-color: black;
+          color: white;
+
+          opacity: 1;
+        }
+      }
+
+      img {
+        transition: all 0.3s ease-in-out;
+      }
+
+      .shortcut {
+        transition: all 0.3s ease-in-out;
+
+        position: absolute;
+        bottom: 0;
+
+        background-color: white;
+        font-weight: bold;
+        font-size: 0.75rem;
+        color: $red;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+
+        opacity: 0.8;
+      }
+    }
+  }
+}

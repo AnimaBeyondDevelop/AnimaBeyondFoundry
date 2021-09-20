@@ -421,7 +421,7 @@ const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
 exports.build = gulp.series(clean, execBuild);
 exports.watch = buildWatch;
 exports.clean = clean;
-exports.package = packageBuild;
+exports.package = gulp.series(clean, execBuild, packageBuild);
 exports.update = updateManifest;
 exports.publish = gulp.series(
   ensureGitBranch,

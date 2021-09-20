@@ -1,0 +1,86 @@
+@import '../variable';
+
+.generic-dialog {
+  width: auto !important;
+  height: auto !important;
+
+  .window-content {
+    padding: 2.5rem;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .buttons {
+      display: flex;
+    }
+  }
+}
+
+.abf-dialog {
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  &.no-close {
+    .window-header {
+      .header-button {
+        display: none !important;
+      }
+    }
+  }
+
+  .window-header {
+    width: 100%;
+    background-color: $red;
+
+    font-weight: bold;
+
+    .window-title {
+      font-weight: bold;
+    }
+
+    color: white;
+  }
+
+  .window-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    background-color: $light-cream;
+
+    form {
+      width: 100%;
+      height: 100%;
+
+      .abf-button {
+        cursor: pointer;
+
+        box-shadow: none;
+        border-radius: 0.5rem;
+        font-weight: bold;
+
+        border: 2px black solid;
+        color: white;
+        background-color: $grey;
+
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          box-shadow: none;
+
+          border: 2px $grey solid;
+          background-color: $red;
+          color: $light-cream;
+        }
+      }
+    }
+  }
+}

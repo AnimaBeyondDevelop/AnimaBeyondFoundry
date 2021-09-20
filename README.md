@@ -1,3 +1,5 @@
+# Anima Beyond Foundry - Foundry VTT System
+
 ## What is this?
 This is the unofficial system for Anima Beyond Fantasy for Foundry VTT, developed with the knowledge and agreement of [Anima Project Studio](https://twitter.com/animaps).
 
@@ -19,6 +21,10 @@ So if you'd want to translate or create your compendium and add it to the system
 ## Community Contribution
 
 As we said before, we love community support, so if you have some system improvement, bug, idea, or code improvement, we are all ears. Here you can add all of it.
+
+### Develop instructions
+
+- [Spanish](docs/develop/es/es.md)
 
 ## Links
 

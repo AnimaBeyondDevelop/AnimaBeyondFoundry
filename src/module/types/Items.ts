@@ -1,6 +1,7 @@
-import { ABFItems } from '../actor/utils/prepareSheet/prepareItems/ABFItems';
+import { ABFItems } from '../items/ABFItems';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFActorDataSourceData } from './Actor';
+import ABFItem from '../items/ABFItem';
 
 export type ABFItemConfig<D, C> = {
   /**
@@ -99,6 +100,12 @@ export type ABFItemConfig<D, C> = {
    * @param target
    */
   onDelete?: (actor: ABFActor, target: JQuery) => void;
+
+  /**
+   * Method to calculate derived data
+   * @param data
+   */
+  prepareItem?(data: ABFItem);
 };
 
 export type ItemChanges<T = undefined> = {
@@ -114,4 +121,14 @@ export type DynamicChanges = {
       [key: string]: unknown;
     };
   };
+};
+
+export type DerivedField = {
+  base: { value: number };
+  final: { value: number };
+};
+
+export type SpecialField = {
+  special: { value: number };
+  final: { value: number };
 };
