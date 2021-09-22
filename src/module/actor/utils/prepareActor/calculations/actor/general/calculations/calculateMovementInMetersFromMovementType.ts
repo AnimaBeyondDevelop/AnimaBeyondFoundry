@@ -1,8 +1,10 @@
 export const calculateMovementInMetersFromMovementType = (movementType: number): number => {
   switch (movementType) {
     case 0:
-      return 1;
+      return 0.5;
     case 1:
+      return 1;
+    case 2:
       return 4;
     case 3:
       return 8;
