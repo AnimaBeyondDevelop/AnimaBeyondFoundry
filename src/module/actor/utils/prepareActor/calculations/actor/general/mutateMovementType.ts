@@ -1,11 +1,12 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 import { calculateMovementInMetersFromMovementType } from './calculations/calculateMovementInMetersFromMovementType';
-import { ArmorDataSource } from '../../../../../../types/combat/ArmorItemConfig';
+import { getEquippedArmors } from '../../../utils/getEquippedArmors';
 
 export const mutateMovementType = (data: ABFActorDataSourceData) => {
-  const armors = data.combat.armors as ArmorDataSource[];
-
-  const armorsMovementRestrictions = armors.reduce((prev, curr) => prev + curr.data.movementRestriction.final.value, 0);
+  const armorsMovementRestrictions = getEquippedArmors(data).reduce(
+    (prev, curr) => prev + curr.data.movementRestriction.final.value,
+    0
+  );
 
   const { movementType } = data.characteristics.secondaries;
 
