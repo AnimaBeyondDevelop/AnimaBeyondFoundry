@@ -41,6 +41,9 @@ if (argv.release) {
   ROOT_PATH = `dist/`;
 } else {
   ROOT_PATH = `${getConfig().destPath ?? '..'}/animabf`;
+  if (argv.develop) {
+    ROOT_PATH += '-dev';
+  }
 }
 
 function getManifest() {
@@ -204,11 +207,19 @@ function buildSASS() {
  * Copy static files
  */
 async function copyFiles() {
-  const statics = ['lang', 'fonts', 'assets', 'templates', 'packs', 'module.json', 'system.json', 'template.json'];
+  const statics = ['lang', 'fonts', 'assets', 'templates', 'packs', 'module.json', 'template.json'];
+  if (argv.develop){
+    statics.push('system.development.json')
+  } else {
+    statics.push('system.json')
+  }
   try {
     for (const file of statics) {
       if (fs.existsSync(path.join('src', file))) {
         await fs.copy(path.join('src', file), path.join(ROOT_PATH, file));
+        if (file === 'system.development.json') {
+          await fs.rename(path.join(ROOT_PATH, file), path.join(ROOT_PATH, 'system.json'))
+        }
       }
     }
     return Promise.resolve();

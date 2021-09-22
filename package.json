@@ -4,8 +4,8 @@
   "version": "1.11.4",
   "description": "",
   "scripts": {
-    "build": "gulp build",
-    "build:watch": "gulp watch",
+    "build": "gulp build --develop",
+    "build:watch": "gulp watch --develop",
     "clean": "gulp clean",
     "package": "gulp package --release",
     "publish": "gulp publish --release",
