@@ -68,6 +68,13 @@
                   disabled=true
                   inputValue=this.attacker.result.values.attack
                 }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-quality"
+                  title=(localize 'macros.combat.dialog.weaponQuality.title')
+                  disabled=true
+                  inputValue=this.attacker.result.weapon.data.quality.value
+                }}
               {{else}}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

@@ -7,6 +7,7 @@ import { Templates } from '../../utils/constants';
 import CloseOptions = FormApplication.CloseOptions;
 import { ABFActor } from '../../actor/ABFActor';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
+import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 
 type GMCombatDialogData = {
   ui: {
@@ -261,7 +262,10 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
         const combatResult = calculateCombatResult(
           attackerTotal,
           defenderTotal,
-          defender.result.values.at!,
+          Math.max(
+            defender.result.values.at! - calculateATReductionByQuality(attacker.result.weapon?.data.quality.value ?? 0),
+            0
+          ),
           attacker.result.values.damage
         );
 

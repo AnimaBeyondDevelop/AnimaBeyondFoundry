@@ -562,6 +562,7 @@
   "macros.combat.dialog.weapon.title": "Weapon",
   "macros.combat.dialog.weaponAttack.title": "Weapon attack",
   "macros.combat.dialog.weaponRow.title": "{name} with {value} attack",
+  "macros.combat.dialog.weaponQuality.title": "Weapon quality",
   "macros.combat.dialog.weaponUsed.title": "Weapon",
   "macros.combat.dialog.winner.title": " wins this assault",
   "macros.damageCalculator.dialog.attack.title": "Attack",
