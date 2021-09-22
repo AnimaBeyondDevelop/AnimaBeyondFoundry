@@ -1,7 +1,7 @@
 import { renderTemplates } from '../../utils/renderTemplates';
 import { Templates } from '../../utils/constants';
 import { ABFDialogs } from '../../dialogs/ABFDialogs';
-import { ABFSettingsKeys } from '../../../utils/registerSettings';
+import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 
 const openDialog = async (): Promise<{ [key: string]: unknown }> => {
   const [dialogHTML, iconHTML] = await renderTemplates(
@@ -34,43 +34,6 @@ const openDialog = async (): Promise<{ [key: string]: unknown }> => {
       default: 'submit'
     }).render(true);
   });
-};
-
-const calculateDamage = (attack: number, defense: number, at: number, damage: number) => {
-  const damageRoundedToCeil5Multiplier = Math.ceil(damage / 10) * 10;
-
-  return (damageRoundedToCeil5Multiplier * (attack - (defense + at * 10 + 20))) / 100;
-};
-
-const roundTo5Multiples = x => Math.round(x / 5) * 5;
-
-const calculateCounterAttackBonus = (attack: number, defense: number) => {
-  return roundTo5Multiples((defense - attack) / 2);
-};
-
-const canCounterAttack = (attack: number, defense: number) => defense > attack;
-
-export const calculateCombatResult = (
-  attack: number,
-  defense: number,
-  at: number,
-  damage: number
-): { canCounterAttack: true; counterAttackBonus: number } | { canCounterAttack: false; damage: number } => {
-  const needToRound = (game as Game).settings.get('animabf', ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5);
-
-  if (canCounterAttack(attack, defense)) {
-    return {
-      canCounterAttack: true,
-      counterAttackBonus: calculateCounterAttackBonus(attack, defense)
-    };
-  }
-
-  const result = calculateDamage(attack, defense, at, damage);
-
-  return {
-    canCounterAttack: false,
-    damage: needToRound ? roundTo5Multiples(result) : result
-  };
 };
 
 export const damageCalculatorMacro = async () => {

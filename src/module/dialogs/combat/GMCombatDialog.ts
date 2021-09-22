@@ -1,4 +1,3 @@
-import { calculateCombatResult } from '../../macros/functions/damageCalculatorMacro';
 import { UserCombatAttackResult } from './CombatAttackDialog';
 import { UserCombatDefenseResult } from './CombatDefenseDialog';
 import { WeaponDataSource } from '../../types/combat/WeaponItemConfig';
@@ -7,6 +6,7 @@ import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import { Templates } from '../../utils/constants';
 import CloseOptions = FormApplication.CloseOptions;
 import { ABFActor } from '../../actor/ABFActor';
+import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 
 type GMCombatDialogData = {
   ui: {
