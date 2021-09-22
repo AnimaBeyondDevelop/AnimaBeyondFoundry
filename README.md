@@ -17,3 +17,7 @@ As we said before, we love community support, so if you have some system improve
 - [Anima Project Studio](https://twitter.com/animaps): Official Twitter
 - [Anima a través de la red](https://discord.gg/GK58q7a): Spanish discord community of Anima Beyond Fantasy
 - [Anima Beyond Fantasy International](https://discord.gg/Avt8ebP): The international discord community of Anima Beyond Fantasy
+
+## Develop instructions
+
+- [Spanish](docs/develop/es/es.md)
