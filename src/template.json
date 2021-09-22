@@ -22,7 +22,7 @@
           "height": { "value": "" },
           "weight": { "value": "" },
           "age": { "value": "" },
-          "genre": { "value": "" },
+          "gender": { "value": "" },
           "race": { "value": "" },
           "appearance": { "value": "" },
           "size": { "value": 0 }

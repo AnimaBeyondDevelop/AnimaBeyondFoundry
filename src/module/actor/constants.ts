@@ -61,7 +61,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       age: {
         value: ''
       },
-      genre: {
+      gender: {
         value: ''
       },
       race: {

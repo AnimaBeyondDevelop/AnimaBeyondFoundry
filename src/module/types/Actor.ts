@@ -63,7 +63,7 @@ export type ABFActorDataSourceData = {
       age: {
         value: string;
       };
-      genre: {
+      gender: {
         value: string;
       };
       race: {
