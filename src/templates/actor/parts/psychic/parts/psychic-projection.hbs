@@ -1,27 +1,60 @@
 {{#> "systems/animabf/templates/common/ui/group.hbs"
-  class="psychic-projection"
+class="psychic-projection"
 }}
+{{>
+"systems/animabf/templates/common/ui/group-header.hbs"
+title=(localize "anima.ui.psychic.psychicProjection.title")
+}}
+{{#> "systems/animabf/templates/common/ui/group-body.hbs"
+class="psychic-projection"
+}}
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+class="projection"
+title=(localize "anima.ui.psychic.psychicProjection.projection.title")
+rollable=true
+rollableMessage=(manipulateString "toLowerCase" (localize "anima.ui.psychic.psychicProjection.title"))
+inputName="data.psychic.psychicProjection.base.value"
+inputValue=data.data.psychic.psychicProjection.base.value
+hasSecondaryInput=true
+addTooltips=true
+disableSecondaryInput=true
+rollSecondaryInput=true
+secondaryInputName="data.psychic.psychicProjection.final.value"
+secondaryInputValue=data.data.psychic.psychicProjection.final.value
+}}
+<h3 class='title'>{{localize "anima.ui.psychic.psychicProjection.imbalance.title"}}</h3>
+<div class='imbalance'>
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
-    title=(localize "anima.ui.psychic.psychicProjection.title")
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  class="offensive"
+  title=(localize "anima.ui.psychic.psychicProjection.offensive.title")
+  rollable=true
+  rollableMessage=(localize "anima.ui.psychic.psychicProjection.offensive.rollMessage")
+  inputName="data.psychic.psychicProjection.imbalance.offensive.base.value"
+  inputValue=data.data.psychic.psychicProjection.offensive.base.value
+  hasSecondaryInput=true
+  rollSecondaryInput=true
+  disableSecondaryInput=true
+  addTooltips=true
+  secondaryInputName="data.psychic.psychicProjection.imbalance.offensive.final.value"
+  secondaryInputValue=data.data.psychic.psychicProjection.offensive.final.value
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
-    class="psychic-projection"
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  class="defensive"
+  title=(localize "anima.ui.psychic.psychicProjection.defensive.title")
+  rollable=true
+  rollableMessage=(localize "anima.ui.psychic.psychicProjection.defensive.rollMessage")
+  inputName="data.psychic.psychicProjection.imbalance.defensive.base.value"
+  inputValue=data.data.psychic.psychicProjection.defensive.base.value
+  hasSecondaryInput=true
+  rollSecondaryInput=true
+  disableSecondaryInput=true
+  addTooltips=true
+  secondaryInputName="data.psychic.psychicProjection.imbalance.defensive.final.value"
+  secondaryInputValue=data.data.psychic.psychicProjection.defensive.final.value
   }}
-    {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="projection"
-      title=(localize "anima.ui.psychic.psychicProjection.projection.title")
-      rollable=true
-      rollableMessage=(manipulateString "toLowerCase" (localize "anima.ui.psychic.psychicProjection.title"))
-      inputName="data.psychic.psychicProjection.base.value"
-      inputValue=data.data.psychic.psychicProjection.base.value
-      hasSecondaryInput=true
-      addTooltips=true
-      disableSecondaryInput=true
-      rollSecondaryInput=true
-      secondaryInputName="data.psychic.psychicProjection.final.value"
-      secondaryInputValue=data.data.psychic.psychicProjection.final.value
-    }}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+</div>
+{{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}
