@@ -321,6 +321,7 @@ function updateManifest(cb) {
 
     manifest.file.url = repoURL;
     manifest.file.manifest = `${rawURL}/main/${manifestRoot}/${manifest.name}`;
+    manifest.file.changelog = `${repoURL}/releases/tag/v${manifest.file.version}`;
     manifest.file.download = result;
 
     const prettyProjectJson = prettier.format(stringify(manifest.file), { parser: 'json' });
