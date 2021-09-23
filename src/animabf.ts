@@ -22,7 +22,6 @@ import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
-import { createAnimaBFMacro } from './module/macros/createAnimaBFMacro';
 import { Log } from './utils/Log';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
@@ -83,8 +82,6 @@ Hooks.once('ready', () => {
   registerCombatWebsocketRoutes();
 
   attachCustomMacroBar();
-
-  Hooks.on('hotbarDrop', (bar, data, slot) => createAnimaBFMacro(data, slot));
 });
 
 // Add any additional hooks if necessary
