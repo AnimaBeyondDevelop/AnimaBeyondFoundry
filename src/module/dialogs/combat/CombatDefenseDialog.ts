@@ -29,7 +29,7 @@ export type UserCombatDefenseDialogData = {
     combat: {
       modifier: number;
       fatigue: number;
-      defenseCount: number;
+      multipleDefensesPenalty: number;
       at: SpecialField;
     };
     mystic: {
@@ -54,7 +54,7 @@ export type UserCombatDefenseCombatResult = {
     modifier: number;
     type: 'dodge' | 'block';
     fatigue: number;
-    defenseCount: number;
+    multipleDefensesPenalty: number;
     at: number | undefined;
     roll: number;
     total: number;
@@ -116,7 +116,7 @@ const getInitialData = (
       showRoll: !isGM,
       combat: {
         fatigue: 0,
-        defenseCount: 1,
+        multipleDefensesPenalty: 0,
         modifier: 0,
         at: {
           special: 0,
@@ -198,7 +198,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
     super.activateListeners(html);
 
     html.find('.send-defense').click(e => {
-      const { fatigue, modifier, defenseCount, at } = this.data.defender.combat;
+      const { fatigue, modifier, multipleDefensesPenalty, at } = this.data.defender.combat;
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
 
@@ -208,7 +208,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
           : this.defenderActor.data.data.combat.block.final.value;
 
       const roll = new ABFFoundryRoll(
-        `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${defenseCount ?? 0} + ${value}`
+        `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${multipleDefensesPenalty ?? 0} + ${value}`
       );
 
       roll.roll();
@@ -226,13 +226,13 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
         });
       }
 
-      const rolled = roll.total! - (modifier ?? 0) - (fatigue ?? 0) * 15 - (defenseCount ?? 0) - value;
+      const rolled = roll.total! - (modifier ?? 0) - (fatigue ?? 0) * 15 - (multipleDefensesPenalty ?? 0) - value;
 
       this.hooks.onDefense({
         type: 'combat',
         values: {
           type,
-          defenseCount,
+          multipleDefensesPenalty,
           modifier,
           fatigue,
           at: at.final,

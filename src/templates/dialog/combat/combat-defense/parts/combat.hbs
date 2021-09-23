@@ -41,13 +41,14 @@
   class="defense-count"
   title=(localize 'macros.combat.dialog.defenseCount.title')
   disabled=this.defenseSent
-  inputName='defender.combat.defenseCount'
+  inputName='defender.combat.multipleDefensesPenalty'
+  inputValue=this.defender.combat.multipleDefensesPenalty
 }}
-  <option value="0">1ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option value="30">2ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option value="50">3ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option value="70">4ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option value="90">5ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -0)}}selected{{/if}} value="-0">1ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -30)}}selected{{/if}} value="-30">2ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -50)}}selected{{/if}} value="-50">3ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -70)}}selected{{/if}} value="-70">4ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -90)}}selected{{/if}} value="-90">5ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
 {{#if this.defenseSent}}

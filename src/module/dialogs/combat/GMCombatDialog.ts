@@ -260,8 +260,8 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
 
       if (attacker.result.type === 'combat' && defender.result.type === 'combat') {
         const combatResult = calculateCombatResult(
-          attackerTotal,
-          defenderTotal,
+          Math.max(attackerTotal, 0),
+          Math.max(defenderTotal, 0),
           Math.max(
             defender.result.values.at! - calculateATReductionByQuality(attacker.result.weapon?.data.quality.value ?? 0),
             0
