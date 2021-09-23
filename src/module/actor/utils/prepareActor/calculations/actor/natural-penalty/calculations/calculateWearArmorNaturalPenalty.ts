@@ -1,12 +1,8 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { ArmorDataSource } from '../../../../../../../types/combat/ArmorItemConfig';
+import { getEquippedArmors } from '../../../../utils/getEquippedArmors';
 
 export const calculateWearArmorNaturalPenalty = (data: ABFActorDataSourceData): number => {
-  const combat = data.combat as { armors: ArmorDataSource[] };
-
-  const equippedArmors = combat.armors.filter(armor => armor.data.equipped.value);
-
-  const totalWearRequirement = equippedArmors.reduce(
+  const totalWearRequirement = getEquippedArmors(data).reduce(
     (prev, curr) => prev + curr.data.wearArmorRequirement.final.value,
     0
   );
