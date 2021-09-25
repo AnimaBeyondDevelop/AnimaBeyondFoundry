@@ -24,6 +24,7 @@ import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
 import { WeaponCritic } from '../../../../types/combat/WeaponItemConfig';
 import { getTargetToken } from '../util/getTargetToken';
 import { assertCurrentScene } from '../util/assertCurrentScene';
+import { ABFSettingsKeys } from '../../../../../utils/registerSettings';
 
 export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNotification> {
   private combat: GMCombatDialog | undefined;
@@ -174,7 +175,9 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
     }
 
     try {
-      await CombatDialogs.openCombatRequestDialog({ attacker: attacker.actor!, defender: defender.actor! });
+      if (!this.game.settings.get('animabf', ABFSettingsKeys.AUTO_ACCEPT_COMBAT_REQUESTS)) {
+        await CombatDialogs.openCombatRequestDialog({ attacker: attacker.actor!, defender: defender.actor! });
+      }
 
       this.combat = this.createNewCombat(attacker, defender);
 
