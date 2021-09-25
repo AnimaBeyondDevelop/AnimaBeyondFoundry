@@ -12,7 +12,7 @@ export default class ABFExploderRoll extends ABFRoll {
 
   public evaluate(): ABFFoundryRoll {
     if (this.canExplode) {
-      this.explodeDice(this.DEFAULT_OPEN_RANGE + 1);
+      this.explodeDice(this.lastOpenRange + 1);
     }
 
     this.firstDice.results = this.firstDice.results.map(res => ({
