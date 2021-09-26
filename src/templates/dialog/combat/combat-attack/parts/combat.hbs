@@ -14,7 +14,7 @@
   }}
     <option {{#if (is "eq" 0 this.attacker.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
 
-    {{#iterateNumber this.attacker.actor.data.data.characteristics.secondaries.fatigue.value}}
+    {{#iterateNumber (minNumber this.attacker.actor.data.data.characteristics.secondaries.fatigue.value 5)}}
       <option {{#if (is "eq" (math this "+" 1) ../this.attacker.combat.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
     {{/iterateNumber}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
