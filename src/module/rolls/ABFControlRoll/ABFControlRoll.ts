@@ -7,7 +7,7 @@ export default class ABFControlRoll extends ABFRoll {
   public evaluate(): ABFFoundryRoll {
     let penalty = Math.max(0, Math.floor(-this.foundryRoll.data.general.modifiers.allActions.base.value / 20));
 
-    if (this.foundryRoll.total === 10) {
+    if (this.foundryRoll.lastResult === 10) {
       this.success = true;
       penalty -= 2;
     }
