@@ -34,7 +34,7 @@
       "name": "psychic",
       "label": "(ES) Mentalismo",
       "system": "animabf",
-      "path": "./packs/psychic_es.db",
+      "path": "./packs/psychic_powers_es.db",
       "entity": "Item"
     }
   ],
