@@ -5,6 +5,7 @@ import { UserCombatAttackResult } from './CombatAttackDialog';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
 import { ABFActor } from '../../actor/ABFActor';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 type SpecialField = {
   special: number;
@@ -94,6 +95,10 @@ const getInitialData = (
   attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
   defender: TokenDocument
 ): UserCombatDefenseDialogData => {
+  const showRollByDefault = !!(game as Game).settings.get(
+    'animabf',
+    ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
+  );
   const isGM = !!(game as Game).user?.isGM;
 
   const attackerActor = attacker.token.actor!;
@@ -113,7 +118,7 @@ const getInitialData = (
     defender: {
       token: defender,
       actor: defenderActor,
-      showRoll: !isGM,
+      showRoll: !isGM || showRollByDefault,
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: 0,
