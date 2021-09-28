@@ -213,7 +213,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
           : this.defenderActor.data.data.combat.block.final.value;
 
       const roll = new ABFFoundryRoll(
-        `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${multipleDefensesPenalty ?? 0} + ${value}`
+        `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`
       );
 
       roll.roll();
