@@ -1,6 +1,6 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
-import { WeaponCritic } from '../../types/combat/WeaponItemConfig';
+import { WeaponCritic, WeaponDataSource } from '../../types/combat/WeaponItemConfig';
 import { UserCombatAttackResult } from './CombatAttackDialog';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
@@ -30,6 +30,9 @@ export type UserCombatDefenseDialogData = {
     combat: {
       modifier: number;
       fatigue: number;
+      weaponUsed: string | undefined;
+      weapon: WeaponDataSource | undefined;
+      unarmed: boolean
       multipleDefensesPenalty: number;
       at: SpecialField;
     };
@@ -123,6 +126,9 @@ const getInitialData = (
         fatigue: 0,
         multipleDefensesPenalty: 0,
         modifier: 0,
+        weaponUsed: undefined,
+        weapon: undefined,
+        unarmed: false,
         at: {
           special: 0,
           final: 0
@@ -158,6 +164,14 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
     super(getInitialData(attacker, defender));
 
     this.data = getInitialData(attacker, defender);
+
+    const weapons = this.defenderActor.data.data.combat.weapons as WeaponDataSource[];
+
+    if (weapons.length > 0) {
+      this.data.defender.combat.weaponUsed = weapons[0]._id;
+    } else {
+      this.data.defender.combat.unarmed = true;
+    }
 
     this.render(true);
   }
@@ -203,14 +217,16 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
     super.activateListeners(html);
 
     html.find('.send-defense').click(e => {
-      const { fatigue, modifier, multipleDefensesPenalty, at } = this.data.defender.combat;
+      const { fatigue, modifier, weapon, multipleDefensesPenalty, at } = this.data.defender.combat;
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
 
-      const value =
-        e.currentTarget.dataset.type === 'dodge'
-          ? this.defenderActor.data.data.combat.dodge.final.value
-          : this.defenderActor.data.data.combat.block.final.value;
+      let value: number;
+      if (e.currentTarget.dataset.type === 'dodge') {
+        value = this.defenderActor.data.data.combat.dodge.final.value;
+      } else {
+        value = weapon ? weapon.data.block.final.value : this.defenderActor.data.data.combat.block.final.value;
+      }
 
       const roll = new ABFFoundryRoll(
         `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`
@@ -386,6 +402,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
     if (at !== undefined) {
       this.data.defender.combat.at.final = this.data.defender.combat.at.special + at;
     }
+
+    const { combat } = this.data.defender;
+
+    const weapons = this.defenderActor.data.data.combat.weapons as WeaponDataSource[];
+    combat.weapon = weapons.find(w => w._id === combat.weaponUsed)!;
 
     return this.data;
   }
