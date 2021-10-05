@@ -59,7 +59,7 @@
   "minimumCoreVersion": "0.8.8",
   "compatibleCoreVersion": "0.8.9",
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
-  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/develop/src/system.json/main/src/system.json",
+  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
   "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.12.3",
   "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.12.3/animabf.zip",
   "bugs": "https://docs.google.com/forms/d/e/1FAIpQLSeUTdTOjxMKarAd1eoHfpswyoIs-mvSElVGmv7sZGrEuBHWKA/viewform?usp=sf_link"
