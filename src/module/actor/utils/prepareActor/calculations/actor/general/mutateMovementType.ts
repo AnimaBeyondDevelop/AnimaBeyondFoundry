@@ -9,11 +9,12 @@ export const mutateMovementType = (data: ABFActorDataSourceData) => {
   );
 
   const { movementType } = data.characteristics.secondaries;
+  const negativeMovementModifier = data.general.modifiers.allActions.base.value / 20;
 
   movementType.final.value =
     movementType.mod.value +
     data.characteristics.primaries.agility.value +
-    Math.min(0, data.general.modifiers.allActions.base.value) +
+    Math.min(0, Math.sign(negativeMovementModifier) * Math.floor(Math.abs(negativeMovementModifier))) +
     armorsMovementRestrictions;
 
   movementType.final.value = Math.max(0, movementType.final.value);
