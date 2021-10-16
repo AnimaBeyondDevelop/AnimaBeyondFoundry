@@ -35,6 +35,14 @@ function getConfig() {
   }
 }
 
+function getDistConfig() {
+  const distPath = path.resolve(process.cwd(), 'distributionconfig.json');
+
+  if (fs.pathExistsSync(distPath)) {
+    return fs.readJsonSync(distPath);
+  }
+}
+
 let ROOT_PATH;
 
 if (argv.release) {
@@ -302,15 +310,15 @@ async function packageBuild() {
  */
 function updateManifest(cb) {
   const packageJson = fs.readJSONSync('package.json');
-  const config = getConfig(),
+  const config = getDistConfig(),
     manifest = getManifest(),
     rawURL = config.rawURL,
     repoURL = config.repository,
     manifestRoot = manifest.root;
 
-  if (!config) cb(Error(chalk.red('foundryconfig.json not found')));
+  if (!config) cb(Error(chalk.red('distributionconfig.json not found')));
   if (!manifest) cb(Error(chalk.red('Manifest JSON not found')));
-  if (!rawURL || !repoURL) cb(Error(chalk.red('Repository URLs not configured in foundryconfig.json')));
+  if (!rawURL || !repoURL) cb(Error(chalk.red('Repository URLs not configured in distributionconfig.json')));
 
   try {
     manifest.file.version = packageJson.version;
