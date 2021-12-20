@@ -228,6 +228,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
   }
 
   updateDefenderData(result: UserCombatDefenseResult) {
+    result.values.total = Math.max(0, result.values.total)
     this.data.defender.result = result;
 
     if (result.type === 'mystic') {
@@ -271,14 +272,14 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
 
         if (combatResult.canCounterAttack) {
           this.data.calculations = {
-            difference: attackerTotal - Math.max(defenderTotal, 0),
+            difference: attackerTotal - defenderTotal,
             canCounter: true,
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
           };
         } else {
           this.data.calculations = {
-            difference: attackerTotal - Math.max(defenderTotal, 0),
+            difference: attackerTotal - defenderTotal,
             canCounter: false,
             winner,
             damage: combatResult.damage
@@ -286,7 +287,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
         }
       } else {
         this.data.calculations = {
-          difference: attackerTotal - Math.max(defenderTotal, 0),
+          difference: attackerTotal - defenderTotal,
           canCounter: false,
           winner
         };
