@@ -271,14 +271,14 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
 
         if (combatResult.canCounterAttack) {
           this.data.calculations = {
-            difference: attackerTotal - defenderTotal,
+            difference: attackerTotal - Math.max(defenderTotal, 0),
             canCounter: true,
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
           };
         } else {
           this.data.calculations = {
-            difference: attackerTotal - defenderTotal,
+            difference: attackerTotal - Math.max(defenderTotal, 0),
             canCounter: false,
             winner,
             damage: combatResult.damage
@@ -286,7 +286,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
         }
       } else {
         this.data.calculations = {
-          difference: attackerTotal - defenderTotal,
+          difference: attackerTotal - Math.max(defenderTotal, 0),
           canCounter: false,
           winner
         };
