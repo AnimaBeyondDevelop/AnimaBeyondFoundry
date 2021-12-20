@@ -6,16 +6,33 @@
   overflow-x: auto;
 }
 
+img {
+  border: none;
+}
+
+.dialog-button {
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    outline: none;
+    box-shadow: 0 0 5px $red;
+  }
+}
+
 .abf.sheet.actor {
   .rollable {
     cursor: pointer;
     &:hover,
     &:focus {
-      text-shadow: 0 0 8px red;
+      text-shadow: 0 0 8px $red;
     }
   }
 
   .input {
+    &[type='select'] {
+      height: 1.5rem;
+    }
+
     font-family: inherit;
     border: none;
     ::-webkit-input-placeholder {
@@ -39,6 +56,53 @@
 
 .common- {
   &group {
+    & .contractible-group {
+      position: relative;
+
+      &.contracted {
+        &.contract-footer {
+          .group-footer {
+            display: none !important;
+
+            * {
+              box-shadow: none !important;
+            }
+          }
+        }
+
+        .group-body {
+          display: none !important;
+
+          * {
+            box-shadow: none !important;
+          }
+        }
+      }
+
+      .contractible-button {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        z-index: 10;
+        cursor: pointer;
+        background-color: white;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        border: none;
+
+        transition: background-color 0.3ms ease-in-out;
+
+        &:hover {
+          background-color: $light-gray;
+        }
+
+        &.contracted {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
     width: 100%;
 
     display: flex;
@@ -176,6 +240,54 @@
       color: white;
       width: 4rem;
       margin-left: -2rem;
+    }
+  }
+}
+
+.animabf-loading-indicator {
+  &.white {
+    border-color: white transparent white transparent;
+  }
+
+  &.big {
+    .lds-dual-ring {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .lds-dual-ring:after {
+      width: 2rem;
+      height: 2rem;
+
+      border-width: 4px;
+    }
+  }
+
+  .lds-dual-ring {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lds-dual-ring:after {
+    content: ' ';
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 2px solid $red;
+    border-color: $red transparent $red transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }

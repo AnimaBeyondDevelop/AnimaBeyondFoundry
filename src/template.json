@@ -3,26 +3,38 @@
     "types": ["character"],
     "templates": [],
     "character": {
+      "version": 0,
+      "ui": {
+        "contractibleItems": {},
+        "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false } }
+      },
       "general": {
-        "modifiers": { "physicalActions": { "value": 0 }, "allActions": { "value": 0 } },
+        "modifiers": {
+          "physicalActions": { "value": 0 },
+          "allActions": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } }
+        },
+        "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "presence": { "value": 0 },
         "aspect": {
           "hair": { "value": "" },
           "eyes": { "value": "" },
           "height": { "value": "" },
           "weight": { "value": "" },
           "age": { "value": "" },
-          "genre": { "value": "" },
+          "gender": { "value": "" },
           "race": { "value": "" },
-          "appearance": { "value": 0 },
+          "appearance": { "value": "" },
           "size": { "value": 0 }
         },
         "advantages": [],
         "contacts": [],
+        "inventory": [],
+        "money": { "cooper": { "value": 0 }, "silver": { "value": 0 }, "gold": { "value": 0 } },
         "description": { "value": "" },
         "disadvantages": [],
         "elan": [],
         "experience": { "current": { "value": 0 }, "next": { "value": 0 } },
-        "fatigue": { "value": 0, "max": 0 },
         "languages": { "base": { "value": "" }, "others": [] },
         "levels": [],
         "notes": [],
@@ -30,92 +42,103 @@
       },
       "characteristics": {
         "primaries": {
-          "agility": { "value": 0 },
-          "constitution": { "value": 0 },
-          "dexterity": { "value": 0 },
-          "strength": { "value": 0 },
-          "intelligence": { "value": 0 },
-          "perception": { "value": 0 },
-          "power": { "value": 0 },
-          "willPower": { "value": 0 }
+          "agility": { "value": 0, "mod": 0 },
+          "constitution": { "value": 0, "mod": 0 },
+          "dexterity": { "value": 0, "mod": 0 },
+          "strength": { "value": 0, "mod": 0 },
+          "intelligence": { "value": 0, "mod": 0 },
+          "perception": { "value": 0, "mod": 0 },
+          "power": { "value": 0, "mod": 0 },
+          "willPower": { "value": 0, "mod": 0 }
         },
         "secondaries": {
           "lifePoints": { "value": 0, "max": 0 },
-          "initiative": { "base": { "value": 0 }, "primary": { "value": 0 }, "secondary": { "value": 0 } },
+          "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
           "fatigue": { "value": 0, "max": 0 },
-          "movement": { "value": 0 },
+          "movementType": { "mod": { "value": 0 }, "final": { "value": 0 } },
+          "movement": { "maximum": { "value": 0 }, "running": { "value": 0 } },
           "resistances": {
-            "physical": { "value": 0 },
-            "disease": { "value": 0 },
-            "poison": { "value": 0 },
-            "magic": { "value": 0 },
-            "psychic": { "value": 0 }
+            "physical": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "disease": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "poison": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "magic": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "psychic": { "base": { "value": 0 }, "final": { "value": 0 } }
           }
         }
       },
       "secondaries": {
         "athletics": {
-          "acrobatics": { "value": 0 },
-          "athleticism": { "value": 0 },
-          "ride": { "value": 0 },
-          "swim": { "value": 0 },
-          "climb": { "value": 0 },
-          "jump": { "value": 0 },
-          "piloting": { "value": 0 }
+          "acrobatics": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "athleticism": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "ride": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "swim": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "climb": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "jump": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "piloting": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
-        "vigor": { "composure": { "value": 0 }, "featsOfStrength": { "value": 0 }, "withstandPain": { "value": 0 } },
-        "perception": { "notice": { "value": 0 }, "search": { "value": 0 }, "track": { "value": 0 } },
+        "vigor": {
+          "composure": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "featsOfStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "withstandPain": { "base": { "value": 0 }, "final": { "value": 0 } }
+        },
+        "perception": {
+          "notice": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "search": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "track": { "base": { "value": 0 }, "final": { "value": 0 } }
+        },
         "intellectual": {
-          "animals": { "value": 0 },
-          "science": { "value": 0 },
-          "law": { "value": 0 },
-          "herbalLore": { "value": 0 },
-          "history": { "value": 0 },
-          "tactics": { "value": 0 },
-          "medicine": { "value": 0 },
-          "memorize": { "value": 0 },
-          "navigation": { "value": 0 },
-          "occult": { "value": 0 },
-          "appraisal": { "value": 0 },
-          "magicAppraisal": { "value": 0 }
+          "animals": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "science": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "law": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "herbalLore": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "history": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "tactics": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "medicine": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "memorize": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "navigation": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "occult": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "appraisal": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "magicAppraisal": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "social": {
-          "style": { "value": 0 },
-          "intimidate": { "value": 0 },
-          "leadership": { "value": 0 },
-          "persuasion": { "value": 0 },
-          "trading": { "value": 0 },
-          "streetwise": { "value": 0 },
-          "etiquette": { "value": 0 }
+          "style": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "intimidate": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "leadership": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "persuasion": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "trading": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "streetwise": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "etiquette": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "subterfuge": {
-          "lockPicking": { "value": 0 },
-          "disguise": { "value": 0 },
-          "hide": { "value": 0 },
-          "theft": { "value": 0 },
-          "stealth": { "value": 0 },
-          "trapLore": { "value": 0 },
-          "poisons": { "value": 0 }
+          "lockPicking": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "disguise": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "hide": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "theft": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "stealth": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "trapLore": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "poisons": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "creative": {
-          "art": { "value": 0 },
-          "dance": { "value": 0 },
-          "forging": { "value": 0 },
-          "runes": { "value": 0 },
-          "alchemy": { "value": 0 },
-          "animism": { "value": 0 },
-          "music": { "value": 0 },
-          "sleightOfHand": { "value": 0 },
-          "ritualCalligraphy": { "value": 0 },
-          "jewelry": { "value": 0 },
-          "tailoring": { "value": 0 }
+          "art": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "dance": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "forging": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "runes": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "alchemy": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "animism": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "music": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "sleightOfHand": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "ritualCalligraphy": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "jewelry": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "tailoring": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "puppetMaking": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "secondarySpecialSkills": []
       },
       "combat": {
-        "attack": { "value": 0 },
-        "block": { "value": 0 },
-        "dodge": { "value": 0 },
+        "attack": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "block": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "dodge": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "wearArmor": { "value": 0 },
         "totalArmor": {
           "at": {
             "cut": { "value": 0 },
@@ -134,13 +157,20 @@
         "armors": []
       },
       "mystic": {
-        "act": { "main": { "value": 0 }, "alternative": { "value": 0 } },
+        "act": {
+          "main": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "alternative": { "base": { "value": 0 }, "final": { "value": 0 } }
+        },
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
         "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
         "magicProjection": {
+          "base": { "value": 0 },
           "final": { "value": 0 },
-          "imbalance": { "offensive": { "value": 0 }, "defensive": { "value": 0 } }
+          "imbalance": {
+            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+          }
         },
         "magicLevel": {
           "spheres": {
@@ -160,12 +190,12 @@
           "used": { "value": 0 }
         },
         "summoning": {
-          "summon": { "value": 0 },
-          "banish": { "value": 0 },
-          "bind": { "value": 0 },
-          "control": { "value": 0 }
+          "summon": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "banish": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "bind": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "control": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
-        "freeAccessSpells": [],
+        "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],
         "summons": [],
@@ -197,18 +227,18 @@
         },
         "martialKnowledge": { "used": { "value": 0 }, "max": { "value": 0 } },
         "kiAccumulation": {
-          "strength": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "agility": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "dexterity": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "constitution": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "willPower": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
-          "power": { "accumulated": { "value": 0 }, "current": { "value": 0 }, "total": { "value": 0 } },
+          "strength": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "agility": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "dexterity": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "constitution": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "willPower": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "power": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
           "generic": { "value": 0, "max": 0 }
         }
       },
       "psychic": {
-        "psychicPotential": { "value": 0 },
-        "psychicProjection": { "value": 0 },
+        "psychicPotential": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "psychicProjection": { "base": { "value": 0 }, "final": { "value": 0 } },
         "psychicPoints": { "value": 0, "max": 0 },
         "psychicPowers": [],
         "psychicDisciplines": [],
@@ -221,9 +251,10 @@
   "Item": {
     "types": [
       "advantage",
+      "ammo",
       "armor",
       "disadvantage",
-      "freeAccessSpell",
+      "spell",
       "mentalPattern",
       "note",
       "psychicDiscipline",
@@ -231,6 +262,15 @@
       "technique",
       "weapon"
     ],
+    "ammo": {
+      "amount": { "value": 0 },
+      "damage": { "value": 0 },
+      "critic": { "value": "-" },
+      "integrity": { "value": 0 },
+      "breaking": { "value": 0 },
+      "presence": { "value": 0 },
+      "special": { "value": "" }
+    },
     "armor": {
       "cut": { "value": 0 },
       "pierce": { "value": 0 },
@@ -241,25 +281,61 @@
       "cold": { "value": 0 },
       "energy": { "value": 0 }
     },
-    "freeAccessSpell": { "level": { "value": 0 }, "cost": { "value": 0 } },
+    "spell": {
+      "level": { "value": 0 },
+      "via": { "value": "" },
+      "spellType": { "value": "" },
+      "actionType": { "value": "" },
+      "hasDailyMaintenance": { "value": false },
+      "grades": {
+        "base": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        },
+        "intermediate": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        },
+        "advanced": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        },
+        "arcane": {
+          "name": { "value": "" },
+          "intRequired": { "value": 0 },
+          "zeon": { "value": 0 },
+          "maintenanceCost": { "value": 0 },
+          "description": { "value": "" }
+        }
+      }
+    },
     "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
     "psychicPower": {
       "level": { "value": 0 },
-      "actionType": { "value": "" },
+      "effects": {
+        "20": { "value": "" },
+        "40": { "value": "" },
+        "80": { "value": "" },
+        "120": { "value": "" },
+        "140": { "value": "" },
+        "180": { "value": "" },
+        "240": { "value": "" },
+        "280": { "value": "" },
+        "320": { "value": "" },
+        "440": { "value": "" }
+      },
+      "actionType": { "value": "active" },
       "hasMaintenance": { "value": false },
-      "bonus": { "value": 0 },
-      "effects": [
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" },
-        { "value": "" }
-      ]
+      "bonus": { "value": 0 }
     },
     "technique": {
       "description": { "value": "" },
@@ -277,22 +353,22 @@
       "breaking": { "value": 0 },
       "attack": { "value": 0 },
       "block": { "value": 0 },
-      "damage": { "value": 0 },
-      "initiative": { "value": 0 },
-      "initiativeBase": { "value": 0 },
+      "damage": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
       "presence": { "value": 0 },
       "size": { "value": 0 },
-      "fueRequired": { "value": "" },
+      "strRequired": { "oneHand": { "value": 0 }, "twoHands": { "value": 0 } },
       "quality": { "value": 0 },
-      "oneOrTwoHanded": { "value": "" },
+      "oneOrTwoHanded": { "value": "one-handed" },
+      "knowledgeType": { "value": "known" },
+      "manageabilityType": { "value": "one_hand" },
+      "shotType": { "value": "throw" },
       "isRanged": { "value": false },
+      "range": { "base": { "value": 0 }, "final": { "value": 0 } },
       "cadence": { "value": "" },
-      "range": { "value": 0 },
-      "knowledgeType": { "value": "" },
-      "critic": {
-        "primary": { "value": "" },
-        "secondary": { "value": "" }
-      }
+      "reload": { "value": 0 },
+      "weaponStrength": { "value": 0 },
+      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     }
   }
 }

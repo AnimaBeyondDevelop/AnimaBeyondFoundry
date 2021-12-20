@@ -1,0 +1,52 @@
+<div class='{{cssClass}} combat-request'>
+  <p class='label title'>
+    {{concat this.data.attacker.name (localize 'macros.combat.dialog.requestPermission.title') this.data.defender.name}}
+  </p>
+  <div class='combatants'>
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="attack-values"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title="Attacker"
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="attack-values"
+      }}
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.data.attacker.img}}' data-edit='img' title='{{this.data.attacker.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.data.attacker.name}}
+          </p>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+
+    <div class='versus-label'>
+      <p class='label'>VS</p>
+    </div>
+
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="defender-values"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title="Defender"
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="defender-values"
+      }}
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.data.defender.img}}' data-edit='img' title='{{this.data.defender.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.data.defender.name}}
+          </p>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  </div>
+</div>

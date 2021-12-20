@@ -1,0 +1,89 @@
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.modifier.title')
+  disabled=this.attackSent
+  inputName="attacker.combat.modifier"
+  inputValue=this.attacker.combat.modifier
+}}
+{{#if this.ui.hasFatiguePoints}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.fatigue.title')
+    disabled=this.attackSent
+    inputName="attacker.combat.fatigueUsed"
+    inputValue=this.attacker.combat.fatigueUsed
+  }}
+    <option {{#if (is "eq" 0 this.attacker.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
+
+    {{#iterateNumber (minNumber this.attacker.actor.data.data.characteristics.secondaries.fatigue.value 5)}}
+      <option {{#if (is "eq" (math this "+" 1) ../this.attacker.combat.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+    {{/iterateNumber}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
+{{/if}}
+
+{{#if this.attacker.combat.unarmed}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.weapon.title')
+    disabled=true
+  }}
+    <option>Unarmed</option>
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.weapon.title')
+    disabled=this.attackSent
+    inputName='attacker.combat.weaponUsed'
+  }}
+    {{#each this.attacker.actor.data.data.combat.weapons}}
+      <option {{#if (is "eq" this._id ../this.attacker.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{localize 'macros.combat.dialog.weaponRow.attack.title' name=this.name value=this.data.attack.final.value}}</option>
+    {{/each}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
+{{#unless this.attacker.combat.unarmed}}
+  {{#if this.ui.weaponHasSecondaryCritic}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'macros.combat.dialog.weapon.critic.title')
+      disabled=this.attackSent
+      inputName='attacker.combat.criticSelected'
+    }}
+      <option {{#if (is "eq" this.attacker.combat.weapon.data.critic.primary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.data.critic.primary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.data.critic.primary.value '.title')}}</option>
+      <option {{#if (is "eq" this.attacker.combat.weapon.data.critic.secondary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.data.critic.secondary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.data.critic.secondary.value '.title')}}</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{else}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'macros.combat.dialog.weapon.critic.title')
+      disabled=true
+      inputName='attacker.combat.criticSelected'
+    }}
+      <option selected value='{{this.attacker.combat.weapon.data.critic.primary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.data.critic.primary.value '.title')}}</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{/if}}
+{{/unless}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.damage.title')
+  inputName="attacker.combat.damage.special"
+  inputValue=this.attacker.combat.damage.special
+  disabled=this.attackSent
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.combat.damage.final"
+  secondaryInputValue=this.attacker.combat.damage.final
+}}
+
+
+{{#if this.attackSent}}
+  <div class='attack-sent'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      {{localize 'macros.combat.dialog.attackSent.title'}}
+    </p>
+  </div>
+{{else}}
+  <button class='abf-button send-attack'>
+    {{localize 'macros.combat.dialog.attackButton.title'}}
+  </button>
+{{/if}}

@@ -3,7 +3,11 @@
     <p class='label'>{{this.title}}</p>
   {{/unless}}
 
-  <select class='input' name='{{this.inputName}}'>
+  <select
+    class='input'
+    name='{{this.inputName}}'
+    {{#if this.disabled}}disabled{{/if}}
+  >
     {{> @partial-block}}
   </select>
 </div>

@@ -6,3 +6,12 @@
 
 @import 'actor/actor-sheet.scss';
 @import 'items/items-sheet.scss';
+@import 'chat/combat-result-message.scss';
+@import 'custom-hotbar/custom-hotbar.scss';
+
+@import 'dialog/gm-combat-dialog.scss';
+@import 'dialog/combat-request-dialog.scss';
+@import 'dialog/combat-attack-dialog';
+@import 'dialog/combat-defense-dialog';
+@import 'dialog/generic-dialog.scss';
+@import 'dialog/confirmation-prompt-dialog';

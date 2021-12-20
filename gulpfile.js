@@ -35,6 +35,14 @@ function getConfig() {
   }
 }
 
+function getDistConfig() {
+  const distPath = path.resolve(process.cwd(), 'distributionconfig.json');
+
+  if (fs.pathExistsSync(distPath)) {
+    return fs.readJsonSync(distPath);
+  }
+}
+
 let ROOT_PATH;
 
 if (argv.release) {
@@ -302,15 +310,15 @@ async function packageBuild() {
  */
 function updateManifest(cb) {
   const packageJson = fs.readJSONSync('package.json');
-  const config = getConfig(),
+  const config = getDistConfig(),
     manifest = getManifest(),
     rawURL = config.rawURL,
     repoURL = config.repository,
     manifestRoot = manifest.root;
 
-  if (!config) cb(Error(chalk.red('foundryconfig.json not found')));
+  if (!config) cb(Error(chalk.red('distributionconfig.json not found')));
   if (!manifest) cb(Error(chalk.red('Manifest JSON not found')));
-  if (!rawURL || !repoURL) cb(Error(chalk.red('Repository URLs not configured in foundryconfig.json')));
+  if (!rawURL || !repoURL) cb(Error(chalk.red('Repository URLs not configured in distributionconfig.json')));
 
   try {
     manifest.file.version = packageJson.version;
@@ -321,6 +329,7 @@ function updateManifest(cb) {
 
     manifest.file.url = repoURL;
     manifest.file.manifest = `${rawURL}/main/${manifestRoot}/${manifest.name}`;
+    manifest.file.changelog = `${repoURL}/releases/tag/v${manifest.file.version}`;
     manifest.file.download = result;
 
     const prettyProjectJson = prettier.format(stringify(manifest.file), { parser: 'json' });
@@ -421,7 +430,7 @@ const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
 exports.build = gulp.series(clean, execBuild);
 exports.watch = buildWatch;
 exports.clean = clean;
-exports.package = packageBuild;
+exports.package = gulp.series(clean, execBuild, packageBuild);
 exports.update = updateManifest;
 exports.publish = gulp.series(
   ensureGitBranch,

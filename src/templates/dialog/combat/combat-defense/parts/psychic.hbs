@@ -1,0 +1,50 @@
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.modifier.title')
+  disabled=this.defenseSent
+  inputName="defender.psychic.modifier"
+  inputValue=this.defender.psychic.modifier
+}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.psychicProjection.title')
+  disabled=this.defenseSent
+  inputName="defender.psychic.psychicProjection"
+  inputValue=this.defender.psychic.psychicProjection
+}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.psychicPotential.title')
+  disabled=this.defenseSent
+  inputName="defender.psychic.psychicPotential.special"
+  inputValue=this.defender.psychic.psychicPotential.special
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="defender.psychic.psychicPotential.final"
+  secondaryInputValue=this.defender.psychic.psychicPotential.final
+}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.psychicPower.title')
+  disabled=this.defenseSent
+  inputName='defender.psychic.powerUsed'
+}}
+  {{#each this.defender.actor.data.data.psychic.psychicPowers}}
+    <option {{#if (is "eq" this._id ../this.defender.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#if this.defenseSent}}
+  <div class='defense-sent'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      {{localize 'macros.combat.dialog.defenseSent.title'}}
+    </p>
+  </div>
+{{else}}
+  <button class='abf-button send-psychic-defense'>
+    {{localize 'macros.combat.dialog.defenseButton.title'}}
+  </button>
+{{/if}}

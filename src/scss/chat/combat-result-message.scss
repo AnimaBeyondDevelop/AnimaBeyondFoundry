@@ -1,0 +1,73 @@
+.combat-result-message {
+  .abf-chat-message-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+
+    .combatants {
+      display: flex;
+      justify-content: space-between;
+
+      width: 100%;
+      height: 100%;
+
+      .versus-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .label {
+          font-size: 2rem;
+          font-weight: bold;
+          color: $red;
+          padding-top: 1rem;
+        }
+      }
+
+      .combatant-profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        max-width: 5rem;
+
+        .image {
+          margin-bottom: 0.5rem;
+
+          img {
+            height: 5rem;
+            width: 5rem;
+            background-color: #6e2917;
+            border-radius: 50%;
+          }
+        }
+
+        .name {
+          margin: 0;
+          font-size: 1rem;
+          font-weight: bold;
+          max-width: 100%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+    }
+
+    .combat-result {
+      .result {
+        font-size: 3rem;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .counter {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}

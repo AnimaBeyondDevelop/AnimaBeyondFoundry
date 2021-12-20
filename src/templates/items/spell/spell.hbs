@@ -1,0 +1,120 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="spell-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="spell"
+    }}
+      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+        <div class='spell-header'>
+          <div class='first-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="name"
+              hideTitle=true
+              inputType="text"
+              inputName="name"
+              inputValue=data.name
+            }}
+          </div>
+          <div class='second-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="level"
+              title=(localize "anima.ui.mystic.spell.level.title")
+              inputName="data.level.value"
+              inputValue=data.data.level.value
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="via"
+              choices=config.iterables.mystic.vias
+              title=(localize "anima.ui.mystic.spell.via.title")
+              inputName="data.via.value"
+              inputValue=data.data.via.value
+            }}
+          </div>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="spell"
+      }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="base-grade"
+          spellId=data._id
+          intRequiredInputName=(concat "data.grades.base.intRequired.value")
+          zeonInputName=(concat "data.grades.base.zeon.value")
+          maintenanceCostInputName=(concat "data.grades.base.maintenanceCost.value")
+          descriptionInputName=(concat "data.grades.base.description.value")
+          gradeName='base'
+          grade=data.data.grades.base
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="intermediate-grade"
+          spellId=data._id
+          hideTitle=true
+          intRequiredInputName=(concat "data.grades.intermediate.intRequired.value")
+          zeonInputName=(concat "data.grades.intermediate.zeon.value")
+          maintenanceCostInputName=(concat "data.grades.intermediate.maintenanceCost.value")
+          descriptionInputName=(concat "data.grades.intermediate.description.value")
+          gradeName='intermediate'
+          grade=data.data.grades.intermediate
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="advanced-grade"
+          spellId=data._id
+          hideTitle=true
+          intRequiredInputName=(concat "data.grades.advanced.intRequired.value")
+          zeonInputName=(concat "data.grades.advanced.zeon.value")
+          maintenanceCostInputName=(concat "data.grades.advanced.maintenanceCost.value")
+          descriptionInputName=(concat "data.grades.advanced.description.value")
+          gradeName='advanced'
+          grade=data.data.grades.advanced
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="arcane-grade"
+          spellId=data._id
+          hideTitle=true
+          intRequiredInputName=(concat "data.grades.arcane.intRequired.value")
+          zeonInputName=(concat "data.grades.arcane.zeon.value")
+          maintenanceCostInputName=(concat "data.grades.arcane.maintenanceCost.value")
+          descriptionInputName=(concat "data.grades.arcane.description.value")
+          gradeName='arcane'
+          grade=data.data.grades.arcane
+        }}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+        <div class='spell-footer'>
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="spell-type"
+            choices=config.iterables.mystic.spellTypes
+            title=(localize "anima.ui.mystic.spell.spellType.title")
+            inputName="data.spellType.value"
+            inputValue=data.data.spellType.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="action-type"
+            choices=config.iterables.mystic.actionTypes
+            title=(localize "anima.ui.mystic.spell.actionType.title")
+            inputName="data.actionType.value"
+            inputValue=data.data.actionType.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+            class="has-daily-maintenance"
+            title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")
+            inputType="checkbox"
+            inputName=(concat "data.hasDailyMaintenance.value")
+            inputValue=(is 'eq' data.data.hasDailyMaintenance.value true)
+          }}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

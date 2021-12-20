@@ -1,22 +1,19 @@
-import { openModDialog } from '../utils/openDialog';
+import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { ABFActor } from './ABFActor';
 import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
 import { ABFItemConfig, DynamicChanges, ItemChanges } from '../types/Items';
-import { unflat } from '../../utils/unflat';
-import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareSheet/prepareItems/constants';
-import { prepareSheet } from './utils/prepareSheet/prepareSheet';
-import { getFieldValueFromPath } from './utils/prepareSheet/prepareItems/util/getFieldValueFromPath';
-import { getUpdateObjectFromPath } from './utils/prepareSheet/prepareItems/util/getUpdateObjectFromPath';
+import { unflat } from './utils/unflat';
+import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareItems/constants';
+import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
+import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
+import { ABFItems } from '../items/ABFItems';
+import { ABFConfig } from '../ABFConfig';
+import { ABFActorDataSourceData } from '../types/Actor';
+import { ABFDialogs } from '../dialogs/ABFDialogs';
 
 export default class ABFActorSheet extends ActorSheet {
   i18n: Localization;
-
-  constructor(object: ABFActor) {
-    super(object, {});
-
-    this.i18n = (game as Game).i18n;
-  }
 
   static get defaultOptions() {
     return {
@@ -24,7 +21,7 @@ export default class ABFActorSheet extends ActorSheet {
       ...{
         classes: ['abf', 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor/actor-sheet.hbs',
-        width: 900,
+        width: 1000,
         height: 850,
         submitOnChange: true,
         tabs: [
@@ -32,23 +29,76 @@ export default class ABFActorSheet extends ActorSheet {
             navSelector: '.sheet-tabs',
             contentSelector: '.sheet-body',
             initial: 'main'
+          },
+          {
+            navSelector: '.mystic-tabs',
+            contentSelector: '.mystic-body',
+            initial: 'mystic-main'
+          },
+          {
+            navSelector: '.general-tabs',
+            contentSelector: '.general-body',
+            initial: 'general-first'
+          },
+          {
+            navSelector: '.psychic-tabs',
+            contentSelector: '.psychic-body',
+            initial: 'psychic-main'
           }
         ]
       }
     };
   }
 
+  get template() {
+    return 'systems/animabf/templates/actor/actor-sheet.hbs';
+  }
+
+  constructor(actor: ABFActor, options?: Partial<ActorSheet.Options>) {
+    super(actor, options);
+
+    this.i18n = (game as Game).i18n;
+
+    this.position.width = this.getWidthDependingFromContent();
+  }
+
+  async close(options?: FormApplication.CloseOptions): Promise<void> {
+    super.close(options);
+
+    this.position.width = this.getWidthDependingFromContent();
+  }
+
+  getWidthDependingFromContent(): number {
+    if (this.actor.items.filter(i => i.type === ABFItems.SPELL).length > 0) {
+      return 1300;
+    }
+
+    return 1000;
+  }
+
   getData() {
-    const data = super.getData() as ActorSheet.Data;
+    const data = super.getData() as ActorSheet.Data & { config?: typeof ABFConfig };
 
     if (this.actor.data.type === 'character') {
-      return prepareSheet(data);
+      data.actor.prepareDerivedData();
+
+      // Yes, a lot of datas, I know. This is Foundry VTT, welcome if you see this
+      data.data.data = data.actor.data.data;
     }
+
+    data.config = CONFIG.config;
 
     return data;
   }
 
   protected async _updateObject(event: Event, formData: Record<string, unknown>): Promise<ABFActor | undefined> {
+    // We have to parse all qualities in order to convert from it selectable to integers to make calculations
+    Object.keys(formData).forEach(key => {
+      if (key.includes('quality')) {
+        formData[key] = parseInt(formData[key] as string, 10);
+      }
+    });
+
     const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
 
     await this.updateItems(itemChanges);
@@ -62,29 +112,43 @@ export default class ABFActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    const handler = ev => this._onDragStart(ev);
+
+    // Find all items on the character sheet.
+
     // Rollable abilities.
     html.find('.rollable').click(e => {
       this._onRoll(e);
     });
 
+    html.find('.contractible-button').click(e => {
+      const { contractibleItemId } = e.currentTarget.dataset;
+
+      if (contractibleItemId) {
+        const ui = this.actor.data.data.ui as ABFActorDataSourceData['ui'];
+
+        ui.contractibleItems = {
+          ...ui.contractibleItems,
+          [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
+        };
+
+        this.actor.update({ data: { ui } });
+      }
+    });
+
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
       this.buildCommonContextualMenu(item);
+
+      html.find(item.selectors.rowSelector).each((_, row) => {
+        // Add draggable attribute and dragstart listener.
+        row.setAttribute('draggable', 'true');
+        row.addEventListener('dragstart', handler, false);
+      });
 
       html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
         item.onCreate(this.actor);
       });
     }
-
-    html.find('[data-on-click="delete-item"]').click(e => {
-      const id = e.currentTarget.dataset.itemId;
-      if (id) {
-        WorldCollection.instance.delete(id);
-      } else {
-        console.warn(
-          'Trying to delete a dynamic item but data-item-id was not set to the button. Cant delete the item.'
-        );
-      }
-    });
   }
 
   async _onRoll(event) {
@@ -133,7 +197,7 @@ export default class ABFActorSheet extends ActorSheet {
 
     if (!itemConfig.isInternal && itemConfig.hasSheet) {
       otherItems.push({
-        name: 'Editar',
+        name: this.i18n.localize('contextualMenu.common.options.edit'),
         icon: '<i class="fas fa-edit fa-fw"></i>',
         callback: target => {
           const { itemId } = target[0].dataset;
@@ -154,6 +218,7 @@ export default class ABFActorSheet extends ActorSheet {
     }
 
     return new ContextMenu($(containerSelector), rowSelector, [
+      ...otherItems,
       {
         name: deleteRowMessage,
         icon: '<i class="fas fa-trash fa-fw"></i>',
@@ -173,25 +238,32 @@ export default class ABFActorSheet extends ActorSheet {
               throw new Error('Data id missing. Are you sure to set data-item-id to rows?');
             }
 
-            if (fieldPath) {
-              if (this.actor.getEmbeddedDocument('Item', id)) {
-                this.actor.deleteEmbeddedDocuments('Item', [id]);
-              } else {
-                let items = getFieldValueFromPath<any[]>(this.actor.data.data, fieldPath);
+            ABFDialogs.confirm(
+              this.i18n.localize('dialogs.items.delete.title'),
+              this.i18n.localize('dialogs.items.delete.body'),
+              {
+                onConfirm: () => {
+                  if (fieldPath) {
+                    if (this.actor.getEmbeddedDocument('Item', id)) {
+                      this.actor.deleteEmbeddedDocuments('Item', [id]);
+                    } else {
+                      let items = getFieldValueFromPath<any[]>(this.actor.data.data, fieldPath);
 
-                items = items.filter(item => item._id !== id);
+                      items = items.filter(item => item._id !== id);
 
-                const dataToUpdate: any = {
-                  data: getUpdateObjectFromPath(items, fieldPath)
-                };
+                      const dataToUpdate: any = {
+                        data: getUpdateObjectFromPath(items, fieldPath)
+                      };
 
-                this.actor.update(dataToUpdate);
+                      this.actor.update(dataToUpdate);
+                    }
+                  }
+                }
               }
-            }
+            );
           }
         }
-      },
-      ...otherItems
+      }
     ]);
   };
 }

@@ -1,0 +1,89 @@
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.modifier.title')
+  disabled=this.defenseSent
+  inputName="defender.combat.modifier"
+  inputValue=this.defender.combat.modifier
+}}
+
+{{#if (is "eq" this.attacker.attackType "combat")}}
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.at.title')
+    disabled=this.defenseSent
+    inputName="defender.combat.at.special"
+    inputValue=this.defender.combat.at.special
+    hasSecondaryInput=true
+    disableSecondaryInput=true
+    secondaryInputName="defender.combat.at.final"
+    secondaryInputValue=this.defender.combat.at.final
+  }}
+{{/if}}
+
+{{#if this.ui.hasFatiguePoints}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.fatigue.title')
+    disabled=this.defenseSent
+    inputName="defender.combat.fatigue"
+    inputValue=this.defender.combat.fatigue
+  }}
+    <option {{#if (is "eq" 0 this.defender.combat.fatigue)}}selected{{/if}} value='0'>0</option>
+
+    {{#iterateNumber this.defender.actor.data.data.characteristics.secondaries.fatigue.value}}
+      <option {{#if (is "eq" (math this "+" 1) ../this.defender.combat.fatigue)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+    {{/iterateNumber}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
+{{/if}}
+
+{{#if this.defender.combat.unarmed}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.weapon.title')
+    disabled=true
+  }}
+    <option>Unarmed</option>
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{else}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.weapon.title')
+    disabled=this.defenseSent
+    inputName='defender.combat.weaponUsed'
+  }}
+    {{#each this.defender.actor.data.data.combat.weapons}}
+      <option {{#if (is 'eq' this._id ../this.defender.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{localize 'macros.combat.dialog.weaponRow.defense.title' name=this.name value=this.data.block.final.value}}</option>
+    {{/each}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  class="defense-count"
+  title=(localize 'macros.combat.dialog.defenseCount.title')
+  disabled=this.defenseSent
+  inputName='defender.combat.multipleDefensesPenalty'
+  inputValue=this.defender.combat.multipleDefensesPenalty
+}}
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -0)}}selected{{/if}} value="-0">1ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -30)}}selected{{/if}} value="-30">2ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -50)}}selected{{/if}} value="-50">3ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -70)}}selected{{/if}} value="-70">4ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -90)}}selected{{/if}} value="-90">5ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#if this.defenseSent}}
+  <div class='defense-sent'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      {{localize 'macros.combat.dialog.defenseSent.title'}}
+    </p>
+  </div>
+{{else}}
+  <div class='defense-buttons'>
+    <button class='abf-button send-defense' data-type='dodge'>
+      {{localize 'macros.combat.dialog.dodgeButton.title'}}
+    </button>
+    <button class='abf-button send-defense' data-type='block'>
+      {{localize 'macros.combat.dialog.blockButton.title'}}
+    </button>
+  </div>
+{{/if}}

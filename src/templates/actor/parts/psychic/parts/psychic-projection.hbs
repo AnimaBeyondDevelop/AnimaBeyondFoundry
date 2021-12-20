@@ -14,8 +14,14 @@
       title=(localize "anima.ui.psychic.psychicProjection.projection.title")
       rollable=true
       rollableMessage=(manipulateString "toLowerCase" (localize "anima.ui.psychic.psychicProjection.title"))
-      inputName="data.psychic.psychicProjection.value"
-      inputValue=data.data.psychic.psychicProjection.value
+      inputName="data.psychic.psychicProjection.base.value"
+      inputValue=data.data.psychic.psychicProjection.base.value
+      hasSecondaryInput=true
+      addTooltips=true
+      disableSecondaryInput=true
+      rollSecondaryInput=true
+      secondaryInputName="data.psychic.psychicProjection.final.value"
+      secondaryInputValue=data.data.psychic.psychicProjection.final.value
     }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -1,0 +1,171 @@
+@import '../variable';
+
+.gm-combat-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 900px !important;
+  height: auto !important;
+
+  .versus-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .label {
+      font-size: 3rem;
+      font-weight: bold;
+      color: $red;
+    }
+  }
+
+  .combatants {
+    display: grid;
+    grid-template-columns: 1fr 0.25fr 1fr;
+    grid-column-gap: 1rem;
+
+    width: 100%;
+    height: 100%;
+
+    .group-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      height: 100%;
+
+      .combatant-profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        margin: 0.5rem;
+
+        .image {
+          width: 6rem;
+          height: 6rem;
+
+          margin-bottom: 1rem;
+        }
+
+        .name {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+      }
+
+      .attack-type,
+      .defense-type {
+        font-size: 1.5rem;
+      }
+
+      .values {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .input-container {
+          width: 100%;
+        }
+
+        .common-titled-input {
+          flex-basis: calc(33% - 1rem);
+          margin: 0.5rem;
+        }
+
+        .weapon-used,
+        .spell-used,
+        .power-used {
+          flex-basis: 33%;
+        }
+
+        .fatigue,
+        .at-value,
+        .defense-count,
+        .weapon-quality {
+          flex-basis: 20%;
+
+          .input-container {
+            width: 2.25rem;
+          }
+        }
+
+        .modifier,
+        .dodge-value,
+        .block-value,
+        .critic,
+        .psychic-projection,
+        .magic-projection,
+        .psychic-potential,
+        .damage,
+        .roll,
+        .total,
+        .spell-grade,
+        .weapon-attack {
+          flex-basis: 2%;
+
+          .input-container {
+            width: 3rem;
+          }
+        }
+      }
+
+      .waiting-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+
+        .label {
+          margin-top: 1rem;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .combat-result {
+    width: 100%;
+    margin-top: 1rem;
+
+    .assault-values {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      width: 100%;
+
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+
+      .common-titled-input {
+        flex-basis: 50%;
+      }
+    }
+
+    .group-body {
+      .label {
+        &.title {
+          text-align: center;
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+      }
+
+      .ready-buttons {
+        display: flex;
+
+        .dialog-button {
+          &.warn {
+            background-color: $red;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

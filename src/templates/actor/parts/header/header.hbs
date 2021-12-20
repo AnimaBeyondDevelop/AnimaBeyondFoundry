@@ -4,7 +4,6 @@
   <div class='columns'>
     <div class='first-column'>
       {{> "systems/animabf/templates/actor/parts/header/parts/actor-image.hbs"}}
-      {{> "systems/animabf/templates/actor/parts/header/parts/modifiers.hbs"}}
     </div>
     <div class='second-column'>
       {{> "systems/animabf/templates/actor/parts/header/parts/primary-characteristics.hbs"}}
@@ -12,7 +11,10 @@
     <div class='third-column'>
       <div class='sub-column'>
         {{> "systems/animabf/templates/actor/parts/header/parts/resistances.hbs"}}
-        {{> "systems/animabf/templates/actor/parts/header/parts/common-resources.hbs"}}
+        <div>
+          {{> "systems/animabf/templates/actor/parts/header/parts/common-resources.hbs"}}
+          {{> "systems/animabf/templates/actor/parts/header/parts/modifiers.hbs"}}
+        </div>
       </div>
       {{> "systems/animabf/templates/actor/parts/header/parts/total-armor.hbs"}}
     </div>

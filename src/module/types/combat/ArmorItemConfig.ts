@@ -1,21 +1,66 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
-import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
-import { openDialog } from '../../utils/openDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItems } from '../../items/ABFItems';
+import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
+
+export enum ArmorLocation {
+  COMPLETE = 'complete',
+  NIGHTDRESS = 'nightdress',
+  BREASTPLATE = 'breastplate',
+  HEAD = 'head'
+}
+
+export enum ArmorType {
+  SOFT = 'soft',
+  HARD = 'hard',
+  NATURAL = 'natural'
+}
 
 export type ArmorItemData = {
-  cut: { value: number };
-  impact: { value: number };
-  thrust: { value: number };
-  heat: { value: number };
-  electricity: { value: number };
-  cold: { value: number };
-  energy: { value: number };
+  cut: DerivedField;
+  impact: DerivedField;
+  thrust: DerivedField;
+  heat: DerivedField;
+  electricity: DerivedField;
+  cold: DerivedField;
+  energy: DerivedField;
+  integrity: DerivedField;
+  presence: DerivedField;
+  wearArmorRequirement: DerivedField;
+  movementRestriction: DerivedField;
+  naturalPenalty: DerivedField;
+  isEnchanted: { value: boolean };
+  type: { value: ArmorType };
+  localization: { value: ArmorLocation };
+  quality: { value: number };
+  equipped: { value: boolean };
 };
 
 export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
 
 export type ArmorChanges = ItemChanges<ArmorItemData>;
+
+const derivedFieldInitialData = { base: { value: 0 }, final: { value: 0 } };
+
+export const INITIAL_ARMOR_DATA: ArmorItemData = {
+  cut: derivedFieldInitialData,
+  impact: derivedFieldInitialData,
+  thrust: derivedFieldInitialData,
+  heat: derivedFieldInitialData,
+  electricity: derivedFieldInitialData,
+  cold: derivedFieldInitialData,
+  energy: derivedFieldInitialData,
+  integrity: derivedFieldInitialData,
+  presence: derivedFieldInitialData,
+  wearArmorRequirement: derivedFieldInitialData,
+  movementRestriction: derivedFieldInitialData,
+  naturalPenalty: derivedFieldInitialData,
+  isEnchanted: { value: false },
+  type: { value: ArmorType.SOFT },
+  localization: { value: ArmorLocation.BREASTPLATE },
+  quality: { value: 0 },
+  equipped: { value: false }
+};
 
 export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   type: ABFItems.ARMOR,
@@ -33,22 +78,14 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openDialog<string>({
+    const name = await openSimpleInputDialog<string>({
       content: i18n.localize('dialogs.items.armors.content')
     });
 
-    const itemData = {
+    const itemData: Omit<ArmorDataSource, '_id'> = {
       name,
       type: ABFItems.ARMOR,
-      data: {
-        cut: { value: 0 },
-        impact: { value: 0 },
-        thrust: { value: 0 },
-        heat: { value: 0 },
-        electricity: { value: 0 },
-        cold: { value: 0 },
-        energy: { value: 0 }
-      }
+      data: INITIAL_ARMOR_DATA
     };
 
     await actor.createItem(itemData);
@@ -66,6 +103,8 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   },
   onAttach: (data, item) => {
     const items = data.combat.armors as ArmorDataSource[];
+
+    item.data = foundry.utils.mergeObject(item.data, INITIAL_ARMOR_DATA, { overwrite: false });
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);

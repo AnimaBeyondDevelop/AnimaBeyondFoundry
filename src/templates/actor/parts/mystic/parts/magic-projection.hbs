@@ -14,8 +14,14 @@
       title=(localize "anima.ui.mystic.magicProjection.final.title")
       rollable=true
       rollableMessage=(localize "anima.ui.mystic.magicProjection.final.rollMessage")
-      inputName="data.mystic.magicProjection.final.value"
-      inputValue=data.data.mystic.magicProjection.final.value
+      inputName="data.mystic.magicProjection.base.value"
+      inputValue=data.data.mystic.magicProjection.base.value
+      hasSecondaryInput=true
+      addTooltips=true
+      disableSecondaryInput=true
+      rollSecondaryInput=true
+      secondaryInputName="data.mystic.magicProjection.final.value"
+      secondaryInputValue=data.data.mystic.magicProjection.final.value
     }}
     <h3 class='title'>{{localize "anima.ui.mystic.magicProjection.imbalance.title"}}</h3>
     <div class='imbalance'>
@@ -25,8 +31,14 @@
         title=(localize "anima.ui.mystic.magicProjection.offensive.title")
         rollable=true
         rollableMessage=(localize "anima.ui.mystic.magicProjection.offensive.rollMessage")
-        inputName="data.mystic.magicProjection.imbalance.offensive.value"
-        inputValue=data.data.mystic.magicProjection.imbalance.offensive.value
+        inputName="data.mystic.magicProjection.imbalance.offensive.base.value"
+        inputValue=data.data.mystic.magicProjection.imbalance.offensive.base.value
+        hasSecondaryInput=true
+        rollSecondaryInput=true
+        disableSecondaryInput=true
+        addTooltips=true
+        secondaryInputName="data.mystic.magicProjection.imbalance.offensive.final.value"
+        secondaryInputValue=data.data.mystic.magicProjection.imbalance.offensive.final.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -34,8 +46,14 @@
         title=(localize "anima.ui.mystic.magicProjection.defensive.title")
         rollable=true
         rollableMessage=(localize "anima.ui.mystic.magicProjection.defensive.rollMessage")
-        inputName="data.mystic.magicProjection.imbalance.defensive.value"
-        inputValue=data.data.mystic.magicProjection.imbalance.defensive.value
+        inputName="data.mystic.magicProjection.imbalance.defensive.base.value"
+        inputValue=data.data.mystic.magicProjection.imbalance.defensive.base.value
+        hasSecondaryInput=true
+        rollSecondaryInput=true
+        disableSecondaryInput=true
+        addTooltips=true
+        secondaryInputName="data.mystic.magicProjection.imbalance.defensive.final.value"
+        secondaryInputValue=data.data.mystic.magicProjection.imbalance.defensive.final.value
       }}
     </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

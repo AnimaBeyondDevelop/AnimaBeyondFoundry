@@ -1,0 +1,546 @@
+<form class='{{cssClass}} gm-combat-dialog' autocomplete='off'>
+  <div class='combatants'>
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="attack-values"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title=(localize 'macros.combat.dialog.attacker.title')
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="attack-values"
+      }}
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.attacker.actor.img}}' data-edit='img' title='{{this.attacker.actor.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.attacker.actor.name}}
+          </p>
+        </div>
+
+        {{#if this.attacker.isReady}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="custom-modifier"
+            title=(localize 'macros.combat.dialog.attackerCustomModifier.title')
+            inputName="attacker.customModifier"
+            inputValue=this.attacker.customModifier
+          }}
+
+
+          <p class='attack-type label'>
+            {{localize (concat 'macros.combat.dialog.attackType.' this.attacker.result.type '.title')}}
+          </p>
+
+          <div class='values'>
+            {{#if (is "eq" this.attacker.result.type 'combat')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="modifier"
+                title=(localize 'macros.combat.dialog.modifier.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.modifier
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="fatigue"
+                title=(localize 'macros.combat.dialog.fatigueUsed.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.fatigueUsed
+              }}
+              {{#unless this.attacker.result.values.unarmed}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-used"
+                  title=(localize 'macros.combat.dialog.weaponUsed.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.weapon.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-attack"
+                  title=(localize 'macros.combat.dialog.weaponAttack.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.attack
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-quality"
+                  title=(localize 'macros.combat.dialog.weaponQuality.title')
+                  disabled=true
+                  inputValue=this.attacker.result.weapon.data.quality.value
+                }}
+              {{else}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-used"
+                  title=(localize 'macros.combat.dialog.weaponUsed.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue="Unarmed"
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-attack"
+                  title=(localize 'macros.combat.dialog.attack.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.attack
+                }}
+              {{/unless}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="critic"
+                title=(localize 'macros.combat.dialog.critic.title')
+                inputType="text"
+                disabled=true
+                inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.criticSelected '.title'))
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="damage"
+                title=(localize 'macros.combat.dialog.damage.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.damage
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="roll"
+                title=(localize 'macros.combat.dialog.rolled.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.roll
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="total"
+                title=(localize 'macros.combat.dialog.total.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.total
+              }}
+            {{/if}}
+
+            {{#if (is "eq" this.attacker.result.type 'mystic')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="modifier"
+                title=(localize 'macros.combat.dialog.modifier.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.modifier
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="magic-projection"
+                title=(localize 'macros.combat.dialog.magicProjection.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.magicProjection
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="spell-used"
+                title=(localize 'macros.combat.dialog.spell.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.spell.name
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="spell-grade"
+                title=(localize 'macros.combat.dialog.spellGrade.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.spellGrade
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="roll"
+                title=(localize 'macros.combat.dialog.rolled.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.roll
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="total"
+                title=(localize 'macros.combat.dialog.total.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.total
+              }}
+            {{/if}}
+
+            {{#if (is "eq" this.attacker.result.type 'psychic')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="modifier"
+                title=(localize 'macros.combat.dialog.modifier.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.modifier
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="psychic-projection"
+                title=(localize 'macros.combat.dialog.psychicProjection.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.psychicProjection
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="psychic-potential"
+                title=(localize 'macros.combat.dialog.psychicPotential.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.psychicPotential
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="power-used"
+                title=(localize 'macros.combat.dialog.psychicPower.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.power.name
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="roll"
+                title=(localize 'macros.combat.dialog.rolled.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.roll
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="total"
+                title=(localize 'macros.combat.dialog.total.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.total
+              }}
+            {{/if}}
+
+          </div>
+        {{else}}
+          <div class='waiting-row'>
+            {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+            <p class='label'>{{localize 'macros.combat.dialog.waitingAttack.title'}}</p>
+          </div>
+        {{/if}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+
+    <div class='versus-label'>
+      <p class='label'>VS</p>
+    </div>
+
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="defender-values"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title=(localize 'macros.combat.dialog.defender.title')
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="defender-values"
+      }}
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.defender.actor.img}}' data-edit='img' title='{{this.defender.actor.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.defender.actor.name}}
+          </p>
+        </div>
+
+        {{#if this.attacker.isReady}}
+          {{#if this.defender.isReady}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="custom-modifier"
+              title=(localize 'macros.combat.dialog.defenderCustomModifier.title')
+              inputName="defender.customModifier"
+              inputValue=this.defender.customModifier
+            }}
+
+            <p class='defense-type label'>
+              {{localize (concat 'macros.combat.dialog.attackType.' this.defender.result.type '.title')}}
+            </p>
+
+            <div class='values'>
+              {{#if (is "eq" this.defender.result.type 'combat')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="modifier"
+                  title=(localize 'macros.combat.dialog.modifier.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.modifier
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="combat-defense-type"
+                  inputType="text"
+                  title=(localize 'macros.combat.dialog.defenseType.title')
+                  disabled=true
+                  inputValue=(localize (concat 'macros.combat.dialog.defenseType.' this.defender.result.values.type '.title'))
+                }}
+                {{#if (is 'eq' this.defender.result.values.type 'dodge')}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="dodge-value"
+                    inputType="text"
+                    title=(localize 'macros.combat.dialog.dodgeValue.title')
+                    disabled=true
+                    inputValue=this.defender.actor.data.data.combat.dodge.final.value
+                  }}
+                {{else}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="block-value"
+                    inputType="text"
+                    title=(localize 'macros.combat.dialog.blockValue.title')
+                    disabled=true
+                    inputValue=this.defender.actor.data.data.combat.block.final.value
+                  }}
+                {{/if}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="fatigue"
+                  title=(localize 'macros.combat.dialog.fatigueUsed.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.fatigue
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="defense-count"
+                  title=(localize 'macros.combat.dialog.defenseCount.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.multipleDefensesPenalty
+                }}
+                {{#if (is 'neq' this.defender.result.values.at undefined)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="at-value"
+                    title=(localize 'macros.combat.dialog.at.title')
+                    inputType="text"
+                    disabled=true
+                    inputValue=this.defender.result.values.at
+                  }}
+                {{/if}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="roll"
+                  title=(localize 'macros.combat.dialog.rolled.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.roll
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="total"
+                  title=(localize 'macros.combat.dialog.total.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'mystic')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="modifier"
+                  title=(localize 'macros.combat.dialog.modifier.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.modifier
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="magic-projection"
+                  title=(localize 'macros.combat.dialog.magicProjection.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.magicProjection
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="spell-used"
+                  title=(localize 'macros.combat.dialog.spell.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.spell.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="spell-grade"
+                  title=(localize 'macros.combat.dialog.spellGrade.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=(localize (concat 'anima.ui.mystic.spell.grade.' this.defender.result.values.spellGrade '.title'))
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="roll"
+                  title=(localize 'macros.combat.dialog.rolled.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.roll
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="total"
+                  title=(localize 'macros.combat.dialog.total.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'psychic')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="modifier"
+                  title=(localize 'macros.combat.dialog.modifier.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.modifier
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="psychic-projection"
+                  title=(localize 'macros.combat.dialog.psychicProjection.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.psychicProjection
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="psychic-potential"
+                  title=(localize 'macros.combat.dialog.psychicPotential.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.psychicPotential
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="power-used"
+                  title=(localize 'macros.combat.dialog.psychicPower.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.power.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="roll"
+                  title=(localize 'macros.combat.dialog.rolled.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.roll
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="total"
+                  title=(localize 'macros.combat.dialog.total.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
+            </div>
+          {{else}}
+            <div class='waiting-row'>
+              {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+              <p class='label'>{{localize 'macros.combat.dialog.waitingDefense.title'}}</p>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class='waiting-row'>
+            {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+            <p class='label'>{{localize 'macros.combat.dialog.waitingDefenseForAttack.title'}}</p>
+          </div>
+        {{/if}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  </div>
+
+  {{#if this.calculations}}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="combat-result"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+        title="Result"
+      }}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="combat-result"
+      }}
+        <p class='label title'>{{concat this.calculations.winner.name (localize 'macros.combat.dialog.winner.title')}}</p>
+        <div class='assault-values'>
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="difference"
+            title=(localize 'macros.combat.dialog.difference.title')
+            inputType="text"
+            disabled=true
+            inputValue=this.calculations.difference
+          }}
+          {{#if (is 'gt' this.calculations.damage 0)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="damage-deal"
+              title=(localize 'macros.combat.dialog.damageDeal.title')
+              disabled=true
+              inputValue=this.calculations.damage
+            }}
+          {{/if}}
+          {{#if this.calculations.canCounter}}
+            {{#unless this.ui.isCounter}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="counterattack-bonus"
+                title=(localize 'macros.combat.dialog.counterAttackBonus.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.calculations.counterAttackBonus
+              }}
+            {{/unless}}
+          {{/if}}
+        </div>
+        <div class='ready-buttons'>
+          {{#if (or this.calculations.canCounter (is 'gt' this.calculations.damage 0))}}
+            <button class='abf-button show-results'>
+              {{localize 'macros.combat.dialog.showResultsButton.title'}}
+            </button>
+          {{/if}}
+          {{#if this.calculations.canCounter}}
+            {{#unless this.ui.isCounter}}
+              <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}' class='abf-button make-counter'>
+                {{localize 'macros.combat.dialog.counterAttackButton.title'}}
+              </button>
+            {{/unless}}
+          {{/if}}
+          {{#if (or (is 'gt' this.calculations.damage 0) (is 'gt' this.defender.result.values.fatigue 0) (is 'gt' this.attacker.result.values.fatigueUsed 0))}}
+            <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}' class='abf-button apply-values'>
+              {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
+            </button>
+          {{/if}}
+          <button class='abf-button cancel-button'>
+            {{localize 'macros.combat.dialog.cancelButton.title'}}
+          </button>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/if}}
+</form>

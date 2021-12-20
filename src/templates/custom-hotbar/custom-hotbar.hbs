@@ -1,0 +1,25 @@
+<nav class='custom-action-bar'>
+  {{#if this.isGM}}
+    <ol class='macros'>
+      <div
+        title='{{localize 'customHotbar.damageCalculator'}}'
+        id='custom-hotbar-damage-calculator'
+        class='custom-macro'
+      >
+        <img src='systems/animabf/assets/icons/game-icons.net/ffffff/delapouite/calculator.svg' />
+        <p class='shortcut'>ctrl + 1</p>
+      </div>
+      <div title='{{localize 'customHotbar.sendAttack'}}' id='custom-hotbar-send-attack' class='custom-macro'>
+        <img src='/systems/animabf/assets/icons/game-icons.net/ffffff/lorc/sword-clash.svg' />
+        <p class='shortcut'>ctrl + 2</p>
+      </div>
+    </ol>
+  {{else}}
+    <ol class='macros'>
+      <div title='{{localize 'customHotbar.sendAttack'}}' id='custom-hotbar-send-attack-request' class='custom-macro'>
+        <img src='/systems/animabf/assets/icons/game-icons.net/ffffff/lorc/sword-clash.svg' />
+        <p class='shortcut'>ctrl + 1</p>
+      </div>
+    </ol>
+  {{/if}}
+</nav>

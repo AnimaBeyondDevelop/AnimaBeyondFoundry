@@ -1,0 +1,26 @@
+<form>
+  <div class='form-group'>
+    <div>
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.damageCalculator.dialog.attack.title')
+        inputName="damage-calculator-attack-input"
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.damageCalculator.dialog.defense.title')
+        inputName="damage-calculator-defense-input"
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.damageCalculator.dialog.ta.title')
+        inputName="damage-calculator-ta-input"
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.damageCalculator.dialog.damage.title')
+        inputName="damage-calculator-damage-input"
+      }}
+    </div>
+  </div>
+</form>

@@ -1,6 +1,6 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
-import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
-import { openDialog } from '../../utils/openDialog';
+import { ABFItems } from '../../items/ABFItems';
+import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 import { ElanPowerItemConfig } from './ElanPowerItemConfig';
 
@@ -30,11 +30,11 @@ export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
         name: (game as Game).i18n.localize('contextualMenu.elan.options.addPower'),
         icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
         callback: target => {
-          const { elanId } = target[0].dataset;
+          const { itemId } = target[0].dataset;
 
-          if (!elanId) throw new Error('elanId missing');
+          if (!itemId) throw new Error('elanId missing');
 
-          ElanPowerItemConfig.onCreate(actor, elanId);
+          ElanPowerItemConfig.onCreate(actor, itemId);
         }
       }
     ]
@@ -42,7 +42,7 @@ export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openDialog<string>({
+    const name = await openSimpleInputDialog<string>({
       content: i18n.localize('dialogs.items.elan.content')
     });
 

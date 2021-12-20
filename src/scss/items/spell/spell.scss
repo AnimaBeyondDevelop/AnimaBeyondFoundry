@@ -1,0 +1,119 @@
+@import '../../variable';
+
+.base-item {
+  display: flex;
+
+  .first-column {
+    width: 6.3rem;
+    height: 6.3rem;
+  }
+
+  .second-column {
+    width: 100%;
+  }
+
+  .spell-item-dialog {
+    width: calc(100% - 0.5rem);
+
+    border-radius: $border-radius;
+    box-shadow: $card-box-shadow;
+
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+
+    .input {
+      height: 1.25rem;
+    }
+
+    .spell-header {
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+
+      width: 100%;
+
+      .first-row {
+        width: 100%;
+
+        .name .input-container {
+          width: 100%;
+        }
+      }
+
+      .second-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .level,
+        .via {
+          .input {
+            height: 1.5rem;
+          }
+        }
+
+        .via .input-container {
+          width: 8rem;
+        }
+      }
+    }
+
+    .base-grade {
+      margin-bottom: 0.5rem;
+
+      .grade-name {
+        align-self: flex-end;
+      }
+    }
+
+    .base-grade,
+    .arcane-grade,
+    .intermediate-grade,
+    .advanced-grade {
+      .grade-name {
+        min-width: 5rem;
+      }
+    }
+
+    .grade-row {
+      display: flex;
+      justify-content: start;
+
+      .int-required {
+        .input-container {
+          width: 3.5rem;
+        }
+      }
+
+      .description {
+        width: 100%;
+
+        .input-container {
+          width: 100%;
+        }
+      }
+    }
+
+    .spell-footer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+
+      .input {
+        height: 1.5rem;
+      }
+    }
+  }
+
+  .base-item-image {
+    margin-bottom: 0.75rem;
+
+    img {
+      border-radius: 1rem;
+      width: 6.3rem;
+      height: 6.3rem;
+    }
+  }
+}

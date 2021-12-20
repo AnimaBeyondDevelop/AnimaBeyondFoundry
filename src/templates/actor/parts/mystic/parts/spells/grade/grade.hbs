@@ -1,0 +1,37 @@
+<div class='{{this.class}} grade-row'>
+  <p class='label grade-name'>{{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}</p>
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="int-required"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.intRequired.title")
+    inputName=this.intRequiredInputName
+    inputValue=this.grade.intRequired.value
+  }}
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="zeon"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.zeon.title")
+    inputName=this.zeonInputName
+    inputValue=this.grade.zeon.value
+  }}
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="maintenance-cost"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.maintenanceCost.title")
+    inputType="text"
+    inputName=this.maintenanceCostInputName
+    inputValue=this.grade.maintenanceCost.value
+  }}
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="description"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.description.title")
+    inputType="text"
+    inputName=this.descriptionInputName
+    inputValue=this.grade.description.value
+  }}
+</div>

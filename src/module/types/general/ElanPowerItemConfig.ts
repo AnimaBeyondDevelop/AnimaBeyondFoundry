@@ -1,7 +1,7 @@
 import { nanoid } from '../../../vendor/nanoid/nanoid';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
-import { ABFItems } from '../../actor/utils/prepareSheet/prepareItems/ABFItems';
-import { openDialog } from '../../utils/openDialog';
+import { ABFItems } from '../../items/ABFItems';
+import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfig, ItemChanges } from '../Items';
 
 export type ElanPowerItemData = {
@@ -20,7 +20,7 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
     return changes.data.dynamic.elan_power as ElanPowerChanges;
   },
   selectors: {
-    addItemButtonSelector: 'add-elan',
+    addItemButtonSelector: 'add-elan-power',
     containerSelector: '#elan-context-menu-container',
     rowSelector: '.elan-row .powers'
   },
@@ -29,7 +29,7 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
 
     const { i18n } = game as Game;
 
-    const name = await openDialog<string>({
+    const name = await openSimpleInputDialog<string>({
       content: i18n.localize('dialogs.items.elanPower.content')
     });
 
@@ -84,9 +84,9 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
 
           actor.updateInnerItem({
             type: ABFItems.ELAN,
-            id,
+            id: elanId,
             data: { ...elan.data, powers: [...powers] }
-          });
+          }, true);
         }
       }
     }

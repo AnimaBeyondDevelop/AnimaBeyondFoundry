@@ -7,7 +7,7 @@
             {{/if}}
             '
             {{#if this.rollable}}
-              data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+{{this.inputValue}}"
+      data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+{{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}"
               data-label="
               {{#if this.rollableMessage}}
                 {{this.rollableMessage}}
@@ -19,17 +19,19 @@
     >{{this.title}}</p>
   {{/unless}}
 
-  <div class='input-container {{#if this.secondaryInputName}}big{{/if}}'>
+  <div class='input-container {{#if this.hasSecondaryInput}}big{{/if}}'>
     <input
+      {{#if this.addTooltips}}title='Base'{{/if}}
       {{#if this.disabled}}disabled{{/if}}
       name='{{this.inputName}}'
       type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
-      class='input {{#if this.secondaryInputName}}primary-input{{/if}}'
+      class='input {{#if this.hasSecondaryInput}}primary-input{{/if}}'
       value='{{this.inputValue}}'
       {{#if (is 'eq' this.inputValue true)}}checked{{/if}}
     />
     {{#if this.hasSecondaryInput}}
       <input
+        {{#if this.addTooltips}}title='Final'{{/if}}
         {{#if this.disableSecondaryInput}}disabled{{/if}}
         name='{{this.secondaryInputName}}'
         type='{{#if this.secondaryInputType}}{{this.secondaryInputType}}{{else}}number{{/if}}'

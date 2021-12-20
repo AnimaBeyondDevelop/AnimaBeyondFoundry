@@ -1,0 +1,42 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="abf-chat-message combat-result-message"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "chat.combatResult.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"}}
+    <div class='abf-chat-message-body'>
+      <div class='combatants'>
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.attacker.img}}' data-edit='img' title='{{this.attacker.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.attacker.name}}
+          </p>
+        </div>
+        <div class='versus-label'>
+          <p class='label'>VS</p>
+        </div>
+        <div class='combatant-profile'>
+          <div class='image'>
+            <img src='{{this.defender.img}}' data-edit='img' title='{{this.defender.name}}' />
+          </div>
+          <p class='label name'>
+            {{this.defender.name}}
+          </p>
+        </div>
+      </div>
+      <div class='combat-result'>
+        <p class='result'>{{this.result}}</p>
+
+        {{#if this.canCounter}}
+          <p class='counter'>{{{localize "chat.combatResult.counter.title" defender=this.defender.name bonus=this.bonus}}}</p>
+        {{else}}
+          <p class='counter'>{{{localize "chat.combatResult.damage.title" defender=this.defender.name damage=this.damage}}}</p>
+        {{/if}}
+      </div>
+    </div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
