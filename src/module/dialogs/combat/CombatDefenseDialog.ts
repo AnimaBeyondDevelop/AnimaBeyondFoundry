@@ -238,11 +238,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
         const { i18n } = game as Game;
 
         const flavor = i18n.format(`macros.combat.dialog.physicalDefense.${type}.title`, {
-          target: this.attackerActor.name
+          target: this.data.attacker.token.name
         });
 
         roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ actor: this.defenderActor }),
+          speaker: ChatMessage.getSpeaker({ token: this.data.defender.token }),
           flavor
         });
       }
@@ -288,11 +288,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
 
           const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
             spell: spell.name,
-            target: this.attackerActor.name
+            target: this.data.attacker.token.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.defenderActor }),
+            speaker: ChatMessage.getSpeaker({ token: this.data.defender.token }),
             flavor
           });
         }
@@ -333,11 +333,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplication.Options
 
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
             power: power.name,
-            target: this.attackerActor.name
+            target: this.data.attacker.token.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.defenderActor }),
+            speaker: ChatMessage.getSpeaker({ token: this.data.defender.token }),
             flavor
           });
         }
