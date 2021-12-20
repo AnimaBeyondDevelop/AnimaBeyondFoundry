@@ -4,7 +4,7 @@
   }}
     {{>
     "systems/animabf/templates/common/ui/group-header.hbs"
-      title=(concat (localize 'macros.combat.dialog.defending.title') this.attacker.actor.name)
+      title=(concat (localize 'macros.combat.dialog.defending.title') this.attacker.token.name)
     }}
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="defense-values"
