@@ -243,14 +243,14 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
                 weapon: weapon?.name,
-                target: this.defenderActor.name
+                target: this.data.defender.token.name
               })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                target: this.defenderActor.name
+                target: this.data.defender.token.name
               });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.attackerActor }),
+            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
             flavor
           });
         }
@@ -301,11 +301,11 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
 
           const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
             spell: spell.name,
-            target: this.defenderActor.name
+            target: this.data.defender.token.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.attackerActor }),
+            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
             flavor
           });
         }
@@ -346,11 +346,11 @@ export class CombatAttackDialog extends FormApplication<FormApplication.Options,
 
           const flavor = i18n.format('macros.combat.dialog.psychicAttack.title', {
             power: power.name,
-            target: this.defenderActor.name
+            target: this.data.defender.token.name
           });
 
           psychicProjectionRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.attackerActor }),
+            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
             flavor
           });
         }
