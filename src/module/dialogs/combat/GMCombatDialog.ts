@@ -228,6 +228,7 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
   }
 
   updateDefenderData(result: UserCombatDefenseResult) {
+    result.values.total = Math.max(0, result.values.total)
     this.data.defender.result = result;
 
     if (result.type === 'mystic') {
