@@ -18,7 +18,7 @@ export default class ABFCombat extends Combat {
   }
 
   // Modify rollInitiative so that it asks for modifiers
-  async rollInitiative(ids: string[] | string, { updateTurn, messageOptions }: InitiativeOptions = {}): Promise<this> {
+  async rollInitiative(ids: string[] | string, { updateTurn = false, messageOptions }: InitiativeOptions = {}): Promise<this> {
     const mod = await openModDialog();
 
     if (typeof ids === 'string') {
