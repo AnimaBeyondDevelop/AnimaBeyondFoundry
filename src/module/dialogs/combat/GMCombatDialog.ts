@@ -159,8 +159,6 @@ export class GMCombatDialog extends FormApplication<FormApplication.Options, GMC
     });
 
     html.find('.show-results').click(async () => {
-      this.applyValuesIfBeAble();
-
       const data: Record<string, any> = {
         attacker: this.attackerActor,
         defender: this.defenderActor,
