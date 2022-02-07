@@ -13,6 +13,7 @@ import { ABFActorDataSourceData } from '../../../types/Actor';
 import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
 import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
 import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicData';
+import { mutateDomineData } from './calculations/actor/domine/mutateDomineData';
 import { mutateInitiative } from './calculations/actor/mutateInitiative';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another
@@ -29,7 +30,8 @@ const DERIVED_DATA_FUNCTIONS: ((data: ABFActorDataSourceData) => void)[] = [
   mutateWeaponsData,
   mutateInitiative,
   mutateMysticData,
-  mutatePsychicData
+  mutatePsychicData,
+  mutateDomineData,
 ];
 
 export const prepareActor = (actor: ABFActor) => {
