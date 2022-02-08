@@ -520,6 +520,7 @@
   "macros.combat.dialog.error.noGMActive.title": "Right now DM is not connected. Cant attack.",
   "macros.combat.dialog.error.noSelectedActor.title": "You don't have selected a character",
   "macros.combat.dialog.error.noSelectedToken.title": "You don't have selected a attacker",
+  "macros.combat.dialog.error.multipleSelectedToken.title": "Only can select one attacker",
   "macros.combat.dialog.error.noTokenInCurrentScene.title": "You don't have ownership of any token in current scene",
   "macros.combat.dialog.error.notInActiveScene.title": "Can't attack while you are not in active scene",
   "macros.combat.dialog.error.oneTarget.title": "Need to select one target",
