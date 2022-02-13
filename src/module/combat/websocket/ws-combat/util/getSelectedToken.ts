@@ -1,20 +1,14 @@
 import { ABFDialogs } from "../../../../dialogs/ABFDialogs";
 
 export function getSelectedToken(game: Game): TokenDocument {
-  const selectedTokens = game.canvas.tokens?.controlled || [];
+const selectedTokens = game.canvas.tokens?.controlled ?? [];
 
-  switch (selectedTokens.length) {
-    case 1:
-      return selectedTokens[0].document;
+if (selectedTokens.length !== 1) {
+    const msg = game.i18n.localize(selectedTokens.length > 0 ? 'macros.combat.dialog.error.multipleSelectedToken.title' : 'macros.combat.dialog.error.noSelectedToken.title');
 
-    case 0:
-      let msg = game.i18n.localize('macros.combat.dialog.error.noSelectedToken.title');
-      ABFDialogs.prompt(msg);
-      throw new Error(msg);
+    ABFDialogs.prompt(msg);
+    throw new Error(msg);
+}
 
-    default:
-      msg = game.i18n.localize('macros.combat.dialog.error.multipleSelectedToken.title');
-      ABFDialogs.prompt(msg);
-      throw new Error(msg);
-  }
+return selectedTokens[0].document;
 }
