@@ -7,7 +7,7 @@ export const canOwnerReceiveMessage = (actor: ABFActor): boolean => {
     return false;
   }
 
-  const user = tgame.users?.filter(e => !!e.character).find(e => e.character?.id === actor.id);
+  const activePlayers = tgame.users!.players.filter(u => u.active);
 
-  return !!user?.active;
+  return activePlayers.filter(u => actor.testUserPermission(u, 'OWNER')).length === 1;
 };
