@@ -17,7 +17,7 @@
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="weapon-item-dialog"
     }}
-      {{#unless (is 'eq' data.data.isRanged.value true)}}
+      {{#unless (and (is 'eq' data.data.isRanged.value true) (is 'eq' data.data.shotType.value 'shot'))}}
         {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
           class="critic-primary"
           isVertical=true
