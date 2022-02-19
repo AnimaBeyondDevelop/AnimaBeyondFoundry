@@ -5,7 +5,7 @@ import { calculateAttributeModifier } from '../../../util/calculateAttributeModi
 
 export const calculateWeaponStrengthModifier = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const hasOnlyOneEquippedHandMultiplier =
-    getCurrentEquippedHand(weapon) === WeaponEquippedHandType.ONE_HANDED || weapon.data.isRanged.value;
+    getCurrentEquippedHand(weapon) === WeaponEquippedHandType.ONE_HANDED;
 
   const equippedHandMultiplier = hasOnlyOneEquippedHandMultiplier ? 1 : 2;
 
