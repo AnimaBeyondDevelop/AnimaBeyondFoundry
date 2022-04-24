@@ -1,14 +1,26 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["@league-of-foundry-developers/foundry-vtt-types", "@types/jest"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": [
+      "@league-of-foundry-developers/foundry-vtt-types",
+      "@types/jest"
+    ],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
-    "outDir": "dist"
+    "outDir": "dist/animabf"
   },
-  "include": ["src"],
-  "exclude": ["./**/.*.test.*", "./**/__mocks__"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "./**/.*.test.*",
+    "./**/__mocks__"
+  ]
 }
