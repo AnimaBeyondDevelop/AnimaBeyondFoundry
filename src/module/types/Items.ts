@@ -91,7 +91,7 @@ export type ABFItemConfig<D, C> = {
      * Function that allows to create new items in the contextual menu
      * @param actor
      */
-    buildExtraOptionsInContextMenu?: (actor: ABFActor) => ContextMenu.Item[];
+    buildExtraOptionsInContextMenu?: (actor: ABFActor) => ContextMenuEntry[];
   };
 
   /**

@@ -149,7 +149,7 @@ const getInitialData = (
   };
 };
 
-export class CombatAttackDialog extends FormApplication<FormApplication.Options, UserCombatAttackDialogData> {
+export class CombatAttackDialog extends FormApplication<FormApplicationOptions, UserCombatAttackDialogData> {
   private data: UserCombatAttackDialogData;
 
   constructor(

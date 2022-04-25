@@ -1,5 +1,46 @@
 @import 'src/scss/variable';
 
+.abf-tabs {
+  &.secondary-tab {
+    margin-top: 0;
+    height: 1.2rem;
+    line-height: 1.2rem;
+  }
+
+  flex: 0 0 2rem;
+  line-height: 2rem;
+
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+
+  border-top: 1px solid $red;
+  border-bottom: 1px solid $red;
+
+  .item {
+    background: transparent;
+    border-radius: $border-radius;
+    color: $black;
+    font-weight: 600;
+
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .active {
+    text-shadow: none;
+    background-color: $red;
+    color: $white;
+    font-weight: 600;
+  }
+}
+
 .actor-sheet {
   display: flex;
   flex-direction: column;
@@ -8,53 +49,14 @@
   .mystic-tabs,
   .psychic-tabs,
   .general-tabs {
-    &.secondary-tab {
-      margin-top: 0;
-      height: 1.2rem;
-      line-height: 1.2rem;
-    }
+    .item[data-tab='settings'] {
+      flex: 0.5;
 
-    flex: 0 0 2rem;
-    line-height: 2rem;
-
-    height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
-
-    border-top: 1px solid $red;
-    border-bottom: 1px solid $red;
-
-    .item {
-      background: transparent;
-      border-radius: $border-radius;
-      color: $black;
-      font-weight: 600;
-
-      display: flex;
-      flex: 1;
-      justify-content: center;
-      align-items: center;
-
-      &[data-tab='settings'] {
-        flex: 0.5;
-
-        img {
-          width: 1.5rem;
-          height: 1.5rem;
-          border-radius: 50%;
-        }
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
       }
-    }
-
-    .active {
-      text-shadow: none;
-      background-color: $red;
-      color: $white;
-      font-weight: 600;
     }
   }
 }

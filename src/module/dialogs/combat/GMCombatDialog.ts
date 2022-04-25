@@ -78,7 +78,7 @@ const getInitialData = (
   };
 };
 
-export class GMCombatDialog extends FormApplication<FormApplication.Options, GMCombatDialogData> {
+export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCombatDialogData> {
   private data: GMCombatDialogData;
 
   constructor(

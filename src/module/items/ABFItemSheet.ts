@@ -11,7 +11,7 @@ export default class ABFItemSheet extends ItemSheet {
     });
   }
 
-  constructor(object: ABFItem, options?: Partial<DocumentSheet.Options>) {
+  constructor(object: ABFItem, options?: Partial<DocumentSheetOptions>) {
     super(object, options);
 
     this.position.width = this.getWidthFromType();
