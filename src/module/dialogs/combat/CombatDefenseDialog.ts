@@ -151,7 +151,7 @@ const getInitialData = (
   };
 };
 
-export class CombatDefenseDialog extends FormApplication<FormApplication.Options, UserCombatDefenseDialogData> {
+export class CombatDefenseDialog extends FormApplication<FormApplicationOptions, UserCombatDefenseDialogData> {
   private data: UserCombatDefenseDialogData;
 
   constructor(

@@ -103,7 +103,7 @@ export default class ABFActorSheet extends ActorSheet {
 
     await this.updateItems(itemChanges);
 
-    return super._updateObject(event, actorChanges);
+    return super._updateObject(event, actorChanges) as Promise<ABFActor | undefined>;
   }
 
   activateListeners(html) {
