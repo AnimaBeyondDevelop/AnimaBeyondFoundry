@@ -160,8 +160,14 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
 
     html.find('.show-results').click(async () => {
       const data: Record<string, any> = {
-        attacker: this.attackerActor,
-        defender: this.defenderActor,
+        attacker: {
+          name: this.attackerToken.name,
+          img: this.attackerToken.data.img
+        },
+        defender: {
+          name: this.defenderToken.name,
+          img: this.defenderToken.data.img
+        },
         result: this.data.calculations?.difference,
         canCounter: this.data.calculations?.canCounter
       };
@@ -226,7 +232,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
   }
 
   updateDefenderData(result: UserCombatDefenseResult) {
-    result.values.total = Math.max(0, result.values.total)
+    result.values.total = Math.max(0, result.values.total);
     this.data.defender.result = result;
 
     if (result.type === 'mystic') {
