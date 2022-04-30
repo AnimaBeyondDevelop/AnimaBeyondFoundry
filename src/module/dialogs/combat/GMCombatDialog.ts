@@ -9,6 +9,11 @@ import { ABFActor } from '../../actor/ABFActor';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 
+export type GMCombatAttackResult = UserCombatAttackResult & {
+  weapon?: WeaponDataSource;
+  spell?: SpellDataSource;
+  power?: PsychicPowerDataSource;
+};
 type GMCombatDialogData = {
   ui: {
     isCounter: boolean;
@@ -19,11 +24,7 @@ type GMCombatDialogData = {
     isReady: boolean;
     customModifier: number;
     counterAttackBonus?: number;
-    result?: UserCombatAttackResult & {
-      weapon?: WeaponDataSource;
-      spell?: SpellDataSource;
-      power?: PsychicPowerDataSource;
-    };
+    result?: GMCombatAttackResult;
   };
   defender: {
     actor: ABFActor;
@@ -262,7 +263,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
           Math.max(attackerTotal, 0),
           Math.max(defenderTotal, 0),
           Math.max(
-            defender.result.values.at! - calculateATReductionByQuality(attacker.result.weapon?.data.quality.value ?? 0),
+            defender.result.values.at! - calculateATReductionByQuality(attacker.result),
             0
           ),
           attacker.result.values.damage
