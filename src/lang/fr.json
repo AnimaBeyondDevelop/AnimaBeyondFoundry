@@ -540,7 +540,7 @@
   "macros.combat.dialog.physicalAttack.unarmed.title": "Essayez de toucher, sans arme, la {target}",
   "macros.combat.dialog.physicalDefense.block.title": "Essayez de bloquer l'attaque de la {target}",
   "macros.combat.dialog.physicalDefense.dodge.title": "Essayez d'esquiver l'attaque de la {target}",
-  "macros.combat.dialog.psychicAttack.title": "Focus envoie une charge de la {power} à la {target}",
+  "macros.combat.dialog.psychicAttack.title": "Focus envoie une charge de la {power} à la {target} avec un potentiel de {potential}",
   "macros.combat.dialog.psychicDefense.title": "Focus de défense avec {power} de la {target}",
   "macros.combat.dialog.psychicPotential.title": "Talent Psychique",
   "macros.combat.dialog.psychicPower.title": "Pouvoir Psychique",

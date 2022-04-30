@@ -542,7 +542,7 @@
   "macros.combat.dialog.physicalAttack.unarmed.title": "Intenta golpear, desarmado, a {target}",
   "macros.combat.dialog.physicalDefense.block.title": "Intenta bloquear el ataque {target}",
   "macros.combat.dialog.physicalDefense.dodge.title": "Intenta esquivar el ataque {target}",
-  "macros.combat.dialog.psychicAttack.title": "Ataca con el poder mental {power} a {target}",
+  "macros.combat.dialog.psychicAttack.title": "Ataca con el poder mental {power} a {target} con un potencial de {potential}",
   "macros.combat.dialog.psychicDefense.title": "Se defiende con el poder mental {power} de {target}",
   "macros.combat.dialog.psychicPotential.title": "Potencial Psíquico",
   "macros.combat.dialog.psychicPower.title": "Poder psíquico",
