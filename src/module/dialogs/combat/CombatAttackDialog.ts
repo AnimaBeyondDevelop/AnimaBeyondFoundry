@@ -1,10 +1,16 @@
 import { Templates } from '../../utils/constants';
-import { NoneWeaponCritic, WeaponCritic, WeaponDataSource } from '../../types/combat/WeaponItemConfig';
+import {
+  NoneWeaponCritic,
+  OptionalWeaponCritic,
+  WeaponCritic,
+  WeaponDataSource
+} from '../../types/combat/WeaponItemConfig';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
+import { ABFConfig } from '../../ABFConfig';
 
 type SpecialField = {
   special: number;
@@ -12,6 +18,7 @@ type SpecialField = {
 };
 
 export type UserCombatAttackDialogData = {
+  config: typeof ABFConfig;
   ui: {
     isGM: boolean;
     hasFatiguePoints: boolean;
@@ -36,12 +43,16 @@ export type UserCombatAttackDialogData = {
       magicProjectionType: 'normal' | 'offensive';
       spellUsed: string | undefined;
       spellGrade: 'base' | 'intermediate' | 'advanced' | 'arcane';
+      critic: OptionalWeaponCritic;
+      damage: number;
     };
     psychic: {
       modifier: number;
       psychicProjection: number;
       psychicPotential: SpecialField;
       powerUsed: string | undefined;
+      critic: OptionalWeaponCritic;
+      damage: number;
     };
   };
   defender: { actor: ABFActor; token: TokenDocument };
@@ -49,7 +60,7 @@ export type UserCombatAttackDialogData = {
   allowed: boolean;
 };
 
-type UserCombatAttackCombatResult = {
+export type UserCombatAttackCombatResult = {
   type: 'combat';
   values: {
     modifier: number;
@@ -57,32 +68,36 @@ type UserCombatAttackCombatResult = {
     fatigueUsed: number;
     unarmed: boolean;
     weaponUsed: string | undefined;
-    criticSelected: WeaponCritic | undefined;
+    critic: WeaponCritic | undefined;
     damage: number;
     roll: number;
     total: number;
   };
 };
 
-type UserCombatAttackMysticResult = {
+export type UserCombatAttackMysticResult = {
   type: 'mystic';
   values: {
     modifier: number;
     magicProjection: number;
     spellUsed: string;
     spellGrade: 'base' | 'intermediate' | 'advanced' | 'arcane';
+    critic: OptionalWeaponCritic;
+    damage: number;
     roll: number;
     total: number;
   };
 };
 
-type UserCombatAttackPsychicResult = {
+export type UserCombatAttackPsychicResult = {
   type: 'psychic';
   values: {
     modifier: number;
     psychicProjection: number;
     psychicPotential: number;
     powerUsed: string | undefined;
+    critic: OptionalWeaponCritic;
+    damage: number;
     roll: number;
     total: number;
   };
@@ -131,13 +146,17 @@ const getInitialData = (
         modifier: 0,
         magicProjectionType: 'normal',
         spellUsed: undefined,
-        spellGrade: 'base'
+        spellGrade: 'base',
+        critic: NoneWeaponCritic.NONE,
+        damage: 0
       },
       psychic: {
         modifier: 0,
         psychicProjection: attackerActor.data.data.psychic.psychicProjection.final.value,
         psychicPotential: { special: 0, final: attackerActor.data.data.psychic.psychicProjection.final.value },
-        powerUsed: undefined
+        powerUsed: undefined,
+        critic: NoneWeaponCritic.NONE,
+        damage: 0
       }
     },
     defender: {
@@ -145,7 +164,8 @@ const getInitialData = (
       actor: defenderActor
     },
     attackSent: false,
-    allowed: false
+    allowed: false,
+    config: ABFConfig
   };
 };
 
@@ -199,10 +219,6 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
   get attackerActor() {
     return this.data.attacker.token.actor!;
-  }
-
-  get defenderActor() {
-    return this.data.defender.token.actor!;
   }
 
   public updatePermissions(allowed: boolean) {
@@ -266,7 +282,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
             damage: damage.final,
             attack,
             weaponUsed,
-            criticSelected: critic,
+            critic,
             modifier,
             fatigueUsed,
             roll: rolled,
@@ -281,7 +297,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
     });
 
     html.find('.send-mystic-attack').click(() => {
-      const { magicProjectionType, spellGrade, spellUsed, modifier } = this.data.attacker.mystic;
+      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage } = this.data.attacker.mystic;
 
       if (spellUsed) {
         const magicProjection =
@@ -319,6 +335,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
             spellUsed,
             spellGrade,
             magicProjection,
+            critic,
+            damage,
             roll: rolled,
             total: roll.total!
           }
@@ -331,7 +349,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
     });
 
     html.find('.send-psychic-attack').click(() => {
-      const { powerUsed, modifier, psychicPotential, psychicProjection } = this.data.attacker.psychic;
+      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage } = this.data.attacker.psychic;
 
       if (powerUsed) {
         const psychicProjectionRoll = new ABFFoundryRoll(`1d100xa + ${psychicProjection} + ${modifier ?? 0}`);
@@ -367,6 +385,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
             powerUsed,
             psychicPotential: psychicPotential.final + psychicPotentialRoll.total!,
             psychicProjection,
+            critic,
+            damage,
             roll: rolled,
             total: psychicProjectionRoll.total!
           }
@@ -410,6 +430,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
       combat.damage.final = combat.damage.special + weapon.data.damage.final.value;
     }
+
+    this.data.config = ABFConfig;
 
     return this.data;
   }

@@ -36,6 +36,22 @@
   <option {{#if (is "eq" this.attacker.mystic.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'macros.combat.dialog.spellGrade.arcane.title'}}</option>
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
+{{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+  disabled=this.attackSent
+  choices=config.iterables.combat.weapon.criticTypesWithNone
+  title=(localize "macros.combat.dialog.weapon.critic.title")
+  inputName='attacker.mystic.critic'
+  inputValue=this.attacker.mystic.critic
+}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.combat.dialog.damage.title")
+  disabled=this.attackSent
+  inputName="attacker.mystic.damage"
+  inputValue=this.attacker.mystic.damage
+}}
+
 {{#if this.attackSent}}
   <div class='mystic-attack-sent'>
     {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}

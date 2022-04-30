@@ -160,6 +160,24 @@
                 disabled=true
                 inputValue=this.attacker.result.values.spellGrade
               }}
+              {{#if (is "neq" this.attacker.result.values.critic '-')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="critic"
+                  title=(localize 'macros.combat.dialog.critic.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="damage"
+                  title=(localize 'macros.combat.dialog.damage.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.damage
+                }}
+              {{/if}}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="roll"
@@ -211,6 +229,24 @@
                 disabled=true
                 inputValue=this.attacker.result.power.name
               }}
+              {{#if (is "neq" this.attacker.result.values.critic '-')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="critic"
+                  title=(localize 'macros.combat.dialog.critic.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="damage"
+                  title=(localize 'macros.combat.dialog.damage.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.damage
+                }}
+              {{/if}}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="roll"

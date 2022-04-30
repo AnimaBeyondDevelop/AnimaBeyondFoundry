@@ -1,6 +1,11 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
-import { WeaponCritic, WeaponDataSource } from '../../types/combat/WeaponItemConfig';
+import {
+  NoneWeaponCritic,
+  OptionalWeaponCritic,
+  WeaponCritic,
+  WeaponDataSource
+} from '../../types/combat/WeaponItemConfig';
 import { UserCombatAttackResult } from './CombatAttackDialog';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
@@ -21,7 +26,7 @@ export type UserCombatDefenseDialogData = {
     actor: ABFActor;
     token: TokenDocument;
     attackType: UserCombatAttackResult['type'];
-    critic?: WeaponCritic;
+    critic?: OptionalWeaponCritic;
   };
   defender: {
     actor: ABFActor;
@@ -32,7 +37,7 @@ export type UserCombatDefenseDialogData = {
       fatigue: number;
       weaponUsed: string | undefined;
       weapon: WeaponDataSource | undefined;
-      unarmed: boolean
+      unarmed: boolean;
       multipleDefensesPenalty: number;
       at: SpecialField;
     };
@@ -95,7 +100,7 @@ export type UserCombatDefenseResult =
   | UserCombatDefensePsychicResult;
 
 const getInitialData = (
-  attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
+  attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: OptionalWeaponCritic },
   defender: TokenDocument
 ): UserCombatDefenseDialogData => {
   const showRollByDefault = !!(game as Game).settings.get(
@@ -155,7 +160,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
   private data: UserCombatDefenseDialogData;
 
   constructor(
-    attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: WeaponCritic },
+    attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: OptionalWeaponCritic },
     defender: TokenDocument,
     private hooks: {
       onDefense: (attackValues: UserCombatDefenseResult) => void;
@@ -371,7 +376,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
 
     let at;
 
-    if (this.data.attacker.attackType === 'combat') {
+    if (this.data.attacker.critic !== NoneWeaponCritic.NONE) {
       switch (this.data.attacker.critic) {
         case WeaponCritic.CUT:
           at = this.defenderActor.data.data.combat.totalArmor.at.cut.value;
