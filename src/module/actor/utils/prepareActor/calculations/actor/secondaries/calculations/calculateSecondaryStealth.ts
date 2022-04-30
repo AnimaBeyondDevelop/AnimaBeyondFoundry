@@ -16,5 +16,7 @@ export const calculateSecondaryStealth = (data: ABFActorDataSourceData): number 
       naturalPenaltyWithoutEquippedArmorsPenalty / 2
     ) + equippedArmorsPenalty;
 
-  return data.secondaries.subterfuge.stealth.base.value + data.general.modifiers.allActions.final.value + armorPenalty;
+  return Math.round(
+    data.secondaries.subterfuge.stealth.base.value + data.general.modifiers.allActions.final.value + armorPenalty
+  );
 };
