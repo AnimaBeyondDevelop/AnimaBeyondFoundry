@@ -28,7 +28,7 @@ export default class ABFCombat extends Combat {
       const combatant = this.data.combatants.get(id);
 
       await super.rollInitiative(id, {
-        formula: `1d100xaturn + ${combatant?.actor?.data.data.characteristics.secondaries.initiative.final.value} + ${mod}`,
+        formula: `1d100Initiative + ${combatant?.actor?.data.data.characteristics.secondaries.initiative.final.value} + ${mod}`,
         updateTurn,
         messageOptions
       });
