@@ -159,8 +159,13 @@ export default class ABFActorSheet extends ActorSheet {
     if (dataset.roll) {
       const label = dataset.label ? `Rolling ${dataset.label}` : '';
       const mod = await openModDialog();
+      console.log(event)
+      console.log(dataset)
       const formula = `${dataset.roll}+ ${mod}`;
-      const roll = new ABFFoundryRoll(formula, this.actor.data.data);
+      const actorData = JSON.parse(JSON.stringify(this.actor.data.data));
+      if(parseInt(dataset.extra) >= 200)
+        actorData.general.ranges.fumbles.value -=1;
+      const roll = new ABFFoundryRoll(formula, actorData);
 
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),

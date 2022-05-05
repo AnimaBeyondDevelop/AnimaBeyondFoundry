@@ -231,8 +231,14 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
         const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
 
+        const complexWeapon = (weapon?.data.special.value.includes("Compleja"));
+        const actorData = JSON.parse(JSON.stringify(this.attackerActor.data.data));
+        if (actorData.combat.attack.base.value >= 200) //Mastery reduces the fumble range
+          actorData.general.ranges.fumbles.value -= 1;
+
         const roll = new ABFFoundryRoll(
-          `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
+          `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`,
+          actorData
         );
 
         roll.roll();
@@ -284,12 +290,21 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
       const { magicProjectionType, spellGrade, spellUsed, modifier } = this.data.attacker.mystic;
 
       if (spellUsed) {
-        const magicProjection =
-          magicProjectionType === 'normal'
-            ? this.attackerActor.data.data.mystic.magicProjection.final.value
-            : this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.final.value;
+        var baseMagicProjection, magicProjection;
+        if (magicProjectionType === 'normal') {
+          magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value
+          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value
+        }
+        else {
+          magicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.final.value
+          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.base.value
+        }
 
-        const roll = new ABFFoundryRoll(`1d100xa + ${magicProjection} + ${modifier ?? 0}`);
+        const actorData = JSON.parse(JSON.stringify(this.attackerActor.data.data));
+        if (baseMagicProjection >= 200) //Mastery reduces the fumble range
+          actorData.general.ranges.fumbles.value -= 1;
+
+        const roll = new ABFFoundryRoll(`1d100xa + ${magicProjection} + ${modifier ?? 0}`, actorData);
         roll.roll();
 
         if (this.data.attacker.showRoll) {
@@ -334,7 +349,11 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
       const { powerUsed, modifier, psychicPotential, psychicProjection } = this.data.attacker.psychic;
 
       if (powerUsed) {
-        const psychicProjectionRoll = new ABFFoundryRoll(`1d100xa + ${psychicProjection} + ${modifier ?? 0}`);
+        const actorData = JSON.parse(JSON.stringify(this.attackerActor.data.data));
+        if (actorData.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
+          actorData.general.ranges.fumbles.value -= 1;
+
+        const psychicProjectionRoll = new ABFFoundryRoll(`1d100xa + ${psychicProjection} + ${modifier ?? 0}`, actorData);
         psychicProjectionRoll.roll();
 
         if (this.data.attacker.showRoll) {
@@ -357,7 +376,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
         const rolled = psychicProjectionRoll.total! - psychicProjection - (modifier ?? 0);
 
-        const psychicPotentialRoll = new ABFFoundryRoll('1d100xa');
+        const psychicPotentialRoll = new ABFFoundryRoll('1d100xa', this.data.attacker.actor.data.data);
         psychicPotentialRoll.roll();
 
         this.hooks.onAttack({

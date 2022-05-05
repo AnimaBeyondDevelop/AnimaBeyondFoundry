@@ -15,7 +15,7 @@ export default class ABFInitiativeRoll extends ABFExploderRoll {
   private calculateFumbledInitiativeMod(): number {
     if (this.foundryRoll.firstResult === 1) return -125;
     if (this.foundryRoll.firstResult === 2) return -100;
-    if (this.foundryRoll.firstResult === 3) return -75;
+    if (this.foundryRoll.firstResult <= this.fumbleRange) return -75;
 
     return 0;
   }

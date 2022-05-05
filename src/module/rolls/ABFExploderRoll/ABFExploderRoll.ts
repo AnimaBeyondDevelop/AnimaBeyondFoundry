@@ -2,15 +2,13 @@ import ABFFoundryRoll from '../ABFFoundryRoll';
 import { ABFRoll } from '../ABFRoll';
 
 export default class ABFExploderRoll extends ABFRoll {
-  private readonly DEFAULT_OPEN_RANGE = 90;
-
-  private lastOpenRange = this.DEFAULT_OPEN_RANGE;
-
+  private lastOpenRange = this.openRollRange;
   get canExplode() {
-    return this.foundryRoll.lastResult >= this.DEFAULT_OPEN_RANGE;
+    return this.foundryRoll.lastResult >= this.openRollRange;
   }
 
   public evaluate(): ABFFoundryRoll {
+    console.log(this.fumbleRange)
     if (this.canExplode) {
       this.explodeDice(this.lastOpenRange + 1);
     }
@@ -18,7 +16,7 @@ export default class ABFExploderRoll extends ABFRoll {
     this.firstDice.results = this.firstDice.results.map(res => ({
       ...res,
       success: res.result >= this.lastOpenRange,
-      failure: res.result <= this.DEFAULT_FUMBLE_RANGE
+      failure: res.result <= this.fumbleRange
     }));
 
     this.foundryRoll.recalculateTotal();

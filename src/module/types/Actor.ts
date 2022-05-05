@@ -15,6 +15,10 @@ export type ABFActorDataSourceData = {
     };
   };
   general: {
+    ranges: {
+      openRolls: { value: number },
+      fumbles: { value: number }
+    },
     modifiers: {
       physicalActions: {
         value: number;
