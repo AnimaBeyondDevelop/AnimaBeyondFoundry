@@ -8,7 +8,6 @@ export default class ABFExploderRoll extends ABFRoll {
   }
 
   public evaluate(): ABFFoundryRoll {
-    console.log(this.fumbleRange)
     if (this.canExplode) {
       this.explodeDice(this.lastOpenRange + 1);
     }

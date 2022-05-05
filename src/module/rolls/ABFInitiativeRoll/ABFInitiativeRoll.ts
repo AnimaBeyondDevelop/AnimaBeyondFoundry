@@ -3,10 +3,8 @@ import ABFExploderRoll from '../ABFExploderRoll/ABFExploderRoll';
 
 export default class ABFInitiativeRoll extends ABFExploderRoll {
   public evaluate(): ABFFoundryRoll {
-    console.log(this.fumbled)
     super.evaluate();
 
-    console.log(this.fumbled)
     if (this.fumbled) {
       this.foundryRoll.recalculateTotal(this.calculateFumbledInitiativeMod());
     }

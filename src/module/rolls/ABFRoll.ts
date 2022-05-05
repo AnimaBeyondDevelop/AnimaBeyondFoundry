@@ -16,7 +16,6 @@ export abstract class ABFRoll {
   }
 
   get fumbled() {
-    console.log(this.fumbleRange)
     return this.foundryRoll.firstResult <= this.fumbleRange;
   }
 
