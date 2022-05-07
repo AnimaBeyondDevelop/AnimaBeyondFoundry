@@ -3,12 +3,20 @@ import ABFFoundryRoll from './ABFFoundryRoll';
 
 export abstract class ABFRoll {
   protected readonly DEFAULT_FUMBLE_RANGE = 3;
+  protected readonly DEFAULT_OPEN_RANGE = 90;
 
-  constructor(protected readonly foundryRoll: ABFFoundryRoll) {}
+  protected openRollRange = this.DEFAULT_OPEN_RANGE;
+  protected fumbleRange = this.DEFAULT_FUMBLE_RANGE;
 
-  get fumbled() {
-    return this.foundryRoll.firstResult <= this.DEFAULT_FUMBLE_RANGE;
+  constructor(protected readonly foundryRoll: ABFFoundryRoll) {
+    if (this.foundryRoll.data.general !== undefined) {
+      this.openRollRange = this.foundryRoll.data.general.ranges.openRolls.value 
+      this.fumbleRange = this.foundryRoll.data.general.ranges.fumbles.value
+      if (foundryRoll.formula.includes('mastery') && this.fumbleRange > 1) 
+        this.fumbleRange -= 1
+    }
   }
+
 
   get firstDice(): DiceTerm {
     return this.foundryRoll.dice[0];
