@@ -61,6 +61,7 @@ type UserCombatAttackCombatResult = {
     damage: number;
     roll: number;
     total: number;
+    fumble: boolean;
   };
 };
 
@@ -73,6 +74,7 @@ type UserCombatAttackMysticResult = {
     spellGrade: 'base' | 'intermediate' | 'advanced' | 'arcane';
     roll: number;
     total: number;
+    fumble: boolean;
   };
 };
 
@@ -85,6 +87,7 @@ type UserCombatAttackPsychicResult = {
     powerUsed: string | undefined;
     roll: number;
     total: number;
+    fumble: boolean;
   };
 };
 
@@ -264,7 +267,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         const critic = criticSelected ?? WeaponCritic.IMPACT;
 
         const rolled = roll.total! - counterAttackBonus - attack - (modifier ?? 0) - (fatigueUsed ?? 0) * 15;
-
+        
         this.hooks.onAttack({
           type: 'combat',
           values: {
@@ -276,7 +279,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
             modifier,
             fatigueUsed,
             roll: rolled,
-            total: roll.total!
+            total: roll.total!,
+            fumble: roll.fumbled
           }
         });
 
@@ -335,7 +339,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
             spellGrade,
             magicProjection,
             roll: rolled,
-            total: roll.total!
+            total: roll.total!,
+            fumble: roll.fumbled
           }
         });
 
@@ -387,7 +392,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
             psychicPotential: psychicPotential.final + psychicPotentialRoll.total!,
             psychicProjection,
             roll: rolled,
-            total: psychicProjectionRoll.total!
+            total: psychicProjectionRoll.total!,
+            fumble: psychicProjectionRoll.fumbled
           }
         });
 

@@ -3,8 +3,13 @@ import { ABFRoll } from '../ABFRoll';
 
 export default class ABFExploderRoll extends ABFRoll {
   private lastOpenRange = this.openRollRange;
+  
   get canExplode() {
     return this.foundryRoll.lastResult >= this.openRollRange;
+  }
+
+  get fumbled() {
+    return this.foundryRoll.firstResult <= this.fumbleRange;
   }
 
   public evaluate(): ABFFoundryRoll {
@@ -20,6 +25,10 @@ export default class ABFExploderRoll extends ABFRoll {
 
     this.foundryRoll.recalculateTotal();
 
+    // if (this.fumbled) {
+    //   this.foundryRoll.recalculateTotal(this.calculateFumbledMod()-this.foundryRoll.firstResult);
+    // }
+
     return this.foundryRoll;
   }
 
@@ -33,4 +42,9 @@ export default class ABFExploderRoll extends ABFRoll {
       this.explodeDice(openRange + 1);
     }
   }
+
+  // protected calculateFumbledMod(): number {
+  //   const fumbleRoll = new ABFFoundryRoll('1d100').evaluate();
+  //   return fumbleRoll.firstResult * -1;
+  // }
 }

@@ -159,8 +159,6 @@ export default class ABFActorSheet extends ActorSheet {
     if (dataset.roll) {
       const label = dataset.label ? `Rolling ${dataset.label}` : '';
       const mod = await openModDialog();
-      console.log(event)
-      console.log(dataset)
       const formula = `${dataset.roll}+ ${mod}`;
       const actorData = JSON.parse(JSON.stringify(this.actor.data.data));
       if(parseInt(dataset.extra) >= 200)

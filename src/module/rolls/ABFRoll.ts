@@ -15,9 +15,6 @@ export abstract class ABFRoll {
     }
   }
 
-  get fumbled() {
-    return this.foundryRoll.firstResult <= this.fumbleRange;
-  }
 
   get firstDice(): DiceTerm {
     return this.foundryRoll.dice[0];
