@@ -230,14 +230,14 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
         baseDefense = this.defenderActor.data.data.combat.block.base.value;
       }
 
-      const complexWeapon = (weapon?.data.special.value.includes("Compleja"));
-      const actorData = JSON.parse(JSON.stringify(this.defenderActor.data.data));
+      //const complexWeapon = (weapon?.data.special.value.includes("Compleja"));
+      var formula = `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`;
         if (baseDefense >= 200) //Mastery reduces the fumble range
-          actorData.general.ranges.fumbles.value -= 1;
+          formula = formula.replace('xa', 'xamastery');
           
       const roll = new ABFFoundryRoll(
-        `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`,
-        actorData
+        formula,
+        this.defenderActor.data.data
       );
 
       roll.roll();
@@ -289,11 +289,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
           baseMagicProjection = this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.base.value;
         }
 
-        const actorData = JSON.parse(JSON.stringify(this.attackerActor.data.data));
+        var formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
         if (baseMagicProjection >= 200) //Mastery reduces the fumble range
-          actorData.general.ranges.fumbles.value -= 1;
+          formula = formula.replace('xa', 'xamastery');
 
-        const roll = new ABFFoundryRoll(`1d100xa + ${magicProjection} + ${modifier ?? 0}`, actorData);
+        const roll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
         roll.roll();
 
         if (this.data.defender.showRoll) {
@@ -338,11 +338,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       const { psychicProjection, psychicPotential, powerUsed, modifier } = this.data.defender.psychic;
 
       if (powerUsed) {
-        const actorData = JSON.parse(JSON.stringify(this.defenderActor.data.data));
-        if (actorData.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
-          actorData.general.ranges.fumbles.value -= 1;
+        var formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
+        if (this.defenderActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
+          formula = formula.replace('xa', 'xamastery');
 
-        const roll = new ABFFoundryRoll(`1d100xa + ${psychicProjection} + ${modifier ?? 0}`, actorData);
+        const roll = new ABFFoundryRoll(formula, this.defenderActor.data.data);
         roll.roll();
 
         if (this.data.defender.showRoll) {
