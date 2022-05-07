@@ -234,8 +234,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
         const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
 
-        //const complexWeapon = (weapon?.data.special.value.includes("Compleja"));
-        var formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
         if (this.attackerActor.data.data.combat.attack.base.value >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -294,7 +293,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
       const { magicProjectionType, spellGrade, spellUsed, modifier } = this.data.attacker.mystic;
 
       if (spellUsed) {
-        var baseMagicProjection, magicProjection;
+        let baseMagicProjection, magicProjection;
         if (magicProjectionType === 'normal') {
           magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value
           baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value
@@ -304,7 +303,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
           baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.base.value
         }
 
-        var formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
+        let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
         if (baseMagicProjection >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -354,7 +353,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
       const { powerUsed, modifier, psychicPotential, psychicProjection } = this.data.attacker.psychic;
 
       if (powerUsed) {
-        var formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
+        let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
         if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 

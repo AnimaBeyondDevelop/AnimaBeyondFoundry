@@ -230,8 +230,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
         baseDefense = this.defenderActor.data.data.combat.block.base.value;
       }
 
-      //const complexWeapon = (weapon?.data.special.value.includes("Compleja"));
-      var formula = `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`;
+      let formula = `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`;
         if (baseDefense >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
           
@@ -289,7 +288,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
           baseMagicProjection = this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.base.value;
         }
 
-        var formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
+        let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
         if (baseMagicProjection >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -338,7 +337,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       const { psychicProjection, psychicPotential, powerUsed, modifier } = this.data.defender.psychic;
 
       if (powerUsed) {
-        var formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
+        let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
         if (this.defenderActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 

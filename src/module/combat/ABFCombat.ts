@@ -41,8 +41,8 @@ export default class ABFCombat extends Combat {
     a: Combatant,
     b: Combatant
   ): number {
-    var initiativeA = a.initiative || -9999;
-    var initiativeB = b.initiative || -9999;
+    let initiativeA = a.initiative || -9999;
+    let initiativeB = b.initiative || -9999;
     if (initiativeA < (a?.actor?.data.data.characteristics.secondaries.initiative.final.value || 0)) initiativeA -= 2000;
     if (initiativeB < (b?.actor?.data.data.characteristics.secondaries.initiative.final.value || 0)) initiativeB -= 2000;
     return initiativeB - initiativeA;
