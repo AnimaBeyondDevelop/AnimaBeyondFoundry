@@ -410,7 +410,7 @@
   "anima.ui.settings.tabVisibility.psychic.title": "Psychic",
   "anima.ui.settings.tabVisibility.title": "Tab visibility",
   "anima.ui.settings.advancedSettings.title": "Advanced Settings",
-  "anima.ui.settings.advancedSettings.openRolls": "Open roll Range",
+  "anima.ui.settings.advancedSettings.openRolls": "Open Roll Range",
   "anima.ui.settings.advancedSettings.fumbles": "Fumble Range",
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title": "Floor items in multiples of 5. Applies for damage",
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.title": "¿Floor calculated damage in multiples of 5?",
