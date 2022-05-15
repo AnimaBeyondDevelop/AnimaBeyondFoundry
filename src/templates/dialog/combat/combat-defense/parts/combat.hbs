@@ -6,7 +6,7 @@
   inputValue=this.defender.combat.modifier
 }}
 
-{{#if (is "eq" this.attacker.attackType "combat")}}
+{{#if (and (is "neq" this.attacker.critic "-") this.attacker.critic)}}
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize 'macros.combat.dialog.at.title')
