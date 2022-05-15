@@ -159,7 +159,9 @@ export default class ABFActorSheet extends ActorSheet {
     if (dataset.roll) {
       const label = dataset.label ? `Rolling ${dataset.label}` : '';
       const mod = await openModDialog();
-      const formula = `${dataset.roll}+ ${mod}`;
+      let formula = `${dataset.roll}+ ${mod}`;
+      if(parseInt(dataset.extra) >= 200)
+        formula = formula.replace('xa', 'xamastery');
       const roll = new ABFFoundryRoll(formula, this.actor.data.data);
 
       roll.toMessage({

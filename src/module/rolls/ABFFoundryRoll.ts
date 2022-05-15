@@ -26,7 +26,7 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
     if (data) {
       this.data = data;
     }
-
+ 
     if (this.formula.includes('xa')) {
       this.abfRoll = new ABFExploderRoll(this);
     }
@@ -46,6 +46,12 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
 
   get lastResult() {
     return this.getResults()[this.getResults().length - 1];
+  }
+
+  get fumbled() {
+    if (this.abfRoll instanceof  ABFExploderRoll)
+      return this.abfRoll?.fumbled || false;
+    else return false
   }
 
   recalculateTotal(mod = 0) {
