@@ -360,6 +360,9 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         const psychicProjectionRoll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
         psychicProjectionRoll.roll();
 
+        const psychicPotentialRoll = new ABFFoundryRoll(`1d100xa + ${psychicPotential.final}`, this.data.attacker.actor.data.data);
+        psychicPotentialRoll.roll();
+
         if (this.data.attacker.showRoll) {
           const { i18n } = game as Game;
 
@@ -367,28 +370,31 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
           const power = powers.find(w => w._id === powerUsed)!;
 
-          const flavor = i18n.format('macros.combat.dialog.psychicAttack.title', {
+          psychicPotentialRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
+            flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
+          });
+
+          const projectionFlavor = i18n.format('macros.combat.dialog.psychicAttack.title', {
             power: power.name,
-            target: this.data.defender.token.name
+            target: this.data.defender.token.name,
+            potential: psychicPotentialRoll.total!
           });
 
           psychicProjectionRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
-            flavor
+            flavor: projectionFlavor
           });
         }
 
         const rolled = psychicProjectionRoll.total! - psychicProjection - (modifier ?? 0);
-
-        const psychicPotentialRoll = new ABFFoundryRoll('1d100xa', this.data.attacker.actor.data.data);
-        psychicPotentialRoll.roll();
 
         this.hooks.onAttack({
           type: 'psychic',
           values: {
             modifier,
             powerUsed,
-            psychicPotential: psychicPotential.final + psychicPotentialRoll.total!,
+            psychicPotential: psychicPotentialRoll.total!,
             psychicProjection,
             roll: rolled,
             total: psychicProjectionRoll.total!,
