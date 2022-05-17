@@ -54,6 +54,9 @@ export type UserCombatDefenseDialogData = {
       psychicPotential: SpecialField;
       powerUsed: string | undefined;
     };
+    resistance: {
+      surprised: boolean;
+    }
   };
   defenseSent: boolean;
 };
@@ -67,6 +70,15 @@ export type UserCombatDefenseCombatResult = {
     multipleDefensesPenalty: number;
     at: number | undefined;
     roll: number;
+    total: number;
+  };
+};
+
+export type UserDamageResistanceDefenseCombatResult = {
+  type: 'resistance';
+  values: {
+    at: number | undefined;
+    surprised: boolean;
     total: number;
   };
 };
@@ -100,7 +112,8 @@ export type UserCombatDefensePsychicResult = {
 export type UserCombatDefenseResult =
   | UserCombatDefenseCombatResult
   | UserCombatDefenseMysticResult
-  | UserCombatDefensePsychicResult;
+  | UserCombatDefensePsychicResult
+  | UserDamageResistanceDefenseCombatResult;
 
 const getInitialData = (
   attacker: { token: TokenDocument; attackType: UserCombatAttackResult['type']; critic?: OptionalWeaponCritic },
@@ -130,7 +143,7 @@ const getInitialData = (
       token: defender,
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
-      withoutRoll: false, //set true for Damage Resistant creatures and ¿masses? Maybe we can do more with masses in the future?
+      withoutRoll: false, //set true for Damage Resistant creatures and ï¿½masses? Maybe we can do more with masses in the future?
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: 0,
@@ -154,6 +167,9 @@ const getInitialData = (
         psychicPotential: { special: 0, final: defenderActor.data.data.psychic.psychicPotential.final.value },
         psychicProjection: defenderActor.data.data.psychic.psychicProjection.final.value,
         powerUsed: undefined
+      },
+      resistance: {
+        surprised: false
       }
     },
     defenseSent: false
@@ -286,18 +302,15 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       this.render();
     });
 
-    html.find('.send-defense-resist').click(e => {
+    html.find('send-defense-damage-resistance').click(e => {
       const at = this.data.defender.combat.at;
+      const surprised = this.data.defender.resistance.surprised;
 
       this.hooks.onDefense({
-        type: 'combat',
+        type: 'resistance',
         values: {
-          'block',
-          0,
-          0,
-          0,
           at: at.final,
-          roll: 0,
+          surprised: surprised,
           total: 0
         }
       });
@@ -462,6 +475,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       }
     }
 
+    console.log("hello my baby: "+at+" + "+this.data.defender.combat.at.special);
     if (at !== undefined) {
       this.data.defender.combat.at.final = this.data.defender.combat.at.special + at;
     }

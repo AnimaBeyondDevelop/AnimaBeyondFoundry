@@ -11,24 +11,56 @@
     }}
       <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
+        <a class="item" data-tab="damageResistance">{{localize "anima.ui.tabs.damageResistance"}}</a>
         {{#if (is 'gt' this.defender.actor.data.data.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
         {{#if (is 'gt' this.defender.actor.data.data.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
       </nav>
 
-      {{#if this.ui.isGM}}
+      <div class='columns'>
+        <div>
+          {{#if this.ui.isGM}}
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.showRoll.title')
+              disabled=this.defenseSent
+              inputType="checkbox"
+              inputName="defender.showRoll"
+              inputValue=(is 'eq' this.defender.showRoll true)
+            }}
+          {{/if}}
+        </div>
+        <div>
+          {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.noRoll.title')
+              inputType="checkbox"
+              inputName="defender.withoutRoll"
+              inputValue=(is 'eq' this.defender.withoutRoll true)
+          }}
+        </div>
+      </div>
+
+      {{#if (and (is "neq" this.attacker.critic "-") this.attacker.critic)}}
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-          title=(localize 'macros.combat.dialog.showRoll.title')
+          title=(localize 'macros.combat.dialog.at.title')
           disabled=this.defenseSent
-          inputType="checkbox"
-          inputName="defender.showRoll"
-          inputValue=(is 'eq' this.defender.showRoll true)
+          inputName="defender.combat.at.special"
+          inputValue=this.defender.combat.at.special
+          hasSecondaryInput=true
+          disableSecondaryInput=true
+          secondaryInputName="defender.combat.at.final"
+          secondaryInputValue=this.defender.combat.at.final
         }}
       {{/if}}
 
       <section class="sheet-body">
         <div class="tab combat" data-group="primary" data-tab="combat">
           {{> 'systems/animabf/templates/dialog/combat/combat-defense/parts/combat.hbs' this=this}}
+        </div>
+
+        <div class="tab damageResistance" data-group="primary" data-tab="damageResistance">
+          {{> 'systems/animabf/templates/dialog/combat/combat-defense/parts/damage-resistance.hbs' this=this}}
         </div>
 
         <div class="tab mystic" data-group="primary" data-tab="mystic">

@@ -10,6 +10,7 @@ export const preloadTemplates = () => {
     Templates.Dialog.Combat.CombatAttackDialog.parts.psychic,
     Templates.Dialog.Combat.CombatDefenseDialog.main,
     Templates.Dialog.Combat.CombatDefenseDialog.parts.combat,
+    Templates.Dialog.Combat.CombatDefenseDialog.parts.damageResistance,
     Templates.Dialog.Combat.CombatDefenseDialog.parts.mystic,
     Templates.Dialog.Combat.CombatDefenseDialog.parts.psychic,
     Templates.Dialog.Combat.CombatRequestDialog,
