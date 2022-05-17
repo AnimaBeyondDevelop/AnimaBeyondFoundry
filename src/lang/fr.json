@@ -552,6 +552,7 @@
   "macros.combat.dialog.rolled.title": "Dés lancés",
   "macros.combat.dialog.showResultsButton.title": "Envoyer au chat les résultats",
   "macros.combat.dialog.showRoll.title": "Montrer le jet",
+  "macros.combat.dialog.noRoll.title": "Sans lancer de dés",
   "macros.combat.dialog.spell.title": "Sort",
   "macros.combat.dialog.spellGrade.advanced.title": "Avancé",
   "macros.combat.dialog.spellGrade.arcane.title": "Arcane",

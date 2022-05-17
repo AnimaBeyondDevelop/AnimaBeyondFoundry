@@ -554,6 +554,7 @@
   "macros.combat.dialog.rolled.title": "Dice rolled",
   "macros.combat.dialog.showResultsButton.title": "Send to chat the results",
   "macros.combat.dialog.showRoll.title": "Show roll",
+  "macros.combat.dialog.noRoll.title": "Without dice roll",
   "macros.combat.dialog.spell.title": "Spell",
   "macros.combat.dialog.spellGrade.advanced.title": "Advanced",
   "macros.combat.dialog.spellGrade.arcane.title": "Arcane",

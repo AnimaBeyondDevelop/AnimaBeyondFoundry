@@ -28,6 +28,7 @@ export type UserCombatAttackDialogData = {
     actor: ABFActor;
     token: TokenDocument;
     showRoll: boolean;
+    withoutRoll: boolean;
     counterAttackBonus: number | undefined;
     combat: {
       modifier: number;
@@ -135,6 +136,7 @@ const getInitialData = (
       token: attacker,
       actor: attackerActor,
       showRoll: !isGM || showRollByDefault,
+      withoutRoll: false,
       counterAttackBonus: options.counterAttackBonus,
       combat: {
         fatigueUsed: 0,
@@ -251,6 +253,9 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
 
         let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
+        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+          formula = formula.replace('1d100xa', '0');
+        }
         if (this.attackerActor.data.data.combat.attack.base.value >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -320,6 +325,9 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         }
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
+        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+          formula = formula.replace('1d100xa', '0');
+        }
         if (baseMagicProjection >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -372,6 +380,9 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
+        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+          formula = formula.replace('1d100xa', '0');
+        }
         if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 

@@ -554,6 +554,7 @@
   "macros.combat.dialog.rolled.title": "Tirada del dado",
   "macros.combat.dialog.showResultsButton.title": "Enviar al chat los resultados",
   "macros.combat.dialog.showRoll.title": "Mostrar tirada",
+  "macros.combat.dialog.noRoll.title": "Sin tirar dado",
   "macros.combat.dialog.spell.title": "Hechizo",
   "macros.combat.dialog.spellGrade.advanced.title": "Avanzado",
   "macros.combat.dialog.spellGrade.arcane.title": "Arcano",

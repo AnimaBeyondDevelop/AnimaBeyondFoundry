@@ -32,6 +32,7 @@ export type UserCombatDefenseDialogData = {
     actor: ABFActor;
     token: TokenDocument;
     showRoll: boolean;
+    withoutRoll: boolean;
     combat: {
       modifier: number;
       fatigue: number;
@@ -77,6 +78,7 @@ export type UserCombatDefenseMysticResult = {
     magicProjection: number;
     spellUsed: string;
     spellGrade: 'base' | 'intermediate' | 'advanced' | 'arcane';
+    at: number | undefined;
     roll: number;
     total: number;
   };
@@ -89,6 +91,7 @@ export type UserCombatDefensePsychicResult = {
     psychicProjection: number;
     psychicPotential: number;
     powerUsed: string;
+    at: number | undefined;
     roll: number;
     total: number;
   };
@@ -127,6 +130,7 @@ const getInitialData = (
       token: defender,
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
+      withoutRoll: false, //set true for Damage Resistant creatures and ¿masses? Maybe we can do more with masses in the future?
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: 0,
@@ -236,8 +240,11 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       }
 
       let formula = `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${(multipleDefensesPenalty ?? 0) * -1} + ${value}`;
-        if (baseDefense >= 200) //Mastery reduces the fumble range
-          formula = formula.replace('xa', 'xamastery');
+      if (this.data.defender.withoutRoll) { //Remove the dice from the formula
+        formula = formula.replace('1d100xa', '0');
+      }
+      if (baseDefense >= 200) //Mastery reduces the fumble range
+        formula = formula.replace('xa', 'xamastery');
           
       const roll = new ABFFoundryRoll(
         formula,
@@ -279,8 +286,30 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       this.render();
     });
 
+    html.find('.send-defense-resist').click(e => {
+      const at = this.data.defender.combat.at;
+
+      this.hooks.onDefense({
+        type: 'combat',
+        values: {
+          'block',
+          0,
+          0,
+          0,
+          at: at.final,
+          roll: 0,
+          total: 0
+        }
+      });
+
+      this.data.defenseSent = true;
+
+      this.render();
+    });
+
     html.find('.send-mystic-defense').click(() => {
       const { modifier, spellUsed, spellGrade, magicProjectionType } = this.data.defender.mystic;
+      const at = this.data.defender.combat.at;
 
       if (spellUsed) {
         let baseMagicProjection, magicProjection;
@@ -294,6 +323,9 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
         }
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
+        if (this.data.defender.withoutRoll) { //Remove the dice from the formula
+          formula = formula.replace('1d100xa', '0');
+        }
         if (baseMagicProjection >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -327,6 +359,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
             magicProjection,
             spellGrade,
             spellUsed,
+            at: at.final,
             roll: rolled,
             total: roll.total!
           }
@@ -340,9 +373,13 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
 
     html.find('.send-psychic-defense').click(() => {
       const { psychicProjection, psychicPotential, powerUsed, modifier } = this.data.defender.psychic;
+      const at = this.data.defender.combat.at;
 
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
+        if (this.data.defender.withoutRoll) { //Remove the dice from the formula
+          formula = formula.replace('1d100xa', '0');
+        }
         if (this.defenderActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
@@ -376,6 +413,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
             powerUsed,
             psychicProjection,
             psychicPotential: psychicPotential.final,
+            at: at.final,
             roll: rolled,
             total: roll.total!
           }

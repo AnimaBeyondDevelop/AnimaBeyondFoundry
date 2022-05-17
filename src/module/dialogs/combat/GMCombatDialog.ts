@@ -283,12 +283,11 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       if (this.isDamagingCombat) {
-        const defenderResult = defender.result as UserCombatDefenseCombatResult;
 
         const combatResult = calculateCombatResult(
           Math.max(attackerTotal, 0),
           Math.max(defenderTotal, 0),
-          Math.max(defenderResult.values.at! - calculateATReductionByQuality(attacker.result), 0),
+          Math.max(defender.result.values.at! - calculateATReductionByQuality(attacker.result), 0),
           attacker.result.values.damage
         );
 

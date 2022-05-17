@@ -6,6 +6,14 @@
   inputValue=this.defender.combat.modifier
 }}
 
+{{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.noRoll.title')
+    inputType="checkbox"
+    inputName="defender.withoutRoll"
+    inputValue=(is 'eq' this.defender.withoutRoll true)
+}}
+
 {{#if (and (is "neq" this.attacker.critic "-") this.attacker.critic)}}
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
