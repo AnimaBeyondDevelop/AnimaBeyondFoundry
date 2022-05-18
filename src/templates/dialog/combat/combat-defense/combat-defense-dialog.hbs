@@ -9,12 +9,12 @@
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="defense-values"
     }}
-      <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
-        <a class="item" data-tab="damageResistance">{{localize "anima.ui.tabs.damageResistance"}}</a>
+    <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+        {{#if (is 'eq' defenderActor.data.data.general.settings.defenseType.value 'resistance'}}<a class="item" data-tab="damageResistance">{{localize "anima.ui.tabs.damageResistance"}}</a>
+        {{else}}<a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>{{/if}}
         {{#if (is 'gt' this.defender.actor.data.data.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
         {{#if (is 'gt' this.defender.actor.data.data.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
-      </nav>
+    </nav>
 
       <div class='columns'>
         <div>
@@ -33,6 +33,7 @@
           {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
               title=(localize 'macros.combat.dialog.noRoll.title')
+              disabled=this.defenseSent
               inputType="checkbox"
               inputName="defender.withoutRoll"
               inputValue=(is 'eq' this.defender.withoutRoll true)

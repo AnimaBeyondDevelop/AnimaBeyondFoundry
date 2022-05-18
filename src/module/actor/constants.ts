@@ -17,9 +17,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     }
   },
   general: {
-    ranges: {
+    settings: {
       openRolls: { value: 90 },
-      fumbles: { value: 3 }
+      fumbles: { value: 3 },
+      defenseType: { value: '' }
     },
     modifiers: {
       physicalActions: {

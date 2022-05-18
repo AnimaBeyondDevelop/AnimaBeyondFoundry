@@ -143,7 +143,7 @@ const getInitialData = (
       token: defender,
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
-      withoutRoll: false, //set true for Damage Resistant creatures and �masses? Maybe we can do more with masses in the future?
+      withoutRoll: (defenderActor.data.data.general.settings.defenseType.value === 'mass') ? true : false,
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: 0,
@@ -197,7 +197,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
     } else {
       this.data.defender.combat.unarmed = true;
     }
-
+      
     this.render(true);
   }
 
