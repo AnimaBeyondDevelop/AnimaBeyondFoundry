@@ -1,3 +1,20 @@
-export const calculateAbsorption = (at: number, halved: boolean) => {
-  return at * 10 + 20;
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
+
+export const calculateAbsorption = (diference: number, at: number, halved: boolean) => {
+  const useCombatTable = (game as Game).settings.get('animabf', ABFSettingsKeys.USE_DAMAGE_TABLE);
+  if (useCombatTable) {
+    let finalAt = at;
+    if (halved) finalAt = Math.floor(at/2);
+    if (diference < 30) return 0;
+    else if (diference < 50 && finalAt <= 1) {
+      if (diference < 40 && finalAt == 0) return 10;
+      else return Math.floor((diference - (finalAt * 10 + 10)) / 10) * 10;
+    }
+    else return Math.floor((diference - (finalAt * 10)) / 10) * 10;
+  }
+  else {
+    let abs = at * 10 + 20;
+    if (halved) abs = abs/2;
+    return Math.floor((diference - abs) / 10) * 10;
+  }
 };

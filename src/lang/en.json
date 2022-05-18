@@ -416,6 +416,8 @@
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.title": "¿Floor calculated damage in multiples of 5?",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Inside managed combat system, the \"Show roll\" checkbox will be checked by default depending on this value",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Show GM rolls automatically in combat",
+  "anima.ui.systemSettings.useCombatTable.title": "Use combat table",
+  "anima.ui.systemSettings.useCombatTable.hint.title": "Calculate damage with the Combat Table explained in Core Exxet pg. 334-335",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Damage Resistance",
   "anima.ui.tabs.domine": "Domine",

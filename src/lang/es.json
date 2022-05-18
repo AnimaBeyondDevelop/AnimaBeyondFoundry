@@ -417,6 +417,8 @@
   "anima.ui.systemSettings.autoAcceptCombatRequests.hint.title": "En el combate autogestionado las peticiones de combate al DM se auto aceptarán dependiendo de si está activa esta opción",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Cuando se use el combate autogestionado por el sistema, posibilidad de mostrar las tiradas que realice el GM vendrán marcadas por defecto según este valor",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Mostrar tiradas del GM forma automática al combatir",
+  "anima.ui.systemSettings.useCombatTable.title": "Usar la Tabla de combate",
+  "anima.ui.systemSettings.useCombatTable.hint.title": "Calcular daño usando la Tabla de combate que aparece en el Core Exxet pg. 334-335",
   "anima.ui.tabs.combat": "Combate",
   "anima.ui.tabs.damageResistance": "Acumulación",
   "anima.ui.tabs.domine": "Domine",
