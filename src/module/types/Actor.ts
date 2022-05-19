@@ -167,6 +167,28 @@ export type ABFActorDataSourceData = {
         value: number;
         max: number;
       };
+      regenerationType: { 
+        mod: { 
+          value: number 
+        }; 
+        final: { 
+          value: number 
+        };
+      };
+      regeneration: { 
+        normal: { 
+          value: string 
+        }; 
+        resting: { 
+          value: string 
+        };
+        recovery: { 
+          value: string 
+        };
+        special: { 
+          value: string 
+        };
+      };
       movementType: {
         mod: {
           value: number;

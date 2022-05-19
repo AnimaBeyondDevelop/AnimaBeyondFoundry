@@ -78,5 +78,34 @@
         inputValue=(math data.data.characteristics.secondaries.movement.maximum.value "/" 4)
       }}
     </div>
+    <div class='regeneration'>
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="movement"
+        title=(localize 'anima.ui.general.regeneration.regenerationType.title')
+        inputName="data.characteristics.secondaries.regenerationType.mod.value"
+        inputValue=data.data.characteristics.secondaries.regenerationType.mod.value
+        hasSecondaryInput=true
+        disableSecondaryInput=true
+        secondaryInputName="data.characteristics.secondaries.regenerationType.final.value"
+        secondaryInputValue=data.data.characteristics.secondaries.regenerationType.final.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="movement"
+        title=(localize 'anima.ui.general.regeneration.resting.title')
+        disabled=true
+        inputName="data.characteristics.secondaries.regeneration.resting.value"
+        inputValue=data.data.characteristics.secondaries.regeneration.resting.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="running"
+        title=(localize 'anima.ui.general.regeneration.notResting.title')
+        disabled=true
+        inputName="data.characteristics.secondaries.regeneration.normal.value"
+        inputValue=data.data.characteristics.secondaries.regeneration.normal.value
+      }}
+    </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

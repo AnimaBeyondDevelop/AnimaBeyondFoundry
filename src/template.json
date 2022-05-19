@@ -56,6 +56,13 @@
           "lifePoints": { "value": 0, "max": 0 },
           "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
           "fatigue": { "value": 0, "max": 0 },
+          "regenerationType": { "mod": { "value": 0 }, "final": { "value": 0 } },
+          "regeneration": {
+            "normal": { "value": "" },
+            "resting": { "value": "" },
+            "recovery": { "value": "" },
+            "special": { "value": "" }
+          },
           "movementType": { "mod": { "value": 0 }, "final": { "value": 0 } },
           "movement": { "maximum": { "value": 0 }, "running": { "value": 0 } },
           "resistances": {
