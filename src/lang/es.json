@@ -493,6 +493,7 @@
   "macros.combat.dialog.attackType.combat.title": "Físico",
   "macros.combat.dialog.attackType.mystic.title": "Mágico",
   "macros.combat.dialog.attackType.psychic.title": "Psíquico",
+  "macros.combat.dialog.attackType.resistance.title": "Acumulación",
   "macros.combat.dialog.attacker.title": "Atacante",
   "macros.combat.dialog.attackerCustomModifier.title": "Modificador personalizado del ataque",
   "macros.combat.dialog.attacking.title": "Atacando a ",

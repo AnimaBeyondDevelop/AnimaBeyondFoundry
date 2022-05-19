@@ -1,7 +1,8 @@
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
-export const calculateAbsorption = (diference: number, at: number, halved: boolean) => {
+export const calculateAbsorption = (attack: number, defense: number, at: number, halved: boolean = false) => {
   const useCombatTable = (game as Game).settings.get('animabf', ABFSettingsKeys.USE_DAMAGE_TABLE);
+  let diference = attack - defense;
   if (useCombatTable) {
     let finalAt = at;
     if (halved) finalAt = Math.floor(at/2);

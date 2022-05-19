@@ -20,15 +20,17 @@
       inputName="data.general.settings.fumbles.value"
       inputValue= data.data.general.settings.fumbles.value
     }}
-    {{> "systems/animabf/templates/common/ui/custom-select.hbs"
-      class="defenseType"
-      title=(localize "anima.ui.settings.advancedSettings.defenseType.title")
-      inputName="data.general.settings.defenseType.value"
-    }}
-        <option {{#if (is "eq" this.inputValue '')}} selected{{/if}} value=''>{{localize 'anima.ui.settings.advancedSettings.defenseType.normal.title'}}</option>
-        <option {{#if (is "eq" this.inputValue 'resistance')}} selected{{/if}} value='resistance'>{{localize 'anima.ui.settings.advancedSettings.defenseType.damageResistance.title'}}</option>
-        <option {{#if (is "eq" this.inputValue 'mass')}} selected{{/if}} value='mass'>{{localize 'anima.ui.settings.advancedSettings.defenseType.mass.title'}}</option>
-    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
-    
+    <div>
+      {{#> "systems/animabf/templates/common/ui/custom-select.hbs"
+        class="defenseType"
+        title=(localize "anima.ui.settings.advancedSettings.defenseType.title")
+        inputName="data.general.settings.defenseType.value"
+        inputValue= data.data.general.settings.defenseType.value
+      }}
+          <option {{#if (is "eq" this.inputValue '')}} selected{{/if}} value=''>{{localize 'anima.ui.settings.advancedSettings.defenseType.normal.title'}}</option>
+          <option {{#if (is "eq" this.inputValue 'resistance')}} selected{{/if}} value='resistance'>{{localize 'anima.ui.settings.advancedSettings.defenseType.damageResistance.title'}}</option>
+          <option {{#if (is "eq" this.inputValue 'mass')}} selected{{/if}} value='mass'>{{localize 'anima.ui.settings.advancedSettings.defenseType.mass.title'}}</option>
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

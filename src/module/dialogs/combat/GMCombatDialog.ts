@@ -1,5 +1,5 @@
 import { UserCombatAttackResult } from './CombatAttackDialog';
-import { UserCombatDefenseCombatResult, UserCombatDefenseResult } from './CombatDefenseDialog';
+import { UserCombatDefenseResult } from './CombatDefenseDialog';
 import { NoneWeaponCritic, WeaponDataSource } from '../../types/combat/WeaponItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
@@ -192,7 +192,6 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
     const { attacker, defender } = this.data;
 
     const isPhysicalDamagingCombat = attacker.result?.type === 'combat';
-    const isPhysicalDefense = defender.result?.type === 'combat';
 
     const isMysticDamagingCombat =
       attacker.result?.type === 'mystic' && attacker.result.values.critic !== NoneWeaponCritic.NONE;
@@ -200,7 +199,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
     const isPsychicDamagingCombat =
       attacker.result?.type === 'psychic' && attacker.result.values.critic !== NoneWeaponCritic.NONE;
 
-    return (isPhysicalDamagingCombat || isMysticDamagingCombat || isPsychicDamagingCombat) && isPhysicalDefense;
+    return (isPhysicalDamagingCombat || isMysticDamagingCombat || isPsychicDamagingCombat);
   }
 
   get canApplyDamage(): boolean {

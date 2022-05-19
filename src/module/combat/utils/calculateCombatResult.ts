@@ -21,7 +21,7 @@ export const calculateCombatResult = (
     };
   }
 
-  let percent = calculateAbsorption(attack - defense, at, halvedAbsorption);
+  let percent = calculateAbsorption(attack, defense, at, halvedAbsorption);
   const result = calculateDamage(percent, damage);
 
   return {

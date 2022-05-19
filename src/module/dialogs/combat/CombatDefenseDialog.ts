@@ -79,6 +79,7 @@ export type UserDamageResistanceDefenseCombatResult = {
   values: {
     at: number | undefined;
     surprised: boolean;
+    roll: number;
     total: number;
   };
 };
@@ -302,15 +303,15 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       this.render();
     });
 
-    html.find('send-defense-damage-resistance').click(e => {
+    html.find('.send-defense-damage-resistance').click(e => {
       const at = this.data.defender.combat.at;
       const surprised = this.data.defender.resistance.surprised;
-
       this.hooks.onDefense({
         type: 'resistance',
         values: {
           at: at.final,
           surprised: surprised,
+          roll: 0,
           total: 0
         }
       });
@@ -475,7 +476,6 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
       }
     }
 
-    console.log("hello my baby: "+at+" + "+this.data.defender.combat.at.special);
     if (at !== undefined) {
       this.data.defender.combat.at.final = this.data.defender.combat.at.special + at;
     }

@@ -9,7 +9,7 @@
         "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false } }
       },
       "general": {
-        "ranges": { "openRolls": { "value": 0 }, "fumbles": { "value": 0 } },
+        "settings": { "openRolls": { "value": 0 }, "fumbles": { "value": 0 }, "defenseType": { "value": "" } },
         "modifiers": {
           "physicalActions": { "value": 0 },
           "allActions": { "base": { "value": 0 }, "final": { "value": 0 } },
