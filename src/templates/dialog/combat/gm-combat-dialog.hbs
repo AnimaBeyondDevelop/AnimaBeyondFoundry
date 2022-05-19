@@ -339,7 +339,7 @@
                     inputType="text"
                     title=(localize 'macros.combat.dialog.dodgeValue.title')
                     disabled=true
-                    inputValue=this.defender.actor.data.data.combat.dodge.final.value
+                    inputValue=this.defender.result.values.defense
                   }}
                 {{else}}
                   {{>
@@ -348,7 +348,7 @@
                     inputType="text"
                     title=(localize 'macros.combat.dialog.blockValue.title')
                     disabled=true
-                    inputValue=this.defender.actor.data.data.combat.block.final.value
+                    inputValue=this.defender.result.values.defense
                   }}
                 {{/if}}
                 {{>

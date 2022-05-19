@@ -69,6 +69,7 @@ export type UserCombatDefenseCombatResult = {
     fatigue: number;
     multipleDefensesPenalty: number;
     at: number | undefined;
+    defense: number;
     roll: number;
     total: number;
   };
@@ -79,7 +80,6 @@ export type UserDamageResistanceDefenseCombatResult = {
   values: {
     at: number | undefined;
     surprised: boolean;
-    roll: number;
     total: number;
   };
 };
@@ -293,6 +293,7 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
           modifier,
           fatigue,
           at: at.final,
+          defense: value,
           roll: rolled,
           total: roll.total!
         }
@@ -311,7 +312,6 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
         values: {
           at: at.final,
           surprised: surprised,
-          roll: 0,
           total: 0
         }
       });

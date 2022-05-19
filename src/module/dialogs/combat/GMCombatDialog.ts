@@ -95,7 +95,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
     super(getInitialData(attacker, defender, options));
 
     this.data = getInitialData(attacker, defender, options);
-
+    
     this.render(true);
   }
 
@@ -189,7 +189,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
   }
 
   get isDamagingCombat(): boolean {
-    const { attacker, defender } = this.data;
+    const { attacker } = this.data;
 
     const isPhysicalDamagingCombat = attacker.result?.type === 'combat';
 
