@@ -2,7 +2,6 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { canCounterAttack } from './canCounterAttack';
 import { calculateCounterAttackBonus } from './calculateCounterAttackBonus';
 import { calculateDamage } from './calculateDamage';
-import { calculateAbsorption } from './calculateAbsorption';
 import { roundTo5Multiples } from './roundTo5Multiples';
 
 export const calculateCombatResult = (
@@ -21,8 +20,7 @@ export const calculateCombatResult = (
     };
   }
 
-  let percent = calculateAbsorption(attack, defense, at, halvedAbsorption);
-  const result = calculateDamage(percent, damage);
+  const result = calculateDamage(attack, defense, at, damage, halvedAbsorption);
 
   return {
     canCounterAttack: false,
