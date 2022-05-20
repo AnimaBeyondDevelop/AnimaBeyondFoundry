@@ -175,16 +175,16 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       regeneration: {
         normal: {
-          value: ''
+          value: 0,
+          period: ''
         },
         resting: {
-          value: ''
+          value: 0,
+          period: ''
         },
         recovery: {
-          value: ''
-        },
-        special: {
-          value: ''
+          value: 0,
+          period: ''
         }
       },
       movementType: {

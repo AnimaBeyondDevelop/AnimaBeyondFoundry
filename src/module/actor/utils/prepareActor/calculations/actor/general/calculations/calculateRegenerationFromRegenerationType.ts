@@ -1,46 +1,46 @@
-export const calculateRegenerationFromRegenerationType = (regenerationType: number): [resting:string, normal: string, recovery: string, esp: string] => {
+export const calculateRegenerationFromRegenerationType = (regenerationType: number): [resting: { value: number; period: string }, normal: { value: number; period: string } | null, recovery: { value: number; period: string }] => {
   switch (regenerationType) {
-    case 0:
-      return ["0", "0", "NA", ""];
-    case 1:
-      return ["10 al día", "5 al día", "-5 al día", ""];
-    case 2:
-      return ["20 al día", "10 al día", "-5 al día", ""];
-    case 3:
-      return ["30 al día", "15 al día", "-5 al día", ""];
-    case 4:
-      return ["40 al día", "20 al día", "-10 al día", ""];
-    case 5:
-      return ["50 al día", "25 al día", "-10 al día", "No quedan cicatrices"];
-    case 6:
-      return ["75 al día", "30 al día", "-15 al día", "El personaje no sufre los efectos del desangramiento"];
-    case 7:
-      return ["100 al día", "50 al día", "-20 al día", "Los miembros limpiamente amputados se recuperan si se unen al muñón durante una semana"];
-    case 8:
-      return ["250 al día", "100 al día", "-25 al día", "Como el anterior, pero en cinco días"];
-    case 9:
-      return ["500 al día", "200 al día", "-30 al día", "Como el anterior, pero en tres días. El personaje supera automáticamente el estado entre la vida y la muerte"];
-    case 10:
-      return ["1 por minuto", "", "-40 al día", "Como el anterior, pero en un día"];
-    case 11:
-      return ["2 por minuto", "", "-50 al día", "Cualquier miembro amputado se recupera, uniendo los restos al muñón durante una semana"];
-    case 12:
-      return ["5 por minuto", "", "-5 por hora", "Como el anterior, pero en tres días"];
-    case 13:
-      return ["10 por minuto", "", "-10 por hora", "Como el anterior, pero en un día"];
-    case 14:
-      return ["1 por asalto", "", "-15 por hora", "Cualquier miembro se recupera, uniéndolo al muñón durante unas pocas horas"];
-    case 15:
-      return ["5 por asalto", "", "-20 por hora", "Cualquier miembro se recupera inmediatamente si se une al muñón durante un asalto. Salvo la cabeza, cualquier miembro amputado vuelve a crecer en una semana"];
-    case 16:
-      return ["10 por asalto", "", "-10 por minuto", "Salvo la cabeza, cualquier miembro amputado vuelve a crecer en un día"];
-    case 17:
-      return ["25 por asalto", "", "-10 por asalto", "Salvo la cabeza, cualquier miembro amputado vuelve a crecer en pocos minutos"];
-    case 18:
-      return ["50 por asalto", "", "-25 por asalto", "Salvo la cabeza, cualquier miembro amputado vuelve a crecer en pocos asaltos"];
-    case 19:
-      return ["100 por asalto", "", "Todos", "Cualquier miembro seccionado crece y es completamente funcional en un asalto"];
-    default:
-      return ["250 por asalto", "", "Todos", "Todos los críticos físicos son anulados"];
+      case 0:
+          return [{ value: 0, period: "d" }, { value: 0, period: "d" }, { value: 0, period: "d" },];
+      case 1:
+          return [{ value: 10, period: "d" }, { value: 5, period: "d" }, { value: -5, period: "d" },];
+      case 2:
+          return [{ value: 20, period: "d" }, { value: 10, period: "d" }, { value: -5, period: "d" },];
+      case 3:
+          return [{ value: 30, period: "d" }, { value: 15, period: "d" }, { value: -5, period: "d" },];
+      case 4:
+          return [{ value: 40, period: "d" }, { value: 20, period: "d" }, { value: -10, period: "d" },];
+      case 5:
+          return [{ value: 50, period: "d" }, { value: 25, period: "d" }, { value: -10, period: "d" },];
+      case 6:
+          return [{ value: 75, period: "d" }, { value: 30, period: "d" }, { value: -15, period: "d" },];
+      case 7:
+          return [{ value: 100, period: "d" }, { value: 50, period: "d" }, { value: -20, period: "d" },];
+      case 8:
+          return [{ value: 250, period: "d" }, { value: 100, period: "d" }, { value: -25, period: "d" },];
+      case 9:
+          return [{ value: 500, period: "d" }, { value: 200, period: "d" }, { value: -30, period: "d" },];
+      case 10:
+          return [{ value: 1, period: "m" }, null, { value: -40, period: "d" },];
+      case 11:
+          return [{ value: 2, period: "m" }, null, { value: -50, period: "d" },];
+      case 12:
+          return [{ value: 5, period: "m" }, null, { value: -5, period: "h" },];
+      case 13:
+          return [{ value: 10, period: "m" }, null, { value: -10, period: "h" },];
+      case 14:
+          return [{ value: 1, period: "a" }, null, { value: -15, period: "h" },];
+      case 15:
+          return [{ value: 5, period: "a" }, null, { value: -20, period: "h" },];
+      case 16:
+          return [{ value: 10, period: "a" }, null, { value: -10, period: "m" },];
+      case 17:
+          return [{ value: 25, period: "a" }, null, { value: -10, period: "a" },];
+      case 18:
+          return [{ value: 50, period: "a" }, null, { value: -25, period: "a" },];
+      case 19:
+          return [{ value: 100, period: "a" }, null, { value: 9999, period: "a" },];
+      default:
+          return [{ value: 250, period: "a" }, null, { value: 9999, period: "a" },];
   }
 };

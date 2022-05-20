@@ -169,24 +169,24 @@ export type ABFActorDataSourceData = {
       };
       regenerationType: { 
         mod: { 
-          value: number 
+          value: number;
         }; 
         final: { 
-          value: number 
+          value: number; 
         };
       };
       regeneration: { 
         normal: { 
-          value: string 
+          value: number;
+          period: string;
         }; 
         resting: { 
-          value: string 
+          value: number;
+          period: string; 
         };
         recovery: { 
-          value: string 
-        };
-        special: { 
-          value: string 
+          value: number;
+          period: string;
         };
       };
       movementType: {
