@@ -87,6 +87,11 @@
           grade=data.data.grades.arcane
         }}
       {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="spell"
+      }}
+        {{editor content=data.data.description.value target=(concat "data.dynamic.spells." data._id ".data.description.value") button=true owner=true editable=true}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
       {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
         <div class='spell-footer'>
           {{>

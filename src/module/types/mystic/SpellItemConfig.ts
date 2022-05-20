@@ -19,6 +19,7 @@ export type SpellGrade = {
 };
 
 export type SpellItemData = {
+  description: { value: string };
   level: { value: number };
   via: { value: string };
   spellType: { value: string };
@@ -60,6 +61,7 @@ export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
       name,
       type: ABFItems.SPELL,
       data: {
+        description: { value: '' },
         level: { value: 0 },
         via: { value: '' },
         hasDailyMaintenance: { value: false },
