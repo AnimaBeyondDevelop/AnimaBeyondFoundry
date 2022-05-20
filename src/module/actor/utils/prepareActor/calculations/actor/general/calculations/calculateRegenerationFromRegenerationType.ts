@@ -39,8 +39,8 @@ export const calculateRegenerationFromRegenerationType = (regenerationType: numb
       case 18:
           return [{ value: 50, period: "a" }, null, { value: -25, period: "a" },];
       case 19:
-          return [{ value: 100, period: "a" }, null, { value: 9999, period: "a" },];
+          return [{ value: 100, period: "a" }, null, { value: -9999, period: "a" },];
       default:
-          return [{ value: 250, period: "a" }, null, { value: 9999, period: "a" },];
+          return [{ value: 250, period: "a" }, null, { value: -9999, period: "a" },];
   }
 };

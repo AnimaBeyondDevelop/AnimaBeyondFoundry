@@ -78,7 +78,7 @@
         inputValue=(math data.data.characteristics.secondaries.movement.maximum.value "/" 4)
       }}
     </div>
-    <div class='regeneration'>
+    {{!-- <div class='regeneration'>
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
@@ -92,28 +92,28 @@
         }}
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="movement"
+        class="info-container"
         title=(localize 'anima.ui.general.regeneration.resting.title')
+        inputType="text"
         disabled=true
-        inputName="data.characteristics.secondaries.regeneration.resting.value"
         inputValue=(concat data.data.characteristics.secondaries.regeneration.resting.value (localize (concat "anima.ui.general.regeneration.period." data.data.characteristics.secondaries.regeneration.resting.period ".title")))
         }}
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="running"
+        class="info-container"
         title=(localize 'anima.ui.general.regeneration.notResting.title')
+        inputType="text"
         disabled=true
-        inputName="data.characteristics.secondaries.regeneration.normal.value"
         inputValue=(concat data.data.characteristics.secondaries.regeneration.normal.value (localize (concat "anima.ui.general.regeneration.period." data.data.characteristics.secondaries.regeneration.normal.period ".title")))
         }}
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="running"
+        class="info-container"
         title=(localize 'anima.ui.general.regeneration.penaltyReduction.title')
+        inputType="text"
         disabled=true
-        inputName="data.characteristics.secondaries.regeneration.recovery.value"
         inputValue=(concat data.data.characteristics.secondaries.regeneration.recovery.value (localize (concat "anima.ui.general.regeneration.period." data.data.characteristics.secondaries.regeneration.recovery.period ".title")))
         }}
-    </div>
+    </div> --}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}
