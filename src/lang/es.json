@@ -409,6 +409,7 @@
   "anima.ui.settings.tabVisibility.psychic.title": "Psíquico",
   "anima.ui.settings.tabVisibility.title": "Visibilidad de pestañas",
   "anima.ui.settings.advancedSettings.title": "Opciones avanzadas",
+  "anima.ui.settings.advancedSettings.doubles": "Abierta con dobles",
   "anima.ui.settings.advancedSettings.openRolls": "Rango de Abierta",
   "anima.ui.settings.advancedSettings.fumbles": "Rango de Pifia",
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title": "Redondea hacia abajo en múltiplos de 5. Aplica al daño",

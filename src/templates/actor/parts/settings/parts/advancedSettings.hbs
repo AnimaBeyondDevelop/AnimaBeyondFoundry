@@ -22,6 +22,14 @@
       inputName="data.general.ranges.fumbles.value"
       inputValue= data.data.general.ranges.fumbles.value
     }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="doubles"
+        title= (localize "anima.ui.settings.advancedSettings.doubles")
+        inputType="checkbox"
+        inputName="data.general.ranges.openOnDoubles.value"
+        inputValue=data.data.general.ranges.openOnDoubles.value
+      }}
     
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

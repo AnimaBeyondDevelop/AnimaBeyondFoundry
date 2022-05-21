@@ -410,6 +410,7 @@
   "anima.ui.settings.tabVisibility.psychic.title": "Psychique",
   "anima.ui.settings.tabVisibility.title": "Table de visibilité",
   "anima.ui.settings.advancedSettings.title": "Paramètres avancés",
+  "anima.ui.settings.advancedSettings.doubles": "Ouverte avec des doubles",
   "anima.ui.settings.advancedSettings.openRolls": "Marge d'ouverte",
   "anima.ui.settings.advancedSettings.fumbles": "Marge de Fumble",
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title": "Arrondir au multiple de 5. Applicable aux dégâts",

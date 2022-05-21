@@ -17,7 +17,8 @@ export type ABFActorDataSourceData = {
   general: {
     ranges: {
       openRolls: { value: number },
-      fumbles: { value: number }
+      fumbles: { value: number },
+      openOnDoubles: { value: boolean }
     },
     modifiers: {
       physicalActions: {
