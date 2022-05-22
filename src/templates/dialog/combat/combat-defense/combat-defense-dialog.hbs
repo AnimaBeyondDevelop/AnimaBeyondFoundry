@@ -18,6 +18,16 @@
 
       <div class='columns'>
         <div>
+          {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.noRoll.title')
+              disabled=this.defenseSent
+              inputType="checkbox"
+              inputName="defender.withoutRoll"
+              inputValue=(is 'eq' this.defender.withoutRoll true)
+          }}
+        </div>
+        <div>
           {{#if this.ui.isGM}}
             {{>
             "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -28,16 +38,6 @@
               inputValue=(is 'eq' this.defender.showRoll true)
             }}
           {{/if}}
-        </div>
-        <div>
-          {{>
-              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-              title=(localize 'macros.combat.dialog.noRoll.title')
-              disabled=this.defenseSent
-              inputType="checkbox"
-              inputName="defender.withoutRoll"
-              inputValue=(is 'eq' this.defender.withoutRoll true)
-          }}
         </div>
       </div>
 
