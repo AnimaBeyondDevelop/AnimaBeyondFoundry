@@ -21,6 +21,7 @@ export type UserCombatDefenseDialogData = {
   ui: {
     isGM: boolean;
     hasFatiguePoints: boolean;
+    activeTab: string;
   };
   attacker: {
     actor: ABFActor;
@@ -129,10 +130,13 @@ const getInitialData = (
   const attackerActor = attacker.token.actor!;
   const defenderActor = defender.actor!;
 
+  const activeTab = (defenderActor.data.data.general.settings.defenseType.value === 'resistance') ? 'damageResistance' : 'combat'
+
   return {
     ui: {
       isGM,
-      hasFatiguePoints: defenderActor.data.data.characteristics.secondaries.fatigue.value > 0
+      hasFatiguePoints: defenderActor.data.data.characteristics.secondaries.fatigue.value > 0,
+      activeTab: activeTab
     },
     attacker: {
       token: attacker.token,
@@ -190,7 +194,10 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
     super(getInitialData(attacker, defender));
 
     this.data = getInitialData(attacker, defender);
-
+    this._tabs[0].callback = (event: MouseEvent | null, tabs: Tabs, tabName: string) => {
+      this.data.ui.activeTab = tabName;
+      this.render(true);
+    }
     const weapons = this.defenderActor.data.data.combat.weapons as WeaponDataSource[];
 
     if (weapons.length > 0) {
