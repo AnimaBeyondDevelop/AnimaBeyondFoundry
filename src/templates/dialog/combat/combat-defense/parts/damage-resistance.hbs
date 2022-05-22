@@ -1,4 +1,4 @@
-<div class='defense-buttons'>
+<div class='columns'>
   {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.surprised.title')
@@ -9,7 +9,7 @@
 </div>
 
 {{#if this.defenseSent}}
-  <div class='columns'>
+  <div class='defense-buttons'>
     {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
       {{localize 'macros.combat.dialog.defenseSent.title'}}
