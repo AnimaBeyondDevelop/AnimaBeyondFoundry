@@ -1,5 +1,5 @@
 import { UserCombatAttackResult } from './CombatAttackDialog';
-import { UserCombatDefenseCombatResult, UserCombatDefenseResult } from './CombatDefenseDialog';
+import { UserCombatDefenseResult } from './CombatDefenseDialog';
 import { NoneWeaponCritic, WeaponDataSource } from '../../types/combat/WeaponItemConfig';
 import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConfig';
 import { SpellDataSource } from '../../types/mystic/SpellItemConfig';
@@ -95,7 +95,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
     super(getInitialData(attacker, defender, options));
 
     this.data = getInitialData(attacker, defender, options);
-
+    
     this.render(true);
   }
 
@@ -189,10 +189,9 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
   }
 
   get isDamagingCombat(): boolean {
-    const { attacker, defender } = this.data;
+    const { attacker } = this.data;
 
     const isPhysicalDamagingCombat = attacker.result?.type === 'combat';
-    const isPhysicalDefense = defender.result?.type === 'combat';
 
     const isMysticDamagingCombat =
       attacker.result?.type === 'mystic' && attacker.result.values.critic !== NoneWeaponCritic.NONE;
@@ -200,7 +199,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
     const isPsychicDamagingCombat =
       attacker.result?.type === 'psychic' && attacker.result.values.critic !== NoneWeaponCritic.NONE;
 
-    return (isPhysicalDamagingCombat || isMysticDamagingCombat || isPsychicDamagingCombat) && isPhysicalDefense;
+    return (isPhysicalDamagingCombat || isMysticDamagingCombat || isPsychicDamagingCombat);
   }
 
   get canApplyDamage(): boolean {
@@ -283,13 +282,12 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       if (this.isDamagingCombat) {
-        const defenderResult = defender.result as UserCombatDefenseCombatResult;
-
         const combatResult = calculateCombatResult(
           Math.max(attackerTotal, 0),
           Math.max(defenderTotal, 0),
-          Math.max(defenderResult.values.at! - calculateATReductionByQuality(attacker.result), 0),
-          attacker.result.values.damage
+          Math.max(defender.result.values.at! - calculateATReductionByQuality(attacker.result), 0),
+          attacker.result.values.damage,
+          (defender.result.type === 'resistance') ? defender.result.values.surprised : false
         );
 
         if (combatResult.canCounterAttack) {

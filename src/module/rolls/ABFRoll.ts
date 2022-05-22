@@ -10,8 +10,8 @@ export abstract class ABFRoll {
 
   constructor(protected readonly foundryRoll: ABFFoundryRoll) {
     if (this.foundryRoll.data.general !== undefined) {
-      this.openRollRange = this.foundryRoll.data.general.ranges.openRolls.value 
-      this.fumbleRange = this.foundryRoll.data.general.ranges.fumbles.value
+      this.openRollRange = this.foundryRoll.data.general.settings.openRolls.value 
+      this.fumbleRange = this.foundryRoll.data.general.settings.fumbles.value
       if (foundryRoll.formula.includes('mastery') && this.fumbleRange > 1) 
         this.fumbleRange -= 1
     }

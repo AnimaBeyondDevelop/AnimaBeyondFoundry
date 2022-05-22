@@ -1,0 +1,22 @@
+<div class='defense-buttons'>
+  {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.surprised.title')
+      inputType="checkbox"
+      inputName="defender.resistance.surprised"
+      inputValue=(is 'eq' this.defender.resistance.surprised true)
+    }}
+</div>
+
+{{#if this.defenseSent}}
+  <div class='columns'>
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    <p class='label'>
+      {{localize 'macros.combat.dialog.defenseSent.title'}}
+    </p>
+  </div>
+{{else}}
+  <button class='abf-button send-defense-damage-resistance'>
+    {{localize 'macros.combat.dialog.defenseButton.title'}}
+  </button>
+{{/if}}

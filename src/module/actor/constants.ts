@@ -17,9 +17,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     }
   },
   general: {
-    ranges: {
+    settings: {
       openRolls: { value: 90 },
-      fumbles: { value: 3 }
+      fumbles: { value: 3 },
+      defenseType: { value: '' }
     },
     modifiers: {
       physicalActions: {
@@ -163,6 +164,28 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       fatigue: {
         value: 0,
         max: 0
+      },
+      regenerationType: {
+        mod: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
+      },
+      regeneration: {
+        normal: {
+          value: 0,
+          period: ''
+        },
+        resting: {
+          value: 0,
+          period: ''
+        },
+        recovery: {
+          value: 0,
+          period: ''
+        }
       },
       movementType: {
         mod: {

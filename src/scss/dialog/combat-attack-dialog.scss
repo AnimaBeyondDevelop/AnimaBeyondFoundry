@@ -86,5 +86,12 @@
     .abf-button {
       margin-top: 2rem;
     }
+
+    .columns {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }

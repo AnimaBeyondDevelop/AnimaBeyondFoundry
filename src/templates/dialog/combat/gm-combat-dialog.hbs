@@ -99,7 +99,7 @@
                 title=(localize 'macros.combat.dialog.critic.title')
                 inputType="text"
                 disabled=true
-                inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.criticSelected '.title'))
+                inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
               }}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -300,13 +300,15 @@
 
         {{#if this.attacker.isReady}}
           {{#if this.defender.isReady}}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="custom-modifier"
-              title=(localize 'macros.combat.dialog.defenderCustomModifier.title')
-              inputName="defender.customModifier"
-              inputValue=this.defender.customModifier
-            }}
+            {{#unless (is "eq" this.defender.result.type 'resistance')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="custom-modifier"
+                title=(localize 'macros.combat.dialog.defenderCustomModifier.title')
+                inputName="defender.customModifier"
+                inputValue=this.defender.customModifier
+              }}
+            {{/unless}}
 
             <p class='defense-type label'>
               {{localize (concat 'macros.combat.dialog.attackType.' this.defender.result.type '.title')}}
@@ -337,7 +339,7 @@
                     inputType="text"
                     title=(localize 'macros.combat.dialog.dodgeValue.title')
                     disabled=true
-                    inputValue=this.defender.actor.data.data.combat.dodge.final.value
+                    inputValue=this.defender.result.values.defense
                   }}
                 {{else}}
                   {{>
@@ -346,7 +348,7 @@
                     inputType="text"
                     title=(localize 'macros.combat.dialog.blockValue.title')
                     disabled=true
-                    inputValue=this.defender.actor.data.data.combat.block.final.value
+                    inputValue=this.defender.result.values.defense
                   }}
                 {{/if}}
                 {{>
@@ -391,6 +393,19 @@
                   disabled=true
                   inputValue=this.defender.result.values.total
                 }}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'resistance')}}
+                {{#if (is 'neq' this.defender.result.values.at undefined)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="at-value"
+                    title=(localize 'macros.combat.dialog.at.title')
+                    inputType="text"
+                    disabled=true
+                    inputValue=this.defender.result.values.at
+                  }}
+                {{/if}}
               {{/if}}
 
               {{#if (is "eq" this.defender.result.type 'mystic')}}
