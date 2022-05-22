@@ -864,7 +864,116 @@ export type ABFActorDataSourceData = {
   };
 
   domine: {
-    kiSkills: [];
+    kiSkills: {
+      kiUse: { 
+        isActive: boolean; 
+      };
+      kiControl: { 
+        isActive: boolean; 
+      };
+      kiDetection: { 
+        isActive: boolean; 
+      };
+      erudition: { 
+        isActive: boolean; 
+      };
+      combatAura: { 
+        isActive: boolean; 
+      };
+      physicalControl: { 
+        isActive: boolean; 
+      };
+      physicalChange: { 
+        isActive: boolean; 
+      };
+      superiorChange: { 
+        isActive: boolean; 
+      };
+      bodyMultiplication: { 
+        isActive: boolean; 
+      };
+      majorMultiplication: { 
+        isActive: boolean; 
+      };
+      arcaneMultiplication: { 
+        isActive: boolean; 
+      };
+      magnitude: { 
+        isActive: boolean; 
+      };
+      arcaneMagnitude: { 
+        isActive: boolean; 
+      };
+      ageControl: { 
+        isActive: boolean; 
+      };
+      techniqueImitation: { 
+        isActive: boolean; 
+      };
+      forceTechniques: { 
+        isActive: boolean; 
+      };
+      kiTransmision: { 
+        isActive: boolean; 
+      };
+      kiHealing: { 
+        isActive: boolean; 
+      };
+      superiorHealing: { 
+        isActive: boolean; 
+      };
+      stabilize: { 
+        isActive: boolean; 
+      };
+      sacrifice: { 
+        isActive: boolean; 
+      };
+      useNecessaryEnergy: { 
+        isActive: boolean; 
+      };
+      kiHiding: { 
+        isActive: boolean; 
+      };
+      hidingAura: { 
+        isActive: boolean; 
+      };
+      fakeDeath: { 
+        isActive: boolean; 
+      };
+      needElimination: { 
+        isActive: boolean; 
+      };
+      fireImmunity: { 
+        isActive: boolean; 
+      };
+      coldImmunity: { 
+        isActive: boolean; 
+      };
+      electricImmunity: { 
+        isActive: boolean; 
+      };
+      recovery: { 
+        isActive: boolean; 
+      };
+      recoverOthers: { 
+        isActive: boolean; 
+      };
+      characteristicIncrease: { 
+        isActive: boolean; 
+      };
+      superiorIncrease: { 
+        isActive: boolean; 
+      };
+      improvisedTechniques: { 
+        isActive: boolean; 
+      };
+      inhumanity: { 
+        isActive: boolean; 
+      };
+      zen: { 
+        isActive: boolean; 
+      };
+    };
     nemesisSkills: [];
     arsMagnus: [];
     martialArts: [];

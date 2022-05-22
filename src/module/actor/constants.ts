@@ -862,7 +862,116 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
   },
 
   domine: {
-    kiSkills: [],
+    kiSkills: {
+      kiUse: { 
+        isActive: false 
+      },
+      kiControl: { 
+        isActive: false 
+      },
+      kiDetection: { 
+        isActive: false 
+      },
+      erudition: { 
+        isActive: false 
+      },
+      combatAura: { 
+        isActive: false 
+      },
+      physicalControl: { 
+        isActive: false 
+      },
+      physicalChange: { 
+        isActive: false 
+      },
+      superiorChange: { 
+        isActive: false 
+      },
+      bodyMultiplication: { 
+        isActive: false 
+      },
+      majorMultiplication: { 
+        isActive: false 
+      },
+      arcaneMultiplication: { 
+        isActive: false 
+      },
+      magnitude: { 
+        isActive: false 
+      },
+      arcaneMagnitude: { 
+        isActive: false 
+      },
+      ageControl: { 
+        isActive: false 
+      },
+      techniqueImitation: { 
+        isActive: false 
+      },
+      forceTechniques: { 
+        isActive: false 
+      },
+      kiTransmision: { 
+        isActive: false 
+      },
+      kiHealing: { 
+        isActive: false 
+      },
+      superiorHealing: { 
+        isActive: false 
+      },
+      stabilize: { 
+        isActive: false 
+      },
+      sacrifice: { 
+        isActive: false 
+      },
+      useNecessaryEnergy: { 
+        isActive: false 
+      },
+      kiHiding: { 
+        isActive: false 
+      },
+      hidingAura: { 
+        isActive: false 
+      },
+      fakeDeath: { 
+        isActive: false 
+      },
+      needElimination: { 
+        isActive: false 
+      },
+      fireImmunity: { 
+        isActive: false 
+      },
+      coldImmunity: { 
+        isActive: false 
+      },
+      electricImmunity: { 
+        isActive: false 
+      },
+      recovery: { 
+        isActive: false 
+      },
+      recoverOthers: { 
+        isActive: false 
+      },
+      characteristicIncrease: { 
+        isActive: false 
+      },
+      superiorIncrease: { 
+        isActive: false 
+      },
+      improvisedTechniques: { 
+        isActive: false 
+      },
+      inhumanity: { 
+        isActive: false 
+      },
+      zen: { 
+        isActive: false 
+      }
+    },
     nemesisSkills: [],
     arsMagnus: [],
     martialArts: [],

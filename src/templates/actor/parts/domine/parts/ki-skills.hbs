@@ -4,20 +4,19 @@
   {{>
   "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.domine.kiSkills.title")
-    addRowButtonData="add-ki-skill"
   }}
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="ki-skills"
   }}
-    {{#each data.data.domine.kiSkills}}
-      <div data-item-id='{{this._id}}' class='ki-skill-row'>
-        <input
-          name='data.dynamic.kiSkills.{{this._id}}.name'
-          type='text'
-          class='input'
-          value='{{this.name}}'
-        />
-      </div>
+    {{#each data.data.domine.kiSkills as |atr key|}}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="ki-skill-row"
+          title = "Placeholder"
+          inputType="checkbox"
+          inputName=(concat "data.domine.kiSkills." key ".isActive")
+          inputValue=atr.isActive
+        }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}
