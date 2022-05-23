@@ -913,6 +913,72 @@ export type ABFActorDataSourceData = {
       forceTechniques: { 
         isActive: boolean; 
       };
+    weightRemoval: {
+        isActive: boolean;
+    };
+    levitation: {
+        isActive: boolean;
+    };
+    objectMovement: {
+        isActive: boolean;
+    };
+    massMovement: {
+        isActive: boolean;
+    };
+    flight: {
+        isActive: boolean;
+    };
+    presenceExtrusion: {
+        isActive: boolean;
+    };
+    energyArmor: {
+        isActive: boolean;
+    };
+    majorArmor: {
+        isActive: boolean;
+    };
+    arcaneArmor: {
+        isActive: boolean;
+    };
+    auraExtension: {
+        isActive: boolean;
+    };
+    elementalAttackLight: {
+        isActive: boolean;
+    };
+    elementalAttackDark: {
+        isActive: boolean;
+    };
+    elementalAttackFire: {
+        isActive: boolean;
+    };
+    elementalAttackWater: {
+        isActive: boolean;
+    };
+    elementalAttackAir: {
+        isActive: boolean;
+    };
+    elementalAttackEarth: {
+        isActive: boolean;
+    };
+    increasedDamage: {
+        isActive: boolean;
+    };
+    increasedReach: {
+        isActive: boolean;
+    };
+    increasedSpeed: {
+        isActive: boolean;
+    };
+    kiDestruction: {
+        isActive: boolean;
+    };
+    energyAbsorption: {
+        isActive: boolean;
+    };
+    physicalShield: {
+        isActive: boolean;
+    };
       kiTransmision: { 
         isActive: boolean; 
       };

@@ -12,7 +12,7 @@
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="ki-skill-row"
-          title = "Placeholder"
+          title = (localize (concat "anima.ui.domine.kiSkills." key ".title"))
           inputType="checkbox"
           inputName=(concat "data.domine.kiSkills." key ".isActive")
           inputValue=atr.isActive

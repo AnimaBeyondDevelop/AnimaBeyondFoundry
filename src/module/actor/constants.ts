@@ -911,6 +911,72 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       forceTechniques: { 
         isActive: false 
       },
+        weightRemoval: {
+            isActive: false
+        },
+        levitation: {
+            isActive: false
+        },
+        objectMovement: {
+            isActive: false
+        },
+        massMovement: {
+            isActive: false
+        },
+        flight: {
+            isActive: false
+        },
+        presenceExtrusion: {
+            isActive: false
+        },
+        energyArmor: {
+            isActive: false
+        },
+        majorArmor: {
+            isActive: false
+        },
+        arcaneArmor: {
+            isActive: false
+        },
+        auraExtension: {
+            isActive: false
+        },
+        elementalAttackLight: {
+            isActive: false
+        },
+        elementalAttackDark: {
+            isActive: false
+        },
+        elementalAttackFire: {
+            isActive: false
+        },
+        elementalAttackWater: {
+            isActive: false
+        },
+        elementalAttackAir: {
+            isActive: false
+        },
+        elementalAttackEarth: {
+            isActive: false
+        },
+        increasedDamage: {
+            isActive: false
+        },
+        increasedReach: {
+            isActive: false
+        },
+        increasedSpeed: {
+            isActive: false
+        },
+        kiDestruction: {
+            isActive: false
+        },
+        energyAbsorption: {
+            isActive: false
+        },
+        physicalShield: {
+            isActive: false
+        },
       kiTransmision: { 
         isActive: false 
       },
