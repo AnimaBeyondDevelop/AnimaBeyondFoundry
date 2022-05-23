@@ -406,6 +406,13 @@
                     inputValue=this.defender.result.values.at
                   }}
                 {{/if}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  title=(localize 'macros.combat.dialog.surprised.title')
+                  inputType="checkbox"
+                  inputName="defender.result.values.surprised"
+                  inputValue=(is 'eq' this.defender.result.values.surprised true)
+                }}
               {{/if}}
 
               {{#if (is "eq" this.defender.result.type 'mystic')}}
