@@ -9,15 +9,15 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="nemesis-skills"
   }}
-    {{#each data.data.domine.nemesisSkills}}
-      <div data-item-id='{{this._id}}' class='nemesis-skill-row'>
-        <input
-          name='data.dynamic.nemesisSkills.{{this._id}}.name'
-          type='text'
-          class='input'
-          value='{{this.name}}'
-        />
-      </div>
+     {{#each data.data.domine.nemesisSkills as |atr key|}}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="nemesis-skill-row"
+          title = (localize (concat "anima.ui.domine.nemesisSkills." key ".title"))
+          inputType="checkbox"
+          inputName=(concat "data.domine.nemesis." key ".isActive")
+          inputValue=atr.isActive
+        }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

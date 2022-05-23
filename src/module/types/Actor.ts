@@ -1040,7 +1040,71 @@ export type ABFActorDataSourceData = {
         isActive: boolean; 
       };
     };
-    nemesisSkills: [];
+    nemesisSkills: {
+      nemesisControl: {
+        isActive: boolean;
+      };
+      voidArmor: {
+        isActive: boolean;
+      };
+      noht: {
+        isActive: boolean;
+      };
+      kiNull: {
+        isActive: boolean;
+      };
+      majKiNull: {
+        isActive: boolean;
+      };
+      magicNull: {
+        isActive: boolean;
+      };
+      majMagicNull: {
+        isActive: boolean;
+      };
+      matrixNull: {
+        isActive: boolean;
+      };
+      majorMatrixNull: {
+        isActive: boolean;
+      };
+      bondNull: {
+        isActive: boolean;
+      };
+      voidExtrusion: {
+        isActive: boolean;
+      };
+      voidForm: {
+        isActive: boolean;
+      };
+      voidBody: {
+        isActive: boolean;
+      };
+      withoutNeeds: {
+        isActive: boolean;
+      };
+      voidMovement: {
+        isActive: boolean;
+      };
+      voidEssence: {
+        isActive: boolean;
+      };
+      oneWithNothing: {
+        isActive: boolean;
+      };
+      voidAura: {
+        isActive: boolean;
+      };
+      indetection: {
+        isActive: boolean;
+      };
+      inhumanity: {
+        isActive: boolean;
+      };
+      zen: {
+        isActive: boolean;
+      };
+    };
     arsMagnus: [];
     martialArts: [];
     creatures: [];

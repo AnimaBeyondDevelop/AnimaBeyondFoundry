@@ -1038,7 +1038,72 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         isActive: false 
       }
     },
-    nemesisSkills: [],
+    nemesisSkills: {
+      nemesisControl: {
+        isActive: true
+      },
+      voidArmor: {
+        isActive: true
+      },
+      noht: {
+        isActive: true
+      },
+      kiNull: {
+        isActive: true
+      },
+      majKiNull: {
+        isActive: true
+      },
+      magicNull: {
+        isActive: true
+      },
+      majMagicNull: {
+        isActive: true
+      },
+      matrixNull: {
+        isActive: true
+      },
+      majorMatrixNull: {
+        isActive: true
+      },
+      bondNull: {
+        isActive: true
+      },
+      voidExtrusion: {
+        isActive: true
+      },
+      voidForm: {
+        isActive: true
+      },
+      voidBody: {
+        isActive: true
+      },
+      withoutNeeds: {
+        isActive: true
+      },
+      voidMovement: {
+        isActive: true
+      },
+      voidEssence: {
+        isActive: true
+      },
+      oneWithNothing: {
+        isActive: true
+      },
+      voidAura: {
+        isActive: true
+      },
+      indetection: {
+        isActive: true
+      },
+      inhumanity: {
+        isActive: true
+      },
+      zen: {
+        isActive: true
+      },
+        
+    },
     arsMagnus: [],
     martialArts: [],
     creatures: [],
