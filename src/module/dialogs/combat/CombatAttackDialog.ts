@@ -157,8 +157,8 @@ const getInitialData = (
       },
       psychic: {
         modifier: 0,
-        psychicProjection: attackerActor.data.data.psychic.psychicProjection.final.value,
-        psychicPotential: { special: 0, final: attackerActor.data.data.psychic.psychicProjection.final.value },
+        psychicProjection: attackerActor.data.data.psychic.psychicProjection.imbalance.offensive.final.value,
+        psychicPotential: { special: 0, final: attackerActor.data.data.psychic.psychicPotential.final.value },
         powerUsed: undefined,
         critic: NoneWeaponCritic.NONE,
         damage: 0

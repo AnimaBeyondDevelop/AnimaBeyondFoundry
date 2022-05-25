@@ -166,7 +166,7 @@ const getInitialData = (
       psychic: {
         modifier: 0,
         psychicPotential: { special: 0, final: defenderActor.data.data.psychic.psychicPotential.final.value },
-        psychicProjection: defenderActor.data.data.psychic.psychicProjection.final.value,
+        psychicProjection: defenderActor.data.data.psychic.psychicProjection.imbalance.defensive.final.value,
         powerUsed: undefined
       },
       resistance: {
@@ -322,19 +322,12 @@ export class CombatDefenseDialog extends FormApplication<FormApplicationOptions,
     });
 
     html.find('.send-mystic-defense').click(() => {
-      const { modifier, spellUsed, spellGrade, magicProjectionType } = this.data.defender.mystic;
+      const { modifier, spellUsed, spellGrade } = this.data.defender.mystic;
       const at = this.data.defender.combat.at;
 
       if (spellUsed) {
-        let baseMagicProjection, magicProjection;
-        if (magicProjectionType === 'normal') {
-          magicProjection = this.defenderActor.data.data.mystic.magicProjection.final.value;
-          baseMagicProjection = this.defenderActor.data.data.mystic.magicProjection.base.value;
-        }
-        else {
-          magicProjection = this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.final.value;
-          baseMagicProjection = this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.base.value;
-        }
+        let magicProjection = this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.final.value;
+        let baseMagicProjection = this.defenderActor.data.data.mystic.magicProjection.imbalance.defensive.base.value;
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
         if (this.data.defender.withoutRoll) { //Remove the dice from the formula

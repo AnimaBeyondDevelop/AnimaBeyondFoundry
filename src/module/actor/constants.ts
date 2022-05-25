@@ -1025,6 +1025,24 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       final: {
         value: 0
+      },
+      imbalance: {
+        offensive: {
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
+        },
+        defensive: {
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
+        }
       }
     },
     psychicPoints: {
