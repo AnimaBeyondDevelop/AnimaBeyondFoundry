@@ -40,6 +40,9 @@ export type ABFActorDataSourceData = {
           value: number;
         };
       };
+      extraDamage: {
+        value: number;
+      }
     };
     destinyPoints: {
       base: {

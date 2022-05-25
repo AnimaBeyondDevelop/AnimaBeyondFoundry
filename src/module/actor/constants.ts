@@ -37,6 +37,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       naturalPenalty: {
         byArmors: { value: 0 },
         byWearArmorRequirement: { value: 0 }
+      },
+      extraDamage : {
+        value: 0
       }
     },
     destinyPoints: {
