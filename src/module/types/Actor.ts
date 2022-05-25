@@ -15,10 +15,19 @@ export type ABFActorDataSourceData = {
     };
   };
   general: {
-    ranges: {
-      openRolls: { value: number },
-      fumbles: { value: number },
-      openOnDoubles: { value: boolean }
+    settings: {
+      openRolls: { 
+        value: number; 
+      };
+      fumbles: { 
+        value: number; 
+      };
+      openOnDoubles: { 
+        value: number; 
+      };
+      defenseType: { 
+        value: string; 
+      };
     },
     modifiers: {
       physicalActions: {
@@ -166,6 +175,28 @@ export type ABFActorDataSourceData = {
       fatigue: {
         value: number;
         max: number;
+      };
+      regenerationType: { 
+        mod: { 
+          value: number;
+        }; 
+        final: { 
+          value: number; 
+        };
+      };
+      regeneration: { 
+        normal: { 
+          value: number;
+          period: string;
+        }; 
+        resting: { 
+          value: number;
+          period: string; 
+        };
+        recovery: { 
+          value: number;
+          period: string;
+        };
       };
       movementType: {
         mod: {

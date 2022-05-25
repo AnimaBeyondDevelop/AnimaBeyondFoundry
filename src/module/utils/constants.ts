@@ -15,6 +15,7 @@ export const Templates = {
         main: 'systems/animabf/templates/dialog/combat/combat-defense/combat-defense-dialog.hbs',
         parts: {
           combat: 'systems/animabf/templates/dialog/combat/combat-defense/parts/combat.hbs',
+          damageResistance: 'systems/animabf/templates/dialog/combat/combat-defense/parts/damage-resistance.hbs',
           mystic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/mystic.hbs',
           psychic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/psychic.hbs'
         }

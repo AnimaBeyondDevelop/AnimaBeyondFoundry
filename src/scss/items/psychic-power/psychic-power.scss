@@ -53,6 +53,29 @@
         }
       }
 
+      .description {
+        display: flex;
+        justify-content: start;
+        padding-top: 0.5rem;
+  
+        .label {
+          align-self: flex-start;
+          padding-right: 0.5rem;
+          font-weight: bold;
+        }
+        .editor {
+          @include input;
+  
+          font-weight: inherit;
+  
+          height: 6rem;
+          width: 100%;
+  
+          margin-top: 0;
+          border-radius: 0.5rem;
+        }
+      }
+
       .psychic-power-header {
         padding-right: 0.5rem;
         padding-left: 0.5rem;
