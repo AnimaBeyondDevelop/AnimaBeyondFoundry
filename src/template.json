@@ -13,7 +13,8 @@
         "modifiers": {
           "physicalActions": { "value": 0 },
           "allActions": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } }
+          "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } },
+          "extraDamage": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "value": 0 },

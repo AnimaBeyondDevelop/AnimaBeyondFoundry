@@ -74,6 +74,7 @@
   "anima.ui.combat.baseValues.attack.title": "Ataque",
   "anima.ui.combat.baseValues.block.title": "Parada",
   "anima.ui.combat.baseValues.dodge.title": "Esquiva",
+  "anima.ui.combat.baseValues.extraDamage.title": "Daño extra",
   "anima.ui.combat.baseValues.title": "Valores base",
   "anima.ui.combat.baseValues.wearArmor.title": "Llevar armadura",
   "anima.ui.combat.combatSpecialSkill.title": "Habilidades especiales",
