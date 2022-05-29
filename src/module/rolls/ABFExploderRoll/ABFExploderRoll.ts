@@ -6,8 +6,14 @@ export default class ABFExploderRoll extends ABFRoll {
   
   get canExplode() {
     const lastResult = this.firstDice.results[this.firstDice.results.length-1]
-    if (this.openOnDoubles) {
-      if (this.checkDoubles()) return true;
+    if (this.openOnDoubles && this.checkDoubles(lastResult.result)) {
+      this.firstDice.results[this.firstDice.results.length-1] = {
+        ...lastResult,
+        success: true,
+        exploded: true,
+        count: 100
+      }
+      return true;
     }
     let exploded = lastResult.result >= this.lastOpenRange;
     lastResult.success = exploded;
@@ -18,19 +24,11 @@ export default class ABFExploderRoll extends ABFRoll {
     return this.foundryRoll.firstResult <= this.fumbleRange;
   }
 
-  protected checkDoubles(): boolean {
-    if (this.foundryRoll.lastResult % 11 === 0) {
+  protected checkDoubles(result: number): boolean {
+    if (result % 11 === 0) {
       const newRoll = new ABFFoundryRoll('1d10').evaluate();
 
-      if (newRoll.total === (this.foundryRoll.lastResult / 11)) {
-        this.firstDice.results[this.firstDice.results.length-1] = {
-          ...this.firstDice.results[this.firstDice.results.length-1],
-          success: true,
-          exploded: true,
-          count: 100
-        }
-        return true;
-      }
+      return (newRoll.total === (result / 11)) 
     }
     return false;
   }
@@ -50,7 +48,6 @@ export default class ABFExploderRoll extends ABFRoll {
 
   private explodeDice(openRange: number) {
     this.lastOpenRange = Math.min(openRange, 100);
-    console.log(this.firstDice);
 
     const newRoll = new ABFFoundryRoll('1d100').evaluate();
     const newResult = this.addRoll(newRoll);

@@ -23,7 +23,7 @@ export type ABFActorDataSourceData = {
         value: number; 
       };
       openOnDoubles: { 
-        value: number; 
+        value: boolean; 
       };
       defenseType: { 
         value: string; 
