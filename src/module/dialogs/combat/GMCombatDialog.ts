@@ -29,6 +29,7 @@ type GMCombatDefenderData = {
 type GMCombatDialogData = {
   ui: {
     isCounter: boolean;
+    index: number;
   };
   attacker: {
     actor: ABFActor;
@@ -72,7 +73,8 @@ const getInitialData = (
 
   return {
     ui: {
-      isCounter: options.isCounter ?? false
+      isCounter: options.isCounter ?? false,
+      index: 1
     },
     attacker: {
       token: attacker,
@@ -143,6 +145,22 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
 
   activateListeners(html) {
     super.activateListeners(html);
+
+    html.find('.next-defender').click(() => {
+      let max = this.data.listDefenders.length;
+      this.data.ui.index -= 1;
+      if (this.data.ui.index <= 0) this.data.ui.index = max;
+      this.data.defender = this.data.listDefenders[this.data.ui.index -1];
+      this.render();
+    });
+
+    html.find('.next-defender').click(() => {
+      let max = this.data.listDefenders.length;
+      this.data.ui.index += 1;
+      if (this.data.ui.index > max) this.data.ui.index = 1;
+      this.data.defender = this.data.listDefenders[this.data.ui.index -1];
+      this.render();
+    });
 
     html.find('.cancel-button').click(() => {
       this.close();
