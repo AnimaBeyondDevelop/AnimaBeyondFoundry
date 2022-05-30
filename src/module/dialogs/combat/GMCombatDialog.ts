@@ -15,6 +15,17 @@ export type GMCombatAttackResult = UserCombatAttackResult & {
   power?: PsychicPowerDataSource;
 };
 
+type GMCombatDefenderData = {
+    actor: ABFActor;
+    token: TokenDocument;
+    isReady: boolean;
+    customModifier: number;
+    result?: UserCombatDefenseResult & {
+      spell?: SpellDataSource;
+      power?: PsychicPowerDataSource;
+    };
+  };
+
 type GMCombatDialogData = {
   ui: {
     isCounter: boolean;
@@ -27,16 +38,8 @@ type GMCombatDialogData = {
     counterAttackBonus?: number;
     result?: GMCombatAttackResult;
   };
-  defender: {
-    actor: ABFActor;
-    token: TokenDocument;
-    isReady: boolean;
-    customModifier: number;
-    result?: UserCombatDefenseResult & {
-      spell?: SpellDataSource;
-      power?: PsychicPowerDataSource;
-    };
-  };
+  defender: GMCombatDefenderData;
+  listDefenders: Array<GMCombatDefenderData>;
   calculations?:
     | {
         winner: TokenDocument;
@@ -54,11 +57,18 @@ type GMCombatDialogData = {
 
 const getInitialData = (
   attacker: TokenDocument,
-  defender: TokenDocument,
+  defenders: Array<TokenDocument>,
   options: { isCounter?: boolean; counterAttackBonus?: number } = {}
 ): GMCombatDialogData => {
   const attackerActor = attacker.actor!;
-  const defenderActor = defender.actor!;
+  const defend = defenders.map(defender=> {
+    return {
+      token: defender,
+      actor: defender.actor!,
+      customModifier: 0,
+      isReady: false
+    };
+  })
 
   return {
     ui: {
@@ -71,12 +81,8 @@ const getInitialData = (
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
-    defender: {
-      token: defender,
-      actor: defenderActor,
-      customModifier: 0,
-      isReady: false
-    }
+    defender: defend[0],
+    listDefenders: defend
   };
 };
 
@@ -85,16 +91,16 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
 
   constructor(
     attacker: TokenDocument,
-    defender: TokenDocument,
+    defenders: Array<TokenDocument>,
     private hooks: {
       onClose: () => Promise<void> | void;
-      onCounterAttack: (bonus: number) => Promise<void> | void;
+      onCounterAttack: (defender: TokenDocument, bonus: number) => Promise<void> | void;
     },
     options: { isCounter?: boolean; counterAttackBonus?: number } = {}
   ) {
-    super(getInitialData(attacker, defender, options));
+    super(getInitialData(attacker, defenders, options));
 
-    this.data = getInitialData(attacker, defender, options);
+    this.data = getInitialData(attacker, defenders, options);
     
     this.render(true);
   }
@@ -146,7 +152,7 @@ export class GMCombatDialog extends FormApplication<FormApplicationOptions, GMCo
       this.applyValuesIfBeAble();
 
       if (this.data.calculations?.canCounter) {
-        this.hooks.onCounterAttack(this.data.calculations.counterAttackBonus);
+        this.hooks.onCounterAttack(this.data.defender.token, this.data.calculations.counterAttackBonus);
       }
     });
 

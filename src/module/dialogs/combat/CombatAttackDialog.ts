@@ -179,14 +179,14 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
   constructor(
     attacker: TokenDocument,
-    defender: TokenDocument,
+    defenders: Array<TokenDocument>,
     private hooks: {
       onAttack: (attackValues: UserCombatAttackResult) => void;
     },
     options: { allowed?: boolean; counterAttackBonus?: number } = {}
   ) {
-    super(getInitialData(attacker, defender, options));
-
+    super(getInitialData(attacker, defenders[0], options));
+    let defender = defenders[0];
     this.data = getInitialData(attacker, defender, options);
 
     const weapons = this.attackerActor.data.data.combat.weapons as WeaponDataSource[];

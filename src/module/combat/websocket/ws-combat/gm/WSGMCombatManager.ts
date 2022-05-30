@@ -131,18 +131,18 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
       return;
     }
 
-    const targetToken = getTargetToken(selectedToken, targets);
+    const targetTokens = getTargetToken(selectedToken, targets);
 
     if (selectedToken?.id) {
       await ABFDialogs.confirm(
         this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
-        this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: targetToken.name }),
+        this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: targetTokens[0]?.name }),
         {
           onConfirm: () => {
-            if (selectedToken?.id && targetToken?.id) {
-              this.combat = this.createNewCombat(selectedToken!, targetToken);
+            if (selectedToken?.id && targetTokens?.every(t=> { return t?.id })) {
+              this.combat = this.createNewCombat(selectedToken!, targetTokens);
 
-              this.manageAttack(selectedToken!, targetToken);
+              this.manageAttack(selectedToken!, targetTokens);
             }
           }
         }
@@ -167,7 +167,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
     const { attackerTokenId, defenderTokenId } = msg.payload;
 
     const attacker = this.findTokenById(attackerTokenId);
-    const defender = this.findTokenById(defenderTokenId);
+    const defender = defenderTokenId.map(id=> { return this.findTokenById(id) });
 
     if (!attacker || !defender) {
       Log.warn('Can not handle user attack request due attacker or defender actor do not exist');
@@ -176,7 +176,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
 
     try {
       if (!this.game.settings.get('animabf', ABFSettingsKeys.AUTO_ACCEPT_COMBAT_REQUESTS)) {
-        await CombatDialogs.openCombatRequestDialog({ attacker: attacker.actor!, defender: defender.actor! });
+        await CombatDialogs.openCombatRequestDialog({ attacker: attacker.actor!, defender: defender[0].actor! });
       }
 
       this.combat = this.createNewCombat(attacker, defender);
@@ -203,17 +203,17 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
     }
   }
 
-  private createNewCombat(attacker: TokenDocument, defender: TokenDocument) {
-    return new GMCombatDialog(attacker, defender, {
+  private createNewCombat(attacker: TokenDocument, defenders: Array<TokenDocument>) {
+    return new GMCombatDialog(attacker, defenders, {
       onClose: () => {
         this.endCombat();
       },
-      onCounterAttack: bonus => {
+      onCounterAttack: (defender, bonus) => {
         this.endCombat();
 
         this.combat = new GMCombatDialog(
           defender,
-          attacker,
+          [attacker],
           {
             onClose: () => {
               this.endCombat();
@@ -233,46 +233,48 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
 
           this.emit(newMsg);
         } else {
-          this.manageAttack(defender, attacker, bonus);
+          this.manageAttack(defender, [attacker], bonus);
         }
       }
     });
   }
 
-  private manageAttack(attacker: TokenDocument, defender: TokenDocument, bonus?: number) {
+  private manageAttack(attacker: TokenDocument, defenders: Array<TokenDocument>, bonus?: number) {
     this.attackDialog = new CombatAttackDialog(
       attacker,
-      defender,
+      defenders,
       {
         onAttack: result => {
-          this.attackDialog?.close({ force: true });
+          defenders.forEach(defender=> {
+            this.attackDialog?.close({ force: true });
 
-          this.attackDialog = undefined;
+            this.attackDialog = undefined;
 
-          if (this.combat) {
-            this.combat.updateAttackerData(result);
+            if (this.combat) {
+              this.combat.updateAttackerData(result);
 
-            if (canOwnerReceiveMessage(defender.actor!)) {
-              const newMsg: GMAttackMessage = {
-                type: GMMessageTypes.Attack,
-                payload: { attackerTokenId: attacker.id!, defenderTokenId: defender.id!, result }
-              };
+              if (canOwnerReceiveMessage(defender.actor!)) {
+                const newMsg: GMAttackMessage = {
+                  type: GMMessageTypes.Attack,
+                  payload: { attackerTokenId: attacker.id!, defenderTokenId: defender.id!, result }
+                };
 
-              this.emit(newMsg);
-            } else {
-              const { critic } = result.values;
+                this.emit(newMsg);
+              } else {
+                const { critic } = result.values;
 
-              try {
-                this.manageDefense(attacker, defender, result.type, critic);
-              } catch (err) {
-                if (err) {
-                  Log.error(err);
+                try {
+                  this.manageDefense(attacker, defender, result.type, critic);
+                } catch (err) {
+                  if (err) {
+                    Log.error(err);
+                  }
+
+                  this.endCombat();
                 }
-
-                this.endCombat();
               }
             }
-          }
+          });
         }
       },
       { counterAttackBonus: bonus }

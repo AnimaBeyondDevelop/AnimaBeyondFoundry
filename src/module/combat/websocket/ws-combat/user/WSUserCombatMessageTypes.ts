@@ -13,7 +13,7 @@ export type UserRequestToAttackMessage = {
   senderId: string;
   payload: {
     attackerTokenId: string;
-    defenderTokenId: string;
+    defenderTokenId: Array<string>;
   };
 };
 

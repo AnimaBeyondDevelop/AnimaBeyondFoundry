@@ -18,20 +18,22 @@ export const getTargetToken = (attackerToken: TokenDocument, targetTokens: UserT
     throw new Error(message);
   }
 
-  const target = targetTokens.values().next().value as TokenDocument;
+  const resultTargets = new Array<TokenDocument>();
+  targetTokens.forEach(target => {
+      if (!target.actor?.id) {
+          message = tgame.i18n.localize('macros.combat.dialog.error.withoutActor.title');
+      }
 
-  if (!target.actor?.id) {
-    message = tgame.i18n.localize('macros.combat.dialog.error.withoutActor.title');
-  }
-
-  if (target.id === attackerToken.id) {
-    message = tgame.i18n.localize('macros.combat.dialog.error.cannotAttackYourself.title');
-  }
+      if (target.id === attackerToken.id) {
+          message = tgame.i18n.localize('macros.combat.dialog.error.cannotAttackYourself.title');
+      }
+      resultTargets.push(target.document);
+  });
 
   if (message) {
     ABFDialogs.prompt(message);
     throw new Error(message);
   }
 
-  return target;
+  return resultTargets;
 };
