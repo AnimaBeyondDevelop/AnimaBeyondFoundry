@@ -85,21 +85,21 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
     const attackerToken = getSelectedToken(this.game);
     const { targets } = this.user;
 
-    const targetToken = getTargetToken(attackerToken, targets);
+    const targetTokens = getTargetToken(attackerToken, targets);
 
     await ABFDialogs.confirm(
       this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
-      this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: targetToken.name }),
+      this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', { target: targetTokens[0].name }),
       {
         onConfirm: () => {
-          if (attackerToken?.id && targetToken.id) {
+          if (attackerToken?.id && targetTokens?.every(t=> { return t?.id })) {
             const msg: UserRequestToAttackMessage = {
               type: UserMessageTypes.RequestToAttack,
               senderId: this.user.id!,
-              payload: { attackerTokenId: attackerToken.id, defenderTokenId: targetToken.id }
+              payload: { attackerTokenId: attackerToken.id, defenderTokenId: targetTokens.map(t=> {return t.id ?? ""}) }
             };
             this.emit(msg);
-            this.attackDialog = new CombatAttackDialog(attackerToken!, targetToken!, {
+            this.attackDialog = new CombatAttackDialog(attackerToken!, targetTokens!, {
               onAttack: result => {
                 const newMsg: UserAttackMessage = {
                   type: UserMessageTypes.Attack,
@@ -125,7 +125,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
 
     this.attackDialog = new CombatAttackDialog(
       attacker,
-      defender,
+      [defender],
       {
         onAttack: result => {
           const newMsg: UserAttackMessage = {

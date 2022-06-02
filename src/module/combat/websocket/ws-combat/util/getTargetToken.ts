@@ -5,9 +5,9 @@ export const getTargetToken = (attackerToken: TokenDocument, targetTokens: UserT
 
   let message: string | undefined;
 
-  if (targetTokens.ids.length > 1) {
-    message = tgame.i18n.localize('macros.combat.dialog.error.multipleTargets.title');
-  }
+  // if (targetTokens.ids.length > 1) {
+  //   message = tgame.i18n.localize('macros.combat.dialog.error.multipleTargets.title');
+  // }
 
   if (targetTokens.ids.length === 0) {
     message = tgame.i18n.localize('macros.combat.dialog.error.oneTarget.title');
