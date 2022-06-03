@@ -1031,6 +1031,24 @@ export type ABFActorDataSourceData = {
       final: {
         value: number;
       };
+      imbalance: {
+        offensive: {
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
+        };
+        defensive: {
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
+        };
+      };
     };
     psychicPoints: {
       value: number;
