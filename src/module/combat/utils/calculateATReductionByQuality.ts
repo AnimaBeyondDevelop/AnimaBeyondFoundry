@@ -1,4 +1,5 @@
 import type { GMCombatAttackResult } from '../../dialogs/combat/GMCombatDialog';
+import { WeaponShotType } from '../../types/combat/WeaponItemConfig';
 
 export const calculateATReductionByQuality = (result: GMCombatAttackResult): number => {
   let quality = 0;
@@ -8,7 +9,7 @@ export const calculateATReductionByQuality = (result: GMCombatAttackResult): num
   if (weapon) {
     quality = weapon.data.quality.value;
 
-    if (weapon.data.isRanged) {
+    if (weapon.data.isRanged.value && weapon.data.shotType.value === WeaponShotType.SHOT) {
       quality = weapon.data.ammo?.data.quality.value ?? 0;
     }
   }
