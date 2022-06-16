@@ -57,5 +57,12 @@
       inputName="data.combat.wearArmor.value"
       inputValue=data.data.combat.wearArmor.value
     }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="wear-armor"
+      title=(localize "anima.ui.combat.baseValues.extraDamage.title")
+      inputName="data.general.modifiers.extraDamage.value"
+      inputValue=data.data.general.modifiers.extraDamage.value
+    }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

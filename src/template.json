@@ -18,7 +18,8 @@
         "modifiers": {
           "physicalActions": { "value": 0 },
           "allActions": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } }
+          "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } },
+          "extraDamage": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "value": 0 },
@@ -250,7 +251,14 @@
       },
       "psychic": {
         "psychicPotential": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "psychicProjection": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "psychicProjection": {
+          "base": { "value": 0 },
+          "final": { "value": 0 },
+          "imbalance": {
+            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
+            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+          }
+        },
         "psychicPoints": { "value": 0, "max": 0 },
         "psychicPowers": [],
         "psychicDisciplines": [],

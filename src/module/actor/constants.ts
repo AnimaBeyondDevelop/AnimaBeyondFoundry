@@ -38,6 +38,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       naturalPenalty: {
         byArmors: { value: 0 },
         byWearArmorRequirement: { value: 0 }
+      },
+      extraDamage : {
+        value: 0
       }
     },
     destinyPoints: {
@@ -1026,6 +1029,24 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       final: {
         value: 0
+      },
+      imbalance: {
+        offensive: {
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
+        },
+        defensive: {
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
+        }
       }
     },
     psychicPoints: {
