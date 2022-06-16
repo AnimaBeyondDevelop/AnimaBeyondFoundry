@@ -11,6 +11,8 @@ export abstract class ABFRoll {
   constructor(protected readonly foundryRoll: ABFFoundryRoll) {
     if (this.foundryRoll.data.general !== undefined) {
       this.openRollRange = this.foundryRoll.data.general.settings.openRolls.value 
+      if (this.openRollRange === 0) //If openRollRange is set to 0 it's probably an actor from 1.14 that hasn't been configured
+        this.openRollRange = this.DEFAULT_OPEN_RANGE;
       this.fumbleRange = this.foundryRoll.data.general.settings.fumbles.value
       if (foundryRoll.formula.includes('mastery') && this.fumbleRange > 1) 
         this.fumbleRange -= 1
