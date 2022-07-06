@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "anima-beyond-foundry",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "scripts": {
     "build": "gulp build",
