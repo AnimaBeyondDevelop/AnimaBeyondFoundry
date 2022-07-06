@@ -10,7 +10,7 @@
     "package": "gulp package --release",
     "publish": "gulp publish --release",
     "test": "jest src",
-    "hook:pre-commit": "npm run test && lint-staged",
+    "hook:pre-commit": "lint-staged",
     "cypress:open": "cd integration && cypress open"
   },
   "engines": {

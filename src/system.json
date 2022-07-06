@@ -1,7 +1,7 @@
 {
   "name": "animabf",
   "title": "Anima Beyond Fantasy",
-  "description": "",
+  "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "version": "1.15.0",
   "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
   "scripts": [],
@@ -57,7 +57,7 @@
   "gridDistance": 1,
   "gridUnits": "m",
   "minimumCoreVersion": "0.8.8",
-  "compatibleCoreVersion": "0.8.9",
+  "compatibleCoreVersion": "9",
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
   "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.15.0",
