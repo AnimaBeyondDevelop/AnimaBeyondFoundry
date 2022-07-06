@@ -452,6 +452,7 @@
   "anima.ui.settings.advancedSettings.defenseType.mass.title": "Masa de enemigos",
   "anima.ui.settings.advancedSettings.defenseType.normal.title": "Normal",
   "anima.ui.settings.advancedSettings.defenseType.title": "Tipo de defensa",
+  "anima.ui.settings.advancedSettings.doubles": "Abierta con dobles",
   "anima.ui.settings.advancedSettings.fumbles.title": "Rango de Pifia",
   "anima.ui.settings.advancedSettings.openRolls.title": "Rango de Abierta",
   "anima.ui.settings.advancedSettings.title": "Opciones avanzadas",

@@ -16,9 +16,18 @@ export type ABFActorDataSourceData = {
   };
   general: {
     settings: {
-      openRolls: { value: number },
-      fumbles: { value: number },
-      defenseType: { value: string },
+      openRolls: { 
+        value: number; 
+      };
+      fumbles: { 
+        value: number; 
+      };
+      openOnDoubles: { 
+        value: boolean; 
+      };
+      defenseType: { 
+        value: string; 
+      };
     },
     modifiers: {
       physicalActions: {

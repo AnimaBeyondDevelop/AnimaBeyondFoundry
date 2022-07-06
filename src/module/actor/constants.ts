@@ -20,6 +20,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     settings: {
       openRolls: { value: 90 },
       fumbles: { value: 3 },
+      openOnDoubles: { value: false },
       defenseType: { value: '' }
     },
     modifiers: {

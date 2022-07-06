@@ -8,6 +8,14 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="advancedSettings"
   }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="doubles"
+        title= (localize "anima.ui.settings.advancedSettings.doubles")
+        inputType="checkbox"
+        inputName="data.general.settings.openOnDoubles.value"
+        inputValue=data.data.general.settings.openOnDoubles.value
+      }}
     {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="openRolls"
       title=(localize "anima.ui.settings.advancedSettings.openRolls.title")
@@ -20,6 +28,7 @@
       inputName="data.general.settings.fumbles.value"
       inputValue= data.data.general.settings.fumbles.value
     }}
+    
     <div>
       {{#> "systems/animabf/templates/common/ui/custom-select.hbs"
         class="defenseType"
