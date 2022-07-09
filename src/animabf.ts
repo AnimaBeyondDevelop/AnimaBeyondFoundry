@@ -43,7 +43,7 @@ Hooks.once('init', async () => {
   CONFIG.Combat.documentClass = ABFCombat;
 
   CONFIG.Combat.initiative = {
-    formula: '1d100xaturn',
+    formula: '1d100Initiative',
     decimals: 2
   };
 

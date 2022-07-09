@@ -12,10 +12,10 @@
       }}
         <div class='combatant-profile'>
           <div class='image'>
-            <img src='{{this.attacker.actor.img}}' data-edit='img' title='{{this.attacker.actor.name}}' />
+            <img src='{{this.attacker.actor.img}}' data-edit='img' title='{{this.attacker.token.name}}' />
           </div>
           <p class='label name'>
-            {{this.attacker.actor.name}}
+            {{this.attacker.token.name}}
           </p>
         </div>
 
@@ -99,7 +99,7 @@
                 title=(localize 'macros.combat.dialog.critic.title')
                 inputType="text"
                 disabled=true
-                inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.criticSelected '.title'))
+                inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
               }}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -160,6 +160,24 @@
                 disabled=true
                 inputValue=this.attacker.result.values.spellGrade
               }}
+              {{#if (is "neq" this.attacker.result.values.critic '-')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="critic"
+                  title=(localize 'macros.combat.dialog.critic.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="damage"
+                  title=(localize 'macros.combat.dialog.damage.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.damage
+                }}
+              {{/if}}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="roll"
@@ -211,6 +229,24 @@
                 disabled=true
                 inputValue=this.attacker.result.power.name
               }}
+              {{#if (is "neq" this.attacker.result.values.critic '-')}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="critic"
+                  title=(localize 'macros.combat.dialog.critic.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="damage"
+                  title=(localize 'macros.combat.dialog.damage.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.values.damage
+                }}
+              {{/if}}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="roll"
@@ -255,22 +291,24 @@
       }}
         <div class='combatant-profile'>
           <div class='image'>
-            <img src='{{this.defender.actor.img}}' data-edit='img' title='{{this.defender.actor.name}}' />
+            <img src='{{this.defender.actor.img}}' data-edit='img' title='{{this.defender.token.name}}' />
           </div>
           <p class='label name'>
-            {{this.defender.actor.name}}
+            {{this.defender.token.name}}
           </p>
         </div>
 
         {{#if this.attacker.isReady}}
           {{#if this.defender.isReady}}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="custom-modifier"
-              title=(localize 'macros.combat.dialog.defenderCustomModifier.title')
-              inputName="defender.customModifier"
-              inputValue=this.defender.customModifier
-            }}
+            {{#unless (is "eq" this.defender.result.type 'resistance')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="custom-modifier"
+                title=(localize 'macros.combat.dialog.defenderCustomModifier.title')
+                inputName="defender.customModifier"
+                inputValue=this.defender.customModifier
+              }}
+            {{/unless}}
 
             <p class='defense-type label'>
               {{localize (concat 'macros.combat.dialog.attackType.' this.defender.result.type '.title')}}
@@ -301,7 +339,7 @@
                     inputType="text"
                     title=(localize 'macros.combat.dialog.dodgeValue.title')
                     disabled=true
-                    inputValue=this.defender.actor.data.data.combat.dodge.final.value
+                    inputValue=this.defender.result.values.defense
                   }}
                 {{else}}
                   {{>
@@ -310,7 +348,7 @@
                     inputType="text"
                     title=(localize 'macros.combat.dialog.blockValue.title')
                     disabled=true
-                    inputValue=this.defender.actor.data.data.combat.block.final.value
+                    inputValue=this.defender.result.values.defense
                   }}
                 {{/if}}
                 {{>
@@ -354,6 +392,26 @@
                   inputType="text"
                   disabled=true
                   inputValue=this.defender.result.values.total
+                }}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'resistance')}}
+                {{#if (is 'neq' this.defender.result.values.at undefined)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="at-value"
+                    title=(localize 'macros.combat.dialog.at.title')
+                    inputType="text"
+                    disabled=true
+                    inputValue=this.defender.result.values.at
+                  }}
+                {{/if}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  title=(localize 'macros.combat.dialog.surprised.title')
+                  inputType="checkbox"
+                  inputName="defender.result.values.surprised"
+                  inputValue=(is 'eq' this.defender.result.values.surprised true)
                 }}
               {{/if}}
 

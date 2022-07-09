@@ -252,6 +252,36 @@
     }
     // Elan
 
+    .regeneration {
+      .group-body {
+        .regeneration-row {
+          margin-top: 0.5rem;
+
+          display: grid;
+          grid-template-columns: 1fr 2fr 2fr 2fr;
+          grid-column-gap: 0.25rem;
+
+          .info-container {
+            .input-container {
+              width: 10rem;
+            }
+          }
+        }
+
+        .regeneration-second-row {
+          margin-top: 0.75rem;
+          .info-container {
+            margin:auto;
+            width: 90%;
+            .input-container {
+              width: 90%;
+            }
+          }
+        }
+      }
+    
+    }
+
     // Contacts
     .contacts {
       .group-body {

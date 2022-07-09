@@ -86,6 +86,10 @@
           gradeName='arcane'
           grade=data.data.grades.arcane
         }}
+        <div class="description">
+          <p class='label'>{{localize "anima.ui.mystic.spell.grade.description.title"}}</p>
+          {{editor content=data.data.description.value target=(concat "data.description.value") button=true owner=true editable=true}}
+        </div>
       {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
       {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
         <div class='spell-footer'>

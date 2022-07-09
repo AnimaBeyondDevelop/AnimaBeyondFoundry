@@ -8,7 +8,8 @@ export const calculateCombatResult = (
   attack: number,
   defense: number,
   at: number,
-  damage: number
+  damage: number,
+  halvedAbsorption: boolean = false
 ): { canCounterAttack: true; counterAttackBonus: number } | { canCounterAttack: false; damage: number } => {
   const needToRound = (game as Game).settings.get('animabf', ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5);
 
@@ -19,7 +20,7 @@ export const calculateCombatResult = (
     };
   }
 
-  const result = calculateDamage(attack, defense, at, damage);
+  const result = calculateDamage(attack, defense, at, damage, halvedAbsorption);
 
   return {
     canCounterAttack: false,

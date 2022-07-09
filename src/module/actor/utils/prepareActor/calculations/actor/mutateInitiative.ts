@@ -6,7 +6,7 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const { general } = data;
 
   const penalty =
-    Math.ceil(general.modifiers.allActions.final.value / 2) + general.modifiers.naturalPenalty.byArmors.value;
+    Math.ceil(Math.min(general.modifiers.allActions.final.value + general.modifiers.physicalActions.value, 0) / 2) + general.modifiers.naturalPenalty.byArmors.value;
 
   const { initiative } = data.characteristics.secondaries;
 
@@ -18,7 +18,7 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
 
   const equippedShield = equippedWeapons.find(weapon => weapon.data.isShield.value);
 
-  // We rest 20 because people is used to put as base unarmed initiative
+  // We subtract 20 because people are used to put as base unarmed initiative
   initiative.final.value -= 20;
 
   if (equippedShield) {

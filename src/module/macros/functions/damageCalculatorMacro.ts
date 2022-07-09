@@ -65,11 +65,23 @@ export const damageCalculatorMacro = async () => {
   }
 
   const typedGame = game as Game;
-  ChatMessage.create({
-    content: final,
-    whisper: typedGame.collections
-      ?.get('User')
-      ?.filter(u => u.isGM)
-      ?.map(u => u.id)
-  });
+
+  const user = typedGame.collections?.get('User') as User[] | undefined;
+
+  if (user !== undefined) {
+    const isGM = u => u.isGM;
+    const hasId = u => u.id !== null;
+
+    const gmIds = user
+      .filter(isGM)
+      .filter(hasId)
+      .map(u => u.id!);
+
+    if (gmIds.length > 0) {
+      ChatMessage.create({
+        content: final,
+        whisper: gmIds
+      });
+    }
+  }
 };
