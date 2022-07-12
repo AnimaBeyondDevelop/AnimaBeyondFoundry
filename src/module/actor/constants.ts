@@ -39,7 +39,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         byArmors: { value: 0 },
         byWearArmorRequirement: { value: 0 }
       },
-      extraDamage : {
+      extraDamage: {
         value: 0
       }
     },
@@ -74,6 +74,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: ''
       },
       race: {
+        value: ''
+      },
+      ethnicity: {
         value: ''
       },
       appearance: {

@@ -16,19 +16,19 @@ export type ABFActorDataSourceData = {
   };
   general: {
     settings: {
-      openRolls: { 
-        value: number; 
+      openRolls: {
+        value: number;
       };
-      fumbles: { 
-        value: number; 
+      fumbles: {
+        value: number;
       };
-      openOnDoubles: { 
-        value: boolean; 
+      openOnDoubles: {
+        value: boolean;
       };
-      defenseType: { 
-        value: string; 
+      defenseType: {
+        value: string;
       };
-    },
+    };
     modifiers: {
       physicalActions: {
         value: number;
@@ -51,7 +51,7 @@ export type ABFActorDataSourceData = {
       };
       extraDamage: {
         value: number;
-      }
+      };
     };
     destinyPoints: {
       base: {
@@ -63,7 +63,7 @@ export type ABFActorDataSourceData = {
     };
     presence: {
       value: number;
-    },
+    };
     aspect: {
       hair: {
         value: string;
@@ -84,6 +84,9 @@ export type ABFActorDataSourceData = {
         value: string;
       };
       race: {
+        value: string;
+      };
+      ethnicity: {
         value: string;
       };
       appearance: {
@@ -179,24 +182,24 @@ export type ABFActorDataSourceData = {
         value: number;
         max: number;
       };
-      regenerationType: { 
-        mod: { 
+      regenerationType: {
+        mod: {
           value: number;
-        }; 
-        final: { 
-          value: number; 
+        };
+        final: {
+          value: number;
         };
       };
-      regeneration: { 
-        normal: { 
+      regeneration: {
+        normal: {
           value: number;
           period: string;
-        }; 
-        resting: { 
-          value: number;
-          period: string; 
         };
-        recovery: { 
+        resting: {
+          value: number;
+          period: string;
+        };
+        recovery: {
           value: number;
           period: string;
         };
