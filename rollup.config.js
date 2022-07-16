@@ -75,7 +75,7 @@ function createTransformer() {
 export default {
   input: "src/animabf.ts",
   output: {
-    sourcemap: !production && true,
+    // sourcemap: !production && true,
     format: "es",
     name: "app",
     dir: "dist/animabf",
@@ -85,17 +85,17 @@ export default {
   },
   plugins: [
     svelte({
-      preprocess: sveltePreprocess({ sourceMap: !production }),
+      preprocess: sveltePreprocess({}),
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
-        enableSourcemap: !production,
+        // enableSourcemap: !production,
         // accessors: true,
       },
       emitCss: false,
     }),
     typescript_rollup({
-      sourceMap: !production,
+      // sourceMap: !production,
       // outDir: 'dist/animabf'
       transformers: {
         after: [createTransformer()]

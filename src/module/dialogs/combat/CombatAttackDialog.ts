@@ -176,6 +176,7 @@ const getInitialData = (
 
 export class CombatAttackDialog extends FormApplication<FormApplicationOptions, UserCombatAttackDialogData> {
   private data: UserCombatAttackDialogData;
+  svelteApp: SvelteComponent;
 
   constructor(
     attacker: TokenDocument,
@@ -220,6 +221,21 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         }
       ]
     });
+  }
+
+  async render(force?: boolean, options?: Application.RenderOptions) {
+    if (!options) options = {};
+    await this._render(force, options)
+    let svelteElement = this.element.find("#svelte-component").get(0);
+    console.dir(svelteElement)
+    if (!this.svelteApp && svelteElement) {
+      this.svelteApp = new SvelteComponent({
+        target: svelteElement,
+        props: {
+          title: 'Funciona!'
+        }
+      });
+    }
   }
 
   get attackerActor() {
@@ -271,12 +287,12 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-                weapon: weapon?.name,
-                target: this.data.defender.token.name
-              })
+              weapon: weapon?.name,
+              target: this.data.defender.token.name
+            })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                target: this.data.defender.token.name
-              });
+              target: this.data.defender.token.name
+            });
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
