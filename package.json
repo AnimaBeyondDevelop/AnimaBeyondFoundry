@@ -19,7 +19,7 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "@league-of-foundry-developers/foundry-vtt-types": "^0.8.9-2",
+    "@league-of-foundry-developers/foundry-vtt-types": "^9.268.0",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.2.1",
     "@rollup/plugin-typescript": "^8.3.2",

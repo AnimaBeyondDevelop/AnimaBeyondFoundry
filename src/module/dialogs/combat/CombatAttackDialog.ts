@@ -11,6 +11,7 @@ import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConf
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
+import TitledInput from '../../../templates/common/ui/titledInput.svelte';
 
 type SpecialField = {
   special: number;
@@ -176,7 +177,7 @@ const getInitialData = (
 
 export class CombatAttackDialog extends FormApplication<FormApplicationOptions, UserCombatAttackDialogData> {
   private data: UserCombatAttackDialogData;
-  svelteApp: SvelteComponent;
+  svelteApp: TitledInput;
 
   constructor(
     attacker: TokenDocument,
@@ -225,16 +226,23 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
   async render(force?: boolean, options?: Application.RenderOptions) {
     if (!options) options = {};
-    await this._render(force, options)
+    await this._render(force, options) //This renders the Foundry/Handlebars part of the template
+    // We need now to inject the svelte component on the corresponding container. The component is created once
     let svelteElement = this.element.find("#svelte-component").get(0);
-    console.dir(svelteElement)
     if (!this.svelteApp && svelteElement) {
-      this.svelteApp = new SvelteComponent({
+      this.svelteApp = new TitledInput({
         target: svelteElement,
         props: {
-          title: 'Funciona!'
+          title: 'Funciona!',
+          inputValue: 10,
+          secondaryInputValue: 5
         }
       });
+      this.svelteApp.element = svelteElement; //Saving the DOM element containing the component for later (see next comment)
+    } else if (this.svelteApp) {
+      //If the component has already been created but the template is rendered again (e.g. because of data changes),
+      //the DOM changes and the element containing the component is re-created, empty. We replace it with the one containing the Component saved before.
+      this.element.find("#svelte-component").get(0)?.replaceWith(this.svelteApp.element)
     }
   }
 
@@ -303,7 +311,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         const critic = criticSelected ?? WeaponCritic.IMPACT;
 
         const rolled = roll.total! - counterAttackBonus - attack - (modifier ?? 0) - (fatigueUsed ?? 0) * 15;
-        
+
         this.hooks.onAttack({
           type: 'combat',
           values: {
