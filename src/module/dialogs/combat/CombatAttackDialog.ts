@@ -192,7 +192,11 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
     const weapons = this.attackerActor.data.data.combat.weapons as WeaponDataSource[];
 
     if (weapons.length > 0) {
-      this.data.attacker.combat.weaponUsed = weapons[0]._id;
+      const lastWeaponUsed = this.attackerActor.getFlag('world', `${this.attackerActor.data._id}.lastWeaponUsed`) as
+        | string
+        | undefined;
+
+      this.data.attacker.combat.weaponUsed = lastWeaponUsed || weapons[0]._id;
     } else {
       this.data.attacker.combat.unarmed = true;
     }
@@ -247,22 +251,23 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
     html.find('.send-attack').click(() => {
       const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.data.attacker.combat;
 
+      this.attackerActor.setFlag('world', `${this.attackerActor.data._id}.lastWeaponUsed`, weaponUsed);
+
       if (typeof damage !== 'undefined') {
         const attack = weapon ? weapon.data.attack.final.value : this.attackerActor.data.data.combat.attack.final.value;
 
         const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
 
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
-        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`;
+        if (this.data.attacker.withoutRoll) {
+          //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.data.data.combat.attack.base.value >= 200) //Mastery reduces the fumble range
+        if (this.attackerActor.data.data.combat.attack.base.value >= 200)
+          //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
-        const roll = new ABFFoundryRoll(
-          formula,
-          this.attackerActor.data.data
-        );
+        const roll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
 
         roll.roll();
 
@@ -287,7 +292,7 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         const critic = criticSelected ?? WeaponCritic.IMPACT;
 
         const rolled = roll.total! - counterAttackBonus - attack - (modifier ?? 0) - (fatigueUsed ?? 0) * 15;
-        
+
         this.hooks.onAttack({
           type: 'combat',
           values: {
@@ -316,19 +321,20 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
       if (spellUsed) {
         let baseMagicProjection, magicProjection;
         if (magicProjectionType === 'normal') {
-          magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value
-          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value
-        }
-        else {
-          magicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.final.value
-          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.base.value
+          magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value;
+          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value;
+        } else {
+          magicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.final.value;
+          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.base.value;
         }
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
-        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+        if (this.data.attacker.withoutRoll) {
+          //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (baseMagicProjection >= 200) //Mastery reduces the fumble range
+        if (baseMagicProjection >= 200)
+          //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
@@ -380,16 +386,21 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
-        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+        if (this.data.attacker.withoutRoll) {
+          //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
+        if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200)
+          //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
         const psychicProjectionRoll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
         psychicProjectionRoll.roll();
 
-        const psychicPotentialRoll = new ABFFoundryRoll(`1d100xa + ${psychicPotential.final}`, this.data.attacker.actor.data.data);
+        const psychicPotentialRoll = new ABFFoundryRoll(
+          `1d100xa + ${psychicPotential.final}`,
+          this.data.attacker.actor.data.data
+        );
         psychicPotentialRoll.roll();
 
         if (this.data.attacker.showRoll) {
