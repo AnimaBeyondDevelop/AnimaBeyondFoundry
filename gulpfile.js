@@ -4,7 +4,6 @@ const path = require('path');
 const chalk = require('chalk');
 const archiver = require('archiver');
 const stringify = require('json-stringify-pretty-compact');
-const typescript = require('typescript');
 const through = require('through2');
 const prettier = require('prettier');
 const { execSync } = require('child_process');
@@ -16,6 +15,9 @@ const less = require('gulp-less');
 const sass = require('gulp-sass');
 const git = require('gulp-git');
 const rimraf = require('rimraf');
+
+const loadConfigFile = require('rollup/loadConfigFile');
+const rollup = require('rollup');
 
 const rimrafAsync = path => new Promise(resolve => rimraf(path, resolve));
 
@@ -76,79 +78,35 @@ function getManifest() {
   return json;
 }
 
-/**
- * TypeScript transformers
- * @returns {typescript.TransformerFactory<typescript.SourceFile>}
- */
-function createTransformer() {
-  /**
-   * @param {typescript.Node} node
-   */
-  function shouldMutateModuleSpecifier(node) {
-    if (!typescript.isImportDeclaration(node) && !typescript.isExportDeclaration(node)) return false;
-    if (node.moduleSpecifier === undefined) return false;
-    if (!typescript.isStringLiteral(node.moduleSpecifier)) return false;
-    if (!node.moduleSpecifier.text.startsWith('./') && !node.moduleSpecifier.text.startsWith('../')) return false;
-    if (path.extname(node.moduleSpecifier.text) !== '') return false;
-    return true;
-  }
-
-  /**
-   * Transforms import/export declarations to append `.js` extension
-   * @param {typescript.TransformationContext} context
-   */
-  function importTransformer(context) {
-    return node => {
-      /**
-       * @param {typescript.Node} node
-       */
-      function visitor(node) {
-        if (shouldMutateModuleSpecifier(node)) {
-          if (typescript.isImportDeclaration(node)) {
-            const newModuleSpecifier = typescript.createLiteral(`${node.moduleSpecifier.text}.js`);
-            return typescript.updateImportDeclaration(
-              node,
-              node.decorators,
-              node.modifiers,
-              node.importClause,
-              newModuleSpecifier
-            );
-          } else if (typescript.isExportDeclaration(node)) {
-            const newModuleSpecifier = typescript.createLiteral(`${node.moduleSpecifier.text}.js`);
-            return typescript.updateExportDeclaration(
-              node,
-              node.decorators,
-              node.modifiers,
-              node.exportClause,
-              newModuleSpecifier
-            );
-          }
-        }
-        return typescript.visitEachChild(node, visitor, context);
-      }
-
-      return typescript.visitNode(node, visitor);
-    };
-  }
-
-  return importTransformer;
-}
-
-const tsConfig = ts.createProject('tsconfig.json', {
-  getCustomTransformers: _program => ({
-    after: [createTransformer()]
-  })
-});
-
 /********************/
 /*		BUILD		*/
 /********************/
 
 /**
- * Build TypeScript
+ * Build Svelte and TypeScript
  */
-function buildTS() {
-  return gulp.src('src/**/*.ts').pipe(tsConfig()).pipe(gulp.dest(ROOT_PATH));
+function buildSvelteTS() {
+  return loadConfigFile(path.resolve(__dirname, 'rollup.config.js')).then(
+    async ({ options, warnings }) => {
+      // "warnings" wraps the default `onwarn` handler passed by the CLI.
+      // This prints all warnings up to this point:
+      if (warnings.count > 0) {
+        console.log(chalk.yellow(`Rollup warnings: ${warnings.count}`));
+
+        // This prints all deferred warnings
+        warnings.flush();
+      }
+
+      // options is an array of "inputOptions" objects with an additional "output"
+      // property that contains an array of "outputOptions".
+      // The following will generate all outputs for all inputs, and write them to disk the same
+      // way the CLI does it:
+      for (const optionsObj of options) {
+        const bundle = await rollup.rollup(optionsObj);
+        await Promise.all(optionsObj.output.map(bundle.write));
+      }
+    }
+  );
 }
 
 /**
@@ -229,7 +187,7 @@ async function copyFiles() {
  * Watch for changes for each build step
  */
 function buildWatch() {
-  gulp.watch('src/**/*.ts', { ignoreInitial: false }, buildTS);
+  gulp.watch(['src/**/*.ts', 'src/**/*.svelte'], { ignoreInitial: false }, buildSvelteTS);
   gulp.watch('src/module/types/Actor.ts', { ignoreInitial: false }, buildTemplate);
   gulp.watch('src/**/*.less', { ignoreInitial: false }, buildLess);
   gulp.watch('src/**/*.scss', { ignoreInitial: false }, buildSASS);
@@ -369,7 +327,7 @@ function ensureNewVersion(cb) {
 }
 
 function ensureGitBranch(cb) {
-  git.revParse({ args: '--abbrev-ref HEAD' }, function (err, branch) {
+  git.revParse({ args: '--abbrev-ref HEAD' }, function(err, branch) {
     if (branch !== 'main') {
       cb(new Error(chalk.red("Publishing only can be done 'main' branch")));
     } else {
@@ -388,7 +346,7 @@ function gitTag(cb) {
 function gitPushTagsAndCreateRelease(cb) {
   const manifest = getManifest();
 
-  git.push('origin', `v${manifest.file.version}`, { args: ' --tags' }, function (err) {
+  git.push('origin', `v${manifest.file.version}`, { args: ' --tags' }, function(err) {
     if (!err) {
       readlineSync.question(
         chalk.blue(
@@ -404,7 +362,7 @@ function gitPushTagsAndCreateRelease(cb) {
 }
 
 function gitPush(cb) {
-  git.push('origin', 'main', { args: ' --tags' }, function (err) {
+  git.push('origin', 'main', { args: ' --tags' }, function(err) {
     if (!err) {
       cb();
     } else {
@@ -425,7 +383,7 @@ function showDisclaimer(cb) {
   cb();
 }
 
-const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
+const execBuild = gulp.parallel(buildSvelteTS, buildLess, buildSASS, copyFiles);
 
 exports.build = gulp.series(clean, execBuild);
 exports.watch = buildWatch;
