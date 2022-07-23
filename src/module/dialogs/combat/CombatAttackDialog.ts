@@ -234,8 +234,8 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
         target: svelteElement,
         props: {
           title: 'Funciona!',
-          inputValue: 10,
-          secondaryInputValue: 5
+          type: "number",
+          value: 2,
         }
       });
       this.svelteApp.element = svelteElement; //Saving the DOM element containing the component for later (see next comment)
