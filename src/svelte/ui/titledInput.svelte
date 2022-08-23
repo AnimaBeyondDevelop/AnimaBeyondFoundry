@@ -10,7 +10,7 @@
 
 <div class="common-titled-input" class:vertical>
   {#if title}
-    <p class="label">{title}: {value}.</p>
+    <p class="label">{title}</p>
   {/if}
 
   <div class="input-container" class:big={secondaryValue}>

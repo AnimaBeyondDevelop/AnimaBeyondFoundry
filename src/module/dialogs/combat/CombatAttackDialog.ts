@@ -11,7 +11,7 @@ import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConf
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
-import TitledInput from '../../../templates/common/ui/titledInput.svelte';
+import TitledInput from '../../../svelte/ui/titledInput.svelte';
 
 type SpecialField = {
   special: number;
