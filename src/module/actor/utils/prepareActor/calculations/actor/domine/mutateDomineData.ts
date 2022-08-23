@@ -14,7 +14,7 @@ export const mutateDomineData = (data: ABFActorDataSourceData) => {
   ];
 
   for (const accum of KI_ACCUMULATIONS) {
-    domine.kiAccumulation[accum].final.value = Math.max(domine.kiAccumulation[accum].base.value + Math.floor(allActionsPenalty / 20), 0);
+    domine.kiAccumulation[accum].final.value = Math.max(domine.kiAccumulation[accum].base.value + Math.min(Math.ceil(allActionsPenalty / 20), 0), 0);
   }
 
 };

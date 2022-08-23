@@ -36,6 +36,21 @@
   {{/each}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
+{{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+  disabled=this.attackSent
+  choices=config.iterables.combat.weapon.criticTypesWithNone
+  title=(localize "macros.combat.dialog.weapon.critic.title")
+  inputName='attacker.psychic.critic'
+  inputValue=this.attacker.psychic.critic
+}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.combat.dialog.damage.title")
+  disabled=this.attackSent
+  inputName="attacker.psychic.damage"
+  inputValue=this.attacker.psychic.damage
+}}
 
 {{#if this.attackSent}}
   <div class='psychic-attack-sent'>

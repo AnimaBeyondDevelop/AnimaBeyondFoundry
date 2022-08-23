@@ -173,7 +173,7 @@ export class WSUserCombatManager extends WSCombatManager<ABFWSUserRequest, ABFWS
         {
           token: attacker,
           attackType: result.type,
-          critic: result.type === 'combat' ? result.values.criticSelected : undefined
+          critic: result.values.critic
         },
         defender,
         {

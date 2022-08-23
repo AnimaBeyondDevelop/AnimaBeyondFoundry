@@ -9,6 +9,7 @@ export enum PsychicPowerActionTypes {
 }
 
 export type PsychicPowerItemData = {
+  description: { value: string };
   level: { value: number };
   effects: {
     20: { value: string };
@@ -52,6 +53,7 @@ export const PsychicPowerItemConfig: ABFItemConfig<PsychicPowerDataSource, Psych
     });
 
     const data: PsychicPowerItemData = {
+      description: { value: ''},
       level: { value: 0 },
       effects: {
         20: { value: '' },

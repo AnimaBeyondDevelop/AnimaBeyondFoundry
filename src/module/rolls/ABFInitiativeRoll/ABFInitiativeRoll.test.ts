@@ -17,7 +17,7 @@ describe('ABFRoll', () => {
   });
 
   test('must explode roll if first result is bigger or equals to 90', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
+    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(90);
     abfRollTesting.evaluate();
 
@@ -31,7 +31,7 @@ describe('ABFRoll', () => {
   });
 
   test('must penalize if roll is 1', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
+    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(1);
     abfRollTesting.evaluate();
 
@@ -45,7 +45,7 @@ describe('ABFRoll', () => {
   });
 
   test('must penalize if roll is 2', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
+    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(2);
     abfRollTesting.evaluate();
 
@@ -59,7 +59,7 @@ describe('ABFRoll', () => {
   });
 
   test('must penalize if roll is 3', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xaturn');
+    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(3);
     abfRollTesting.evaluate();
 

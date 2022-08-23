@@ -15,6 +15,20 @@ export type ABFActorDataSourceData = {
     };
   };
   general: {
+    settings: {
+      openRolls: {
+        value: number;
+      };
+      fumbles: {
+        value: number;
+      };
+      openOnDoubles: {
+        value: boolean;
+      };
+      defenseType: {
+        value: string;
+      };
+    };
     modifiers: {
       physicalActions: {
         value: number;
@@ -35,6 +49,9 @@ export type ABFActorDataSourceData = {
           value: number;
         };
       };
+      extraDamage: {
+        value: number;
+      };
     };
     destinyPoints: {
       base: {
@@ -46,7 +63,7 @@ export type ABFActorDataSourceData = {
     };
     presence: {
       value: number;
-    },
+    };
     aspect: {
       hair: {
         value: string;
@@ -67,6 +84,9 @@ export type ABFActorDataSourceData = {
         value: string;
       };
       race: {
+        value: string;
+      };
+      ethnicity: {
         value: string;
       };
       appearance: {
@@ -161,6 +181,28 @@ export type ABFActorDataSourceData = {
       fatigue: {
         value: number;
         max: number;
+      };
+      regenerationType: {
+        mod: {
+          value: number;
+        };
+        final: {
+          value: number;
+        };
+      };
+      regeneration: {
+        normal: {
+          value: number;
+          period: string;
+        };
+        resting: {
+          value: number;
+          period: string;
+        };
+        recovery: {
+          value: number;
+          period: string;
+        };
       };
       movementType: {
         mod: {
@@ -1000,6 +1042,24 @@ export type ABFActorDataSourceData = {
       };
       final: {
         value: number;
+      };
+      imbalance: {
+        offensive: {
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
+        };
+        defensive: {
+          base: {
+            value: number;
+          };
+          final: {
+            value: number;
+          };
+        };
       };
     };
     psychicPoints: {

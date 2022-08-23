@@ -17,6 +17,12 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     }
   },
   general: {
+    settings: {
+      openRolls: { value: 90 },
+      fumbles: { value: 3 },
+      openOnDoubles: { value: false },
+      defenseType: { value: '' }
+    },
     modifiers: {
       physicalActions: {
         value: 0
@@ -32,6 +38,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       naturalPenalty: {
         byArmors: { value: 0 },
         byWearArmorRequirement: { value: 0 }
+      },
+      extraDamage: {
+        value: 0
       }
     },
     destinyPoints: {
@@ -65,6 +74,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: ''
       },
       race: {
+        value: ''
+      },
+      ethnicity: {
         value: ''
       },
       appearance: {
@@ -159,6 +171,28 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       fatigue: {
         value: 0,
         max: 0
+      },
+      regenerationType: {
+        mod: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
+      },
+      regeneration: {
+        normal: {
+          value: 0,
+          period: ''
+        },
+        resting: {
+          value: 0,
+          period: ''
+        },
+        recovery: {
+          value: 0,
+          period: ''
+        }
       },
       movementType: {
         mod: {
@@ -998,6 +1032,24 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       final: {
         value: 0
+      },
+      imbalance: {
+        offensive: {
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
+        },
+        defensive: {
+          base: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
+        }
       }
     },
     psychicPoints: {

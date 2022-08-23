@@ -6,20 +6,6 @@
   inputValue=this.defender.combat.modifier
 }}
 
-{{#if (is "eq" this.attacker.attackType "combat")}}
-  {{>
-  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-    title=(localize 'macros.combat.dialog.at.title')
-    disabled=this.defenseSent
-    inputName="defender.combat.at.special"
-    inputValue=this.defender.combat.at.special
-    hasSecondaryInput=true
-    disableSecondaryInput=true
-    secondaryInputName="defender.combat.at.final"
-    secondaryInputValue=this.defender.combat.at.final
-  }}
-{{/if}}
-
 {{#if this.ui.hasFatiguePoints}}
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.fatigue.title')

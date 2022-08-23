@@ -21,7 +21,7 @@ import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDia
 import { CombatAttackDialog, UserCombatAttackResult } from '../../../../dialogs/combat/CombatAttackDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
-import { WeaponCritic } from '../../../../types/combat/WeaponItemConfig';
+import { OptionalWeaponCritic } from '../../../../types/combat/WeaponItemConfig';
 import { getTargetToken } from '../util/getTargetToken';
 import { assertCurrentScene } from '../util/assertCurrentScene';
 import { ABFSettingsKeys } from '../../../../../utils/registerSettings';
@@ -58,7 +58,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
 
       const { attackerToken, defenderToken, defenderActor } = this.combat;
 
-      const critic = msg.payload.type === 'combat' ? msg.payload.values.criticSelected : undefined;
+      const { critic } = msg.payload.values;
 
       if (canOwnerReceiveMessage(defenderActor)) {
         const newMsg: GMAttackMessage = {
@@ -260,7 +260,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
 
               this.emit(newMsg);
             } else {
-              const critic = result.type === 'combat' ? result.values.criticSelected : undefined;
+              const { critic } = result.values;
 
               try {
                 this.manageDefense(attacker, defender, result.type, critic);
@@ -283,7 +283,7 @@ export class WSGMCombatManager extends WSCombatManager<ABFWSGMRequest, ABFWSGMNo
     attacker: TokenDocument,
     defender: TokenDocument,
     attackType: UserCombatAttackResult['type'],
-    critic?: WeaponCritic
+    critic?: OptionalWeaponCritic
   ) {
     this.defendDialog = new CombatDefenseDialog({ token: attacker, attackType, critic }, defender, {
       onDefense: result => {

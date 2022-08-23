@@ -10,7 +10,7 @@ type GenericDialogData = {
   buttons: ButtonConfig[];
 };
 
-export class GenericDialog extends FormApplication<FormApplication.Options, GenericDialogData> {
+export class GenericDialog extends FormApplication<FormApplicationOptions, GenericDialogData> {
   private data: GenericDialogData;
 
   constructor(data: GenericDialogData) {

@@ -2,6 +2,7 @@ export enum ABFSettingsKeys {
   AUTO_ACCEPT_COMBAT_REQUESTS = 'AUTO_ACCEPT_COMBAT_REQUESTS',
   ROUND_DAMAGE_IN_MULTIPLES_OF_5 = 'ROUND_DAMAGE_IN_MULTIPLES_OF_5',
   SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT = 'SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT',
+  USE_DAMAGE_TABLE = 'USE_DAMAGE_TABLE',
   DEVELOP_MODE = 'DEVELOP_MODE'
 }
 
@@ -32,6 +33,15 @@ export const registerSettings = () => {
     scope: 'world',
     config: true,
     default: true,
+    type: Boolean
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.USE_DAMAGE_TABLE, {
+    name: 'anima.ui.systemSettings.useCombatTable.title',
+    hint: 'anima.ui.systemSettings.useCombatTable.hint.title',
+    scope: 'world',
+    config: true,
+    default: false,
     type: Boolean
   });
 
