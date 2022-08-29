@@ -2,9 +2,25 @@ import type { InitiativeOptions } from '@league-of-foundry-developers/foundry-vt
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
 export default class ABFCombat extends Combat {
+  constructor(
+    data: ConstructorParameters<typeof foundry.documents.BaseCombat>[0],
+    context: ConstructorParameters<typeof foundry.documents.BaseCombat>[1]
+  ) {
+    super(data, context);
+    this.setFlag('world', 'newRound', true);
+  }
+
+  async nextTurn() {
+    if (this.getFlag('world', 'newRound')) {
+      this.setFlag('world', 'newRound', false)
+    }
+    return super.nextTurn();
+  }
+
   async nextRound() {
     // Reset initiative for everyone when going to the next round
     await this.resetAll();
+    this.setFlag('world', 'newRound', true)
 
     return super.nextRound();
   }
@@ -33,7 +49,10 @@ export default class ABFCombat extends Combat {
         messageOptions
       });
     }
-    await this.update({turn: 0}) // Updates active turn such that it is the one with higher innitiative.
+
+    if (this.getFlag('world', 'newRound')) {
+      await this.update({ turn: 0 }); // Updates active turn such that it is the one with higher innitiative.
+    }
 
     return this;
   }
