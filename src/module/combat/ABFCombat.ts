@@ -33,6 +33,7 @@ export default class ABFCombat extends Combat {
         messageOptions
       });
     }
+    await this.update({turn: 0}) // Updates active turn such that it is the one with higher innitiative.
 
     return this;
   }
