@@ -4,11 +4,11 @@ import { ArmorDataSource, ArmorLocation } from '../../../../../types/combat/Armo
 const calculateTA = (tas: number[]): number => {
   if (tas.length === 0) return 0;
 
-  const orderedTas = [...tas].sort().reverse();
+  const orderedTas = new Int8Array([...tas]).sort().reverse();
 
-  const maxTa = orderedTas.shift();
+  const maxTa = orderedTas[0];
 
-  const sumOtherTas = orderedTas.reduce((prev, curr) => prev + curr, 0);
+  const sumOtherTas = orderedTas.slice(1).reduce((prev, curr) => prev + curr, 0);
 
   return maxTa! + Math.floor(sumOtherTas / 2);
 };
