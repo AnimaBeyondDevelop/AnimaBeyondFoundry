@@ -12,6 +12,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
 import TitledInput from '../../../svelte/ui/titledInput.svelte';
+import { injectSvelte } from '../../../svelte/utils';
 
 type SpecialField = {
   special: number;
@@ -175,9 +176,22 @@ const getInitialData = (
   };
 };
 
-export class CombatAttackDialog extends FormApplication<FormApplicationOptions, UserCombatAttackDialogData> {
+let svelteDescriptor = {
+  component: TitledInput,
+  name: 'component',
+  props: {
+    title: 'Funciona!',
+    type: 'number',
+    value: 2
+  }
+};
+// abstract class MyFormApplication extends FormApplication<FormApplicationOptions, UserCombatAttackDialogData>{
+
+// }
+export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, UserCombatAttackDialogData>(
+  svelteDescriptor
+) {
   private data: UserCombatAttackDialogData;
-  svelteApp: TitledInput;
 
   constructor(
     attacker: TokenDocument,
@@ -224,28 +238,6 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
     });
   }
 
-  async render(force?: boolean, options?: Application.RenderOptions) {
-    if (!options) options = {};
-    await this._render(force, options) //This renders the Foundry/Handlebars part of the template
-    // We need now to inject the svelte component on the corresponding container. The component is created once
-    let svelteElement = this.element.find("#svelte-component").get(0);
-    if (!this.svelteApp && svelteElement) {
-      this.svelteApp = new TitledInput({
-        target: svelteElement,
-        props: {
-          title: 'Funciona!',
-          type: "number",
-          value: 2,
-        }
-      });
-      this.svelteApp.element = svelteElement; //Saving the DOM element containing the component for later (see next comment)
-    } else if (this.svelteApp) {
-      //If the component has already been created but the template is rendered again (e.g. because of data changes),
-      //the DOM changes and the element containing the component is re-created, empty. We replace it with the one containing the Component saved before.
-      this.element.find("#svelte-component").get(0)?.replaceWith(this.svelteApp.element)
-    }
-  }
-
   get attackerActor() {
     return this.data.attacker.token.actor!;
   }
@@ -271,22 +263,25 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
     html.find('.send-attack').click(() => {
       const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.data.attacker.combat;
 
+      if (this.svelteApp) {
+        console.log(`Send attack with ${this.svelteApp.component.title} = ${this.svelteApp.component.value}`);
+      }
+
       if (typeof damage !== 'undefined') {
         const attack = weapon ? weapon.data.attack.final.value : this.attackerActor.data.data.combat.attack.final.value;
 
         const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
 
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`
-        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`;
+        if (this.data.attacker.withoutRoll) {
+          //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.data.data.combat.attack.base.value >= 200) //Mastery reduces the fumble range
+        if (this.attackerActor.data.data.combat.attack.base.value >= 200)
+          //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
-        const roll = new ABFFoundryRoll(
-          formula,
-          this.attackerActor.data.data
-        );
+        const roll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
 
         roll.roll();
 
@@ -295,12 +290,12 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-              weapon: weapon?.name,
-              target: this.data.defender.token.name
-            })
+                weapon: weapon?.name,
+                target: this.data.defender.token.name
+              })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-              target: this.data.defender.token.name
-            });
+                target: this.data.defender.token.name
+              });
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
@@ -340,19 +335,20 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
       if (spellUsed) {
         let baseMagicProjection, magicProjection;
         if (magicProjectionType === 'normal') {
-          magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value
-          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value
-        }
-        else {
-          magicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.final.value
-          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.base.value
+          magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value;
+          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value;
+        } else {
+          magicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.final.value;
+          baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.imbalance.offensive.base.value;
         }
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
-        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+        if (this.data.attacker.withoutRoll) {
+          //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (baseMagicProjection >= 200) //Mastery reduces the fumble range
+        if (baseMagicProjection >= 200)
+          //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
@@ -404,16 +400,21 @@ export class CombatAttackDialog extends FormApplication<FormApplicationOptions, 
 
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
-        if (this.data.attacker.withoutRoll) { //Remove the dice from the formula
+        if (this.data.attacker.withoutRoll) {
+          //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200) //Mastery reduces the fumble range
+        if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200)
+          //Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
 
         const psychicProjectionRoll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
         psychicProjectionRoll.roll();
 
-        const psychicPotentialRoll = new ABFFoundryRoll(`1d100xa + ${psychicPotential.final}`, this.data.attacker.actor.data.data);
+        const psychicPotentialRoll = new ABFFoundryRoll(
+          `1d100xa + ${psychicPotential.final}`,
+          this.data.attacker.actor.data.data
+        );
         psychicPotentialRoll.roll();
 
         if (this.data.attacker.showRoll) {

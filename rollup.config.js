@@ -86,7 +86,7 @@ export default {
         // enable run-time checks when not in production
         dev: !production,
         // enableSourcemap: !production,
-        // accessors: true,
+        accessors: true,
       },
       emitCss: false,
     }),
