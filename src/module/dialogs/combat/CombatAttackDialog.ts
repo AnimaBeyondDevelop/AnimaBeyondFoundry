@@ -12,7 +12,8 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
 import TitledInput from '../../../svelte/ui/titledInput.svelte';
-import { injectSvelte } from '../../../svelte/utils';
+import { ComponentDescriptor, injectSvelte } from '../../../svelte/utils';
+import { ComponentProps, SvelteComponent } from 'svelte';
 
 type SpecialField = {
   special: number;
@@ -177,17 +178,17 @@ const getInitialData = (
 };
 
 let svelteDescriptor = {
-  component: TitledInput,
-  name: 'component',
-  props: {
-    title: 'Funciona!',
-    type: 'number',
-    value: 2
+  component: {
+    componentConstructor: TitledInput,
+    props: {
+      title: 'Svelte works!',
+      type: 'number',
+      secondaryValue: 2,
+      secondaryEnabled: false
+    }
   }
 };
-// abstract class MyFormApplication extends FormApplication<FormApplicationOptions, UserCombatAttackDialogData>{
 
-// }
 export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, UserCombatAttackDialogData>(
   svelteDescriptor
 ) {
@@ -263,8 +264,10 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
     html.find('.send-attack').click(() => {
       const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.data.attacker.combat;
 
-      if (this.svelteApp) {
-        console.log(`Send attack with ${this.svelteApp.component.title} = ${this.svelteApp.component.value}`);
+      if (this.svelteApps.component.component) {
+        console.log(
+          `Send attack with ${this.svelteApps.component.component.title} = ${this.svelteApps.component.component.value}`
+        );
       }
 
       if (typeof damage !== 'undefined') {
