@@ -6,11 +6,11 @@
 
 3) En VSCode, añadir la carpeta del repositorio al worskpace (boton derecho en el panel izquierda y "Add folder to workspace" por ejemplo). Luego, hacer clic derecho sobre ella y "Open in integrated terminal". Eso abre una terminal de comandos de windows en dicho directorio (...\FoundryVTT\Data\systems\AnimaBeyondFoundry). En esa terminal se debe ejecutar el comando:
 
+`npm install`
+
 4) Duplica el fichero `foundryconfig.example.json` y renombralo a `foundryconfig.json`, luego editalo y el campo `destPath` rellenalo con la ruta donde tengas la carpeta de sistemas, por ejemplo:
    4.1. Windows: `C:/Users/<nombredeUsuario>/AppData/Local/FoundryVTT/Data/systems`
    4.2. Linux: `/home/<nombredeUsuario>/.local/share/FoundryVTT/Data/systems`
-
-`npm install`
 
 4) Hasta ahora esta carpeta no tiene ningún efecto sobre Foundry. Para generar la carpeta real del sistema, ejecutamos el comando:
 
