@@ -3,8 +3,9 @@ const chalk = require('chalk');
 const readlineSync = require('readline-sync');
 const { execSync } = require('child_process');
 const rimraf = require('rimraf');
+const prettier = require('prettier');
 
-const argv = require('yargs').argv;
+const { argv } = require('yargs');
 
 const { log } = require('./utils/log');
 const { getFile } = require('./utils/getFile');
@@ -50,7 +51,9 @@ const { dry } = argv;
   systemFile.changelog = `${repoURL}/releases/tag/v${systemFile.version}`;
   systemFile.download = `${repoURL}/releases/download/v${systemFile.version}/${systemFile.name}.zip`;
 
-  fs.writeJSONSync('src/system.json', systemFile, 'utf8');
+  const prettiedSystemFile = prettier.format(JSON.stringify(systemFile), { parser: 'json' });
+
+  fs.writeFileSync('src/system.json', prettiedSystemFile, 'utf8');
 
   log.info('Commiting changes...');
 
