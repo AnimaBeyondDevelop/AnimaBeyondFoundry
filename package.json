@@ -4,7 +4,7 @@
   "version": "1.15.1",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "scripts": {
-    "dev": "npx nodemon",
+    "dev": "nodemon",
     "build": "npm run build:com && npm run copy:files && npm run copy:prod-system",
     "build:dev": "npm run build:com && npm run copy:files && npm run copy:dev-system && node scripts/appendSystemName.js animabf-dev && node scripts/copyDirectoryToFoundrySystem.js animabf-dev",
     "build:prod": "npm run build && node scripts/appendSystemName.js animabf && node scripts/copyDirectoryToFoundrySystem.js animabf",
@@ -49,6 +49,7 @@
     "husky": "^6.0.0",
     "jest": "^26.6.3",
     "lint-staged": "^11.0.0",
+    "nodemon": "^2.0.21",
     "prettier": "^2.3.0",
     "readline-sync": "^1.4.10",
     "rimraf": "^3.0.2",

@@ -1,22 +1,24 @@
 ## Instrucciones de instalación para desarrolladores
 
+Estos pasos están recomendados para trabajar con Linux, si usas Windows, deberías instalar [WSL2](https://learn.microsoft.com/es-es/windows/wsl/install) y seguir los pasos de Linux.
+
 1) Clonar el repositorio en \AppData\Local\FoundryVTT\Data\systems\AnimaBeyondFoundry. En Sourcetree esto se hace en File-> Clone.
 
-2) Instalar node si no lo tienes: https://nodejs.org/en/download/
+2) Instalar node (18) si no lo tienes: https://nodejs.org/en/download/
 
-3) En VSCode, añadir la carpeta del repositorio al worskpace (boton derecho en el panel izquierda y "Add folder to workspace" por ejemplo). Luego, hacer clic derecho sobre ella y "Open in integrated terminal". Eso abre una terminal de comandos de windows en dicho directorio (...\FoundryVTT\Data\systems\AnimaBeyondFoundry). En esa terminal se debe ejecutar el comando:
+3) En VSCode, añadir la carpeta del repositorio al worskpace (botón derecho en el panel izquierda y "Add folder to workspace" por ejemplo). Luego, hacer clic derecho sobre ella y "Open in integrated terminal". Eso abre una terminal de comandos de windows en dicho directorio (...\FoundryVTT\Data\systems\AnimaBeyondFoundry). En esa terminal se debe ejecutar el comando:
 
 `npm install`
 
-4) Duplica el fichero `foundryconfig.example.json` y renombralo a `foundryconfig.json`, luego editalo y el campo `destPath` rellenalo con la ruta donde tengas la carpeta de sistemas, por ejemplo:
+4) Duplica el fichero `foundryconfig.example.json` y renómbralo a `foundryconfig.json`, luego edítalo y el campo `destPath` rellénalo con la ruta donde tengas la carpeta de sistemas, por ejemplo:
    4.1. Windows: `C:/Users/<nombredeUsuario>/AppData/Local/FoundryVTT/Data/systems`
    4.2. Linux: `/home/<nombredeUsuario>/.local/share/FoundryVTT/Data/systems`
 
 4) Hasta ahora esta carpeta no tiene ningún efecto sobre Foundry. Para generar la carpeta real del sistema, ejecutamos el comando:
 
-`npm run-script build`, para generarla sin más, o
+`npm run build:dev`, para generarla sin más, o
 
-`npm run-script build:watch`, para generarla y que además se vuelva a generar si hacemos algún cambio en la carpeta del repositorio.
+`npm run dev`, para generarla y que además se vuelva a generar si hacemos algún cambio en la carpeta del repositorio.
 
 5) Abrir Foundry. Deberíamos ver Anima Beyond Fantasy entre nuestros sistemas instalados.
 
@@ -36,7 +38,7 @@ a) Para empezar a trabajar en algo en lo que no se esté trabajando ya:
 
 5) Programar cosas: En VSCode, abre la terminal en la carpeta del repositorio y ejecuta el comando:
 
-`npm run-script build:watch`
+`npm run dev`
 
 Mientras la terminal siga corriendo con ese comando, cualquier cambio que se haga en la carpeta del repositorio prvocará que se recompile el proyecto y actualize la carpeta animabf.
 - Para ver los cambios en Foundry, por lo general basta con pulsar f5 dentro del mundo una vez el proyecto haya compilado. Si no, Opciones -> Return to setup y cargar de nuevo el mundo.
