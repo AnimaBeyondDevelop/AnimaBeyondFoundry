@@ -7,8 +7,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "outDir": "dist"
   },
-  "include": ["src"],
-  "exclude": ["./**/.*.test.*", "./**/__mocks__"]
+  "include": ["src",
+    "scripts"
+  ],
+  "exclude": ["./**/.*.test.*", "./**/__mocks__", "node_modules"]
 }

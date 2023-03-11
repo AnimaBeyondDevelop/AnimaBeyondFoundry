@@ -4,9 +4,18 @@
   "version": "1.15.1",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "scripts": {
-    "build": "gulp build",
-    "build:watch": "gulp watch",
-    "clean": "gulp clean",
+    "dev": "npx nodemon",
+    "build": "npm run build:com && npm run copy:files && npm run copy:prod-system",
+    "build:dev": "npm run build:com && npm run copy:files && npm run copy:dev-system && node scripts/appendSystemName.js animabf-dev && node scripts/copyDirectoryToFoundrySystem.js animabf-dev",
+    "build:prod": "npm run build && node scripts/appendSystemName.js animabf && node scripts/copyDirectoryToFoundrySystem.js animabf",
+    "build:com": "rimraf dist/ && npm run build:ts && npm run build:sass && npm run build:template",
+    "build:ts": "tsc-esm -p .",
+    "build:sass": "sass src/scss/animabf.scss dist/animabf.css",
+    "build:template": "node ./scripts/buildTemplate.js",
+    "copy:dev-system": "cp src/system.development.json dist/system.json",
+    "copy:prod-system": "cp src/system.json dist/system.json",
+    "copy:files": "cp src/template.json dist && cp -r src/lang dist && cp -r src/templates dist && cp -r src/assets dist && cp -r src/packs dist",
+    "clean": "rimraf dist/",
     "package": "gulp package --release",
     "publish": "gulp publish --release",
     "test": "jest src",
@@ -14,11 +23,12 @@
     "cypress:open": "cd integration && cypress open"
   },
   "engines": {
-    "node": ">14.0.0"
+    "node": ">18.0.0"
   },
   "author": "",
   "license": "",
   "devDependencies": {
+    "@digitak/tsc-esm": "^3.1.4",
     "@league-of-foundry-developers/foundry-vtt-types": "^9.268.0",
     "@types/faker": "^5.5.6",
     "@types/jest": "^26.0.23",
@@ -53,7 +63,9 @@
     "sass": "^1.32.8",
     "sass-lint": "^1.13.1",
     "ts-jest": "^26.5.6",
-    "typescript": "^4.6.3",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4",
+    "vite-plugin-static-copy": "^0.13.1",
     "yargs": "^16.2.0"
   },
   "dependencies": {
