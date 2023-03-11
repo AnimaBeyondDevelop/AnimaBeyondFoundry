@@ -1,4 +1,3 @@
-import type { InitiativeOptions } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/clientDocuments/combat';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
 export default class ABFCombat extends Combat {
@@ -12,7 +11,7 @@ export default class ABFCombat extends Combat {
 
   async nextTurn() {
     if (this.getFlag('world', 'newRound')) {
-      this.setFlag('world', 'newRound', false)
+      this.setFlag('world', 'newRound', false);
     }
     return super.nextTurn();
   }
@@ -20,7 +19,7 @@ export default class ABFCombat extends Combat {
   async nextRound() {
     // Reset initiative for everyone when going to the next round
     await this.resetAll();
-    this.setFlag('world', 'newRound', true)
+    this.setFlag('world', 'newRound', true);
 
     return super.nextRound();
   }
@@ -34,7 +33,7 @@ export default class ABFCombat extends Combat {
   }
 
   // Modify rollInitiative so that it asks for modifiers
-  async rollInitiative(ids: string[] | string, { updateTurn = false, messageOptions }: InitiativeOptions = {}): Promise<this> {
+  async rollInitiative(ids: string[] | string, { updateTurn = false, messageOptions }: any = {}): Promise<this> {
     const mod = await openModDialog();
 
     if (typeof ids === 'string') {

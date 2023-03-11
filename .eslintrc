@@ -38,5 +38,15 @@
     "@typescript-eslint/no-shadow": ["error"],
     "arrow-body-style": "off"
   },
-  "ignorePatterns": ["**/*.d.ts"]
+  "ignorePatterns": ["**/*.d.ts"],
+  "overrides": [
+    {
+      "files": "scripts/**/*.js",
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off",
+        "import/no-extraneous-dependencies": "off",
+        "no-console": "off"
+      }
+    }
+  ]
 }

@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "watch": ["src", "scripts"],
+  "ignore": ["**/node_modules/**", "**/dist/**", "src/template.json"],
+  "exec": "npm run build:dev"
+}
