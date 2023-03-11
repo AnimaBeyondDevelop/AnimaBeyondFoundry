@@ -1,4 +1,3 @@
-import type { Options } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/foundry.js/roll';
 import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
@@ -26,7 +25,7 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
     if (data) {
       this.data = data;
     }
- 
+
     if (this.formula.includes('xa')) {
       this.abfRoll = new ABFExploderRoll(this);
     }
@@ -49,9 +48,8 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
   }
 
   get fumbled() {
-    if (this.abfRoll instanceof  ABFExploderRoll)
-      return this.abfRoll?.fumbled || false;
-    else return false
+    if (this.abfRoll instanceof ABFExploderRoll) return this.abfRoll?.fumbled || false;
+    return false;
   }
 
   recalculateTotal(mod = 0) {
@@ -63,7 +61,7 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(partialOptions?: Partial<Options>): any {
+  evaluate(partialOptions?: any): any {
     const options = { ...partialOptions, async: false };
 
     super.evaluate(options);
