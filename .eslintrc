@@ -41,10 +41,11 @@
   "ignorePatterns": ["**/*.d.ts"],
   "overrides": [
     {
-      "files": "vite.config.ts",
+      "files": "scripts/**/*.js",
       "rules": {
         "@typescript-eslint/no-var-requires": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "no-console": "off"
       }
     }
   ]
