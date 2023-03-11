@@ -12,8 +12,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
 import TitledInput from '../../../svelte/ui/titledInput.svelte';
-import { ComponentDescriptor, injectSvelte } from '../../../svelte/utils';
-import { ComponentProps, SvelteComponent } from 'svelte';
+import { injectSvelte } from '../../../svelte/utils';
 
 type SpecialField = {
   special: number;
@@ -177,7 +176,7 @@ const getInitialData = (
   };
 };
 
-let svelteDescriptor = {
+const svelteDescriptor = {
   component: {
     componentConstructor: TitledInput,
     props: {

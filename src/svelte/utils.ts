@@ -27,7 +27,8 @@ class SvelteApp<T extends SvelteComponent> {
   }
 
   inject(targetElement: HTMLElement) {
-    //If the component has already been created but the template is rendered again (e.g. because of data changes), the DOM changes and the element containing the component is re-created, without the injected component.
+    // If the component has already been created but the template is rendered again (e.g. because of data changes),
+    // the DOM changes and the element containing the component is re-created, without the injected component.
     // In such a case, we replace the targetElement with this.element; otherwise we create it
     if (this.component && this.element) {
       console.log(`injecting already existent component ${this.element}`);
@@ -52,21 +53,22 @@ export function injectSvelte<
   // Except for `TInjector`, all types are coppied from League of Foundry's `FormApplication`
   TOptions extends FormApplicationOptions = FormApplicationOptions,
   TData extends object = FormApplication.Data<{}, TOptions>,
-  TConcreteObject = TData extends FormApplication.Data<infer T, TOptions> ? T : {},
+  TConcreteObject = TData extends FormApplication.Data<infer T, TOptions> ? T : TData,
   TInjector extends Injector<SvelteComponent> = Injector<SvelteComponent>
 >(injector: TInjector) {
   if (Object.keys(injector).length === 0) {
-    throw new Error(`Error injecting svelte: injector needs to be non-empty`);
+    throw new Error('Error injecting svelte: injector needs to be non-empty');
   }
 
-  // TODO: improve this typing so that typescript knows which keys are on SvelteApps (therefre allowing for IDE completion)
+  // TODO: improve this typing so that typescript knows which keys are on SvelteApps
+  // (therefore allowing for IDE completion)
   type SvelteApps = {
     [name in keyof TInjector]: SvelteApp<InstanceType<TInjector[name]['componentConstructor']>>;
   };
 
   // The following iterates the keys in `injector` and constructs an object `apps` satisfying
   // apps.key = SvelteApp(injector.key.descriptor)
-  let apps = Object.fromEntries(
+  const apps = Object.fromEntries(
     Object.entries(injector).map(([name, descriptor]) => [name, new SvelteApp(descriptor)])
   ) as SvelteApps;
 
@@ -75,7 +77,7 @@ export function injectSvelte<
 
     async render(force?: boolean, options?: Application.RenderOptions<TOptions>) {
       if (!options) options = {};
-      //First, we render the Foundry/Handlebars part of the template, since we need the container of our component.
+      // First, we render the Foundry/Handlebars part of the template, since we need the container of our component.
       await this._render(force, options);
 
       this.renderSvelteApps();
@@ -85,7 +87,7 @@ export function injectSvelte<
       for (const app in this.svelteApps) {
         if (this.svelteApps.hasOwnProperty(app)) {
           // We first fetch the container into wich we inject the svelte component by its id.
-          let targetElement = this.element.find(`#svelte-${app}`).get(0);
+          const targetElement = this.element.find(`#svelte-${app}`).get(0);
           if (!targetElement) {
             throw new Error(`Error rendering SvelteApp '${app}': element '#svelte-${app}' not found in the HTML.`);
           }

@@ -36,6 +36,8 @@
     "import/prefer-default-export": ["off"],
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "max-classes-per-file": "off",
     "arrow-body-style": "off"
   },
   "ignorePatterns": ["**/*.d.ts"]
