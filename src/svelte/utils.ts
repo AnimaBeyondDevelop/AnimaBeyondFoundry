@@ -76,6 +76,10 @@ export function injectSvelte<
     svelteApps: SvelteApps = apps;
 
     async render(force?: boolean, options?: Application.RenderOptions<TOptions>) {
+      // Do not render if the application is closing or already rendering.
+      const states = Application.RENDER_STATES;
+      if (this._state === states.CLOSING || this._state === states.RENDERING) return;
+
       if (!options) options = {};
       // First, we render the Foundry/Handlebars part of the template, since we need the container of our component.
       await this._render(force, options);
