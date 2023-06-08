@@ -12,6 +12,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
 import TitledInput from '../../../svelte/ui/titledInput.svelte';
+import Testing from "../../../svelte/ui/testing.svelte";
 import { injectSvelte } from '../../../svelte/utils';
 
 type SpecialField = {
@@ -178,21 +179,13 @@ const getInitialData = (
 
 const svelteDescriptor = {
   component: {
-    componentConstructor: TitledInput,
-    props: {
-      title: 'Svelte works!',
-      type: 'number',
-      secondaryValue: 2,
-      secondaryEnabled: false
-    }
+    componentConstructor: Testing,
   }
 };
 
 export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, UserCombatAttackDialogData>(
   svelteDescriptor
 ) {
-  private data: UserCombatAttackDialogData;
-
   constructor(
     attacker: TokenDocument,
     defender: TokenDocument,
@@ -203,17 +196,15 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
   ) {
     super(getInitialData(attacker, defender, options));
 
-    this.data = getInitialData(attacker, defender, options);
-
     const weapons = this.attackerActor.data.data.combat.weapons as WeaponDataSource[];
 
     if (weapons.length > 0) {
-      this.data.attacker.combat.weaponUsed = weapons[0]._id;
+      this.object.attacker.combat.weaponUsed = weapons[0]._id;
     } else {
-      this.data.attacker.combat.unarmed = true;
+      this.object.attacker.combat.unarmed = true;
     }
 
-    this.data.allowed = (game as Game).user?.isGM || (options.allowed ?? false);
+    this.object.allowed = (game as Game).user?.isGM || (options.allowed ?? false);
 
     this.render(true);
   }
@@ -239,11 +230,11 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
   }
 
   get attackerActor() {
-    return this.data.attacker.token.actor!;
+    return this.object.attacker.token.actor!;
   }
 
   public updatePermissions(allowed: boolean) {
-    this.data.allowed = allowed;
+    this.object.allowed = allowed;
 
     this.render();
   }
@@ -261,21 +252,15 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
     super.activateListeners(html);
 
     html.find('.send-attack').click(() => {
-      const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.data.attacker.combat;
-
-      if (this.svelteApps.component.component) {
-        console.log(
-          `Send attack with ${this.svelteApps.component.component.title} = ${this.svelteApps.component.component.value}`
-        );
-      }
+      const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.object.attacker.combat;
 
       if (typeof damage !== 'undefined') {
         const attack = weapon ? weapon.data.attack.final.value : this.attackerActor.data.data.combat.attack.final.value;
 
-        const counterAttackBonus = this.data.attacker.counterAttackBonus ?? 0;
+        const counterAttackBonus = this.object.attacker.counterAttackBonus ?? 0;
 
         let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0}* 15`;
-        if (this.data.attacker.withoutRoll) {
+        if (this.object.attacker.withoutRoll) {
           //Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
@@ -287,20 +272,20 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
 
         roll.roll();
 
-        if (this.data.attacker.showRoll) {
+        if (this.object.attacker.showRoll) {
           const { i18n } = game as Game;
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
                 weapon: weapon?.name,
-                target: this.data.defender.token.name
+                target: this.object.defender.token.name
               })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                target: this.data.defender.token.name
+                target: this.object.defender.token.name
               });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor
           });
         }
@@ -325,17 +310,18 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
           }
         });
 
-        this.data.attackSent = true;
+        this.object.attackSent = true;
 
         this.render();
       }
     });
 
     html.find('.send-mystic-attack').click(() => {
-      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage } = this.data.attacker.mystic;
+      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage } = this.object.attacker.mystic;
 
       if (spellUsed) {
-        let baseMagicProjection, magicProjection;
+        let baseMagicProjection: number;
+        let magicProjection: number;
         if (magicProjectionType === 'normal') {
           magicProjection = this.attackerActor.data.data.mystic.magicProjection.final.value;
           baseMagicProjection = this.attackerActor.data.data.mystic.magicProjection.base.value;
@@ -345,18 +331,19 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
         }
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
-        if (this.data.attacker.withoutRoll) {
-          //Remove the dice from the formula
+        if (this.object.attacker.withoutRoll) {
+          // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (baseMagicProjection >= 200)
-          //Mastery reduces the fumble range
+        if (baseMagicProjection >= 200) {
+          // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
+        }
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
         roll.roll();
 
-        if (this.data.attacker.showRoll) {
+        if (this.object.attacker.showRoll) {
           const { i18n } = game as Game;
 
           const spells = this.attackerActor.data.data.mystic.spells as SpellDataSource[];
@@ -365,11 +352,11 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
 
           const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
             spell: spell.name,
-            target: this.data.defender.token.name
+            target: this.object.defender.token.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor
           });
         }
@@ -391,35 +378,36 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
           }
         });
 
-        this.data.attackSent = true;
+        this.object.attackSent = true;
 
         this.render();
       }
     });
 
     html.find('.send-psychic-attack').click(() => {
-      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage } = this.data.attacker.psychic;
+      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage } = this.object.attacker.psychic;
 
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
-        if (this.data.attacker.withoutRoll) {
-          //Remove the dice from the formula
+        if (this.object.attacker.withoutRoll) {
+          // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200)
-          //Mastery reduces the fumble range
+        if (this.attackerActor.data.data.psychic.psychicProjection.base.value >= 200) {
+          // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
+        }
 
         const psychicProjectionRoll = new ABFFoundryRoll(formula, this.attackerActor.data.data);
         psychicProjectionRoll.roll();
 
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100xa + ${psychicPotential.final}`,
-          this.data.attacker.actor.data.data
+          this.object.attacker.actor.data.data
         );
         psychicPotentialRoll.roll();
 
-        if (this.data.attacker.showRoll) {
+        if (this.object.attacker.showRoll) {
           const { i18n } = game as Game;
 
           const powers = this.attackerActor.data.data.psychic.psychicPowers as PsychicPowerDataSource[];
@@ -427,18 +415,18 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
           const power = powers.find(w => w._id === powerUsed)!;
 
           psychicPotentialRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
           });
 
           const projectionFlavor = i18n.format('macros.combat.dialog.psychicAttack.title', {
             power: power.name,
-            target: this.data.defender.token.name,
+            target: this.object.defender.token.name,
             potential: psychicPotentialRoll.total!
           });
 
           psychicProjectionRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.data.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor: projectionFlavor
           });
         }
@@ -460,7 +448,7 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
           }
         });
 
-        this.data.attackSent = true;
+        this.object.attackSent = true;
 
         this.render();
       }
@@ -471,7 +459,7 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
     const {
       attacker: { combat, psychic },
       ui
-    } = this.data;
+    } = this.object;
 
     ui.hasFatiguePoints = this.attackerActor.data.data.characteristics.secondaries.fatigue.value > 0;
 
@@ -499,18 +487,18 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
       combat.damage.final = combat.damage.special + weapon.data.damage.final.value;
     }
 
-    this.data.config = ABFConfig;
+    this.object.config = ABFConfig;
 
-    return this.data;
+    return this.object;
   }
 
   async _updateObject(event, formData) {
-    const prevWeapon = this.data.attacker.combat.weaponUsed;
+    const prevWeapon = this.object.attacker.combat.weaponUsed;
 
-    this.data = mergeObject(this.data, formData);
+    this.dataStore.set(mergeObject(this.object, formData));
 
-    if (prevWeapon !== this.data.attacker.combat.weaponUsed) {
-      this.data.attacker.combat.criticSelected = undefined;
+    if (prevWeapon !== this.object.attacker.combat.weaponUsed) {
+      this.object.attacker.combat.criticSelected = undefined;
     }
 
     this.render();

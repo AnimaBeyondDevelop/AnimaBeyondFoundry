@@ -1,4 +1,5 @@
 import { ComponentProps, SvelteComponent } from 'svelte';
+import { writable, Writable } from 'svelte/store';
 import { getGame } from '../utils/helpers';
 
 export function localize(str: string) {
@@ -10,7 +11,7 @@ type TConstructor<T> = new (...args: any[]) => T;
 
 export type ComponentDescriptor<T extends SvelteComponent> = {
   componentConstructor: TConstructor<T>;
-  props: ComponentProps<T>;
+  // props: ComponentProps<T>;
 };
 
 type Injector<T extends SvelteComponent> = { [name: string]: ComponentDescriptor<T> };
@@ -26,18 +27,16 @@ class SvelteApp<T extends SvelteComponent> {
     return !!this.component && this.element;
   }
 
-  inject(targetElement: HTMLElement) {
+  inject(targetElement: HTMLElement, store: Writable<any>) {
     // If the component has already been created but the template is rendered again (e.g. because of data changes),
     // the DOM changes and the element containing the component is re-created, without the injected component.
     // In such a case, we replace the targetElement with this.element; otherwise we create it
     if (this.component && this.element) {
-      console.log(`injecting already existent component ${this.element}`);
       targetElement.replaceWith(this.element);
     } else {
-      console.log(`Creating svelte component for the first time, and injecting into ${targetElement}`);
       this.component = new this.descriptor.componentConstructor({
         target: targetElement,
-        props: this.descriptor.props
+        props: { store }
       });
       this.element = targetElement;
     }
@@ -66,14 +65,21 @@ export function injectSvelte<
     [name in keyof TInjector]: SvelteApp<InstanceType<TInjector[name]['componentConstructor']>>;
   };
 
-  // The following iterates the keys in `injector` and constructs an object `apps` satisfying
-  // apps.key = SvelteApp(injector.key.descriptor)
-  const apps = Object.fromEntries(
-    Object.entries(injector).map(([name, descriptor]) => [name, new SvelteApp(descriptor)])
-  ) as SvelteApps;
-
   abstract class SvelteFormApplication extends FormApplication<TOptions, TData, TConcreteObject> {
-    svelteApps: SvelteApps = apps;
+    // The following iterates the keys in `injector` and constructs an object `apps` satisfying
+    // apps.key = SvelteApp(injector.key.descriptor)
+    svelteApps: SvelteApps = Object.fromEntries(
+      Object.entries(injector).map(([name, descriptor]) => [name, new SvelteApp(descriptor)])
+    ) as SvelteApps;
+    dataStore: Writable<TConcreteObject> = writable();
+
+    constructor(object: TConcreteObject, options?: TOptions) {
+      super(object, options);
+      this.dataStore.subscribe(v => {
+        this.object = v;
+      });
+      this.dataStore.set(object);
+    }
 
     async render(force?: boolean, options?: Application.RenderOptions<TOptions>) {
       // Do not render if the application is closing or already rendering.
@@ -95,7 +101,7 @@ export function injectSvelte<
           if (!targetElement) {
             throw new Error(`Error rendering SvelteApp '${app}': element '#svelte-${app}' not found in the HTML.`);
           }
-          this.svelteApps[app].inject(targetElement);
+          this.svelteApps[app].inject(targetElement, this.dataStore);
         }
       }
     }
@@ -104,6 +110,7 @@ export function injectSvelte<
       for (const app in this.svelteApps) {
         if (this.svelteApps.hasOwnProperty(app)) {
           this.svelteApps[app].destroy();
+          delete this.svelteApps[app];
         }
       }
       return super.close(options);
