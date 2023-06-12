@@ -2,8 +2,14 @@ import { ComponentProps, SvelteComponent } from 'svelte';
 import { writable, Writable } from 'svelte/store';
 import { getGame } from '../utils/helpers';
 
-export function localize(str: string) {
-  return getGame().i18n.localize(str);
+export function localize(str: string, values: object = {}) {
+  let localized = getGame().i18n.localize(str);
+  for (const key in values) {
+    if (values.hasOwnProperty(key)) {
+      localized = localized.replace(`{${key}}`, values[key]);
+    }
+  }
+  return localized
 }
 
 // TODO: type it in a more concrete way
