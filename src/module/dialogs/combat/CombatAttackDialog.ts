@@ -11,8 +11,7 @@ import { PsychicPowerDataSource } from '../../types/psychic/PsychicPowerItemConf
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFActor } from '../../actor/ABFActor';
 import { ABFConfig } from '../../ABFConfig';
-import TitledInput from '../../../svelte/ui/titledInput.svelte';
-import Testing from "../../../svelte/ui/testing.svelte";
+import CombatSvelte from '../../../svelte/ui/combat.svelte';
 import { injectSvelte } from '../../../svelte/utils';
 
 type SpecialField = {
@@ -178,8 +177,8 @@ const getInitialData = (
 };
 
 const svelteDescriptor = {
-  component: {
-    componentConstructor: Testing,
+  combat: {
+    componentConstructor: CombatSvelte,
   }
 };
 
@@ -251,6 +250,7 @@ export class CombatAttackDialog extends injectSvelte<FormApplicationOptions, Use
   activateListeners(html) {
     super.activateListeners(html);
 
+    // TODO: Refactor to unify send-attack with send-mystic-attack and send-psychic-attack on the svelte side.
     html.find('.send-attack').click(() => {
       const { weapon, criticSelected, modifier, fatigueUsed, damage, weaponUsed, unarmed } = this.object.attacker.combat;
 

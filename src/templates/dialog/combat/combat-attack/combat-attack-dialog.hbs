@@ -51,7 +51,22 @@
 
         <section class="sheet-body">
           <div class="tab combat" data-group="primary" data-tab="combat">
-            {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs' this=this}}
+
+            <div id="svelte-combat"></div>
+
+            {{#if this.attackSent}}
+            <div class='attack-sent'>
+              {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+              <p class='label'>
+              {{localize 'macros.combat.dialog.attackSent.title'}}
+              </p>
+            </div>
+            {{else}}
+            <button class='abf-button send-attack'>
+              {{localize 'macros.combat.dialog.attackButton.title'}}
+            </button>
+            {{/if}}
+
           </div>
 
           <div class="tab mystic" data-group="primary" data-tab="mystic">
