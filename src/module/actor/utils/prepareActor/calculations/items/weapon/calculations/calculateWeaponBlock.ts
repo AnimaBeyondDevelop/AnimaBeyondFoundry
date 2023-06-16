@@ -6,8 +6,8 @@ import { calculateShieldBlockBonus } from '../../../actor/combat/calculations/ca
 
 export const calculateWeaponBlock = (weapon: WeaponDataSource, data: ABFActorDataSourceData) =>
   data.combat.block.final.value +
-  weapon.data.block.special.value +
-  weapon.data.quality.value +
-  (weapon.data.isShield.value && weapon.data.equipped.value ? calculateShieldBlockBonus(weapon) : 0) +
+  weapon.system.block.special.value +
+  weapon.system.quality.value +
+  (weapon.system.isShield.value && weapon.system.equipped.value ? calculateShieldBlockBonus(weapon) : 0) +
   getWeaponKnowledgePenalty(weapon) +
   calculateStrengthRequiredPenalty(weapon, data);

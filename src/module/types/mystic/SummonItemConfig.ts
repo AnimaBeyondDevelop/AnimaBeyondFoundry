@@ -24,7 +24,7 @@ export const SummonItemConfig: ABFItemConfig<SummonDataSource, SummonChanges> = 
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.summon.content')
     });
 
@@ -40,8 +40,8 @@ export const SummonItemConfig: ABFItemConfig<SummonDataSource, SummonChanges> = 
       await actor.updateInnerItem({ id, type: ABFItems.SUMMON, name });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.mystic.summons as SummonDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getKnownSummonings();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +51,7 @@ export const SummonItemConfig: ABFItemConfig<SummonDataSource, SummonChanges> = 
         items.push(item);
       }
     } else {
-      (data.mystic.summons as SummonDataSource[]) = [item];
+      actor.system.mystic.summons = [item];
     }
   }
 };

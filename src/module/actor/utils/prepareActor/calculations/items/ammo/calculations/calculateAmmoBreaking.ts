@@ -6,8 +6,8 @@ export const calculateAmmoBreaking = (ammo: AmmoDataSource, data: ABFActorDataSo
   const strength = data.characteristics.primaries.strength.value;
 
   return (
-    ammo.data.breaking.base.value +
+    ammo.system.breaking.base.value +
     getWeaponBreakingFromStrength(strength) +
-    Math.floor((ammo.data.quality.value / 5) * 2)
+    Math.floor((ammo.system.quality.value / 5) * 2)
   );
 };

@@ -1,6 +1,4 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { getEquippedWeapons } from '../../../utils/getEquippedWeapons';
-import { calculateShieldBlockBonus } from './calculations/calculateShieldBlockBonus';
 
 export const mutateCombatData = (data: ABFActorDataSourceData) => {
   data.combat.attack.final.value =

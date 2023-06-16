@@ -3,27 +3,27 @@ import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponRangeFromStrength } from '../util/getWeaponRangeFromStrength';
 
 export const calculateWeaponRange = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
-  const strength = weapon.data.hasOwnStr.value
-    ? weapon.data.weaponStrength.final.value
+  const strength = weapon.system.hasOwnStr.value
+    ? weapon.system.weaponStrength.final.value
     : data.characteristics.primaries.strength.value;
 
-  const baseRange = weapon.data.range.base.value;
+  const baseRange = weapon.system.range.base.value;
 
   const rangeFromStrength = getWeaponRangeFromStrength(strength);
 
-  if (strength > 10 && weapon.data.quality.value < 5) {
+  if (strength > 10 && weapon.system.quality.value < 5) {
     return baseRange + 50;
   }
 
-  if ((strength === 12 || strength === 13) && weapon.data.quality.value < 10) {
+  if ((strength === 12 || strength === 13) && weapon.system.quality.value < 10) {
     return baseRange + 100;
   }
 
-  if ((strength === 14 || strength === 15) && weapon.data.quality.value < 15) {
+  if ((strength === 14 || strength === 15) && weapon.system.quality.value < 15) {
     return baseRange + 500;
   }
 
-  if (strength > 15 && weapon.data.quality.value < 20) {
+  if (strength > 15 && weapon.system.quality.value < 20) {
     return baseRange + 5000;
   }
 

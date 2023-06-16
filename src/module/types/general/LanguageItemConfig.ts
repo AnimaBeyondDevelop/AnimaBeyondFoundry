@@ -5,7 +5,10 @@ import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type LanguageItemData = Record<string, never>;
 
-export type LanguageDataSource = ABFItemBaseDataSource<ABFItems.LANGUAGE, LanguageItemData>;
+export type LanguageDataSource = ABFItemBaseDataSource<
+  ABFItems.LANGUAGE,
+  LanguageItemData
+>;
 
 export type LanguageChanges = ItemChanges<LanguageItemData>;
 
@@ -24,21 +27,28 @@ export const LanguageItemConfig: ABFItemConfig<LanguageDataSource, LanguageChang
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.language.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.LANGUAGE, name });
+    actor.createInnerItem({
+      type: ABFItems.LANGUAGE,
+      name
+    });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.LANGUAGE, id, name });
+      actor.updateInnerItem({
+        type: ABFItems.LANGUAGE,
+        id,
+        name
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.languages.others as LanguageDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getKnownLanguages();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -48,7 +58,7 @@ export const LanguageItemConfig: ABFItemConfig<LanguageDataSource, LanguageChang
         items.push(item);
       }
     } else {
-      (data.general.languages.others as LanguageDataSource[]) = [item];
+      actor.system.general.languages.others = [item];
     }
   }
 };

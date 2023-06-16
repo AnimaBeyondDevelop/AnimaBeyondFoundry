@@ -9,25 +9,25 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="contacts"
   }}
-    {{#each data.data.general.contacts}}
-      <div data-item-id='{{this._id}}' class='contact-row'>
+    {{#each system.general.contacts as |contact index|}}
+      <div data-item-id='{{contact._id}}' class='contact-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize 'anima.ui.contactSection.contactRow.name')
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.contacts." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "data.dynamic.contacts." contact._id ".name")
+          inputValue=contact.name
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="description"
           title=(localize 'anima.ui.contactSection.contactRow.description')
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.contacts." this._id ".data.description.value")
-          inputValue=this.data.description.value
+          inputName=(concat "data.dynamic.contacts." contact._id ".data.description.value")
+          inputValue=contact.system.description.value
         }}
       </div>
     {{/each}}

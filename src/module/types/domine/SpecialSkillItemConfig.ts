@@ -5,11 +5,17 @@ import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type SpecialSkillItemData = Record<string, never>;
 
-export type SpecialSkillDataSource = ABFItemBaseDataSource<ABFItems.SPECIAL_SKILL, SpecialSkillItemData>;
+export type SpecialSkillDataSource = ABFItemBaseDataSource<
+  ABFItems.SPECIAL_SKILL,
+  SpecialSkillItemData
+>;
 
 export type SpecialSkillChanges = ItemChanges<SpecialSkillItemData>;
 
-export const SpecialSkillItemConfig: ABFItemConfig<SpecialSkillDataSource, SpecialSkillChanges> = {
+export const SpecialSkillItemConfig: ABFItemConfig<
+  SpecialSkillDataSource,
+  SpecialSkillChanges
+> = {
   type: ABFItems.SPECIAL_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'specialSkills'],
@@ -24,7 +30,7 @@ export const SpecialSkillItemConfig: ABFItemConfig<SpecialSkillDataSource, Speci
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.specialSkill.content')
     });
 
@@ -37,11 +43,15 @@ export const SpecialSkillItemConfig: ABFItemConfig<SpecialSkillDataSource, Speci
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await actor.updateInnerItem({ id, type: ABFItems.SPECIAL_SKILL, name });
+      await actor.updateInnerItem({
+        id,
+        type: ABFItems.SPECIAL_SKILL,
+        name
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.domine.specialSkills as SpecialSkillDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getSpecialSkills();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +61,7 @@ export const SpecialSkillItemConfig: ABFItemConfig<SpecialSkillDataSource, Speci
         items.push(item);
       }
     } else {
-      (data.domine.specialSkills as SpecialSkillDataSource[]) = [item];
+      actor.system.domine.specialSkills = [item];
     }
   }
 };

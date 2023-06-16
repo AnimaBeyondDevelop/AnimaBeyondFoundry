@@ -9,6 +9,8 @@ export type ABFItemConfig<D, C> = {
    */
   type: ABFItems;
 
+  defaultValue?: D;
+
   /**
    * Items can be external or internals
    * External items could be exported to compendiums to be reused by other actors, like weapons that can be used the same sword for different actors
@@ -23,7 +25,7 @@ export type ABFItemConfig<D, C> = {
 
   /**
    * Path where the item are located inside actor data, for example:
-   * In data.data.combat.weapons are located the weapons
+   * In system.combat.weapons are located the weapons
    * This field value must be: ['combat', 'weapons']
    */
   fieldPath: string[];
@@ -76,7 +78,7 @@ export type ABFItemConfig<D, C> = {
    * @param item
    * @param otherArgs
    */
-  onAttach?: (data: ABFActorDataSourceData, item: D, ...otherArgs: unknown[]) => void;
+  onAttach?: (data: ABFActor, item: D, ...otherArgs: unknown[]) => void;
 
   /**
    * Extra configuration for contextual menu

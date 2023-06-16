@@ -5,7 +5,7 @@ import { calculateStrengthRequiredPenalty } from '../util/calculateStrengthRequi
 
 export const calculateWeaponAttack = (weapon: WeaponDataSource, data: ABFActorDataSourceData) =>
   data.combat.attack.final.value +
-  weapon.data.attack.special.value +
-  weapon.data.quality.value +
+  weapon.system.attack.special.value +
+  weapon.system.quality.value +
   getWeaponKnowledgePenalty(weapon) +
   calculateStrengthRequiredPenalty(weapon, data);

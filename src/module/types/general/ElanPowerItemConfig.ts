@@ -8,7 +8,10 @@ export type ElanPowerItemData = {
   level: { value: number };
 };
 
-export type ElanPowerDataSource = ABFItemBaseDataSource<ABFItems.ELAN_POWER, ElanPowerItemData>;
+export type ElanPowerDataSource = ABFItemBaseDataSource<
+  ABFItems.ELAN_POWER,
+  ElanPowerItemData
+>;
 
 export type ElanPowerChanges = ItemChanges<ElanPowerItemData & { elanId: string }>;
 
@@ -29,34 +32,41 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
 
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.elanPower.content')
     });
+
+    const InitialData = { level: { value: 0 } };
 
     const power: ElanPowerDataSource = {
       _id: nanoid(),
       type: ABFItems.ELAN_POWER,
       name,
-      data: { level: { value: 0 } }
+      ...InitialData,
+
+      system: InitialData
     };
 
     const elan = actor.getInnerItem(ABFItems.ELAN, elanId);
 
     if (elan) {
-      const { data } = elan;
+      const { system } = elan;
 
       const powers: ElanPowerDataSource[] = [];
 
-      if (!data.powers) {
+      if (!system.powers) {
         powers.push(power);
       } else {
-        powers.push(...[...data.powers, power]);
+        powers.push(...[...system.powers, power]);
       }
 
       await actor.updateInnerItem({
         type: ABFItems.ELAN,
         id: elanId,
-        data: { ...elan.data, powers }
+        system: {
+          ...elan.data,
+          powers
+        }
       });
     }
   },
@@ -72,26 +82,38 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
       const elan = actor.getInnerItem(ABFItems.ELAN, elanId);
 
       if (elan) {
-        const powers = elan.data.powers as ElanPowerDataSource[];
+        const powers = elan.system.powers as ElanPowerDataSource[];
 
         const elanPower = powers.find(power => power._id === id);
 
         if (elanPower) {
-          if (elanPower.name === name && elanPower.data.level.value === level.value) continue;
+          if (elanPower.name === name && elanPower.system.level.value === level.value) {
+            continue;
+          }
 
           elanPower.name = name;
-          elanPower.data.level.value = level.value;
+          elanPower.system.level.value = level.value;
 
-          actor.updateInnerItem({
-            type: ABFItems.ELAN,
-            id: elanId,
-            data: { ...elan.data, powers: [...powers] }
-          }, true);
+          const system = {
+            ...elan.system,
+            powers: [...powers]
+          };
+
+          await actor.updateInnerItem(
+            {
+              type: ABFItems.ELAN,
+              id: elanId,
+              ...system,
+
+              system
+            },
+            true
+          );
         }
       }
     }
   },
-  onDelete: (actor, target) => {
+  onDelete: async (actor, target) => {
     const { elanId } = target[0].dataset;
 
     if (!elanId) {
@@ -107,10 +129,10 @@ export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerCh
     const elan = actor.getInnerItem(ABFItems.ELAN, elanId);
 
     if (elan) {
-      actor.updateInnerItem({
+      await actor.updateInnerItem({
         type: ABFItems.ELAN,
         id: elanId,
-        data: {
+        system: {
           ...elan.data,
           powers: elan.data.powers.filter(power => power._id !== elanPowerId)
         }

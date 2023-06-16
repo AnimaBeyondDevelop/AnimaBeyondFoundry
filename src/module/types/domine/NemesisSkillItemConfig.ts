@@ -24,7 +24,7 @@ export const NemesisSkillItemConfig: ABFItemConfig<NemesisSkillDataSource, Nemes
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.nemesisSkill.content')
     });
 
@@ -40,8 +40,8 @@ export const NemesisSkillItemConfig: ABFItemConfig<NemesisSkillDataSource, Nemes
       await actor.updateInnerItem({ id, type: ABFItems.NEMESIS_SKILL, name });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.domine.nemesisSkills as NemesisSkillDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getNemesisSkills();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +51,7 @@ export const NemesisSkillItemConfig: ABFItemConfig<NemesisSkillDataSource, Nemes
         items.push(item);
       }
     } else {
-      (data.domine.nemesisSkills as NemesisSkillDataSource[]) = [item];
+      actor.system.domine.nemesisSkills = [item];
     }
   }
 };

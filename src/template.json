@@ -293,14 +293,19 @@
       "special": { "value": "" }
     },
     "armor": {
-      "cut": { "value": 0 },
-      "pierce": { "value": 0 },
-      "impact": { "value": 0 },
-      "thrust": { "value": 0 },
-      "heat": { "value": 0 },
-      "electricity": { "value": 0 },
-      "cold": { "value": 0 },
-      "energy": { "value": 0 }
+      "cut": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "pierce": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "impact": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "thrust": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "heat": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "electricity": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "cold": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "energy": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "integrity": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "presence": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "movementRestriction":  { "base": { "value": 0 }, "final": { "value": 0 } },
+      "naturalPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } }
     },
     "spell": {
       "level": { "value": 0 },
@@ -370,15 +375,15 @@
     },
     "weapon": {
       "special": { "value": "" },
-      "integrity": { "value": 0 },
-      "breaking": { "value": 0 },
-      "attack": { "value": 0 },
-      "block": { "value": 0 },
-      "damage": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "presence": { "value": 0 },
+      "integrity": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "breaking": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "attack": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "block": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "damage": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "initiative": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "presence": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
       "size": { "value": 0 },
-      "strRequired": { "oneHand": { "value": 0 }, "twoHands": { "value": 0 } },
+      "strRequired": { "oneHand": { "base": { "value": 0 }, "final": { "value": 0 } }, "twoHands": { "base": { "value": 0 }, "final": { "value": 0 } } },
       "quality": { "value": 0 },
       "oneOrTwoHanded": { "value": "one-handed" },
       "knowledgeType": { "value": "known" },
@@ -387,8 +392,9 @@
       "isRanged": { "value": false },
       "range": { "base": { "value": 0 }, "final": { "value": 0 } },
       "cadence": { "value": "" },
-      "reload": { "value": 0 },
-      "weaponStrength": { "value": 0 },
+      "reload": { "base": { "value": 0 }, "final": { "value": 0 } },
+      "sizeProportion": { "value": "" },
+      "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     }
   }

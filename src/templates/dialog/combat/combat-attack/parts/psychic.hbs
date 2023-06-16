@@ -31,7 +31,7 @@
   disabled=this.attackSent
   inputName='attacker.psychic.powerUsed'
 }}
-  {{#each this.attacker.actor.data.data.psychic.psychicPowers}}
+  {{#each this.attacker.actor.system.psychic.psychicPowers}}
     <option {{#if (is "eq" this._id ../this.attacker.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

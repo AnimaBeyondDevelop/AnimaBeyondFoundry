@@ -5,7 +5,7 @@ import { calculateNaturalPenaltyWithoutWearArmor } from '../natural-penalty/calc
 
 const calculateArmorsMovementTypeModifier = (data: ABFActorDataSourceData): number => {
   const armorsMovementRestrictions = getEquippedArmors(data).reduce(
-    (prev, curr) => prev + curr.data.movementRestriction.final.value,
+    (prev, curr) => prev + curr.system.movementRestriction.final.value,
     0
   );
 

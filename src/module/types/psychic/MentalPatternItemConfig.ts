@@ -27,14 +27,14 @@ export const MentalPatternItemConfig: ABFItemConfig<MentalPatternDataSource, Men
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.mentalPattern.content')
     });
 
     await actor.createItem({
       name,
       type: ABFItems.MENTAL_PATTERN,
-      data: {
+      system: {
         bonus: { value: 0 },
         penalty: { value: 0 }
       }
@@ -47,12 +47,12 @@ export const MentalPatternItemConfig: ABFItemConfig<MentalPatternDataSource, Men
       await actor.updateItem({
         id,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.psychic.mentalPatterns as MentalPatternDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getMentalPatterns();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -62,7 +62,7 @@ export const MentalPatternItemConfig: ABFItemConfig<MentalPatternDataSource, Men
         items.push(item);
       }
     } else {
-      (data.psychic.mentalPatterns as MentalPatternDataSource[]) = [item];
+      actor.system.psychic.mentalPatterns = [item];
     }
   }
 };

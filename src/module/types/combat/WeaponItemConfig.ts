@@ -1,9 +1,10 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, DerivedField, ItemChanges, SpecialField } from '../Items';
+import { ABFItemConfig, ItemChanges } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
 import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
+import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
 
 export enum WeaponEquippedHandType {
   ONE_HANDED = 'one-handed',
@@ -56,41 +57,7 @@ export enum WeaponSizeProportion {
   GIANT = 'giant'
 }
 
-export type WeaponItemData = {
-  equipped: { value: boolean };
-  isShield: { value: boolean };
-  special: { value: string };
-  integrity: DerivedField;
-  breaking: DerivedField;
-  attack: SpecialField;
-  block: SpecialField;
-  damage: DerivedField;
-  initiative: DerivedField;
-  presence: DerivedField;
-  size: { value: WeaponSize };
-  sizeProportion: { value: WeaponSizeProportion };
-  strRequired: {
-    oneHand: DerivedField;
-    twoHands: DerivedField;
-  };
-  quality: { value: number };
-  oneOrTwoHanded: { value: WeaponEquippedHandType };
-  knowledgeType: { value: WeaponKnowledgeType };
-  manageabilityType: { value: WeaponManageabilityType };
-  shotType: { value: WeaponShotType };
-  hasOwnStr: { value: boolean };
-  isRanged: { value: boolean };
-  ammoId?: string;
-  ammo?: AmmoDataSource;
-  range: DerivedField;
-  cadence: { value: string };
-  reload: DerivedField;
-  weaponStrength: DerivedField;
-  critic: {
-    primary: { value: WeaponCritic };
-    secondary: { value: OptionalWeaponCritic };
-  };
-};
+export type WeaponItemData = any;
 
 export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItemData>;
 
@@ -170,6 +137,7 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
   type: ABFItems.WEAPON,
   isInternal: false,
   hasSheet: true,
+  defaultValue: INITIAL_WEAPON_DATA,
   fieldPath: ['combat', 'weapons'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.weapons as WeaponChanges;
@@ -182,14 +150,14 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.weapons.content')
     });
 
-    const itemData: Omit<WeaponDataSource, '_id'> = {
+    const itemData: any = {
       name,
       type: ABFItems.WEAPON,
-      data: INITIAL_WEAPON_DATA
+      system: INITIAL_WEAPON_DATA
     };
 
     await actor.createItem(itemData);
@@ -201,33 +169,35 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
       actor.updateItem({
         id,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const combat = data.combat as { weapons: WeaponDataSource[]; ammo: AmmoDataSource[] };
+  onAttach: async (actor, item) => {
+    const weapons = actor.getWeapons();
 
-    const items = combat.weapons;
+    item = await normalizeItem(item, INITIAL_WEAPON_DATA);
 
-    item.data = foundry.utils.mergeObject(item.data, INITIAL_WEAPON_DATA, { overwrite: false });
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
+    if (weapons) {
+      const itemIndex = weapons.findIndex(i => i._id === item._id);
       if (itemIndex !== -1) {
-        items[itemIndex] = item;
+        weapons[itemIndex] = item;
       } else {
-        items.push(item);
+        weapons.push(item);
       }
     } else {
-      combat.weapons = [item];
+      actor.system.combat.weapons = [item];
     }
 
-    combat.weapons = combat.weapons.map(weapon => {
-      if (weapon.data.isRanged && typeof weapon.data.ammoId === 'string' && !!weapon.data.ammoId) {
-        const ammo = combat.ammo as AmmoDataSource[];
+    actor.system.combat.weapons = actor.system.combat.weapons.map(weapon => {
+      if (
+        weapon.system.isRanged &&
+        typeof weapon.system.ammoId === 'string' &&
+        !!weapon.system.ammoId
+      ) {
+        const ammo = actor.system.combat.ammo as AmmoDataSource[];
 
-        weapon.data.ammo = ammo.find(i => i._id === weapon.data.ammoId);
+        weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
       }
 
       return weapon;

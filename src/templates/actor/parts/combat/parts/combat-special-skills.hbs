@@ -9,13 +9,13 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="combat-special-skills"
   }}
-    {{#each data.data.combat.combatSpecialSkills}}
-      <div data-item-id='{{this._id}}' class='combat-special-skill-row'>
+    {{#each system.combat.combatSpecialSkills as |combatSpecialSkill|}}
+      <div data-item-id='{{combatSpecialSkill._id}}' class='combat-special-skill-row'>
         <input
-          name='data.dynamic.combatSpecialSkills.{{this._id}}.name'
+          name='data.dynamic.combatSpecialSkills.{{combatSpecialSkill._id}}.name'
           type='text'
           class='input'
-          value='{{this.name}}'
+          value='{{combatSpecialSkill.name}}'
         />
       </div>
     {{/each}}

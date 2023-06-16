@@ -24,7 +24,7 @@ export const KiSkillItemConfig: ABFItemConfig<KiSkillDataSource, KiSkillChanges>
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.kiSkill.content')
     });
 
@@ -37,11 +37,15 @@ export const KiSkillItemConfig: ABFItemConfig<KiSkillDataSource, KiSkillChanges>
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await actor.updateInnerItem({ id, type: ABFItems.KI_SKILL, name });
+      await actor.updateInnerItem({
+        id,
+        type: ABFItems.KI_SKILL,
+        name
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.domine.kiSkills as KiSkillDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getKiSkills();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +55,7 @@ export const KiSkillItemConfig: ABFItemConfig<KiSkillDataSource, KiSkillChanges>
         items.push(item);
       }
     } else {
-      (data.domine.kiSkills as KiSkillDataSource[]) = [item];
+      actor.system.domine.kiSkills = [item];
     }
   }
 };

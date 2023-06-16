@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="elan"
   }}
-    {{#each data.data.general.elan as |elan|}}
+    {{#each system.general.elan as |elan|}}
       <div class='elan-row'>
         <div data-item-id='{{elan._id}}' class='base'>
           {{>
@@ -25,11 +25,11 @@
             class="level"
             title=(localize 'anima.ui.elanSection.elanRow.level')
             inputName=(concat "data.dynamic.elan." elan._id ".data.level.value")
-            inputValue=elan.data.level.value
+            inputValue=elan.system.level.value
           }}
         </div>
 
-        {{#each elan.data.powers as |power|}}
+        {{#each elan.system.powers as |power|}}
           <div
             class='powers mt-1'
             data-elan-id='{{elan._id}}'
@@ -54,7 +54,7 @@
               hideTitle=true
               inputType="text"
               inputName=(concat "data.dynamic.elan_power." power._id ".data.level.value")
-              inputValue=power.data.level.value
+              inputValue=power.system.level.value
             }}
           </div>
         {{/each}}

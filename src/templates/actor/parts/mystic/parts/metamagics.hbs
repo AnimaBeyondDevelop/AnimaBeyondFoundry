@@ -9,24 +9,24 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="metamagics"
   }}
-    {{#each data.data.mystic.metamagics}}
-      <div data-item-id='{{this._id}}' class='metamagic-row'>
+    {{#each system.mystic.metamagics as |metamagic index|}}
+      <div data-item-id='{{metamagic._id}}' class='metamagic-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.mystic.metamagic.name.title")
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.metamagics." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "data.dynamic.metamagics." metamagic._id ".name")
+          inputValue=metamagic.name
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="grade"
           title=(localize "anima.ui.mystic.metamagic.grade.title")
-          hideTitle=(is "gt" @index 0)
-          inputName=(concat "data.dynamic.metamagics." this._id ".data.grade.value")
-          inputValue=this.data.grade.value
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "data.dynamic.metamagics." metamagic._id ".data.grade.value")
+          inputValue=metamagic.system.grade.value
         }}
       </div>
     {{/each}}

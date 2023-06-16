@@ -26,7 +26,7 @@ export const ContactItemConfig: ABFItemConfig<ContactDataSource, ContactChanges>
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.contact.content')
     });
 
@@ -43,12 +43,12 @@ export const ContactItemConfig: ABFItemConfig<ContactDataSource, ContactChanges>
         id,
         type: ABFItems.CONTACT,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.contacts as ContactDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getContacts();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -58,7 +58,7 @@ export const ContactItemConfig: ABFItemConfig<ContactDataSource, ContactChanges>
         items.push(item);
       }
     } else {
-      (data.general.contacts as ContactDataSource[]) = [item];
+      actor.system.general.contacts = [item];
     }
   }
 };

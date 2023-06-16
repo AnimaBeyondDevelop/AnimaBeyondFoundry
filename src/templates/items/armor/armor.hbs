@@ -8,10 +8,11 @@
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
           inputType="text"
-          inputName=(concat "name")
-          inputValue=data.name
+          inputName="name"
+          inputValue=item.name
         }}
       </div>
+      {{log item}}
     {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="armor-item-dialog"
@@ -20,107 +21,107 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="cut"
         title=(localize "anima.ui.combat.armors.at.cut.base.title")
-        inputName=(concat "data.cut.base.value")
-        inputValue=data.data.cut.base.value
+        inputName="system.cut.base.value"
+        inputValue=system.cut.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="impact"
         title=(localize "anima.ui.combat.armors.at.impact.base.title")
-        inputName=(concat "data.impact.base.value")
-        inputValue=data.data.impact.base.value
+        inputName="system.impact.base.value"
+        inputValue=system.impact.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="thrust"
         title=(localize "anima.ui.combat.armors.at.thrust.base.title")
-        inputName=(concat "data.thrust.base.value")
-        inputValue=data.data.thrust.base.value
+        inputName="system.thrust.base.value"
+        inputValue=system.thrust.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="heat"
         title=(localize "anima.ui.combat.armors.at.heat.base.title")
-        inputName=(concat "data.heat.base.value")
-        inputValue=data.data.heat.base.value
+        inputName="system.heat.base.value"
+        inputValue=system.heat.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="electricity"
         title=(localize "anima.ui.combat.armors.at.electricity.base.title")
-        inputName=(concat "data.electricity.base.value")
-        inputValue=data.data.electricity.base.value
+        inputName="system.electricity.base.value"
+        inputValue=system.electricity.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="cold"
         title=(localize "anima.ui.combat.armors.at.cold.base.title")
-        inputName=(concat "data.cold.base.value")
-        inputValue=data.data.cold.base.value
+        inputName="system.cold.base.value"
+        inputValue=system.cold.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="energy"
         title=(localize "anima.ui.combat.armors.at.energy.base.title")
-        inputName=(concat "data.energy.base.value")
-        inputValue=data.data.energy.base.value
+        inputName="system.energy.base.value"
+        inputValue=system.energy.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="integrity"
         title=(localize "anima.ui.combat.armors.integrity.base.title")
-        inputName=(concat "data.integrity.base.value")
-        inputValue=data.data.integrity.base.value
+        inputName="system.integrity.base.value"
+        inputValue=system.integrity.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="presence"
         title=(localize "anima.ui.combat.armors.presence.base.title")
-        inputName=(concat "data.presence.base.value")
-        inputValue=data.data.presence.base.value
+        inputName="system.presence.base.value"
+        inputValue=system.presence.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="wear-armor-requirement"
         title=(localize "anima.ui.combat.armors.wearArmorRequirement.base.title")
-        inputName=(concat "data.wearArmorRequirement.base.value")
-        inputValue=data.data.wearArmorRequirement.base.value
+        inputName="system.wearArmorRequirement.base.value"
+        inputValue=system.wearArmorRequirement.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="base-movement-restriction"
         title=(localize "anima.ui.combat.armors.movementRestriction.base.title")
-        inputName=(concat "data.movementRestriction.base.value")
-        inputValue=data.data.movementRestriction.base.value
+        inputName="system.movementRestriction.base.value"
+        inputValue=system.movementRestriction.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="base-natural-penalty"
         title=(localize "anima.ui.combat.armors.naturalPenalty.base.title")
-        inputName=(concat "data.naturalPenalty.base.value")
-        inputValue=data.data.naturalPenalty.base.value
+        inputName="system.naturalPenalty.base.value"
+        inputValue=system.naturalPenalty.base.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="is-enchanted"
         title=(localize "anima.ui.combat.armors.isEnchanted.title")
         inputType="checkbox"
-        inputName=(concat "data.isEnchanted.value")
-        inputValue=(is 'eq' data.data.isEnchanted.value true)
+        inputName="system.isEnchanted.value"
+        inputValue=system.isEnchanted.value
       }}
       {{>
       'systems/animabf/templates/common/domain/armor/select-armor-type.hbs'
         class="type"
         title=(localize "anima.ui.combat.armors.type.title")
-        inputName=(concat "data.type.value")
-        inputValue=data.data.type.value
+        inputName="system.type.value"
+        inputValue=system.type.value
       }}
       {{>
       'systems/animabf/templates/common/domain/armor/select-armor-localization.hbs'
         class="localization"
         title=(localize "anima.ui.combat.armors.localization.title")
-        inputName=(concat "data.localization.value")
-        inputValue=data.data.localization.value
+        inputName="system.localization.value"
+        inputValue=system.localization.value
       }}
     {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}

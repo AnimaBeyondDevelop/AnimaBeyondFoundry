@@ -9,8 +9,8 @@ export const calculateWeaponStrengthModifier = (weapon: WeaponDataSource, data: 
 
   const equippedHandMultiplier = hasOnlyOneEquippedHandMultiplier ? 1 : 2;
 
-  if (weapon.data.hasOwnStr.value) {
-    return calculateAttributeModifier(weapon.data.weaponStrength.final.value);
+  if (weapon.system.hasOwnStr.value) {
+    return calculateAttributeModifier(weapon.system.weaponStrength.final.value);
   }
 
   return data.characteristics.primaries.strength.mod * equippedHandMultiplier;

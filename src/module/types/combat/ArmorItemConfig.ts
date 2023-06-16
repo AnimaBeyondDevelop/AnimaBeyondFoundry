@@ -1,7 +1,7 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
+import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
 
 export enum ArmorLocation {
   COMPLETE = 'complete',
@@ -36,11 +36,14 @@ export type ArmorItemData = {
   equipped: { value: boolean };
 };
 
-export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
+export type ArmorDataSource = any;
 
 export type ArmorChanges = ItemChanges<ArmorItemData>;
 
-const derivedFieldInitialData = { base: { value: 0 }, final: { value: 0 } };
+const derivedFieldInitialData = {
+  base: { value: 0 },
+  final: { value: 0 }
+};
 
 export const INITIAL_ARMOR_DATA: ArmorItemData = {
   cut: derivedFieldInitialData,
@@ -66,6 +69,7 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   type: ABFItems.ARMOR,
   isInternal: false,
   hasSheet: true,
+  defaultValue: INITIAL_ARMOR_DATA,
   fieldPath: ['combat', 'armors'],
   getFromDynamicChanges: changes => {
     return changes.data.dynamic.armors as ArmorChanges;
@@ -78,14 +82,14 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.armors.content')
     });
 
-    const itemData: Omit<ArmorDataSource, '_id'> = {
+    const itemData: any = {
       name,
       type: ABFItems.ARMOR,
-      data: INITIAL_ARMOR_DATA
+      system: INITIAL_ARMOR_DATA
     };
 
     await actor.createItem(itemData);
@@ -94,17 +98,17 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateItem({
+      await actor.updateItem({
         id,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.combat.armors as ArmorDataSource[];
+  onAttach: async (actor, item) => {
+    const items = actor.getArmors();
 
-    item.data = foundry.utils.mergeObject(item.data, INITIAL_ARMOR_DATA, { overwrite: false });
+    item = await normalizeItem(item, INITIAL_ARMOR_DATA);
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -114,7 +118,7 @@ export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
         items.push(item);
       }
     } else {
-      (data.combat.armors as ArmorDataSource[]) = [item];
+      actor.system.combat.armors = [item];
     }
   }
 };

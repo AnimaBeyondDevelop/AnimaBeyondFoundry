@@ -8,11 +8,17 @@ export type InventoryItemItemData = {
   weight: { value: number };
 };
 
-export type InventoryItemDataSource = ABFItemBaseDataSource<ABFItems.INVENTORY_ITEM, InventoryItemItemData>;
+export type InventoryItemDataSource = ABFItemBaseDataSource<
+  ABFItems.INVENTORY_ITEM,
+  InventoryItemItemData
+>;
 
 export type InventoryItemChanges = ItemChanges<InventoryItemItemData>;
 
-export const InventoryItemItemConfig: ABFItemConfig<InventoryItemDataSource, InventoryItemChanges> = {
+export const InventoryItemItemConfig: ABFItemConfig<
+  InventoryItemDataSource,
+  InventoryItemChanges
+> = {
   type: ABFItems.INVENTORY_ITEM,
   isInternal: true,
   fieldPath: ['general', 'inventory'],
@@ -27,21 +33,33 @@ export const InventoryItemItemConfig: ABFItemConfig<InventoryItemDataSource, Inv
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.inventoryItem.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.INVENTORY_ITEM, name, data: { level: 0 } });
+    actor.createInnerItem({
+      type: ABFItems.INVENTORY_ITEM,
+      name,
+      system: {
+        amount: { value: 0 },
+        weight: { value: 0 }
+      }
+    });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.INVENTORY_ITEM, id, name, data });
+      actor.updateInnerItem({
+        type: ABFItems.INVENTORY_ITEM,
+        id,
+        name,
+        system: data
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.levels as InventoryItemDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getInventoryItems();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +69,7 @@ export const InventoryItemItemConfig: ABFItemConfig<InventoryItemDataSource, Inv
         items.push(item);
       }
     } else {
-      (data.general.levels as InventoryItemDataSource[]) = [item];
+      actor.system.general.inventory = [item];
     }
   }
 };

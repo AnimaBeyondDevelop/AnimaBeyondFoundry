@@ -4,7 +4,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="characteristics"
   }}
-    {{#each data.data.characteristics.primaries as |char key|}}
+    {{#each system.characteristics.primaries as |char key|}}
       {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="characteristic"
@@ -12,7 +12,7 @@
         rollable=true
         rollableDice='1d10ControlRoll'
         rollableMessage=(localize (concat 'anima.ui.characteristics.' key))
-        inputName=(concat "data.characteristics.primaries." key ".value")
+        inputName=(concat "system.characteristics.primaries." key ".value")
         inputValue=char.value
         hasSecondaryInput=true
         disableSecondaryInput=true

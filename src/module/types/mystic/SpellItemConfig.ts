@@ -53,51 +53,53 @@ export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.spell.content')
     });
 
+    const InitialData = {
+      description: { value: '' },
+      level: { value: 0 },
+      via: { value: '' },
+      hasDailyMaintenance: { value: false },
+      spellType: { value: '' },
+      actionType: { value: '' },
+      grades: {
+        base: {
+          name: { value: SpellGradeNames.BASE },
+          intRequired: { value: 0 },
+          maintenanceCost: { value: 0 },
+          zeon: { value: 0 },
+          description: { value: '' }
+        },
+        intermediate: {
+          name: { value: SpellGradeNames.INTERMEDIATE },
+          intRequired: { value: 0 },
+          maintenanceCost: { value: 0 },
+          zeon: { value: 0 },
+          description: { value: '' }
+        },
+        advanced: {
+          name: { value: SpellGradeNames.ADVANCED },
+          intRequired: { value: 0 },
+          maintenanceCost: { value: 0 },
+          zeon: { value: 0 },
+          description: { value: '' }
+        },
+        arcane: {
+          name: { value: SpellGradeNames.ARCANE },
+          intRequired: { value: 0 },
+          maintenanceCost: { value: 0 },
+          zeon: { value: 0 },
+          description: { value: '' }
+        }
+      }
+    };
     const itemCreateData: Omit<SpellDataSource, '_id'> = {
       name,
       type: ABFItems.SPELL,
-      data: {
-        description: { value: '' },
-        level: { value: 0 },
-        via: { value: '' },
-        hasDailyMaintenance: { value: false },
-        spellType: { value: '' },
-        actionType: { value: '' },
-        grades: {
-          base: {
-            name: { value: SpellGradeNames.BASE },
-            intRequired: { value: 0 },
-            maintenanceCost: { value: 0 },
-            zeon: { value: 0 },
-            description: { value: '' }
-          },
-          intermediate: {
-            name: { value: SpellGradeNames.INTERMEDIATE },
-            intRequired: { value: 0 },
-            maintenanceCost: { value: 0 },
-            zeon: { value: 0 },
-            description: { value: '' }
-          },
-          advanced: {
-            name: { value: SpellGradeNames.ADVANCED },
-            intRequired: { value: 0 },
-            maintenanceCost: { value: 0 },
-            zeon: { value: 0 },
-            description: { value: '' }
-          },
-          arcane: {
-            name: { value: SpellGradeNames.ARCANE },
-            intRequired: { value: 0 },
-            maintenanceCost: { value: 0 },
-            zeon: { value: 0 },
-            description: { value: '' }
-          }
-        }
-      }
+      ...InitialData,
+      system: InitialData
     };
 
     await actor.createItem(itemCreateData);
@@ -106,11 +108,15 @@ export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      await actor.updateItem({ id, name, data });
+      await actor.updateItem({
+        id,
+        name,
+        system: data
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.mystic.spells as SpellDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getKnownSpells();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -120,7 +126,7 @@ export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
         items.push(item);
       }
     } else {
-      (data.mystic.spells as SpellDataSource[]) = [item];
+      actor.system.mystic.spells = [item];
     }
   }
 };

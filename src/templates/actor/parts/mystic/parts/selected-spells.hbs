@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="selected-spells"
   }}
-    {{#each data.data.mystic.selectedSpells}}
+    {{#each system.mystic.selectedSpells as |spell|}}
       <div data-item-id='{{this._id}}' class='selected-spell-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -26,7 +26,7 @@
           title=(localize "anima.ui.mystic.selectedSpells.cost.title")
           hideTitle=(is "gt" @index 0)
           inputName=(concat "data.dynamic.selectedSpells." this._id ".data.cost.value")
-          inputValue=this.data.cost.value
+          inputValue=this.system.cost.value
         }}
       </div>
     {{/each}}

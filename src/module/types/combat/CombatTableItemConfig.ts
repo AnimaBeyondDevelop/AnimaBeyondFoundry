@@ -5,11 +5,17 @@ import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type CombatTableItemData = Record<string, never>;
 
-export type CombatTableDataSource = ABFItemBaseDataSource<ABFItems.COMBAT_TABLE, CombatTableItemData>;
+export type CombatTableDataSource = ABFItemBaseDataSource<
+  ABFItems.COMBAT_TABLE,
+  CombatTableItemData
+>;
 
 export type CombatTableChanges = ItemChanges<CombatTableItemData>;
 
-export const CombatTableItemConfig: ABFItemConfig<CombatTableDataSource, CombatTableChanges> = {
+export const CombatTableItemConfig: ABFItemConfig<
+  CombatTableDataSource,
+  CombatTableChanges
+> = {
   type: ABFItems.COMBAT_TABLE,
   isInternal: true,
   fieldPath: ['combat', 'combatTables'],
@@ -24,7 +30,7 @@ export const CombatTableItemConfig: ABFItemConfig<CombatTableDataSource, CombatT
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.combatTable.content')
     });
 
@@ -44,8 +50,8 @@ export const CombatTableItemConfig: ABFItemConfig<CombatTableDataSource, CombatT
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.combat.combatTables as CombatTableDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getCombatTables();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -55,7 +61,7 @@ export const CombatTableItemConfig: ABFItemConfig<CombatTableDataSource, CombatT
         items.push(item);
       }
     } else {
-      (data.combat.combatTables as CombatTableDataSource[]) = [item];
+      actor.system.combat.combatTables = [item];
     }
   }
 };

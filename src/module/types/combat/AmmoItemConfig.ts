@@ -1,8 +1,8 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { WeaponCritic } from './WeaponItemConfig';
+import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
 
 export type AmmoItemData = {
   amount: { value: number };
@@ -15,24 +15,37 @@ export type AmmoItemData = {
   special: { value: string };
 };
 
-export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
+export type AmmoDataSource = any;
 
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 
 export const INITIAL_AMMO_DATA: AmmoItemData = {
   amount: { value: 0 },
-  damage: { base: { value: 0 }, final: { value: 0 } },
+  damage: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
   critic: { value: WeaponCritic.CUT },
   quality: { value: 0 },
-  integrity: { base: { value: 0 }, final: { value: 0 } },
-  breaking: { base: { value: 0 }, final: { value: 0 } },
-  presence: { base: { value: 0 }, final: { value: 0 } },
+  integrity: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  breaking: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
+  presence: {
+    base: { value: 0 },
+    final: { value: 0 }
+  },
   special: { value: '' }
 };
 
 export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
   type: ABFItems.AMMO,
   isInternal: false,
+  defaultValue: INITIAL_AMMO_DATA,
   hasSheet: true,
   fieldPath: ['combat', 'ammo'],
   getFromDynamicChanges: changes => {
@@ -46,14 +59,14 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.ammo.content')
     });
 
-    const itemData: Omit<AmmoDataSource, '_id'> = {
+    const itemData: any = {
       name,
       type: ABFItems.AMMO,
-      data: INITIAL_AMMO_DATA
+      system: INITIAL_AMMO_DATA
     };
 
     await actor.createItem(itemData);
@@ -65,14 +78,14 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
       actor.updateItem({
         id,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.combat.ammo as AmmoDataSource[];
+  onAttach: async (actor, item) => {
+    const items = actor.getAmmos();
 
-    item.data = foundry.utils.mergeObject(item.data, INITIAL_AMMO_DATA, { overwrite: false });
+    item = await normalizeItem(item, INITIAL_AMMO_DATA);
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -82,7 +95,7 @@ export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
         items.push(item);
       }
     } else {
-      (data.combat.ammo as AmmoDataSource[]) = [item];
+      actor.system.combat.ammo = [item];
     }
   }
 };

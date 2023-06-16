@@ -9,13 +9,13 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="psychic-disciplines"
   }}
-    {{#each data.data.psychic.psychicDisciplines}}
-      <div data-item-id='{{this._id}}' class='psychic-discipline-row'>
+    {{#each system.psychic.psychicDisciplines as |psychicDiscipline|}}
+      <div data-item-id='{{psychicDiscipline._id}}' class='psychic-discipline-row'>
         <input
-          name='data.dynamic.psychicDisciplines.{{this._id}}.name'
+          name='data.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
           type='text'
           class='input'
-          value='{{this.name}}'
+          value='{{psychicDiscipline.name}}'
         />
       </div>
     {{/each}}

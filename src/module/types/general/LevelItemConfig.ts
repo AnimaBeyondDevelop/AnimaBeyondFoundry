@@ -26,21 +26,21 @@ export const LevelItemConfig: ABFItemConfig<LevelDataSource, LevelChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.level.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.LEVEL, name, data: { level: 0 } });
+    actor.createInnerItem({ type: ABFItems.LEVEL, name, system: { level: 0 } });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.LEVEL, id, name, data });
+      actor.updateInnerItem({ type: ABFItems.LEVEL, id, name, system: data });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.levels as LevelDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getCategories();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -50,7 +50,7 @@ export const LevelItemConfig: ABFItemConfig<LevelDataSource, LevelChanges> = {
         items.push(item);
       }
     } else {
-      (data.general.levels as LevelDataSource[]) = [item];
+      actor.system.general.levels = [item];
     }
   }
 };

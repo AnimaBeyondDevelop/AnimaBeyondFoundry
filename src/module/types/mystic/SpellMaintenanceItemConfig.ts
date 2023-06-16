@@ -7,11 +7,17 @@ export type SpellMaintenanceItemData = {
   cost: { value: number };
 };
 
-export type SpellMaintenanceDataSource = ABFItemBaseDataSource<ABFItems.SPELL_MAINTENANCE, SpellMaintenanceItemData>;
+export type SpellMaintenanceDataSource = ABFItemBaseDataSource<
+  ABFItems.SPELL_MAINTENANCE,
+  SpellMaintenanceItemData
+>;
 
 export type SpellMaintenanceChanges = ItemChanges<SpellMaintenanceItemData>;
 
-export const SpellMaintenanceItemConfig: ABFItemConfig<SpellMaintenanceDataSource, SpellMaintenanceChanges> = {
+export const SpellMaintenanceItemConfig: ABFItemConfig<
+  SpellMaintenanceDataSource,
+  SpellMaintenanceChanges
+> = {
   type: ABFItems.SPELL_MAINTENANCE,
   isInternal: true,
   fieldPath: ['mystic', 'spellMaintenances'],
@@ -26,21 +32,30 @@ export const SpellMaintenanceItemConfig: ABFItemConfig<SpellMaintenanceDataSourc
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.spellMaintenance.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.SPELL_MAINTENANCE, name, data: { cost: { value: 0 } } });
+    actor.createInnerItem({
+      type: ABFItems.SPELL_MAINTENANCE,
+      name,
+      system: { cost: { value: 0 } }
+    });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.SPELL_MAINTENANCE, id, name, data });
+      actor.updateInnerItem({
+        type: ABFItems.SPELL_MAINTENANCE,
+        id,
+        name,
+        system: data
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.mystic.spellMaintenances as SpellMaintenanceDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getSpellMaintenances();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -50,7 +65,7 @@ export const SpellMaintenanceItemConfig: ABFItemConfig<SpellMaintenanceDataSourc
         items.push(item);
       }
     } else {
-      (data.mystic.spellMaintenances as SpellMaintenanceDataSource[]) = [item];
+      actor.system.mystic.spellMaintenances = [item];
     }
   }
 };

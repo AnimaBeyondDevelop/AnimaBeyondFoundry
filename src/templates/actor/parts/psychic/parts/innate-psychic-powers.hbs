@@ -9,35 +9,35 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="innate-psychic-powers"
   }}
-    {{#each data.data.psychic.innatePsychicPowers}}
-      <div data-item-id='{{this._id}}' class='innate-psychic-power-row'>
+    {{#each system.psychic.innatePsychicPowers as |innatePsychicPower index|}}
+      <div data-item-id='{{innatePsychicPower._id}}' class='innate-psychic-power-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.psychic.innatePsychicPower.power.title")
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "data.dynamic.innatePsychicPowers." innatePsychicPower._id ".name")
+          inputValue=innatePsychicPower.name
         }}
 
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="effect"
           title=(localize "anima.ui.psychic.innatePsychicPower.effect.title")
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".data.effect.value")
-          inputValue=this.data.effect.value
+          inputName=(concat "data.dynamic.innatePsychicPowers." innatePsychicPower._id ".data.effect.value")
+          inputValue=innatePsychicPower.system.effect.value
         }}
 
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="value"
           title=(localize "anima.ui.psychic.innatePsychicPower.value.title")
-          hideTitle=(is "gt" @index 0)
-          inputName=(concat "data.dynamic.innatePsychicPowers." this._id ".data.value.value")
-          inputValue=this.data.value.value
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "data.dynamic.innatePsychicPowers." innatePsychicPower._id ".data.value.value")
+          inputValue=innatePsychicPower.system.value.value
         }}
 
       </div>
@@ -48,8 +48,8 @@
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="amount"
       title=(localize "anima.ui.psychic.innatePsychicPower.amount.title")
-      inputName="data.psychic.innatePsychicPower.amount.value"
-      inputValue=data.data.psychic.innatePsychicPower.amount.value
+      inputName="system.psychic.innatePsychicPower.amount.value"
+      inputValue=system.psychic.innatePsychicPower.amount.value
     }}
   {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

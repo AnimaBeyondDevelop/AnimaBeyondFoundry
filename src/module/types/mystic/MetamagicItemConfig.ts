@@ -26,25 +26,25 @@ export const MetamagicItemConfig: ABFItemConfig<MetamagicDataSource, MetamagicCh
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.metamagic.content')
     });
 
     await actor.createInnerItem({
       name,
       type: ABFItems.METAMAGIC,
-      data: { grade: { value: 0 } }
+      system: { grade: { value: 0 } }
     });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      await actor.updateInnerItem({ id, type: ABFItems.METAMAGIC, name, data });
+      await actor.updateInnerItem({ id, type: ABFItems.METAMAGIC, name, system: data });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.mystic.metamagics as MetamagicDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getKnownMetamagics();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -54,7 +54,7 @@ export const MetamagicItemConfig: ABFItemConfig<MetamagicDataSource, MetamagicCh
         items.push(item);
       }
     } else {
-      (data.mystic.metamagics as MetamagicDataSource[]) = [item];
+      actor.system.mystic.metamagics = [item];
     }
   }
 };

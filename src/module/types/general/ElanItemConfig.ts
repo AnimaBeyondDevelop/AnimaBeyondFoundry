@@ -42,14 +42,14 @@ export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.elan.content')
     });
 
-    actor.createInnerItem({
+    await actor.createInnerItem({
       name,
       type: ABFItems.ELAN,
-      data: {
+      system: {
         level: { value: 0 },
         powers: []
       }
@@ -61,16 +61,16 @@ export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
 
       const elan = actor.getInnerItem(ABFItems.ELAN, id);
 
-      actor.updateInnerItem({
+      await actor.updateInnerItem({
         type: ABFItems.ELAN,
         id,
         name,
-        data: { ...elan.data, ...data }
+        system: { ...elan.system, ...data }
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.elan as ElanDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getElans();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -80,7 +80,7 @@ export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
         items.push(item);
       }
     } else {
-      (data.general.elan as ElanDataSource[]) = [item];
+      actor.system.general.elan = [item];
     }
   }
 };

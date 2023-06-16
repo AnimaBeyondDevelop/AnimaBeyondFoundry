@@ -30,14 +30,14 @@ export const InnatePsychicPowerItemConfig: ABFItemConfig<InnatePsychicPowerDataS
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.innatePsychicPower.content')
     });
 
     await actor.createInnerItem({
       name,
       type: ABFItems.INNATE_PSYCHIC_POWER,
-      data: {
+      system: {
         effect: { value: '' },
         value: { value: 0 }
       }
@@ -51,12 +51,12 @@ export const InnatePsychicPowerItemConfig: ABFItemConfig<InnatePsychicPowerDataS
         id,
         type: ABFItems.INNATE_PSYCHIC_POWER,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.psychic.innatePsychicPowers as InnatePsychicPowerDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getInnatePsychicPowers();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -66,7 +66,7 @@ export const InnatePsychicPowerItemConfig: ABFItemConfig<InnatePsychicPowerDataS
         items.push(item);
       }
     } else {
-      (data.psychic.innatePsychicPowers as InnatePsychicPowerDataSource[]) = [item];
+      actor.system.psychic.innatePsychicPowers = [item];
     }
   }
 };

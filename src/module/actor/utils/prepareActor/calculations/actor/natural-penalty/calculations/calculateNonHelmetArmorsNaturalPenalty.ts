@@ -5,8 +5,8 @@ export const calculateNonHelmetArmorsNaturalPenalty = (data: ABFActorDataSourceD
   const combat = data.combat as { armors: ArmorDataSource[] };
 
   const equippedArmors = combat.armors.filter(
-    armor => armor.data.equipped.value && armor.data.localization.value !== ArmorLocation.HEAD
+    armor => armor.system.equipped.value && armor.system.localization.value !== ArmorLocation.HEAD
   );
 
-  return equippedArmors.reduce((prev, curr) => prev + curr.data.naturalPenalty.final.value, 0);
+  return equippedArmors.reduce((prev, curr) => prev + curr.system.naturalPenalty.final.value, 0);
 };

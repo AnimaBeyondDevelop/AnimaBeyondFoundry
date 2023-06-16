@@ -9,9 +9,9 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="_notes"
   }}
-    {{#each data.data.general.notes}}
-      <div data-item-id='{{this._id}}' class='note-row'>
-        {{editor content=this.name target=(concat "data.dynamic.notes." this._id ".name") button=true owner=true editable=true}}
+    {{#each system.general.notes as |note|}}
+      <div data-item-id='{{note._id}}' class='note-row'>
+        {{editor note.system.enrichedName target=(concat "data.dynamic.notes." note._id ".name") button=true owner=true editable=true}}
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

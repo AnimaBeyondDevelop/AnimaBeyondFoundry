@@ -8,6 +8,7 @@ import { prepareActor } from './utils/prepareActor/prepareActor';
 import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
 import { Log } from '../../utils/Log';
+import { migrateItem } from '../items/migrations/migrateItem';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -20,28 +21,31 @@ export class ABFActor extends Actor {
 
     this.i18n = (game as Game).i18n;
 
-    if (this.data.data.version !== INITIAL_ACTOR_DATA.version) {
+    if (this.system.version !== INITIAL_ACTOR_DATA.version) {
       Log.log(
-        `Upgrading actor ${this.data.name} (${this.data._id}) from version ${this.data.data.version} to ${INITIAL_ACTOR_DATA.version}`
+        `Upgrading actor ${this.name} (${this._id}) from version ${this.system.version} to ${INITIAL_ACTOR_DATA.version}`
       );
 
-      this.data.update({ data: { version: INITIAL_ACTOR_DATA.version } });
+      this.updateSource({ version: INITIAL_ACTOR_DATA.version });
     }
   }
 
-  prepareDerivedData() {
+  async prepareDerivedData() {
     super.prepareDerivedData();
 
-    this.data.data = foundry.utils.mergeObject(this.data.data, INITIAL_ACTOR_DATA, { overwrite: false });
+    this.system = foundry.utils.mergeObject(this.system, INITIAL_ACTOR_DATA, {
+      overwrite: false
+    });
 
-    prepareActor(this);
+    await prepareActor(this);
   }
 
   applyFatigue(fatigueUsed: number) {
-    const newFatigue = this.data.data.characteristics.secondaries.fatigue.value - fatigueUsed;
+    const newFatigue =
+      this.system.characteristics.secondaries.fatigue.value - fatigueUsed;
 
     this.update({
-      data: {
+      system: {
         characteristics: {
           secondaries: { fatigue: { value: newFatigue } }
         }
@@ -50,10 +54,11 @@ export class ABFActor extends Actor {
   }
 
   applyDamage(damage: number) {
-    const newLifePoints = this.data.data.characteristics.secondaries.lifePoints.value - damage;
+    const newLifePoints =
+      this.system.characteristics.secondaries.lifePoints.value - damage;
 
     this.update({
-      data: {
+      system: {
         characteristics: {
           secondaries: { lifePoints: { value: newLifePoints } }
         }
@@ -61,38 +66,82 @@ export class ABFActor extends Actor {
     });
   }
 
-  public async createItem({ type, name, data = {} }: { type: ABFItems; name: string; data?: unknown }) {
-    await this.createEmbeddedDocuments('Item', [{ type, name, data }]);
+  public async createItem({
+    type,
+    name,
+    system = {}
+  }: {
+    type: ABFItems;
+    name: string;
+    system?: unknown;
+  }) {
+    await this.createEmbeddedDocuments('Item', [
+      {
+        type,
+        name,
+        system
+      }
+    ]);
   }
 
-  public async createInnerItem({ type, name, data = {} }: { type: ABFItems; name: string; data?: unknown }) {
+  public async createInnerItem({
+    type,
+    name,
+    system = {}
+  }: {
+    type: ABFItems;
+    name: string;
+    system?: unknown;
+  }) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
-    const items = getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath) ?? [];
+    const items =
+      getFieldValueFromPath<any[]>(this.system, configuration.fieldPath) ?? [];
 
     await this.update({
-      data: getUpdateObjectFromPath([...items, { _id: nanoid(), type, name, data }], configuration.fieldPath)
+      system: getUpdateObjectFromPath(
+        [
+          ...items,
+          {
+            _id: nanoid(),
+            type,
+            name,
+            system
+          }
+        ],
+        configuration.fieldPath
+      )
     });
   }
 
-  public async updateItem({ id, name, data = {} }: { id: string; name?: string; data?: unknown }) {
+  public async updateItem({
+    id,
+    name,
+    system = {}
+  }: {
+    id: string;
+    name?: string;
+    system?: unknown;
+  }) {
     const item = this.getItem(id);
 
     if (item) {
-      let updateObject: Record<string, unknown> = { data };
+      let updateObject: Record<string, unknown> = { system };
 
       if (name) {
-        updateObject = { ...updateObject, name };
+        updateObject = {
+          ...updateObject,
+          name
+        };
       }
 
-      if ((!!name && name !== item.name) || JSON.stringify(data) !== JSON.stringify(item.data.data)) {
+      if (
+        (!!name && name !== item.name) ||
+        JSON.stringify(system) !== JSON.stringify(item.system)
+      ) {
         await item.update(updateObject);
       }
     }
-  }
-
-  protected _getSheetClass(): ConstructorOf<FormApplication> | null {
-    return ABFActorSheet as unknown as ConstructorOf<FormApplication>;
   }
 
   public async updateInnerItem(
@@ -100,48 +149,207 @@ export class ABFActor extends Actor {
       type,
       id,
       name,
-      data = {}
+      system = {}
     }: {
       type: ABFItems;
       id: string;
       name?: string;
-      data?: unknown;
+      system?: unknown;
     },
     forceSave = false
   ) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
-    const items = getFieldValueFromPath<any[]>(this.data.data, configuration.fieldPath);
+    const items = getFieldValueFromPath<any[]>(this.system, configuration.fieldPath);
 
     const item = items.find(it => it._id === id);
 
     if (item) {
       const hasChanges =
-        forceSave || (!!name && name !== item.name) || JSON.stringify(data) !== JSON.stringify(item.data);
+        forceSave ||
+        (!!name && name !== item.name) ||
+        JSON.stringify(system) !== JSON.stringify(item.system);
 
       if (hasChanges) {
         if (name) {
           item.name = name;
         }
 
-        if (data) {
-          item.data = data;
+        if (system) {
+          item.system = system;
         }
 
         await this.update({
-          data: getUpdateObjectFromPath(items, configuration.fieldPath)
+          system: getUpdateObjectFromPath(items, configuration.fieldPath)
         });
       }
     }
   }
 
-  private getItem(itemId: string) {
-    return this.getEmbeddedDocument('Item', itemId);
+  getInnerItem(type: ABFItems, itemId: string) {
+    return this.getInnerItems(type).find(item => item._id === itemId);
   }
 
-  getInnerItem(type: ABFItems, itemId: string) {
+  public getSecondarySpecialSkills() {
+    return this.getInnerItems(ABFItems.SECONDARY_SPECIAL_SKILL);
+  }
+
+  public getKnownSpells() {
+    return this.getInnerItems(ABFItems.SPELL);
+  }
+
+  public getSpellMaintenances() {
+    return this.getInnerItems(ABFItems.SPELL_MAINTENANCE);
+  }
+
+  public getSelectedSpells() {
+    return this.getInnerItems(ABFItems.SELECTED_SPELL);
+  }
+
+  public getKnownMetamagics() {
+    return this.getInnerItems(ABFItems.METAMAGIC);
+  }
+
+  public getKnownSummonings() {
+    return this.getInnerItems(ABFItems.SUMMON);
+  }
+
+  public getCategories() {
+    return this.getInnerItems(ABFItems.LEVEL);
+  }
+
+  public getKnownLanguages() {
+    return this.getInnerItems(ABFItems.LANGUAGE);
+  }
+
+  public getElans() {
+    return this.getInnerItems(ABFItems.ELAN);
+  }
+
+  public getElanPowers() {
+    return this.getInnerItems(ABFItems.ELAN_POWER);
+  }
+
+  public getTitles() {
+    return this.getInnerItems(ABFItems.TITLE);
+  }
+
+  public getAdvantages() {
+    return this.getInnerItems(ABFItems.ADVANTAGE);
+  }
+
+  public getDisadvantages() {
+    return this.getInnerItems(ABFItems.DISADVANTAGE);
+  }
+
+  public getContacts() {
+    return this.getInnerItems(ABFItems.CONTACT);
+  }
+
+  public getNotes() {
+    return this.getInnerItems(ABFItems.NOTE);
+  }
+
+  public getPsychicDisciplines() {
+    return this.getInnerItems(ABFItems.PSYCHIC_DISCIPLINE);
+  }
+
+  public getMentalPatterns() {
+    return this.getInnerItems(ABFItems.MENTAL_PATTERN);
+  }
+
+  public getInnatePsychicPowers() {
+    return this.getInnerItems(ABFItems.INNATE_PSYCHIC_POWER);
+  }
+
+  public getPsychicPowers() {
+    return this.getInnerItems(ABFItems.PSYCHIC_POWER);
+  }
+
+  public getKiSkills() {
+    return this.getInnerItems(ABFItems.KI_SKILL);
+  }
+
+  public getNemesisSkills() {
+    return this.getInnerItems(ABFItems.NEMESIS_SKILL);
+  }
+
+  public getArsMagnus() {
+    return this.getInnerItems(ABFItems.ARS_MAGNUS);
+  }
+
+  public getMartialArts() {
+    return this.getInnerItems(ABFItems.MARTIAL_ART);
+  }
+
+  public getKnownCreatures() {
+    return this.getInnerItems(ABFItems.CREATURE);
+  }
+
+  public getSpecialSkills() {
+    return this.getInnerItems(ABFItems.SPECIAL_SKILL);
+  }
+
+  public getKnownTechniques() {
+    return this.getInnerItems(ABFItems.TECHNIQUE);
+  }
+
+  public getCombatSpecialSkills() {
+    return this.getInnerItems(ABFItems.COMBAT_SPECIAL_SKILL);
+  }
+
+  public getCombatTables() {
+    return this.getInnerItems(ABFItems.COMBAT_TABLE);
+  }
+
+  public getAmmos() {
+    return this.getInnerItems(ABFItems.AMMO);
+  }
+
+  public getWeapons() {
+    return this.getInnerItems(ABFItems.WEAPON);
+  }
+
+  public getArmors() {
+    return this.getInnerItems(ABFItems.ARMOR);
+  }
+
+  public getInventoryItems() {
+    return this.getInnerItems(ABFItems.INVENTORY_ITEM);
+  }
+
+  public getAllItems() {
+    const externalItems = [...this.items.values()].map(migrateItem);
+
+    return [
+      ...externalItems,
+      ...Object.values(ABFItems).flatMap(itemType => this.getInnerItems(itemType))
+    ];
+  }
+
+  protected _getSheetClass(): ConstructorOf<FormApplication> | null {
+    return ABFActorSheet as unknown as ConstructorOf<FormApplication>;
+  }
+
+  private getInnerItems(type) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
-    return getFieldValueFromPath<any>(this.data.data, configuration.fieldPath).find(item => item._id === itemId);
+    if (!configuration) {
+      console.error(`No configuration found for item type ${type}`);
+
+      return [];
+    }
+
+    if (configuration.fieldPath.length === 0) {
+      return [];
+    }
+
+    const items = getFieldValueFromPath<any>(this.system, configuration.fieldPath);
+
+    return items.map(migrateItem);
+  }
+
+  private getItem(itemId: string) {
+    return this.getEmbeddedDocument('Item', itemId);
   }
 }

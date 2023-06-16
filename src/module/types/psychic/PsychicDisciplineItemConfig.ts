@@ -24,7 +24,7 @@ export const PsychicDisciplineItemConfig: ABFItemConfig<PsychicDisciplineDataSou
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.psychicDiscipline.content')
     });
 
@@ -40,8 +40,8 @@ export const PsychicDisciplineItemConfig: ABFItemConfig<PsychicDisciplineDataSou
       await actor.updateInnerItem({ id, type: ABFItems.PSYCHIC_DISCIPLINE, name });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.psychic.psychicDisciplines as PsychicDisciplineDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getPsychicDisciplines();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +51,7 @@ export const PsychicDisciplineItemConfig: ABFItemConfig<PsychicDisciplineDataSou
         items.push(item);
       }
     } else {
-      (data.psychic.psychicDisciplines as PsychicDisciplineDataSource[]) = [item];
+      actor.system.psychic.psychicDisciplines = [item];
     }
   }
 };

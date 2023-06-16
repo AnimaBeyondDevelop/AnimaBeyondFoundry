@@ -24,7 +24,7 @@ export const TitleItemConfig: ABFItemConfig<TitleDataSource, TitleChanges> = {
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.title.content')
     });
 
@@ -40,8 +40,8 @@ export const TitleItemConfig: ABFItemConfig<TitleDataSource, TitleChanges> = {
       await actor.updateInnerItem({ id, type: ABFItems.TITLE, name });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.titles as TitleDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getTitles();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +51,7 @@ export const TitleItemConfig: ABFItemConfig<TitleDataSource, TitleChanges> = {
         items.push(item);
       }
     } else {
-      (data.general.titles as TitleDataSource[]) = [item];
+      actor.system.general.titles = [item];
     }
   }
 };

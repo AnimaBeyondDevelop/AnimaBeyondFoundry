@@ -35,14 +35,14 @@ export const CreatureItemConfig: ABFItemConfig<CreatureDataSource, CreatureChang
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.creature.content')
     });
 
     await actor.createInnerItem({
       name,
       type: ABFItems.CREATURE,
-      data: {
+      system: {
         earth: {
           value: false
         },
@@ -69,12 +69,12 @@ export const CreatureItemConfig: ABFItemConfig<CreatureDataSource, CreatureChang
         id,
         type: ABFItems.CREATURE,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.domine.creatures as CreatureDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getKnownCreatures();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -84,7 +84,7 @@ export const CreatureItemConfig: ABFItemConfig<CreatureDataSource, CreatureChang
         items.push(item);
       }
     } else {
-      (data.domine.creatures as CreatureDataSource[]) = [item];
+      actor.system.domine.creatures = [item];
     }
   }
 };

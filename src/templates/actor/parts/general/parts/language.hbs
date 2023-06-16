@@ -23,19 +23,19 @@
         class="name"
         title=(localize 'anima.ui.languageSection.base')
         inputType="text"
-        inputName="data.general.languages.base.value"
-        inputValue=data.data.general.languages.base.value
+        inputName="system.general.languages.base.value"
+        inputValue=system.general.languages.base.value
       }}
     </div>
-    {{#each data.data.general.languages.others}}
-      <div data-item-id='{{this._id}}' class='language-row'>
+    {{#each system.general.languages.others as |language|}}
+      <div data-item-id='{{language._id}}' class='language-row'>
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
           hideTitle=true
           inputType="text"
-          inputName=(concat "data.dynamic.languages." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "data.dynamic.languages." language._id ".name")
+          inputValue=language.name
         }}
       </div>
     {{/each}}

@@ -23,16 +23,16 @@
               class="level"
               title=(localize "anima.ui.psychic.psychicPowers.power.header.level.title")
               inputType="text"
-              inputName=(concat "data.level.value")
-              inputValue=data.data.level.value
+              inputName=(concat "system.level.value")
+              inputValue=system.level.value
             }}
             {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
               class="action-type"
               choices=xRoot.config.iterables.psychic.actionTypes
               title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
-              inputName=(concat "data.actionType.value")
-              inputValue=data.data.actionType.value
+              inputName=(concat "system.actionType.value")
+              inputValue=system.actionType.value
             }}
           </div>
         </div>
@@ -40,7 +40,7 @@
       {{#> "systems/animabf/templates/common/ui/group-body.hbs"
         class="psychic-power"
       }}
-        {{#each data.data.effects as |effect key|}}
+        {{#each system.effects as |effect key|}}
           <div class='effect-row'>
             <input
               type='text'
@@ -51,14 +51,14 @@
             <input
               type='text'
               class='input description'
-              name='{{concat "data.effects." key ".value"}}'
+              name='{{concat "system.effects." key ".value"}}'
               value='{{effect.value}}'
             />
           </div>
         {{/each}}
         <div class="description">
           <p class='label'>{{localize "anima.ui.descriptionSection.title"}}</p>
-          {{editor content=data.data.description.value target=(concat "data.description.value") button=true owner=true editable=true}}
+          {{editor system.enrichedDescription target="system.description.value" button=true owner=true editable=true}}
         </div>
       {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
       {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
@@ -68,15 +68,15 @@
             class="has-maintenance"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
             inputType="checkbox"
-            inputName=(concat "data.hasMaintenance.value")
-            inputValue=(is 'eq' data.data.hasMaintenance.value true)
+            inputName=(concat "system.hasMaintenance.value")
+            inputValue=(is 'eq' system.hasMaintenance.value true)
           }}
           {{>
           "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
             class="bonus"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
-            inputName=(concat "data.bonus.value")
-            inputValue=data.data.bonus.value
+            inputName=(concat "system.bonus.value")
+            inputValue=system.bonus.value
           }}
         </div>
       {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}

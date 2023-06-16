@@ -5,7 +5,10 @@ import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type AdvantageItemData = Record<string, never>;
 
-export type AdvantageDataSource = ABFItemBaseDataSource<ABFItems.ADVANTAGE, AdvantageItemData>;
+export type AdvantageDataSource = ABFItemBaseDataSource<
+  ABFItems.ADVANTAGE,
+  AdvantageItemData
+>;
 
 export type AdvantageChanges = ItemChanges<AdvantageItemData>;
 
@@ -24,7 +27,7 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.advantage.content')
     });
 
@@ -37,11 +40,14 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await actor.updateItem({ id, name });
+      await actor.updateItem({
+        id,
+        name
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.general.advantages as AdvantageDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getAdvantages();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +57,7 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
         items.push(item);
       }
     } else {
-      (data.general.advantages as AdvantageDataSource[]) = [item];
+      actor.system.general.advantages = [item];
     }
   }
 };

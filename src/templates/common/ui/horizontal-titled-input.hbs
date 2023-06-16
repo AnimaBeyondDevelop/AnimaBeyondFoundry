@@ -27,8 +27,11 @@
       name='{{this.inputName}}'
       type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
       class='input {{#if this.hasSecondaryInput}}primary-input{{/if}}'
-      value='{{this.inputValue}}'
-      {{#if (is 'eq' this.inputValue true)}}checked{{/if}}
+      {{#if (is 'eq' this.inputType 'checkbox')}}
+        {{checked this.inputValue}}
+      {{else}}
+        value='{{this.inputValue}}'
+      {{/if}}
     />
     {{#if this.hasSecondaryInput}}
       <input

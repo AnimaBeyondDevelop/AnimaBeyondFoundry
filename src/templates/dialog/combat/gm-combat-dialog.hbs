@@ -12,7 +12,7 @@
       }}
         <div class='combatant-profile'>
           <div class='image'>
-            <img src='{{this.attacker.actor.img}}' data-edit='img' title='{{this.attacker.token.name}}' />
+            <img src='{{this.attacker.token.texture.src}}' data-edit='img' title='{{this.attacker.token.name}}' />
           </div>
           <p class='label name'>
             {{this.attacker.token.name}}
@@ -73,7 +73,7 @@
                   class="weapon-quality"
                   title=(localize 'macros.combat.dialog.weaponQuality.title')
                   disabled=true
-                  inputValue=this.attacker.result.weapon.data.quality.value
+                  inputValue=this.attacker.result.weapon.system.quality.value
                 }}
               {{else}}
                 {{>
@@ -291,7 +291,7 @@
       }}
         <div class='combatant-profile'>
           <div class='image'>
-            <img src='{{this.defender.actor.img}}' data-edit='img' title='{{this.defender.token.name}}' />
+            <img src='{{this.defender.token.texture.src}}' data-edit='img' title='{{this.defender.token.name}}' />
           </div>
           <p class='label name'>
             {{this.defender.token.name}}
@@ -544,7 +544,8 @@
       {{#> "systems/animabf/templates/common/ui/group-body.hbs"
         class="combat-result"
       }}
-        <p class='label title'>{{concat this.calculations.winner.name (localize 'macros.combat.dialog.winner.title')}}</p>
+        <p class='label title'>{{concat this.calculations.winner.name
+                                        (localize 'macros.combat.dialog.winner.title')}}</p>
         <div class='assault-values'>
           {{>
           "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -584,13 +585,16 @@
           {{/if}}
           {{#if this.calculations.canCounter}}
             {{#unless this.ui.isCounter}}
-              <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}' class='abf-button make-counter'>
+              <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}'
+                      class='abf-button make-counter'>
                 {{localize 'macros.combat.dialog.counterAttackButton.title'}}
               </button>
             {{/unless}}
           {{/if}}
-          {{#if (or (is 'gt' this.calculations.damage 0) (is 'gt' this.defender.result.values.fatigue 0) (is 'gt' this.attacker.result.values.fatigueUsed 0))}}
-            <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}' class='abf-button apply-values'>
+          {{#if
+            (or (is 'gt' this.calculations.damage 0) (is 'gt' this.defender.result.values.fatigue 0) (is 'gt' this.attacker.result.values.fatigueUsed 0))}}
+            <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
+                    class='abf-button apply-values'>
               {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
             </button>
           {{/if}}

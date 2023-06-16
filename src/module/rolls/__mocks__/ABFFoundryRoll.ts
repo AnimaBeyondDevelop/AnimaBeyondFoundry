@@ -6,7 +6,7 @@ import { nextValueService } from './nextValueService';
 
 export default class ABFFoundryRoll {
   _formula: string;
-  data: Record<string, unknown> | undefined;
+  system: Record<string, unknown> | undefined;
 
   _rolled = false;
   _total: number;
@@ -18,7 +18,7 @@ export default class ABFFoundryRoll {
 
   constructor(formula: string, data?: Record<string, unknown>) {
     this._formula = formula;
-    this.data = data;
+    this.system = data;
 
     this.dice = [];
   }

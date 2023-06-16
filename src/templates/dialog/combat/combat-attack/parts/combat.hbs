@@ -14,7 +14,7 @@
   }}
     <option {{#if (is "eq" 0 this.attacker.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
 
-    {{#iterateNumber (minNumber this.attacker.actor.data.data.characteristics.secondaries.fatigue.value 5)}}
+    {{#iterateNumber (minNumber this.attacker.actor.system.characteristics.secondaries.fatigue.value 5)}}
       <option {{#if (is "eq" (math this "+" 1) ../this.attacker.combat.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
     {{/iterateNumber}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
@@ -35,8 +35,8 @@
     disabled=this.attackSent
     inputName='attacker.combat.weaponUsed'
   }}
-    {{#each this.attacker.actor.data.data.combat.weapons}}
-      <option {{#if (is "eq" this._id ../this.attacker.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{localize 'macros.combat.dialog.weaponRow.attack.title' name=this.name value=this.data.attack.final.value}}</option>
+    {{#each this.attacker.actor.system.combat.weapons}}
+      <option {{#if (is "eq" this._id ../this.attacker.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>{{localize 'macros.combat.dialog.weaponRow.attack.title' name=this.name value=this.system.attack.final.value}}</option>
     {{/each}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{/if}}
@@ -48,8 +48,8 @@
       disabled=this.attackSent
       inputName='attacker.combat.criticSelected'
     }}
-      <option {{#if (is "eq" this.attacker.combat.weapon.data.critic.primary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.data.critic.primary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.data.critic.primary.value '.title')}}</option>
-      <option {{#if (is "eq" this.attacker.combat.weapon.data.critic.secondary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.data.critic.secondary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.data.critic.secondary.value '.title')}}</option>
+      <option {{#if (is "eq" this.attacker.combat.weapon.system.critic.primary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.system.critic.primary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.system.critic.primary.value '.title')}}</option>
+      <option {{#if (is "eq" this.attacker.combat.weapon.system.critic.secondary.value this.attacker.combat.criticSelected)}}selected{{/if}} value='{{this.attacker.combat.weapon.system.critic.secondary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.system.critic.secondary.value '.title')}}</option>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
   {{else}}
     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
@@ -57,7 +57,7 @@
       disabled=true
       inputName='attacker.combat.criticSelected'
     }}
-      <option selected value='{{this.attacker.combat.weapon.data.critic.primary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.data.critic.primary.value '.title')}}</option>
+      <option selected value='{{this.attacker.combat.weapon.system.critic.primary.value}}'>{{localize (concat 'anima.ui.combat.armors.at.' this.attacker.combat.weapon.system.critic.primary.value '.title')}}</option>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
   {{/if}}
 {{/unless}}

@@ -12,7 +12,10 @@ export type CombatSpecialSkillDataSource = ABFItemBaseDataSource<
 
 export type CombatSpecialSkillChanges = ItemChanges<CombatSpecialSkillItemData>;
 
-export const CombatSpecialSkillItemConfig: ABFItemConfig<CombatSpecialSkillDataSource, CombatSpecialSkillChanges> = {
+export const CombatSpecialSkillItemConfig: ABFItemConfig<
+  CombatSpecialSkillDataSource,
+  CombatSpecialSkillChanges
+> = {
   type: ABFItems.COMBAT_SPECIAL_SKILL,
   isInternal: true,
   fieldPath: ['combat', 'combatSpecialSkills'],
@@ -27,7 +30,7 @@ export const CombatSpecialSkillItemConfig: ABFItemConfig<CombatSpecialSkillDataS
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.combatSpecialSkills.content')
     });
 
@@ -40,11 +43,15 @@ export const CombatSpecialSkillItemConfig: ABFItemConfig<CombatSpecialSkillDataS
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
-      await actor.updateInnerItem({ id, type: ABFItems.COMBAT_SPECIAL_SKILL, name });
+      await actor.updateInnerItem({
+        id,
+        type: ABFItems.COMBAT_SPECIAL_SKILL,
+        name
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.combat.combatSpecialSkills as CombatSpecialSkillDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getCombatSpecialSkills();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -54,7 +61,7 @@ export const CombatSpecialSkillItemConfig: ABFItemConfig<CombatSpecialSkillDataS
         items.push(item);
       }
     } else {
-      (data.combat.combatSpecialSkills as CombatSpecialSkillDataSource[]) = [item];
+      actor.system.combat.combatSpecialSkills = [item];
     }
   }
 };

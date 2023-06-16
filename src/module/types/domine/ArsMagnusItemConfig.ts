@@ -24,7 +24,7 @@ export const ArsMagnusItemConfig: ABFItemConfig<ArsMagnusDataSource, ArsMagnusCh
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.arsMagnus.content')
     });
 
@@ -40,8 +40,8 @@ export const ArsMagnusItemConfig: ABFItemConfig<ArsMagnusDataSource, ArsMagnusCh
       await actor.updateInnerItem({ id, type: ABFItems.ARS_MAGNUS, name });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.domine.arsMagnus as ArsMagnusDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getArsMagnus();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -51,7 +51,7 @@ export const ArsMagnusItemConfig: ABFItemConfig<ArsMagnusDataSource, ArsMagnusCh
         items.push(item);
       }
     } else {
-      (data.domine.arsMagnus as ArsMagnusDataSource[]) = [item];
+      actor.system.domine.arsMagnus = [item];
     }
   }
 };

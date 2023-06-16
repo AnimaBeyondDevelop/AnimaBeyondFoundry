@@ -26,14 +26,14 @@ export const MartialArtItemConfig: ABFItemConfig<MartialArtDataSource, MartialAr
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.martialArt.content')
     });
 
     await actor.createInnerItem({
       name,
       type: ABFItems.MARTIAL_ART,
-      data: {
+      system: {
         grade: { value: '' }
       }
     });
@@ -46,12 +46,12 @@ export const MartialArtItemConfig: ABFItemConfig<MartialArtDataSource, MartialAr
         id,
         type: ABFItems.MARTIAL_ART,
         name,
-        data
+        system: data
       });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.domine.martialArts as MartialArtDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getMartialArts();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -61,7 +61,7 @@ export const MartialArtItemConfig: ABFItemConfig<MartialArtDataSource, MartialAr
         items.push(item);
       }
     } else {
-      (data.domine.martialArts as MartialArtDataSource[]) = [item];
+      actor.system.domine.martialArts = [item];
     }
   }
 };

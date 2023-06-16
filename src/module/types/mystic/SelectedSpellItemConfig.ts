@@ -7,11 +7,17 @@ export type SelectedSpellItemData = {
   cost: { value: number };
 };
 
-export type SelectedSpellDataSource = ABFItemBaseDataSource<ABFItems.SELECTED_SPELL, SelectedSpellItemData>;
+export type SelectedSpellDataSource = ABFItemBaseDataSource<
+  ABFItems.SELECTED_SPELL,
+  SelectedSpellItemData
+>;
 
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 
-export const SelectedSpellItemConfig: ABFItemConfig<SelectedSpellDataSource, SelectedSpellChanges> = {
+export const SelectedSpellItemConfig: ABFItemConfig<
+  SelectedSpellDataSource,
+  SelectedSpellChanges
+> = {
   type: ABFItems.SELECTED_SPELL,
   isInternal: true,
   fieldPath: ['mystic', 'selectedSpells'],
@@ -26,21 +32,30 @@ export const SelectedSpellItemConfig: ABFItemConfig<SelectedSpellDataSource, Sel
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.selectedSpell.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.SELECTED_SPELL, name, data: { cost: { value: 0 } } });
+    actor.createInnerItem({
+      type: ABFItems.SELECTED_SPELL,
+      name,
+      system: { cost: { value: 0 } }
+    });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.SELECTED_SPELL, id, name, data });
+      actor.updateInnerItem({
+        type: ABFItems.SELECTED_SPELL,
+        id,
+        name,
+        system: data
+      });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.mystic.selectedSpells as SelectedSpellDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getSelectedSpells();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -50,7 +65,7 @@ export const SelectedSpellItemConfig: ABFItemConfig<SelectedSpellDataSource, Sel
         items.push(item);
       }
     } else {
-      (data.mystic.selectedSpells as SelectedSpellDataSource[]) = [item];
+      actor.system.mystic.selectedSpells = [item];
     }
   }
 };

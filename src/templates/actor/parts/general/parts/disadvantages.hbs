@@ -9,13 +9,13 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="disadvantages"
   }}
-    {{#each data.data.general.disadvantages}}
-      <div data-item-id='{{this._id}}' class='disadvantage-row'>
+    {{#each system.general.disadvantages as |disadvantage|}}
+      <div data-item-id='{{disadvantage._id}}' class='disadvantage-row'>
         <input
-          name='data.dynamic.disadvantages.{{this._id}}.name'
+          name='data.dynamic.disadvantages.{{disadvantage._id}}.name'
           type='text'
           class='input'
-          value='{{this.name}}'
+          value='{{disadvantage.name}}'
         />
       </div>
     {{/each}}

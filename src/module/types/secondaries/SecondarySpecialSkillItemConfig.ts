@@ -32,21 +32,21 @@ export const SecondarySpecialSkillItemConfig: ABFItemConfig<
   onCreate: async (actor): Promise<void> => {
     const { i18n } = game as Game;
 
-    const name = await openSimpleInputDialog<string>({
+    const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.secondarySkill.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, name, data: { level: { value: 0 } } });
+    actor.createInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, name, system: { level: { value: 0 } } });
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, id, name, data });
+      actor.updateInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, id, name, system: data });
     }
   },
-  onAttach: (data, item) => {
-    const items = data.secondaries.secondarySpecialSkills as SecondarySpecialSkillDataSource[];
+  onAttach: (actor, item) => {
+    const items = actor.getSecondarySpecialSkills();
 
     if (items) {
       const itemIndex = items.findIndex(i => i._id === item._id);
@@ -56,7 +56,7 @@ export const SecondarySpecialSkillItemConfig: ABFItemConfig<
         items.push(item);
       }
     } else {
-      (data.secondaries.secondarySpecialSkills as SecondarySpecialSkillDataSource[]) = [item];
+      actor.system.secondaries.secondarySpecialSkills = [item];
     }
   }
 };

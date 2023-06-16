@@ -6,6 +6,10 @@ export const splitAsActorAndItemChanges = (
 
   for (const key of Object.keys(changes)) {
     if (key.startsWith('data.dynamic')) {
+      if (key.includes('..')) {
+        console.warn(`Key ${key} is not valid`);
+      }
+
       itemsChanges[key] = changes[key];
     } else {
       actorChanges[key] = changes[key];
