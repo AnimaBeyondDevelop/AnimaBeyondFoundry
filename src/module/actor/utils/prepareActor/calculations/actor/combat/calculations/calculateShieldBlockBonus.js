@@ -1,6 +1,6 @@
-import { WeaponDataSource, WeaponSize } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSize } from '../../../../../../../types/combat/WeaponItemConfig';
 
-export const calculateShieldBlockBonus = (shield: WeaponDataSource): number => {
+export const calculateShieldBlockBonus = shield => {
   switch (shield.system.size.value) {
     case WeaponSize.SMALL:
       return 10;

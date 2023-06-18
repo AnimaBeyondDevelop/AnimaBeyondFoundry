@@ -3,7 +3,7 @@ import { calculateMovementInMetersFromMovementType } from './calculations/calcul
 import { getEquippedArmors } from '../../../utils/getEquippedArmors';
 import { calculateNaturalPenaltyWithoutWearArmor } from '../natural-penalty/calculations/calculateWearArmorNaturalPenalty';
 
-const calculateArmorsMovementTypeModifier = (data: ABFActorDataSourceData): number => {
+const calculateArmorsMovementTypeModifier = (data) => {
   const armorsMovementRestrictions = getEquippedArmors(data).reduce(
     (prev, curr) => prev + curr.system.movementRestriction.final.value,
     0
@@ -17,7 +17,7 @@ const calculateArmorsMovementTypeModifier = (data: ABFActorDataSourceData): numb
   return Math.min(0, wearArmorModifier + armorsMovementRestrictions);
 };
 
-export const mutateMovementType = (data: ABFActorDataSourceData) => {
+export const mutateMovementType = (data) => {
   const armorsMovementRestrictions = calculateArmorsMovementTypeModifier(data);
 
   const { movementType } = data.characteristics.secondaries;

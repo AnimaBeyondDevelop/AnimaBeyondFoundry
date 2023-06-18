@@ -1,5 +1,5 @@
-export const calculateRegenerationTypeFromConstitution = (constitution: number): number => {
-  switch(Math.max(Math.min(constitution, 20), 0)) {
+export const calculateRegenerationTypeFromConstitution = constitution => {
+  switch (Math.max(Math.min(constitution, 20), 0)) {
     case undefined:
     case 0:
     case 1:

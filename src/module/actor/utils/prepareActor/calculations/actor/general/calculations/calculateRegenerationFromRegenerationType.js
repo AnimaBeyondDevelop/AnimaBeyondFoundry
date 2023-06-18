@@ -1,10 +1,4 @@
-export const calculateRegenerationFromRegenerationType = (
-  regenerationType: number
-): [
-  resting: { value: number; period: string },
-  normal: { value: number; period: string } | null,
-  recovery: { value: number; period: string }
-] => {
+export const calculateRegenerationFromRegenerationType = regenerationType => {
   switch (regenerationType) {
     case 0:
       return [

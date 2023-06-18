@@ -1,8 +1,7 @@
-import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 import { calculateRegenerationTypeFromConstitution } from './calculations/calculateRegenerationTypeFromConstitution';
 import { calculateRegenerationFromRegenerationType } from './calculations/calculateRegenerationFromRegenerationType';
 
-export const mutateRegenerationType = (data: ABFActorDataSourceData) => {
+export const mutateRegenerationType = data => {
   const { regenerationType } = data.characteristics.secondaries;
 
   const baseRegen = calculateRegenerationTypeFromConstitution(
