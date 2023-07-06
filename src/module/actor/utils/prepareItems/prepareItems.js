@@ -16,4 +16,5 @@ export const prepareItems = async actor => {
   }
 
   actor.system.mystic.spells = actor.getKnownSpells();
+  actor.system.mystic.metamagics = actor.getKnownMetamagics();
 };

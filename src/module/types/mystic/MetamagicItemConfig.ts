@@ -7,7 +7,10 @@ export type MetamagicItemData = {
   grade: { value: number };
 };
 
-export type MetamagicDataSource = ABFItemBaseDataSource<ABFItems.METAMAGIC, MetamagicItemData>;
+export type MetamagicDataSource = ABFItemBaseDataSource<
+  ABFItems.METAMAGIC,
+  MetamagicItemData
+>;
 
 export type MetamagicChanges = ItemChanges<MetamagicItemData>;
 
@@ -40,21 +43,12 @@ export const MetamagicItemConfig: ABFItemConfig<MetamagicDataSource, MetamagicCh
     for (const id of Object.keys(changes)) {
       const { name, data } = changes[id];
 
-      await actor.updateInnerItem({ id, type: ABFItems.METAMAGIC, name, system: data });
-    }
-  },
-  onAttach: (actor, item) => {
-    const items = actor.getKnownMetamagics();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.mystic.metamagics = [item];
+      await actor.updateInnerItem({
+        id,
+        type: ABFItems.METAMAGIC,
+        name,
+        system: data
+      });
     }
   }
 };
