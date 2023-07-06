@@ -4,7 +4,6 @@ import { ABFMacros } from '../module/macros/ABFMacros';
 import { ABFSettingsKeys } from './registerSettings';
 import { Log } from './Log';
 import { PromptDialog } from '../module/dialogs/PromptDialog';
-import { ABFSystemName } from '../animabf.name';
 
 type DefaultMacroConfig = {
   macroSelectorId?: `#${string}`;
@@ -45,7 +44,7 @@ export const attachCustomMacroBar = async () => {
     }
   });
 
-  $(`.system-${ABFSystemName}`).append(customHotbarHTML);
+  $('.system-animabf').append(customHotbarHTML);
 
   const defaultMacroConfigs = isGM ? DEFAULT_GM_MACROS : DEFAULT_USER_MACROS;
 
