@@ -346,7 +346,11 @@ export class ABFActor extends Actor {
 
     const items = getFieldValueFromPath<any>(this.system, configuration.fieldPath);
 
-    return items.map(migrateItem);
+    if (Array.isArray(items)) {
+      return items.map(migrateItem);
+    }
+
+    return [];
   }
 
   private getItem(itemId: string) {
