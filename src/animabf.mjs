@@ -5,10 +5,9 @@ import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
 import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
-import ABFItemSheet from './module/items/ABFItemSheet.mjs';
+import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
-import { Log } from './utils/Log';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 
@@ -16,7 +15,7 @@ import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-  Log.log('Initializing system');
+  console.log('AnimaBF | Initializing system');
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
@@ -79,7 +78,7 @@ Hooks.once('ready', () => {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line func-names
-Handlebars.JavaScriptCompiler.prototype.nameLookup = function(parent, name) {
+Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
   if (name.indexOf('xRoot') === 0) {
     return 'data.root';
   }

@@ -1,4 +1,3 @@
-import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 import { calculateMovementInMetersFromMovementType } from './calculations/calculateMovementInMetersFromMovementType';
 import { getEquippedArmors } from '../../../utils/getEquippedArmors';
 import { calculateNaturalPenaltyWithoutWearArmor } from '../natural-penalty/calculations/calculateWearArmorNaturalPenalty';

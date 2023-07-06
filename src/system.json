@@ -20,7 +20,7 @@
   ],
   "scripts": [],
   "esmodules": [
-    "animabf.js"
+    "animabf.mjs"
   ],
   "styles": [
     "animabf.css"
