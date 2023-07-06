@@ -187,135 +187,135 @@ export class ABFActor extends Actor {
   }
 
   getInnerItem(type: ABFItems, itemId: string) {
-    return this.getInnerItems(type).find(item => item._id === itemId);
+    return this.getItemsOf(type).find(item => item._id === itemId);
   }
 
   public getSecondarySpecialSkills() {
-    return this.getInnerItems(ABFItems.SECONDARY_SPECIAL_SKILL);
+    return this.getItemsOf(ABFItems.SECONDARY_SPECIAL_SKILL);
   }
 
   public getKnownSpells() {
-    return this.getInnerItems(ABFItems.SPELL);
+    return this.getItemsOf(ABFItems.SPELL);
   }
 
   public getSpellMaintenances() {
-    return this.getInnerItems(ABFItems.SPELL_MAINTENANCE);
+    return this.getItemsOf(ABFItems.SPELL_MAINTENANCE);
   }
 
   public getSelectedSpells() {
-    return this.getInnerItems(ABFItems.SELECTED_SPELL);
+    return this.getItemsOf(ABFItems.SELECTED_SPELL);
   }
 
   public getKnownMetamagics() {
-    return this.getInnerItems(ABFItems.METAMAGIC);
+    return this.getItemsOf(ABFItems.METAMAGIC);
   }
 
   public getKnownSummonings() {
-    return this.getInnerItems(ABFItems.SUMMON);
+    return this.getItemsOf(ABFItems.SUMMON);
   }
 
   public getCategories() {
-    return this.getInnerItems(ABFItems.LEVEL);
+    return this.getItemsOf(ABFItems.LEVEL);
   }
 
   public getKnownLanguages() {
-    return this.getInnerItems(ABFItems.LANGUAGE);
+    return this.getItemsOf(ABFItems.LANGUAGE);
   }
 
   public getElans() {
-    return this.getInnerItems(ABFItems.ELAN);
+    return this.getItemsOf(ABFItems.ELAN);
   }
 
   public getElanPowers() {
-    return this.getInnerItems(ABFItems.ELAN_POWER);
+    return this.getItemsOf(ABFItems.ELAN_POWER);
   }
 
   public getTitles() {
-    return this.getInnerItems(ABFItems.TITLE);
+    return this.getItemsOf(ABFItems.TITLE);
   }
 
   public getAdvantages() {
-    return this.getInnerItems(ABFItems.ADVANTAGE);
+    return this.getItemsOf(ABFItems.ADVANTAGE);
   }
 
   public getDisadvantages() {
-    return this.getInnerItems(ABFItems.DISADVANTAGE);
+    return this.getItemsOf(ABFItems.DISADVANTAGE);
   }
 
   public getContacts() {
-    return this.getInnerItems(ABFItems.CONTACT);
+    return this.getItemsOf(ABFItems.CONTACT);
   }
 
   public getNotes() {
-    return this.getInnerItems(ABFItems.NOTE);
+    return this.getItemsOf(ABFItems.NOTE);
   }
 
   public getPsychicDisciplines() {
-    return this.getInnerItems(ABFItems.PSYCHIC_DISCIPLINE);
+    return this.getItemsOf(ABFItems.PSYCHIC_DISCIPLINE);
   }
 
   public getMentalPatterns() {
-    return this.getInnerItems(ABFItems.MENTAL_PATTERN);
+    return this.getItemsOf(ABFItems.MENTAL_PATTERN);
   }
 
   public getInnatePsychicPowers() {
-    return this.getInnerItems(ABFItems.INNATE_PSYCHIC_POWER);
+    return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
   }
 
   public getPsychicPowers() {
-    return this.getInnerItems(ABFItems.PSYCHIC_POWER);
+    return this.getItemsOf(ABFItems.PSYCHIC_POWER);
   }
 
   public getKiSkills() {
-    return this.getInnerItems(ABFItems.KI_SKILL);
+    return this.getItemsOf(ABFItems.KI_SKILL);
   }
 
   public getNemesisSkills() {
-    return this.getInnerItems(ABFItems.NEMESIS_SKILL);
+    return this.getItemsOf(ABFItems.NEMESIS_SKILL);
   }
 
   public getArsMagnus() {
-    return this.getInnerItems(ABFItems.ARS_MAGNUS);
+    return this.getItemsOf(ABFItems.ARS_MAGNUS);
   }
 
   public getMartialArts() {
-    return this.getInnerItems(ABFItems.MARTIAL_ART);
+    return this.getItemsOf(ABFItems.MARTIAL_ART);
   }
 
   public getKnownCreatures() {
-    return this.getInnerItems(ABFItems.CREATURE);
+    return this.getItemsOf(ABFItems.CREATURE);
   }
 
   public getSpecialSkills() {
-    return this.getInnerItems(ABFItems.SPECIAL_SKILL);
+    return this.getItemsOf(ABFItems.SPECIAL_SKILL);
   }
 
   public getKnownTechniques() {
-    return this.getInnerItems(ABFItems.TECHNIQUE);
+    return this.getItemsOf(ABFItems.TECHNIQUE);
   }
 
   public getCombatSpecialSkills() {
-    return this.getInnerItems(ABFItems.COMBAT_SPECIAL_SKILL);
+    return this.getItemsOf(ABFItems.COMBAT_SPECIAL_SKILL);
   }
 
   public getCombatTables() {
-    return this.getInnerItems(ABFItems.COMBAT_TABLE);
+    return this.getItemsOf(ABFItems.COMBAT_TABLE);
   }
 
   public getAmmos() {
-    return this.getInnerItems(ABFItems.AMMO);
+    return this.getItemsOf(ABFItems.AMMO);
   }
 
   public getWeapons() {
-    return this.getInnerItems(ABFItems.WEAPON);
+    return this.getItemsOf(ABFItems.WEAPON);
   }
 
   public getArmors() {
-    return this.getInnerItems(ABFItems.ARMOR);
+    return this.getItemsOf(ABFItems.ARMOR);
   }
 
   public getInventoryItems() {
-    return this.getInnerItems(ABFItems.INVENTORY_ITEM);
+    return this.getItemsOf(ABFItems.INVENTORY_ITEM);
   }
 
   public getAllItems() {
@@ -323,12 +323,28 @@ export class ABFActor extends Actor {
 
     return [
       ...externalItems,
-      ...Object.values(ABFItems).flatMap(itemType => this.getInnerItems(itemType))
+      ...Object.values(ABFItems).flatMap(itemType => this.getItemsOf(itemType))
     ];
   }
 
   protected _getSheetClass(): ConstructorOf<FormApplication> | null {
     return ABFActorSheet as unknown as ConstructorOf<FormApplication>;
+  }
+
+  private getItemsOf(type) {
+    const configuration = ALL_ITEM_CONFIGURATIONS[type];
+
+    if (!configuration) {
+      console.error(`No configuration found for item type ${type}`);
+
+      return [];
+    }
+
+    if (configuration.isInternal) {
+      return this.getInnerItems(type);
+    }
+
+    return this.items.filter(i => i.type === type);
   }
 
   private getInnerItems(type) {

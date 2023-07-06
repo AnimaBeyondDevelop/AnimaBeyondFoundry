@@ -14,4 +14,6 @@ export const prepareItems = async actor => {
       console.warn(`Item with ${item.type} unrecognized. Skipping...`, { item });
     }
   }
+
+  actor.system.mystic.spells = actor.getKnownSpells();
 };

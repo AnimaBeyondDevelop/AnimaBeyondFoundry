@@ -114,19 +114,5 @@ export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
         system: data
       });
     }
-  },
-  onAttach: (actor, item) => {
-    const items = actor.getKnownSpells();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.mystic.spells = [item];
-    }
   }
 };
