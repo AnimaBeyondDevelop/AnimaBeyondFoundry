@@ -50,27 +50,15 @@ export const TechniqueItemConfig = {
       });
     }
   },
-  onAttach: async (actor, item) => {
-    const items = actor.getKnownTechniques();
-
-    for (const technique of items) {
-      technique.system.enrichedDescription = await TextEditor.enrichHTML(
-        technique.system.description?.value ?? '',
-        {
-          async: true
-        }
-      );
-    }
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
+  onAttach: async (actor, technique) => {
+    technique.system.enrichedDescription = await TextEditor.enrichHTML(
+      technique.system.description?.value ?? '',
+      {
+        async: true
       }
-    } else {
-      actor.system.domine.techniques = [item];
-    }
+    );
+
+    actor.system.domine.techniques = actor.system.domine.techniques.filter(t => t._id !== technique._id);
+    actor.system.domine.techniques.push(technique);
   }
 };
