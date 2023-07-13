@@ -40,18 +40,4 @@ export const ArsMagnusItemConfig: ABFItemConfig<ArsMagnusDataSource, ArsMagnusCh
       await actor.updateInnerItem({ id, type: ABFItems.ARS_MAGNUS, name });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getArsMagnus();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.domine.arsMagnus = [item];
-    }
-  }
 };

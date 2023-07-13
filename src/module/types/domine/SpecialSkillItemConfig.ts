@@ -50,18 +50,4 @@ export const SpecialSkillItemConfig: ABFItemConfig<
       });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getSpecialSkills();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.domine.specialSkills = [item];
-    }
-  }
 };

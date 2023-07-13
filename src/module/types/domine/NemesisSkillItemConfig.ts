@@ -40,18 +40,4 @@ export const NemesisSkillItemConfig: ABFItemConfig<NemesisSkillDataSource, Nemes
       await actor.updateInnerItem({ id, type: ABFItems.NEMESIS_SKILL, name });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getNemesisSkills();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.domine.nemesisSkills = [item];
-    }
-  }
 };

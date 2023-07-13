@@ -44,18 +44,4 @@ export const KiSkillItemConfig: ABFItemConfig<KiSkillDataSource, KiSkillChanges>
       });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getKiSkills();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.domine.kiSkills = [item];
-    }
-  }
 };
