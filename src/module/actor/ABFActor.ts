@@ -319,12 +319,7 @@ export class ABFActor extends Actor {
   }
 
   public getAllItems() {
-    const externalItems = [...this.items.values()].map(migrateItem);
-
-    return [
-      ...externalItems,
-      ...Object.values(ABFItems).flatMap(itemType => this.getItemsOf(itemType))
-    ];
+    return Object.values(ABFItems).flatMap(itemType => this.getItemsOf(itemType));
   }
 
   protected _getSheetClass(): ConstructorOf<FormApplication> | null {
