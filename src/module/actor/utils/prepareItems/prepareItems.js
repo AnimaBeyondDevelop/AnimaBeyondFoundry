@@ -15,6 +15,10 @@ export const prepareItems = async actor => {
     }
   }
 
+  // Prepare Actor's mystic items
   actor.system.mystic.spells = actor.getKnownSpells();
+  actor.system.mystic.selectedSpells = actor.getSelectedSpells();
   actor.system.mystic.metamagics = actor.getKnownMetamagics();
+  actor.system.mystic.spellMaintenances = actor.getSpellMaintenances();
+  actor.system.mystic.summons = actor.getKnownSummonings();
 };

@@ -22,6 +22,7 @@ export const SelectedSpellItemConfig: ABFItemConfig<
   isInternal: true,
   fieldPath: ['mystic', 'selectedSpells'],
   getFromDynamicChanges: changes => {
+    // TODO: is this `data.` ok or shoult id be `system`?
     return changes.data.dynamic.selectedSpells as SelectedSpellChanges;
   },
   selectors: {
@@ -54,18 +55,4 @@ export const SelectedSpellItemConfig: ABFItemConfig<
       });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getSelectedSpells();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.mystic.selectedSpells = [item];
-    }
-  }
 };
