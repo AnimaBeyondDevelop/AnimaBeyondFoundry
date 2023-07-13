@@ -173,36 +173,6 @@ export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = 
       });
     }
   },
-  onAttach: async (actor, item) => {
-    const weapons = actor.getWeapons();
-
-    item = await normalizeItem(item, INITIAL_WEAPON_DATA);
-
-    if (weapons) {
-      const itemIndex = weapons.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        weapons[itemIndex] = item;
-      } else {
-        weapons.push(item);
-      }
-    } else {
-      actor.system.combat.weapons = [item];
-    }
-
-    actor.system.combat.weapons = actor.system.combat.weapons.map(weapon => {
-      if (
-        weapon.system.isRanged &&
-        typeof weapon.system.ammoId === 'string' &&
-        !!weapon.system.ammoId
-      ) {
-        const ammo = actor.system.combat.ammo as AmmoDataSource[];
-
-        weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
-      }
-
-      return weapon;
-    });
-  },
   prepareItem(data) {
     mutateWeapon(data);
   }

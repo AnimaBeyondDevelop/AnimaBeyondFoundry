@@ -20,6 +20,20 @@ export const prepareItems = async actor => {
   actor.system.combat.armors = actor.getArmors();
   actor.system.combat.combatSpecialSkills = actor.getCombatSpecialSkills();
   actor.system.combat.combatTables = actor.getCombatTables();
+
+  actor.system.combat.weapons = actor.getWeapons().map(weapon => {
+    if (
+      weapon.system.isRanged &&
+      typeof weapon.system.ammoId === 'string' &&
+      !!weapon.system.ammoId
+    ) {
+      const ammo = actor.system.combat.ammo;
+
+      weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
+    }
+    return weapon;
+  });
+
   // Prepare Actor's mystic items
   actor.system.mystic.spells = actor.getKnownSpells();
   actor.system.mystic.selectedSpells = actor.getSelectedSpells();
