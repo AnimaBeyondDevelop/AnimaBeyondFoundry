@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type ArsMagnusItemData = Record<string, never>;
@@ -9,7 +9,7 @@ export type ArsMagnusDataSource = ABFItemBaseDataSource<ABFItems.ARS_MAGNUS, Ars
 
 export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 
-export const ArsMagnusItemConfig: ABFItemConfig<ArsMagnusDataSource, ArsMagnusChanges> = {
+export const ArsMagnusItemConfig: ABFItemConfigMinimal<ArsMagnusDataSource, ArsMagnusChanges> = {
   type: ABFItems.ARS_MAGNUS,
   isInternal: true,
   fieldPath: ['domine', 'arsMagnus'],

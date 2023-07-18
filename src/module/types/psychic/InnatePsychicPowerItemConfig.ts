@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type InnatePsychicPowerItemData = {
   effect: { value: string };
@@ -15,7 +15,7 @@ export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<
 
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 
-export const InnatePsychicPowerItemConfig: ABFItemConfig<InnatePsychicPowerDataSource, InnatePsychicPowerChanges> = {
+export const InnatePsychicPowerItemConfig: ABFItemConfigMinimal<InnatePsychicPowerDataSource, InnatePsychicPowerChanges> = {
   type: ABFItems.INNATE_PSYCHIC_POWER,
   isInternal: true,
   fieldPath: ['psychic', 'innatePsychicPowers'],

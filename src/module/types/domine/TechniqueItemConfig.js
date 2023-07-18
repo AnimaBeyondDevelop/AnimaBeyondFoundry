@@ -1,7 +1,30 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export const TechniqueItemConfig = {
+/**
+  * @typedef {Object} TechniqueItemData
+  * @property {{value: string}} description
+  * @property {{value: number}} level
+  * @property {{value: number}} strength
+  * @property {{value: number}} agility
+  * @property {{value: number}} dexterity
+  * @property {{value: number}} constitution
+  * @property {{value: number}} willPower
+  * @property {{value: number}} power
+  * @property {{value: number}} martialKnowledge
+  */
+
+/**
+  * @typedef {import("../Items").ItemChanges<TechniqueItemData>} TechniqueChanges
+  */
+
+/**
+ * @typedef {import("../../../animabf.types").ABFItemBaseDataSource<ABFItems.TECHNIQUE, TechniqueItemData>} TechniqueDataSource
+  */
+
+/** @type {import("../Items").ABFItemConfig<TechniqueDataSource, TechniqueChanges>} */
+export const TechniqueItemConfig = ABFItemConfigFactory({
   type: ABFItems.TECHNIQUE,
   isInternal: false,
   fieldPath: ['domine', 'techniques'],
@@ -61,4 +84,4 @@ export const TechniqueItemConfig = {
     actor.system.domine.techniques = actor.system.domine.techniques.filter(t => t._id !== technique._id);
     actor.system.domine.techniques.push(technique);
   }
-};
+});

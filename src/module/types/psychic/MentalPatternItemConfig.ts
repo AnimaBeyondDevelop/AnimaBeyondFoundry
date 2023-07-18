@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type MentalPatternItemData = {
   bonus: { value: number };
@@ -12,7 +12,7 @@ export type MentalPatternDataSource = ABFItemBaseDataSource<ABFItems.MENTAL_PATT
 
 export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 
-export const MentalPatternItemConfig: ABFItemConfig<MentalPatternDataSource, MentalPatternChanges> = {
+export const MentalPatternItemConfig: ABFItemConfigMinimal<MentalPatternDataSource, MentalPatternChanges> = {
   type: ABFItems.MENTAL_PATTERN,
   isInternal: false,
   fieldPath: ['psychic', 'mentalPatterns'],

@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type KiSkillItemData = Record<string, never>;
@@ -9,7 +9,7 @@ export type KiSkillDataSource = ABFItemBaseDataSource<ABFItems.KI_SKILL, KiSkill
 
 export type KiSkillChanges = ItemChanges<KiSkillItemData>;
 
-export const KiSkillItemConfig: ABFItemConfig<KiSkillDataSource, KiSkillChanges> = {
+export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource, KiSkillChanges> = {
   type: ABFItems.KI_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'kiSkills'],

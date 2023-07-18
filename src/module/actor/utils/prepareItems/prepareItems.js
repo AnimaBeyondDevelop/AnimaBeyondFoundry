@@ -1,17 +1,10 @@
 import { ALL_ITEM_CONFIGURATIONS } from './constants';
 
 export const prepareItems = async actor => {
-  const items = actor.getAllItems();
-
-  for (const item of items) {
-    const configuration = ALL_ITEM_CONFIGURATIONS[item.type];
-
-    if (configuration) {
-      await configuration.onAttach?.(actor, item);
-
-      configuration.prepareItem?.(item);
-    } else {
-      console.warn(`Item with ${item.type} unrecognized. Skipping...`, { item });
+  for (const itemType in ALL_ITEM_CONFIGURATIONS) {
+    if (ALL_ITEM_CONFIGURATIONS.hasOwnProperty(itemType)) {
+      const config = ALL_ITEM_CONFIGURATIONS[itemType];
+      await config.resetFieldPath?.(actor);
     }
   }
 
@@ -27,7 +20,7 @@ export const prepareItems = async actor => {
       typeof weapon.system.ammoId === 'string' &&
       !!weapon.system.ammoId
     ) {
-      const ammo = actor.system.combat.ammo;
+      const { system: { combat: { ammo } } } = actor;
 
       weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
     }
@@ -41,10 +34,6 @@ export const prepareItems = async actor => {
   actor.system.domine.nemesisSkills = actor.getNemesisSkills();
   actor.system.domine.martialArts = actor.getMartialArts();
   actor.system.domine.specialSkills = actor.getSpecialSkills();
-
-  // Prepare Actor's general items
-  actor.system.general.advantages = actor.getAdvantages();
-  actor.system.general.contacts = actor.getContacts();
 
   // Prepare Actor's mystic items
   actor.system.mystic.spells = actor.getKnownSpells();

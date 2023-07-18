@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type SelectedSpellItemData = {
   cost: { value: number };
@@ -14,7 +14,7 @@ export type SelectedSpellDataSource = ABFItemBaseDataSource<
 
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 
-export const SelectedSpellItemConfig: ABFItemConfig<
+export const SelectedSpellItemConfig: ABFItemConfigMinimal<
   SelectedSpellDataSource,
   SelectedSpellChanges
 > = {

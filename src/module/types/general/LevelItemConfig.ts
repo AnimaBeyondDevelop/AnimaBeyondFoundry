@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type LevelItemData = {
   level: { value: number };
@@ -11,7 +11,7 @@ export type LevelDataSource = ABFItemBaseDataSource<ABFItems.LEVEL, LevelItemDat
 
 export type LevelChanges = ItemChanges<LevelItemData>;
 
-export const LevelItemConfig: ABFItemConfig<LevelDataSource, LevelChanges> = {
+export const LevelItemConfig: ABFItemConfigMinimal<LevelDataSource, LevelChanges> = {
   type: ABFItems.LEVEL,
   isInternal: true,
   fieldPath: ['general', 'levels'],

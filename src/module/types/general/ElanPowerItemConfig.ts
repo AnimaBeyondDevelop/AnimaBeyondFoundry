@@ -2,7 +2,7 @@ import { nanoid } from '../../../vendor/nanoid/nanoid';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type ElanPowerItemData = {
   level: { value: number };
@@ -15,7 +15,7 @@ export type ElanPowerDataSource = ABFItemBaseDataSource<
 
 export type ElanPowerChanges = ItemChanges<ElanPowerItemData & { elanId: string }>;
 
-export const ElanPowerItemConfig: ABFItemConfig<ElanPowerDataSource, ElanPowerChanges> = {
+export const ElanPowerItemConfig: ABFItemConfigMinimal<ElanPowerDataSource, ElanPowerChanges> = {
   type: ABFItems.ELAN_POWER,
   isInternal: true,
   fieldPath: [], // This is not used because this is internal to the elan

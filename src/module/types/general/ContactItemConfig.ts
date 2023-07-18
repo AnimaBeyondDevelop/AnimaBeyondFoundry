@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type ContactItemData = {
   description: { value: string };
@@ -11,7 +11,7 @@ export type ContactDataSource = ABFItemBaseDataSource<ABFItems.CONTACT, ContactI
 
 export type ContactChanges = ItemChanges<ContactItemData>;
 
-export const ContactItemConfig: ABFItemConfig<ContactDataSource, ContactChanges> = {
+export const ContactItemConfig: ABFItemConfigMinimal<ContactDataSource, ContactChanges> = {
   type: ABFItems.CONTACT,
   isInternal: true,
   fieldPath: ['general', 'contacts'],

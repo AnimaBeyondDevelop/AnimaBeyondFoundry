@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type CombatSpecialSkillItemData = Record<string, never>;
 
@@ -12,7 +12,7 @@ export type CombatSpecialSkillDataSource = ABFItemBaseDataSource<
 
 export type CombatSpecialSkillChanges = ItemChanges<CombatSpecialSkillItemData>;
 
-export const CombatSpecialSkillItemConfig: ABFItemConfig<
+export const CombatSpecialSkillItemConfig: ABFItemConfigMinimal<
   CombatSpecialSkillDataSource,
   CombatSpecialSkillChanges
 > = {

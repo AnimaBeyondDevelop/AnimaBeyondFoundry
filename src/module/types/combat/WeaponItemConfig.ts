@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { AmmoDataSource } from './AmmoItemConfig';
 import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
 import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
@@ -133,7 +133,7 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
   }
 };
 
-export const WeaponItemConfig: ABFItemConfig<WeaponDataSource, WeaponChanges> = {
+export const WeaponItemConfig: ABFItemConfigMinimal<WeaponDataSource, WeaponChanges> = {
   type: ABFItems.WEAPON,
   isInternal: false,
   hasSheet: true,

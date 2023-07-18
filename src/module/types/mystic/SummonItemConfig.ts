@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type SummonItemData = Record<string, never>;
@@ -9,7 +9,7 @@ export type SummonDataSource = ABFItemBaseDataSource<ABFItems.SUMMON, SummonItem
 
 export type SummonChanges = ItemChanges<SummonItemData>;
 
-export const SummonItemConfig: ABFItemConfig<SummonDataSource, SummonChanges> = {
+export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource, SummonChanges> = {
   type: ABFItems.SUMMON,
   isInternal: true,
   fieldPath: ['mystic', 'summons'],

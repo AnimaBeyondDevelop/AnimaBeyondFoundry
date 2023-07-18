@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, DerivedField, ItemChanges } from '../Items';
 import { WeaponCritic } from './WeaponItemConfig';
 import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
 
@@ -42,7 +42,7 @@ export const INITIAL_AMMO_DATA: AmmoItemData = {
   special: { value: '' }
 };
 
-export const AmmoItemConfig: ABFItemConfig<AmmoDataSource, AmmoChanges> = {
+export const AmmoItemConfig: ABFItemConfigMinimal<AmmoDataSource, AmmoChanges> = {
   type: ABFItems.AMMO,
   isInternal: false,
   defaultValue: INITIAL_AMMO_DATA,

@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type DisadvantageItemData = Record<string, never>;
@@ -12,7 +12,7 @@ export type DisadvantageDataSource = ABFItemBaseDataSource<
 
 export type DisadvantageChanges = ItemChanges<DisadvantageItemData>;
 
-export const DisadvantageItemConfig: ABFItemConfig<
+export const DisadvantageItemConfig: ABFItemConfigMinimal<
   DisadvantageDataSource,
   DisadvantageChanges
 > = {

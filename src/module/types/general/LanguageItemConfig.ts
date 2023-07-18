@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type LanguageItemData = Record<string, never>;
@@ -12,7 +12,7 @@ export type LanguageDataSource = ABFItemBaseDataSource<
 
 export type LanguageChanges = ItemChanges<LanguageItemData>;
 
-export const LanguageItemConfig: ABFItemConfig<LanguageDataSource, LanguageChanges> = {
+export const LanguageItemConfig: ABFItemConfigMinimal<LanguageDataSource, LanguageChanges> = {
   type: ABFItems.LANGUAGE,
   isInternal: true,
   fieldPath: ['general', 'languages', 'others'],

@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 enum SpellGradeNames {
@@ -37,7 +37,7 @@ export type SpellDataSource = ABFItemBaseDataSource<ABFItems.SPELL, SpellItemDat
 
 export type SpellChanges = ItemChanges<SpellItemData>;
 
-export const SpellItemConfig: ABFItemConfig<SpellDataSource, SpellChanges> = {
+export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource, SpellChanges> = {
   type: ABFItems.SPELL,
   isInternal: false,
   hasSheet: true,

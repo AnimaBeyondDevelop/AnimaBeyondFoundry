@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type MartialArtItemData = {
   grade: { value: string };
@@ -11,7 +11,7 @@ export type MartialArtDataSource = ABFItemBaseDataSource<ABFItems.MARTIAL_ART, M
 
 export type MartialArtChanges = ItemChanges<MartialArtItemData>;
 
-export const MartialArtItemConfig: ABFItemConfig<MartialArtDataSource, MartialArtChanges> = {
+export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource, MartialArtChanges> = {
   type: ABFItems.MARTIAL_ART,
   isInternal: true,
   fieldPath: ['domine', 'martialArts'],
