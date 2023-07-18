@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type MetamagicItemData = {
   grade: { value: number };
@@ -14,7 +14,7 @@ export type MetamagicDataSource = ABFItemBaseDataSource<
 
 export type MetamagicChanges = ItemChanges<MetamagicItemData>;
 
-export const MetamagicItemConfig: ABFItemConfig<MetamagicDataSource, MetamagicChanges> = {
+export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource, MetamagicChanges> = {
   type: ABFItems.METAMAGIC,
   isInternal: true,
   fieldPath: ['mystic', 'metamagics'],

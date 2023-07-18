@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type TitleItemData = Record<string, never>;
@@ -9,7 +9,7 @@ export type TitleDataSource = ABFItemBaseDataSource<ABFItems.TITLE, TitleItemDat
 
 export type TitleChanges = ItemChanges<TitleItemData>;
 
-export const TitleItemConfig: ABFItemConfig<TitleDataSource, TitleChanges> = {
+export const TitleItemConfig: ABFItemConfigMinimal<TitleDataSource, TitleChanges> = {
   type: ABFItems.TITLE,
   isInternal: true,
   fieldPath: ['general', 'titles'],

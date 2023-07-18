@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type PsychicDisciplineItemData = Record<string, never>;
@@ -9,7 +9,7 @@ export type PsychicDisciplineDataSource = ABFItemBaseDataSource<ABFItems.PSYCHIC
 
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 
-export const PsychicDisciplineItemConfig: ABFItemConfig<PsychicDisciplineDataSource, PsychicDisciplineChanges> = {
+export const PsychicDisciplineItemConfig: ABFItemConfigMinimal<PsychicDisciplineDataSource, PsychicDisciplineChanges> = {
   type: ABFItems.PSYCHIC_DISCIPLINE,
   isInternal: false,
   fieldPath: ['psychic', 'psychicDisciplines'],

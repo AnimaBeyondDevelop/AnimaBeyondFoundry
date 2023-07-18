@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type CreatureItemData = {
@@ -20,7 +20,7 @@ export type CreatureChange = {
 
 export type CreatureChanges = ItemChanges<CreatureChange>;
 
-export const CreatureItemConfig: ABFItemConfig<CreatureDataSource, CreatureChanges> = {
+export const CreatureItemConfig: ABFItemConfigMinimal<CreatureDataSource, CreatureChanges> = {
   type: ABFItems.CREATURE,
   isInternal: true,
   fieldPath: ['domine', 'creatures'],

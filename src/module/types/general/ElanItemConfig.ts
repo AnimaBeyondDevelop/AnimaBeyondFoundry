@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ElanPowerItemConfig } from './ElanPowerItemConfig';
 
 export type ElanItemData = {
@@ -12,7 +12,7 @@ export type ElanDataSource = ABFItemBaseDataSource<ABFItems.ELAN, ElanItemData>;
 
 export type ElanChanges = ItemChanges<ElanItemData>;
 
-export const ElanItemConfig: ABFItemConfig<ElanDataSource, ElanChanges> = {
+export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource, ElanChanges> = {
   type: ABFItems.ELAN,
   isInternal: true,
   fieldPath: ['general', 'elan'],

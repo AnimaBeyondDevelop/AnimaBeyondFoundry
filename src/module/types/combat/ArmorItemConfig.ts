@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, DerivedField, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, DerivedField, ItemChanges } from '../Items';
 import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
 
 export enum ArmorLocation {
@@ -65,7 +65,7 @@ export const INITIAL_ARMOR_DATA: ArmorItemData = {
   equipped: { value: false }
 };
 
-export const ArmorItemConfig: ABFItemConfig<ArmorDataSource, ArmorChanges> = {
+export const ArmorItemConfig: ABFItemConfigMinimal<ArmorDataSource, ArmorChanges> = {
   type: ABFItems.ARMOR,
   isInternal: false,
   hasSheet: true,

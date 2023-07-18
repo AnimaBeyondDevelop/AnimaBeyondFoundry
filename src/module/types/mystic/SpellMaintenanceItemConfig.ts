@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type SpellMaintenanceItemData = {
   cost: { value: number };
@@ -14,7 +14,7 @@ export type SpellMaintenanceDataSource = ABFItemBaseDataSource<
 
 export type SpellMaintenanceChanges = ItemChanges<SpellMaintenanceItemData>;
 
-export const SpellMaintenanceItemConfig: ABFItemConfig<
+export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<
   SpellMaintenanceDataSource,
   SpellMaintenanceChanges
 > = {

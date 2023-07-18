@@ -1,31 +1,36 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type AdvantageItemData = Record<string, never>;
+/**
+ * @typedef {Record<string, never>} AdvantageItemData
+ */
 
-export type AdvantageDataSource = ABFItemBaseDataSource<
-  ABFItems.ADVANTAGE,
-  AdvantageItemData
->;
+/**
+ * @typedef {import("../Items").ItemChanges<AdvantageItemData>} AdvantageChanges
+ */
 
-export type AdvantageChanges = ItemChanges<AdvantageItemData>;
+/**
+ * @typedef {import("../../../animabf.types").ABFItemBaseDataSource<ABFItems.ADVANTAGE, AdvantageItemData>} AdvantageDataSource
+ */
 
-export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageChanges> = {
+/**
+ * @type {import("../Items").ABFItemConfig<AdvantageDataSource, AdvantageChanges>}
+ */
+export const AdvantageItemConfig = ABFItemConfigFactory({
   type: ABFItems.ADVANTAGE,
   isInternal: false,
   fieldPath: ['general', 'advantages'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.advantages as AdvantageChanges;
+    return changes.data.dynamic.advantages;
   },
   selectors: {
     addItemButtonSelector: 'add-advantage',
     containerSelector: '#advantages-context-menu-container',
     rowSelector: '.advantage-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.advantage.content')
@@ -36,7 +41,7 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
       type: ABFItems.ADVANTAGE
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
@@ -46,4 +51,4 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
       });
     }
   },
-};
+});

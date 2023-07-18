@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 
 export type NemesisSkillItemData = Record<string, never>;
@@ -9,7 +9,7 @@ export type NemesisSkillDataSource = ABFItemBaseDataSource<ABFItems.NEMESIS_SKIL
 
 export type NemesisSkillChanges = ItemChanges<NemesisSkillItemData>;
 
-export const NemesisSkillItemConfig: ABFItemConfig<NemesisSkillDataSource, NemesisSkillChanges> = {
+export const NemesisSkillItemConfig: ABFItemConfigMinimal<NemesisSkillDataSource, NemesisSkillChanges> = {
   type: ABFItems.NEMESIS_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'nemesisSkills'],

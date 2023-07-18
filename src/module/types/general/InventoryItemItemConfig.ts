@@ -1,7 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfig, ItemChanges } from '../Items';
+import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 
 export type InventoryItemItemData = {
   amount: { value: number };
@@ -15,7 +15,7 @@ export type InventoryItemDataSource = ABFItemBaseDataSource<
 
 export type InventoryItemChanges = ItemChanges<InventoryItemItemData>;
 
-export const InventoryItemItemConfig: ABFItemConfig<
+export const InventoryItemItemConfig: ABFItemConfigMinimal<
   InventoryItemDataSource,
   InventoryItemChanges
 > = {
