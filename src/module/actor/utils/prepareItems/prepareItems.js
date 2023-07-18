@@ -42,6 +42,10 @@ export const prepareItems = async actor => {
   actor.system.domine.martialArts = actor.getMartialArts();
   actor.system.domine.specialSkills = actor.getSpecialSkills();
 
+  // Prepare Actor's general items
+  actor.system.general.advantages = actor.getAdvantages();
+  actor.system.general.contacts = actor.getContacts();
+
   // Prepare Actor's mystic items
   actor.system.mystic.spells = actor.getKnownSpells();
   actor.system.mystic.selectedSpells = actor.getSelectedSpells();

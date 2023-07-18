@@ -47,18 +47,4 @@ export const ContactItemConfig: ABFItemConfig<ContactDataSource, ContactChanges>
       });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getContacts();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.general.contacts = [item];
-    }
-  }
 };

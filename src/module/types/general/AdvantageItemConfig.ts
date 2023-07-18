@@ -46,18 +46,4 @@ export const AdvantageItemConfig: ABFItemConfig<AdvantageDataSource, AdvantageCh
       });
     }
   },
-  onAttach: (actor, item) => {
-    const items = actor.getAdvantages();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.general.advantages = [item];
-    }
-  }
 };
