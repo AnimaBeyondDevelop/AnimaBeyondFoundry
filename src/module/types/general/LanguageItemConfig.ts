@@ -17,7 +17,7 @@ export const LanguageItemConfig: ABFItemConfigMinimal<LanguageDataSource, Langua
   isInternal: true,
   fieldPath: ['general', 'languages', 'others'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.languages as LanguageChanges;
+    return changes.system.dynamic.languages as LanguageChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-language',

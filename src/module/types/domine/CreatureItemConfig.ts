@@ -15,7 +15,7 @@ export type CreatureDataSource = ABFItemBaseDataSource<ABFItems.CREATURE, Creatu
 
 export type CreatureChange = {
   name: string;
-  data: CreatureItemData;
+  system: CreatureItemData;
 };
 
 export type CreatureChanges = ItemChanges<CreatureChange>;
@@ -25,7 +25,7 @@ export const CreatureItemConfig: ABFItemConfigMinimal<CreatureDataSource, Creatu
   isInternal: true,
   fieldPath: ['domine', 'creatures'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.creatures as CreatureChanges;
+    return changes.system.dynamic.creatures as CreatureChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-creature',
@@ -63,13 +63,13 @@ export const CreatureItemConfig: ABFItemConfigMinimal<CreatureDataSource, Creatu
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateInnerItem({
         id,
         type: ABFItems.CREATURE,
         name,
-        system: data
+        system
       });
     }
   },

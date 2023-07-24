@@ -1,4 +1,4 @@
-import { AmmoDataSource } from '../../../../../../../types/combat/AmmoItemConfig';
+import { AmmoDataSource } from "../../../../../../../types/Items";
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponBreakingFromStrength } from '../../weapon/util/getWeaponBreakingFromStrength';
 

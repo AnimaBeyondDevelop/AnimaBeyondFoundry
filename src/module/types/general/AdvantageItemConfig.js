@@ -14,16 +14,11 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @typedef {import("../../../animabf.types").ABFItemBaseDataSource<ABFItems.ADVANTAGE, AdvantageItemData>} AdvantageDataSource
  */
 
-/**
- * @type {import("../Items").ABFItemConfig<AdvantageDataSource, AdvantageChanges>}
- */
+/** @type {import("../Items").ABFItemConfig<AdvantageItemData>} */
 export const AdvantageItemConfig = ABFItemConfigFactory({
   type: ABFItems.ADVANTAGE,
   isInternal: false,
   fieldPath: ['general', 'advantages'],
-  getFromDynamicChanges: changes => {
-    return changes.data.dynamic.advantages;
-  },
   selectors: {
     addItemButtonSelector: 'add-advantage',
     containerSelector: '#advantages-context-menu-container',

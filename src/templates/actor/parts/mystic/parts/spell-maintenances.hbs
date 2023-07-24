@@ -17,7 +17,7 @@
           title=(localize "anima.ui.mystic.spellMaintenance.name.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.spellMaintenances." spellMaintenance._id ".name")
+          inputName=(concat "system.dynamic.spellMaintenances." spellMaintenance._id ".name")
           inputValue=spellMaintenance.name
         }}
         {{>
@@ -25,7 +25,7 @@
           class="cost"
           title=(localize "anima.ui.mystic.spellMaintenance.cost.title")
           hideTitle=(is "gt" index 0)
-          inputName=(concat "data.dynamic.spellMaintenances." spellMaintenance._id ".data.cost.value")
+          inputName=(concat "system.dynamic.spellMaintenances." spellMaintenance._id ".system.cost.value")
           inputValue=spellMaintenance.system.cost.value
         }}
       </div>

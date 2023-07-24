@@ -29,7 +29,7 @@ export const TechniqueItemConfig = ABFItemConfigFactory({
   isInternal: false,
   fieldPath: ['domine', 'techniques'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.techniques;
+    return changes.system.dynamic.techniques;
   },
   selectors: {
     addItemButtonSelector: 'add-technique',

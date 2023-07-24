@@ -23,7 +23,7 @@
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 inputType="text"
-                inputName=(concat "data.dynamic.armors." armor._id ".name")
+                inputName=(concat "system.dynamic.armors." armor._id ".name")
                 inputValue=armor.name
               }}
             </div>
@@ -36,7 +36,7 @@
               class="quality"
               isVertical=true
               title=(localize "anima.ui.combat.armors.quality.title")
-              inputName=(concat "data.dynamic.armors." armor._id ".data.quality.value")
+              inputName=(concat "system.dynamic.armors." armor._id ".system.quality.value")
               inputValue=armor.system.quality.value
             }}
             {{>
@@ -44,7 +44,7 @@
               class="integrity"
               title=(localize "anima.ui.combat.armors.integrity.title")
               disabled=true
-              inputName=(concat "data.dynamic.armors." armor._id ".data.integrity.final.value")
+              inputName=(concat "system.dynamic.armors." armor._id ".system.integrity.final.value")
               inputValue=armor.system.integrity.final.value
             }}
             {{>
@@ -52,7 +52,7 @@
               class="final-movement-restriction"
               title=(localize "anima.ui.combat.armors.movementRestriction.final.title")
               disabled=true
-              inputName=(concat "data.dynamic.armors." armor._id ".data.movementRestriction.final.value")
+              inputName=(concat "system.dynamic.armors." armor._id ".system.movementRestriction.final.value")
               inputValue=armor.system.movementRestriction.final.value
             }}
             {{>
@@ -60,7 +60,7 @@
               class="presence"
               title=(localize "anima.ui.combat.armors.presence.title")
               disabled=true
-              inputName=(concat "data.dynamic.armors." armor._id ".data.presence.final.value")
+              inputName=(concat "system.dynamic.armors." armor._id ".system.presence.final.value")
               inputValue=armor.system.presence.final.value
             }}
             {{>
@@ -68,7 +68,7 @@
               class="final-natural-penalty"
               title=(localize "anima.ui.combat.armors.naturalPenalty.title")
               disabled=true
-              inputName=(concat "data.dynamic.armors." armor._id ".data.naturalPenalty.final.value")
+              inputName=(concat "system.dynamic.armors." armor._id ".system.naturalPenalty.final.value")
               inputValue=armor.system.naturalPenalty.final.value
             }}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
@@ -79,7 +79,7 @@
                 class="equipped"
                 title=(localize "anima.ui.combat.armors.equipped.title")
                 inputType="checkbox"
-                inputName=(concat "data.dynamic.armors." armor._id ".data.equipped.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.equipped.value")
                 inputValue=(is 'eq' armor.system.equipped.value true)
               }}
               {{>
@@ -87,7 +87,7 @@
                 class="cut"
                 title=(localize "anima.ui.combat.armors.at.cut.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.cut.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.cut.final.value")
                 inputValue=armor.system.cut.final.value
               }}
               {{>
@@ -95,7 +95,7 @@
                 class="impact"
                 title=(localize "anima.ui.combat.armors.at.impact.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.impact.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.impact.final.value")
                 inputValue=armor.system.impact.final.value
               }}
               {{>
@@ -103,7 +103,7 @@
                 class="thrust"
                 title=(localize "anima.ui.combat.armors.at.thrust.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.thrust.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.thrust.final.value")
                 inputValue=armor.system.thrust.final.value
               }}
               {{>
@@ -111,7 +111,7 @@
                 class="heat"
                 title=(localize "anima.ui.combat.armors.at.heat.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.heat.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.heat.final.value")
                 inputValue=armor.system.heat.final.value
               }}
               {{>
@@ -119,7 +119,7 @@
                 class="electricity"
                 title=(localize "anima.ui.combat.armors.at.electricity.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.electricity.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.electricity.final.value")
                 inputValue=armor.system.electricity.final.value
               }}
               {{>
@@ -127,7 +127,7 @@
                 class="cold"
                 title=(localize "anima.ui.combat.armors.at.cold.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.cold.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.cold.final.value")
                 inputValue=armor.system.cold.final.value
               }}
               {{>
@@ -135,7 +135,7 @@
                 class="energy"
                 title=(localize "anima.ui.combat.armors.at.energy.title")
                 disabled=true
-                inputName=(concat "data.dynamic.armors." armor._id ".data.energy.final.value")
+                inputName=(concat "system.dynamic.armors." armor._id ".system.energy.final.value")
                 inputValue=armor.system.energy.final.value
               }}
             </div>

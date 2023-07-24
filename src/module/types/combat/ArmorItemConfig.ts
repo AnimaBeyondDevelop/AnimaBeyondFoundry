@@ -72,7 +72,7 @@ export const ArmorItemConfig: ABFItemConfigMinimal<ArmorDataSource, ArmorChanges
   defaultValue: INITIAL_ARMOR_DATA,
   fieldPath: ['combat', 'armors'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.armors as ArmorChanges;
+    return changes.system.dynamic.armors as ArmorChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-armor',
@@ -96,12 +96,12 @@ export const ArmorItemConfig: ABFItemConfigMinimal<ArmorDataSource, ArmorChanges
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateItem({
         id,
         name,
-        system: data
+        system
       });
     }
   },

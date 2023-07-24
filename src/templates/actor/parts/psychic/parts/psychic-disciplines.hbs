@@ -12,7 +12,7 @@
     {{#each system.psychic.psychicDisciplines as |psychicDiscipline|}}
       <div data-item-id='{{psychicDiscipline._id}}' class='psychic-discipline-row'>
         <input
-          name='data.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
+          name='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
           type='text'
           class='input'
           value='{{psychicDiscipline.name}}'

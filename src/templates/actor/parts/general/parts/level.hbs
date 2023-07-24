@@ -24,14 +24,14 @@
           class="name"
           hideTitle=true
           inputType="text"
-          inputName=(concat "data.dynamic.levels." level._id ".name")
+          inputName=(concat "system.dynamic.levels." level._id ".name")
           inputValue=level.name
         }}
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="level"
           hideTitle=true
-          inputName=(concat "data.dynamic.levels." level._id ".data.level")
+          inputName=(concat "system.dynamic.levels." level._id ".system.level")
           inputValue=level.system.level
         }}
       </div>

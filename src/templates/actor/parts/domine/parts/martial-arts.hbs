@@ -17,7 +17,7 @@
           title=(localize "anima.ui.domine.martialArts.name.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.martialArts." martialArt._id ".name")
+          inputName=(concat "system.dynamic.martialArts." martialArt._id ".name")
           inputValue=martialArt.name
         }}
         {{>
@@ -26,7 +26,7 @@
           title=(localize "anima.ui.domine.martialArts.grade.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.martialArts." martialArt._id ".data.grade.value")
+          inputName=(concat "system.dynamic.martialArts." martialArt._id ".system.grade.value")
           inputValue=martialArt.system.grade.value
         }}
       </div>

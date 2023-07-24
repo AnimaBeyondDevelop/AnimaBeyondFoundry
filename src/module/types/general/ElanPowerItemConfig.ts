@@ -20,7 +20,7 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<ElanPowerDataSource, Elan
   isInternal: true,
   fieldPath: [], // This is not used because this is internal to the elan
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.elan_power as ElanPowerChanges;
+    return changes.system.dynamic.elan_power as ElanPowerChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-elan-power',
@@ -64,7 +64,7 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<ElanPowerDataSource, Elan
         type: ABFItems.ELAN,
         id: elanId,
         system: {
-          ...elan.data,
+          ...elan.system,
           powers
         }
       });
@@ -74,7 +74,7 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<ElanPowerDataSource, Elan
     for (const id of Object.keys(changes)) {
       const {
         name,
-        data: { elanId, level }
+        system: { elanId, level }
       } = changes[id];
 
       if (!elanId) throw new Error('elanId missing');
@@ -133,8 +133,8 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<ElanPowerDataSource, Elan
         type: ABFItems.ELAN,
         id: elanId,
         system: {
-          ...elan.data,
-          powers: elan.data.powers.filter(power => power._id !== elanPowerId)
+          ...elan.system,
+          powers: elan.system.powers.filter(power => power._id !== elanPowerId)
         }
       });
     }

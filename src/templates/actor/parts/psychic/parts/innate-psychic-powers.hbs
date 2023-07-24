@@ -17,7 +17,7 @@
           title=(localize "anima.ui.psychic.innatePsychicPower.power.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.innatePsychicPowers." innatePsychicPower._id ".name")
+          inputName=(concat "system.dynamic.innatePsychicPowers." innatePsychicPower._id ".name")
           inputValue=innatePsychicPower.name
         }}
 
@@ -27,7 +27,7 @@
           title=(localize "anima.ui.psychic.innatePsychicPower.effect.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.innatePsychicPowers." innatePsychicPower._id ".data.effect.value")
+          inputName=(concat "system.dynamic.innatePsychicPowers." innatePsychicPower._id ".system.effect.value")
           inputValue=innatePsychicPower.system.effect.value
         }}
 
@@ -36,7 +36,7 @@
           class="value"
           title=(localize "anima.ui.psychic.innatePsychicPower.value.title")
           hideTitle=(is "gt" index 0)
-          inputName=(concat "data.dynamic.innatePsychicPowers." innatePsychicPower._id ".data.value.value")
+          inputName=(concat "system.dynamic.innatePsychicPowers." innatePsychicPower._id ".system.value.value")
           inputValue=innatePsychicPower.system.value.value
         }}
 

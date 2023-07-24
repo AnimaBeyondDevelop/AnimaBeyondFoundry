@@ -17,7 +17,7 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource, ElanChanges> =
   isInternal: true,
   fieldPath: ['general', 'elan'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.elan as ElanChanges;
+    return changes.system.dynamic.elan as ElanChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-elan',
@@ -57,7 +57,7 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource, ElanChanges> =
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       const elan = actor.getInnerItem(ABFItems.ELAN, id);
 
@@ -65,7 +65,7 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource, ElanChanges> =
         type: ABFItems.ELAN,
         id,
         name,
-        system: { ...elan.system, ...data }
+        system: { ...elan.system, ...system }
       });
     }
   },

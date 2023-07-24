@@ -14,7 +14,7 @@ export const NemesisSkillItemConfig: ABFItemConfigMinimal<NemesisSkillDataSource
   isInternal: true,
   fieldPath: ['domine', 'nemesisSkills'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.nemesisSkills as NemesisSkillChanges;
+    return changes.system.dynamic.nemesisSkills as NemesisSkillChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-nemesis-skill',

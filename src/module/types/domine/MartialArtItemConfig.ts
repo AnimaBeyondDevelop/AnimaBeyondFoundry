@@ -16,7 +16,7 @@ export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource, Ma
   isInternal: true,
   fieldPath: ['domine', 'martialArts'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.martialArts as MartialArtChanges;
+    return changes.system.dynamic.martialArts as MartialArtChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-martial-art',
@@ -40,13 +40,13 @@ export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource, Ma
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateInnerItem({
         id,
         type: ABFItems.MARTIAL_ART,
         name,
-        system: data
+        system
       });
     }
   },

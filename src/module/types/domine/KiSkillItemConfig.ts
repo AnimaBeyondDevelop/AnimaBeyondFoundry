@@ -14,7 +14,7 @@ export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource, KiSkillC
   isInternal: true,
   fieldPath: ['domine', 'kiSkills'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.kiSkills as KiSkillChanges;
+    return changes.system.dynamic.kiSkills as KiSkillChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-ki-skill',

@@ -17,7 +17,7 @@
           title=(localize "anima.ui.combat.ammo.name.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.ammo." ammo._id ".name")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".name")
           inputValue=ammo.name
         }}
         {{>
@@ -26,7 +26,7 @@
           title=(localize "anima.ui.combat.ammo.quality.title")
           hideTitle=(is "gt" index 0)
           isVertical=true
-          inputName=(concat "data.dynamic.ammo." ammo._id ".data.quality.value")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".system.quality.value")
           inputValue=ammo.system.quality.value
         }}
         {{>
@@ -35,7 +35,7 @@
           title=(localize "anima.ui.combat.ammo.presence.title")
           hideTitle=(is "gt" index 0)
           disabled=true
-          inputName=(concat "data.dynamic.ammo." ammo._id ".data.presence.final.value")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".system.presence.final.value")
           inputValue=ammo.system.presence.final.value
         }}
         {{>
@@ -44,7 +44,7 @@
           title=(localize "anima.ui.combat.ammo.damage.title")
           hideTitle=(is "gt" index 0)
           disabled=true
-          inputName=(concat "data.dynamic.ammo." ammo._id ".data.damage.final.value")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".system.damage.final.value")
           inputValue=ammo.system.damage.final.value
         }}
         {{>
@@ -53,7 +53,7 @@
           title=(localize "anima.ui.combat.ammo.breaking.title")
           hideTitle=(is "gt" index 0)
           disabled=true
-          inputName=(concat "data.dynamic.ammo." ammo._id ".data.breaking.final.value")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".system.breaking.final.value")
           inputValue=ammo.system.breaking.final.value
         }}
         {{>
@@ -62,7 +62,7 @@
           title=(localize "anima.ui.combat.ammo.integrity.title")
           hideTitle=(is "gt" index 0)
           disabled=true
-          inputName=(concat "data.dynamic.ammo." ammo._id ".data.integrity.final.value")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".system.integrity.final.value")
           inputValue=ammo.system.integrity.final.value
         }}
         {{>
@@ -70,7 +70,7 @@
           class="amount"
           title=(localize "anima.ui.combat.ammo.amount.title")
           hideTitle=(is "gt" index 0)
-          inputName=(concat "data.dynamic.ammo." ammo._id ".data.amount.value")
+          inputName=(concat "system.dynamic.ammo." ammo._id ".system.amount.value")
           inputValue=ammo.system.amount.value
         }}
       </div>

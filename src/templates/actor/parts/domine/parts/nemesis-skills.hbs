@@ -12,7 +12,7 @@
     {{#each system.domine.nemesisSkills as |nemesisSkill|}}
       <div data-item-id='{{nemesisSkill._id}}' class='nemesis-skill-row'>
         <input
-          name='data.dynamic.nemesisSkills.{{nemesisSkill._id}}.name'
+          name='system.dynamic.nemesisSkills.{{nemesisSkill._id}}.name'
           type='text'
           class='input'
           value='{{nemesisSkill.name}}'

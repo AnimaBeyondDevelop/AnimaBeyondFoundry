@@ -20,7 +20,7 @@ export const InnatePsychicPowerItemConfig: ABFItemConfigMinimal<InnatePsychicPow
   isInternal: true,
   fieldPath: ['psychic', 'innatePsychicPowers'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.innatePsychicPowers as InnatePsychicPowerChanges;
+    return changes.system.dynamic.innatePsychicPowers as InnatePsychicPowerChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-innate-psychic-power',
@@ -45,13 +45,13 @@ export const InnatePsychicPowerItemConfig: ABFItemConfigMinimal<InnatePsychicPow
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateInnerItem({
         id,
         type: ABFItems.INNATE_PSYCHIC_POWER,
         name,
-        system: data
+        system
       });
     }
   },

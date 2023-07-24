@@ -11,7 +11,7 @@
   }}
     {{#each system.general.notes as |note|}}
       <div data-item-id='{{note._id}}' class='note-row'>
-        {{editor note.system.enrichedName target=(concat "data.dynamic.notes." note._id ".name") button=true owner=true editable=true}}
+        {{editor note.system.enrichedName target=(concat "system.dynamic.notes." note._id ".name") button=true owner=true editable=true}}
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

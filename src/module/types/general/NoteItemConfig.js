@@ -6,7 +6,7 @@ export const NoteItemConfig = {
   isInternal: false,
   fieldPath: ['general', 'notes'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.notes;
+    return changes.system.dynamic.notes;
   },
   selectors: {
     addItemButtonSelector: 'add-note',

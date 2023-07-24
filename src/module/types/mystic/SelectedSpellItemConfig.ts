@@ -22,8 +22,7 @@ export const SelectedSpellItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['mystic', 'selectedSpells'],
   getFromDynamicChanges: changes => {
-    // TODO: is this `data.` ok or shoult id be `system`?
-    return changes.data.dynamic.selectedSpells as SelectedSpellChanges;
+    return changes.system.dynamic.selectedSpells as SelectedSpellChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-selected-spell',
@@ -45,13 +44,13 @@ export const SelectedSpellItemConfig: ABFItemConfigMinimal<
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       actor.updateInnerItem({
         type: ABFItems.SELECTED_SPELL,
         id,
         name,
-        system: data
+        system
       });
     }
   },

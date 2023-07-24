@@ -14,7 +14,7 @@ export const TitleItemConfig: ABFItemConfigMinimal<TitleDataSource, TitleChanges
   isInternal: true,
   fieldPath: ['general', 'titles'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.titles as TitleChanges;
+    return changes.system.dynamic.titles as TitleChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-title',

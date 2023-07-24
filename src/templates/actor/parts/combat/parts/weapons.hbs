@@ -23,7 +23,7 @@
                 class="name"
                 hideTitle=true
                 inputType="text"
-                inputName=(concat "data.dynamic.weapons." weapon._id ".name")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".name")
                 inputValue=weapon.name
               }}
             </div>
@@ -39,7 +39,7 @@
                 disabled=true
                 choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
                 title=(localize "anima.ui.combat.weapons.critic.secondary.title")
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.critic.secondary.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.critic.secondary.value")
                 inputValue=weapon.system.critic.secondary.value
               }}
             {{/if}}
@@ -47,7 +47,7 @@
               class="quality"
               isVertical=true
               title=(localize "anima.ui.combat.weapons.quality.title")
-              inputName=(concat "data.dynamic.weapons." weapon._id ".data.quality.value")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.quality.value")
               inputValue=weapon.system.quality.value
             }}
             {{>
@@ -56,7 +56,7 @@
               rollable=true
               disabled=true
               title=(localize "anima.ui.combat.weapons.integrity.final.title")
-              inputName=(concat "data.dynamic.weapons." weapon._id ".data.integrity.final.value")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.integrity.final.value")
               inputValue=weapon.system.integrity.final.value
             }}
             {{>
@@ -65,7 +65,7 @@
               rollable=true
               disabled=true
               title=(localize "anima.ui.combat.weapons.breaking.final.title")
-              inputName=(concat "data.dynamic.weapons." weapon._id ".data.breaking.final.value")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.breaking.final.value")
               inputValue=weapon.system.breaking.final.value
             }}
             {{>
@@ -74,7 +74,7 @@
               rollable=true
               disabled=true
               title=(localize "anima.ui.combat.weapons.presence.final.title")
-              inputName=(concat "data.dynamic.weapons." weapon._id ".data.presence.final.value")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.presence.final.value")
               inputValue=weapon.system.presence.final.value
             }}
             {{#if (is 'eq' weapon.system.isRanged.value true)}}
@@ -83,7 +83,7 @@
                 class="range"
                 disabled=true
                 title=(localize "anima.ui.combat.weapons.range.final.title")
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.range.final.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.range.final.value")
                 inputValue=weapon.system.range.final.value
               }}
               {{#if (is 'eq' weapon.system.shotType.value 'shot')}}
@@ -92,7 +92,7 @@
                   class="reload"
                   disabled=true
                   title=(localize "anima.ui.combat.weapons.reload.final.title")
-                  inputName=(concat "data.dynamic.weapons." weapon._id ".data.reload.final.value")
+                  inputName=(concat "system.dynamic.weapons." weapon._id ".system.reload.final.value")
                   inputValue=weapon.system.reload.final.value
                 }}
                 {{>
@@ -101,7 +101,7 @@
                   isVertical=true
                   title=(localize "anima.ui.combat.weapons.ammo.title")
                   ammo=xRoot.system.combat.ammo
-                  inputName=(concat "data.dynamic.weapons." weapon._id ".data.ammoId")
+                  inputName=(concat "system.dynamic.weapons." weapon._id ".system.ammoId")
                   inputValue=weapon.system.ammoId
                 }}
               {{/if}}
@@ -109,7 +109,7 @@
             {{> 'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs'
               class="knowledge-type"
               title=(localize "anima.ui.combat.weapons.knowledgeType.title")
-              inputName=(concat "data.dynamic.weapons." weapon._id ".data.knowledgeType.value")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.knowledgeType.value")
               inputValue=weapon.system.knowledgeType.value
             }}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
@@ -120,7 +120,7 @@
                 class="equipped"
                 title=(localize "anima.ui.combat.weapons.equipped.title")
                 inputType="checkbox"
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.equipped.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.equipped.value")
                 inputValue=(is 'eq' weapon.system.equipped.value true)
               }}
               {{>
@@ -130,7 +130,7 @@
                 disabled=true
                 title=(localize "anima.ui.combat.weapons.critic.primary.title")
                 choices=xRoot.config.iterables.combat.weapon.criticTypes
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.critic.primary.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.critic.primary.value")
                 inputValue=weapon.system.critic.primary.value
               }}
               {{#if (is 'eq' weapon.system.manageabilityType.value 'one_or_two_hands')}}
@@ -138,7 +138,7 @@
                 "systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs"
                   class="one-or-two-handed"
                   title=(localize "anima.ui.combat.weapons.oneOrTwoHanded.title")
-                  inputName=(concat "data.dynamic.weapons." weapon._id ".data.oneOrTwoHanded.value")
+                  inputName=(concat "system.dynamic.weapons." weapon._id ".system.oneOrTwoHanded.value")
                   inputValue=weapon.system.oneOrTwoHanded.value
                 }}
               {{/if}}
@@ -147,7 +147,7 @@
                 class="attack"
                 title=(localize "anima.ui.combat.weapons.attack.title")
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.attack.roll.message") weapon.name)
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.attack.special.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.attack.special.value")
                 inputValue=weapon.system.attack.special.value
                 rollable=true
                 rollSecondaryInput=true
@@ -161,7 +161,7 @@
                 class="block"
                 title=(localize "anima.ui.combat.weapons.block.title")
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.block.roll.message") weapon.name)
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.block.special.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.block.special.value")
                 inputValue=weapon.system.block.special.value
                 rollable=true
                 rollSecondaryInput=true
@@ -175,7 +175,7 @@
                 class="damage"
                 disabled=true
                 title=(localize "anima.ui.combat.weapons.damage.final.title")
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.damage.final.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.damage.final.value")
                 inputValue=weapon.system.damage.final.value
               }}
               {{>
@@ -184,7 +184,7 @@
                 rollable=true
                 disabled=true
                 title=(localize "anima.ui.combat.weapons.initiative.final.title")
-                inputName=(concat "data.dynamic.weapons." weapon._id ".data.initiative.final.value")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.final.value")
                 inputValue=weapon.system.initiative.final.value
               }}
             </div>

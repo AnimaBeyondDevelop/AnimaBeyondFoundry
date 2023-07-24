@@ -3,10 +3,10 @@
  */
 
 /** Factory for creating ItemConfig objects with default parameters which can be overriden.
- * @param {import("./Items").ABFItemConfigMinimal<D, C>} minimal - Parameters to override the default params.
- * @template D - Template parameter for the (default) data of the item.
- * @template C - Template parameter for the changes of the item data.
- * @returns {import("./Items").ABFItemConfig<D, C>}
+ * @param {import("./Items").ABFItemConfigMinimal<TData>} minimal
+ * - Parameters to override the default params.
+ * @template TData - Type of the data inside the item's system attribute.
+ * @returns {import("./Items").ABFItemConfig<TData>}
  */
 export function ABFItemConfigFactory(minimal) {
   if (!minimal.fieldPath) {
@@ -14,6 +14,10 @@ export function ABFItemConfigFactory(minimal) {
   }
 
   return {
+    getFromDynamicChanges(changes) {
+      const path = ['system', 'dynamic', ...this.fieldPath.slice(-1)];
+      return path.reduce((field, nextKey) => field[nextKey], changes);
+    },
     clearFieldPath(actor) {
       const path = ['system', ...this.fieldPath];
       const lastKey = path.pop();

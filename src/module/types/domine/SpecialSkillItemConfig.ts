@@ -20,7 +20,7 @@ export const SpecialSkillItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['domine', 'specialSkills'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.specialSkills as SpecialSkillChanges;
+    return changes.system.dynamic.specialSkills as SpecialSkillChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-special-skill',

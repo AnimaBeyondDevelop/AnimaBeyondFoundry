@@ -1,9 +1,10 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { AmmoDataSource, INITIAL_AMMO_DATA } from '../../../../../../types/combat/AmmoItemConfig';
+import { INITIAL_AMMO_DATA } from '../../../../../../types/combat/AmmoItemConfig';
 import { calculateAmmoPresence } from './calculations/calculateAmmoPresence';
 import { calculateAmmoIntegrity } from './calculations/calculateAmmoIntegrity';
 import { calculateAmmoBreaking } from './calculations/calculateAmmoBreaking';
 import { calculateAmmoDamage } from './calculations/calculateAmmoDamage';
+import { AmmoDataSource } from '../../../../../../types/Items';
 
 export const mutateAmmoData = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { ammo: AmmoDataSource[] };

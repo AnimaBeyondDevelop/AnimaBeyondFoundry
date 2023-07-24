@@ -17,7 +17,7 @@
           title=(localize "anima.ui.psychic.mentalPattern.name.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.mentalPatterns." pattern._id ".name")
+          inputName=(concat "system.dynamic.mentalPatterns." pattern._id ".name")
           inputValue=pattern.name
         }}
 
@@ -26,7 +26,7 @@
           class="bonus"
           title=(localize "anima.ui.psychic.mentalPattern.bonus.title")
           hideTitle=(is "gt" index 0)
-          inputName=(concat "data.dynamic.mentalPatterns." pattern._id ".data.bonus.value")
+          inputName=(concat "system.dynamic.mentalPatterns." pattern._id ".system.bonus.value")
           inputValue=pattern.system.bonus.value
         }}
 
@@ -35,7 +35,7 @@
           class="penalty"
           title=(localize "anima.ui.psychic.mentalPattern.penalty.title")
           hideTitle=(is "gt" index 0)
-          inputName=(concat "data.dynamic.mentalPatterns." pattern._id ".data.penalty.value")
+          inputName=(concat "system.dynamic.mentalPatterns." pattern._id ".system.penalty.value")
           inputValue=pattern.system.penalty.value
         }}
 

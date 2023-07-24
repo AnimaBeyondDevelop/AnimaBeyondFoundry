@@ -14,7 +14,7 @@ export const ArsMagnusItemConfig: ABFItemConfigMinimal<ArsMagnusDataSource, ArsM
   isInternal: true,
   fieldPath: ['domine', 'arsMagnus'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.arsMagnus as ArsMagnusChanges;
+    return changes.system.dynamic.arsMagnus as ArsMagnusChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-ars-magnus',

@@ -9,7 +9,6 @@ export const prepareItems = async actor => {
   }
 
   // Prepare Actor's combat items
-  actor.system.combat.ammo = actor.getAmmos();
   actor.system.combat.armors = actor.getArmors();
   actor.system.combat.combatSpecialSkills = actor.getCombatSpecialSkills();
   actor.system.combat.combatTables = actor.getCombatTables();

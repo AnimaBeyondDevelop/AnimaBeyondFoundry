@@ -23,7 +23,7 @@ export const InventoryItemItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['general', 'inventory'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.inventory as InventoryItemChanges;
+    return changes.system.dynamic.inventory as InventoryItemChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-inventory-item',
@@ -48,13 +48,13 @@ export const InventoryItemItemConfig: ABFItemConfigMinimal<
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       actor.updateInnerItem({
         type: ABFItems.INVENTORY_ITEM,
         id,
         name,
-        system: data
+        system
       });
     }
   },

@@ -19,7 +19,7 @@ export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource, Meta
   isInternal: true,
   fieldPath: ['mystic', 'metamagics'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.metamagics as MetamagicChanges;
+    return changes.system.dynamic.metamagics as MetamagicChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-metamagic',
@@ -41,13 +41,13 @@ export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource, Meta
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateInnerItem({
         id,
         type: ABFItems.METAMAGIC,
         name,
-        system: data
+        system
       });
     }
   }

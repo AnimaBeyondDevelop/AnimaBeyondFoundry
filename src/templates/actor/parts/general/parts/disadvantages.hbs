@@ -12,7 +12,7 @@
     {{#each system.general.disadvantages as |disadvantage|}}
       <div data-item-id='{{disadvantage._id}}' class='disadvantage-row'>
         <input
-          name='data.dynamic.disadvantages.{{disadvantage._id}}.name'
+          name='system.dynamic.disadvantages.{{disadvantage._id}}.name'
           type='text'
           class='input'
           value='{{disadvantage.name}}'

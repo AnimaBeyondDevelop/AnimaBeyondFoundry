@@ -17,7 +17,7 @@
           title=(localize "anima.ui.domine.creatures.name.title")
           hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.creatures." creature._id ".name")
+          inputName=(concat "system.dynamic.creatures." creature._id ".name")
           inputValue=creature.name
         }}
         {{>
@@ -26,7 +26,7 @@
           title=(localize "anima.ui.domine.creatures.fire.title")
           hideTitle=(is "gt" index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." creature._id ".data.fire.value")
+          inputName=(concat "system.dynamic.creatures." creature._id ".system.fire.value")
           inputValue=(is 'eq' creature.system.fire.value true)
         }}
         {{>
@@ -35,7 +35,7 @@
           title=(localize "anima.ui.domine.creatures.water.title")
           hideTitle=(is "gt" index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." creature._id ".data.water.value")
+          inputName=(concat "system.dynamic.creatures." creature._id ".system.water.value")
           inputValue=(is 'eq' creature.system.water.value true)
         }}
         {{>
@@ -44,7 +44,7 @@
           title=(localize "anima.ui.domine.creatures.earth.title")
           hideTitle=(is "gt" index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." creature._id ".data.earth.value")
+          inputName=(concat "system.dynamic.creatures." creature._id ".system.earth.value")
           inputValue=(is 'eq' creature.system.earth.value true)
         }}
         {{>
@@ -53,7 +53,7 @@
           title=(localize "anima.ui.domine.creatures.wood.title")
           hideTitle=(is "gt" index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." creature._id ".data.wood.value")
+          inputName=(concat "system.dynamic.creatures." creature._id ".system.wood.value")
           inputValue=(is 'eq' creature.system.wood.value true)
         }}
         {{>
@@ -62,7 +62,7 @@
           title=(localize "anima.ui.domine.creatures.metal.title")
           hideTitle=(is "gt" index 0)
           inputType="checkbox"
-          inputName=(concat "data.dynamic.creatures." creature._id ".data.metal.value")
+          inputName=(concat "system.dynamic.creatures." creature._id ".system.metal.value")
           inputValue=(is 'eq' creature.system.metal.value true)
         }}
       </div>

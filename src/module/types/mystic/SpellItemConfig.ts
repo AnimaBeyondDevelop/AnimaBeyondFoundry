@@ -43,7 +43,7 @@ export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource, SpellChanges
   hasSheet: true,
   fieldPath: ['mystic', 'spells'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.spells as SpellChanges;
+    return changes.system.dynamic.spells as SpellChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-spell',
@@ -106,12 +106,12 @@ export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource, SpellChanges
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateItem({
         id,
         name,
-        system: data
+        system
       });
     }
   }

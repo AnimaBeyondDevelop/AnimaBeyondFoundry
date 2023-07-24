@@ -16,7 +16,7 @@ export const LevelItemConfig: ABFItemConfigMinimal<LevelDataSource, LevelChanges
   isInternal: true,
   fieldPath: ['general', 'levels'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.levels as LevelChanges;
+    return changes.system.dynamic.levels as LevelChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-level',
@@ -34,9 +34,9 @@ export const LevelItemConfig: ABFItemConfigMinimal<LevelDataSource, LevelChanges
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.LEVEL, id, name, system: data });
+      actor.updateInnerItem({ type: ABFItems.LEVEL, id, name, system });
     }
   },
   onAttach: (actor, item) => {

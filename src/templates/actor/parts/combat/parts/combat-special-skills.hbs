@@ -12,7 +12,7 @@
     {{#each system.combat.combatSpecialSkills as |combatSpecialSkill|}}
       <div data-item-id='{{combatSpecialSkill._id}}' class='combat-special-skill-row'>
         <input
-          name='data.dynamic.combatSpecialSkills.{{combatSpecialSkill._id}}.name'
+          name='system.dynamic.combatSpecialSkills.{{combatSpecialSkill._id}}.name'
           type='text'
           class='input'
           value='{{combatSpecialSkill.name}}'

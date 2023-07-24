@@ -2,7 +2,6 @@ import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { AmmoDataSource } from './AmmoItemConfig';
 import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
 import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
 
@@ -140,7 +139,7 @@ export const WeaponItemConfig: ABFItemConfigMinimal<WeaponDataSource, WeaponChan
   defaultValue: INITIAL_WEAPON_DATA,
   fieldPath: ['combat', 'weapons'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.weapons as WeaponChanges;
+    return changes.system.dynamic.weapons as WeaponChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-weapon',
@@ -164,12 +163,12 @@ export const WeaponItemConfig: ABFItemConfigMinimal<WeaponDataSource, WeaponChan
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       actor.updateItem({
         id,
         name,
-        system: data
+        system
       });
     }
   },

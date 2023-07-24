@@ -17,7 +17,7 @@
           hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.name.title')
           inputType="text"
-          inputName=(concat "data.dynamic.inventory." item._id ".name")
+          inputName=(concat "system.dynamic.inventory." item._id ".name")
           inputValue=item.name
         }}
         {{>
@@ -25,7 +25,7 @@
           class="amount"
           hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.amount.title')
-          inputName=(concat "data.dynamic.inventory." item._id ".data.amount.value")
+          inputName=(concat "system.dynamic.inventory." item._id ".system.amount.value")
           inputValue=item.system.amount.value
         }}
         {{>
@@ -33,7 +33,7 @@
           class="weight"
           hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.weight.title')
-          inputName=(concat "data.dynamic.inventory." item._id ".data.weight.value")
+          inputName=(concat "system.dynamic.inventory." item._id ".system.weight.value")
           inputValue=item.system.weight.value
         }}
       </div>

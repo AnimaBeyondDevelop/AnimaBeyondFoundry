@@ -20,7 +20,7 @@ export const CombatSpecialSkillItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['combat', 'combatSpecialSkills'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.combatSpecialSkills as CombatSpecialSkillChanges;
+    return changes.system.dynamic.combatSpecialSkills as CombatSpecialSkillChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-combat-special-skill',

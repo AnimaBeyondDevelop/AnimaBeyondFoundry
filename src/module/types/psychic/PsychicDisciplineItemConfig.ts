@@ -14,7 +14,7 @@ export const PsychicDisciplineItemConfig: ABFItemConfigMinimal<PsychicDiscipline
   isInternal: false,
   fieldPath: ['psychic', 'psychicDisciplines'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.psychicDisciplines as PsychicDisciplineChanges;
+    return changes.system.dynamic.psychicDisciplines as PsychicDisciplineChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-psychic-discipline',

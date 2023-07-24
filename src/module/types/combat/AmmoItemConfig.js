@@ -1,25 +1,10 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, DerivedField, ItemChanges } from '../Items';
 import { WeaponCritic } from './WeaponItemConfig';
-import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type AmmoItemData = {
-  amount: { value: number };
-  damage: DerivedField;
-  critic: { value: WeaponCritic };
-  integrity: DerivedField;
-  breaking: DerivedField;
-  presence: DerivedField;
-  quality: { value: number };
-  special: { value: string };
-};
-
-export type AmmoDataSource = any;
-
-export type AmmoChanges = ItemChanges<AmmoItemData>;
-
-export const INITIAL_AMMO_DATA: AmmoItemData = {
+/** @type {import("../Items").AmmoItemData} */
+export const INITIAL_AMMO_DATA = {
   amount: { value: 0 },
   damage: {
     base: { value: 0 },
@@ -42,28 +27,26 @@ export const INITIAL_AMMO_DATA: AmmoItemData = {
   special: { value: '' }
 };
 
-export const AmmoItemConfig: ABFItemConfigMinimal<AmmoDataSource, AmmoChanges> = {
+/** @type {import("../Items").AmmoItemConfig */
+export const AmmoItemConfig = ABFItemConfigFactory({
   type: ABFItems.AMMO,
   isInternal: false,
   defaultValue: INITIAL_AMMO_DATA,
   hasSheet: true,
   fieldPath: ['combat', 'ammo'],
-  getFromDynamicChanges: changes => {
-    return changes.data.dynamic.ammo as AmmoChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-ammo',
     containerSelector: '#ammo-context-menu-container',
     rowSelector: '.ammo-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.ammo.content')
     });
 
-    const itemData: any = {
+    const itemData = {
       name,
       type: ABFItems.AMMO,
       system: INITIAL_AMMO_DATA
@@ -71,15 +54,15 @@ export const AmmoItemConfig: ABFItemConfigMinimal<AmmoDataSource, AmmoChanges> =
 
     await actor.createItem(itemData);
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       actor.updateItem({
         id,
         name,
-        system: data
+        system
       });
     }
   },
-};
+});

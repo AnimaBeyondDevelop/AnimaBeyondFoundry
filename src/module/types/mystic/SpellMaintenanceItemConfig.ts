@@ -22,7 +22,7 @@ export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['mystic', 'spellMaintenances'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.spellMaintenances as SpellMaintenanceChanges;
+    return changes.system.dynamic.spellMaintenances as SpellMaintenanceChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-spell-maintenance',
@@ -44,13 +44,13 @@ export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       actor.updateInnerItem({
         type: ABFItems.SPELL_MAINTENANCE,
         id,
         name,
-        system: data
+        system
       });
     }
   },

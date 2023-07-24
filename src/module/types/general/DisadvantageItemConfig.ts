@@ -20,7 +20,7 @@ export const DisadvantageItemConfig: ABFItemConfigMinimal<
   isInternal: false,
   fieldPath: ['general', 'disadvantages'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.disadvantages as DisadvantageChanges;
+    return changes.system.dynamic.disadvantages as DisadvantageChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-disadvantage',

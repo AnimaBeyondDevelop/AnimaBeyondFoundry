@@ -17,7 +17,7 @@ export const MentalPatternItemConfig: ABFItemConfigMinimal<MentalPatternDataSour
   isInternal: false,
   fieldPath: ['psychic', 'mentalPatterns'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.mentalPatterns as MentalPatternChanges;
+    return changes.system.dynamic.mentalPatterns as MentalPatternChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-mental-pattern',
@@ -42,12 +42,12 @@ export const MentalPatternItemConfig: ABFItemConfigMinimal<MentalPatternDataSour
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
       await actor.updateItem({
         id,
         name,
-        system: data
+        system
       });
     }
   },

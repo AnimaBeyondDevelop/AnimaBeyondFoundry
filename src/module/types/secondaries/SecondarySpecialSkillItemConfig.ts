@@ -22,7 +22,7 @@ export const SecondarySpecialSkillItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['secondaries', 'secondarySpecialSkills'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.secondarySpecialSkills as SecondarySpecialSkillChanges;
+    return changes.system.dynamic.secondarySpecialSkills as SecondarySpecialSkillChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-secondary-special-skill',
@@ -40,9 +40,9 @@ export const SecondarySpecialSkillItemConfig: ABFItemConfigMinimal<
   },
   onUpdate: async (actor, changes): Promise<void> => {
     for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
+      const { name, system } = changes[id];
 
-      actor.updateInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, id, name, system: data });
+      actor.updateInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, id, name, system });
     }
   },
   onAttach: (actor, item) => {

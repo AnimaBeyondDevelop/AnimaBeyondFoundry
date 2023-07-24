@@ -14,7 +14,7 @@ export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource, SummonChan
   isInternal: true,
   fieldPath: ['mystic', 'summons'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.summons as SummonChanges;
+    return changes.system.dynamic.summons as SummonChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-summon',

@@ -20,7 +20,7 @@ export const CombatTableItemConfig: ABFItemConfigMinimal<
   isInternal: true,
   fieldPath: ['combat', 'combatTables'],
   getFromDynamicChanges: changes => {
-    return changes.data.dynamic.combatTables as CombatTableChanges;
+    return changes.system.dynamic.combatTables as CombatTableChanges;
   },
   selectors: {
     addItemButtonSelector: 'add-combat-table',

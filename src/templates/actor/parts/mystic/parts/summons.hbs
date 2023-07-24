@@ -12,7 +12,7 @@
     {{#each system.mystic.summons as |summon|}}
       <div data-item-id='{{summon._id}}' class='summon-row'>
         <input
-          name='data.dynamic.summons.{{summon._id}}.name'
+          name='system.dynamic.summons.{{summon._id}}.name'
           type='text'
           class='input'
           value='{{summon.name}}'
