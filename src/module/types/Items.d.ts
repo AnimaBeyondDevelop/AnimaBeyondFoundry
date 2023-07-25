@@ -243,3 +243,11 @@ export type CombatSpecialSkillDataSource = ABFItemBaseDataSource<
 >;
 export type CombatSpecialSkillChanges = ItemChanges<CombatSpecialSkillItemData>;
 export type CombatSpecialSkillItemConfig = ABFItemConfig<CombatSpecialSkillItemData>;
+
+export type CombatTableItemData = Record<string, never>;
+export type CombatTableDataSource = ABFItemBaseDataSource<
+  ABFItems.COMBAT_TABLE,
+  CombatTableItemData
+>;
+export type CombatTableChanges = ItemChanges<CombatTableItemData>;
+export type CombatTableItemConfig = ABFItemConfig<CombatTableItemData>;

@@ -1,34 +1,19 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type CombatTableItemData = Record<string, never>;
-
-export type CombatTableDataSource = ABFItemBaseDataSource<
-  ABFItems.COMBAT_TABLE,
-  CombatTableItemData
->;
-
-export type CombatTableChanges = ItemChanges<CombatTableItemData>;
-
-export const CombatTableItemConfig: ABFItemConfigMinimal<
-  CombatTableDataSource,
-  CombatTableChanges
-> = {
+/** @type {import("../Items").CombatTableItemConfig} */
+export const CombatTableItemConfig = ABFItemConfigFactory({
   type: ABFItems.COMBAT_TABLE,
   isInternal: true,
   fieldPath: ['combat', 'combatTables'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.combatTables as CombatTableChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-combat-table',
     containerSelector: '#combat-tables-context-menu-container',
     rowSelector: '.combat-table-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.combatTable.content')
@@ -39,7 +24,7 @@ export const CombatTableItemConfig: ABFItemConfigMinimal<
       type: ABFItems.COMBAT_TABLE
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
@@ -50,4 +35,4 @@ export const CombatTableItemConfig: ABFItemConfigMinimal<
       });
     }
   },
-};
+});
