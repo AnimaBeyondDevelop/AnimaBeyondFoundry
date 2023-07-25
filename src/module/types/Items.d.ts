@@ -235,3 +235,11 @@ export type ContactItemData = {
 export type ContactChanges = ItemChanges<ContactItemData>;
 export type ContactDataSource = ABFItemBaseDataSource<ABFItems.CONTACT, ContactItemData>;
 export type ContactItemConfig = ABFItemConfig<ContactItemData>;
+
+export type CombatSpecialSkillItemData = Record<string, never>;
+export type CombatSpecialSkillDataSource = ABFItemBaseDataSource<
+  ABFItems.COMBAT_SPECIAL_SKILL,
+  CombatSpecialSkillItemData
+>;
+export type CombatSpecialSkillChanges = ItemChanges<CombatSpecialSkillItemData>;
+export type CombatSpecialSkillItemConfig = ABFItemConfig<CombatSpecialSkillItemData>;
