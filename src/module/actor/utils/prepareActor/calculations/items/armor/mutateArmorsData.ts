@@ -1,5 +1,5 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { ArmorDataSource } from '../../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource } from '../../../../../../types/Items';
 import { calculateArmorIntegrity } from './calculations/calculateArmorIntegrity';
 import { calculateArmorPresence } from './calculations/calculateArmorPresence';
 import { calculateArmorTA } from './calculations/calculateArmorTA';

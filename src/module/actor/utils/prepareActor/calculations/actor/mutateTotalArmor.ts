@@ -1,5 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../types/Actor';
-import { ArmorDataSource, ArmorLocation } from '../../../../../types/combat/ArmorItemConfig';
+import { ArmorLocation } from '../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource } from '../../../../../types/Items';
 
 const calculateTA = (tas: number[]): number => {
   if (tas.length === 0) return 0;

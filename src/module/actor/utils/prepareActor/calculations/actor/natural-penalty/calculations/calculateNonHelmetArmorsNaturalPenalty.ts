@@ -1,5 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { ArmorDataSource, ArmorLocation } from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorLocation } from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource } from '../../../../../../../types/Items';
 
 export const calculateNonHelmetArmorsNaturalPenalty = (data: ABFActorDataSourceData): number => {
   const combat = data.combat as { armors: ArmorDataSource[] };

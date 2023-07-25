@@ -1,5 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { ArmorDataSource, ArmorType } from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorType } from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource } from '../../../../../../../types/Items';
 
 export const calculateEquippedArmorsPenalty = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { armors: ArmorDataSource[] };

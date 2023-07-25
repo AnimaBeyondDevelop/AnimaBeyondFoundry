@@ -1,51 +1,36 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, DerivedField, ItemChanges } from '../Items';
-import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export enum ArmorLocation {
-  COMPLETE = 'complete',
-  NIGHTDRESS = 'nightdress',
-  BREASTPLATE = 'breastplate',
-  HEAD = 'head'
-}
-
-export enum ArmorType {
-  SOFT = 'soft',
-  HARD = 'hard',
-  NATURAL = 'natural'
-}
-
-export type ArmorItemData = {
-  cut: DerivedField;
-  impact: DerivedField;
-  thrust: DerivedField;
-  heat: DerivedField;
-  electricity: DerivedField;
-  cold: DerivedField;
-  energy: DerivedField;
-  integrity: DerivedField;
-  presence: DerivedField;
-  wearArmorRequirement: DerivedField;
-  movementRestriction: DerivedField;
-  naturalPenalty: DerivedField;
-  isEnchanted: { value: boolean };
-  type: { value: ArmorType };
-  localization: { value: ArmorLocation };
-  quality: { value: number };
-  equipped: { value: boolean };
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const ArmorLocation = {
+  COMPLETE: 'complete',
+  NIGHTDRESS: 'nightdress',
+  BREASTPLATE: 'breastplate',
+  HEAD: 'head'
 };
 
-export type ArmorDataSource = any;
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const ArmorType = {
+  SOFT: 'soft',
+  HARD: 'hard',
+  NATURAL: 'natural'
+};
 
-export type ArmorChanges = ItemChanges<ArmorItemData>;
-
+/** @type {import("../Items").DerivedField} */
 const derivedFieldInitialData = {
   base: { value: 0 },
   final: { value: 0 }
 };
 
-export const INITIAL_ARMOR_DATA: ArmorItemData = {
+/** @type {import("../Items").ArmorItemData} */
+export const INITIAL_ARMOR_DATA = {
   cut: derivedFieldInitialData,
   impact: derivedFieldInitialData,
   thrust: derivedFieldInitialData,
@@ -65,28 +50,26 @@ export const INITIAL_ARMOR_DATA: ArmorItemData = {
   equipped: { value: false }
 };
 
-export const ArmorItemConfig: ABFItemConfigMinimal<ArmorDataSource, ArmorChanges> = {
+/** @type {import("../Items").ArmorItemConfig} */
+export const ArmorItemConfig = ABFItemConfigFactory({
   type: ABFItems.ARMOR,
   isInternal: false,
   hasSheet: true,
   defaultValue: INITIAL_ARMOR_DATA,
   fieldPath: ['combat', 'armors'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.armors as ArmorChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-armor',
     containerSelector: '#armors-context-menu-container',
     rowSelector: '.armor-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.armors.content')
     });
 
-    const itemData: any = {
+    const itemData = {
       name,
       type: ABFItems.ARMOR,
       system: INITIAL_ARMOR_DATA
@@ -94,7 +77,7 @@ export const ArmorItemConfig: ABFItemConfigMinimal<ArmorDataSource, ArmorChanges
 
     await actor.createItem(itemData);
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -105,4 +88,4 @@ export const ArmorItemConfig: ABFItemConfigMinimal<ArmorDataSource, ArmorChanges
       });
     }
   },
-};
+});
