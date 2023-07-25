@@ -31,8 +31,6 @@ export function ABFItemConfigFactory(minimal) {
       parentField[lastKey].push(item);
     },
     async resetFieldPath(actor) {
-      this.clearFieldPath(actor);
-
       const items = actor.getItemsOf(this.type);
 
       for (const item of items) {
