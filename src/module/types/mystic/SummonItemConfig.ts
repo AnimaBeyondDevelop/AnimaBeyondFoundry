@@ -9,13 +9,10 @@ export type SummonDataSource = ABFItemBaseDataSource<ABFItems.SUMMON, SummonItem
 
 export type SummonChanges = ItemChanges<SummonItemData>;
 
-export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource, SummonChanges> = {
+export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource> = {
   type: ABFItems.SUMMON,
   isInternal: true,
   fieldPath: ['mystic', 'summons'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.summons as SummonChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-summon',
     containerSelector: '#summons-context-menu-container',

@@ -13,15 +13,11 @@ export type DisadvantageDataSource = ABFItemBaseDataSource<
 export type DisadvantageChanges = ItemChanges<DisadvantageItemData>;
 
 export const DisadvantageItemConfig: ABFItemConfigMinimal<
-  DisadvantageDataSource,
-  DisadvantageChanges
+  DisadvantageDataSource
 > = {
   type: ABFItems.DISADVANTAGE,
   isInternal: false,
   fieldPath: ['general', 'disadvantages'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.disadvantages as DisadvantageChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-disadvantage',
     containerSelector: '#disadvantages-context-menu-container',

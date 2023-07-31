@@ -1,5 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../types/Actor';
-import { WeaponDataSource, WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
+import { WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../types/Items';
 
 export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };

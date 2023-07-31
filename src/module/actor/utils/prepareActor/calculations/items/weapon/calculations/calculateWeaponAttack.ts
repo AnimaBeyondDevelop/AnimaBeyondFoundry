@@ -1,4 +1,4 @@
-import { WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponKnowledgePenalty } from '../util/getWeaponKnowledgePenalty';
 import { calculateStrengthRequiredPenalty } from '../util/calculateStrengthRequiredPenalty';

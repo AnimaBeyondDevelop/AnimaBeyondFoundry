@@ -12,13 +12,10 @@ export type MentalPatternDataSource = ABFItemBaseDataSource<ABFItems.MENTAL_PATT
 
 export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 
-export const MentalPatternItemConfig: ABFItemConfigMinimal<MentalPatternDataSource, MentalPatternChanges> = {
+export const MentalPatternItemConfig: ABFItemConfigMinimal<MentalPatternDataSource> = {
   type: ABFItems.MENTAL_PATTERN,
   isInternal: false,
   fieldPath: ['psychic', 'mentalPatterns'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.mentalPatterns as MentalPatternChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-mental-pattern',
     containerSelector: '#mental-patterns-context-menu-container',

@@ -15,16 +15,10 @@ export type InventoryItemDataSource = ABFItemBaseDataSource<
 
 export type InventoryItemChanges = ItemChanges<InventoryItemItemData>;
 
-export const InventoryItemItemConfig: ABFItemConfigMinimal<
-  InventoryItemDataSource,
-  InventoryItemChanges
-> = {
+export const InventoryItemItemConfig: ABFItemConfigMinimal<InventoryItemDataSource> = {
   type: ABFItems.INVENTORY_ITEM,
   isInternal: true,
   fieldPath: ['general', 'inventory'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.inventory as InventoryItemChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-inventory-item',
     containerSelector: '#inventory-items-context-menu-container',

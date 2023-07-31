@@ -1,8 +1,8 @@
-import { WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponKnowledgePenalty } from '../util/getWeaponKnowledgePenalty';
 import { calculateStrengthRequiredPenalty } from '../util/calculateStrengthRequiredPenalty';
 import { calculateShieldBlockBonus } from '../../../actor/combat/calculations/calculateShieldBlockBonus';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const calculateWeaponBlock = (weapon: WeaponDataSource, data: ABFActorDataSourceData) =>
   data.combat.block.final.value +

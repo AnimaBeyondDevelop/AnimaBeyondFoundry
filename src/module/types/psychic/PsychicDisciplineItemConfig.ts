@@ -9,13 +9,10 @@ export type PsychicDisciplineDataSource = ABFItemBaseDataSource<ABFItems.PSYCHIC
 
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 
-export const PsychicDisciplineItemConfig: ABFItemConfigMinimal<PsychicDisciplineDataSource, PsychicDisciplineChanges> = {
+export const PsychicDisciplineItemConfig: ABFItemConfigMinimal<PsychicDisciplineDataSource> = {
   type: ABFItems.PSYCHIC_DISCIPLINE,
   isInternal: false,
   fieldPath: ['psychic', 'psychicDisciplines'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.psychicDisciplines as PsychicDisciplineChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-psychic-discipline',
     containerSelector: '#psychic-disciplines-context-menu-container',

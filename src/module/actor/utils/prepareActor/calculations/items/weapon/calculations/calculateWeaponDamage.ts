@@ -1,10 +1,10 @@
 import {
-  WeaponDataSource,
   WeaponShotType,
   WeaponSizeProportion
 } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
   if (weapon.system.sizeProportion.value === WeaponSizeProportion.ENORMOUS) {
@@ -23,7 +23,7 @@ const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
 export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const getDamage = () => {
     const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
-    const extraDamage = data.general.modifiers.extraDamage.value
+    const extraDamage = data.general.modifiers.extraDamage.value;
 
     if (weapon.system.isRanged.value && weapon.system.shotType.value === WeaponShotType.SHOT) {
       const { ammo } = weapon.system;

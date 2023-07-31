@@ -1,5 +1,5 @@
-import { WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const calculateWeaponReload = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const sleightOfHand = data.secondaries.creative.sleightOfHand.final.value;

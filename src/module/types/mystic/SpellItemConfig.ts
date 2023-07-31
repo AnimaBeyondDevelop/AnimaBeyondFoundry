@@ -37,14 +37,11 @@ export type SpellDataSource = ABFItemBaseDataSource<ABFItems.SPELL, SpellItemDat
 
 export type SpellChanges = ItemChanges<SpellItemData>;
 
-export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource, SpellChanges> = {
+export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource> = {
   type: ABFItems.SPELL,
   isInternal: false,
   hasSheet: true,
   fieldPath: ['mystic', 'spells'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.spells as SpellChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-spell',
     containerSelector: '#spells-context-menu-container',

@@ -8,20 +8,6 @@ export const prepareItems = async actor => {
     }
   }
 
-  // Prepare Actor's combat items
-  actor.system.combat.weapons = actor.getWeapons().map(weapon => {
-    if (
-      weapon.system.isRanged &&
-      typeof weapon.system.ammoId === 'string' &&
-      !!weapon.system.ammoId
-    ) {
-      const { system: { combat: { ammo } } } = actor;
-
-      weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
-    }
-    return weapon;
-  });
-
   // Prepare Actor's domine items
   actor.system.domine.arsMagnus = actor.getArsMagnus();
   actor.system.domine.creatures = actor.getKnownCreatures();

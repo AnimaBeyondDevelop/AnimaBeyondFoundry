@@ -12,12 +12,12 @@ export type LanguageDataSource = ABFItemBaseDataSource<
 
 export type LanguageChanges = ItemChanges<LanguageItemData>;
 
-export const LanguageItemConfig: ABFItemConfigMinimal<LanguageDataSource, LanguageChanges> = {
+export const LanguageItemConfig: ABFItemConfigMinimal<LanguageDataSource> = {
   type: ABFItems.LANGUAGE,
   isInternal: true,
   fieldPath: ['general', 'languages', 'others'],
   getFromDynamicChanges: changes => {
-    return changes.system.dynamic.languages as LanguageChanges;
+    return changes.system.dynamic.languages;
   },
   selectors: {
     addItemButtonSelector: 'add-language',

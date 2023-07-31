@@ -14,16 +14,10 @@ export type SecondarySpecialSkillDataSource = ABFItemBaseDataSource<
 
 export type SecondarySpecialSkillChanges = ItemChanges<SecondarySpecialSkillItemData>;
 
-export const SecondarySpecialSkillItemConfig: ABFItemConfigMinimal<
-  SecondarySpecialSkillDataSource,
-  SecondarySpecialSkillChanges
-> = {
+export const SecondarySpecialSkillItemConfig: ABFItemConfigMinimal<SecondarySpecialSkillDataSource> = {
   type: ABFItems.SECONDARY_SPECIAL_SKILL,
   isInternal: true,
   fieldPath: ['secondaries', 'secondarySpecialSkills'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.secondarySpecialSkills as SecondarySpecialSkillChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-secondary-special-skill',
     containerSelector: '#secondary-special-skills-context-menu-container',

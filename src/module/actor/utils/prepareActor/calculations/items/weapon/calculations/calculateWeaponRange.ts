@@ -1,5 +1,5 @@
-import { WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 import { getWeaponRangeFromStrength } from '../util/getWeaponRangeFromStrength';
 
 export const calculateWeaponRange = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {

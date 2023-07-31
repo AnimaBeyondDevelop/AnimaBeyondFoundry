@@ -1,4 +1,5 @@
-import { WeaponDataSource, WeaponKnowledgeType } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponKnowledgeType } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const getWeaponKnowledgePenalty = (weapon: WeaponDataSource) => {
   switch (weapon.system.knowledgeType.value) {

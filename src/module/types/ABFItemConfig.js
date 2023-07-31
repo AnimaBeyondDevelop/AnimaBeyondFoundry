@@ -36,7 +36,7 @@ export function ABFItemConfigFactory(minimal) {
       for (const item of items) {
         await this.onAttach?.(actor, item);
         this.addToFieldPath(actor, item);
-        this.prepareItem?.(item); // WARN: Does this have any effect on the item stored in the fieldPath?
+        this.prepareItem?.(item);
       }
     },
     ...minimal

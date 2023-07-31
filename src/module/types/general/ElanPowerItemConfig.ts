@@ -15,12 +15,16 @@ export type ElanPowerDataSource = ABFItemBaseDataSource<
 
 export type ElanPowerChanges = ItemChanges<ElanPowerItemData & { elanId: string }>;
 
-export const ElanPowerItemConfig: ABFItemConfigMinimal<ElanPowerDataSource, ElanPowerChanges> = {
+export const ElanPowerItemConfig: ABFItemConfigMinimal<
+  ElanPowerItemData,
+  ElanPowerDataSource,
+  ElanPowerChanges
+> = {
   type: ABFItems.ELAN_POWER,
   isInternal: true,
   fieldPath: [], // This is not used because this is internal to the elan
   getFromDynamicChanges: changes => {
-    return changes.system.dynamic.elan_power as ElanPowerChanges;
+    return changes.system.dynamic.elan_power;
   },
   selectors: {
     addItemButtonSelector: 'add-elan-power',

@@ -9,13 +9,10 @@ export type ArsMagnusDataSource = ABFItemBaseDataSource<ABFItems.ARS_MAGNUS, Ars
 
 export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 
-export const ArsMagnusItemConfig: ABFItemConfigMinimal<ArsMagnusDataSource, ArsMagnusChanges> = {
+export const ArsMagnusItemConfig: ABFItemConfigMinimal<ArsMagnusDataSource> = {
   type: ABFItems.ARS_MAGNUS,
   isInternal: true,
   fieldPath: ['domine', 'arsMagnus'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.arsMagnus as ArsMagnusChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-ars-magnus',
     containerSelector: '#ars-magnus-context-menu-container',

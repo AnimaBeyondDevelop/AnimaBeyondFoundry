@@ -12,13 +12,10 @@ export type ElanDataSource = ABFItemBaseDataSource<ABFItems.ELAN, ElanItemData>;
 
 export type ElanChanges = ItemChanges<ElanItemData>;
 
-export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource, ElanChanges> = {
+export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource> = {
   type: ABFItems.ELAN,
   isInternal: true,
   fieldPath: ['general', 'elan'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.elan as ElanChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-elan',
     containerSelector: '#elan-context-menu-container',

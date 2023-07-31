@@ -23,7 +23,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @typedef {import("../../../animabf.types").ABFItemBaseDataSource<ABFItems.TECHNIQUE, TechniqueItemData>} TechniqueDataSource
   */
 
-/** @type {import("../Items").ABFItemConfig<TechniqueDataSource, TechniqueChanges>} */
+/** @type {import("../Items").ABFItemConfig<TechniqueDataSource>} */
 export const TechniqueItemConfig = ABFItemConfigFactory({
   type: ABFItems.TECHNIQUE,
   isInternal: false,

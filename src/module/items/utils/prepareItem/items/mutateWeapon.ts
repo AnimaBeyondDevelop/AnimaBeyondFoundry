@@ -1,4 +1,4 @@
-import { WeaponItemData } from '../../../../types/combat/WeaponItemConfig';
+import { WeaponItemData } from '../../../../types/Items';
 import { mutateStrRequired } from './mutations/mutateStrRequired';
 import { mutateWeaponStrength } from './mutations/mutateWeaponStrength';
 

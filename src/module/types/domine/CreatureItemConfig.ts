@@ -20,13 +20,10 @@ export type CreatureChange = {
 
 export type CreatureChanges = ItemChanges<CreatureChange>;
 
-export const CreatureItemConfig: ABFItemConfigMinimal<CreatureDataSource, CreatureChanges> = {
+export const CreatureItemConfig: ABFItemConfigMinimal<CreatureDataSource> = {
   type: ABFItems.CREATURE,
   isInternal: true,
   fieldPath: ['domine', 'creatures'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.creatures as CreatureChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-creature',
     containerSelector: '#creatures-context-menu-container',

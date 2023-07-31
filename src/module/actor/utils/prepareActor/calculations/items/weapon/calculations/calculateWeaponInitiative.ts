@@ -1,4 +1,5 @@
-import { WeaponDataSource, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const calculateWeaponInitiative = (weapon: WeaponDataSource) => {
   let initiative = weapon.system.initiative.base.value + weapon.system.quality.value;

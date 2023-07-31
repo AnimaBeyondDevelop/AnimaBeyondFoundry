@@ -1,4 +1,5 @@
-import { WeaponEquippedHandType, WeaponManageabilityType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponEquippedHandType, WeaponManageabilityType } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const getStrengthRequirement = (weapon: WeaponDataSource) => {
   switch (weapon.system.manageabilityType.value) {

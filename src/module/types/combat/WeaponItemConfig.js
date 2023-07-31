@@ -1,68 +1,90 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
 import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
-import { normalizeItem } from '../../actor/utils/prepareActor/utils/normalizeItem';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export enum WeaponEquippedHandType {
-  ONE_HANDED = 'one-handed',
-  TWO_HANDED = 'two-handed'
-}
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const WeaponEquippedHandType = {
+  ONE_HANDED: 'one-handed',
+  TWO_HANDED: 'two-handed'
+};
 
-export enum WeaponKnowledgeType {
-  KNOWN = 'known',
-  SIMILAR = 'similar',
-  MIXED = 'mixed',
-  DIFFERENT = 'different'
-}
+/**
+  * @readonly
+  * @enum {string}
+  */
+export const WeaponKnowledgeType = {
+  KNOWN: 'known',
+  SIMILAR: 'similar',
+  MIXED: 'mixed',
+  DIFFERENT: 'different'
+};
 
-export enum WeaponCritic {
-  CUT = 'cut',
-  IMPACT = 'impact',
-  THRUST = 'thrust',
-  HEAT = 'heat',
-  ELECTRICITY = 'electricity',
-  COLD = 'cold',
-  ENERGY = 'energy'
-}
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const WeaponCritic = {
+  CUT: 'cut',
+  IMPACT: 'impact',
+  THRUST: 'thrust',
+  HEAT: 'heat',
+  ELECTRICITY: 'electricity',
+  COLD: 'cold',
+  ENERGY: 'energy'
+};
 
-export enum NoneWeaponCritic {
-  NONE = '-'
-}
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const NoneWeaponCritic = {
+  NONE: '-'
+};
 
-export type OptionalWeaponCritic = WeaponCritic | NoneWeaponCritic;
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const WeaponManageabilityType = {
+  ONE_HAND: 'one_hand',
+  TWO_HAND: 'two_hands',
+  ONE_OR_TWO_HAND: 'one_or_two_hands'
+};
 
-export enum WeaponManageabilityType {
-  ONE_HAND = 'one_hand',
-  TWO_HAND = 'two_hands',
-  ONE_OR_TWO_HAND = 'one_or_two_hands'
-}
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const WeaponShotType = {
+  SHOT: 'shot',
+  THROW: 'throw'
+};
 
-export enum WeaponShotType {
-  SHOT = 'shot',
-  THROW = 'throw'
-}
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const WeaponSize = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+  BIG: 'big'
+};
 
-export enum WeaponSize {
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  BIG = 'big'
-}
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const WeaponSizeProportion = {
+  NORMAL: 'normal',
+  ENORMOUS: 'enormous',
+  GIANT: 'giant'
+};
 
-export enum WeaponSizeProportion {
-  NORMAL = 'normal',
-  ENORMOUS = 'enormous',
-  GIANT = 'giant'
-}
-
-export type WeaponItemData = any;
-
-export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItemData>;
-
-export type WeaponChanges = ItemChanges<WeaponItemData>;
-
-export const INITIAL_WEAPON_DATA: WeaponItemData = {
+export const INITIAL_WEAPON_DATA = {
   equipped: { value: false },
   isShield: { value: false },
   special: { value: '' },
@@ -132,28 +154,26 @@ export const INITIAL_WEAPON_DATA: WeaponItemData = {
   }
 };
 
-export const WeaponItemConfig: ABFItemConfigMinimal<WeaponDataSource, WeaponChanges> = {
+/** @type {import("../Items").WeaponItemConfig} */
+export const WeaponItemConfig = ABFItemConfigFactory({
   type: ABFItems.WEAPON,
   isInternal: false,
   hasSheet: true,
   defaultValue: INITIAL_WEAPON_DATA,
   fieldPath: ['combat', 'weapons'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.weapons as WeaponChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-weapon',
     containerSelector: '#weapons-context-menu-container',
     rowSelector: '.weapon-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.weapons.content')
     });
 
-    const itemData: any = {
+    const itemData = {
       name,
       type: ABFItems.WEAPON,
       system: INITIAL_WEAPON_DATA
@@ -161,7 +181,7 @@ export const WeaponItemConfig: ABFItemConfigMinimal<WeaponDataSource, WeaponChan
 
     await actor.createItem(itemData);
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -172,7 +192,18 @@ export const WeaponItemConfig: ABFItemConfigMinimal<WeaponDataSource, WeaponChan
       });
     }
   },
+  onAttach: async (actor, weapon) => {
+    if (
+      weapon.system.isRanged &&
+      typeof weapon.system.ammoId === 'string' &&
+      !!weapon.system.ammoId
+    ) {
+      const { system: { combat: { ammo } } } = actor;
+
+      weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
+    }
+  },
   prepareItem(data) {
     mutateWeapon(data);
   }
-};
+});

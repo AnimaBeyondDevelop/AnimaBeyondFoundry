@@ -9,7 +9,7 @@ export type NemesisSkillDataSource = ABFItemBaseDataSource<ABFItems.NEMESIS_SKIL
 
 export type NemesisSkillChanges = ItemChanges<NemesisSkillItemData>;
 
-export const NemesisSkillItemConfig: ABFItemConfigMinimal<NemesisSkillDataSource, NemesisSkillChanges> = {
+export const NemesisSkillItemConfig: ABFItemConfigMinimal<NemesisSkillItemData> = {
   type: ABFItems.NEMESIS_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'nemesisSkills'],

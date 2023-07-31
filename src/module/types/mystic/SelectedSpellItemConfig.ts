@@ -14,16 +14,10 @@ export type SelectedSpellDataSource = ABFItemBaseDataSource<
 
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 
-export const SelectedSpellItemConfig: ABFItemConfigMinimal<
-  SelectedSpellDataSource,
-  SelectedSpellChanges
-> = {
+export const SelectedSpellItemConfig: ABFItemConfigMinimal<SelectedSpellDataSource> = {
   type: ABFItems.SELECTED_SPELL,
   isInternal: true,
   fieldPath: ['mystic', 'selectedSpells'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.selectedSpells as SelectedSpellChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-selected-spell',
     containerSelector: '#selected-spells-context-menu-container',

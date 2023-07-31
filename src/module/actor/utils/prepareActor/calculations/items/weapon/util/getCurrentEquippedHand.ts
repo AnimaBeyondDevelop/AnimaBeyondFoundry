@@ -1,4 +1,5 @@
-import { WeaponEquippedHandType, WeaponManageabilityType, WeaponDataSource } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponEquippedHandType, WeaponManageabilityType, } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const getCurrentEquippedHand = (weapon: WeaponDataSource): WeaponEquippedHandType => {
   switch (weapon.system.manageabilityType.value) {

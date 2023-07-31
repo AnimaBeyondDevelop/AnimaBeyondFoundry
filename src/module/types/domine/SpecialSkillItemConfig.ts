@@ -12,16 +12,10 @@ export type SpecialSkillDataSource = ABFItemBaseDataSource<
 
 export type SpecialSkillChanges = ItemChanges<SpecialSkillItemData>;
 
-export const SpecialSkillItemConfig: ABFItemConfigMinimal<
-  SpecialSkillDataSource,
-  SpecialSkillChanges
-> = {
+export const SpecialSkillItemConfig: ABFItemConfigMinimal<SpecialSkillDataSource> = {
   type: ABFItems.SPECIAL_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'specialSkills'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.specialSkills as SpecialSkillChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-special-skill',
     containerSelector: '#special-skills-context-menu-container',
@@ -49,5 +43,5 @@ export const SpecialSkillItemConfig: ABFItemConfigMinimal<
         name
       });
     }
-  },
+  }
 };

@@ -9,13 +9,10 @@ export type TitleDataSource = ABFItemBaseDataSource<ABFItems.TITLE, TitleItemDat
 
 export type TitleChanges = ItemChanges<TitleItemData>;
 
-export const TitleItemConfig: ABFItemConfigMinimal<TitleDataSource, TitleChanges> = {
+export const TitleItemConfig: ABFItemConfigMinimal<TitleDataSource> = {
   type: ABFItems.TITLE,
   isInternal: true,
   fieldPath: ['general', 'titles'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.titles as TitleChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-title',
     containerSelector: '#titles-context-menu-container',

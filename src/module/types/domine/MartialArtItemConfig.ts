@@ -11,13 +11,10 @@ export type MartialArtDataSource = ABFItemBaseDataSource<ABFItems.MARTIAL_ART, M
 
 export type MartialArtChanges = ItemChanges<MartialArtItemData>;
 
-export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource, MartialArtChanges> = {
+export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource> = {
   type: ABFItems.MARTIAL_ART,
   isInternal: true,
   fieldPath: ['domine', 'martialArts'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.martialArts as MartialArtChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-martial-art',
     containerSelector: '#martial-arts-context-menu-container',

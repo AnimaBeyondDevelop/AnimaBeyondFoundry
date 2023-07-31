@@ -9,13 +9,10 @@ export type KiSkillDataSource = ABFItemBaseDataSource<ABFItems.KI_SKILL, KiSkill
 
 export type KiSkillChanges = ItemChanges<KiSkillItemData>;
 
-export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource, KiSkillChanges> = {
+export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource> = {
   type: ABFItems.KI_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'kiSkills'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.kiSkills as KiSkillChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-ki-skill',
     containerSelector: '#ki-skills-context-menu-container',

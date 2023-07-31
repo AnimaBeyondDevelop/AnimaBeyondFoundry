@@ -14,16 +14,10 @@ export type SpellMaintenanceDataSource = ABFItemBaseDataSource<
 
 export type SpellMaintenanceChanges = ItemChanges<SpellMaintenanceItemData>;
 
-export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<
-  SpellMaintenanceDataSource,
-  SpellMaintenanceChanges
-> = {
+export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<SpellMaintenanceDataSource> = {
   type: ABFItems.SPELL_MAINTENANCE,
   isInternal: true,
   fieldPath: ['mystic', 'spellMaintenances'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.spellMaintenances as SpellMaintenanceChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-spell-maintenance',
     containerSelector: '#spell-maintenances-context-menu-container',

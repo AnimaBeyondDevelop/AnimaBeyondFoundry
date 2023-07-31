@@ -11,13 +11,10 @@ export type LevelDataSource = ABFItemBaseDataSource<ABFItems.LEVEL, LevelItemDat
 
 export type LevelChanges = ItemChanges<LevelItemData>;
 
-export const LevelItemConfig: ABFItemConfigMinimal<LevelDataSource, LevelChanges> = {
+export const LevelItemConfig: ABFItemConfigMinimal<LevelDataSource> = {
   type: ABFItems.LEVEL,
   isInternal: true,
   fieldPath: ['general', 'levels'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.levels as LevelChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-level',
     containerSelector: '#level-context-menu-container',

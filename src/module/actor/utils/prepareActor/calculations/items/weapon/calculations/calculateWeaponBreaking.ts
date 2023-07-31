@@ -1,6 +1,7 @@
-import { WeaponDataSource, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponBreakingFromStrength } from '../util/getWeaponBreakingFromStrength';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const calculateWeaponBreaking = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const strength = data.characteristics.primaries.strength.value;

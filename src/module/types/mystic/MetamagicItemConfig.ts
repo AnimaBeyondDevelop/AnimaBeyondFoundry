@@ -14,13 +14,10 @@ export type MetamagicDataSource = ABFItemBaseDataSource<
 
 export type MetamagicChanges = ItemChanges<MetamagicItemData>;
 
-export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource, MetamagicChanges> = {
+export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource> = {
   type: ABFItems.METAMAGIC,
   isInternal: true,
   fieldPath: ['mystic', 'metamagics'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.metamagics as MetamagicChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-metamagic',
     containerSelector: '#metamagics-context-menu-container',

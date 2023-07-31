@@ -4,14 +4,17 @@ import { ABFActorDataSourceData } from './Actor';
 import ABFItem from '../items/ABFItem';
 import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
+import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 
 /**
  * @template TData - Type of the data inside the item's system attribute.
+ * @template TDataSource - Type of the item as returned by `actor.getItemsOf()`.
  * @template TChanges - Type of the item changes as returned by `.getFromDynamicChanges()`.
  * @template TDynamicChanges - Type of the dynamic changes as received by `.getFromDynamicChanges()`.
  */
 export type ABFItemConfigMinimal<
   TData,
+  TDataSource = ABFItemBaseDataSource<TData> | ABFItem,
   TChanges = ItemChanges<TData>,
   TDynamicChanges = DynamicChanges<TChanges>
 > = {
@@ -92,7 +95,7 @@ export type ABFItemConfigMinimal<
    * @param item
    * @param otherArgs
    */
-  onAttach?: (data: ABFActor, item: TData, ...otherArgs: unknown[]) => void;
+  onAttach?: (data: ABFActor, item: TDataSource, ...otherArgs: unknown[]) => void;
 
   /**
    * Extra configuration for contextual menu
@@ -119,9 +122,9 @@ export type ABFItemConfigMinimal<
 
   /**
    * Method to calculate derived data
-   * @param data
+   * @param item
    */
-  prepareItem?: (data: ABFItem) => void;
+  prepareItem?: (item: TDataSource) => void;
 
   /**
    * This function clears the path where this type of Items is stored for a given actor, setting it to an empty array.
@@ -134,7 +137,7 @@ export type ABFItemConfigMinimal<
    * @param actor
    * @param item
    */
-  addToFieldPath?: (actor: ABFActor, item: D) => void;
+  addToFieldPath?: (actor: ABFActor, item: TDatasource) => void;
 
   /**
    * This function reloads the items of this type into `actor`'s fieldPath.
@@ -154,15 +157,17 @@ type WithRequired<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
 /**
  * @template TData - Type of the data inside the item's system attribute.
+ * @template TDataSource - Type of the item as returned by `actor.getItemsOf()`.
  * @template TChanges - Type of the item changes as returned by `.getFromDynamicChanges()`.
  * @template TDynamicChanges - Type of the dynamic changes as received by `.getFromDynamicChanges()`.
  */
 export type ABFItemConfig<
   TData,
+  TDataSource = ABFItemBaseDataSource<TData> | ABFItem,
   TChanges = ItemChanges<TData>,
   TDynamicChanges = DynamicChanges<TChanges>
 > = WithRequired<
-  ABFItemConfigMinimal<TData, TChanges, TDynamicChanges>,
+  ABFItemConfigMinimal<TData, TDataSource, TChanges, TDynamicChanges>,
   'getFromDynamicChanges' | 'clearFieldPath' | 'addToFieldPath' | 'resetFieldPath'
 >;
 
@@ -204,7 +209,7 @@ export type AmmoItemData = {
 };
 export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
 export type AmmoChanges = ItemChanges<AmmoItemData>;
-export type AmmoItemConfig = ABFItemConfig<AmmoItemData, AmmoChanges>;
+export type AmmoItemConfig = ABFItemConfig<AmmoItemData>;
 
 export type ArmorItemData = {
   cut: DerivedField;
@@ -227,7 +232,7 @@ export type ArmorItemData = {
 };
 export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
 export type ArmorChanges = ItemChanges<ArmorItemData>;
-export type ArmorItemConfig = ABFItemConfig<ArmorItemData, ArmorChanges>;
+export type ArmorItemConfig = ABFItemConfig<ArmorItemData>;
 
 export type ContactItemData = {
   description: { value: string };
@@ -251,3 +256,10 @@ export type CombatTableDataSource = ABFItemBaseDataSource<
 >;
 export type CombatTableChanges = ItemChanges<CombatTableItemData>;
 export type CombatTableItemConfig = ABFItemConfig<CombatTableItemData>;
+
+// export type OptionalWeaponCritic = WeaponCritic | NoneWeaponCritic;
+export type WeaponItemData = typeof INITIAL_WEAPON_DATA;
+
+export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItemData>;
+export type WeaponChanges = ItemChanges<WeaponItemData>;
+export type WeaponItemConfig = ABFItemConfig<WeaponItemData>;

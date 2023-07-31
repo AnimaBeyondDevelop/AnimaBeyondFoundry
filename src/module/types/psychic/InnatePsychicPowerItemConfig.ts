@@ -15,13 +15,10 @@ export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<
 
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 
-export const InnatePsychicPowerItemConfig: ABFItemConfigMinimal<InnatePsychicPowerDataSource, InnatePsychicPowerChanges> = {
+export const InnatePsychicPowerItemConfig: ABFItemConfigMinimal<InnatePsychicPowerDataSource> = {
   type: ABFItems.INNATE_PSYCHIC_POWER,
   isInternal: true,
   fieldPath: ['psychic', 'innatePsychicPowers'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.innatePsychicPowers as InnatePsychicPowerChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-innate-psychic-power',
     containerSelector: '#innate-psychic-powers-context-menu-container',
