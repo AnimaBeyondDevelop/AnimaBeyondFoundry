@@ -1,15 +1,9 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type SummonItemData = Record<string, never>;
-
-export type SummonDataSource = ABFItemBaseDataSource<ABFItems.SUMMON, SummonItemData>;
-
-export type SummonChanges = ItemChanges<SummonItemData>;
-
-export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource> = {
+/** @type {import("../Items").SummonItemConfig} */
+export const SummonItemConfig = ABFItemConfigFactory({
   type: ABFItems.SUMMON,
   isInternal: true,
   fieldPath: ['mystic', 'summons'],
@@ -18,8 +12,8 @@ export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource> = {
     containerSelector: '#summons-context-menu-container',
     rowSelector: '.summon-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.summon.content')
@@ -30,11 +24,11 @@ export const SummonItemConfig: ABFItemConfigMinimal<SummonDataSource> = {
       type: ABFItems.SUMMON
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
       await actor.updateInnerItem({ id, type: ABFItems.SUMMON, name });
     }
   },
-};
+});

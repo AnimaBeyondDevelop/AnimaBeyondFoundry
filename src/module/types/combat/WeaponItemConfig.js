@@ -86,6 +86,7 @@ export const WeaponSizeProportion = {
 
 /**
  * Initial data for a new weapon. Used to infer the type of the data inside `weapon.system`
+ * @readonly
  */
 export const INITIAL_WEAPON_DATA = {
   equipped: { value: false },

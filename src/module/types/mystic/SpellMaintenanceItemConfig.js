@@ -1,20 +1,9 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type SpellMaintenanceItemData = {
-  cost: { value: number };
-};
-
-export type SpellMaintenanceDataSource = ABFItemBaseDataSource<
-  ABFItems.SPELL_MAINTENANCE,
-  SpellMaintenanceItemData
->;
-
-export type SpellMaintenanceChanges = ItemChanges<SpellMaintenanceItemData>;
-
-export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<SpellMaintenanceDataSource> = {
+/** @type {import("../Items").SpellMaintenanceItemConfig} */
+export const SpellMaintenanceItemConfig = ABFItemConfigFactory({
   type: ABFItems.SPELL_MAINTENANCE,
   isInternal: true,
   fieldPath: ['mystic', 'spellMaintenances'],
@@ -23,8 +12,8 @@ export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<SpellMaintenanceDa
     containerSelector: '#spell-maintenances-context-menu-container',
     rowSelector: '.spell-maintenance-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.spellMaintenance.content')
@@ -36,7 +25,7 @@ export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<SpellMaintenanceDa
       system: { cost: { value: 0 } }
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -48,4 +37,4 @@ export const SpellMaintenanceItemConfig: ABFItemConfigMinimal<SpellMaintenanceDa
       });
     }
   },
-};
+});

@@ -1,13 +1,12 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export const NoteItemConfig = {
+/** @type {import("../Items").NoteItemConfig} */
+export const NoteItemConfig = ABFItemConfigFactory({
   type: ABFItems.NOTE,
-  isInternal: false,
+  isInternal: true,
   fieldPath: ['general', 'notes'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.notes;
-  },
   selectors: {
     addItemButtonSelector: 'add-note',
     containerSelector: '#_notes-context-menu-container',
@@ -37,24 +36,8 @@ export const NoteItemConfig = {
     }
   },
   onAttach: async (actor, item) => {
-    const items = actor.getNotes();
-
-    for (const note of items) {
-      note.system.enrichedName = await TextEditor.enrichHTML(note.name, {
-        async: true
-      });
-    }
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.general.notes = [item];
-    }
+    item.system.enrichedName = await TextEditor.enrichHTML(item.name ?? '', {
+      async: true
+    });
   }
-};
+});

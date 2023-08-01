@@ -1,18 +1,10 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 import { ElanPowerItemConfig } from './ElanPowerItemConfig';
 
-export type ElanItemData = {
-  level: { value: string };
-};
-
-export type ElanDataSource = ABFItemBaseDataSource<ABFItems.ELAN, ElanItemData>;
-
-export type ElanChanges = ItemChanges<ElanItemData>;
-
-export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource> = {
+/** @type {import("../Items").ElanItemConfig} */
+export const ElanItemConfig = ABFItemConfigFactory({
   type: ABFItems.ELAN,
   isInternal: true,
   fieldPath: ['general', 'elan'],
@@ -24,7 +16,7 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource> = {
   contextMenuConfig: {
     buildExtraOptionsInContextMenu: actor => [
       {
-        name: (game as Game).i18n.localize('contextualMenu.elan.options.addPower'),
+        name: game.i18n.localize('contextualMenu.elan.options.addPower'),
         icon: '<i class="fa fa-plus" aria-hidden="true"></i>',
         callback: target => {
           const { itemId } = target[0].dataset;
@@ -36,8 +28,8 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource> = {
       }
     ]
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.elan.content')
@@ -52,7 +44,7 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource> = {
       }
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -65,19 +57,5 @@ export const ElanItemConfig: ABFItemConfigMinimal<ElanDataSource> = {
         system: { ...elan.system, ...system }
       });
     }
-  },
-  onAttach: (actor, item) => {
-    const items = actor.getElans();
-
-    if (items) {
-      const itemIndex = items.findIndex(i => i._id === item._id);
-      if (itemIndex !== -1) {
-        items[itemIndex] = item;
-      } else {
-        items.push(item);
-      }
-    } else {
-      actor.system.general.elan = [item];
-    }
   }
-};
+});

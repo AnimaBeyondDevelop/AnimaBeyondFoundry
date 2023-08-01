@@ -1,20 +1,9 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type SelectedSpellItemData = {
-  cost: { value: number };
-};
-
-export type SelectedSpellDataSource = ABFItemBaseDataSource<
-  ABFItems.SELECTED_SPELL,
-  SelectedSpellItemData
->;
-
-export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
-
-export const SelectedSpellItemConfig: ABFItemConfigMinimal<SelectedSpellDataSource> = {
+/** @type {import("../Items").SelectedSpellItemConfig} */
+export const SelectedSpellItemConfig = ABFItemConfigFactory({
   type: ABFItems.SELECTED_SPELL,
   isInternal: true,
   fieldPath: ['mystic', 'selectedSpells'],
@@ -23,8 +12,8 @@ export const SelectedSpellItemConfig: ABFItemConfigMinimal<SelectedSpellDataSour
     containerSelector: '#selected-spells-context-menu-container',
     rowSelector: '.selected-spell-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.selectedSpell.content')
@@ -36,7 +25,7 @@ export const SelectedSpellItemConfig: ABFItemConfigMinimal<SelectedSpellDataSour
       system: { cost: { value: 0 } }
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -48,4 +37,4 @@ export const SelectedSpellItemConfig: ABFItemConfigMinimal<SelectedSpellDataSour
       });
     }
   },
-};
+});

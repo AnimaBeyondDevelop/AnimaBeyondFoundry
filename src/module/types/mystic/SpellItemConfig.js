@@ -1,43 +1,20 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-enum SpellGradeNames {
-  BASE = 'anima.ui.mystic.spell.grade.base.title',
-  INTERMEDIATE = 'anima.ui.mystic.spell.grade.intermediate.title',
-  ADVANCED = 'anima.ui.mystic.spell.grade.advanced.title',
-  ARCANE = 'anima.ui.mystic.spell.grade.arcane.title'
-}
-
-export type SpellGrade = {
-  name: { value: SpellGradeNames };
-  intRequired: { value: number };
-  zeon: { value: number };
-  maintenanceCost: { value: number };
-  description: { value: string };
+/**
+ * @readonly
+ * @enum {string}
+ */
+const SpellGradeNames = {
+  BASE: 'anima.ui.mystic.spell.grade.base.title',
+  INTERMEDIATE: 'anima.ui.mystic.spell.grade.intermediate.title',
+  ADVANCED: 'anima.ui.mystic.spell.grade.advanced.title',
+  ARCANE: 'anima.ui.mystic.spell.grade.arcane.title'
 };
 
-export type SpellItemData = {
-  description: { value: string };
-  level: { value: number };
-  via: { value: string };
-  spellType: { value: string };
-  actionType: { value: string };
-  hasDailyMaintenance: { value: boolean };
-  grades: {
-    base: SpellGrade;
-    intermediate: SpellGrade;
-    advanced: SpellGrade;
-    arcane: SpellGrade;
-  };
-};
-
-export type SpellDataSource = ABFItemBaseDataSource<ABFItems.SPELL, SpellItemData>;
-
-export type SpellChanges = ItemChanges<SpellItemData>;
-
-export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource> = {
+/** @type {import("../Items").SpellItemConfig} */
+export const SpellItemConfig = ABFItemConfigFactory({
   type: ABFItems.SPELL,
   isInternal: false,
   hasSheet: true,
@@ -47,8 +24,8 @@ export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource> = {
     containerSelector: '#spells-context-menu-container',
     rowSelector: '.spell-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.spell.content')
@@ -92,16 +69,16 @@ export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource> = {
         }
       }
     };
-    const itemCreateData: Omit<SpellDataSource, '_id'> = {
+    const itemCreateData = {
       name,
       type: ABFItems.SPELL,
-      ...InitialData,
+      ...InitialData, // NOTE: (AB) Why do we have this repeated? (see `ABFItemBaseDataSource`)
       system: InitialData
     };
 
     await actor.createItem(itemCreateData);
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -112,4 +89,4 @@ export const SpellItemConfig: ABFItemConfigMinimal<SpellDataSource> = {
       });
     }
   }
-};
+});

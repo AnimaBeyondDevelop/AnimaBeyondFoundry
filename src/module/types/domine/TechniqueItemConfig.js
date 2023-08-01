@@ -3,34 +3,26 @@ import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
-  * @typedef {Object} TechniqueItemData
-  * @property {{value: string}} description
-  * @property {{value: number}} level
-  * @property {{value: number}} strength
-  * @property {{value: number}} agility
-  * @property {{value: number}} dexterity
-  * @property {{value: number}} constitution
-  * @property {{value: number}} willPower
-  * @property {{value: number}} power
-  * @property {{value: number}} martialKnowledge
-  */
+ * Initial data for a new technique. Used to infer the type of the data inside `technique.system`
+ * @readonly
+ */
+export const INITIAL_TECHNIQUE_DATA = {
+  description: { value: '' },
+  level: { value: 0 },
+  strength: { value: 0 },
+  agility: { value: 0 },
+  dexterity: { value: 0 },
+  constitution: { value: 0 },
+  willPower: { value: 0 },
+  power: { value: 0 },
+  martialKnowledge: { value: 0 }
+};
 
-/**
-  * @typedef {import("../Items").ItemChanges<TechniqueItemData>} TechniqueChanges
-  */
-
-/**
- * @typedef {import("../../../animabf.types").ABFItemBaseDataSource<ABFItems.TECHNIQUE, TechniqueItemData>} TechniqueDataSource
-  */
-
-/** @type {import("../Items").ABFItemConfig<TechniqueDataSource>} */
+/** @type {import("../Items").TechniqueItemConfig} */
 export const TechniqueItemConfig = ABFItemConfigFactory({
   type: ABFItems.TECHNIQUE,
   isInternal: false,
   fieldPath: ['domine', 'techniques'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.techniques;
-  },
   selectors: {
     addItemButtonSelector: 'add-technique',
     containerSelector: '#techniques-context-menu-container',
@@ -46,17 +38,7 @@ export const TechniqueItemConfig = ABFItemConfigFactory({
     await actor.createItem({
       name,
       type: ABFItems.TECHNIQUE,
-      system: {
-        description: { value: '' },
-        level: { value: 0 },
-        strength: { value: 0 },
-        agility: { value: 0 },
-        dexterity: { value: 0 },
-        constitution: { value: 0 },
-        willPower: { value: 0 },
-        power: { value: 0 },
-        martialKnowledge: { value: 0 }
-      }
+      system: INITIAL_TECHNIQUE_DATA
     });
   },
   onUpdate: async (actor, changes) => {

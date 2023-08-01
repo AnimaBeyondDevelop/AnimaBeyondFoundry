@@ -1,25 +1,10 @@
 import { nanoid } from '../../../vendor/nanoid/nanoid';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type ElanPowerItemData = {
-  level: { value: number };
-};
-
-export type ElanPowerDataSource = ABFItemBaseDataSource<
-  ABFItems.ELAN_POWER,
-  ElanPowerItemData
->;
-
-export type ElanPowerChanges = ItemChanges<ElanPowerItemData & { elanId: string }>;
-
-export const ElanPowerItemConfig: ABFItemConfigMinimal<
-  ElanPowerItemData,
-  ElanPowerDataSource,
-  ElanPowerChanges
-> = {
+/** @type {import("../Items").ElanPowerItemConfig} */
+export const ElanPowerItemConfig = ABFItemConfigFactory({
   type: ABFItems.ELAN_POWER,
   isInternal: true,
   fieldPath: [], // This is not used because this is internal to the elan
@@ -31,10 +16,10 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<
     containerSelector: '#elan-context-menu-container',
     rowSelector: '.elan-row .powers'
   },
-  onCreate: async (actor, elanId): Promise<void> => {
+  onCreate: async (actor, elanId) => {
     if (typeof elanId !== 'string') throw new Error('elanId missing');
 
-    const { i18n } = game as Game;
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.elanPower.content')
@@ -42,7 +27,8 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<
 
     const InitialData = { level: { value: 0 } };
 
-    const power: ElanPowerDataSource = {
+    /** @type {import("../Items").ElanPowerDataSource} */
+    const power = {
       _id: nanoid(),
       type: ABFItems.ELAN_POWER,
       name,
@@ -56,7 +42,8 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<
     if (elan) {
       const { system } = elan;
 
-      const powers: ElanPowerDataSource[] = [];
+    /** @type {import("../Items").ElanPowerDataSource[]} */
+      const powers = [];
 
       if (!system.powers) {
         powers.push(power);
@@ -74,7 +61,7 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<
       });
     }
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const {
         name,
@@ -86,7 +73,8 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<
       const elan = actor.getInnerItem(ABFItems.ELAN, elanId);
 
       if (elan) {
-        const powers = elan.system.powers as ElanPowerDataSource[];
+        /** @type {import("../Items").ElanPowerDataSource[]} */
+        const powers = elan.system.powers;
 
         const elanPower = powers.find(power => power._id === id);
 
@@ -143,4 +131,4 @@ export const ElanPowerItemConfig: ABFItemConfigMinimal<
       });
     }
   }
-};
+});

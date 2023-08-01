@@ -1,20 +1,9 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type MetamagicItemData = {
-  grade: { value: number };
-};
-
-export type MetamagicDataSource = ABFItemBaseDataSource<
-  ABFItems.METAMAGIC,
-  MetamagicItemData
->;
-
-export type MetamagicChanges = ItemChanges<MetamagicItemData>;
-
-export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource> = {
+/** @type {import("../Items").MetamagicItemConfig} */
+export const MetamagicItemConfig = ABFItemConfigFactory({
   type: ABFItems.METAMAGIC,
   isInternal: true,
   fieldPath: ['mystic', 'metamagics'],
@@ -23,8 +12,8 @@ export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource> = {
     containerSelector: '#metamagics-context-menu-container',
     rowSelector: '.metamagic-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.metamagic.content')
@@ -36,7 +25,7 @@ export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource> = {
       system: { grade: { value: 0 } }
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -48,4 +37,4 @@ export const MetamagicItemConfig: ABFItemConfigMinimal<MetamagicDataSource> = {
       });
     }
   }
-};
+});

@@ -17,7 +17,7 @@ export type ABFItemBaseDataSource<
 
   updateSource?: (data: D) => void;
 } & {
-  [key in K]: D[K]; // INFO: (AB) Does this makes sense?
+  [key in K]: D[K]; // INFO: (AB) Does this makes sense? (Used in `SpellItemConfig.js:77`)
 };
 
 declare global {
