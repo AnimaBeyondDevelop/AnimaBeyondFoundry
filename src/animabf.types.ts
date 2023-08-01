@@ -2,15 +2,15 @@ import { ABFConfig } from './module/ABFConfig';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import { WSUserCombatManager } from './module/combat/websocket/ws-combat/user/WSUserCombatManager';
 import { WSGMCombatManager } from './module/combat/websocket/ws-combat/gm/WSGMCombatManager';
+import { ABFItems } from './module/items/ABFItems';
 
 export type ABFItemBaseDataSource<
-  T,
   D extends Record<string, any>,
   K extends keyof D = keyof D
 > = {
   _id: string;
 
-  type: T;
+  type: ABFItems;
   name: string;
 
   system: D;

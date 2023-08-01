@@ -1,17 +1,9 @@
-import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type MartialArtItemData = {
-  grade: { value: string };
-};
-
-export type MartialArtDataSource = ABFItemBaseDataSource<ABFItems.MARTIAL_ART, MartialArtItemData>;
-
-export type MartialArtChanges = ItemChanges<MartialArtItemData>;
-
-export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource> = {
+/** @type {import("../Items").MartialArtItemConfig} */
+export const MartialArtItemConfig = ABFItemConfigFactory({
   type: ABFItems.MARTIAL_ART,
   isInternal: true,
   fieldPath: ['domine', 'martialArts'],
@@ -20,8 +12,8 @@ export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource> = 
     containerSelector: '#martial-arts-context-menu-container',
     rowSelector: '.martial-art-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.martialArt.content')
@@ -35,7 +27,7 @@ export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource> = 
       }
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name, system } = changes[id];
 
@@ -47,4 +39,4 @@ export const MartialArtItemConfig: ABFItemConfigMinimal<MartialArtDataSource> = 
       });
     }
   },
-};
+});

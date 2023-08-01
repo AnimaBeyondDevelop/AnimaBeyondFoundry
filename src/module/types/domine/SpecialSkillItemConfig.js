@@ -1,18 +1,9 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type SpecialSkillItemData = Record<string, never>;
-
-export type SpecialSkillDataSource = ABFItemBaseDataSource<
-  ABFItems.SPECIAL_SKILL,
-  SpecialSkillItemData
->;
-
-export type SpecialSkillChanges = ItemChanges<SpecialSkillItemData>;
-
-export const SpecialSkillItemConfig: ABFItemConfigMinimal<SpecialSkillDataSource> = {
+/** @type {import("../Items").SpecialSkillItemConfig} */
+export const SpecialSkillItemConfig = ABFItemConfigFactory({
   type: ABFItems.SPECIAL_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'specialSkills'],
@@ -21,8 +12,8 @@ export const SpecialSkillItemConfig: ABFItemConfigMinimal<SpecialSkillDataSource
     containerSelector: '#special-skills-context-menu-container',
     rowSelector: '.special-skill-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.specialSkill.content')
@@ -33,7 +24,7 @@ export const SpecialSkillItemConfig: ABFItemConfigMinimal<SpecialSkillDataSource
       type: ABFItems.SPECIAL_SKILL
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
@@ -44,4 +35,4 @@ export const SpecialSkillItemConfig: ABFItemConfigMinimal<SpecialSkillDataSource
       });
     }
   }
-};
+});

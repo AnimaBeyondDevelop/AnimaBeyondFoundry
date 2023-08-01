@@ -207,7 +207,7 @@ export type AmmoItemData = {
   quality: { value: number };
   special: { value: string };
 };
-export type AmmoDataSource = ABFItemBaseDataSource<ABFItems.AMMO, AmmoItemData>;
+export type AmmoDataSource = ABFItemBaseDataSource<AmmoItemData>;
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 export type AmmoItemConfig = ABFItemConfig<AmmoItemData>;
 
@@ -230,7 +230,7 @@ export type ArmorItemData = {
   quality: { value: number };
   equipped: { value: boolean };
 };
-export type ArmorDataSource = ABFItemBaseDataSource<ABFItems.ARMOR, ArmorItemData>;
+export type ArmorDataSource = ABFItemBaseDataSource<ArmorItemData>;
 export type ArmorChanges = ItemChanges<ArmorItemData>;
 export type ArmorItemConfig = ABFItemConfig<ArmorItemData>;
 
@@ -238,28 +238,61 @@ export type ContactItemData = {
   description: { value: string };
 };
 export type ContactChanges = ItemChanges<ContactItemData>;
-export type ContactDataSource = ABFItemBaseDataSource<ABFItems.CONTACT, ContactItemData>;
+export type ContactDataSource = ABFItemBaseDataSource<ContactItemData>;
 export type ContactItemConfig = ABFItemConfig<ContactItemData>;
 
 export type CombatSpecialSkillItemData = Record<string, never>;
-export type CombatSpecialSkillDataSource = ABFItemBaseDataSource<
-  ABFItems.COMBAT_SPECIAL_SKILL,
-  CombatSpecialSkillItemData
->;
+export type CombatSpecialSkillDataSource =
+  ABFItemBaseDataSource<CombatSpecialSkillItemData>;
 export type CombatSpecialSkillChanges = ItemChanges<CombatSpecialSkillItemData>;
 export type CombatSpecialSkillItemConfig = ABFItemConfig<CombatSpecialSkillItemData>;
 
 export type CombatTableItemData = Record<string, never>;
-export type CombatTableDataSource = ABFItemBaseDataSource<
-  ABFItems.COMBAT_TABLE,
-  CombatTableItemData
->;
+export type CombatTableDataSource = ABFItemBaseDataSource<CombatTableItemData>;
 export type CombatTableChanges = ItemChanges<CombatTableItemData>;
 export type CombatTableItemConfig = ABFItemConfig<CombatTableItemData>;
 
 // export type OptionalWeaponCritic = WeaponCritic | NoneWeaponCritic;
 export type WeaponItemData = typeof INITIAL_WEAPON_DATA;
 
-export type WeaponDataSource = ABFItemBaseDataSource<ABFItems.WEAPON, WeaponItemData>;
+export type WeaponDataSource = ABFItemBaseDataSource<WeaponItemData>;
 export type WeaponChanges = ItemChanges<WeaponItemData>;
 export type WeaponItemConfig = ABFItemConfig<WeaponItemData>;
+
+export type ArsMagnusItemData = Record<string, never>;
+export type ArsMagnusDataSource = ABFItemBaseDataSource<ArsMagnusItemData>;
+export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
+export type ArsMagnusItemConfig = ABFItemConfig<ArsMagnusItemData>;
+
+export type CreatureItemData = {
+  fire: { value: unknown };
+  water: { value: unknown };
+  earth: { value: unknown };
+  wood: { value: unknown };
+  metal: { value: unknown };
+};
+export type CreatureDataSource = ABFItemBaseDataSource<CreatureItemData>;
+export type CreatureChanges = ItemChanges<CreatureItemData>;
+export type CreatureItemConfig = ABFItemConfig<CreatureItemData>;
+
+export type KiSkillItemData = Record<string, never>;
+export type KiSkillDataSource = ABFItemBaseDataSource<KiSkillItemData>;
+export type KiSkillChanges = ItemChanges<KiSkillItemData>;
+export type KiSkillItemConfig = ABFItemConfig<KiSkillItemData>;
+
+export type MartialArtItemData = {
+  grade: { value: string };
+};
+export type MartialArtDataSource = ABFItemBaseDataSource<MartialArtItemData>;
+export type MartialArtChanges = ItemChanges<MartialArtItemData>;
+export type MartialArtItemConfig = ABFItemConfig<MartialArtItemData>;
+
+export type NemesisSkillItemData = Record<string, never>;
+export type NemesisSkillDataSource = ABFItemBaseDataSource<NemesisSkillItemData>;
+export type NemesisSkillChanges = ItemChanges<NemesisSkillItemData>;
+export type NemesisSkillItemConfig = ABFItemConfig<NemesisSkillItemData>;
+
+export type SpecialSkillItemData = Record<string, never>;
+export type SpecialSkillDataSource = ABFItemBaseDataSource<SpecialSkillItemData>;
+export type SpecialSkillChanges = ItemChanges<SpecialSkillItemData>;
+export type SpecialSkillItemConfig = ABFItemConfig<SpecialSkillItemData>;

@@ -1,15 +1,9 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type KiSkillItemData = Record<string, never>;
-
-export type KiSkillDataSource = ABFItemBaseDataSource<ABFItems.KI_SKILL, KiSkillItemData>;
-
-export type KiSkillChanges = ItemChanges<KiSkillItemData>;
-
-export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource> = {
+/** @type {import("../Items").KiSkillItemConfig} */
+export const KiSkillItemConfig = ABFItemConfigFactory({
   type: ABFItems.KI_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'kiSkills'],
@@ -18,8 +12,8 @@ export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource> = {
     containerSelector: '#ki-skills-context-menu-container',
     rowSelector: '.ki-skill-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.kiSkill.content')
@@ -30,7 +24,7 @@ export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource> = {
       type: ABFItems.KI_SKILL
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
@@ -41,4 +35,4 @@ export const KiSkillItemConfig: ABFItemConfigMinimal<KiSkillDataSource> = {
       });
     }
   },
-};
+});

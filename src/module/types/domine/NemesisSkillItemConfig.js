@@ -1,28 +1,19 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { ABFItemConfigMinimal, ItemChanges } from '../Items';
-import { ABFItemBaseDataSource } from '../../../animabf.types';
+import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-export type NemesisSkillItemData = Record<string, never>;
-
-export type NemesisSkillDataSource = ABFItemBaseDataSource<ABFItems.NEMESIS_SKILL, NemesisSkillItemData>;
-
-export type NemesisSkillChanges = ItemChanges<NemesisSkillItemData>;
-
-export const NemesisSkillItemConfig: ABFItemConfigMinimal<NemesisSkillItemData> = {
+/** @type {import("../Items").NemesisSkillItemConfig} */
+export const NemesisSkillItemConfig = ABFItemConfigFactory({
   type: ABFItems.NEMESIS_SKILL,
   isInternal: true,
   fieldPath: ['domine', 'nemesisSkills'],
-  getFromDynamicChanges: changes => {
-    return changes.system.dynamic.nemesisSkills as NemesisSkillChanges;
-  },
   selectors: {
     addItemButtonSelector: 'add-nemesis-skill',
     containerSelector: '#nemesis-skills-context-menu-container',
     rowSelector: '.nemesis-skill-row'
   },
-  onCreate: async (actor): Promise<void> => {
-    const { i18n } = game as Game;
+  onCreate: async (actor) => {
+    const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.nemesisSkill.content')
@@ -33,11 +24,11 @@ export const NemesisSkillItemConfig: ABFItemConfigMinimal<NemesisSkillItemData> 
       type: ABFItems.NEMESIS_SKILL
     });
   },
-  onUpdate: async (actor, changes): Promise<void> => {
+  onUpdate: async (actor, changes) => {
     for (const id of Object.keys(changes)) {
       const { name } = changes[id];
 
       await actor.updateInnerItem({ id, type: ABFItems.NEMESIS_SKILL, name });
     }
   },
-};
+});
