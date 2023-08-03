@@ -77,5 +77,13 @@ export const SpellItemConfig = ABFItemConfigFactory({
     };
 
     await actor.createItem(itemCreateData);
+  },
+  prepareItem: async (item) => {
+    item.system.enrichedDescription = await TextEditor.enrichHTML(
+      item.system.description?.value ?? '',
+      {
+        async: true
+      }
+    );
   }
 });

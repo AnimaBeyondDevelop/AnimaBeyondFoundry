@@ -13,7 +13,5 @@ export const prepareItem = async (item) => {
     item = await normalizeItem(item, configuration.defaultValue);
   }
 
-  if (item.type === ABFItems.WEAPON) {
-    ALL_ITEM_CONFIGURATIONS[item.type]?.prepareItem?.(item);
-  }
+  ALL_ITEM_CONFIGURATIONS[item.type]?.prepareItem?.(item);
 };
