@@ -23,16 +23,5 @@ export const CombatSpecialSkillItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.COMBAT_SPECIAL_SKILL
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      await actor.updateInnerItem({
-        id,
-        type: ABFItems.COMBAT_SPECIAL_SKILL,
-        name
-      });
-    }
-  },
+  }
 });

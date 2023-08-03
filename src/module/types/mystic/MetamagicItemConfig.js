@@ -24,17 +24,5 @@ export const MetamagicItemConfig = ABFItemConfigFactory({
       type: ABFItems.METAMAGIC,
       system: { grade: { value: 0 } }
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      await actor.updateInnerItem({
-        id,
-        type: ABFItems.METAMAGIC,
-        name,
-        system
-      });
-    }
   }
 });

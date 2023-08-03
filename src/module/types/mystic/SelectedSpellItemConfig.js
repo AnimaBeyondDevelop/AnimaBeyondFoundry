@@ -24,17 +24,5 @@ export const SelectedSpellItemConfig = ABFItemConfigFactory({
       name,
       system: { cost: { value: 0 } }
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      actor.updateInnerItem({
-        type: ABFItems.SELECTED_SPELL,
-        id,
-        name,
-        system
-      });
-    }
-  },
+  }
 });

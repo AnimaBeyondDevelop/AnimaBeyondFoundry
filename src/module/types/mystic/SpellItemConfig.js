@@ -77,16 +77,5 @@ export const SpellItemConfig = ABFItemConfigFactory({
     };
 
     await actor.createItem(itemCreateData);
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      await actor.updateItem({
-        id,
-        name,
-        system
-      });
-    }
   }
 });

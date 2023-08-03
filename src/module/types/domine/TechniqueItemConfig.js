@@ -41,20 +41,6 @@ export const TechniqueItemConfig = ABFItemConfigFactory({
       system: INITIAL_TECHNIQUE_DATA
     });
   },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const {
-        name,
-        data
-      } = changes[id];
-
-      await actor.updateItem({
-        id,
-        name,
-        system: data
-      });
-    }
-  },
   onAttach: async (actor, technique) => {
     technique.system.enrichedDescription = await TextEditor.enrichHTML(
       technique.system.description?.value ?? '',

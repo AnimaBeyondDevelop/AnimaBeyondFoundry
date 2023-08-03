@@ -23,12 +23,5 @@ export const SummonItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.SUMMON
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      await actor.updateInnerItem({ id, type: ABFItems.SUMMON, name });
-    }
-  },
+  }
 });

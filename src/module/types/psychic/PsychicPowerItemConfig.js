@@ -60,17 +60,6 @@ export const PsychicPowerItemConfig = ABFItemConfigFactory({
       system: INITIAL_PSYCHIC_POWER_DATA
     });
   },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, data } = changes[id];
-
-      await actor.updateItem({
-        id,
-        name,
-        system: data
-      });
-    }
-  },
   onAttach: async (actor, psychicPower) => {
     psychicPower.system.enrichedDescription = await TextEditor.enrichHTML(
       psychicPower.system.description?.value ?? '',

@@ -24,17 +24,5 @@ export const SpellMaintenanceItemConfig = ABFItemConfigFactory({
       name,
       system: { cost: { value: 0 } }
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      actor.updateInnerItem({
-        type: ABFItems.SPELL_MAINTENANCE,
-        id,
-        name,
-        system
-      });
-    }
-  },
+  }
 });

@@ -20,12 +20,5 @@ export const LevelItemConfig = ABFItemConfigFactory({
     });
 
     actor.createInnerItem({ type: ABFItems.LEVEL, name, system: { level: 0 } });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      actor.updateInnerItem({ type: ABFItems.LEVEL, id, name, system });
-    }
   }
 });

@@ -24,17 +24,6 @@ export const NoteItemConfig = ABFItemConfigFactory({
       type: ABFItems.NOTE
     });
   },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      await actor.updateInnerItem({
-        id,
-        type: ABFItems.NOTE,
-        name
-      });
-    }
-  },
   onAttach: async (actor, item) => {
     item.system.enrichedName = await TextEditor.enrichHTML(item.name ?? '', {
       async: true

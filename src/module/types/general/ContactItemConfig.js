@@ -23,17 +23,5 @@ export const ContactItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.CONTACT
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      await actor.updateInnerItem({
-        id,
-        type: ABFItems.CONTACT,
-        name,
-        system
-      });
-    }
-  },
+  }
 });

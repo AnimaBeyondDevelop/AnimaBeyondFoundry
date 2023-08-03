@@ -26,16 +26,5 @@ export const LanguageItemConfig = ABFItemConfigFactory({
       type: ABFItems.LANGUAGE,
       name
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      actor.updateInnerItem({
-        type: ABFItems.LANGUAGE,
-        id,
-        name
-      });
-    }
   }
 });

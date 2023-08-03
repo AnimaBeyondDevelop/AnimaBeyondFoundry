@@ -23,15 +23,5 @@ export const AdvantageItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.ADVANTAGE
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      await actor.updateItem({
-        id,
-        name
-      });
-    }
-  },
+  }
 });

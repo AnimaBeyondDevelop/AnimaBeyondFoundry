@@ -23,12 +23,5 @@ export const ArsMagnusItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.ARS_MAGNUS
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      await actor.updateInnerItem({ id, type: ABFItems.ARS_MAGNUS, name });
-    }
-  },
+  }
 });

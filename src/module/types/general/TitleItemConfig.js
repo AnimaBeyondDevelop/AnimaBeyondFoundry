@@ -23,12 +23,5 @@ export const TitleItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.TITLE
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      await actor.updateInnerItem({ id, type: ABFItems.TITLE, name });
-    }
   }
 });

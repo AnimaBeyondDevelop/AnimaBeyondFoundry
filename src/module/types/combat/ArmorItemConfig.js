@@ -76,16 +76,5 @@ export const ArmorItemConfig = ABFItemConfigFactory({
     };
 
     await actor.createItem(itemData);
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      await actor.updateItem({
-        id,
-        name,
-        system
-      });
-    }
-  },
+  }
 });

@@ -23,16 +23,5 @@ export const CombatTableItemConfig = ABFItemConfigFactory({
       name,
       type: ABFItems.COMBAT_TABLE
     });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name } = changes[id];
-
-      actor.updateInnerItem({
-        id,
-        type: ABFItems.COMBAT_TABLE,
-        name
-      });
-    }
-  },
+  }
 });

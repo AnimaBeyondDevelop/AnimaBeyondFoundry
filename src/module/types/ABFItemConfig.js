@@ -39,6 +39,19 @@ export function ABFItemConfigFactory(minimal) {
         this.prepareItem?.(item);
       }
     },
+    async onUpdate(actor, changes) {
+      for (const id of Object.keys(changes)) {
+        const { name, system } = changes[id];
+
+        const itemData = system ? { id, name, system } : { id, name };
+
+        if (this.isInternal) {
+          actor.updateInnerItem({ type: this.type, ...itemData });
+        } else {
+          await actor.updateItem(itemData);
+        }
+      }
+    },
     ...minimal
   };
 }

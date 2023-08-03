@@ -20,12 +20,5 @@ export const SecondarySpecialSkillItemConfig = ABFItemConfigFactory({
     });
 
     actor.createInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, name, system: { level: { value: 0 } } });
-  },
-  onUpdate: async (actor, changes) => {
-    for (const id of Object.keys(changes)) {
-      const { name, system } = changes[id];
-
-      actor.updateInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, id, name, system });
-    }
   }
 });
