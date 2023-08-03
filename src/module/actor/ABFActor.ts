@@ -160,8 +160,7 @@ export class ABFActor extends Actor {
   ) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
-    const items = getFieldValueFromPath<any[]>(this.system, configuration.fieldPath);
-
+    const items = this.getInnerItems(type);
     const item = items.find(it => it._id === id);
 
     if (item) {
