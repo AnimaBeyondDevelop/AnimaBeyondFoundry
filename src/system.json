@@ -4,8 +4,9 @@
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "version": "1.15.1",
   "compatibility": {
-    "minimum": "10.291",
-    "verified": "11"
+    "minimum": "10",
+    "verified": "10.303"
+    "maximum": "10"
   },
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
