@@ -4,8 +4,8 @@
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "version": "1.15.1",
   "compatibility": {
-    "minimum": "11.299",
-    "verified": "11"
+    "minimum": "11",
+    "verified": "11.306"
   },
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
@@ -31,7 +31,7 @@
       "name": "weapons",
       "label": "(ES) Armas",
       "system": "animabf",
-      "path": "./packs/weapons",
+      "path": "./packs/weapons_es.db",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -40,7 +40,7 @@
       "name": "armors",
       "label": "(ES) Armaduras",
       "system": "animabf",
-      "path": "./packs/armors",
+      "path": "./packs/armors_es.db",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -49,7 +49,7 @@
       "name": "magic",
       "label": "(ES) Magia",
       "system": "animabf",
-      "path": "./packs/magic",
+      "path": "./packs/magic_es.db",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -58,7 +58,7 @@
       "name": "psychic",
       "label": "(ES) Mentalismo",
       "system": "animabf",
-      "path": "./packs/psychic_powers",
+      "path": "./packs/psychic_powers_es.db",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -67,7 +67,7 @@
       "name": "npcs",
       "label": "(ES) NPCs Core Exxet",
       "system": "animabf",
-      "path": "./packs/npcs",
+      "path": "./packs/npcs_es.db",
       "type": "Actor",
       "private": false,
       "flags": {}
@@ -91,7 +91,24 @@
     }
   ],
   "relationships": {
-    "requires": []
+    "requires": [
+      {
+        "id": "libWrapper",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/ruipin/fvtt-lib-wrapper/master/module.json",
+        "compatibility": {
+          "verified": "1.12.12.1"
+        }
+      },
+      {
+        "id": "Compendium Folders",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/11x-update/module.json",
+        "compatibility": {
+          "verified": "2.6.1"
+        }
+      }
+    ]
   },
   "primaryTokenAttribute": "characteristics.secondaries.lifePoints",
   "gridDistance": 1,
