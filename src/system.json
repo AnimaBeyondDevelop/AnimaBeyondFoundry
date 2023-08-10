@@ -31,7 +31,7 @@
       "name": "weapons",
       "label": "(ES) Armas",
       "system": "animabf",
-      "path": "./packs/weapons_es.db",
+      "path": "./packs/weapons",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -40,7 +40,7 @@
       "name": "armors",
       "label": "(ES) Armaduras",
       "system": "animabf",
-      "path": "./packs/armors_es.db",
+      "path": "./packs/armors",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -49,7 +49,7 @@
       "name": "magic",
       "label": "(ES) Magia",
       "system": "animabf",
-      "path": "./packs/magic_es.db",
+      "path": "./packs/magic",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -58,7 +58,7 @@
       "name": "psychic",
       "label": "(ES) Mentalismo",
       "system": "animabf",
-      "path": "./packs/psychic_powers_es.db",
+      "path": "./packs/psychic_powers",
       "type": "Item",
       "private": false,
       "flags": {}
@@ -67,7 +67,7 @@
       "name": "npcs",
       "label": "(ES) NPCs Core Exxet",
       "system": "animabf",
-      "path": "./packs/npcs_es.db",
+      "path": "./packs/npcs",
       "type": "Actor",
       "private": false,
       "flags": {}
@@ -91,24 +91,7 @@
     }
   ],
   "relationships": {
-    "requires": [
-      {
-        "id": "libWrapper",
-        "type": "module",
-        "manifest": "https://raw.githubusercontent.com/ruipin/fvtt-lib-wrapper/master/module.json",
-        "compatibility": {
-          "verified": "1.12.12.1"
-        }
-      },
-      {
-        "id": "Compendium Folders",
-        "type": "module",
-        "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/11x-update/module.json",
-        "compatibility": {
-          "verified": "2.6.1"
-        }
-      }
-    ]
+    "requires": []
   },
   "primaryTokenAttribute": "characteristics.secondaries.lifePoints",
   "gridDistance": 1,
