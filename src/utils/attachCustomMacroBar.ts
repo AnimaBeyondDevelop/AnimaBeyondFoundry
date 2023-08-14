@@ -6,6 +6,12 @@ import { Log } from './Log';
 import { PromptDialog } from '../module/dialogs/PromptDialog';
 import { ABFSystemName } from '../animabf.name';
 
+
+
+
+
+
+
 type DefaultMacroConfig = {
   macroSelectorId?: `#${string}`;
   hotkey: (e: KeyboardEvent) => boolean;
@@ -27,11 +33,26 @@ const DEFAULT_GM_MACROS: DefaultMacroConfig[] = [
 
 const DEFAULT_USER_MACROS: DefaultMacroConfig[] = [
   {
-    macroSelectorId: '#custom-hotbar-send-attack-request',
+    macroSelectorId: '#custom-hotbar-damage-calculator',
     hotkey: e => e.ctrlKey && e.key === '1',
+    fn: () => ABFMacros.damageCalculator()
+  },
+  {
+    macroSelectorId: '#custom-hotbar-send-attack-request',
+    hotkey: e => e.ctrlKey && e.key === '2',
     fn: () => window.Websocket.sendAttackRequest?.()
   }
 ];
+
+
+
+
+
+
+
+
+
+
 
 export const attachCustomMacroBar = async () => {
   const tgame = game as Game;
