@@ -66,6 +66,14 @@
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="creatureType"
+      title=(localize 'anima.ui.aspectSection.creatureType.title')
+      inputType="text"
+      inputName="data.general.aspect.creatureType.value"
+      inputValue=data.data.general.aspect.creatureType.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="appearance"
       title=(localize 'anima.ui.aspectSection.appearance.title')
       inputType="text"
@@ -80,13 +88,29 @@
       inputName="data.general.aspect.age.value"
       inputValue=data.data.general.aspect.age.value
     }}
+
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="size"
-      title=(localize 'anima.ui.aspectSection.size.title')
-      inputType="text"
-      inputName="data.general.aspect.size.value"
-      inputValue=data.data.general.aspect.size.value
+    class="size"
+    title=(localize 'anima.ui.aspectSection.size.title')
+    inputType="text"
+    inputName="data.general.aspect.size.value"
+    inputValue=data.data.general.aspect.size.value
     }}
+
+
+
+    {{>
+    'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+    class="sizeClass"
+    title=(localize 'anima.ui.aspectSection.size.title')
+
+    choices=xRoot.config.iterables.general.sizeClass
+    inputName="data.general.aspect.sizeType.value"
+    inputValue=data.data.general.aspect.sizeType.value
+    }}
+
+
+
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

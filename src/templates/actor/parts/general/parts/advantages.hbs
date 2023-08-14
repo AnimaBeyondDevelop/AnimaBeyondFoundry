@@ -11,12 +11,19 @@
   }}
     {{#each data.data.general.advantages}}
       <div data-item-id='{{this._id}}' class='advantage-row'>
+      
+       
+       
+       
         <input
           name='data.dynamic.advantages.{{this._id}}.name'
           type='text'
           class='input'
           value='{{this.name}}'
         />
+
+
+
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

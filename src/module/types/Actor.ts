@@ -64,6 +64,12 @@ export type ABFActorDataSourceData = {
     presence: {
       value: number;
     };
+    gnosis: {
+      value: number;
+    };
+    natura: {
+      value: number;
+    };
     aspect: {
       hair: {
         value: string;
@@ -89,12 +95,19 @@ export type ABFActorDataSourceData = {
       ethnicity: {
         value: string;
       };
+      creatureType: {
+        value: string;
+      };
       appearance: {
         value: string;
       };
       size: {
         value: number;
       };
+      sizeType:{
+        value: string;
+      }
+
     };
     advantages: [];
     contacts: [];
@@ -719,6 +732,11 @@ export type ABFActorDataSourceData = {
     wearArmor: {
       value: number;
     };
+    attacks: {
+      value: number;
+    };
+    defenses:{value:number}
+    ;
     totalArmor: {
       at: {
         cut: {

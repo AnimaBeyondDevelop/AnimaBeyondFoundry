@@ -66,7 +66,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/general/parts/elan.hbs',
     'systems/animabf/templates/actor/parts/general/parts/titles.hbs',
     'systems/animabf/templates/actor/parts/general/parts/destiny-points.hbs',
-    'systems/animabf/templates/actor/parts/general/parts/presence.hbs',
+    'systems/animabf/templates/actor/parts/general/parts/presenceGnosisAndNatura.hbs',
     'systems/animabf/templates/actor/parts/general/parts/experience.hbs',
     'systems/animabf/templates/actor/parts/general/parts/advantages.hbs',
     'systems/animabf/templates/actor/parts/general/parts/disadvantages.hbs',

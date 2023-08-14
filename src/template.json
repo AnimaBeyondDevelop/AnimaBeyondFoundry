@@ -23,6 +23,8 @@
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "value": 0 },
+        "gnosis": { "value": 0 },
+        "natura": { "value": 0 },
         "aspect": {
           "hair": { "value": "" },
           "eyes": { "value": "" },
@@ -32,8 +34,10 @@
           "gender": { "value": "" },
           "race": { "value": "" },
           "ethnicity": { "value": "" },
+          "creatureType": { "value": "" },
           "appearance": { "value": "" },
-          "size": { "value": 0 }
+          "size": { "value": 0 },
+          "sizeType": { "value": "" }
         },
         "advantages": [],
         "contacts": [],
@@ -153,6 +157,8 @@
         "block": { "base": { "value": 0 }, "final": { "value": 0 } },
         "dodge": { "base": { "value": 0 }, "final": { "value": 0 } },
         "wearArmor": { "value": 0 },
+        "attacks": { "value": 0 },
+        "defenses": { "value": 0 },
         "totalArmor": {
           "at": {
             "cut": { "value": 0 },

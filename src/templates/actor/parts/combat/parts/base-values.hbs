@@ -50,6 +50,28 @@
       secondaryInputName="data.combat.dodge.final.value"
       secondaryInputValue=data.data.combat.dodge.final.value
     }}
+
+        {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="attacks"
+      title=(localize "anima.ui.combat.baseValues.attacks.title")
+      inputName="data.combat.attacks.base.value"
+      inputValue=data.data.combat.attacks.base.value
+      hasSecondaryInput=true
+      addTooltips=true
+      secondaryInputName="data.combat.attacks.final.value"
+      secondaryInputValue=data.data.combat.attacks.final.value
+    }}
+    
+    {{>
+    'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+    class="defenses"
+    title=(localize 'anima.ui.combat.baseValues.defenses.title')
+
+    choices=xRoot.config.iterables.combat.defenses
+    inputName="data.combat.defenses.value"
+    inputValue=data.data.combat.defenses.value
+    }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="wear-armor"
@@ -64,5 +86,10 @@
       inputName="data.general.modifiers.extraDamage.value"
       inputValue=data.data.general.modifiers.extraDamage.value
     }}
+
+
+
+
+
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

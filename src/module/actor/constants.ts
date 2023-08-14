@@ -54,6 +54,14 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     presence: {
       value: 0
     },
+    gnosis: {
+      value: 0
+    },
+    natura: {
+      value: 0
+    },
+
+
     aspect: {
       hair: {
         value: ''
@@ -79,11 +87,17 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       ethnicity: {
         value: ''
       },
+      creatureType: {
+        value: ''
+      },
       appearance: {
         value: ''
       },
       size: {
         value: 0
+      },
+      sizeType: {
+        value: ''
       }
     },
     advantages: [],
@@ -707,6 +721,12 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       }
     },
     wearArmor: {
+      value: 0
+    },
+    attacks: {
+      value: 0
+    },
+    defenses:{
       value: 0
     },
     totalArmor: {

@@ -22,7 +22,30 @@ const criticTypes = {
 ABFConfig.ui = {};
 
 ABFConfig.iterables = {
+  
+  general:{
+    sizeClass:{
+      minuscule: 'anima.ui.aspectSection.sizeType.minuscule',
+      small: 'anima.ui.aspectSection.sizeType.small',
+      medium: 'anima.ui.aspectSection.sizeType.medium',
+      large: 'anima.ui.aspectSection.sizeType.large',  
+      huge: 'anima.ui.aspectSection.sizeType.huge',
+      gargantuan: 'anima.ui.aspectSection.sizeType.gargantuan',
+      colossal: 'anima.ui.aspectSection.sizeType.colossal'
+    }
+
+  },
   combat: {
+
+    defenses:{
+      0: "0",
+      1: "1",
+      2: "2",
+      3: "3",
+      4: "4",
+      5: "5+"
+    },
+
     weapon: {
       sizes: {
         [WeaponSize.SMALL]: 'anima.ui.combat.weapon.size.small.title',

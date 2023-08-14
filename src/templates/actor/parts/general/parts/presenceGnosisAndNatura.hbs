@@ -1,0 +1,38 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="presence"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.general.presenceGnosisAndNatura.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="presence"
+  }}
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="presence"
+      title=(localize "anima.ui.general.presenceGnosisAndNatura.presence")
+      inputName="data.general.presenceGnosisAndNatura.base.value"
+      inputValue=data.data.general.presence.base.value
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="gnosis"
+      title=(localize "anima.ui.general.presenceGnosisAndNatura.gnosis")
+      inputName="data.general.presenceGnosisAndNatura.gnosis.value"
+      inputValue=data.data.general.presenceGnosisAndNatura.gnosis.value
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="natura"
+      title=(localize "anima.ui.general.presenceGnosisAndNatura.natura")
+      inputName="data.general.presenceGnosisAndNatura.natura.value"
+      inputValue=data.data.general.presenceGnosisAndNatura.natura.value
+    }}
+
+
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
