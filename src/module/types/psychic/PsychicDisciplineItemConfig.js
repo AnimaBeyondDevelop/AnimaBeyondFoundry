@@ -19,7 +19,7 @@ export const PsychicDisciplineItemConfig = ABFItemConfigFactory({
       content: i18n.localize('dialogs.items.psychicDiscipline.content')
     });
 
-    await actor.createInnerItem({
+    await actor.createItem({
       name,
       type: ABFItems.PSYCHIC_DISCIPLINE
     });
