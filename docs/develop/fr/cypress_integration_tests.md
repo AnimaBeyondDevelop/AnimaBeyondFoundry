@@ -3,7 +3,8 @@
 Cypress est un outil qui permet de tester de manière exhaustive un site web ou une application web. En d'autres termes, il émule les actions que nous lui demandons sur différents éléments et nous disons ce qu'il doit attendre, par exemple :
 
 
-```// cy est la manière dont nous interagissons avec Cypress
+```js
+// cy est la manière dont nous interagissons avec Cypress
 
 cy.visit('http://localhost:30000') // Nous demandons à Cypress de visiter cette URL, qui contient l'interface Foundry
 
