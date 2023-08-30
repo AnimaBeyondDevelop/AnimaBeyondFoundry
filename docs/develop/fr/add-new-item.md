@@ -1,4 +1,4 @@
-# Ajouter un nouvel élément à l'acteur
+# Ajouter un nouvel item à l'acteur
 
 Parfois, nous voulons qu'un champ de l'acteur soit dynamique, c'est-à-dire que nous voulons ajouter, éditer et supprimer certains éléments comme par exemple les armes que le personnage peut porter ou les sorts appris. Voici les étapes à suivre pour ajouter un nouveau type d'élément (appelé **Items** dans Foundry VTT) à notre acteur :
 
