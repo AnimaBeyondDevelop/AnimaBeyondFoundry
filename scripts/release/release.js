@@ -49,7 +49,7 @@ const { dry } = argv;
   systemFile.url = repoURL;
   systemFile.manifest = `${rawURL}/main/src/system.json`;
   systemFile.changelog = `${repoURL}/releases/tag/v${systemFile.version}`;
-  systemFile.download = `${repoURL}/releases/download/v${systemFile.version}/${systemFile.name}.zip`;
+  systemFile.download = `${repoURL}/releases/download/v${systemFile.version}/${systemFile.id}.zip`;
 
   const prettiedSystemFile = prettier.format(JSON.stringify(systemFile), { parser: 'json' });
 
@@ -76,7 +76,7 @@ const { dry } = argv;
   rimraf.sync('package');
   fs.mkdirSync('package');
 
-  await zip('dist', `package/${systemFile.name}.zip`);
+  await zip('dist', `package/${systemFile.id}.zip`);
 
   log.success('Package created...');
 
@@ -92,7 +92,7 @@ const { dry } = argv;
 
   readlineSync.question(
     chalk.blue(
-      `Wait until create new release, click here to access directly: https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${systemFile.version}&tag=v${systemFile.version}\n\nRemember to upload de package ${systemFile.name}.zip allocated in package folder`
+      `Wait until create new release, click here to access directly: https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${systemFile.version}&tag=v${systemFile.version}\n\nRemember to upload de package ${systemFile.id}.zip allocated in package folder`
     )
   );
 
