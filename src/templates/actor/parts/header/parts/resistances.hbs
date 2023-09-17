@@ -8,7 +8,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="resistances"
   }}
-    {{#each data.data.characteristics.secondaries.resistances as |atr key|}}
+    {{#each system.characteristics.secondaries.resistances as |atr key|}}
       {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="resistance"
@@ -16,13 +16,13 @@
         rollable=true
         rollableDice='1d100'
         rollableMessage=(localize (concat 'anima.ui.resistances.' key))
-        inputName=(concat "data.characteristics.secondaries.resistances." key ".base.value")
+        inputName=(concat "system.characteristics.secondaries.resistances." key ".base.value")
         inputValue=atr.base.value
         hasSecondaryInput=false
         rollSecondaryInput=true
         addTooltips=true
         disableSecondaryInput=true
-        secondaryInputName=(concat "data.characteristics.secondaries.resistances." key ".base.value")
+        secondaryInputName=(concat "system.characteristics.secondaries.resistances." key ".base.value")
         secondaryInputValue=atr.final.value
       }}
     {{/each}}

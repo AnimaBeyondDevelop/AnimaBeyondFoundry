@@ -10,12 +10,11 @@
       class="defense-values"
     }}
       <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
-          {{#if (is 'eq' this.defender.actor.data.data.general.settings.defenseType.value 'resistance')}}<a class="item" data-tab="damageResistance">{{localize "anima.ui.tabs.damageResistance"}}</a>
+          {{#if (is 'eq' this.defender.actor.system.general.settings.defenseType.value 'resistance')}}<a class="item" data-tab="damageResistance">{{localize "anima.ui.tabs.damageResistance"}}</a>
           {{else}}<a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>{{/if}}
-          {{#if (is 'gt' this.defender.actor.data.data.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
-          {{#if (is 'gt' this.defender.actor.data.data.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
+          {{#if (is 'gt' this.defender.actor.system.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
+          {{#if (is 'gt' this.defender.actor.system.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
       </nav>
-      {{log  this}}
       {{#if (is 'neq' this.ui.activeTab 'damageResistance')}}
         <div class='columns'>
           <div>

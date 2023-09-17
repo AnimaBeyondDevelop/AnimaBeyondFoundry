@@ -9,37 +9,38 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="current-life"
         title=(localize 'anima.ui.general.life.current.title')
-        inputName="data.characteristics.secondaries.lifePoints.value"
-        inputValue=data.data.characteristics.secondaries.lifePoints.value
+        inputName="system.characteristics.secondaries.lifePoints.value"
+        inputValue=system.characteristics.secondaries.lifePoints.value
         hasSecondaryInput=true
         addTooltips=true
         addTooltips=true
-        secondaryInputName="data.characteristics.secondaries.lifePoints.max"
-        secondaryInputValue=data.data.characteristics.secondaries.lifePoints.max
+        secondaryInputName="system.characteristics.secondaries.lifePoints.max"
+        secondaryInputValue=system.characteristics.secondaries.lifePoints.max
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="fatigue"
         title=(localize 'anima.ui.general.fatigue.title')
-        inputName="data.characteristics.secondaries.fatigue.value"
-        inputValue=data.data.characteristics.secondaries.fatigue.value
+        inputName="system.characteristics.secondaries.fatigue.value"
+        inputValue=system.characteristics.secondaries.fatigue.value
         hasSecondaryInput=true
-        secondaryInputName="data.characteristics.secondaries.fatigue.max"
-        secondaryInputValue=data.data.characteristics.secondaries.fatigue.max
+        secondaryInputName="system.characteristics.secondaries.fatigue.max"
+        secondaryInputValue=system.characteristics.secondaries.fatigue.max
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
         rollable=true
+        rollableDice='1d100Initiative'
         title=(localize 'anima.ui.general.initiative.base.title')
-        inputName="data.characteristics.secondaries.initiative.base.value"
-        inputValue=data.data.characteristics.secondaries.initiative.base.value
+        inputName="system.characteristics.secondaries.initiative.base.value"
+        inputValue=system.characteristics.secondaries.initiative.base.value
         hasSecondaryInput=true
         disableSecondaryInput=true
         rollSecondaryInput=true
         addTooltips=true
-        secondaryInputName="data.characteristics.secondaries.initiative.final.value"
-        secondaryInputValue=data.data.characteristics.secondaries.initiative.final.value
+        secondaryInputName="system.characteristics.secondaries.initiative.final.value"
+        secondaryInputValue=system.characteristics.secondaries.initiative.final.value
       }}
     </div>
     <div class='movements'>
@@ -47,37 +48,37 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movementType.title')
-        inputName="data.characteristics.secondaries.movementType.mod.value"
-        inputValue=data.data.characteristics.secondaries.movementType.mod.value
+        inputName="system.characteristics.secondaries.movementType.mod.value"
+        inputValue=system.characteristics.secondaries.movementType.mod.value
         hasSecondaryInput=true
         disableSecondaryInput=true
-        secondaryInputName="data.characteristics.secondaries.movementType.final.value"
-        secondaryInputValue=data.data.characteristics.secondaries.movementType.final.value
+        secondaryInputName="system.characteristics.secondaries.movementType.final.value"
+        secondaryInputValue=system.characteristics.secondaries.movementType.final.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.maximum.title')
         disabled=true
-        inputName="data.characteristics.secondaries.movement.maximum.value"
-        inputValue=data.data.characteristics.secondaries.movement.maximum.value
+        inputName="system.characteristics.secondaries.movement.maximum.value"
+        inputValue=system.characteristics.secondaries.movement.maximum.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="running"
         title=(localize 'anima.ui.general.movement.running.title')
         disabled=true
-        inputName="data.characteristics.secondaries.movement.running.value"
-        inputValue=data.data.characteristics.secondaries.movement.running.value
+        inputName="system.characteristics.secondaries.movement.running.value"
+        inputValue=system.characteristics.secondaries.movement.running.value
       }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.quarter.title')
         disabled=true
-        inputValue=(math data.data.characteristics.secondaries.movement.maximum.value "/" 4)
+        inputValue=(math system.characteristics.secondaries.movement.maximum.value "/" 4)
       }}
     </div>
-     
+
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

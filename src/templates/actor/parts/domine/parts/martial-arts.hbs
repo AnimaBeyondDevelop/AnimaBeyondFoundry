@@ -9,25 +9,25 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="martial-arts"
   }}
-    {{#each data.data.domine.martialArts}}
-      <div data-item-id='{{this._id}}' class='martial-art-row'>
+    {{#each system.domine.martialArts as |martialArt index|}}
+      <div data-item-id='{{martialArt._id}}' class='martial-art-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.domine.martialArts.name.title")
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.martialArts." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "system.dynamic.martialArts." martialArt._id ".name")
+          inputValue=martialArt.name
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="grade"
           title=(localize "anima.ui.domine.martialArts.grade.title")
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.martialArts." this._id ".data.grade.value")
-          inputValue=this.data.grade.value
+          inputName=(concat "system.dynamic.martialArts." martialArt._id ".system.grade.value")
+          inputValue=martialArt.system.grade.value
         }}
       </div>
     {{/each}}

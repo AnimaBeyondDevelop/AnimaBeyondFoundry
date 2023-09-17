@@ -1,10 +1,11 @@
-import { WeaponDataSource, WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const calculateWeaponInitiative = (weapon: WeaponDataSource) => {
-  let initiative = weapon.data.initiative.base.value + weapon.data.quality.value;
+  let initiative = weapon.system.initiative.base.value + weapon.system.quality.value;
 
   // This depends on the size of the character but right now is not automatized
-  if (weapon.data.sizeProportion.value !== WeaponSizeProportion.NORMAL) {
+  if (weapon.system.sizeProportion.value !== WeaponSizeProportion.NORMAL) {
     initiative -= 40;
   }
 

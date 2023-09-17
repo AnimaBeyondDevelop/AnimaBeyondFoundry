@@ -9,13 +9,13 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="summons"
   }}
-    {{#each data.data.mystic.summons}}
-      <div data-item-id='{{this._id}}' class='summon-row'>
+    {{#each system.mystic.summons as |summon|}}
+      <div data-item-id='{{summon._id}}' class='summon-row'>
         <input
-          name='data.dynamic.summons.{{this._id}}.name'
+          name='system.dynamic.summons.{{summon._id}}.name'
           type='text'
           class='input'
-          value='{{this.name}}'
+          value='{{summon.name}}'
         />
       </div>
     {{/each}}

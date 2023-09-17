@@ -9,13 +9,13 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="titles"
   }}
-    {{#each data.data.general.titles}}
-      <div data-item-id='{{this._id}}' class='title-row'>
+    {{#each system.general.titles as |title|}}
+      <div data-item-id='{{title._id}}' class='title-row'>
         <input
-          name='data.dynamic.titles.{{this._id}}.name'
+          name='system.dynamic.titles.{{title._id}}.name'
           type='text'
           class='input'
-          value='{{this.name}}'
+          value='{{title.name}}'
         />
       </div>
     {{/each}}

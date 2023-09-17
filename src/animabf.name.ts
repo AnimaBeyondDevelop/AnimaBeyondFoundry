@@ -1,1 +1,1 @@
-export const ABFSystemName = '$$$animabf$$$';
+export const ABFSystemName = 'animabf';

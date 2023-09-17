@@ -15,12 +15,12 @@
         title=(localize (concat "anima.ui.secondaries." key ".title"))
         rollable=true
         rollSecondaryInput=true
-        inputName=(concat "data.secondaries." ../this.secondarySkillName "." key ".base.value")
+        inputName=(concat "system.secondaries." ../this.secondarySkillName "." key ".base.value")
         inputValue=atr.base.value
         hasSecondaryInput=true
         addTooltips=true
         disableSecondaryInput=true
-        secondaryInputName=(concat "data.secondaries." ../this.secondarySkillName "." key ".final.value")
+        secondaryInputName=(concat "system.secondaries." ../this.secondarySkillName "." key ".final.value")
         secondaryInputValue=atr.final.value
       }}
     {{/each}}

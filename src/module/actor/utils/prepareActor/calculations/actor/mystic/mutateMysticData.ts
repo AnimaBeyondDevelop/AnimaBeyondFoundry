@@ -1,5 +1,5 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { SpellMaintenanceDataSource } from '../../../../../../types/mystic/SpellMaintenanceItemConfig';
+import { SpellMaintenanceDataSource } from '../../../../../../types/Items';
 
 export const mutateMysticData = (data: ABFActorDataSourceData) => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
@@ -22,8 +22,8 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   );
 
   const dailyZeon = mystic.spellMaintenances.reduce(
-    (acc: number, currentValue: SpellMaintenanceDataSource) => 
-      acc + currentValue.data.cost.value,
+    (acc: number, currentValue: SpellMaintenanceDataSource) =>
+      acc + currentValue.system.cost.value,
     0
   );
   mystic.zeonRegeneration.final.value = Math.max(mystic.zeonRegeneration.base.value - dailyZeon, 0);

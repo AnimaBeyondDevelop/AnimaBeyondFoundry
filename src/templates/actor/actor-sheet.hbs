@@ -8,9 +8,12 @@
     <a class="item" data-tab="main">{{localize "anima.ui.tabs.main"}}</a>
     <a class="item" data-tab="secondaries">{{localize "anima.ui.tabs.secondaries"}}</a>
     <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
-    {{#if data.data.ui.tabVisibility.mystic.value}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
-    {{#if data.data.ui.tabVisibility.domine.value}}<a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>{{/if}}
-    {{#if data.data.ui.tabVisibility.psychic.value}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
+    {{#if system.ui.tabVisibility.mystic.value}}
+      <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
+    {{#if system.ui.tabVisibility.domine.value}}
+      <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>{{/if}}
+    {{#if system.ui.tabVisibility.psychic.value}}
+      <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
     <a class="item" data-tab="settings"><img src='/systems/animabf/assets/icons/game-icons.net/ffffff/lorc/cog.svg'></a>
   </nav>
 

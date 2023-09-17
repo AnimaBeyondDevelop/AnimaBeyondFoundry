@@ -1,5 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../types/Actor';
-import { WeaponDataSource, WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
+import { WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
+import { WeaponDataSource } from '../../../../../types/Items';
 
 export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };
@@ -12,19 +13,19 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
 
   initiative.final.value = initiative.base.value + penalty;
 
-  const equippedWeapons = combat.weapons.filter(weapon => weapon.data.equipped.value);
+  const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 
-  const firstTwoWeapons = equippedWeapons.filter(weapon => !weapon.data.isShield.value).slice(0, 2);
+  const firstTwoWeapons = equippedWeapons.filter(weapon => !weapon.system.isShield.value).slice(0, 2);
 
-  const equippedShield = equippedWeapons.find(weapon => weapon.data.isShield.value);
+  const equippedShield = equippedWeapons.find(weapon => weapon.system.isShield.value);
 
   // We subtract 20 because people are used to put as base unarmed initiative
   initiative.final.value -= 20;
 
   if (equippedShield) {
-    if (equippedShield.data.size.value === WeaponSize.SMALL) {
+    if (equippedShield.system.size.value === WeaponSize.SMALL) {
       initiative.final.value -= 15;
-    } else if (equippedShield.data.size.value === WeaponSize.MEDIUM) {
+    } else if (equippedShield.system.size.value === WeaponSize.MEDIUM) {
       initiative.final.value -= 25;
     } else {
       initiative.final.value -= 40;
@@ -34,10 +35,10 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
   if (firstTwoWeapons.length === 0) {
     initiative.final.value += 20;
   } else if (firstTwoWeapons.length === 1) {
-    initiative.final.value += firstTwoWeapons[0].data.initiative.final.value;
+    initiative.final.value += firstTwoWeapons[0].system.initiative.final.value;
   } else if (firstTwoWeapons.length === 2) {
-    const leftWeapon = firstTwoWeapons[0].data;
-    const rightWeapon = firstTwoWeapons[1].data;
+    const leftWeapon = firstTwoWeapons[0].system;
+    const rightWeapon = firstTwoWeapons[1].system;
 
     initiative.final.value += Math.min(leftWeapon.initiative.final.value, rightWeapon.initiative.final.value);
 
