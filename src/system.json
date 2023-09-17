@@ -7,7 +7,7 @@
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
   "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.16.0",
-  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.16.0/undefined.zip",
+  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.16.0/animabf.zip",
   "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
   "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
   "scripts": [],
