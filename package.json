@@ -14,8 +14,8 @@
     "copy:prod-system": "cp src/system.json dist/system.json",
     "copy:files": "cp src/template.json dist && cp -r src/lang dist && cp -r src/templates dist && cp -r src/assets dist && cp -r src/packs dist",
     "clean": "rimraf dist/",
-    "release": "node scripts/release.js",
-    "release:dry": "node scripts/release.js --dry",
+    "release": "node scripts/release/release.js",
+    "release:dry": "node scripts/release/release.js --dry",
     "test": "jest src",
     "hook:pre-commit": "lint-staged",
     "cypress:open": "cd integration && cypress open"
