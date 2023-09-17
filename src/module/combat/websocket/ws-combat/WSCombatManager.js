@@ -1,15 +1,12 @@
 import { ABFDialogs } from '../../../dialogs/ABFDialogs';
-import { ABFSystemName } from '../../../../animabf.name';
 
-export class WSCombatManager {
-  constructor(game) {
-    this.game = game;
-
-    game.socket?.on(`system.${ABFSystemName}`, msg => this.receive(msg));
+export abstract class WSCombatManager<M, N> {
+  protected constructor(protected game: Game) {
+    game.socket?.on('system.animabf', msg => this.receive(msg));
   }
 
-  emit(msg) {
-    this.game.socket?.emit(`system.${ABFSystemName}`, msg);
+  protected emit(msg: M) {
+    this.game.socket?.emit('system.animabf', msg);
   }
 
   findTokenById(tokenId) {
