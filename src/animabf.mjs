@@ -23,7 +23,7 @@ Hooks.once('init', async () => {
   CONFIG.config = ABFConfig;
 
   window.ABFFoundryRoll = ABFFoundryRoll;
-  CONFIG.Dice.rolls.push(ABFFoundryRoll);
+  CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
 
   CONFIG.Combat.documentClass = ABFCombat;
 
