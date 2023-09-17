@@ -2,30 +2,17 @@
   "id": "animabf",
   "title": "Anima Beyond Fantasy",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
-  "version": "1.15.1",
-  "compatibility": {
-    "minimum": "10",
-    "verified": "10.303",
-    "maximum": "10"
-  },
+  "version": "1.16.0",
+  "compatibility": { "minimum": "10", "verified": "10.303", "maximum": "10" },
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
-  "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.15.1",
-  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.15.1/animabf.zip",
+  "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.16.0",
+  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.16.0/undefined.zip",
   "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
-  "authors": [
-    {
-      "name": "Linkaynn",
-      "url": "https://www.jeseromero.com"
-    }
-  ],
+  "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
   "scripts": [],
-  "esmodules": [
-    "animabf.mjs"
-  ],
-  "styles": [
-    "animabf.css"
-  ],
+  "esmodules": ["animabf.mjs"],
+  "styles": ["animabf.css"],
   "socket": true,
   "packs": [
     {
@@ -75,21 +62,9 @@
     }
   ],
   "languages": [
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
-    },
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    },
-    {
-      "lang": "fr",
-      "name": "Français",
-      "path": "lang/fr.json"
-    }
+    { "lang": "es", "name": "Español", "path": "lang/es.json" },
+    { "lang": "en", "name": "English", "path": "lang/en.json" },
+    { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
   ],
   "relationships": {
     "requires": [
@@ -97,17 +72,13 @@
         "id": "libWrapper",
         "type": "module",
         "manifest": "https://raw.githubusercontent.com/ruipin/fvtt-lib-wrapper/master/module.json",
-        "compatibility": {
-          "verified": "1.12.12.1"
-        }
+        "compatibility": { "verified": "1.12.12.1" }
       },
       {
         "id": "Compendium Folders",
         "type": "module",
         "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/11x-update/module.json",
-        "compatibility": {
-          "verified": "2.6.1"
-        }
+        "compatibility": { "verified": "2.6.1" }
       }
     ]
   },
