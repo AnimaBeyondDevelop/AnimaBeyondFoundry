@@ -1,6 +1,5 @@
 import { ABFItems } from './ABFItems';
 import { ITEM_CONFIGURATIONS } from '../actor/utils/prepareItems/constants';
-import { ABFSystemName } from '../../animabf.name';
 
 export default class ABFItemSheet extends ItemSheet {
   constructor(object, options) {
@@ -20,8 +19,7 @@ export default class ABFItemSheet extends ItemSheet {
   get template() {
     const configuration = ITEM_CONFIGURATIONS[this.item.type];
     if (configuration && configuration.hasSheet) {
-      const path = `systems/${ABFSystemName}/templates/items/`;
-      return `${path}/${this.item.type}/${this.item.type}.hbs`;
+      return `systems/animabf/templates/items/${this.item.type}/${this.item.type}.hbs`;
     }
 
     return super.template;

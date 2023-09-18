@@ -2,7 +2,6 @@ import { NoneWeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
-import { ABFSystemName } from '../../../animabf.name';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const attackerActor = attacker.actor;
@@ -46,7 +45,7 @@ export class GMCombatDialog extends FormApplication {
       closeOnSubmit: false,
       height: 600,
       width: 700,
-      template: `systems/${ABFSystemName}/templates/dialog/combat/gm-combat-dialog.hbs`,
+      template: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs',
       title: 'GM Combat'
     });
   }
