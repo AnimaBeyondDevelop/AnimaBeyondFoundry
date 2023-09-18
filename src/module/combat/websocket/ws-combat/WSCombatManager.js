@@ -1,11 +1,13 @@
 import { ABFDialogs } from '../../../dialogs/ABFDialogs';
 
-export abstract class WSCombatManager<M, N> {
-  protected constructor(protected game: Game) {
+export class WSCombatManager {
+  constructor(game) {
+    this.game = game;
+
     game.socket?.on('system.animabf', msg => this.receive(msg));
   }
 
-  protected emit(msg: M) {
+  emit(msg) {
     this.game.socket?.emit('system.animabf', msg);
   }
 
