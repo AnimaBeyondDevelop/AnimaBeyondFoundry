@@ -18,7 +18,7 @@ export const getTargetToken = (attackerToken: TokenDocument, targetTokens: UserT
     throw new Error(message);
   }
 
-  const target = targetTokens.values().next().value as TokenDocument;
+  const target = targetTokens.values().next().value.document;
 
   if (!target.actor?.id) {
     message = tgame.i18n.localize('macros.combat.dialog.error.withoutActor.title');

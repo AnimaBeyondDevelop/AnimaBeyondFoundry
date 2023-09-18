@@ -1,4 +1,4 @@
-import { ArmorDataSource } from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorDataSource } from '../../../../../../../types/Items';
 
 export const calculateArmorNaturalPenalty = (armor: ArmorDataSource) =>
-  Math.min(armor.data.naturalPenalty.base.value + armor.data.quality.value, 0);
+  Math.min(armor.system.naturalPenalty.base.value + armor.system.quality.value, 0);

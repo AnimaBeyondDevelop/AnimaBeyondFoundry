@@ -17,22 +17,22 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="level"
   }}
-    {{#each data.data.general.levels}}
-      <div data-item-id='{{this._id}}' class='level-row'>
+    {{#each system.general.levels as |level|}}
+      <div data-item-id='{{level._id}}' class='level-row'>
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
           hideTitle=true
           inputType="text"
-          inputName=(concat "data.dynamic.levels." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "system.dynamic.levels." level._id ".name")
+          inputValue=level.name
         }}
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="level"
           hideTitle=true
-          inputName=(concat "data.dynamic.levels." this._id ".data.level")
-          inputValue=this.data.level
+          inputName=(concat "system.dynamic.levels." level._id ".system.level")
+          inputValue=level.system.level
         }}
       </div>
     {{/each}}

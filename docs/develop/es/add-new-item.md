@@ -85,14 +85,13 @@ export enum ABFItems {
 
 ### 4. Añadir la configuración de item
 
+Toda la información de los campos a crear está documentado en el fichero `Items.d.ts`, donde también se encuentran los tipos de todas las configuraciones para usarlos con JSDoc. Lo primero que deberás hacer será crear estos tipos para tus items, basándote en los que ya están creados.
+
 En la carpeta `module/types` encontrarás varias subcarpetas que hacen referencia a donde se encuentra dichos items, por ejemplo: `mystic` o `psychic`
 
-Una vez localizada (o creada si no existe) la carpeta que alojará la configuración del nuevo item, creamos un fichero y escogemos uno de los dos templates a continuación dependiendo de lo que contenga el `data`.
+Una vez localizada (o creada si no existe) la carpeta que alojará la configuración del nuevo item, creamos un fichero usando como ejemplo el `[...]ItemConfig` ya creado del item que más se parezca al nuevo que deseamos añadir. Es decir, si nuestro item es interno y sólo tiene nombre, escogemos un `[...]ItemConfig` que sea interno y sólo tenga nombre (como `ContactItemConfig`), mientras que si nuestro item es externo y tiene más datos (como un arma), escogemos un `[...]ItemConfig` acorde (como `WeaponItemConfig`).
 
-En caso de que el nuevo item tenga solo nombre, recomiendo coger como template: `AdvantageItemConfig.ts`.
-En caso de que el nuevo item tenga más datos, recomiendo coger como template: `ContactItemConfig.ts`.
-
-Toda la información de los campos a crear está documentado en el fichero `Items.ts`
+> :warning: *Nota: es importante tener en cuenta si el item es interno o externo a la hora de crear el archivo de configuración del nuevo item. En general, las tareas de modificación, creación y eliminación de items de un actor dependen de si un item es interno o externo, y se han de llamar para ello a los métodos correspondientes de la clase actor. Para ver un ejemplo de esto, compara el método `onCreate` en `AdvantageItemConfig` con el mismo método en `NoteItemConfig`.*
 
 ### 5. Añadir nuestro item a la lista de items disponibles
 

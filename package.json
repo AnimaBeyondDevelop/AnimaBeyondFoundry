@@ -1,23 +1,20 @@
 {
   "private": true,
   "name": "anima-beyond-foundry",
-  "version": "1.15.1",
+  "version": "1.17.0",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "scripts": {
     "dev": "nodemon",
-    "build": "npm run build:com && npm run copy:files && npm run copy:prod-system",
-    "build:dev": "npm run build:com && npm run copy:files && npm run copy:dev-system && node scripts/appendSystemName.js animabf-dev && node scripts/copyDirectoryToFoundrySystem.js animabf-dev",
-    "build:prod": "npm run build && node scripts/appendSystemName.js animabf && node scripts/copyDirectoryToFoundrySystem.js animabf",
+    "build:dev": "npm run build:com && npm run copy:files && node scripts/copyDirectoryToFoundrySystem.js animabf",
+    "build:prod": "npm run build:com && npm run copy:files",
     "build:com": "rimraf dist/ && npm run build:ts && npm run build:sass && npm run build:template",
     "build:ts": "tsc-esm -p .",
     "build:sass": "sass src/scss/animabf.scss dist/animabf.css",
     "build:template": "node ./scripts/buildTemplate.js",
-    "copy:dev-system": "cp src/system.development.json dist/system.json",
-    "copy:prod-system": "cp src/system.json dist/system.json",
-    "copy:files": "cp src/template.json dist && cp -r src/lang dist && cp -r src/templates dist && cp -r src/assets dist && cp -r src/packs dist",
+    "copy:files": "cp src/template.json dist && cp -r src/lang dist && cp -r src/templates dist && cp -r src/assets dist && cp -r src/packs dist && cp src/system.json dist",
     "clean": "rimraf dist/",
-    "release": "node scripts/release.js",
-    "release:dry": "node scripts/release.js --dry",
+    "release": "node scripts/release/release.js",
+    "release:dry": "node scripts/release/release.js --dry",
     "test": "jest src",
     "hook:pre-commit": "lint-staged",
     "cypress:open": "cd integration && cypress open"
@@ -29,9 +26,9 @@
   "license": "",
   "devDependencies": {
     "@digitak/tsc-esm": "^3.1.4",
-    "@league-of-foundry-developers/foundry-vtt-types": "^9.268.0",
     "@types/faker": "^5.5.6",
     "@types/jest": "^26.0.23",
+    "@types/jquery": "^3.5.16",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "archiver": "^5.3.0",
@@ -57,7 +54,8 @@
     "sass-lint": "^1.13.1",
     "ts-jest": "^26.5.6",
     "typescript": "^4.9.5",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "@types/handlebars": "^4.1.0"
   },
   "dependencies": {
     "jquery": "^3.6.0"

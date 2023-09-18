@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="spells"
   }}
-    {{#each data.data.mystic.spells as |spell|}}
+    {{#each system.mystic.spells as |spell|}}
       <div data-item-id='{{spell._id}}' class='spell-row'>
         {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="spell"
@@ -24,7 +24,7 @@
                   class="name"
                   hideTitle=true
                   inputType="text"
-                  inputName=(concat "data.dynamic.spells." spell._id ".name")
+                  inputName=(concat "system.dynamic.spells." spell._id ".name")
                   inputValue=spell.name
                 }}
               </div>
@@ -33,16 +33,16 @@
                 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                   class="level"
                   title=(localize "anima.ui.mystic.spell.level.title")
-                  inputName=(concat "data.dynamic.spells." spell._id ".data.level.value")
-                  inputValue=spell.data.level.value
+                  inputName=(concat "system.dynamic.spells." spell._id ".system.level.value")
+                  inputValue=spell.system.level.value
                 }}
                 {{>
                 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                   class="via"
                   choices=xRoot.config.iterables.mystic.vias
                   title=(localize "anima.ui.mystic.spell.via.title")
-                  inputName=(concat "data.dynamic.spells." spell._id ".data.via.value")
-                  inputValue=spell.data.via.value
+                  inputName=(concat "system.dynamic.spells." spell._id ".system.via.value")
+                  inputValue=spell.system.via.value
                 }}
               </div>
             </div>
@@ -54,48 +54,48 @@
             "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
               class="base-grade"
               spellId=spell._id
-              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.intRequired.value")
-              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.zeon.value")
-              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.maintenanceCost.value")
-              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.base.description.value")
+              intRequiredInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.intRequired.value")
+              zeonInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.zeon.value")
+              maintenanceCostInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.maintenanceCost.value")
+              descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.description.value")
               gradeName='base'
-              grade=spell.data.grades.base
+              grade=spell.system.grades.base
             }}
             {{>
             "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
               class="intermediate-grade"
               spellId=spell._id
               hideTitle=true
-              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.intRequired.value")
-              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.zeon.value")
-              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.maintenanceCost.value")
-              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.intermediate.description.value")
+              intRequiredInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.intRequired.value")
+              zeonInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.zeon.value")
+              maintenanceCostInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.maintenanceCost.value")
+              descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.description.value")
               gradeName='intermediate'
-              grade=spell.data.grades.intermediate
+              grade=spell.system.grades.intermediate
             }}
             {{>
             "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
               class="advanced-grade"
               spellId=spell._id
               hideTitle=true
-              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.intRequired.value")
-              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.zeon.value")
-              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.maintenanceCost.value")
-              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.advanced.description.value")
+              intRequiredInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.intRequired.value")
+              zeonInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.zeon.value")
+              maintenanceCostInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.maintenanceCost.value")
+              descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.description.value")
               gradeName='advanced'
-              grade=spell.data.grades.advanced
+              grade=spell.system.grades.advanced
             }}
             {{>
             "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
               class="arcane-grade"
               spellId=spell._id
               hideTitle=true
-              intRequiredInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.intRequired.value")
-              zeonInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.zeon.value")
-              maintenanceCostInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.maintenanceCost.value")
-              descriptionInputName=(concat "data.dynamic.spells." this.spellId ".data.grades.arcane.description.value")
+              intRequiredInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.intRequired.value")
+              zeonInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.zeon.value")
+              maintenanceCostInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.maintenanceCost.value")
+              descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.description.value")
               gradeName='arcane'
-              grade=spell.data.grades.arcane
+              grade=spell.system.grades.arcane
             }}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
@@ -105,24 +105,24 @@
                 class="spell-type"
                 choices=xRoot.config.iterables.mystic.spellTypes
                 title=(localize "anima.ui.mystic.spell.spellType.title")
-                inputName=(concat "data.dynamic.spells." spell._id ".data.spellType.value")
-                inputValue=spell.data.spellType.value
+                inputName=(concat "system.dynamic.spells." spell._id ".system.spellType.value")
+                inputValue=spell.system.spellType.value
               }}
               {{>
               'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="action-type"
                 choices=xRoot.config.iterables.mystic.actionTypes
                 title=(localize "anima.ui.mystic.spell.actionType.title")
-                inputName=(concat "data.dynamic.spells." spell._id ".data.actionType.value")
-                inputValue=spell.data.actionType.value
+                inputName=(concat "system.dynamic.spells." spell._id ".system.actionType.value")
+                inputValue=spell.system.actionType.value
               }}
               {{>
               'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
                 class="has-daily-maintenance"
                 title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")
                 inputType="checkbox"
-                inputName=(concat "data.dynamic.spells." spell._id ".data.hasDailyMaintenance.value")
-                inputValue=(is 'eq' spell.data.hasDailyMaintenance.value true)
+                inputName=(concat "system.dynamic.spells." spell._id ".system.hasDailyMaintenance.value")
+                inputValue=(is 'eq' spell.system.hasDailyMaintenance.value true)
               }}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}

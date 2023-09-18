@@ -9,13 +9,13 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="combat-tables"
   }}
-    {{#each data.data.combat.combatTables}}
-      <div data-item-id='{{this._id}}' class='combat-table-row'>
+    {{#each system.combat.combatTables as |combatTable|}}
+      <div data-item-id='{{combatTable._id}}' class='combat-table-row'>
         <input
-          name='data.dynamic.combatTables.{{this._id}}.name'
+          name='system.dynamic.combatTables.{{combatTable._id}}.name'
           type='text'
           class='input'
-          value='{{this.name}}'
+          value='{{combatTable.name}}'
         />
       </div>
     {{/each}}

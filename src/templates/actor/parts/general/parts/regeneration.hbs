@@ -13,12 +13,12 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.regeneration.regenerationType.title')
-        inputName="data.characteristics.secondaries.regenerationType.mod.value"
-        inputValue=data.data.characteristics.secondaries.regenerationType.mod.value
+        inputName="system.characteristics.secondaries.regenerationType.mod.value"
+        inputValue=system.characteristics.secondaries.regenerationType.mod.value
         hasSecondaryInput=true
         disableSecondaryInput=true
-        secondaryInputName="data.characteristics.secondaries.regenerationType.final.value"
-        secondaryInputValue=data.data.characteristics.secondaries.regenerationType.final.value
+        secondaryInputName="system.characteristics.secondaries.regenerationType.final.value"
+        secondaryInputValue=system.characteristics.secondaries.regenerationType.final.value
         }}
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -26,7 +26,7 @@
         title=(localize 'anima.ui.general.regeneration.resting.title')
         inputType="text"
         disabled=true
-        inputValue=(concat data.data.characteristics.secondaries.regeneration.resting.value (localize (concat "anima.ui.general.regeneration.period." data.data.characteristics.secondaries.regeneration.resting.period ".title")))
+        inputValue=(concat system.characteristics.secondaries.regeneration.resting.value (localize (concat "anima.ui.general.regeneration.period." system.characteristics.secondaries.regeneration.resting.period ".title")))
         }}
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -34,7 +34,7 @@
         title=(localize 'anima.ui.general.regeneration.notResting.title')
         inputType="text"
         disabled=true
-        inputValue=(concat data.data.characteristics.secondaries.regeneration.normal.value (localize (concat "anima.ui.general.regeneration.period." data.data.characteristics.secondaries.regeneration.normal.period ".title")))
+        inputValue=(concat system.characteristics.secondaries.regeneration.normal.value (localize (concat "anima.ui.general.regeneration.period." system.characteristics.secondaries.regeneration.normal.period ".title")))
         }}
         {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -42,9 +42,9 @@
         title=(localize 'anima.ui.general.regeneration.penaltyReduction.title')
         inputType="text"
         disabled=true
-        inputValue=(concat data.data.characteristics.secondaries.regeneration.recovery.value (localize (concat "anima.ui.general.regeneration.period." data.data.characteristics.secondaries.regeneration.recovery.period ".title")))
+        inputValue=(concat system.characteristics.secondaries.regeneration.recovery.value (localize (concat "anima.ui.general.regeneration.period." system.characteristics.secondaries.regeneration.recovery.period ".title")))
         }}
-        
+
     </div>
     <div class="regeneration-second-row">
       {{>
@@ -53,10 +53,10 @@
         title=(localize 'anima.ui.general.regeneration.special.title')
         inputType="text"
         disabled=true
-        inputValue=(localize (concat "anima.ui.general.regeneration.special." data.data.characteristics.secondaries.regenerationType.final.value ".title"))
+        inputValue=(localize (concat "anima.ui.general.regeneration.special." system.characteristics.secondaries.regenerationType.final.value ".title"))
         }}
     </div>
-     
+
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}
 

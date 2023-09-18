@@ -9,24 +9,24 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="spell-maintenances"
   }}
-    {{#each data.data.mystic.spellMaintenances}}
-      <div data-item-id='{{this._id}}' class='spell-maintenance-row'>
+    {{#each system.mystic.spellMaintenances as |spellMaintenance index|}}
+      <div data-item-id='{{spellMaintenance._id}}' class='spell-maintenance-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.mystic.spellMaintenance.name.title")
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           inputType="text"
-          inputName=(concat "data.dynamic.spellMaintenances." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "system.dynamic.spellMaintenances." spellMaintenance._id ".name")
+          inputValue=spellMaintenance.name
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="cost"
           title=(localize "anima.ui.mystic.spellMaintenance.cost.title")
-          hideTitle=(is "gt" @index 0)
-          inputName=(concat "data.dynamic.spellMaintenances." this._id ".data.cost.value")
-          inputValue=this.data.cost.value
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "system.dynamic.spellMaintenances." spellMaintenance._id ".system.cost.value")
+          inputValue=spellMaintenance.system.cost.value
         }}
       </div>
     {{/each}}

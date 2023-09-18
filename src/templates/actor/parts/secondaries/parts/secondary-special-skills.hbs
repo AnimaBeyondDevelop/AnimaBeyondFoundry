@@ -9,15 +9,15 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="secondary-special-skills"
   }}
-    {{#each data.data.secondaries.secondarySpecialSkills}}
+    {{#each system.secondaries.secondarySpecialSkills}}
       <div data-item-id='{{this._id}}' class='secondary-special-skill-row'>
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="level"
           rollable=true
           title=this.name
-          inputName=(concat "data.dynamic.secondarySpecialSkills." this._id ".data.level.value")
-          inputValue=this.data.level.value
+          inputName=(concat "system.dynamic.secondarySpecialSkills." this._id ".system.level.value")
+          inputValue=this.system.level.value
         }}
       </div>
     {{/each}}

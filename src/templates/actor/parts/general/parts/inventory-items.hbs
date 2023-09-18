@@ -9,32 +9,32 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="inventory-items"
   }}
-    {{#each data.data.general.inventory}}
-      <div data-item-id='{{this._id}}' class='inventory-item-row'>
+    {{#each system.general.inventory as |item index|}}
+      <div data-item-id='{{item._id}}' class='inventory-item-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.name.title')
           inputType="text"
-          inputName=(concat "data.dynamic.inventory." this._id ".name")
-          inputValue=this.name
+          inputName=(concat "system.dynamic.inventory." item._id ".name")
+          inputValue=item.name
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="amount"
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.amount.title')
-          inputName=(concat "data.dynamic.inventory." this._id ".data.amount.value")
-          inputValue=this.data.amount.value
+          inputName=(concat "system.dynamic.inventory." item._id ".system.amount.value")
+          inputValue=item.system.amount.value
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="weight"
-          hideTitle=(is "gt" @index 0)
+          hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.weight.title')
-          inputName=(concat "data.dynamic.inventory." this._id ".data.weight.value")
-          inputValue=this.data.weight.value
+          inputName=(concat "system.dynamic.inventory." item._id ".system.weight.value")
+          inputValue=item.system.weight.value
         }}
       </div>
     {{/each}}

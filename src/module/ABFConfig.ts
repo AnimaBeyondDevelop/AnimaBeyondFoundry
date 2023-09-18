@@ -5,7 +5,7 @@ import {
   WeaponCritic,
   WeaponSizeProportion, WeaponSize
 } from './types/combat/WeaponItemConfig';
-import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig';
+import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig.js';
 
 export const ABFConfig: Record<string, any> = {};
 

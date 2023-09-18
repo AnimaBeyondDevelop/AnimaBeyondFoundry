@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="psychic-powers"
   }}
-    {{#each data.data.psychic.psychicPowers as |power|}}
+    {{#each system.psychic.psychicPowers as |power|}}
       <div data-item-id='{{power._id}}' class='psychic-power-row'>
         {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="psychic-power"
@@ -24,7 +24,7 @@
                   class="name"
                   hideTitle=true
                   inputType="text"
-                  inputName=(concat "data.dynamic.psychicPowers." power._id ".name")
+                  inputName=(concat "system.dynamic.psychicPowers." power._id ".name")
                   inputValue=power.name
                 }}
               </div>
@@ -34,16 +34,16 @@
                   class="level"
                   title=(localize "anima.ui.psychic.psychicPowers.power.header.level.title")
                   inputType="text"
-                  inputName=(concat "data.dynamic.psychicPowers." power._id ".data.level.value")
-                  inputValue=power.data.level.value
+                  inputName=(concat "system.dynamic.psychicPowers." power._id ".system.level.value")
+                  inputValue=power.system.level.value
                 }}
                 {{>
                 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                   class="action-type"
                   choices=xRoot.config.iterables.psychic.actionTypes
                   title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
-                  inputName=(concat "data.dynamic.psychicPowers." power._id ".data.actionType.value")
-                  inputValue=power.data.actionType.value
+                  inputName=(concat "system.dynamic.psychicPowers." power._id ".system.actionType.value")
+                  inputValue=power.system.actionType.value
                 }}
               </div>
             </div>
@@ -51,7 +51,7 @@
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="psychic-power"
           }}
-            {{#each power.data.effects as |effect key|}}
+            {{#each power.system.effects as |effect key|}}
               <div class='effect-row'>
                 <input
                   type='text'
@@ -62,7 +62,7 @@
                 <input
                   type='text'
                   class='input description'
-                  name='{{concat "data.dynamic.psychicPowers." power._id ".data.effects." key ".value"}}'
+                  name='{{concat "system.dynamic.psychicPowers." power._id ".system.effects." key ".value"}}'
                   value='{{effect.value}}'
                 />
               </div>
@@ -75,15 +75,15 @@
                 class="has-maintenance"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
                 inputType="checkbox"
-                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.hasMaintenance.value")
-                inputValue=(is 'eq' power.data.hasMaintenance.value true)
+                inputName=(concat "system.dynamic.psychicPowers." power._id ".system.hasMaintenance.value")
+                inputValue=(is 'eq' power.system.hasMaintenance.value true)
               }}
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="bonus"
                 title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
-                inputName=(concat "data.dynamic.psychicPowers." power._id ".data.bonus.value")
-                inputValue=power.data.bonus.value
+                inputName=(concat "system.dynamic.psychicPowers." power._id ".system.bonus.value")
+                inputValue=power.system.bonus.value
               }}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}

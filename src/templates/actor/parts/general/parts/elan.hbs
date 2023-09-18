@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="elan"
   }}
-    {{#each data.data.general.elan as |elan|}}
+    {{#each system.general.elan as |elan|}}
       <div class='elan-row'>
         <div data-item-id='{{elan._id}}' class='base'>
           {{>
@@ -17,19 +17,19 @@
             class="name"
             title=(localize 'anima.ui.elanSection.elanRow.name')
             inputType="text"
-            inputName=(concat "data.dynamic.elan." elan._id ".name")
+            inputName=(concat "system.dynamic.elan." elan._id ".name")
             inputValue=elan.name
           }}
           {{>
           "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
             class="level"
             title=(localize 'anima.ui.elanSection.elanRow.level')
-            inputName=(concat "data.dynamic.elan." elan._id ".data.level.value")
-            inputValue=elan.data.level.value
+            inputName=(concat "system.dynamic.elan." elan._id ".system.level.value")
+            inputValue=elan.system.level.value
           }}
         </div>
 
-        {{#each elan.data.powers as |power|}}
+        {{#each elan.system.powers as |power|}}
           <div
             class='powers mt-1'
             data-elan-id='{{elan._id}}'
@@ -37,7 +37,7 @@
           >
             <input
               type='hidden'
-              name='data.dynamic.elan_power.{{power._id}}.data.elanId'
+              name='system.dynamic.elan_power.{{power._id}}.system.elanId'
               value='{{elan._id}}'
             />
             {{>
@@ -45,7 +45,7 @@
               class="elan-power-name"
               hideTitle=true
               inputType="text"
-              inputName=(concat "data.dynamic.elan_power." power._id ".name")
+              inputName=(concat "system.dynamic.elan_power." power._id ".name")
               inputValue=power.name
             }}
             {{>
@@ -53,8 +53,8 @@
               class="elan-power-level"
               hideTitle=true
               inputType="text"
-              inputName=(concat "data.dynamic.elan_power." power._id ".data.level.value")
-              inputValue=power.data.level.value
+              inputName=(concat "system.dynamic.elan_power." power._id ".system.level.value")
+              inputValue=power.system.level.value
             }}
           </div>
         {{/each}}
