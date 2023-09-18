@@ -7,7 +7,6 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
-import { ABFSystemName } from '../../animabf.name';
 
 export default class ABFActorSheet extends ActorSheet {
   i18n;
@@ -25,7 +24,7 @@ export default class ABFActorSheet extends ActorSheet {
       ...super.defaultOptions,
       ...{
         classes: ['abf', 'sheet', 'actor'],
-        template: `systems/${ABFSystemName}/templates/actor/actor-sheet.hbs`,
+        template: 'systems/animabf/templates/actor/actor-sheet.hbs',
         width: 1000,
         height: 850,
         submitOnChange: true,
@@ -56,7 +55,7 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   get template() {
-    return `systems/${ABFSystemName}/templates/actor/actor-sheet.hbs`;
+    return 'systems/animabf/templates/actor/actor-sheet.hbs';
   }
 
   async close(options) {
