@@ -9,6 +9,7 @@ import { iterateNumberHBSHelper } from './helpers/iterateNumberHBSHelper';
 import { notHBSHelper } from './helpers/notHBSHelper';
 import { minNumberHBSHelper } from './helpers/minNumberHBSHelper';
 import { logHBSHelper } from './helpers/logHBSHelper';
+import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 
 export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
 
@@ -24,7 +25,8 @@ export const registerHelpers = () => {
     manipulateStringHBSHelper,
     mathHBSHelper,
     minNumberHBSHelper,
-    logHBSHelper
+    logHBSHelper,
+    calculateLevelsHBSHelper
   ];
 
   for (const helper of helpers) {
