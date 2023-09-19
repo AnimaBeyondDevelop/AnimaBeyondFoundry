@@ -85,14 +85,13 @@ export enum ABFItems {
 
 ### 4. Ajouter la configuration de l'item
 
-Dans le dossier `module/types`, vous trouverez plusieurs sous-dossiers qui font référence à l'emplacement de ces items, par exemple : `mystic` ou `psychic`.
+Toutes les informations sur les champs à créer sont documentées dans le fichier `Items.d.ts`, où vous trouverez également les types de toutes les configurations à utiliser avec JSDoc. La première étape consiste à créer ces types pour vos items en vous basant sur ceux déjà existants.
 
-Une fois que vous avez localisé (ou créé s'il n'existe pas) le dossier qui contiendra la configuration du nouvel item, créez un fichier et choisissez l'un des deux modèles ci-dessous en fonction de ce que contient le `data`.
+Dans le dossier `module/types`, vous trouverez plusieurs sous-dossiers faisant référence à l'emplacement de ces items, par exemple : `mystic` ou `psychic`.
 
-Si le nouvel item n'a que le nom, je recommande d'utiliser le modèle : `AdvantageItemConfig.ts`.
-Si le nouvel item contient plus de données, je recommande d'utiliser le modèle : `ContactItemConfig.ts`.
+Une fois que vous avez localisé (ou créé s'il n'existe pas encore) le dossier qui hébergera la configuration du nouvel item, créez un fichier en utilisant comme exemple le `[...]ItemConfig` déjà créé pour l'item qui ressemble le plus au nouveau que vous souhaitez ajouter. En d'autres termes, si votre item est interne et ne comporte qu'un nom, choisissez un `[...]ItemConfig` qui soit interne et ne comporte qu'un nom (comme `ContactItemConfig`), tandis que si votre item est externe et comporte plus de données (comme une arme), choisissez un `[...]ItemConfig` approprié (comme `WeaponItemConfig`).
 
-Toutes les informations sur les champs à créer sont documentées dans le fichier `Items.ts`
+> :warning: *Remarque : Il est important de prendre en compte si l'item est interne ou externe lors de la création du fichier de configuration du nouvel item. En général, les tâches de modification, de création et de suppression d'items d'un acteur dépendent du fait que l'élément soit interne ou externe, et les méthodes correspondantes de la classe acteur doivent être appelées à cet effet. Pour un exemple de cela, comparez la méthode `onCreate` dans `AdvantageItemConfig` avec la même méthode dans `NoteItemConfig`.*
 
 ### 5. Ajouter notre item à la liste des items disponibles
 

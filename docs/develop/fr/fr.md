@@ -1,19 +1,27 @@
 ## Instructions d'installation pour les développeurs
 
-Ces étapes sont recommandées pour travailler avec Linux. Si vous utilisez Windows, vous devriez installer [WSL2](https://learn.microsoft.com/fr-fr/windows/wsl/install) et suivre les étapes de Linux.
+Ces étapes sont recommandées pour travailler avec Linux. Si vous utilisez Windows, vous devriez installer [WSL2](https://learn.microsoft.com/fr-fr/windows/wsl/install), configurer VSCode pour travailler avec WSL et suivre les étapes de Linux.
 
-1) Cloner le référentiel dans \AppData\Local\FoundryVTT\Data\systems\AnimaBeyondFoundry. Dans Sourcetree, cela se fait via Fichier -> Cloner.
+>:warning: *Si vous configurez pour travailler avec WSL, nous vous recommandons de ne pas utiliser l'installation de Foundry sous Windows et d'installer Foundry sous WSL à partir du terminal en suivant les étapes de la section "Hosting a Dedicated Server with NodeJS" dans le [guide d'installation de Foundry]((https://foundryvtt.com/article/installation/)). Il est possible d'utiliser une installation existante sous Windows, auquel cas il serait recommandé de séparer les dossiers de données de Foundry pour le développement et la production.*
 
-2) Installer node (18) si ce n'est pas déjà fait : https://nodejs.org/en/download/
+1) Clonez le dépôt dans l'emplacement qui vous convient le mieux. Dans Sourcetree, cela se fait via File -> Clone, et en utilisant la console :
+```bash
+git clone https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry.git
 
-3) Dans VSCode, ajouter le dossier du référentiel à l'espace de travail (clic droit sur le panneau de gauche et "Ajouter un dossier à l'espace de travail", par exemple). Ensuite, faites un clic droit dessus et "Ouvrir dans le terminal intégré". Cela ouvre un terminal de commandes Windows dans ce répertoire (...\FoundryVTT\Data\systems\AnimaBeyondFoundry). Dans ce terminal, exécutez la commande :
+```
+
+2) Installez Node(18) si ce n'est pas déjà fait : https://nodejs.org/en/download/
+
+3) Dans VSCode, ajoutez le dossier du référentiel à l'espace de travail (clic droit sur le panneau de gauche et "Ajouter un dossier à l'espace de travail", par exemple). Ensuite, faites un clic droit dessus et "Ouvrir dans le terminal intégré". Cela ouvre un terminal de commandes Windows dans ce répertoire (...\FoundryVTT\Data\systems\AnimaBeyondFoundry). Dans ce terminal, exécutez la commande :
 
 `npm install`
 
-4) Dupliquez le fichier foundryconfig.example.json et renommez-le foundryconfig.json, puis éditez-le et remplissez le champ destPath avec le chemin où vous avez le dossier des systèmes, par exemple :
+> :warning: *Si vous utilisez WSL, pour ouvrir le dossier du dépôt dans VSCode, vous devrez suivre les étapes décrites ici. Le moyen le plus simple est de naviguer depuis la console jusqu'au dossier du dépôt et d'exécuter  `code .`.*
+
+4) Dupliquez le fichier `foundryconfig.example.json`, renommez-le `foundryconfig.json`, puis éditez-le et remplissez le champ destPath avec le chemin où se trouve le dossier des systèmes, par exemple :
    4.1. Windows: `C:/Users/<nomdutilisateur>/AppData/Local/FoundryVTT/Data/systems`
    4.2. Linux: `/home/<nomdutilisateur>/.local/share/FoundryVTT/Data/systems`
-
+   4.3. WSL (installation du serveur) : `/home/<nomdutilisateur>/foundrydata/Data/Systems`
 
 5) Jusqu'à présent, ce dossier n'a aucun effet sur Foundry. Pour générer le vrai dossier du système, exécutez la commande :
 
@@ -22,6 +30,15 @@ Ces étapes sont recommandées pour travailler avec Linux. Si vous utilisez Wind
 `npm run dev`, pour le générer et le régénérer en cas de changements dans le dossier du référentiel.
 
 6) Ouvrez Foundry. Vous devriez voir Anima Beyond Fantasy parmi vos systèmes installés.
+> :warning: * Si vous utilisez WSL et que vous avez suivi les étapes pour installer Foundry décrites dans la section "Hosting a Dedicated Server with NodeJS" dans le [guide d'installation de Foundry](https://foundryvtt.com/article/installation/),  vous devrez lancer Foundry depuis la console avec la commande suivante :*
+> ```bash
+> node $HOME/foundryvtt/resources/app/main.js --dataPath=$HOME/foundrydata`
+> ```
+> *Pour plus de commodité, vous pouvez créer un alias avec :*
+>```bash
+> echo "alias foundry='node $HOME/foundryvtt/resources/app/main.js --dataPath=$HOME/foundrydata'" >> ~/.bash_aliases
+>```
+> *Après avoir créé l'alias (et redémarré la console pour qu'il prenne effet), il vous suffira d'utiliser la commande `foundry` pour le lancer. Pour vous connecter, ouvrez simplement n'importe quel navigateur et accédez à l'URL `localhost:30000`.*
 
 ## Instructions de travail pour les développeurs
 
