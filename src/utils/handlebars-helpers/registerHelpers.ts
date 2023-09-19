@@ -10,6 +10,7 @@ import { notHBSHelper } from './helpers/notHBSHelper';
 import { minNumberHBSHelper } from './helpers/minNumberHBSHelper';
 import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
+import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
 
 export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
 
@@ -26,6 +27,7 @@ export const registerHelpers = () => {
     mathHBSHelper,
     minNumberHBSHelper,
     logHBSHelper,
+    calculateLanguagesHBSHelper,
     calculateLevelsHBSHelper
   ];
 
