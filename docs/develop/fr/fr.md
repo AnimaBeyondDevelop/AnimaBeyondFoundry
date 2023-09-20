@@ -1,6 +1,6 @@
 ## Instructions d'installation pour les développeurs
 
-Ces étapes sont recommandées pour travailler avec Linux. Si vous utilisez Windows, vous devriez installer [WSL2](https://learn.microsoft.com/fr-fr/windows/wsl/install), configurer VSCode pour travailler avec WSL et suivre les étapes de Linux.
+Ces étapes sont recommandées pour travailler avec Linux. Si vous utilisez Windows, vous devriez installer [WSL2](https://learn.microsoft.com/fr-fr/windows/wsl/install), puis [configurer VSCode pour travailler avec WSL](https://learn.microsoft.com/fr-fr/windows/wsl/tutorials/wsl-vscode) et suivre les étapes de Linux.
 
 >:warning: *Si vous configurez pour travailler avec WSL, nous vous recommandons de ne pas utiliser l'installation de Foundry sous Windows et d'installer Foundry sous WSL à partir du terminal en suivant les étapes de la section "Hosting a Dedicated Server with NodeJS" dans le [guide d'installation de Foundry]((https://foundryvtt.com/article/installation/)). Il est possible d'utiliser une installation existante sous Windows, auquel cas il serait recommandé de séparer les dossiers de données de Foundry pour le développement et la production.*
 
@@ -16,12 +16,12 @@ git clone https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry.git
 
 `npm install`
 
-> :warning: *Si vous utilisez WSL, pour ouvrir le dossier du dépôt dans VSCode, vous devrez suivre les étapes décrites ici. Le moyen le plus simple est de naviguer depuis la console jusqu'au dossier du dépôt et d'exécuter  `code .`.*
+> :warning: *Si vous utilisez WSL, pour ouvrir le dossier du dépôt dans VSCode, vous devrez suivre les étapes décrites [ici](https://learn.microsoft.com/fr-fr/windows/wsl/tutorials/wsl-vscode#open-a-wsl-project-in-visual-studio-code). Le moyen le plus simple est de naviguer depuis la console jusqu'au dossier du dépôt et d'exécuter  `code .`.*
 
 4) Dupliquez le fichier `foundryconfig.example.json`, renommez-le `foundryconfig.json`, puis éditez-le et remplissez le champ destPath avec le chemin où se trouve le dossier des systèmes, par exemple :
-   4.1. Windows: `C:/Users/<nomdutilisateur>/AppData/Local/FoundryVTT/Data/systems`
-   4.2. Linux: `/home/<nomdutilisateur>/.local/share/FoundryVTT/Data/systems`
-   4.3. WSL (installation du serveur) : `/home/<nomdutilisateur>/foundrydata/Data/Systems`
+   - Windows: `C:/Users/<nomdutilisateur>/AppData/Local/FoundryVTT/Data/systems`
+   - Linux: `/home/<nomdutilisateur>/.local/share/FoundryVTT/Data/systems`
+   - WSL (installation du serveur) : `/home/<nomdutilisateur>/foundrydata/Data/Systems`
 
 5) Jusqu'à présent, ce dossier n'a aucun effet sur Foundry. Pour générer le vrai dossier du système, exécutez la commande :
 
