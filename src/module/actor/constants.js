@@ -1,6 +1,4 @@
-import { ABFActorDataSourceData } from '../types/Actor';
-
-export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
+export const INITIAL_ACTOR_DATA = {
   version: 1,
   ui: {
     contractibleItems: {},
