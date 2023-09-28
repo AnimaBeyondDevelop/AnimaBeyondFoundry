@@ -36,6 +36,10 @@ export class WSGMCombatManager extends WSCombatManager {
       const { attackerToken, defenderToken, defenderActor } = this.combat;
 
       const { critic } = msg.payload.values;
+      const { visible } = msg.payload.values;
+      const { projectile } = msg.payload.values;
+      const { damage } = msg.payload.values;
+      const { specialType } = msg.payload.values;
 
       if (canOwnerReceiveMessage(defenderActor)) {
         const newMsg = {
@@ -50,7 +54,7 @@ export class WSGMCombatManager extends WSCombatManager {
         this.emit(newMsg);
       } else {
         try {
-          this.manageDefense(attackerToken, defenderToken, msg.payload.type, critic);
+          this.manageDefense(attackerToken, defenderToken, msg.payload.type, critic, visible, projectile, damage, specialType);
         } catch (err) {
           if (err) {
             Log.error(err);
@@ -274,9 +278,13 @@ export class WSGMCombatManager extends WSCombatManager {
               this.emit(newMsg);
             } else {
               const { critic } = result.values;
+              const { visible } = result.values;
+              const { projectile } = result.values;
+              const { damage } = result.values;
+              const { specialType } = result.values;
 
               try {
-                this.manageDefense(attacker, defender, result.type, critic);
+                this.manageDefense(attacker, defender, result.type, critic, visible, projectile, damage, specialType);
               } catch (err) {
                 if (err) {
                   Log.error(err);
@@ -297,7 +305,11 @@ export class WSGMCombatManager extends WSCombatManager {
       {
         token: attacker,
         attackType,
-        critic
+        critic,
+        visible,
+        projectile,
+        damage,
+        specialType
       },
       defender,
       {

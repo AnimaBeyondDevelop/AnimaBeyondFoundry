@@ -52,7 +52,31 @@ export class ABFActor extends Actor {
       }
     });
   }
-
+  applyDamageShieldSupernatural(damage: number, dobleDamage: boolean) {
+    const newShieldPoints = dobleDamage? this.system.combat.shieldSupernatural.value - damage * 2 : this.system.combat.shieldSupernatural.value - damage;
+    if (newShieldPoints < 0) {
+        const newLifePoints = this.system.characteristics.secondaries.lifePoints.value + newShieldPoints;    
+        this.update({
+            system: {
+                characteristics: {
+                    secondaries: { lifePoints: { value: newLifePoints } }
+                },
+                combat: {
+                    shieldSupernatural: { value: 0 }
+                }
+            }
+        });
+    }
+    else {
+        this.update({
+            system: {
+                combat: {
+                    shieldSupernatural: { value: newShieldPoints }
+                }
+            }
+        });
+    }
+}
   applyDamage(damage: number) {
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
