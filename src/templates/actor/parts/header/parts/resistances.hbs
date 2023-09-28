@@ -16,13 +16,13 @@
         rollable=true
         rollableDice='1d100'
         rollableMessage=(localize (concat 'anima.ui.resistances.' key))
-        inputName=(concat "system.characteristics.secondaries.resistances." key ".base.value")
-        inputValue=atr.base.value
-        hasSecondaryInput=false
+        inputName=(concat "system.characteristics.secondaries.resistances." key ".special.value")
+        inputValue=atr.special.value
+        hasSecondaryInput=true
         rollSecondaryInput=true
         addTooltips=true
         disableSecondaryInput=true
-        secondaryInputName=(concat "system.characteristics.secondaries.resistances." key ".base.value")
+        secondaryInputName=(concat "system.characteristics.secondaries.resistances." key ".final.value")
         secondaryInputValue=atr.final.value
       }}
     {{/each}}
