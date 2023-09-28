@@ -21,6 +21,11 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       openRolls: { value: 90 },
       fumbles: { value: 3 },
       openOnDoubles: { value: false },
+      perceiveMystic: { value: false },
+      inmaterial: { value: false },
+      inhuman: { value: false },
+      zen: { value: false },
+      perceivePsychic: { value: false },
       defenseType: { value: '' }
     },
     modifiers: {
@@ -41,6 +46,21 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       extraDamage: {
         value: 0
+      },
+      attackMod: {
+          value: 0
+      },
+      blockMod: {
+          value: 0
+      },
+      dodgeMod: {
+          value: 0
+      },
+      projectionMod: {
+          value: 0
+      },
+      initiativeMod: {
+          value: 0
       }
     },
     destinyPoints: {
@@ -764,6 +784,12 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       accumulated: 0,
       value: 0,
       max: 0
+    },
+    zeonAccumulated: {
+        value: 0
+    },
+    zeonMaintained: {
+        value: 0
     },
     zeonRegeneration: {
       base: {

@@ -1,5 +1,10 @@
 import { Templates } from '../../utils/constants';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
+import { energyCheck } from '../../combat/utils/energyCheck.js';
+import { resistanceCheck } from '../../combat/utils/resistanceCheck.js';
+import { damageCheck } from '../../combat/utils/damageCheck.js';
+import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
+import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
@@ -26,7 +31,11 @@ const getInitialData = (attacker, defender, options = {}) => {
       actor: attackerActor,
       showRoll: !isGM || showRollByDefault,
       withoutRoll: false,
+      poorVisibility: false,
+      targetInCover: false,
       counterAttackBonus: options.counterAttackBonus,
+      distance: 0,
+      inmaterial: false,
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -34,6 +43,13 @@ const getInitialData = (attacker, defender, options = {}) => {
         weaponUsed: undefined,
         criticSelected: undefined,
         weapon: undefined,
+        visible: true,
+        highGround: false,
+        projectile: {
+            value: false,
+            type: ''
+        },
+        specialType:'material',
         damage: {
           special: 0,
           final: 0
@@ -41,10 +57,19 @@ const getInitialData = (attacker, defender, options = {}) => {
       },
       mystic: {
         modifier: 0,
-        magicProjectionType: 'normal',
+        magicProjectionType: 'offensive',
         spellUsed: undefined,
         spellGrade: 'base',
         critic: NoneWeaponCritic.NONE,
+        checkResistance: false,
+        resistanceType: undefined,
+        resistanceCheck: 0,
+        visible: false,
+        projectile: {
+            value: true,
+            type: 'shot'
+        },
+        specialType:'energy',
         damage: 0
       },
       psychic: {
@@ -57,6 +82,16 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         powerUsed: undefined,
         critic: NoneWeaponCritic.NONE,
+        fatigueCheck: false,
+        checkResistance: false,
+        resistanceType: undefined,
+        resistanceCheck: 0,
+        visible: false,
+        projectile: {
+            value: true,
+            type: 'shot'
+        },
+        specialType:'intangible',
         damage: 0
       }
     },
@@ -75,9 +110,22 @@ export class CombatAttackDialog extends FormApplication {
     super(getInitialData(attacker, defender, options));
 
     this.modalData = getInitialData(attacker, defender, options);
-
+    this.modalData.attacker.inmaterial = this.attackerActor.system.general.settings.inmaterial.value;
     const { weapons } = this.attackerActor.system.combat;
-
+    const { spells } = this.attackerActor.system.mystic;
+    const { psychicPowers } = this.attackerActor.system.psychic;
+    if (psychicPowers.length > 0) {
+        psychicPowers.powerUsed = psychicPowers.filter(w => w.system.actionType.value === "attack")[0]?._id;
+        const power = psychicPowers.find(w => w._id === psychicPowers.powerUsed);
+        this.attackerActor.system.psychic.psychicPotential.special = power?.system.bonus.value;
+        this.modalData.attacker.psychic.critic = power?.system.critic.value;
+    };
+    if (spells.length > 0) {
+        spells.spellUsed = spells.filter(w => w.system.spellType.value === "attack" || w.system.spellType.value === "animatic")[0]?._id;
+        const spell = spells.find(w => w._id === spells.spellUsed);
+    const spellUsedEffect = spell?.system.grades.base.description.value;
+    spells.damage = damageCheck(spellUsedEffect)[0]
+    };
     if (weapons.length > 0) {
       this.modalData.attacker.combat.weaponUsed = weapons[0]._id;
     } else {
@@ -134,24 +182,38 @@ export class CombatAttackDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.send-attack').click(() => {
-      const {
-        weapon,
-        criticSelected,
-        modifier,
-        fatigueUsed,
-        damage,
-        weaponUsed,
-        unarmed
-      } = this.modalData.attacker.combat;
-
+      const { combat:{
+              weapon,
+              criticSelected,
+              modifier,
+              fatigueUsed,
+              damage,
+              weaponUsed,
+              unarmed,
+              visible,
+              specialType
+              }, distance, poorVisibility, targetInCover, inmaterial } = this.modalData.attacker;
+      const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (typeof damage !== 'undefined') {
+        let combatModifier = 0;
+        let projectile = {value: false, type: ''}
+        if (weapon?.system.isRanged.value){
+            projectile = {
+                value: true,
+                type: weapon.system.shotType.value
+            };
+            if (distance <= 1) { combatModifier += 30 };
+            if (poorVisibility) { combatModifier -= 20 };
+            if (targetInCover) { combatModifier -= 40 };
+        };
+        if (weapon !== undefined && criticSelected !== NoneWeaponCritic.NONE && criticSelected == weapon?.system.critic.secondary.value){ combatModifier -= 10 };
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
 
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
-
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${
+        const newModifier = combatModifier + modifier ?? 0
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${newModifier} + ${
           fatigueUsed ?? 0
         }* 15`;
         if (this.modalData.attacker.withoutRoll) {
@@ -186,6 +248,17 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const critic = criticSelected ?? WeaponCritic.IMPACT;
+        let checkRes = [false, "", 0];
+        if(weapon !== undefined){
+        checkRes = resistanceCheck(weapon.system.special.value)
+        };
+        let specialTypeCheck = specialType;
+        let unableToAttack = false;
+        if  (energyCheck(critic)) {specialTypeCheck = 'materialEnergy'}
+        else if (!inmaterial && inmaterialDefender) {unableToAttack = true};
+        if (inmaterial && !inmaterialDefender) {damage.final = 0}
+        else {checkRes = [false, "", 0]};
+        if  (inmaterial) {specialTypeCheck = 'inmaterial'};
 
         const rolled =
           roll.total -
@@ -202,11 +275,19 @@ export class CombatAttackDialog extends FormApplication {
             attack,
             weaponUsed,
             critic,
-            modifier,
+            modifier: newModifier,
             fatigueUsed,
             roll: rolled,
             total: roll.total,
-            fumble: roll.fumbled
+            fumble: roll.fumbled,
+            checkResistance: checkRes[0],
+            resistanceType: checkRes[1],
+            resistanceCheck: checkRes[2],
+            visible,
+            distance,
+            projectile,
+            specialType: specialTypeCheck,
+            unableToAttack
           }
         });
 
@@ -217,9 +298,9 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-mystic-attack').click(() => {
-      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage } =
-        this.modalData.attacker.mystic;
-
+      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage, projectile, specialType} = this.modalData.attacker.mystic;
+      const { distance } =this.modalData.attacker;
+      const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (spellUsed) {
         let baseMagicProjection;
         let magicProjection;
@@ -248,7 +329,15 @@ export class CombatAttackDialog extends FormApplication {
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
         roll.roll();
-
+        const { spells } = this.attackerActor.system.mystic;
+        const spell = spells.find(w => w._id === spellUsed);
+        const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? "";
+        let visibleCheck = spell?.system.visible.value;
+        let specialTypeCheck = specialType;
+        if  (spell?.system.spellType.value == 'animatic') {specialTypeCheck = 'intangible'}
+        else if (spell?.system.via.value == 'light') {specialTypeCheck = 'attackSpellLight'}
+        else if (spell?.system.via.value == 'darkness') {specialTypeCheck = 'attackSpellDarkness'};
+        let checkRes = resistanceCheck(spellUsedEffect);
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
 
@@ -268,6 +357,8 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const rolled = roll.total - magicProjection - (modifier ?? 0);
+        let unableToAttack = false;
+        if (inmaterialDefender && specialTypeCheck == specialType ) {unableToAttack = true};
 
         this.hooks.onAttack({
           type: 'mystic',
@@ -275,12 +366,22 @@ export class CombatAttackDialog extends FormApplication {
             modifier,
             spellUsed,
             spellGrade,
+            spellName: spell.name,
             magicProjection,
             critic,
             damage,
             roll: rolled,
             total: roll.total,
-            fumble: roll.fumbled
+            fumble: roll.fumbled,
+            checkResistance: checkRes[0],
+            resistanceType: checkRes[1],
+            resistanceCheck: checkRes[2],
+            visible: visibleCheck,
+            distance,
+            projectile,
+            specialType : specialTypeCheck,
+            unableToAttack,
+            macro: spell.macro
           }
         });
 
@@ -291,9 +392,10 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-psychic-attack').click(() => {
-      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage } =
+      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage, projectile, specialType} =
         this.modalData.attacker.psychic;
-
+      const { distance } =this.modalData.attacker;
+      const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
@@ -316,6 +418,19 @@ export class CombatAttackDialog extends FormApplication {
           this.modalData.attacker.actor.system
         );
         psychicPotentialRoll.roll();
+        let imbalance = true;
+        const newPotentialTotal = psychicPotentialEffect (psychicPotentialRoll.total,imbalance);
+        const { psychicPowers } = this.attackerActor.system.psychic;
+        const power = psychicPowers.find(w => w._id === powerUsed);
+        const powerUsedEffect = power?.system.effects[newPotentialTotal].value;
+        let newDamage = damageCheck(powerUsedEffect)[0] + damage;
+        let checkRes = resistanceCheck(powerUsedEffect);
+        let fatigueInmune = this.attackerActor.system.general.advantages.find(i => i.name === "Res. a la fatiga psíquica");
+        let fatigueCheck = psychicFatigue(powerUsedEffect, fatigueInmune);
+        let fatiguePen = fatigueCheck[1];
+        let visibleCheck = power?.system.visible.value;
+        let specialTypeCheck = specialType;
+        if  (visibleCheck) {specialTypeCheck = 'energy'};
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
@@ -323,41 +438,57 @@ export class CombatAttackDialog extends FormApplication {
           const powers = this.attackerActor.system.psychic.psychicPowers;
 
           const power = powers.find(w => w._id === powerUsed);
-
-          psychicPotentialRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
-            flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
-          });
-
-          const projectionFlavor = i18n.format(
-            'macros.combat.dialog.psychicAttack.title',
-            {
-              power: power.name,
-              target: this.modalData.defender.token.name,
-              potential: psychicPotentialRoll.total
-            }
-          );
-
-          psychicProjectionRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
-            flavor: projectionFlavor
-          });
+          if (fatigueCheck[0]){
+              psychicPotentialRoll.toMessage({
+                  speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+                  flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
+                      fatiguePen
+                  })
+              });
+              this.attackerActor.applyFatigue(fatiguePen);
+          }
+          else{ psychicPotentialRoll.toMessage({
+                  speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+                  flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
+              });
+              const projectionFlavor = i18n.format('macros.combat.dialog.psychicAttack.title', {
+                  power: power.name,
+                  target: this.modalData.defender.token.name,
+                  potential: psychicPotentialRoll.total
+              });
+              psychicProjectionRoll.toMessage({
+                  speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+                  flavor: projectionFlavor
+              });
+          };
         }
 
         const rolled = psychicProjectionRoll.total - psychicProjection - (modifier ?? 0);
-
+        let unableToAttack = false;
+        if (inmaterialDefender) {unableToAttack = true};
         this.hooks.onAttack({
           type: 'psychic',
           values: {
             modifier,
             powerUsed,
+            powerName : power.name,
             psychicPotential: psychicPotentialRoll.total,
             psychicProjection,
             critic,
-            damage,
+            damage: newDamage,
+            fatigueCheck: fatigueCheck[0],
             roll: rolled,
             total: psychicProjectionRoll.total,
-            fumble: psychicProjectionRoll.fumbled
+            fumble: psychicProjectionRoll.fumbled,
+            checkResistance: checkRes[0],
+            resistanceType: checkRes[1],
+            resistanceCheck: checkRes[2],
+            visible: visibleCheck,
+            distance,
+            projectile,
+            specialType : specialTypeCheck,
+            unableToAttack,
+            macro: power.macro
           }
         });
 
@@ -370,17 +501,32 @@ export class CombatAttackDialog extends FormApplication {
 
   getData() {
     const {
-      attacker: { combat, psychic },
+      attacker: { combat, psychic, mystic },
       ui
     } = this.modalData;
 
     ui.hasFatiguePoints =
       this.attackerActor.system.characteristics.secondaries.fatigue.value > 0;
 
+    const { psychicPowers } = this.attackerActor.system.psychic;
+    if (!psychic.powerUsed) {
+            psychic.powerUsed = psychicPowers.filter(w => w.system.actionType.value === "attack")[0]?._id;
+        };
+    const power = psychicPowers.find(w => w._id === psychic.powerUsed);
+    psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
+    let psychicBonus = power?.system.bonus.value ?? 0
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
-      this.attackerActor.system.psychic.psychicPotential.final.value;
+      this.attackerActor.system.psychic.psychicPotential.final.value + psychicBonus;
 
+    this.modalData.attacker.distance = Math.floor(canvas.grid.measureDistance(this.modalData.attacker.token, this.modalData.defender.token));
+    const { spells } = this.attackerActor.system.mystic;
+    if (!mystic.spellUsed) {
+        mystic.spellUsed = spells.filter(w => w.system.spellType.value === "attack" || w.system.spellType.value === "animatic")[0]?._id
+    };
+    const spell = spells.find(w => w._id === mystic.spellUsed);
+    const spellUsedEffect = spell?.system.grades[mystic.spellGrade].description.value ?? "";
+    mystic.damage = damageCheck(spellUsedEffect)[0];
     const { weapons } = this.attackerActor.system.combat;
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);
@@ -394,6 +540,18 @@ export class CombatAttackDialog extends FormApplication {
         this.attackerActor.system.characteristics.primaries.strength.mod;
     } else {
       combat.weapon = weapon;
+      if (weapon?.system.isRanged.value){
+          combat.projectile = {
+              value: true,
+              type: weapon.system.shotType.value
+          };
+      }
+      else {
+          combat.projectile = {
+              value: false,
+              type: ''
+          };
+      };
 
       if (!combat.criticSelected) {
         combat.criticSelected = weapon.system.critic.primary.value;

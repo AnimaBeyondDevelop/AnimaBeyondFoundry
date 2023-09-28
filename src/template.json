@@ -13,12 +13,22 @@
           "openRolls": { "value": 0 },
           "fumbles": { "value": 0 },
           "openOnDoubles": { "value": false },
+          "perceiveMystic": { "value": false },
+          "perceivePsychic": { "value": false },
+          "inmaterial": { "value": false },
+          "inhuman": { "value": false },
+          "zen": { "value": false },
           "defenseType": { "value": "" }
         },
         "modifiers": {
           "physicalActions": { "value": 0 },
           "allActions": { "base": { "value": 0 }, "final": { "value": 0 } },
           "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } },
+          "attackMod": { "value": 0 },
+          "blockMod": { "value": 0 },
+          "dodgeMod": { "value": 0 },
+          "projectionMod": { "value": 0 },
+          "initiativeMod": { "value": 0 },
           "extraDamage": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
@@ -176,6 +186,8 @@
           "alternative": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
+        "zeonAccumulated": { "value": 0 },
+        "zeonMaintained": { "value": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
         "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
         "magicProjection": {
@@ -313,6 +325,9 @@
       "spellType": { "value": "" },
       "actionType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
+      "critic": { "value": "-" },
+      "visible": { "value": false },
+      "macro": { "value": "" },
       "grades": {
         "base": {
           "name": { "value": "" },
@@ -360,7 +375,11 @@
         "440": { "value": "" }
       },
       "actionType": { "value": "active" },
+      "discipline": { "value": "matrial" },
+      "critic": { "value": "-" },
+      "macro": { "value": "" },
       "hasMaintenance": { "value": false },
+      "visible": { "value": false },
       "bonus": { "value": 0 }
     },
     "technique": {

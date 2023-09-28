@@ -69,15 +69,16 @@ export class GMCombatDialog extends FormApplication {
   get isDamagingCombat() {
     const { attacker } = this.modalData;
 
-    const isPhysicalDamagingCombat = attacker.result?.type === 'combat';
+    const isPhysicalDamagingCombat = attacker.result?.type === 'combat' &&
+    attacker.result.values.damage !== 0;
 
     const isMysticDamagingCombat =
       attacker.result?.type === 'mystic' &&
-      attacker.result.values.critic !== NoneWeaponCritic.NONE;
+      attacker.result.values.damage !== 0;
 
     const isPsychicDamagingCombat =
       attacker.result?.type === 'psychic' &&
-      attacker.result.values.critic !== NoneWeaponCritic.NONE;
+      attacker.result.values.damage !== 0;
 
     return isPhysicalDamagingCombat || isMysticDamagingCombat || isPsychicDamagingCombat;
   }
@@ -107,10 +108,14 @@ export class GMCombatDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.cancel-button').click(() => {
+      this.applyDamageShieldSupernaturalIfBeAble();
+      this.executeMacro(false);
       this.close();
     });
 
     html.find('.make-counter').click(() => {
+      this.applyDamageShieldSupernaturalIfBeAble();
+      this.executeMacro(false);
       this.applyValuesIfBeAble();
 
       if (this.modalData.calculations?.canCounter) {
@@ -125,9 +130,34 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.applyDamage(this.modalData.calculations.damage);
       }
 
+      this.executeMacro(true);
       this.close();
     });
-
+    html.find('.roll-resistance').click(() => {
+      this.applyValuesIfBeAble();
+      const resType = this.modalData.attacker.result.values.resistanceType;
+      const resCheck = this.modalData.attacker.result.values.resistanceCheck;
+      const resistance = this.defenderActor.system.characteristics.secondaries.resistances[resType].base.value;
+      let formula = `1d100 + ${resistance ?? 0} - ${resCheck ?? 0}`;
+      const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
+      resistanceRoll.roll();
+      const { i18n } = game;
+      const flavor = i18n.format('macros.combat.dialog.physicalDefense.resist.title', {
+      target: this.modalData.attacker.token.name });
+      resistanceRoll.toMessage({
+              speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+              flavor
+          });
+      if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0){
+      this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
+      this.executeMacro(true, resistanceRoll.total);
+      }
+      else{
+      this.executeMacro(false, resistanceRoll.total);
+      };
+      console.log(this)
+      this.close();
+  });
     html.find('.show-results').click(async () => {
       const data = {
         attacker: {
