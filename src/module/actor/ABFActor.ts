@@ -75,8 +75,8 @@ export class ABFActor extends Actor {
                 }
             }
         });
-    }
-}
+      }
+  }
   applyDamage(damage: number) {
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;

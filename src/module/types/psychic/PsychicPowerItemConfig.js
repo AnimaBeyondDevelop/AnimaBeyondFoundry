@@ -1,5 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
