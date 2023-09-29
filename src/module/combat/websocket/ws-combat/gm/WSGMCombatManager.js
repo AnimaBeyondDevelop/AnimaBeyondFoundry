@@ -300,7 +300,7 @@ export class WSGMCombatManager extends WSCombatManager {
     );
   }
 
-  manageDefense(attacker, defender, attackType, critic) {
+  manageDefense(attacker, defender, attackType, critic, visible, projectile, damage, specialType) {
     this.defendDialog = new CombatDefenseDialog(
       {
         token: attacker,

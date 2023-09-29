@@ -370,7 +370,6 @@ executeMacro(damage, resistanceRoll) {
       this.modalData.attacker.result?.values.macro !== '') {
       macroName = this.modalData.attacker.result?.values.macro
   };
-  console.log(args)
   const macro = game.macros.getName(macroName);
   if (macro) {
       macro.execute(args)
