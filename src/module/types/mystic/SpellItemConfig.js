@@ -36,8 +36,11 @@ export const SpellItemConfig = ABFItemConfigFactory({
       level: { value: 0 },
       via: { value: '' },
       hasDailyMaintenance: { value: false },
+      visible: { value: false },
+      critic: { value: NoneWeaponCritic.NONE },
       spellType: { value: '' },
       actionType: { value: '' },
+      macro: { value: '' },
       grades: {
         base: {
           name: { value: SpellGradeNames.BASE },

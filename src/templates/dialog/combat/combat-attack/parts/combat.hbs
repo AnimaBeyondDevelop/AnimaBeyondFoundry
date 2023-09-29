@@ -74,6 +74,41 @@
   secondaryInputValue=this.attacker.combat.damage.final
 }}
 
+{{#if this.attacker.combat.projectile.value}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.highGround.title')
+      inputType="checkbox"
+      inputName="attacker.combat.highGround"
+      inputValue=(is 'eq' this.attacker.combat.highGround true)
+    }}
+  </div>
+</div>
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.poorVisibility.title')
+      inputType="checkbox"
+      inputName="attacker.poorVisibility"
+      inputValue=(is 'eq' this.attacker.poorVisibility true)
+    }}
+  </div>
+</div>
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.targetInCover.title')
+      inputType="checkbox"
+      inputName="attacker.targetInCover"
+      inputValue=(is 'eq' this.attacker.targetInCover true)
+    }}
+  </div>
+</div>
+{{/if}}
 
 {{#if this.attackSent}}
   <div class='attack-sent'>

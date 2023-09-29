@@ -117,6 +117,14 @@
                 inputValue=spell.system.actionType.value
               }}
               {{>
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                class="critic"
+                disabled=true
+                choices=xRoot.config.iterables.mystic.criticTypesWithNone
+                inputName=(concat "system.dynamic.spells." spell._id ".system.critic.value")
+                inputValue=spell.system.critic.value
+              }}
+              {{>
               'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
                 class="has-daily-maintenance"
                 title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")

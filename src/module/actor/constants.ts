@@ -726,6 +726,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       }
     },
+    shieldSupernatural: {
+        value: 0
+    },
     wearArmor: {
       value: 0
     },
