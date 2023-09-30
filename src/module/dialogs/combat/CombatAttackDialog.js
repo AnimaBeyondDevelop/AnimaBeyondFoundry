@@ -4,6 +4,7 @@ import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { resistanceCheck } from '../../combat/utils/resistanceCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
+import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
 import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
@@ -35,6 +36,8 @@ const getInitialData = (attacker, defender, options = {}) => {
       targetInCover: false,
       counterAttackBonus: options.counterAttackBonus,
       distance: 0,
+      zen: false,
+      inhuman: false,
       inmaterial: false,
       combat: {
         fatigueUsed: 0,
@@ -110,6 +113,8 @@ export class CombatAttackDialog extends FormApplication {
     super(getInitialData(attacker, defender, options));
 
     this.modalData = getInitialData(attacker, defender, options);
+    this.modalData.attacker.zen = this.attackerActor.system.general.settings.zen.value;
+    this.modalData.attacker.inhuman = this.attackerActor.system.general.settings.inhuman.value;
     this.modalData.attacker.inmaterial = this.attackerActor.system.general.settings.inmaterial.value;
     const { weapons } = this.attackerActor.system.combat;
     const { spells } = this.attackerActor.system.mystic;
@@ -394,7 +399,7 @@ export class CombatAttackDialog extends FormApplication {
     html.find('.send-psychic-attack').click(() => {
       const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage, projectile, specialType} =
         this.modalData.attacker.psychic;
-      const { distance } =this.modalData.attacker;
+      const { distance, inhuman, zen } =this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
@@ -418,10 +423,10 @@ export class CombatAttackDialog extends FormApplication {
           this.modalData.attacker.actor.system
         );
         psychicPotentialRoll.roll();
-        let imbalance = true;
-        const newPotentialTotal = psychicPotentialEffect (psychicPotentialRoll.total,imbalance);
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
+        let imbalance = psychicImbalanceCheck(power?.system.discipline.value, this.attackerActor.system.general.advantages) ?? 0;
+        const newPotentialTotal = psychicPotentialEffect (psychicPotentialRoll.total, imbalance, inhuman, zen);
         const powerUsedEffect = power?.system.effects[newPotentialTotal].value;
         let newDamage = damageCheck(powerUsedEffect)[0] + damage;
         let checkRes = resistanceCheck(powerUsedEffect);

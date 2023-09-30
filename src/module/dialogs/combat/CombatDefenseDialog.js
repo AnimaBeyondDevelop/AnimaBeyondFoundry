@@ -44,6 +44,8 @@ const getInitialData = (attacker, defender) => {
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
       blindnessPen: 0,
       distance: 0,
+      zen: false,
+      inhuman: false,
       inmaterial: false,
       specialType: {
           material: true,
@@ -100,6 +102,8 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
+    this.modalData.attacker.zen = this.attackerActor.system.general.settings.zen.value;
+    this.modalData.attacker.inhuman = this.attackerActor.system.general.settings.inhuman.value;
     this.modalData.defender.inmaterial = this.defenderActor.system.general.settings.inmaterial.value;
     if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE && this.modalData.attacker.damage == 0){
         this.modalData.defender.combat.at.defense = true;
