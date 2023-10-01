@@ -20,9 +20,9 @@
   disabled=this.attackSent
   inputName='attacker.mystic.spellUsed'
 }}
-  {{#each this.attacker.actor.system.mystic.spells}}
+  {{#each_when this.attacker.actor.system.mystic.spells "system" "spellType" "value" "attack|animatic"}}
     <option {{#if (is "eq" this._id ../this.attacker.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-  {{/each}}
+  {{/each_when}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'

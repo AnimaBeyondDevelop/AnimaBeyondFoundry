@@ -530,6 +530,7 @@ export class CombatAttackDialog extends FormApplication {
         mystic.spellUsed = spells.filter(w => w.system.spellType.value === "attack" || w.system.spellType.value === "animatic")[0]?._id
     };
     const spell = spells.find(w => w._id === mystic.spellUsed);
+    mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
     const spellUsedEffect = spell?.system.grades[mystic.spellGrade].description.value ?? "";
     mystic.damage = damageCheck(spellUsedEffect)[0];
     const { weapons } = this.attackerActor.system.combat;
