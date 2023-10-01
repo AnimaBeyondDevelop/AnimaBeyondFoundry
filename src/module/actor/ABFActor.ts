@@ -77,6 +77,50 @@ export class ABFActor extends Actor {
         });
       }
   }
+
+  accumulateDefenses(keepAccumulating: boolean) {
+    const newDefensesCounter =
+    this.system.combat.defensesCounter.accumulated + 1;
+    if (keepAccumulating) {
+      this.update({
+        system: {
+          combat: {
+            defensesCounter: { accumulated: newDefensesCounter, value: true }
+          }
+        }
+      });
+    }
+    else {
+      this.update({
+        system: {
+          combat: {
+            defensesCounter: { value: false }
+          }
+        }
+      });
+    }
+  }
+
+  resetDefensesCounter(keepAccumulating: boolean) {
+    if (keepAccumulating) {
+      this.update({
+        system: {
+          combat: {
+            defensesCounter: { value: true }
+          }
+        }
+      });
+    };
+
+    this.update({
+      system: {
+        combat: {
+           defensesCounter: { accumulated: 0 }
+        }
+      }
+    });
+  }
+
   applyDamage(damage: number) {
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;

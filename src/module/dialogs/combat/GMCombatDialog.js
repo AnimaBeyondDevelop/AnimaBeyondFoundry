@@ -109,14 +109,16 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.cancel-button').click(() => {
       this.applyDamageShieldSupernaturalIfBeAble();
+      this.accumulateDefensesIfAble();
       this.executeMacro(false);
       this.close();
     });
 
     html.find('.make-counter').click(() => {
       this.applyDamageShieldSupernaturalIfBeAble();
-      this.executeMacro(false);
+      this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
+      this.executeMacro(false);
 
       if (this.modalData.calculations?.canCounter) {
         this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
@@ -130,6 +132,7 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.applyDamage(this.modalData.calculations.damage);
       }
 
+      this.accumulateDefensesIfAble();
       this.executeMacro(true);
       this.close();
     });
@@ -155,6 +158,7 @@ export class GMCombatDialog extends FormApplication {
       else{
       this.executeMacro(false, resistanceRoll.total);
       };
+      this.accumulateDefensesIfAble();
       this.close();
   });
     html.find('.show-results').click(async () => {
@@ -315,66 +319,73 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-applyDamageShieldSupernaturalIfBeAble() {
-  const cantDamage = this.modalData.defender.result?.values.cantDamage;
-  const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
-  const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token;
-  const damage = this.modalData.attacker.result?.values.damage;
-  if (defenderIsWinner && (this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && !cantDamage) {
-      this.defenderActor.applyDamageShieldSupernatural(damage, dobleDamage);
+  accumulateDefensesIfAble() {
+    if (this.modalData.defender.result?.type === 'combat') {
+      this.defenderActor.accumulateDefenses(this.modalData.defender.result.values?.accumulateDefenses);
+    }
   }
-}
-executeMacro(damage, resistanceRoll) {
-  let macroName;
-  const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token
-  let args = {
-      attacker: this.attackerToken,
-      defender: this.defenderToken,
-      defenderIsWinner,
-      dodge: false,
-      totalAtk: this.modalData.attacker.result.values.total,
-      damage,
-      blood: 'red',
-      missvalue: 80,
-      invisible: false,
-      resistanceRoll,
-      spellGrade: this.modalData.attacker.result.values.spellGrade
-      };
-  if (this.modalData.attacker.result?.type === 'combat') {
-      const {name} = this.modalData.attacker.result.weapon
-      macroName = `Atk ${name}`;
-      const {projectile} = this.modalData.attacker.result.values
-      if (projectile) {
-          args = {...args, projectile: projectile};
-          if (projectile.type == 'shot') {macroName = 'Atk Projectil Flecha'}
-      }
+
+  applyDamageShieldSupernaturalIfBeAble() {
+    const cantDamage = this.modalData.defender.result?.values.cantDamage;
+    const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
+    const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token;
+    const damage = this.modalData.attacker.result?.values.damage;
+    if (defenderIsWinner && (this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && !cantDamage) {
+        this.defenderActor.applyDamageShieldSupernatural(damage, dobleDamage);
+    }
   }
-  else if (this.modalData.attacker.result?.type === 'mystic'){
-      macroName = this.modalData.attacker.result.values.spellName;
-  }
-  else if (this.modalData.attacker.result?.type === 'psychic'){
-      macroName = this.modalData.attacker.result.values.powerName;
-  };
-  if (this.modalData.defender.result?.type === 'combat') {
-      const {type} = this.modalData.defender.result.values
-      if (type == 'dodge') {
-          args.dodge = true
-      }
-  };
-  if (this.modalData.attacker.result.values.visible !== undefined && 
-      !this.modalData.attacker.result.values.visible){
-      args.invisible = true
-  };
-  
-  if (this.modalData.attacker.result?.values.macro !== undefined &&
-      this.modalData.attacker.result?.values.macro !== '') {
-      macroName = this.modalData.attacker.result?.values.macro
-  };
-  const macro = game.macros.getName(macroName);
-  if (macro) {
-      macro.execute(args)
-    } else {
-      console.error(`Macro '${macroName}' not found.`);
+
+  executeMacro(damage, resistanceRoll) {
+    let macroName;
+    const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token
+    let args = {
+        attacker: this.attackerToken,
+        defender: this.defenderToken,
+        defenderIsWinner,
+        dodge: false,
+        totalAtk: this.modalData.attacker.result.values.total,
+        damage,
+        blood: 'red',
+        missvalue: 80,
+        invisible: false,
+        resistanceRoll,
+        spellGrade: this.modalData.attacker.result.values.spellGrade
+        };
+    if (this.modalData.attacker.result?.type === 'combat') {
+        const {name} = this.modalData.attacker.result.weapon
+        macroName = `Atk ${name}`;
+        const {projectile} = this.modalData.attacker.result.values
+        if (projectile) {
+            args = {...args, projectile: projectile};
+            if (projectile.type == 'shot') {macroName = 'Atk Projectil Flecha'}
+        }
+    }
+    else if (this.modalData.attacker.result?.type === 'mystic'){
+        macroName = this.modalData.attacker.result.values.spellName;
+    }
+    else if (this.modalData.attacker.result?.type === 'psychic'){
+        macroName = this.modalData.attacker.result.values.powerName;
+    };
+    if (this.modalData.defender.result?.type === 'combat') {
+        const {type} = this.modalData.defender.result.values
+        if (type == 'dodge') {
+            args.dodge = true
+        }
+    };
+    if (this.modalData.attacker.result.values.visible !== undefined && 
+        !this.modalData.attacker.result.values.visible){
+        args.invisible = true
+    };
+    
+    if (this.modalData.attacker.result?.values.macro !== undefined &&
+        this.modalData.attacker.result?.values.macro !== '') {
+        macroName = this.modalData.attacker.result?.values.macro
+    };
+    const macro = game.macros.getName(macroName);
+    if (macro) {
+        macro.execute(args)
+      } else {
+        console.error(`Macro '${macroName}' not found.`);
     }
   }
 }

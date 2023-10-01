@@ -1,5 +1,7 @@
 import { registerSettings } from './utils/registerSettings';
 import { preloadTemplates } from './utils/preloadTemplates';
+import { resetDefensesCounterHook } from './module/utils/hooks-scripts/resetDefensesCounterHook.js';
+import { zeonMaintained } from './module/utils/hooks-scripts/zeonMaintained.js';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
@@ -69,6 +71,13 @@ Hooks.once('ready', () => {
   attachCustomMacroBar();
 });
 
+Hooks.on("combatRound", () => {
+  resetDefensesCounterHook(false);
+  zeonMaintained();
+});
+
+Hooks.on("combatStart", () => resetDefensesCounterHook(true));
+
 // Add any additional hooks if necessary
 
 // This function allow us to use xRoot in templates to extract the root object in Handlebars template
@@ -95,3 +104,6 @@ Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
 
   return `${parent}['${name}']`;
 };
+
+const myFunc = () => {console.log("try")};
+globalThis.myFunc = myFunc

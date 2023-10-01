@@ -726,8 +726,12 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       }
     },
+    defensesCounter: {
+      accumulated: 0,
+      value: true
+    },
     shieldSupernatural: {
-        value: 0
+      value: 0
     },
     wearArmor: {
       value: 0
@@ -787,9 +791,6 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       accumulated: 0,
       value: 0,
       max: 0
-    },
-    zeonAccumulated: {
-        value: 0
     },
     zeonMaintained: {
         value: 0

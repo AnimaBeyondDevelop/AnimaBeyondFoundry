@@ -3,6 +3,7 @@ import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { shieldSupernaturalCheck } from '../../combat/utils/shieldSupernaturalCheck.js';
+import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
@@ -59,6 +60,7 @@ const getInitialData = (attacker, defender) => {
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: 0,
+        accumulateDefenses: true,
         modifier: 0,
         weaponUsed: undefined,
         weapon: undefined,
@@ -102,8 +104,10 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
-    this.modalData.attacker.zen = this.attackerActor.system.general.settings.zen.value;
-    this.modalData.attacker.inhuman = this.attackerActor.system.general.settings.inhuman.value;
+    this.modalData.defender.combat.accumulateDefenses = this.defenderActor.system.combat.defensesCounter.value;
+    this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(this.defenderActor.system.combat.defensesCounter.accumulated);
+    this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
+    this.modalData.defender.inhuman = this.defenderActor.system.general.settings.inhuman.value;
     this.modalData.defender.inmaterial = this.defenderActor.system.general.settings.inmaterial.value;
     if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE && this.modalData.attacker.damage == 0){
         this.modalData.defender.combat.at.defense = true;
@@ -214,7 +218,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     html.find('.send-defense').click(e => {
       const { combat: {
-        fatigue, modifier, weapon, multipleDefensesPenalty, at
+        fatigue, modifier, weapon, multipleDefensesPenalty, at, accumulateDefenses
       },
       blindnessPen, distance, inmaterial } = 
       this.modalData.defender;
@@ -317,7 +321,8 @@ export class CombatDefenseDialog extends FormApplication {
           roll: rolled,
           total: roll.total,
           unableToDefense,
-          atResValue
+          atResValue,
+          accumulateDefenses
         }
       });
 

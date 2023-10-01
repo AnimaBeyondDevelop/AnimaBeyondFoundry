@@ -162,6 +162,7 @@
         "attack": { "base": { "value": 0 }, "final": { "value": 0 } },
         "block": { "base": { "value": 0 }, "final": { "value": 0 } },
         "dodge": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "defensesCounter": { "accumulated": 0, "value": true },
         "shieldSupernatural": { "value": 0 },
         "wearArmor": { "value": 0 },
         "totalArmor": {
@@ -187,7 +188,6 @@
           "alternative": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
-        "zeonAccumulated": { "value": 0 },
         "zeonMaintained": { "value": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
         "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },

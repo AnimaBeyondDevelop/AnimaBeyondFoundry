@@ -11,6 +11,6 @@ export const psychicPotentialEffect = (potential, imbalance, inhuman, zen) => {
     else if(potential < 280) {newPotential = Effect[6+imbalance]} 
     else if(potential < 320) {newPotential = Effect[Math.min(max, 7+imbalance)]}
     else if(potential < 440) {newPotential = Effect[Math.min(max, 8+imbalance)]}
-    else {newPotential = Effect[Math.min(max, 9+imbalance)]}
+    else {newPotential = Effect[Math.min(max, 9)]}
     return newPotential
-    };
+};
