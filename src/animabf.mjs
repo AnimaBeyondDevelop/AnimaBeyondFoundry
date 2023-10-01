@@ -104,6 +104,3 @@ Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
 
   return `${parent}['${name}']`;
 };
-
-const myFunc = () => {console.log("try")};
-globalThis.myFunc = myFunc
