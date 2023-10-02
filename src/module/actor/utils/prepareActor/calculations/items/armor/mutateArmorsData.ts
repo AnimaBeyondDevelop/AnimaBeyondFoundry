@@ -5,6 +5,7 @@ import { calculateArmorPresence } from './calculations/calculateArmorPresence';
 import { calculateArmorTA } from './calculations/calculateArmorTA';
 import { calculateArmorMovementRestriction } from './calculations/calculateArmorMovementRestriction';
 import { calculateArmorNaturalPenalty } from './calculations/calculateArmorNaturalPenalty';
+import { calculateArmorPerceptionPenalty } from './calculations/calculateArmorPerceptionPenalty';
 import { calculateArmorWearArmorRequirement } from './calculations/calculateArmorWearArmorRequirement';
 
 export const mutateArmorsData = (data: ABFActorDataSourceData) => {
@@ -71,6 +72,11 @@ export const mutateArmorsData = (data: ABFActorDataSourceData) => {
     armor.system.naturalPenalty = {
       base: armor.system.naturalPenalty.base,
       final: { value: calculateArmorNaturalPenalty(armor) }
+    };
+
+    armor.system.perceptionPenalty = {
+      base: armor.system.perceptionPenalty.base,
+      final: { value: calculateArmorPerceptionPenalty(armor) }
     };
 
     armor.system.wearArmorRequirement = {
