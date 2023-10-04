@@ -72,11 +72,11 @@ Hooks.once('ready', () => {
 });
 
 Hooks.on("combatRound", () => {
-  resetDefensesCounterHook(false);
+  resetDefensesCounterHook();
   zeonMaintained();
 });
 
-Hooks.on("combatStart", () => resetDefensesCounterHook(true));
+Hooks.on("combatStart", () => resetDefensesCounterHook());
 
 // Add any additional hooks if necessary
 

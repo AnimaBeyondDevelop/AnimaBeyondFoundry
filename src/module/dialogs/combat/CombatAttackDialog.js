@@ -3,6 +3,8 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { resistanceCheck } from '../../combat/utils/resistanceCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
+import { evaluateCast } from '../../combat/utils/evaluateCast.js';
+import { innateCheck } from '../../combat/utils/innateCheck.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
 import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
@@ -63,6 +65,11 @@ const getInitialData = (attacker, defender, options = {}) => {
         magicProjectionType: 'offensive',
         spellUsed: undefined,
         spellGrade: 'base',
+        spellPrepared: false,
+        castPrepared: false,
+        spellInnate: false,
+        castInnate: false,
+        zeonAccumulated: 0,
         critic: NoneWeaponCritic.NONE,
         checkResistance: false,
         resistanceType: undefined,
@@ -73,7 +80,10 @@ const getInitialData = (attacker, defender, options = {}) => {
             type: 'shot'
         },
         specialType:'energy',
-        damage: 0
+        damage: {
+          special: 0,
+          final: 0
+        }
       },
       psychic: {
         modifier: 0,
@@ -120,16 +130,21 @@ export class CombatAttackDialog extends FormApplication {
     const { spells } = this.attackerActor.system.mystic;
     const { psychicPowers } = this.attackerActor.system.psychic;
     if (psychicPowers.length > 0) {
-        psychicPowers.powerUsed = psychicPowers.filter(w => w.system.actionType.value === "attack")[0]?._id;
+        psychicPowers.powerUsed = psychicPowers.filter(w => w.system.combatType.value === "attack")[0]?._id;
         const power = psychicPowers.find(w => w._id === psychicPowers.powerUsed);
         this.attackerActor.system.psychic.psychicPotential.special = power?.system.bonus.value;
         this.modalData.attacker.psychic.critic = power?.system.critic.value;
     };
     if (spells.length > 0) {
-        spells.spellUsed = spells.filter(w => w.system.spellType.value === "attack" || w.system.spellType.value === "animatic")[0]?._id;
-        const spell = spells.find(w => w._id === spells.spellUsed);
-    const spellUsedEffect = spell?.system.grades.base.description.value;
-    spells.damage = damageCheck(spellUsedEffect)[0]
+      const { mystic } = this.modalData.attacker;
+      spells.spellUsed = spells.filter(w => w.system.combatType.value === "attack")[0]?._id;
+      const spell = spells.find(w => w._id === spells.spellUsed);
+      const spellUsedEffect = spell?.system.grades.base.description.value;
+      mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0]
+      mystic.zeonAccumulated = this.attackerActor.system.mystic.zeon.accumulated.value ?? 0
+      mystic.spellPrepared = this.attackerActor.system.mystic.preparedSpells.find(ps => ps.name == spell.name && ps.system.grade.value == mystic.spellGrade)?.system.prepared.value ?? false;
+      let actType = 'main';
+      mystic.spellInnate = innateCheck(this.attackerActor.system.mystic.act[actType].final.value, this.attackerActor.system.general.advantages, spell?.system.grades.base.zeon.value);
     };
     if (weapons.length > 0) {
       this.modalData.attacker.combat.weaponUsed = weapons[0]._id;
@@ -303,7 +318,7 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-mystic-attack').click(() => {
-      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage, projectile, specialType} = this.modalData.attacker.mystic;
+      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage, projectile, specialType, spellInnate, castInnate, spellPrepared, castPrepared, zeonAccumulated} = this.modalData.attacker.mystic;
       const { distance } =this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (spellUsed) {
@@ -322,6 +337,19 @@ export class CombatAttackDialog extends FormApplication {
               .value;
         }
 
+        const { spells } = this.attackerActor.system.mystic;
+        const spell = spells.find(w => w._id === spellUsed);
+        const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? "";
+        const zeonCost = spell?.system.grades[spellGrade].zeon.value;
+        let evaluateCastMsj = evaluateCast(spellInnate, castInnate, spellPrepared, castPrepared, zeonAccumulated, zeonCost);
+        if (evaluateCastMsj !== undefined) { return evaluateCastMsj };
+        let visibleCheck = spell?.system.visible.value;
+        let specialTypeCheck = specialType;
+        if  (spell?.system.spellType.value == 'animatic') {specialTypeCheck = 'intangible'}
+        else if (spell?.system.via.value == 'light') {specialTypeCheck = 'attackSpellLight'}
+        else if (spell?.system.via.value == 'darkness') {specialTypeCheck = 'attackSpellDarkness'};
+        let checkRes = resistanceCheck(spellUsedEffect);
+
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
@@ -334,21 +362,9 @@ export class CombatAttackDialog extends FormApplication {
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
         roll.roll();
-        const { spells } = this.attackerActor.system.mystic;
-        const spell = spells.find(w => w._id === spellUsed);
-        const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? "";
-        let visibleCheck = spell?.system.visible.value;
-        let specialTypeCheck = specialType;
-        if  (spell?.system.spellType.value == 'animatic') {specialTypeCheck = 'intangible'}
-        else if (spell?.system.via.value == 'light') {specialTypeCheck = 'attackSpellLight'}
-        else if (spell?.system.via.value == 'darkness') {specialTypeCheck = 'attackSpellDarkness'};
-        let checkRes = resistanceCheck(spellUsedEffect);
+
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
-
-          const { spells } = this.attackerActor.system.mystic;
-
-          const spell = spells.find(w => w._id === spellUsed);
 
           const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
             spell: spell.name,
@@ -374,7 +390,7 @@ export class CombatAttackDialog extends FormApplication {
             spellName: spell.name,
             magicProjection,
             critic,
-            damage,
+            damage: damage.final,
             roll: rolled,
             total: roll.total,
             fumble: roll.fumbled,
@@ -386,6 +402,9 @@ export class CombatAttackDialog extends FormApplication {
             projectile,
             specialType : specialTypeCheck,
             unableToAttack,
+            innate: spellInnate && castInnate,
+            prepared: spellPrepared && castPrepared,
+            zeonCost,
             macro: spell.macro
           }
         });
@@ -515,7 +534,7 @@ export class CombatAttackDialog extends FormApplication {
 
     const { psychicPowers } = this.attackerActor.system.psychic;
     if (!psychic.powerUsed) {
-            psychic.powerUsed = psychicPowers.filter(w => w.system.actionType.value === "attack")[0]?._id;
+            psychic.powerUsed = psychicPowers.filter(w => w.system.combatType.value === "attack")[0]?._id;
         };
     const power = psychicPowers.find(w => w._id === psychic.powerUsed);
     psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
@@ -527,12 +546,15 @@ export class CombatAttackDialog extends FormApplication {
     this.modalData.attacker.distance = Math.floor(canvas.grid.measureDistance(this.modalData.attacker.token, this.modalData.defender.token));
     const { spells } = this.attackerActor.system.mystic;
     if (!mystic.spellUsed) {
-        mystic.spellUsed = spells.filter(w => w.system.spellType.value === "attack" || w.system.spellType.value === "animatic")[0]?._id
+        mystic.spellUsed = spells.filter(w => w.system.combatType.value === "attack")[0]?._id
     };
     const spell = spells.find(w => w._id === mystic.spellUsed);
     mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
     const spellUsedEffect = spell?.system.grades[mystic.spellGrade].description.value ?? "";
-    mystic.damage = damageCheck(spellUsedEffect)[0];
+    mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
+    mystic.spellPrepared = this.attackerActor.system.mystic.preparedSpells.find(ps => ps.name == spell.name && ps.system.grade.value == mystic.spellGrade)?.system.prepared.value ?? false;
+    let actType = 'main';
+    mystic.spellInnate = innateCheck(this.attackerActor.system.mystic.act[actType].final.value, this.attackerActor.system.general.advantages, spell?.system.grades[mystic.spellGrade].zeon.value);
     const { weapons } = this.attackerActor.system.combat;
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);

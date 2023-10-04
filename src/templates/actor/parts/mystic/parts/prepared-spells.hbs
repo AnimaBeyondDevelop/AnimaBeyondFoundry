@@ -1,0 +1,59 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="prepared-spells"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.preparedSpells.title")
+    addRowButtonData="add-prepared-spell"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="prepared-spells"
+  }}
+    {{#each system.mystic.preparedSpells as |spell|}}
+      <div data-item-id='{{this._id}}' class='prepared-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.preparedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=(is 'eq' this.system.prepared.value true)
+          inputType="text"
+          inputName=(concat "system.dynamic.preparedSpells." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="zeonAcc"
+          title=(localize "anima.ui.mystic.preparedSpells.zeonAcc.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=(is 'eq' this.system.prepared.value true)
+          inputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.value")
+          inputValue=this.system.zeonAcc.value
+          hasSecondaryInput=true
+          disableSecondaryInput=(is 'eq' this.system.prepared.value true)
+          secondaryInputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.max")
+          secondaryInputValue=this.system.zeonAcc.max
+        }}
+      </div>
+      <div data-item-id='{{this._id}}' class='prepared-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/custom-select-choices.hbs"
+          class="grade"
+          choices=xRoot.config.iterables.mystic.spellGrades
+          disabled=(is 'eq' this.system.prepared.value true)
+          inputName=(concat "system.dynamic.preparedSpells." this._id ".system.grade.value")
+          inputValue=this.system.grade.value
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+          class="prepared"
+          title=(localize "anima.ui.mystic.preparedSpells.prepared.title")
+          hideTitle=true
+          inputType="checkbox"
+          inputName=(concat "system.dynamic.preparedSpells." this._id ".system.prepared.value")
+          inputValue=(is 'eq' this.system.prepared.value true)
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

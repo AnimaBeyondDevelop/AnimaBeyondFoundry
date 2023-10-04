@@ -108,6 +108,7 @@ export class GMCombatDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.cancel-button').click(() => {
+      this.mysticCastEvaluateIfAble()
       this.applyDamageShieldSupernaturalIfBeAble();
       this.accumulateDefensesIfAble();
       this.executeMacro(false);
@@ -115,6 +116,7 @@ export class GMCombatDialog extends FormApplication {
     });
 
     html.find('.make-counter').click(() => {
+      this.mysticCastEvaluateIfAble()
       this.applyDamageShieldSupernaturalIfBeAble();
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
@@ -132,6 +134,7 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.applyDamage(this.modalData.calculations.damage);
       }
 
+      this.mysticCastEvaluateIfAble()
       this.accumulateDefensesIfAble();
       this.executeMacro(true);
       this.close();
@@ -158,6 +161,7 @@ export class GMCombatDialog extends FormApplication {
       else{
       this.executeMacro(false, resistanceRoll.total);
       };
+      this.mysticCastEvaluateIfAble()
       this.accumulateDefensesIfAble();
       this.close();
   });
@@ -316,6 +320,18 @@ export class GMCombatDialog extends FormApplication {
 
     if (this.modalData.defender.result?.type === 'combat') {
       this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigue);
+    }
+  }
+
+  mysticCastEvaluateIfAble() {
+    if (this.modalData.attacker.result?.type === 'mystic') {
+      if (this.modalData.attacker.result.values?.innate){}
+      else if (this.modalData.attacker.result.values?.prepared){
+        this.attackerActor.deletePreparedSpell(this.modalData.attacker.result.values?.spellName, this.modalData.attacker.result.values?.spellGrade)
+      }
+      else {
+        this.attackerActor.consumeAccumulatedZeon(this.modalData.attacker.result.values?.zeonCost)
+      }
     }
   }
 

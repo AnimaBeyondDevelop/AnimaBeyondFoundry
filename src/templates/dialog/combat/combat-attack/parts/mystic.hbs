@@ -1,5 +1,13 @@
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.combat.dialog.zeonAccumulated.title")
+  disabled=true
+  inputName="attacker.mystic.zeonAccumulated"
+  inputValue=this.attacker.mystic.zeonAccumulated
+}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.attackSent
   inputName="attacker.mystic.modifier"
@@ -20,7 +28,7 @@
   disabled=this.attackSent
   inputName='attacker.mystic.spellUsed'
 }}
-  {{#each_when this.attacker.actor.system.mystic.spells "system" "spellType" "value" "attack|animatic"}}
+  {{#each_when this.attacker.actor.system.mystic.spells "system" "combatType" "value" "attack"}}
     <option {{#if (is "eq" this._id ../this.attacker.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
@@ -48,9 +56,43 @@
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.damage.title")
   disabled=this.attackSent
-  inputName="attacker.mystic.damage"
-  inputValue=this.attacker.mystic.damage
+  inputName="attacker.mystic.damage.special"
+  inputValue=this.attacker.mystic.damage.special
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.mystic.damage.final"
+  secondaryInputValue=attacker.mystic.damage.final
 }}
+
+{{#if this.attacker.mystic.spellInnate}}
+<div class='columns'>
+  <div>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.castInnate.title')
+    disabled=this.attackSent
+    inputType="checkbox"
+    inputName="attacker.mystic.castInnate"
+    inputValue=(is 'eq' this.attacker.mystic.castInnate true)
+    }}
+  </div>
+</div>
+{{/if}}
+
+{{#if this.attacker.mystic.spellPrepared}}
+<div class='columns'>
+  <div>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.castPrepared.title')
+    disabled=this.attackSent
+    inputType="checkbox"
+    inputName="attacker.mystic.castPrepared"
+    inputValue=(is 'eq' this.attacker.mystic.castPrepared true)
+    }}
+  </div>
+</div>
+{{/if}}
 
 {{#if this.attackSent}}
   <div class='mystic-attack-sent'>

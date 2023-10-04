@@ -31,7 +31,7 @@
   disabled=this.defenseSent
   inputName='defender.psychic.powerUsed'
 }}
-  {{#each_when this.defender.actor.system.psychic.psychicPowers "system" "actionType" "value" "defense"}}
+  {{#each_when this.defender.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
     <option {{#if (is "eq" this._id ../this.defender.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}

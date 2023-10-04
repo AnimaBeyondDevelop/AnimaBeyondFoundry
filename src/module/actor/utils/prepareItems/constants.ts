@@ -20,6 +20,7 @@ import { PsychicDisciplineItemConfig } from '../../../types/psychic/PsychicDisci
 import { PsychicPowerItemConfig } from '../../../types/psychic/PsychicPowerItemConfig';
 import { SecondarySpecialSkillItemConfig } from '../../../types/secondaries/SecondarySpecialSkillItemConfig';
 import { SelectedSpellItemConfig } from '../../../types/mystic/SelectedSpellItemConfig';
+import { PreparedSpellItemConfig } from '../../../types/mystic/PreparedSpellItemConfig';
 import { SpecialSkillItemConfig } from '../../../types/domine/SpecialSkillItemConfig';
 import { SpellMaintenanceItemConfig } from '../../../types/mystic/SpellMaintenanceItemConfig';
 import { SummonItemConfig } from '../../../types/mystic/SummonItemConfig';
@@ -61,6 +62,7 @@ export const ITEM_CONFIGURATIONS = {
   [ArmorItemConfig.type]: ArmorItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
   [SpellItemConfig.type]: SpellItemConfig,
+  [PreparedSpellItemConfig.type]: PreparedSpellItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,
   [NoteItemConfig.type]: NoteItemConfig,
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,

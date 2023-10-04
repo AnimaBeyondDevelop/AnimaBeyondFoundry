@@ -918,7 +918,8 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     spellMaintenances: [],
     selectedSpells: [],
     summons: [],
-    metamagics: []
+    metamagics: [],
+    preparedSpells: []
   },
 
   domine: {

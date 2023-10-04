@@ -1,5 +1,5 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { SpellMaintenanceDataSource } from '../../../../../../types/Items';
+import { SpellMaintenanceDataSource, PreparedSpellDataSource } from '../../../../../../types/Items';
 
 export const mutateMysticData = (data: ABFActorDataSourceData) => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
@@ -32,4 +32,13 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   mystic.summoning.banish.final.value = mystic.summoning.banish.base.value + Math.min(allActionsPenalty, 0);
   mystic.summoning.bind.final.value = mystic.summoning.bind.base.value + Math.min(allActionsPenalty, 0);
   mystic.summoning.control.final.value = mystic.summoning.control.base.value + Math.min(allActionsPenalty, 0);
+
+  if (mystic.preparedSpells.length !== 0) {
+    for (let preparedSpell of mystic.preparedSpells) {
+      let prepared = preparedSpell.system.prepared.value;
+      if (prepared) {
+        preparedSpell.system.zeonAcc.value = 0;
+      }
+    }
+  };
 };

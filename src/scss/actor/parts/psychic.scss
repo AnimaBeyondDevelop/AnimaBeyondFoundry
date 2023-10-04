@@ -198,6 +198,11 @@
             justify-content: space-between;
 
             .level,
+            .combat-type {
+              .input {
+                height: 1.5rem;
+              }
+            }
             .action-type {
               .input {
                 height: 1.5rem;

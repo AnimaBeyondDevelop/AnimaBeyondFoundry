@@ -52,6 +52,7 @@ export class ABFActor extends Actor {
       }
     });
   }
+
   applyDamageShieldSupernatural(damage: number, dobleDamage: boolean) {
     const newShieldPoints = dobleDamage? this.system.combat.shieldSupernatural.value - damage * 2 : this.system.combat.shieldSupernatural.value - damage;
     if (newShieldPoints < 0) {
@@ -101,17 +102,7 @@ export class ABFActor extends Actor {
     }
   }
 
-  resetDefensesCounter(keepAccumulating: boolean) {
-    if (keepAccumulating) {
-      this.update({
-        system: {
-          combat: {
-            defensesCounter: { value: true }
-          }
-        }
-      });
-    };
-
+  resetDefensesCounter() {
     this.update({
       system: {
         combat: {
@@ -119,6 +110,27 @@ export class ABFActor extends Actor {
         }
       }
     });
+  }
+
+  consumeAccumulatedZeon(zeonCost: number) {
+    const newAccumulateZeon =
+      this.system.mystic.zeon.accumulated.value - zeonCost;
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: { value: newAccumulateZeon } }
+        }
+      }
+    });
+  }
+
+  deletePreparedSpell(spellName: string, spellGrade: string) {
+    let preparedSpell = this.system.mystic.preparedSpells.find((ps: any) => ps.name == spellName && ps.system.grade.value == spellGrade && ps.system.prepared.value == true)._id;
+    console.log(preparedSpell)
+    if(preparedSpell !== undefined){
+      this.deleteEmbeddedDocuments("Item", [preparedSpell]);
+    }
   }
 
   applyDamage(damage: number) {
@@ -271,6 +283,10 @@ export class ABFActor extends Actor {
 
   public getSelectedSpells() {
     return this.getItemsOf(ABFItems.SELECTED_SPELL);
+  }
+
+  public getPreparedSpells() {
+    return this.getItemsOf(ABFItems.PREPARED_SPELL);
   }
 
   public getKnownMetamagics() {

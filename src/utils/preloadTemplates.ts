@@ -106,6 +106,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/prepared-spells.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/summons.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/metamagics.hbs',
     'systems/animabf/templates/actor/parts/domine/domine.hbs',

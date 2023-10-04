@@ -10,8 +10,15 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
 export const PsychicPowerActionTypes = {
   ACTIVE: 'active',
   PASSIVE: 'passive',
+};
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const PsychicPowerCombatTypes = {
   ATTACK: 'attack',
-  DEFENSE: 'defense'
+  DEFENSE: 'defense',
+  NONE: 'none'
 };
 /**
  * @readonly
@@ -49,6 +56,7 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
     440: { value: '' }
   },
   actionType: { value: PsychicPowerActionTypes.ACTIVE },
+  combatType: { value: PsychicPowerCombatTypes.ATTACK },
   discipline: { value: PsychicPowerDisciplines.THE_MATRIAL_POWERS },
   critic: { value: NoneWeaponCritic.NONE },
   hasMaintenance: { value: false },

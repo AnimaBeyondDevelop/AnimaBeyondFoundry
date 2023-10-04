@@ -226,7 +226,8 @@
         "spellMaintenances": [],
         "selectedSpells": [],
         "summons": [],
-        "metamagics": []
+        "metamagics": [],
+        "preparedSpells": []
       },
       "domine": {
         "kiSkills": [],
@@ -289,6 +290,7 @@
       "armor",
       "disadvantage",
       "spell",
+      "preparedSpell",
       "mentalPattern",
       "note",
       "psychicDiscipline",
@@ -325,6 +327,7 @@
       "via": { "value": "" },
       "spellType": { "value": "" },
       "actionType": { "value": "" },
+      "combatType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
       "critic": { "value": "-" },
       "visible": { "value": false },
@@ -376,6 +379,7 @@
         "440": { "value": "" }
       },
       "actionType": { "value": "active" },
+      "combatType": { "value": "attack" },
       "discipline": { "value": "matrial" },
       "critic": { "value": "-" },
       "macro": { "value": "" },
