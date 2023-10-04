@@ -75,6 +75,19 @@
 }}
 
 {{#if this.attacker.combat.projectile.value}}
+{{#if (is 'eq' this.attacker.combat.distance.enable false)}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.distance.title')
+      inputType="checkbox"
+      inputName="attacker.combat.distance.check"
+      inputValue=(is 'eq' this.attacker.combat.distance.check true)
+    }}
+  </div>
+</div>
+{{/if}}
 <div class='columns'>
   <div>
     {{>

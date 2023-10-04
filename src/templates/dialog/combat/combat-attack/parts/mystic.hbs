@@ -64,6 +64,21 @@
   secondaryInputValue=attacker.mystic.damage.final
 }}
 
+
+{{#if (is 'eq' this.attacker.mystic.distance.enable false)}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.distance.title')
+      inputType="checkbox"
+      inputName="attacker.mystic.distance.check"
+      inputValue=(is 'eq' this.attacker.mystic.distance.check true)
+    }}
+  </div>
+</div>
+{{/if}}
+
 {{#if this.attacker.mystic.spellInnate}}
 <div class='columns'>
   <div>

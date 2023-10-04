@@ -13,6 +13,10 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
 
 const getInitialData = (attacker, defender, options = {}) => {
+  const combatDistance = !!game.settings.get(
+    'animabf', 
+    ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE
+  );
   const showRollByDefault = !!game.settings.get(
     'animabf',
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
@@ -37,7 +41,6 @@ const getInitialData = (attacker, defender, options = {}) => {
       poorVisibility: false,
       targetInCover: false,
       counterAttackBonus: options.counterAttackBonus,
-      distance: 0,
       zen: false,
       inhuman: false,
       inmaterial: false,
@@ -50,6 +53,11 @@ const getInitialData = (attacker, defender, options = {}) => {
         weapon: undefined,
         visible: true,
         highGround: false,
+        distance: {
+          value: 0,
+          enable: combatDistance,
+          check: false
+        },
         projectile: {
             value: false,
             type: ''
@@ -75,6 +83,11 @@ const getInitialData = (attacker, defender, options = {}) => {
         resistanceType: undefined,
         resistanceCheck: 0,
         visible: false,
+        distance: {
+          value: 0,
+          enable: combatDistance,
+          check: false
+        },
         projectile: {
             value: true,
             type: 'shot'
@@ -100,6 +113,11 @@ const getInitialData = (attacker, defender, options = {}) => {
         resistanceType: undefined,
         resistanceCheck: 0,
         visible: false,
+        distance: {
+          value: 0,
+          enable: combatDistance,
+          check: false
+        },
         projectile: {
             value: true,
             type: 'shot'
@@ -126,15 +144,25 @@ export class CombatAttackDialog extends FormApplication {
     this.modalData.attacker.zen = this.attackerActor.system.general.settings.zen.value;
     this.modalData.attacker.inhuman = this.attackerActor.system.general.settings.inhuman.value;
     this.modalData.attacker.inmaterial = this.attackerActor.system.general.settings.inmaterial.value;
+
+    if(this.modalData.attacker.combat.distance.enable){
+      const calculateDistance = Math.floor(canvas.grid.measureDistance(this.modalData.attacker.token, this.modalData.defender.token));
+      this.modalData.attacker.combat.distance.value = calculateDistance;
+      this.modalData.attacker.mystic.distance.value = calculateDistance;
+      this.modalData.attacker.psychic.distance.value = calculateDistance;
+    };
+
     const { weapons } = this.attackerActor.system.combat;
     const { spells } = this.attackerActor.system.mystic;
     const { psychicPowers } = this.attackerActor.system.psychic;
+
     if (psychicPowers.length > 0) {
         psychicPowers.powerUsed = psychicPowers.filter(w => w.system.combatType.value === "attack")[0]?._id;
         const power = psychicPowers.find(w => w._id === psychicPowers.powerUsed);
         this.attackerActor.system.psychic.psychicPotential.special = power?.system.bonus.value;
         this.modalData.attacker.psychic.critic = power?.system.critic.value;
     };
+
     if (spells.length > 0) {
       const { mystic } = this.modalData.attacker;
       spells.spellUsed = spells.filter(w => w.system.combatType.value === "attack")[0]?._id;
@@ -146,11 +174,12 @@ export class CombatAttackDialog extends FormApplication {
       let actType = 'main';
       mystic.spellInnate = innateCheck(this.attackerActor.system.mystic.act[actType].final.value, this.attackerActor.system.general.advantages, spell?.system.grades.base.zeon.value);
     };
+
     if (weapons.length > 0) {
       this.modalData.attacker.combat.weaponUsed = weapons[0]._id;
     } else {
       this.modalData.attacker.combat.unarmed = true;
-    }
+    };
 
     this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
 
@@ -211,8 +240,9 @@ export class CombatAttackDialog extends FormApplication {
               weaponUsed,
               unarmed,
               visible,
-              specialType
-              }, distance, poorVisibility, targetInCover, inmaterial } = this.modalData.attacker;
+              specialType,
+              distance
+              }, poorVisibility, targetInCover, inmaterial } = this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (typeof damage !== 'undefined') {
         let combatModifier = 0;
@@ -222,7 +252,7 @@ export class CombatAttackDialog extends FormApplication {
                 value: true,
                 type: weapon.system.shotType.value
             };
-            if (distance <= 1) { combatModifier += 30 };
+            if (distance.check || (distance.enable && distance.value <= 1)) { combatModifier += 30 };
             if (poorVisibility) { combatModifier -= 20 };
             if (targetInCover) { combatModifier -= 40 };
         };
@@ -318,8 +348,7 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-mystic-attack').click(() => {
-      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage, projectile, specialType, spellInnate, castInnate, spellPrepared, castPrepared, zeonAccumulated} = this.modalData.attacker.mystic;
-      const { distance } =this.modalData.attacker;
+      const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage, projectile, specialType, spellInnate, castInnate, spellPrepared, castPrepared, zeonAccumulated, distance} = this.modalData.attacker.mystic;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (spellUsed) {
         let baseMagicProjection;
@@ -416,9 +445,9 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-psychic-attack').click(() => {
-      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage, projectile, specialType} =
+      const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage, projectile, specialType, distance} =
         this.modalData.attacker.psychic;
-      const { distance, inhuman, zen } =this.modalData.attacker;
+      const { inhuman, zen } =this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
@@ -542,8 +571,6 @@ export class CombatAttackDialog extends FormApplication {
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
       this.attackerActor.system.psychic.psychicPotential.final.value + psychicBonus;
-
-    this.modalData.attacker.distance = Math.floor(canvas.grid.measureDistance(this.modalData.attacker.token, this.modalData.defender.token));
     const { spells } = this.attackerActor.system.mystic;
     if (!mystic.spellUsed) {
         mystic.spellUsed = spells.filter(w => w.system.combatType.value === "attack")[0]?._id

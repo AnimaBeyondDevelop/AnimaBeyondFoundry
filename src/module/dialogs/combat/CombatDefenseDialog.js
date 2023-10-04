@@ -44,7 +44,7 @@ const getInitialData = (attacker, defender) => {
       showRoll: !isGM || showRollByDefault,
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
       blindnessPen: 0,
-      distance: 0,
+      distance: attacker.distance,
       zen: false,
       inhuman: false,
       inmaterial: false,
@@ -234,7 +234,7 @@ export class CombatDefenseDialog extends FormApplication {
         value = this.defenderActor.system.combat.dodge.final.value;
         baseDefense = this.defenderActor.system.combat.dodge.base.value;
         const maestry = (baseDefense >= 200);
-        if(distance > 1 && projectileType == 'shot' && !maestry){ combatModifier -= 30 };
+        if((!distance.check || (distance.enable && distance.value > 1)) && projectileType == 'shot' && !maestry){ combatModifier -= 30 };
       }
       else {
         const attackerSpecialType = this.modalData.attacker.specialType;
@@ -256,7 +256,7 @@ export class CombatDefenseDialog extends FormApplication {
       baseDefense = this.defenderActor.system.combat.block.base.value;
       const isShield = weapon?.system.isShield.value;
       const maestry = (baseDefense >= 200);
-      if(distance > 1){
+      if(!distance.check || (distance.enable && distance.value > 1)){
           if (projectileType == 'shot'){
               if(!maestry) {
                   if (!isShield) { combatModifier -= 80 } else { combatModifier -= 30 }
@@ -501,7 +501,6 @@ export class CombatDefenseDialog extends FormApplication {
       psychic.psychicPotential.final =
       psychic.psychicPotential.special +
           this.defenderActor.system.psychic.psychicPotential.final.value;
-    this.modalData.defender.distance = Math.floor(canvas.grid.measureDistance(this.modalData.attacker.token, this.modalData.defender.token));
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
