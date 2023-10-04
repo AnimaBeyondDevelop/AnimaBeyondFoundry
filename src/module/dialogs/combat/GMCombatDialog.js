@@ -275,8 +275,8 @@ export class GMCombatDialog extends FormApplication {
           attacker.result.values.damage,
           defender.result.type === 'resistance' ? defender.result.values.surprised : false
         );
-        const {distance} = attacker.result.values;
-        if (combatResult.canCounterAttack && distance <= 1 ) {
+        const {distance, projectile} = attacker.result.values;
+        if (combatResult.canCounterAttack && (!projectile.value || (distance.check || (distance.enable && distance.value <= 1)))) {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
             canCounter: true,
