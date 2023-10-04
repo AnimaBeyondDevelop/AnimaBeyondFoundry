@@ -177,6 +177,8 @@ export class CombatAttackDialog extends FormApplication {
 
     if (weapons.length > 0) {
       this.modalData.attacker.combat.weaponUsed = weapons[0]._id;
+      const lastWeaponUsed = this.attackerActor.getFlag('world', `${this.attackerActor._id}.lastWeaponUsed`)
+      this.modalData.attacker.combat.weaponUsed = lastWeaponUsed || weapons[0]._id;
     } else {
       this.modalData.attacker.combat.unarmed = true;
     };
@@ -244,6 +246,7 @@ export class CombatAttackDialog extends FormApplication {
               distance
               }, poorVisibility, targetInCover, inmaterial } = this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
+      this.attackerActor.setFlag('world', `${this.attackerActor._id}.lastWeaponUsed`, weaponUsed);
       if (typeof damage !== 'undefined') {
         let combatModifier = 0;
         let projectile = {value: false, type: ''}
