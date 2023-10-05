@@ -726,13 +726,6 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       }
     },
-    defensesCounter: {
-      accumulated: 0,
-      value: true
-    },
-    shieldSupernatural: {
-      value: 0
-    },
     wearArmor: {
       value: 0
     },

@@ -80,22 +80,22 @@ export class ABFActor extends Actor {
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
-    const newDefensesCounter =
-    this.system.combat.defensesCounter.accumulated + 1;
+    const defensesCounter: any = this.getFlag('world', `${this._id}.defensesCounter`) || { value: true, accumulated: 0 };
+    const newDefensesCounter  = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
       this.update({
-        system: {
-          combat: {
-            defensesCounter: { accumulated: newDefensesCounter, value: true }
+        flags: {
+          world: {
+            [`${this._id}.defensesCounter`]: { accumulated: newDefensesCounter, value: true }
           }
         }
       });
     }
     else {
       this.update({
-        system: {
-          combat: {
-            defensesCounter: { value: false }
+        flags: {
+          world: {
+            [`${this._id}.defensesCounter`]: { value: false }
           }
         }
       });
@@ -104,9 +104,9 @@ export class ABFActor extends Actor {
 
   resetDefensesCounter() {
     this.update({
-      system: {
-        combat: {
-           defensesCounter: { accumulated: 0 }
+      flags: {
+        world: {
+          [`${this._id}.defensesCounter`]: { accumulated: 0 }
         }
       }
     });

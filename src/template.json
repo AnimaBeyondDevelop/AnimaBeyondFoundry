@@ -162,8 +162,6 @@
         "attack": { "base": { "value": 0 }, "final": { "value": 0 } },
         "block": { "base": { "value": 0 }, "final": { "value": 0 } },
         "dodge": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "defensesCounter": { "accumulated": 0, "value": true },
-        "shieldSupernatural": { "value": 0 },
         "wearArmor": { "value": 0 },
         "totalArmor": {
           "at": {

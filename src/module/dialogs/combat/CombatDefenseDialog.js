@@ -110,8 +110,9 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
-    this.modalData.defender.combat.accumulateDefenses = this.defenderActor.system.combat.defensesCounter.value;
-    this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(this.defenderActor.system.combat.defensesCounter.accumulated);
+    const defensesCounter = this.defenderActor.getFlag('world', `${this.defenderActor._id}.defensesCounter`) || { value: true, accumulated: 0 };
+    this.modalData.defender.combat.accumulateDefenses = defensesCounter.value;
+    this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(defensesCounter.accumulated);
     this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
     this.modalData.defender.inhuman = this.defenderActor.system.general.settings.inhuman.value;
     this.modalData.defender.inmaterial = this.defenderActor.system.general.settings.inmaterial.value;
@@ -489,7 +490,7 @@ export class CombatDefenseDialog extends FormApplication {
             flavor
           });
         };
-        
+
         let unableToDefense = false;
         const attackerSpecialType = this.modalData.attacker.specialType;
         const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType)
