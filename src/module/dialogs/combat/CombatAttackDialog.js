@@ -257,7 +257,7 @@ export class CombatAttackDialog extends FormApplication {
                 value: true,
                 type: weapon.system.shotType.value
             };
-            if (distance.check || (distance.enable && distance.value <= 1)) { combatModifier += 30 };
+            if ((!distance.enable && distance.check) || (distance.enable && distance.value <= 1)) { combatModifier += 30 };
             if (poorVisibility) { combatModifier -= 20 };
             if (targetInCover) { combatModifier -= 40 };
         };

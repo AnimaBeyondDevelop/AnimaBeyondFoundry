@@ -282,7 +282,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.setFlag('world', `${this.defenderActor._id}.lastDefensiveWeaponUsed`, weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
-
+      console.log(distance)
       let value;
       let baseDefense;
       let unableToDefense = false;
@@ -292,7 +292,7 @@ export class CombatDefenseDialog extends FormApplication {
         value = this.defenderActor.system.combat.dodge.final.value;
         baseDefense = this.defenderActor.system.combat.dodge.base.value;
         const maestry = (baseDefense >= 200);
-        if((!distance.check || (distance.enable && distance.value > 1)) && projectileType == 'shot' && !maestry){ combatModifier -= 30 };
+        if(((!distance.enable && !distance.check) || (distance.enable && distance.value > 1)) && projectileType == 'shot' && !maestry){ combatModifier -= 30 };
       }
       else {
         const attackerSpecialType = this.modalData.attacker.specialType;
