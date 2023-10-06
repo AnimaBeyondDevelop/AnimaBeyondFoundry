@@ -495,9 +495,6 @@ export class CombatAttackDialog extends FormApplication {
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
 
-          const powers = this.attackerActor.system.psychic.psychicPowers;
-
-          const power = powers.find(w => w._id === powerUsed);
           if (fatigueCheck[0]){
               psychicPotentialRoll.toMessage({
                   speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),

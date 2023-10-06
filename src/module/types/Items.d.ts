@@ -6,7 +6,9 @@ import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
+import { INITIAL_MYSTIC_SHIELD_DATA } from './mystic/MysticShieldItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
+import { INITIAL_PSYCHIC_SHIELD_DATA } from './psychic/PsychicShieldItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
 
 /**
@@ -330,6 +332,11 @@ export type PreparedSpellDataSource = ABFItemBaseDataSource<PreparedSpellItemDat
 export type PreparedSpellChanges = ItemChanges<PreparedSpellItemData>;
 export type PreparedSpellItemConfig = ABFItemConfig<PreparedSpellItemData>;
 
+export type MysticShieldItemData = typeof INITIAL_MYSTIC_SHIELD_DATA;
+export type MysticShieldDataSource = ABFItemBaseDataSource<MysticShieldItemData>;
+export type MysticShieldChanges = ItemChanges<MysticShieldItemData>;
+export type MysticShieldItemConfig = ABFItemConfig<MysticShieldItemData>;
+
 export type SpellItemData = typeof INITIAL_MYSTIC_SPELL_DATA;
 export type SpellDataSource = ABFItemBaseDataSource<SpellItemData>;
 export type SpellChanges = ItemChanges<SpellItemData>;
@@ -374,6 +381,11 @@ export type PsychicDisciplineItemData = Record<string, never>;
 export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;
+
+export type PsychicShieldItemData = typeof INITIAL_PSYCHIC_SHIELD_DATA;
+export type PsychicShieldDataSource = ABFItemBaseDataSource<PsychicShieldItemData>;
+export type PsychicShieldChanges = ItemChanges<PsychicShieldItemData>;
+export type PsychicShieldItemConfig = ABFItemConfig<PsychicShieldItemData>;
 
 export type PsychicPowerItemData = typeof INITIAL_PSYCHIC_POWER_DATA;
 export type PsychicPowerDataSource = ABFItemBaseDataSource<PsychicPowerItemData>;

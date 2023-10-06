@@ -9,7 +9,7 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="prepared-spells"
   }}
-    {{#each system.mystic.preparedSpells as |spell|}}
+    {{#each system.mystic.preparedSpells as |preparedSpell|}}
       <div data-item-id='{{this._id}}' class='prepared-spell-row'>
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

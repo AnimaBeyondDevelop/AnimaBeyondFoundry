@@ -53,6 +53,17 @@ export class ABFActor extends Actor {
     });
   }
 
+  newSupernaturalShield(newShield: any, type: string) {
+    const  supernaturalShieldData = {
+        type: `${type}Shield`,
+        name: newShield.name,
+        system: newShield.system
+      }
+     
+    this.createEmbeddedDocuments('Item', [supernaturalShieldData])
+    
+  }
+
   applyDamageShieldSupernatural(damage: number, dobleDamage: boolean) {
     const newShieldPoints = dobleDamage? this.system.combat.shieldSupernatural.value - damage * 2 : this.system.combat.shieldSupernatural.value - damage;
     if (newShieldPoints < 0) {
@@ -127,7 +138,6 @@ export class ABFActor extends Actor {
 
   deletePreparedSpell(spellName: string, spellGrade: string) {
     let preparedSpell = this.system.mystic.preparedSpells.find((ps: any) => ps.name == spellName && ps.system.grade.value == spellGrade && ps.system.prepared.value == true)._id;
-    console.log(preparedSpell)
     if(preparedSpell !== undefined){
       this.deleteEmbeddedDocuments("Item", [preparedSpell]);
     }
@@ -289,6 +299,10 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.PREPARED_SPELL);
   }
 
+  public getMysticShields() {
+    return this.getItemsOf(ABFItems.MYSTIC_SHIELD);
+  }
+
   public getKnownMetamagics() {
     return this.getItemsOf(ABFItems.METAMAGIC);
   }
@@ -343,6 +357,10 @@ export class ABFActor extends Actor {
 
   public getInnatePsychicPowers() {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
+  }
+
+  public getPsychicShields() {
+    return this.getItemsOf(ABFItems.PSYCHIC_SHIELD);
   }
 
   public getPsychicPowers() {

@@ -912,7 +912,8 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     selectedSpells: [],
     summons: [],
     metamagics: [],
-    preparedSpells: []
+    preparedSpells: [],
+    mysticShields: []
   },
 
   domine: {
@@ -1088,6 +1089,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       }
     },
-    innatePsychicPowers: []
+    innatePsychicPowers: [],
+    psychicShields: []
   }
 };

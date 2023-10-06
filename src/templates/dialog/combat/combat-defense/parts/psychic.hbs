@@ -14,6 +14,7 @@
   inputValue=this.defender.psychic.psychicProjection
 }}
 
+{{#if this.defender.psychic.newShield}}
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.psychicPotential.title')
@@ -35,6 +36,38 @@
     <option {{#if (is "eq" this._id ../this.defender.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{else}}
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.psychicShield.title')
+  disabled=this.defenseSent
+  inputName='defender.psychic.shieldUsed'
+}}
+  {{#each this.defender.actor.system.psychic.psychicShields}}
+    <option {{#if (is "eq" this._id ../this.defender.psychic.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.combat.dialog.shieldValue.title")
+  disabled=this.defenseSent
+  inputName="defender.psychic.shieldValue"
+  inputValue=this.defender.psychic.shieldValue
+}}
+{{/if}}
+
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.newShield.title')
+      inputType="checkbox"
+      inputName="defender.psychic.newShield"
+      inputValue=(is 'eq' defender.psychic.newShield true)
+    }}
+  </div>
+</div>
 
 {{#if this.defenseSent}}
   <div class='defense-sent'>

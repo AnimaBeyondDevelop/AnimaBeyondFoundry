@@ -225,7 +225,8 @@
         "selectedSpells": [],
         "summons": [],
         "metamagics": [],
-        "preparedSpells": []
+        "preparedSpells": [],
+        "mysticShields": []
       },
       "domine": {
         "kiSkills": [],
@@ -277,7 +278,8 @@
         "psychicDisciplines": [],
         "mentalPatterns": [],
         "innatePsychicPower": { "amount": { "value": 0 } },
-        "innatePsychicPowers": []
+        "innatePsychicPowers": [],
+        "psychicShields": []
       }
     }
   },
@@ -289,10 +291,12 @@
       "disadvantage",
       "spell",
       "preparedSpell",
+      "mysticShield",
       "mentalPattern",
       "note",
       "psychicDiscipline",
       "psychicPower",
+      "psychicShield",
       "technique",
       "weapon"
     ],

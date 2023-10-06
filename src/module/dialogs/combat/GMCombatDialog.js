@@ -108,7 +108,8 @@ export class GMCombatDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.cancel-button').click(() => {
-      this.mysticCastEvaluateIfAble()
+      this.mysticCastEvaluateIfAble();
+      this.newSupernaturalShieldIfBeAble();
       this.applyDamageShieldSupernaturalIfBeAble();
       this.accumulateDefensesIfAble();
       this.executeMacro(false);
@@ -116,7 +117,8 @@ export class GMCombatDialog extends FormApplication {
     });
 
     html.find('.make-counter').click(() => {
-      this.mysticCastEvaluateIfAble()
+      this.mysticCastEvaluateIfAble();
+      this.newSupernaturalShieldIfBeAble();
       this.applyDamageShieldSupernaturalIfBeAble();
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
@@ -134,7 +136,8 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.applyDamage(this.modalData.calculations.damage);
       }
 
-      this.mysticCastEvaluateIfAble()
+      this.mysticCastEvaluateIfAble();
+      this.newSupernaturalShieldIfBeAble();
       this.accumulateDefensesIfAble();
       this.executeMacro(true);
       this.close();
@@ -341,6 +344,12 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
+  newSupernaturalShieldIfBeAble() {
+    const {supShield} = this.modalData.defender.result?.values;
+    if ((this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && supShield.create) {
+        this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
+    }
+  }
   applyDamageShieldSupernaturalIfBeAble() {
     const cantDamage = this.modalData.defender.result?.values.cantDamage;
     const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
