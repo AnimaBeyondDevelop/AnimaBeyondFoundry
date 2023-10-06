@@ -9,6 +9,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  */
 export const INITIAL_MYSTIC_SHIELD_DATA = {
     grade: { value: SpellGrades.BASE },
+    damageBarrier: { value: 0 },
     shieldPoints: { value: 0 }
 };
 

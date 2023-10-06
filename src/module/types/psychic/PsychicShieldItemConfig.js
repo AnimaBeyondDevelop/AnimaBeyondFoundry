@@ -8,9 +8,10 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  */
 export const INITIAL_PSYCHIC_SHIELD_DATA = {
     maintain: { value: false },
+    damageBarrier: { value: 0 },
     shieldPoints: {
-        base: { value: 0 },
-        final: { value: 0 }
+        value: 0,
+        maintainMax:0
     }
 };
 

@@ -25,11 +25,11 @@
           class="shieldPoints"
           title=(localize "anima.ui.psychic.psychicShields.shieldPoints.title")
           hideTitle=(is "gt" @index 0)
-          inputName=(concat "system.dynamic.psychicShields." this._id ".system.shieldPoints.final.value")
-          inputValue=this.system.shieldPoints.final.value
+          inputName=(concat "system.dynamic.psychicShields." this._id ".system.shieldPoints.value")
+          inputValue=this.system.shieldPoints.value
           hasSecondaryInput=true
-          secondaryInputName=(concat "system.dynamic.psychicShields." this._id ".system.shieldPoints.base.value")
-          secondaryInputValue=this.system.shieldPoints.base.value
+          secondaryInputName=(concat "system.dynamic.psychicShields." this._id ".system.shieldPoints.maintainMax")
+          secondaryInputValue=this.system.shieldPoints.maintainMax
         }}
       </div>
     {{/each}}

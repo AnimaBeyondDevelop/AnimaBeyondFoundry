@@ -64,30 +64,25 @@ export class ABFActor extends Actor {
     
   }
 
-  applyDamageShieldSupernatural(damage: number, dobleDamage: boolean) {
-    const newShieldPoints = dobleDamage? this.system.combat.shieldSupernatural.value - damage * 2 : this.system.combat.shieldSupernatural.value - damage;
-    if (newShieldPoints < 0) {
-        const newLifePoints = this.system.characteristics.secondaries.lifePoints.value + newShieldPoints;    
-        this.update({
-            system: {
-                characteristics: {
-                    secondaries: { lifePoints: { value: newLifePoints } }
-                },
-                combat: {
-                    shieldSupernatural: { value: 0 }
-                }
-            }
-        });
+  applyDamageShieldSupernatural(supShield: any, damage: number, dobleDamage: boolean, type: string) {
+    const shieldValue = supShield.system.shieldPoints.value;
+    let shieldId: any;
+    if (supShield.id){
+      shieldId = supShield.id
+    } else {
+    shieldId = this.system[type][`${type}Shields`].pop()._id
+    };
+    const newShieldPoints = dobleDamage? shieldValue - damage * 2 : shieldValue - damage;
+    if (newShieldPoints > 0) {  
+        const updates = [{_id: shieldId, ['system.shieldPoints.value']: newShieldPoints}]
+        Item.updateDocuments(updates, {parent: this})
     }
-    else {
-        this.update({
-            system: {
-                combat: {
-                    shieldSupernatural: { value: newShieldPoints }
-                }
-            }
-        });
-      }
+      else  {
+        Item.deleteDocuments([shieldId], {parent: this})
+        if (newShieldPoints < 0) {
+          this.applyDamage(Math.abs(newShieldPoints))
+        }
+     }
   }
 
   accumulateDefenses(keepAccumulating: boolean) {

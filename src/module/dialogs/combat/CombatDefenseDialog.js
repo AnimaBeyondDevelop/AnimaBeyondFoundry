@@ -148,9 +148,9 @@ export class CombatDefenseDialog extends FormApplication {
     };
 
     if (psychicShields.length > 0) {
-      const psychicShield = psychicShields.filter(w => w.system.shieldPoints.final.value > 0)[0];
+      const psychicShield = psychicShields.filter(w => w.system.shieldPoints.value > 0)[0];
       psychic.shieldUsed = psychicShield?._id;
-      psychic.shieldValue = psychicShield?.system.shieldPoints.final.value;
+      psychic.shieldValue = psychicShield?.system.shieldPoints.value;
     } else {
       psychic.newShield = true;
     };
@@ -418,12 +418,11 @@ export class CombatDefenseDialog extends FormApplication {
           .value + atResValue;
       const baseMagicProjection =
         this.defenderActor.system.mystic.magicProjection.imbalance.defensive.base.value;
-
-
+        
       if (!newShield) {
         if(!shieldUsed) { return ui.notifications.warn("No tienes escudos místicos activos, has click en Escudo nuevo") }
         spell = mysticShields.find(w => w._id === shieldUsed);
-        supShield = { id: shieldUsed, create: false };
+        supShield = { ...spell, create: false , id: shieldUsed};
       }
       else if (spellUsed) {
         this.defenderActor.setFlag('world', `${this.defenderActor._id}.lastDefensiveSpellUsed`, spellUsed);
@@ -522,11 +521,11 @@ export class CombatDefenseDialog extends FormApplication {
       const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
       roll.roll();
       const rolled = roll.total - psychicProjection - (newModifier);
-    
+
       if (!newShield) {
         if(!shieldUsed) { return ui.notifications.warn("No tienes escudos psíquicos activos, has click en Escudo nuevo") }
         power = psychicShields.find(w => w._id === shieldUsed);
-        supShield = { id: shieldUsed, create: false };
+        supShield = { ...power, create: false, id: shieldUsed };
       }
       else if (powerUsed) {
         this.defenderActor.setFlag('world', `${this.defenderActor._id}.lastDefensivePowerUsed`, powerUsed);
@@ -561,8 +560,8 @@ export class CombatDefenseDialog extends FormApplication {
               system: {
                 maintain: { value: maintain },
                 shieldPoints: {
-                  base: { value: baseEffect[0] },
-                  final: { value: finalEffect[0] }
+                  value: finalEffect[0],
+                  maintainMax: baseEffect[0]
                 }
               },
               create: true,
@@ -633,10 +632,11 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.system.psychic.psychicPotential.final.value + psychicBonus;
 
     const { psychicShields } = this.defenderActor.system.psychic;
-    if (psychic.shieldUsed) {
-      const psychicShield = psychicShields.find(w => w._id === psychic.shieldUsed);
-      psychic.shieldValue = psychicShield.system.shieldPoints.final.value;
+    if (!psychic.shieldUsed) {
+      psychic.shieldUsed = psychicShields.filter(w => w.system.shieldPoints.value > 0)[0]
     };
+    const psychicShield = psychicShields.find(w => w._id === psychic.shieldUsed);
+    psychic.shieldValue = psychicShield?.system.shieldPoints.value ?? 0;
 
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
@@ -648,10 +648,11 @@ export class CombatDefenseDialog extends FormApplication {
     mystic.spellInnate = innateCheck(this.defenderActor.system.mystic.act[actType].final.value, this.defenderActor.system.general.advantages, spell?.system.grades[mystic.spellGrade].zeon.value);
 
     const { mysticShields } = this.defenderActor.system.mystic;
-    if (mystic.shieldUsed) {
-      const mysticShield = mysticShields.find(w => w._id === mystic.shieldUsed);
-      mystic.shieldValue = mysticShield.system.shieldPoints.value;
+    if (!mystic.shieldUsed) {
+      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints.value > 0)[0]
     };
+    const mysticShield = mysticShields.find(w => w._id === mystic.shieldUsed);
+    mystic.shieldValue = mysticShield?.system.shieldPoints.value ?? 0;
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);

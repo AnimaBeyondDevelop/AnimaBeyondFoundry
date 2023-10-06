@@ -108,9 +108,10 @@ export class GMCombatDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.cancel-button').click(() => {
+      
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
-      this.applyDamageShieldSupernaturalIfBeAble();
+      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},1000);
       this.accumulateDefensesIfAble();
       this.executeMacro(false);
       this.close();
@@ -119,7 +120,7 @@ export class GMCombatDialog extends FormApplication {
     html.find('.make-counter').click(() => {
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
-      this.applyDamageShieldSupernaturalIfBeAble();
+      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},1000);
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
       this.executeMacro(false);
@@ -164,7 +165,7 @@ export class GMCombatDialog extends FormApplication {
       else{
       this.executeMacro(false, resistanceRoll.total);
       };
-      this.mysticCastEvaluateIfAble()
+      this.mysticCastEvaluateIfAble();
       this.accumulateDefensesIfAble();
       this.close();
   });
@@ -315,7 +316,6 @@ export class GMCombatDialog extends FormApplication {
 
     this.render();
   }
-
   applyValuesIfBeAble() {
     if (this.modalData.attacker.result?.type === 'combat') {
       this.attackerActor.applyFatigue(this.modalData.attacker.result.values.fatigueUsed);
@@ -350,13 +350,14 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
     }
   }
-  applyDamageShieldSupernaturalIfBeAble() {
+    applyDamageShieldSupernaturalIfBeAble() {
     const cantDamage = this.modalData.defender.result?.values.cantDamage;
     const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
     const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token;
     const damage = this.modalData.attacker.result?.values.damage;
     if (defenderIsWinner && (this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && !cantDamage) {
-        this.defenderActor.applyDamageShieldSupernatural(damage, dobleDamage);
+      const {supShield} = this.modalData.defender.result?.values;
+      this.defenderActor.applyDamageShieldSupernatural(supShield, damage, dobleDamage, this.modalData.defender.result?.type);
     }
   }
 
