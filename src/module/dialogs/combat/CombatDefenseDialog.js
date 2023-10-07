@@ -7,6 +7,7 @@ import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
 import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
+import { shieldBaseValueCheck } from '../../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 import { shieldSupernaturalCheck } from '../../combat/utils/shieldSupernaturalCheck.js';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
@@ -539,10 +540,10 @@ export class CombatDefenseDialog extends FormApplication {
         let imbalance = psychicImbalanceCheck(power?.system.discipline.value, this.defenderActor.system.general.advantages) ?? 0;
         const newPotentialBase = psychicPotentialEffect (psychicPotential.base, imbalance, inhuman, zen);
         const newPotentialTotal = psychicPotentialEffect (psychicPotentialRoll.total, imbalance, inhuman, zen);
-        const baseEffect = shieldValueCheck(power?.system.effects[newPotentialBase].value ?? "")
+        const baseEffect = shieldBaseValueCheck(newPotentialBase, power?.system.effects)
         const finalEffect = shieldValueCheck(power?.system.effects[newPotentialTotal].value ?? "")
         const fatigueInmune = this.defenderActor.system.general.advantages.find(i => i.name === "Res. a la fatiga psíquica");
-        fatigueCheck = psychicFatigue(finalEffect, fatigueInmune);
+        fatigueCheck = psychicFatigue(power?.system.effects[newPotentialTotal].value, fatigueInmune);
         const fatiguePen = fatigueCheck[1];
         const maintain = baseEffect[0] >= finalEffect[0];
         
@@ -577,7 +578,7 @@ export class CombatDefenseDialog extends FormApplication {
         const attackerSpecialType = this.modalData.attacker.specialType;
         const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType)
         unableToDefense = shieldCheck[0];
-
+console.log(fatigueCheck)
         if (this.modalData.defender.showRoll && (fatigueCheck == undefined || !fatigueCheck[0])) {
 
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
