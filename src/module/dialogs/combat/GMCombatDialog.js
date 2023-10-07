@@ -335,6 +335,15 @@ export class GMCombatDialog extends FormApplication {
       else {
         this.attackerActor.consumeAccumulatedZeon(this.modalData.attacker.result.values?.zeonCost)
       }
+    };
+    if (this.modalData.defender.result?.type === 'mystic') {
+        if (this.modalData.defender.result.values?.innate) { }
+        else if (this.modalData.defender.result.values?.prepared) {
+            this.defenderActor.deletePreparedSpell(this.modalData.defender.result.values?.spellName, this.modalData.defender.result.values?.spellGrade);
+        }
+        else {
+            this.defenderActor.consumeAccumulatedZeon(this.modalData.defender.result.values?.zeonCost);
+        }
     }
   }
 
