@@ -375,7 +375,8 @@ export class GMCombatDialog extends FormApplication {
         missvalue: 80,
         invisible: false,
         resistanceRoll,
-        spellGrade: this.modalData.attacker.result.values.spellGrade
+        spellGrade: this.modalData.attacker.result.values.spellGrade,
+        fatigueCheck: false
         };
     if (this.modalData.attacker.result?.type === 'combat') {
         const {name} = this.modalData.attacker.result.weapon
@@ -391,6 +392,7 @@ export class GMCombatDialog extends FormApplication {
     }
     else if (this.modalData.attacker.result?.type === 'psychic'){
         macroName = this.modalData.attacker.result.values.powerName;
+        args.fatigueCheck = this.modalData.attacker.result.values.fatigueCheck;
     };
     if (this.modalData.defender.result?.type === 'combat') {
         const {type} = this.modalData.defender.result.values

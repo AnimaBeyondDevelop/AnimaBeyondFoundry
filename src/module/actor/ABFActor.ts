@@ -9,6 +9,7 @@ import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
 import { Log } from '../../utils/Log';
 import { migrateItem } from '../items/migrations/migrateItem';
+import { executeArgsMacro } from '../utils/functions/executeArgsMacro';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -61,7 +62,13 @@ export class ABFActor extends Actor {
       }
      
     this.createEmbeddedDocuments('Item', [supernaturalShieldData])
-    
+    let shieldId = this.system[type][`${type}Shields`].pop()._id
+    let args = {
+      actor: this,
+      newShield: true,
+      shieldId
+      };
+    executeArgsMacro(newShield.name,args)
   }
 
   applyDamageShieldSupernatural(supShield: any, damage: number, dobleDamage: boolean, type: string) {
@@ -82,6 +89,12 @@ export class ABFActor extends Actor {
         if (newShieldPoints < 0) {
           this.applyDamage(Math.abs(newShieldPoints))
         }
+        let args = {
+          actor: this,
+          newShield: false,
+          shieldId
+          };
+        executeArgsMacro(supShield.name,args)
      }
   }
 

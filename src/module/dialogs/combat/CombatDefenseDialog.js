@@ -578,7 +578,6 @@ export class CombatDefenseDialog extends FormApplication {
         const attackerSpecialType = this.modalData.attacker.specialType;
         const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType)
         unableToDefense = shieldCheck[0];
-console.log(fatigueCheck)
         if (this.modalData.defender.showRoll && (fatigueCheck == undefined || !fatigueCheck[0])) {
 
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
