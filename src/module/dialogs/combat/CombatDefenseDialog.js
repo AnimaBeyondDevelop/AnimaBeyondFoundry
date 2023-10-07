@@ -491,6 +491,9 @@ export class CombatDefenseDialog extends FormApplication {
           dobleDamage,
           cantDamage,
           atResValue,
+          innate: spellInnate && castInnate,
+          prepared: spellPrepared && castPrepared,
+          zeonCost,
           supShield
         }
       });
