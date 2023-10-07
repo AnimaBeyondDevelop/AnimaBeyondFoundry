@@ -480,7 +480,7 @@ export class CombatAttackDialog extends FormApplication {
         psychicPotentialRoll.roll();
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
-        let imbalance = psychicImbalanceCheck(power?.system.discipline.value, this.attackerActor.system.general.advantages) ?? 0;
+        let imbalance = psychicImbalanceCheck(power?.system.discipline.value, this.attackerActor.system.general.advantages, this.attackerActor.system.psychic.mentalPatterns) ?? 0;
         const newPotentialTotal = psychicPotentialEffect (psychicPotentialRoll.total, imbalance, inhuman, zen);
         const powerUsedEffect = power?.system.effects[newPotentialTotal].value;
         let newDamage = damageCheck(powerUsedEffect)[0] + damage;

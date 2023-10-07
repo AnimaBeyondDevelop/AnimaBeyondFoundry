@@ -1,5 +1,5 @@
 import {PsychicPowerDisciplines } from '../../types/psychic/PsychicPowerItemConfig.js';
-export const psychicImbalanceCheck = (discipline, advantages) => {
+export const psychicImbalanceCheck = (discipline, advantages, mentalPatterns) => {
     const systemDisciplines = {
         [PsychicPowerDisciplines.THE_MATRIAL_POWERS]: game.i18n.localize('anima.ui.psychic.psychicPowers.discipline.matrial.title'),
         [PsychicPowerDisciplines.TELEPATHY]: game.i18n.localize('anima.ui.psychic.psychicPowers.discipline.telepathy.title'),
@@ -11,7 +11,10 @@ export const psychicImbalanceCheck = (discipline, advantages) => {
         [PsychicPowerDisciplines.TELEMETRY]: game.i18n.localize('anima.ui.psychic.psychicPowers.discipline.telemetry.title'),
         [PsychicPowerDisciplines.SENTIENT]: game.i18n.localize('anima.ui.psychic.psychicPowers.discipline.sentient.title')
     };
-    const regExp = new RegExp(`${systemDisciplines[discipline]}`);
-    if (regExp.test(advantages.map(i => i.name))) {return 1}
-    else {return 0}
+    const regExpDisc = new RegExp(`${systemDisciplines[discipline]}`);
+    const regExpMental = new RegExp("Valentía");
+    let imbalance = 0
+    if (regExpDisc.test(advantages?.map(i => i.name))) {imbalance++}
+    if (regExpMental.test(mentalPatterns?.map(i => i.name))) {imbalance++}
+    return imbalance
     };
