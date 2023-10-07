@@ -410,7 +410,7 @@ export class CombatDefenseDialog extends FormApplication {
     html.find('.send-mystic-defense').click(() => {
       const { mystic : {modifier, spellUsed, spellGrade, spellInnate, castInnate, spellPrepared, castPrepared, zeonAccumulated, shieldUsed, newShield}, combat : {at}, blindnessPen } = this.modalData.defender;
       const { spells, mysticShields } = this.defenderActor.system.mystic;      
-      let spell, supShield = { create: false }, atResValue = 0;
+      let spell, zeonCost, supShield = { create: false }, atResValue = 0;
       if (at.defense) {atResValue += at.final* 10 + 20 + 10};
 
       const newModifier = blindnessPen + modifier ?? 0;
@@ -428,7 +428,7 @@ export class CombatDefenseDialog extends FormApplication {
       else if (spellUsed) {
         this.defenderActor.setFlag('world', `${this.defenderActor._id}.lastDefensiveSpellUsed`, spellUsed);
         spell = spells.find(w => w._id === spellUsed);
-        const zeonCost = spell?.system.grades[spellGrade].zeon.value;
+        zeonCost = spell?.system.grades[spellGrade].zeon.value;
         let evaluateCastMsj = evaluateCast(spellInnate, castInnate, spellPrepared, castPrepared, zeonAccumulated, zeonCost);
         if (evaluateCastMsj !== undefined) { return evaluateCastMsj };
         const spellEffect = shieldValueCheck(spell?.system.grades[spellGrade].description.value ?? "");
