@@ -484,6 +484,7 @@ export class CombatDefenseDialog extends FormApplication {
           magicProjection,
           spellGrade,
           spellUsed,
+          spellName: spell.name,
           at: at.final,
           roll: rolled,
           total: roll.total,

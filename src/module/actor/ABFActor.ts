@@ -62,13 +62,13 @@ export class ABFActor extends Actor {
       }
      
     this.createEmbeddedDocuments('Item', [supernaturalShieldData])
-    let shieldId = this.system[type][`${type}Shields`].pop()._id
+    setTimeout(() => {let shieldId = this.system[type][`${type}Shields`].pop()._id
     let args = {
-      actor: this,
+      thisActor: this,
       newShield: true,
       shieldId
       };
-    executeArgsMacro(newShield.name,args)
+    executeArgsMacro(newShield.name,args);}, 2000);
   }
 
   applyDamageShieldSupernatural(supShield: any, damage: number, dobleDamage: boolean, type: string) {
@@ -90,7 +90,7 @@ export class ABFActor extends Actor {
           this.applyDamage(Math.abs(newShieldPoints))
         }
         let args = {
-          actor: this,
+          thisActor: this,
           newShield: false,
           shieldId
           };

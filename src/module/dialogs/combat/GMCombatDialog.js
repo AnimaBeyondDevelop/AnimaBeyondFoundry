@@ -111,19 +111,19 @@ export class GMCombatDialog extends FormApplication {
       
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
-      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},1000);
+      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},2000);
       this.accumulateDefensesIfAble();
-      this.executeMacro(false);
+      setTimeout(() => {this.executeMacro(false);},2000);
       this.close();
     });
 
     html.find('.make-counter').click(() => {
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
-      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},1000);
+      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},2000);
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
-      this.executeMacro(false);
+      setTimeout(() => {this.executeMacro(false);},2000);
 
       if (this.modalData.calculations?.canCounter) {
         this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
@@ -140,7 +140,7 @@ export class GMCombatDialog extends FormApplication {
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
       this.accumulateDefensesIfAble();
-      this.executeMacro(true);
+      setTimeout(() => {this.executeMacro(true);},2000);
       this.close();
     });
     html.find('.roll-resistance').click(() => {
