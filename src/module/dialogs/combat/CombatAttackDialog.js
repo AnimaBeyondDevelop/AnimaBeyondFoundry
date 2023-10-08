@@ -246,7 +246,7 @@ export class CombatAttackDialog extends FormApplication {
               visible,
               specialType,
               distance
-              }, poorVisibility, targetInCover, inmaterial } = this.modalData.attacker;
+              }, highGround, poorVisibility, targetInCover, inmaterial } = this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.actor.system.general.settings.inmaterial.value;
       this.attackerActor.setFlag('world', `${this.attackerActor._id}.lastOffensiveWeaponUsed`, weaponUsed);
       if (typeof damage !== 'undefined') {
@@ -258,6 +258,7 @@ export class CombatAttackDialog extends FormApplication {
                 type: weapon.system.shotType.value
             };
             if ((!distance.enable && distance.check) || (distance.enable && distance.value <= 1)) { combatModifier += 30 };
+            if (highGround) { combatModifier += 20 };
             if (poorVisibility) { combatModifier -= 20 };
             if (targetInCover) { combatModifier -= 40 };
         };
