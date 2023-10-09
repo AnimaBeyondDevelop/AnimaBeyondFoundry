@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
+import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -355,8 +356,24 @@ export class GMCombatDialog extends FormApplication {
 
   newSupernaturalShieldIfBeAble() {
     const {supShield} = this.modalData.defender.result?.values;
-    if ((this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && supShield.create) {
-        this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
+    if ((this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && supShield.create) {     
+    const {type} = this.modalData.defender.result;
+        
+          const supernaturalShieldData = {
+              type: `${type}Shield`,
+              name: supShield.name,
+              system: supShield.system
+          };
+  
+          this.defenderActor.createItem(supernaturalShieldData)
+          setTimeout(() => { 
+          let shieldId = this.defenderActor.system[type][`${type}Shields`].pop()._id;
+          let args = {
+              thisActor: this.defenderActor,
+              newShield: true,
+              shieldId
+          };
+          executeArgsMacro(supShield.name, args);}, 2000);
     }
   }
     applyDamageShieldSupernaturalIfBeAble() {

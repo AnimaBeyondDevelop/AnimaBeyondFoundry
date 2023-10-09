@@ -55,13 +55,14 @@ export class ABFActor extends Actor {
   }
 
   newSupernaturalShield(newShield: any, type: string) {
+    const itemType = type == "psychic"? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
     const  supernaturalShieldData = {
-        type: `${type}Shield`,
         name: newShield.name,
+        type: itemType,
         system: newShield.system
       }
      
-    this.createEmbeddedDocuments('Item', [supernaturalShieldData])
+    this.createItem(supernaturalShieldData)
     setTimeout(() => {let shieldId = this.system[type][`${type}Shields`].pop()._id
     let args = {
       thisActor: this,
@@ -76,8 +77,8 @@ export class ABFActor extends Actor {
     let shieldId: any;
     if (supShield.id){
       shieldId = supShield.id
-    } else {
-    shieldId = this.system[type][`${type}Shields`].pop()._id
+    } else {shieldId = this.system[type][`${type}Shields`].pop()?._id;
+    if(shieldId == undefined){return console.log("Escudo Sobrenatural no encontrado")}
     };
     const newShieldPoints = dobleDamage? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {  

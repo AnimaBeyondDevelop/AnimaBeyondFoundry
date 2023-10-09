@@ -3,6 +3,7 @@ import { SpellMaintenanceDataSource, PreparedSpellDataSource } from '../../../..
 
 export const mutateMysticData = (data: ABFActorDataSourceData) => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
+  const projectionMod = data.general.modifiers.projectionMod.value;
 
   const { mystic } = data;
 
@@ -10,14 +11,14 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
 
   mystic.act.alternative.final.value = Math.max(mystic.act.alternative.base.value + Math.min(allActionsPenalty / 2, 0), 0);
 
-  mystic.magicProjection.final.value = Math.max(mystic.magicProjection.base.value + allActionsPenalty, 0);
+  mystic.magicProjection.final.value = Math.max(mystic.magicProjection.base.value + allActionsPenalty + projectionMod, 0);
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.offensive.base.value + allActionsPenalty,
+    mystic.magicProjection.imbalance.offensive.base.value + allActionsPenalty + projectionMod,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.defensive.base.value + allActionsPenalty,
+    mystic.magicProjection.imbalance.defensive.base.value + allActionsPenalty + projectionMod,
     0
   );
 

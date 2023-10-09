@@ -149,9 +149,9 @@ export class CombatDefenseDialog extends FormApplication {
     };
 
     if (psychicShields.length > 0) {
-      const psychicShield = psychicShields.filter(w => w.system.shieldPoints.value > 0)[0];
+      const psychicShield = psychicShields.filter(w => w.system.shieldPoints?.value > 0)[0];
       psychic.shieldUsed = psychicShield?._id;
-      psychic.shieldValue = psychicShield?.system.shieldPoints.value;
+      psychic.shieldValue = psychicShield?.system.shieldPoints?.value;
     } else {
       psychic.newShield = true;
     };
@@ -167,7 +167,7 @@ export class CombatDefenseDialog extends FormApplication {
     };
 
     if (mysticShields.length > 0) {
-      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints.value > 0)[0]?._id;
+      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints?.value > 0)[0]?._id;
     } else {
       mystic.newShield = true;
     };
@@ -436,6 +436,7 @@ export class CombatDefenseDialog extends FormApplication {
           name: spell.name,
           system: {
             grade: { value: spellGrade },
+            damageBarrier: { value: 0 },
             shieldPoints: { value: spellEffect[0] }
           },
           create: true,
@@ -564,6 +565,7 @@ export class CombatDefenseDialog extends FormApplication {
               name: power.name,
               system: {
                 maintain: { value: maintain },
+                damageBarrier: { value: 0 },
                 shieldPoints: {
                   value: finalEffect[0],
                   maintainMax: baseEffect[0]
@@ -637,10 +639,10 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { psychicShields } = this.defenderActor.system.psychic;
     if (!psychic.shieldUsed) {
-      psychic.shieldUsed = psychicShields.filter(w => w.system.shieldPoints.value > 0)[0]
+      psychic.shieldUsed = psychicShields.filter(w => w.system.shieldPoints?.value > 0)[0]
     };
     const psychicShield = psychicShields.find(w => w._id === psychic.shieldUsed);
-    psychic.shieldValue = psychicShield?.system.shieldPoints.value ?? 0;
+    psychic.shieldValue = psychicShield?.system.shieldPoints?.value ?? 0;
 
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
@@ -653,10 +655,10 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { mysticShields } = this.defenderActor.system.mystic;
     if (!mystic.shieldUsed) {
-      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints.value > 0)[0]
+      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints?.value > 0)[0]
     };
     const mysticShield = mysticShields.find(w => w._id === mystic.shieldUsed);
-    mystic.shieldValue = mysticShield?.system.shieldPoints.value ?? 0;
+    mystic.shieldValue = mysticShield?.system.shieldPoints?.value ?? 0;
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
