@@ -63,7 +63,8 @@ export class ABFActor extends Actor {
       }
      
     this.createItem(supernaturalShieldData)
-    setTimeout(() => {let shieldId = this.system[type][`${type}Shields`].pop()._id
+    let supShields = this.system[type][`${type}Shields`]
+    setTimeout(() => {let shieldId = supShields[supShields.length - 1]._id
     let args = {
       thisActor: this,
       newShield: true,
@@ -77,8 +78,10 @@ export class ABFActor extends Actor {
     let shieldId: any;
     if (supShield.id){
       shieldId = supShield.id
-    } else {shieldId = this.system[type][`${type}Shields`].pop()?._id;
-    if(shieldId == undefined){return console.log("Escudo Sobrenatural no encontrado")}
+    } else {
+      let supShields = this.system[type][`${type}Shields`]
+      shieldId = supShields[supShields.length - 1]._id;
+    if(shieldId == undefined){return ui.notifications.warn("Escudo Sobrenatural no encontrado")}
     };
     const newShieldPoints = dobleDamage? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {  

@@ -1,7 +1,6 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
-import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -294,15 +293,16 @@ export class GMCombatDialog extends FormApplication {
             canCounter: false,
             winner,
             damage: combatResult.damage
-          };
-        }
+          }
+        };
       } else {
         this.modalData.calculations = {
           difference: attackerTotal - defenderTotal,
           canCounter: false,
           winner
-        };
-      }
+        }
+      };
+
       if (this.modalData.calculations.winner === this.modalData.attacker.token &&
         this.modalData.attacker.result.values.checkResistance === true ) { //Revisar logica a implementar para nuevo dialogo
       }
@@ -332,17 +332,16 @@ export class GMCombatDialog extends FormApplication {
       if (this.modalData.attacker.result.values?.innate){}
       else if (this.modalData.attacker.result.values?.prepared){
         this.attackerActor.deletePreparedSpell(this.modalData.attacker.result.values?.spellName, this.modalData.attacker.result.values?.spellGrade)
-      }
-      else {
+      } else {
         this.attackerActor.consumeAccumulatedZeon(this.modalData.attacker.result.values?.zeonCost)
       }
-    };
+    }
+
     if (this.modalData.defender.result?.type === 'mystic') {
         if (this.modalData.defender.result.values?.innate) { }
         else if (this.modalData.defender.result.values?.prepared) {
             this.defenderActor.deletePreparedSpell(this.modalData.defender.result.values?.spellName, this.modalData.defender.result.values?.spellGrade);
-        }
-        else {
+        } else {
             this.defenderActor.consumeAccumulatedZeon(this.modalData.defender.result.values?.zeonCost);
         }
     }
@@ -357,26 +356,11 @@ export class GMCombatDialog extends FormApplication {
   newSupernaturalShieldIfBeAble() {
     const {supShield} = this.modalData.defender.result?.values;
     if ((this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && supShield.create) {     
-    const {type} = this.modalData.defender.result;
-        
-          const supernaturalShieldData = {
-              type: `${type}Shield`,
-              name: supShield.name,
-              system: supShield.system
-          };
-  
-          this.defenderActor.createItem(supernaturalShieldData)
-          setTimeout(() => { 
-          let shieldId = this.defenderActor.system[type][`${type}Shields`].pop()._id;
-          let args = {
-              thisActor: this.defenderActor,
-              newShield: true,
-              shieldId
-          };
-          executeArgsMacro(supShield.name, args);}, 2000);
+      this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
     }
   }
-    applyDamageShieldSupernaturalIfBeAble() {
+
+  applyDamageShieldSupernaturalIfBeAble() {
     const cantDamage = this.modalData.defender.result?.values.cantDamage;
     const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
     const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token;
@@ -403,7 +387,8 @@ export class GMCombatDialog extends FormApplication {
         resistanceRoll,
         spellGrade: this.modalData.attacker.result.values.spellGrade,
         fatigueCheck: false
-        };
+    };
+
     if (this.modalData.attacker.result?.type === 'combat') {
         const {name} = this.modalData.attacker.result.weapon
         macroName = `Atk ${name}`;
@@ -420,12 +405,14 @@ export class GMCombatDialog extends FormApplication {
         macroName = this.modalData.attacker.result.values.powerName;
         args.fatigueCheck = this.modalData.attacker.result.values.fatigueCheck;
     };
+
     if (this.modalData.defender.result?.type === 'combat') {
         const {type} = this.modalData.defender.result.values
         if (type == 'dodge') {
             args.dodge = true
         }
     };
+
     if (this.modalData.attacker.result.values.visible !== undefined && 
         !this.modalData.attacker.result.values.visible){
         args.invisible = true
@@ -435,6 +422,7 @@ export class GMCombatDialog extends FormApplication {
         this.modalData.attacker.result?.values.macro !== '') {
         macroName = this.modalData.attacker.result?.values.macro
     };
+
     const macro = game.macros.getName(macroName);
     if (macro) {
         macro.execute(args)
