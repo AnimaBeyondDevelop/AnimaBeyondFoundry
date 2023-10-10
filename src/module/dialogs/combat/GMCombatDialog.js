@@ -69,16 +69,14 @@ export class GMCombatDialog extends FormApplication {
   get isDamagingCombat() {
     const { attacker } = this.modalData;
 
-    const isPhysicalDamagingCombat = attacker.result?.type === 'combat' &&
-    attacker.result.values.damage !== 0;
+    const isPhysicalDamagingCombat =
+      attacker.result?.type === 'combat' && attacker.result.values.damage !== 0;
 
     const isMysticDamagingCombat =
-      attacker.result?.type === 'mystic' &&
-      attacker.result.values.damage !== 0;
+      attacker.result?.type === 'mystic' && attacker.result.values.damage !== 0;
 
     const isPsychicDamagingCombat =
-      attacker.result?.type === 'psychic' &&
-      attacker.result.values.damage !== 0;
+      attacker.result?.type === 'psychic' && attacker.result.values.damage !== 0;
 
     return isPhysicalDamagingCombat || isMysticDamagingCombat || isPsychicDamagingCombat;
   }
@@ -107,20 +105,19 @@ export class GMCombatDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('.cancel-button').click( async () => {
-      
+    html.find('.cancel-button').click(async () => {
       this.mysticCastEvaluateIfAble();
       await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageShieldSupernaturalIfBeAble()
+      this.applyDamageShieldSupernaturalIfBeAble();
       this.accumulateDefensesIfAble();
       this.executeMacro(false);
       this.close();
     });
 
-    html.find('.make-counter').click( async () => {
+    html.find('.make-counter').click(async () => {
       this.mysticCastEvaluateIfAble();
       await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageShieldSupernaturalIfBeAble()
+      this.applyDamageShieldSupernaturalIfBeAble();
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
       this.executeMacro(false);
@@ -147,28 +144,30 @@ export class GMCombatDialog extends FormApplication {
       this.applyValuesIfBeAble();
       const resType = this.modalData.attacker.result.values.resistanceType;
       const resCheck = this.modalData.attacker.result.values.resistanceCheck;
-      const resistance = this.defenderActor.system.characteristics.secondaries.resistances[resType].base.value;
+      const resistance =
+        this.defenderActor.system.characteristics.secondaries.resistances[resType].base
+          .value;
       let formula = `1d100 + ${resistance ?? 0} - ${resCheck ?? 0}`;
       const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
       resistanceRoll.roll();
       const { i18n } = game;
       const flavor = i18n.format('macros.combat.dialog.physicalDefense.resist.title', {
-      target: this.modalData.attacker.token.name });
+        target: this.modalData.attacker.token.name
+      });
       resistanceRoll.toMessage({
-              speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-              flavor
-          });
-      if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0){
-      this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
-      this.executeMacro(true, resistanceRoll.total);
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+        flavor
+      });
+      if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
+        this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
+        this.executeMacro(true, resistanceRoll.total);
+      } else {
+        this.executeMacro(false, resistanceRoll.total);
       }
-      else{
-      this.executeMacro(false, resistanceRoll.total);
-      };
       this.mysticCastEvaluateIfAble();
       this.accumulateDefensesIfAble();
       this.close();
-  });
+    });
     html.find('.show-results').click(async () => {
       const data = {
         attacker: {
@@ -198,7 +197,9 @@ export class GMCombatDialog extends FormApplication {
   }
 
   updateAttackerData(result) {
-    if (result.values.unableToAttack) {result.values.total = 0};
+    if (result.values.unableToAttack) {
+      result.values.total = 0;
+    }
     result.values.total = Math.max(0, result.values.total);
     this.modalData.attacker.result = result;
 
@@ -230,7 +231,9 @@ export class GMCombatDialog extends FormApplication {
   }
 
   updateDefenderData(result) {
-    if (result.values.unableToDefense) {result.values.total = 0};
+    if (result.values.unableToDefense) {
+      result.values.total = 0;
+    }
     result.values.total = Math.max(0, result.values.total);
     this.modalData.defender.result = result;
 
@@ -264,7 +267,9 @@ export class GMCombatDialog extends FormApplication {
       const attackerTotal =
         attacker.result.values.total + this.modalData.attacker.customModifier;
       const defenderTotal =
-        defender.result.values.total + this.modalData.defender.customModifier - defender.result.values.atResValue;
+        defender.result.values.total +
+        this.modalData.defender.customModifier -
+        defender.result.values.atResValue;
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
@@ -279,8 +284,13 @@ export class GMCombatDialog extends FormApplication {
           attacker.result.values.damage,
           defender.result.type === 'resistance' ? defender.result.values.surprised : false
         );
-        const {distance, projectile} = attacker.result.values;
-        if (combatResult.canCounterAttack && (!projectile.value || (distance.check || (distance.enable && distance.value <= 1)))) {
+        const { distance, projectile } = attacker.result.values;
+        if (
+          combatResult.canCounterAttack &&
+          (!projectile.value ||
+            distance.check ||
+            (distance.enable && distance.value <= 1))
+        ) {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
             canCounter: true,
@@ -293,20 +303,24 @@ export class GMCombatDialog extends FormApplication {
             canCounter: false,
             winner,
             damage: combatResult.damage
-          }
-        };
+          };
+        }
       } else {
         this.modalData.calculations = {
           difference: attackerTotal - defenderTotal,
           canCounter: false,
           winner
-        }
-      };
-
-      if (this.modalData.calculations.winner === this.modalData.attacker.token &&
-        this.modalData.attacker.result.values.checkResistance === true ) { //Revisar logica a implementar para nuevo dialogo
+        };
       }
-        else {this.modalData.attacker.result.values.checkResistance = false;}
+
+      if (
+        this.modalData.calculations.winner === this.modalData.attacker.token &&
+        this.modalData.attacker.result.values.checkResistance === true
+      ) {
+        //Revisar logica a implementar para nuevo dialogo
+      } else {
+        this.modalData.attacker.result.values.checkResistance = false;
+      }
     }
 
     return this.modalData;
@@ -329,100 +343,139 @@ export class GMCombatDialog extends FormApplication {
 
   mysticCastEvaluateIfAble() {
     if (this.modalData.attacker.result?.type === 'mystic') {
-      if (this.modalData.attacker.result.values?.innate){}
-      else if (this.modalData.attacker.result.values?.prepared){
-        this.attackerActor.deletePreparedSpell(this.modalData.attacker.result.values?.spellName, this.modalData.attacker.result.values?.spellGrade)
+      if (this.modalData.attacker.result.values?.innate) {
+      } else if (this.modalData.attacker.result.values?.prepared) {
+        this.attackerActor.deletePreparedSpell(
+          this.modalData.attacker.result.values?.spellName,
+          this.modalData.attacker.result.values?.spellGrade
+        );
       } else {
-        this.attackerActor.consumeAccumulatedZeon(this.modalData.attacker.result.values?.zeonCost)
+        this.attackerActor.consumeAccumulatedZeon(
+          this.modalData.attacker.result.values?.zeonCost
+        );
       }
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
-        if (this.modalData.defender.result.values?.innate) { }
-        else if (this.modalData.defender.result.values?.prepared) {
-            this.defenderActor.deletePreparedSpell(this.modalData.defender.result.values?.spellName, this.modalData.defender.result.values?.spellGrade);
-        } else {
-            this.defenderActor.consumeAccumulatedZeon(this.modalData.defender.result.values?.zeonCost);
-        }
+      if (this.modalData.defender.result.values?.innate) {
+      } else if (this.modalData.defender.result.values?.prepared) {
+        this.defenderActor.deletePreparedSpell(
+          this.modalData.defender.result.values?.spellName,
+          this.modalData.defender.result.values?.spellGrade
+        );
+      } else {
+        this.defenderActor.consumeAccumulatedZeon(
+          this.modalData.defender.result.values?.zeonCost
+        );
+      }
     }
   }
 
   accumulateDefensesIfAble() {
     if (this.modalData.defender.result?.type === 'combat') {
-      this.defenderActor.accumulateDefenses(this.modalData.defender.result.values?.accumulateDefenses);
+      this.defenderActor.accumulateDefenses(
+        this.modalData.defender.result.values?.accumulateDefenses
+      );
     }
   }
 
   async newSupernaturalShieldIfBeAble() {
-    const {supShield} = this.modalData.defender.result?.values;
-    if ((this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && supShield.create) {     
-     await this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
+    const { supShield } = this.modalData.defender.result?.values;
+    if (
+      (this.modalData.defender.result?.type === 'mystic' ||
+        this.modalData.defender.result?.type === 'psychic') &&
+      supShield.create
+    ) {
+      await this.defenderActor.newSupernaturalShield(
+        supShield,
+        this.modalData.defender.result.type
+      );
     }
   }
 
   applyDamageShieldSupernaturalIfBeAble() {
     const cantDamage = this.modalData.defender.result?.values.cantDamage;
     const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
-    const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token;
+    const defenderIsWinner =
+      this.modalData.calculations.winner == this.modalData.defender.token;
     const damage = this.modalData.attacker.result?.values.damage;
-    if (defenderIsWinner && (this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && !cantDamage) {
-      const {supShield} = this.modalData.defender.result?.values;
-      this.defenderActor.applyDamageShieldSupernatural(supShield, damage, dobleDamage, this.modalData.defender.result?.type);
+    if (
+      defenderIsWinner &&
+      (this.modalData.defender.result?.type === 'mystic' ||
+        this.modalData.defender.result?.type === 'psychic') &&
+      !cantDamage
+    ) {
+      const { supShield } = this.modalData.defender.result?.values;
+      this.defenderActor.applyDamageShieldSupernatural(
+        supShield,
+        damage,
+        dobleDamage,
+        this.modalData.defender.result?.type
+      );
     }
   }
 
   executeMacro(appliedDamage, resistanceRoll) {
     let macroName;
-    const winner = this.modalData.calculations.winner == this.modalData.defender.token? "defender" : "attacker";
+    const winner =
+      this.modalData.calculations.winner == this.modalData.defender.token
+        ? 'defender'
+        : 'attacker';
     let args = {
-        attacker: this.attackerToken,
-        defender: this.defenderToken,
-        winner,
-        defenseType: this.modalData.defender.result.values.type,
-        totalAttack: this.modalData.attacker.result.values.total,
-        appliedDamage,
-        bloodColor: 'red',
-        missedAttack: false,
-        isVisibleAttack: true,
-        resistanceRoll,
-        spellGrade: this.modalData.attacker.result.values.spellGrade,
-        hasPsychicFatigue: false
+      attacker: this.attackerToken,
+      defender: this.defenderToken,
+      winner,
+      defenseType: this.modalData.defender.result.values.type,
+      totalAttack: this.modalData.attacker.result.values.total,
+      appliedDamage,
+      bloodColor: 'red', // agregar valor de color de sangre al actor
+      missedAttack: false,
+      isVisibleAttack: true,
+      resistanceRoll,
+      spellGrade: this.modalData.attacker.result.values.spellGrade,
+      hasPsychicFatigue: false
     };
 
-    if (args.totalAttack < 80) {missedAttack = true} //cambiar valor fijo 80 por variable en ABFSettings
+    if (args.totalAttack < 80) {
+      args.missedAttack = true;
+    } //cambiar valor fijo 80 por variable en ABFSettings
 
     if (this.modalData.attacker.result?.type === 'combat') {
-        const {name} = this.modalData.attacker.result.weapon
-        macroName = `Atk ${name}`;
-        const {projectile} = this.modalData.attacker.result.values
-        if (projectile) {
-            args = {...args, projectile: projectile};
-            if (projectile.type == 'shot') {macroName = 'Atk Projectil Flecha'}
+      const { name } = this.modalData.attacker.result.weapon;
+      macroName = `Atk ${name}`;
+      const { projectile } = this.modalData.attacker.result.values;
+      if (projectile) {
+        args = { ...args, projectile: projectile };
+        if (projectile.type == 'shot') {
+          macroName = 'Atk Projectil Flecha';
         }
+      }
+    } else if (this.modalData.attacker.result?.type === 'mystic') {
+      macroName = this.modalData.attacker.result.values.spellName;
+    } else if (this.modalData.attacker.result?.type === 'psychic') {
+      macroName = this.modalData.attacker.result.values.powerName;
+      args.hasPsychicFatigue = this.modalData.attacker.result.values.fatigueCheck;
     }
-    else if (this.modalData.attacker.result?.type === 'mystic'){
-        macroName = this.modalData.attacker.result.values.spellName;
-    }
-    else if (this.modalData.attacker.result?.type === 'psychic'){
-        macroName = this.modalData.attacker.result.values.powerName;
-        args.hasPsychicFatigue = this.modalData.attacker.result.values.fatigueCheck;
-    };
 
-    if (this.modalData.attacker.result.values.visible !== undefined && 
-        !this.modalData.attacker.result.values.visible){
-        args.isVisibleAttack = false
-    };
-    
-    if (this.modalData.attacker.result?.values.macro !== undefined &&
-        this.modalData.attacker.result?.values.macro !== '') {
-        macroName = this.modalData.attacker.result?.values.macro
-    };
+    if (
+      this.modalData.attacker.result.values.visible !== undefined &&
+      !this.modalData.attacker.result.values.visible
+    ) {
+      args.isVisibleAttack = false;
+    }
+
+    if (
+      this.modalData.attacker.result?.values.macro !== undefined &&
+      this.modalData.attacker.result?.values.macro !== ''
+    ) {
+      macroName = this.modalData.attacker.result?.values.macro;
+    }
 
     const macro = game.macros.getName(macroName);
     if (macro) {
-        macro.execute(args)
-      } else {
-        console.error(`Macro '${macroName}' not found.`);
+      macro.execute(args);
+    } else {
+      console.debug(`Macro '${macroName}' not found.`);
     }
   }
 }
