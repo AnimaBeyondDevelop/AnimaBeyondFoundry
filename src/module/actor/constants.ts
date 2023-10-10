@@ -726,13 +726,6 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       }
     },
-    defensesCounter: {
-      accumulated: 0,
-      value: true
-    },
-    shieldSupernatural: {
-      value: 0
-    },
     wearArmor: {
       value: 0
     },
@@ -918,7 +911,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     spellMaintenances: [],
     selectedSpells: [],
     summons: [],
-    metamagics: []
+    metamagics: [],
+    preparedSpells: [],
+    mysticShields: []
   },
 
   domine: {
@@ -1094,6 +1089,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0
       }
     },
-    innatePsychicPowers: []
+    innatePsychicPowers: [],
+    psychicShields: []
   }
 };

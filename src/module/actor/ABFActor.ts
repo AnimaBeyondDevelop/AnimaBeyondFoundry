@@ -9,6 +9,7 @@ import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
 import { Log } from '../../utils/Log';
 import { migrateItem } from '../items/migrations/migrateItem';
+import { executeArgsMacro } from '../utils/functions/executeArgsMacro';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -52,73 +53,122 @@ export class ABFActor extends Actor {
       }
     });
   }
-  applyDamageShieldSupernatural(damage: number, dobleDamage: boolean) {
-    const newShieldPoints = dobleDamage? this.system.combat.shieldSupernatural.value - damage * 2 : this.system.combat.shieldSupernatural.value - damage;
-    if (newShieldPoints < 0) {
-        const newLifePoints = this.system.characteristics.secondaries.lifePoints.value + newShieldPoints;    
-        this.update({
-            system: {
-                characteristics: {
-                    secondaries: { lifePoints: { value: newLifePoints } }
-                },
-                combat: {
-                    shieldSupernatural: { value: 0 }
-                }
-            }
-        });
-    }
-    else {
-        this.update({
-            system: {
-                combat: {
-                    shieldSupernatural: { value: newShieldPoints }
-                }
-            }
-        });
+
+  async newSupernaturalShield(newShield: any, type: string) {
+    const itemType = type == 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
+    const supernaturalShieldData = {
+      name: newShield.name,
+      type: itemType,
+      system: newShield.system
+    };
+
+    await this.createItem(supernaturalShieldData);
+
+    let supShields = this.system[type][`${type}Shields`];
+    let shieldId = supShields[supShields.length - 1]._id;
+    let args = {
+      thisActor: this,
+      newShield: true,
+      shieldId
+    };
+    executeArgsMacro(newShield.name, args);
+  }
+
+  applyDamageShieldSupernatural(
+    supShield: any,
+    damage: number,
+    dobleDamage: boolean,
+    type: string
+  ) {
+    const shieldValue = supShield.system.shieldPoints.value;
+    let shieldId: any;
+    if (supShield.id) {
+      shieldId = supShield.id;
+    } else {
+      let supShields = this.system[type][`${type}Shields`];
+      shieldId = supShields[supShields.length - 1]._id;
+      if (shieldId == undefined) {
+        return ui.notifications.warn('Escudo Sobrenatural no encontrado');
       }
+    }
+    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
+    if (newShieldPoints > 0) {
+      const updates = [{ _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }];
+      Item.updateDocuments(updates, { parent: this });
+    } else {
+      Item.deleteDocuments([shieldId], { parent: this });
+      if (newShieldPoints < 0) {
+        this.applyDamage(Math.abs(newShieldPoints));
+      }
+      let args = {
+        thisActor: this,
+        newShield: false,
+        shieldId
+      };
+      executeArgsMacro(supShield.name, args);
+    }
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
-    const newDefensesCounter =
-    this.system.combat.defensesCounter.accumulated + 1;
+    const defensesCounter: any = this.getFlag('world', `${this._id}.defensesCounter`) || {
+      value: true,
+      accumulated: 0
+    };
+    const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
       this.update({
-        system: {
-          combat: {
-            defensesCounter: { accumulated: newDefensesCounter, value: true }
+        flags: {
+          world: {
+            [`${this._id}.defensesCounter`]: {
+              accumulated: newDefensesCounter,
+              value: true
+            }
           }
         }
       });
-    }
-    else {
+    } else {
       this.update({
-        system: {
-          combat: {
-            defensesCounter: { value: false }
+        flags: {
+          world: {
+            [`${this._id}.defensesCounter`]: { value: false }
           }
         }
       });
     }
   }
 
-  resetDefensesCounter(keepAccumulating: boolean) {
-    if (keepAccumulating) {
-      this.update({
-        system: {
-          combat: {
-            defensesCounter: { value: true }
-          }
-        }
-      });
-    };
-
+  resetDefensesCounter() {
     this.update({
-      system: {
-        combat: {
-           defensesCounter: { accumulated: 0 }
+      flags: {
+        world: {
+          [`${this._id}.defensesCounter`]: { accumulated: 0 }
         }
       }
     });
+  }
+
+  consumeAccumulatedZeon(zeonCost: number) {
+    const newAccumulateZeon = this.system.mystic.zeon.accumulated.value - zeonCost;
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: { value: newAccumulateZeon } }
+        }
+      }
+    });
+  }
+
+  deletePreparedSpell(spellName: string, spellGrade: string) {
+    let preparedSpell = this.system.mystic.preparedSpells.find(
+      (ps: any) =>
+        ps.name == spellName &&
+        ps.system.grade.value == spellGrade &&
+        ps.system.prepared.value == true
+    )._id;
+    if (preparedSpell !== undefined) {
+      this.deleteEmbeddedDocuments('Item', [preparedSpell]);
+    }
   }
 
   applyDamage(damage: number) {
@@ -273,6 +323,14 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.SELECTED_SPELL);
   }
 
+  public getPreparedSpells() {
+    return this.getItemsOf(ABFItems.PREPARED_SPELL);
+  }
+
+  public getMysticShields() {
+    return this.getItemsOf(ABFItems.MYSTIC_SHIELD);
+  }
+
   public getKnownMetamagics() {
     return this.getItemsOf(ABFItems.METAMAGIC);
   }
@@ -327,6 +385,10 @@ export class ABFActor extends Actor {
 
   public getInnatePsychicPowers() {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
+  }
+
+  public getPsychicShields() {
+    return this.getItemsOf(ABFItems.PSYCHIC_SHIELD);
   }
 
   public getPsychicPowers() {

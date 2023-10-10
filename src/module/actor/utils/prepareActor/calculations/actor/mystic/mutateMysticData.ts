@@ -1,8 +1,9 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { SpellMaintenanceDataSource } from '../../../../../../types/Items';
+import { SpellMaintenanceDataSource, PreparedSpellDataSource } from '../../../../../../types/Items';
 
 export const mutateMysticData = (data: ABFActorDataSourceData) => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
+  const projectionMod = data.general.modifiers.projectionMod.value;
 
   const { mystic } = data;
 
@@ -10,14 +11,14 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
 
   mystic.act.alternative.final.value = Math.max(mystic.act.alternative.base.value + Math.min(allActionsPenalty / 2, 0), 0);
 
-  mystic.magicProjection.final.value = Math.max(mystic.magicProjection.base.value + allActionsPenalty, 0);
+  mystic.magicProjection.final.value = Math.max(mystic.magicProjection.base.value + allActionsPenalty + projectionMod, 0);
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.offensive.base.value + allActionsPenalty,
+    mystic.magicProjection.imbalance.offensive.base.value + allActionsPenalty + projectionMod,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.defensive.base.value + allActionsPenalty,
+    mystic.magicProjection.imbalance.defensive.base.value + allActionsPenalty + projectionMod,
     0
   );
 
@@ -32,4 +33,13 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   mystic.summoning.banish.final.value = mystic.summoning.banish.base.value + Math.min(allActionsPenalty, 0);
   mystic.summoning.bind.final.value = mystic.summoning.bind.base.value + Math.min(allActionsPenalty, 0);
   mystic.summoning.control.final.value = mystic.summoning.control.base.value + Math.min(allActionsPenalty, 0);
+
+  if (mystic.preparedSpells.length !== 0) {
+    for (let preparedSpell of mystic.preparedSpells) {
+      let prepared = preparedSpell.system.prepared.value;
+      if (prepared) {
+        preparedSpell.system.zeonAcc.value = 0;
+      }
+    }
+  };
 };

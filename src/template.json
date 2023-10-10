@@ -162,8 +162,6 @@
         "attack": { "base": { "value": 0 }, "final": { "value": 0 } },
         "block": { "base": { "value": 0 }, "final": { "value": 0 } },
         "dodge": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "defensesCounter": { "accumulated": 0, "value": true },
-        "shieldSupernatural": { "value": 0 },
         "wearArmor": { "value": 0 },
         "totalArmor": {
           "at": {
@@ -226,7 +224,9 @@
         "spellMaintenances": [],
         "selectedSpells": [],
         "summons": [],
-        "metamagics": []
+        "metamagics": [],
+        "preparedSpells": [],
+        "mysticShields": []
       },
       "domine": {
         "kiSkills": [],
@@ -278,7 +278,8 @@
         "psychicDisciplines": [],
         "mentalPatterns": [],
         "innatePsychicPower": { "amount": { "value": 0 } },
-        "innatePsychicPowers": []
+        "innatePsychicPowers": [],
+        "psychicShields": []
       }
     }
   },
@@ -289,10 +290,13 @@
       "armor",
       "disadvantage",
       "spell",
+      "preparedSpell",
+      "mysticShield",
       "mentalPattern",
       "note",
       "psychicDiscipline",
       "psychicPower",
+      "psychicShield",
       "technique",
       "weapon"
     ],
@@ -325,6 +329,7 @@
       "via": { "value": "" },
       "spellType": { "value": "" },
       "actionType": { "value": "" },
+      "combatType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
       "critic": { "value": "-" },
       "visible": { "value": false },
@@ -376,6 +381,7 @@
         "440": { "value": "" }
       },
       "actionType": { "value": "active" },
+      "combatType": { "value": "attack" },
       "discipline": { "value": "matrial" },
       "critic": { "value": "-" },
       "macro": { "value": "" },

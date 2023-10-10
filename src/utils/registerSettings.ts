@@ -3,7 +3,8 @@ export enum ABFSettingsKeys {
   ROUND_DAMAGE_IN_MULTIPLES_OF_5 = 'ROUND_DAMAGE_IN_MULTIPLES_OF_5',
   SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT = 'SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT',
   USE_DAMAGE_TABLE = 'USE_DAMAGE_TABLE',
-  DEVELOP_MODE = 'DEVELOP_MODE'
+  DEVELOP_MODE = 'DEVELOP_MODE',
+  AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE'
 }
 
 export const registerSettings = () => {
@@ -39,6 +40,15 @@ export const registerSettings = () => {
   typedGame.settings.register('animabf', ABFSettingsKeys.USE_DAMAGE_TABLE, {
     name: 'anima.ui.systemSettings.useCombatTable.title',
     hint: 'anima.ui.systemSettings.useCombatTable.hint.title',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE, {
+    name: 'anima.ui.systemSettings.useDistanceAutomation.title',
+    hint: 'anima.ui.systemSettings.useDistanceAutomation.hint.title',
     scope: 'world',
     config: true,
     default: false,

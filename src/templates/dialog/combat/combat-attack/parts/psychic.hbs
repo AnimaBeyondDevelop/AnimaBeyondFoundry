@@ -31,7 +31,7 @@
   disabled=this.attackSent
   inputName='attacker.psychic.powerUsed'
 }}
-  {{#each_when this.attacker.actor.system.psychic.psychicPowers "system" "actionType" "value" "attack"}}
+  {{#each_when this.attacker.actor.system.psychic.psychicPowers "system" "combatType" "value" "attack"}}
     <option {{#if (is "eq" this._id ../this.attacker.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
@@ -46,11 +46,25 @@
 
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize "macros.combat.dialog.damage.title")
+  title=(localize "macros.combat.dialog.psychic.damage.title")
   disabled=this.attackSent
   inputName="attacker.psychic.damage"
   inputValue=this.attacker.psychic.damage
 }}
+
+{{#if (is 'eq' this.attacker.psychic.distance.enable false)}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.distance.title')
+      inputType="checkbox"
+      inputName="attacker.psychic.distance.check"
+      inputValue=(is 'eq' this.attacker.psychic.distance.check true)
+    }}
+  </div>
+</div>
+{{/if}}
 
 {{#if this.attackSent}}
   <div class='psychic-attack-sent'>

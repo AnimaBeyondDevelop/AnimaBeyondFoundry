@@ -5,7 +5,10 @@ import ABFItem from '../items/ABFItem';
 import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
+import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
+import { INITIAL_MYSTIC_SHIELD_DATA } from './mystic/MysticShieldItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
+import { INITIAL_PSYCHIC_SHIELD_DATA } from './psychic/PsychicShieldItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
 
 /**
@@ -318,27 +321,23 @@ export type SelectedSpellDataSource = ABFItemBaseDataSource<SelectedSpellItemDat
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 export type SelectedSpellItemConfig = ABFItemConfig<SelectedSpellItemData>;
 
-export type SpellGrade = {
-  name: { value: SpellGradeNames };
-  intRequired: { value: number };
-  zeon: { value: number };
-  maintenanceCost: { value: number };
-  description: { value: string };
-};
-export type SpellItemData = {
-  description: { value: string };
-  level: { value: number };
-  via: { value: string };
-  spellType: { value: string };
-  actionType: { value: string };
-  hasDailyMaintenance: { value: boolean };
-  grades: {
-    base: SpellGrade;
-    intermediate: SpellGrade;
-    advanced: SpellGrade;
-    arcane: SpellGrade;
+export type PreparedSpellItemData = {
+  system: {
+    grade: { value: string };
+    zeonAcc: { value: number, max: number };
+    prepared: { value: boolean };
   };
 };
+export type PreparedSpellDataSource = ABFItemBaseDataSource<PreparedSpellItemData>;
+export type PreparedSpellChanges = ItemChanges<PreparedSpellItemData>;
+export type PreparedSpellItemConfig = ABFItemConfig<PreparedSpellItemData>;
+
+export type MysticShieldItemData = typeof INITIAL_MYSTIC_SHIELD_DATA;
+export type MysticShieldDataSource = ABFItemBaseDataSource<MysticShieldItemData>;
+export type MysticShieldChanges = ItemChanges<MysticShieldItemData>;
+export type MysticShieldItemConfig = ABFItemConfig<MysticShieldItemData>;
+
+export type SpellItemData = typeof INITIAL_MYSTIC_SPELL_DATA;
 export type SpellDataSource = ABFItemBaseDataSource<SpellItemData>;
 export type SpellChanges = ItemChanges<SpellItemData>;
 export type SpellItemConfig = ABFItemConfig<SpellItemData>;
@@ -382,6 +381,11 @@ export type PsychicDisciplineItemData = Record<string, never>;
 export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;
+
+export type PsychicShieldItemData = typeof INITIAL_PSYCHIC_SHIELD_DATA;
+export type PsychicShieldDataSource = ABFItemBaseDataSource<PsychicShieldItemData>;
+export type PsychicShieldChanges = ItemChanges<PsychicShieldItemData>;
+export type PsychicShieldItemConfig = ABFItemConfig<PsychicShieldItemData>;
 
 export type PsychicPowerItemData = typeof INITIAL_PSYCHIC_POWER_DATA;
 export type PsychicPowerDataSource = ABFItemBaseDataSource<PsychicPowerItemData>;

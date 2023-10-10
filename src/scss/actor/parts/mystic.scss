@@ -242,6 +242,54 @@
     }
     // Selected Spells
 
+    // Prepared Spells
+    .prepared-spells {
+      .prepared-spell-row:first-child {
+        margin-top: 0;
+      }
+
+      .prepared-spell-row {
+        margin-top: 0.75rem;
+
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-column-gap: 0.1rem;
+
+        .name .input-container {
+          width: 100%;
+        }
+        .grade {
+          margin-top: 0;
+          width: 100%;
+        }
+      }
+    }
+    // Prepared Spells
+
+    // Mystic Shields
+    .mystic-shields {
+      .mystic-shield-row:first-child {
+        margin-top: 0;
+      }
+
+      .mystic-shield-row {
+        margin-top: 0.75rem;
+
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-column-gap: 0.1rem;
+
+        .name .input-container {
+          width: 100%;
+        }
+        .grade {
+          margin-top: 0;
+          width: 100%;
+        }
+      }
+    }
+    // Mystic Shields
+
     // Summons
     .summons {
       .summon-row:first-child {
@@ -328,7 +376,11 @@
                 height: 1.5rem;
               }
             }
-
+            .combat-type {
+              .input {
+                height: 1.5rem;
+              }
+            }
             .via .input-container {
               width: 8rem;
             }
