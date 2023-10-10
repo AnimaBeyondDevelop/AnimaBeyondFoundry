@@ -63,8 +63,9 @@ export class ABFActor extends Actor {
       }
      
     this.createItem(supernaturalShieldData)
+    setTimeout(() => {
     let supShields = this.system[type][`${type}Shields`]
-    setTimeout(() => {let shieldId = supShields[supShields.length - 1]._id
+    let shieldId = supShields[supShields.length - 1]._id
     let args = {
       thisActor: this,
       newShield: true,
