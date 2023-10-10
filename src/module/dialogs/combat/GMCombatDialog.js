@@ -379,15 +379,17 @@ export class GMCombatDialog extends FormApplication {
         defender: this.defenderToken,
         winner,
         defenseType: this.modalData.defender.result.values.type,
-        totalAttack: this.modalData.attacker.result.values.total, // totalAtk
+        totalAttack: this.modalData.attacker.result.values.total,
         appliedDamage,
-        bloodColor: 'red', // blood
-        missedAttack: false, // missvalue calcular booleano y agrego Setting al numero
-        isVisibleAttack: true, // invisible
+        bloodColor: 'red',
+        missedAttack: false,
+        isVisibleAttack: true,
         resistanceRoll,
         spellGrade: this.modalData.attacker.result.values.spellGrade,
-        hasPsychicFatigue: false // fatigueCheck
+        hasPsychicFatigue: false
     };
+
+    if (args.totalAttack < 80) {missedAttack = true} //cambiar valor fijo 80 por variable en ABFSettings
 
     if (this.modalData.attacker.result?.type === 'combat') {
         const {name} = this.modalData.attacker.result.weapon
@@ -403,12 +405,12 @@ export class GMCombatDialog extends FormApplication {
     }
     else if (this.modalData.attacker.result?.type === 'psychic'){
         macroName = this.modalData.attacker.result.values.powerName;
-        args.fatigueCheck = this.modalData.attacker.result.values.fatigueCheck;
+        args.hasPsychicFatigue = this.modalData.attacker.result.values.fatigueCheck;
     };
 
     if (this.modalData.attacker.result.values.visible !== undefined && 
         !this.modalData.attacker.result.values.visible){
-        args.invisible = true
+        args.isVisibleAttack = false
     };
     
     if (this.modalData.attacker.result?.values.macro !== undefined &&
