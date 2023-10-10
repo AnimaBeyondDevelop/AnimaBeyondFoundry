@@ -107,23 +107,23 @@ export class GMCombatDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('.cancel-button').click(() => {
+    html.find('.cancel-button').click( async () => {
       
       this.mysticCastEvaluateIfAble();
-      this.newSupernaturalShieldIfBeAble();
-      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},2000);
+      await this.newSupernaturalShieldIfBeAble();
+      this.applyDamageShieldSupernaturalIfBeAble()
       this.accumulateDefensesIfAble();
-      setTimeout(() => {this.executeMacro(false);},2000);
+      this.executeMacro(false);
       this.close();
     });
 
-    html.find('.make-counter').click(() => {
+    html.find('.make-counter').click( async () => {
       this.mysticCastEvaluateIfAble();
-      this.newSupernaturalShieldIfBeAble();
-      setTimeout(() => {this.applyDamageShieldSupernaturalIfBeAble();},2000);
+      await this.newSupernaturalShieldIfBeAble();
+      this.applyDamageShieldSupernaturalIfBeAble()
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
-      setTimeout(() => {this.executeMacro(false);},2000);
+      this.executeMacro(false);
 
       if (this.modalData.calculations?.canCounter) {
         this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
@@ -140,7 +140,7 @@ export class GMCombatDialog extends FormApplication {
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
       this.accumulateDefensesIfAble();
-      setTimeout(() => {this.executeMacro(true);},2000);
+      this.executeMacro(true);
       this.close();
     });
     html.find('.roll-resistance').click(() => {
@@ -353,10 +353,10 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  newSupernaturalShieldIfBeAble() {
+  async newSupernaturalShieldIfBeAble() {
     const {supShield} = this.modalData.defender.result?.values;
     if ((this.modalData.defender.result?.type === 'mystic' || this.modalData.defender.result?.type === 'psychic') && supShield.create) {     
-      this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
+     await this.defenderActor.newSupernaturalShield(supShield, this.modalData.defender.result.type);
     }
   }
 
@@ -371,22 +371,22 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeMacro(damage, resistanceRoll) {
+  executeMacro(appliedDamage, resistanceRoll) {
     let macroName;
-    const defenderIsWinner = this.modalData.calculations.winner == this.modalData.defender.token
+    const winner = this.modalData.calculations.winner == this.modalData.defender.token? "defender" : "attacker";
     let args = {
         attacker: this.attackerToken,
         defender: this.defenderToken,
-        defenderIsWinner,
-        dodge: false,
-        totalAtk: this.modalData.attacker.result.values.total,
-        damage,
-        blood: 'red',
-        missvalue: 80,
-        invisible: false,
+        winner,
+        defenseType: this.modalData.defender.result.values.type,
+        totalAttack: this.modalData.attacker.result.values.total, // totalAtk
+        appliedDamage,
+        bloodColor: 'red', // blood
+        missedAttack: false, // missvalue calcular booleano y agrego Setting al numero
+        isVisibleAttack: true, // invisible
         resistanceRoll,
         spellGrade: this.modalData.attacker.result.values.spellGrade,
-        fatigueCheck: false
+        hasPsychicFatigue: false // fatigueCheck
     };
 
     if (this.modalData.attacker.result?.type === 'combat') {
@@ -404,13 +404,6 @@ export class GMCombatDialog extends FormApplication {
     else if (this.modalData.attacker.result?.type === 'psychic'){
         macroName = this.modalData.attacker.result.values.powerName;
         args.fatigueCheck = this.modalData.attacker.result.values.fatigueCheck;
-    };
-
-    if (this.modalData.defender.result?.type === 'combat') {
-        const {type} = this.modalData.defender.result.values
-        if (type == 'dodge') {
-            args.dodge = true
-        }
     };
 
     if (this.modalData.attacker.result.values.visible !== undefined && 
