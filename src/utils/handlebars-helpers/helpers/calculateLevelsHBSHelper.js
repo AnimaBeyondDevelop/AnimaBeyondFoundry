@@ -1,6 +1,6 @@
 export const calculateLevelsHBSHelper = {
   name: 'calculateLevels',
-  fn: levels => {
+  fn: (levels) => {
     if (levels) {
       return levels.reduce((accum, current) => accum + current.system.level, 0);
     }

@@ -1,6 +1,6 @@
 export const calculateLanguagesHBSHelper = {
   name: 'calculateLanguages',
-  fn: inteligence => {
+  fn: (inteligence) => {
     if (inteligence === 6) {
       return 2;
     }
