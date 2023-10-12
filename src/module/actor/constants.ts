@@ -900,33 +900,77 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     totalArmor: {
       at: {
         cut: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         },
         impact: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         },
         thrust: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         },
         heat: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         },
         electricity: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         },
         cold: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         },
         energy: {
-          value: 0
+            special: {
+                value: 0
+            },
+            final: {
+                value: 0
+            }
         }
-      }
+    }
     },
     combatSpecialSkills: [],
     combatTables: [],
     ammo: [],
     weapons: [],
-    armors: []
+    armors: [],
+    extraArmor: {
+      value: 0
+    },
+    extraReducedArmor: {
+      value: 0
+    },
+    incomingDamageReduction: {
+      value: 0
+    }
   },
 
   mystic: {

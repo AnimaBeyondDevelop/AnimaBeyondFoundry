@@ -159,20 +159,23 @@
         "wearArmor": { "value": 0 },
         "totalArmor": {
           "at": {
-            "cut": { "value": 0 },
-            "impact": { "value": 0 },
-            "thrust": { "value": 0 },
-            "heat": { "value": 0 },
-            "electricity": { "value": 0 },
-            "cold": { "value": 0 },
-            "energy": { "value": 0 }
+            "cut": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "impact": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "thrust": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "heat": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "electricity": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "cold": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "energy": { "special": { "value": 0 }, "final": { "value": 0 } }
           }
         },
         "combatSpecialSkills": [],
         "combatTables": [],
         "ammo": [],
         "weapons": [],
-        "armors": []
+        "armors": [],
+        "extraArmor": { "value": 0 },
+        "extraReducedArmor": { "value": 0 },
+        "incomingDamageReduction": { "value": 0 }
       },
       "mystic": {
         "act": {
@@ -310,7 +313,8 @@
       "movementRestriction":  { "base": { "value": 0 }, "final": { "value": 0 } },
       "naturalPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
       "perceptionPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } }
+      "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } },
+      "isInmodifiable": { "value": false }
     },
     "spell": {
       "level": { "value": 0 },
@@ -400,7 +404,11 @@
       "reload": { "base": { "value": 0 }, "final": { "value": 0 } },
       "sizeProportion": { "value": "" },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
+      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } },
+      "extraReducedArmor": { "value": 0 },
+      "ignoreArmor": { "value": false },
+      "damageAttribute": { "value": "strength" },
+      "baseDamageCalculation": { "value": "default" }
     }
   }
 }

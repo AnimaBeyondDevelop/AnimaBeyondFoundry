@@ -48,7 +48,8 @@ export const INITIAL_ARMOR_DATA = {
   type: { value: ArmorType.SOFT },
   localization: { value: ArmorLocation.BREASTPLATE },
   quality: { value: 0 },
-  equipped: { value: false }
+  equipped: { value: false },
+  isInmodifiable: { value: false }
 };
 
 /** @type {import("../Items").ArmorItemConfig} */

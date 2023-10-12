@@ -64,5 +64,26 @@
       inputName="system.general.modifiers.extraDamage.value"
       inputValue=system.general.modifiers.extraDamage.value
     }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="extra-armor"
+      title=(localize "anima.ui.combat.baseValues.extraArmor.title")
+      inputName="system.combat.extraArmor.value"
+      inputValue=system.combat.extraArmor.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="extra-reduced-armor"
+      title=(localize "anima.ui.combat.baseValues.extraReducedArmor.title")
+      inputName="system.combat.extraReducedArmor.value"
+      inputValue=system.combat.extraReducedArmor.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="incoming-damage-reduction"
+      title=(localize "anima.ui.combat.baseValues.incomingDamageReduction.title")
+      inputName="system.combat.incomingDamageReduction.value"
+      inputValue=system.combat.incomingDamageReduction.value
+    }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

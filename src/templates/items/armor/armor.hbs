@@ -119,6 +119,14 @@
         inputValue=system.isEnchanted.value
       }}
       {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="is-inmodifiable"
+        title=(localize "anima.ui.combat.armors.isInmodifiable.title")
+        inputType="checkbox"
+        inputName="system.isInmodifiable.value"
+        inputValue=system.isInmodifiable.value
+      }}
+      {{>
       'systems/animabf/templates/common/domain/armor/select-armor-type.hbs'
         class="type"
         title=(localize "anima.ui.combat.armors.type.title")

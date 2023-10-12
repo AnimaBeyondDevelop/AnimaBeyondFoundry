@@ -41,5 +41,12 @@ export const mutateTotalArmor = (data: ABFActorDataSourceData) => {
     totalArmor.at.thrust.value = calculateTA(equippedArmors.map(armor => armor.system.thrust.final.value));
   }
 
-  data.combat.totalArmor = totalArmor;
+  let extraAt= data.combat.extraArmor.value;
+    data.combat.totalArmor.at.cold.final.value = data.combat.totalArmor.at.cold.special.value + totalArmor.at.cold.value + extraAt;
+    data.combat.totalArmor.at.cut.final.value = data.combat.totalArmor.at.cut.special.value + totalArmor.at.cut.value + extraAt;
+    data.combat.totalArmor.at.electricity.final.value = data.combat.totalArmor.at.electricity.special.value + totalArmor.at.electricity.value + extraAt;
+    data.combat.totalArmor.at.energy.final.value = data.combat.totalArmor.at.energy.special.value + totalArmor.at.energy.value + extraAt;
+    data.combat.totalArmor.at.heat.final.value = data.combat.totalArmor.at.heat.special.value + totalArmor.at.heat.value + extraAt;
+    data.combat.totalArmor.at.impact.final.value = data.combat.totalArmor.at.impact.special.value + totalArmor.at.impact.value + extraAt;
+    data.combat.totalArmor.at.thrust.final.value = data.combat.totalArmor.at.thrust.special.value + totalArmor.at.thrust.value + extraAt;
 };
