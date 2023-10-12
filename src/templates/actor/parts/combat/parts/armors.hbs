@@ -62,14 +62,25 @@
               inputName=(concat "system.dynamic.armors." armor._id ".system.presence.final.value")
               inputValue=armor.system.presence.final.value
             }}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="final-natural-penalty"
-              title=(localize "anima.ui.combat.armors.naturalPenalty.title")
-              disabled=true
-              inputName=(concat "system.dynamic.armors." armor._id ".system.naturalPenalty.final.value")
-              inputValue=armor.system.naturalPenalty.final.value
-            }}
+            {{#if (is 'eq' armor.system.localization.value 'head')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="final-natural-penalty"
+                title=(localize "anima.ui.combat.armors.perceptionPenalty.title")
+                disabled=true
+                inputName=(concat "system.dynamic.armors." armor._id ".system.perceptionPenalty.final.value")
+                inputValue=armor.system.perceptionPenalty.final.value
+              }}
+            {{else}}
+              {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="final-natural-penalty"
+                  title=(localize "anima.ui.combat.armors.naturalPenalty.title")
+                  disabled=true
+                  inputName=(concat "system.dynamic.armors." armor._id ".system.naturalPenalty.final.value")
+                  inputValue=armor.system.naturalPenalty.final.value
+                }}
+            {{/if}} 
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='armor-footer'>

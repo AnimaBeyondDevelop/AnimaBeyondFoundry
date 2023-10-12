@@ -43,6 +43,7 @@ export const INITIAL_ARMOR_DATA = {
   wearArmorRequirement: derivedFieldInitialData,
   movementRestriction: derivedFieldInitialData,
   naturalPenalty: derivedFieldInitialData,
+  perceptionPenalty: derivedFieldInitialData,
   isEnchanted: { value: false },
   type: { value: ArmorType.SOFT },
   localization: { value: ArmorLocation.BREASTPLATE },

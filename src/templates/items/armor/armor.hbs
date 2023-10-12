@@ -93,13 +93,23 @@
         inputName="system.movementRestriction.base.value"
         inputValue=system.movementRestriction.base.value
       }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="base-natural-penalty"
-        title=(localize "anima.ui.combat.armors.naturalPenalty.base.title")
-        inputName="system.naturalPenalty.base.value"
-        inputValue=system.naturalPenalty.base.value
-      }}
+      {{#if (is 'eq' system.localization.value 'head')}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="base-natural-penalty"
+          title=(localize "anima.ui.combat.armors.perceptionPenalty.base.title")
+          inputName="system.perceptionPenalty.base.value"
+          inputValue=system.perceptionPenalty.base.value
+        }}
+      {{else}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="base-natural-penalty"
+          title=(localize "anima.ui.combat.armors.naturalPenalty.base.title")
+          inputName="system.naturalPenalty.base.value"
+          inputValue=system.naturalPenalty.base.value
+        }}
+      {{/if}} 
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="is-enchanted"

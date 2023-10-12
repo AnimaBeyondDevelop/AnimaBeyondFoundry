@@ -1,14 +1,8 @@
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-import { calculateNaturalPenaltyWithoutWearArmor } from '../../natural-penalty/calculations/calculateWearArmorNaturalPenalty';
 
-export const calculateSecondarySwim = (data: ABFActorDataSourceData): number => {
-  const naturalPenalty = -calculateNaturalPenaltyWithoutWearArmor(data);
-
-  return (
+export const calculateSecondarySwim = (data: ABFActorDataSourceData): number => 
     data.secondaries.athletics.swim.base.value +
     data.general.modifiers.allActions.final.value +
-    data.general.modifiers.physicalActions.value +
-    naturalPenalty +
-    data.general.modifiers.naturalPenalty.byWearArmorRequirement.value
-  );
-};
+    data.general.modifiers.physicalActions.final.value +
+    data.general.modifiers.naturalPenalty.final.value -
+    data.general.modifiers.naturalPenalty.reduction.value;
