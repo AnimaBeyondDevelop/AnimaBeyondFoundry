@@ -386,4 +386,106 @@
       }
     }
   }
+
+  .mystic-invocations-tab{
+    .invocations {
+      & > .group-body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .invocation-row {
+        width: calc(50% - 1rem);
+        height: 100%;
+
+        border-radius: $border-radius;
+        box-shadow: $card-box-shadow;
+
+        margin: 0.5rem;
+
+        .input {
+          height: 1.25rem;
+        }
+
+        .invocation-header {
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+
+          width: 100%;
+
+          .first-row {
+            width: 100%;
+
+            .name .input-container {
+              width: 100%;
+            }
+          }
+
+          .second-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .level, .via {
+              .input {
+                height: 1.5rem;
+              }
+            }
+
+            .via .input-container {
+              width: 8rem;
+            }
+          }
+        }
+
+        .base-grade {
+          margin-bottom: 0.5rem;
+
+          .grade-name {
+            align-self: flex-end;
+          }
+        }
+
+        .base-grade,
+        .arcane-grade,
+        .intermediate-grade,
+        .advanced-grade {
+          .grade-name {
+            min-width: 5rem;
+          }
+        }
+
+        .grade-row {
+          display: flex;
+          justify-content: start;
+
+          .int-required {
+            .input-container {
+              width: 3.5rem;
+            }
+          }
+
+          .description {
+            width: 100%;
+
+            .input-container {
+              width: 100%;
+            }
+          }
+        }
+
+        .invocation-footer {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+
+          .input {
+            height: 1.5rem;
+          }
+        }
+      }
+    }
+  }
 }

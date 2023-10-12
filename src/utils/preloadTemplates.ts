@@ -103,6 +103,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/summoning.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spheres.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spells/spells.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/invocations/invocations.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs',

@@ -396,6 +396,11 @@
       "sizeProportion": { "value": "" },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
+    },
+    "invocation":{
+      "name":{ "value": "Invocation" },
+      "description":{ "value": "dexcription" },
+      "img":{ "value": "" }
     }
   }
 }
