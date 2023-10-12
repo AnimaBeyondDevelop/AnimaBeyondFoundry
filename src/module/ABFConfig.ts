@@ -3,7 +3,11 @@ import {
   NoneWeaponCritic,
   WeaponShotType,
   WeaponCritic,
-  WeaponSizeProportion, WeaponSize
+  WeaponSizeProportion, 
+  WeaponSize, 
+  Attribute, 
+  NoneAttribute, 
+  BaseDamageCalculationType 
 } from './types/combat/WeaponItemConfig';
 import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig.js';
 
@@ -19,9 +23,27 @@ const criticTypes = {
   [WeaponCritic.ENERGY]: 'anima.ui.combat.armors.at.energy.title'
 };
 
+const attributes = { 
+  [Attribute.AGI]: 'anima.ui.characteristics.agility', //por alguna razón no tiene .title
+  [Attribute.CON]: 'anima.ui.characteristics.constitution',
+  [Attribute.DEX]: 'anima.ui.characteristics.dexterity',
+  [Attribute.STR]: 'anima.ui.characteristics.strength',
+  [Attribute.INT]: 'anima.ui.characteristics.intelligence',
+  [Attribute.PER]: 'anima.ui.characteristics.perception',
+  [Attribute.POW]: 'anima.ui.characteristics.power',
+  [Attribute.WP]: 'anima.ui.characteristics.willPower'
+};
+
 ABFConfig.ui = {};
 
 ABFConfig.iterables = {
+  general: {
+      attributes,
+      attributesWithNone: {
+          [NoneAttribute.NONE]: 'anima.ui.characteristics.none',
+          ...attributes
+      }
+  },
   combat: {
     weapon: {
       sizes: {
@@ -47,6 +69,11 @@ ABFConfig.iterables = {
       shotTypes: {
         [WeaponShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
         [WeaponShotType.THROW]: 'anima.ui.combat.weapon.shotType.throw.title'
+      },
+      baseDamageCalculationTypes: {
+          [BaseDamageCalculationType.DEFAULT]: 'anima.ui.combat.weapon.baseDamageCalculationType.default.title',
+          [BaseDamageCalculationType.PRESENCE]: 'anima.ui.combat.weapon.baseDamageCalculationType.presence.title',
+          [BaseDamageCalculationType.DOUBLE_PRESENCE]: 'anima.ui.combat.weapon.baseDamageCalculationType.doublePresence.title',
       }
     }
   },

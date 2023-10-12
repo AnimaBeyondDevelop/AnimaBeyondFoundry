@@ -29,11 +29,13 @@ export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
 
     weapon.system.initiative = {
       base: weapon.system.initiative.base,
+      special: weapon.system.initiative.special,
       final: { value: calculateWeaponInitiative(weapon) }
     };
-
+  
     weapon.system.damage = {
       base: weapon.system.damage.base,
+      special: weapon.system.damage.special,
       final: { value: calculateWeaponDamage(weapon, data) }
     };
 

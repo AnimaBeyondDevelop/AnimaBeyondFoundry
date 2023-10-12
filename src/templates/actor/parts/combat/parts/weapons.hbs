@@ -173,19 +173,24 @@
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="damage"
-                disabled=true
                 title=(localize "anima.ui.combat.weapons.damage.final.title")
-                inputName=(concat "system.dynamic.weapons." weapon._id ".system.damage.final.value")
-                inputValue=weapon.system.damage.final.value
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.damage.special.value")
+                inputValue=weapon.system.damage.special.value
+                hasSecondaryInput=true
+                disableSecondaryInput=true
+                secondaryInputValue=weapon.system.damage.final.value
               }}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="initiative"
                 rollable=true
-                disabled=true
                 title=(localize "anima.ui.combat.weapons.initiative.final.title")
-                inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.final.value")
-                inputValue=weapon.system.initiative.final.value
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.special.value")
+                inputValue=weapon.system.initiative.special.value
+                rollSecondaryInput=true
+                hasSecondaryInput=true
+                disableSecondaryInput=true
+                secondaryInputValue=weapon.system.initiative.final.value
               }}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}

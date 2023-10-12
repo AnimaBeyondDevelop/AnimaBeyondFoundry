@@ -84,19 +84,47 @@
         inputName="system.breaking.base.value"
         inputValue=system.breaking.base.value
       }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="damage"
-        title=(localize "anima.ui.combat.weapons.damage.base.title")
-        inputName="system.damage.base.value"
-        inputValue=system.damage.base.value
-      }}
+      {{#if (is 'eq' system.baseDamageCalculation.value 'default')}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="damage"
+          title=(localize "anima.ui.combat.weapons.damage.base.title")
+          inputName="system.damage.base.value"
+          inputValue=system.damage.base.value
+        }}
+      {{/if}}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
         title=(localize "anima.ui.combat.weapons.initiative.base.title")
         inputName="system.initiative.base.value"
         inputValue=system.initiative.base.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="ignore-armor"
+        title=(localize "anima.ui.combat.weapons.ignoreArmor.title")
+        inputType="checkbox"
+        inputName="system.ignoreArmor.value"
+        inputValue=system.ignoreArmor.value
+      }}
+      {{#if (is 'eq' system.ignoreArmor.value false)}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="extra-reduced-armor"
+          title=(localize "anima.ui.combat.weapons.extraReducedArmor.title")
+          inputName="system.extraReducedArmor.value"
+          inputValue=system.extraReducedArmor.value
+        }}
+      {{/if}}
+      {{>
+      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="used-attribute"
+        isVertical=true
+        choices=config.iterables.general.attributesWithNone
+        title=(localize "anima.ui.combat.weapon.attribute.title")
+        inputName="system.damageAttribute.value"
+        inputValue=system.damageAttribute.value
       }}
       {{>
       'systems/animabf/templates/common/ui/custom-select-choices.hbs'
@@ -197,6 +225,15 @@
           }}
         {{/if}}
       {{/if}}
+      {{>
+      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="damage-calculation"
+        isVertical=true
+        choices=config.iterables.combat.weapon.baseDamageCalculationTypes
+        title=(localize "anima.ui.combat.weapon.damageCalculation.title")
+        inputName="system.baseDamageCalculation.value"
+        inputValue=system.baseDamageCalculation.value
+      }}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="special"
