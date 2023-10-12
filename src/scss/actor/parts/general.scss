@@ -177,6 +177,9 @@
       .group-body {
         .base-language {
           align-items: center;
+          .input-container {
+            width: 10rem;
+          }
         }
 
         .language-row {
