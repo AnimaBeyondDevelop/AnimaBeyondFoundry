@@ -26,7 +26,6 @@ export const newRollABF = async (abilityPath, abilityValue, actor) => {
 };
 
 export const newPsychicRollABF = async (power, actor) => {
-  const token = actor.getActiveTokens()[0];
   const { inhuman, zen } = actor.system.general.settings;
   const { i18n } = game;
   const mod = await openModDialog();
@@ -49,7 +48,7 @@ export const newPsychicRollABF = async (power, actor) => {
     ) ?? 0;
   const newPotentialBase = psychicPotentialEffect(
     psychicPotential.base,
-    imbalance,
+    0,
     inhuman.value,
     zen.value
   );
@@ -98,6 +97,7 @@ export const newPsychicRollABF = async (power, actor) => {
       speaker: ChatMessage.getSpeaker({ actor }),
       flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
     });
+    return supShield;
   }
-  return supShield;
+  return;
 };

@@ -3,6 +3,8 @@ export enum ABFItems {
   SPELL = 'spell',
   SPELL_MAINTENANCE = 'spellMaintenance',
   SELECTED_SPELL = 'selectedSpell',
+  ACT_VIA = 'actVia',
+  INNATE_MAGIC_VIA = 'innateMagicVia',
   PREPARED_SPELL = 'preparedSpell',
   MYSTIC_SHIELD = 'mysticShield',
   METAMAGIC = 'metamagic',

@@ -63,7 +63,7 @@ export class ABFActor extends Actor {
     };
 
     await this.createItem(supernaturalShieldData);
-
+    setTimeout(() => {
     let supShields = this.system[type][`${type}Shields`];
     let shieldId = supShields[supShields.length - 1]._id;
     let args = {
@@ -71,7 +71,7 @@ export class ABFActor extends Actor {
       newShield: true,
       shieldId
     };
-    executeArgsMacro(newShield.name, args);
+    executeArgsMacro(newShield.name, args);}, 100);
   }
 
   applyDamageShieldSupernatural(
@@ -80,6 +80,7 @@ export class ABFActor extends Actor {
     dobleDamage: boolean,
     type: string
   ) {
+    setTimeout(() => {
     const shieldValue = supShield.system.shieldPoints.value;
     let shieldId: any;
     if (supShield.id) {
@@ -106,7 +107,7 @@ export class ABFActor extends Actor {
         shieldId
       };
       executeArgsMacro(supShield.name, args);
-    }
+    }}, 100);
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
@@ -321,6 +322,14 @@ export class ABFActor extends Actor {
 
   public getSelectedSpells() {
     return this.getItemsOf(ABFItems.SELECTED_SPELL);
+  }
+
+  public getActVias() {
+    return this.getItemsOf(ABFItems.ACT_VIA);
+  }
+
+  public getInnateMagicVias() {
+    return this.getItemsOf(ABFItems.INNATE_MAGIC_VIA);
   }
 
   public getPreparedSpells() {

@@ -252,13 +252,13 @@
         margin-top: 0.75rem;
 
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 2fr 1fr 1.25rem;
         grid-column-gap: 0.1rem;
 
         .name .input-container {
           width: 100%;
         }
-        .grade {
+        .prepared {
           margin-top: 0;
           width: 100%;
         }
@@ -280,10 +280,6 @@
         grid-column-gap: 0.1rem;
 
         .name .input-container {
-          width: 100%;
-        }
-        .grade {
-          margin-top: 0;
           width: 100%;
         }
       }

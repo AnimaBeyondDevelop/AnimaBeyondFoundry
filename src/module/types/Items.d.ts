@@ -5,6 +5,8 @@ import ABFItem from '../items/ABFItem';
 import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
+import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
+import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
 import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
 import { INITIAL_MYSTIC_SHIELD_DATA } from './mystic/MysticShieldItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
@@ -320,6 +322,16 @@ export type SelectedSpellItemData = {
 export type SelectedSpellDataSource = ABFItemBaseDataSource<SelectedSpellItemData>;
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 export type SelectedSpellItemConfig = ABFItemConfig<SelectedSpellItemData>;
+
+export type ActViaItemData = typeof INITIAL_ACT_VIA_DATA;
+export type ActViaDataSource = ABFItemBaseDataSource<ActViaItemData>;
+export type ActViaChanges = ItemChanges<ActViaItemData>;
+export type ActViaItemConfig = ABFItemConfig<ActViaItemData>;
+
+export type InnateMagicViaItemData = typeof INITIAL_INNATE_MAGIC_VIA_DATA;
+export type InnateMagicViaDataSource = ABFItemBaseDataSource<InnateMagicViaItemData>;
+export type InnateMagicViaChanges = ItemChanges<InnateMagicViaItemData>;
+export type InnateMagicViaItemConfig = ABFItemConfig<InnateMagicViaItemData>;
 
 export type PreparedSpellItemData = {
   system: {

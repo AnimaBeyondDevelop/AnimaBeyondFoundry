@@ -1,16 +1,18 @@
 import { ABFItems } from '../../items/ABFItems';
-import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { SpellGrades } from './SpellItemConfig';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
+import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
 
 /**
- * Initial data for a new psychic power. Used to infer the type of the data inside `power.system`
+ * Initial data for a new mystic shield. Used to infer the type of the data inside `mysticShield.system`
  * @readonly
  */
 export const INITIAL_MYSTIC_SHIELD_DATA = {
-    grade: { value: SpellGrades.BASE },
-    damageBarrier: { value: 0 },
-    shieldPoints: { value: 0 }
+  grade: { value: SpellGrades.BASE },
+  damageBarrier: { value: 0 },
+  shieldPoints: { value: 0 }
 };
 
 /** @type {import("../Items").MysticShieldItemConfig} */
@@ -23,17 +25,37 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
     containerSelector: '#mystic-shields-context-menu-container',
     rowSelector: '.mystic-shield-row'
   },
-  onCreate: async (actor) => {
-    const { i18n } = game;
-
-    const name = await openSimpleInputDialog({
-      content: i18n.localize('dialogs.items.mysticShield.content')
-    });
+  onCreate: async actor => {
+    const results = await openComplexInputDialog(actor, 'newMysticShield');
+    const spellID = results['new.mysticShield.id'];
+    const spellGrade = results['new.mysticShield.grade'];
+    const spell = actor.system.mystic.spells.find(i => i._id == spellID);
+    if (!spell) {
+      return;
+    }
+    const name = spell.name;
+    const shieldPoints = shieldValueCheck(
+      spell.system.grades[spellGrade].description.value
+    )[0];
 
     await actor.createItem({
       name,
       type: ABFItems.MYSTIC_SHIELD,
-      system: INITIAL_MYSTIC_SHIELD_DATA
+      system: {
+        grade: { value: spellGrade },
+        damageBarrier: { value: 0 },
+        shieldPoints: { value: shieldPoints }
+      }
     });
+    setTimeout(() => {
+      let supShields = actor.system.mystic.mysticShields;
+      let shieldId = supShields[supShields.length - 1]._id;
+      let args = {
+        thisActor: actor,
+        newShield: true,
+        shieldId
+      };
+      executeArgsMacro(name, args);
+    }, 100);
   }
 });

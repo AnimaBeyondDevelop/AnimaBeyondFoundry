@@ -183,12 +183,15 @@
       "mystic": {
         "act": {
           "main": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "alternative": { "base": { "value": 0 }, "final": { "value": 0 } }
+          "via": []
         },
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
         "zeonMaintained": { "value": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
+        "innateMagic": { 
+          "main": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "via": []
+        },
         "magicProjection": {
           "base": { "value": 0 },
           "final": { "value": 0 },

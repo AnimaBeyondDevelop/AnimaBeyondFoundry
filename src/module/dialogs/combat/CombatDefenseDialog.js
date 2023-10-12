@@ -2,7 +2,6 @@ import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { energyCheck } from '../../combat/utils/energyCheck.js';
-import { innateCheck } from '../../combat/utils/innateCheck.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
@@ -189,12 +188,14 @@ export class CombatDefenseDialog extends FormApplication {
         this.defenderActor.system.mystic.preparedSpells.find(
           ps => ps.name == spell.name && ps.system.grade.value == mystic.spellGrade
         )?.system.prepared.value ?? false;
-      let actType = 'main';
-      mystic.spellInnate = innateCheck(
-        this.defenderActor.system.mystic.act[actType].final.value,
-        this.defenderActor.system.general.advantages,
-        spell?.system.grades.base.zeon.value
-      );
+      const spellVia = spell?.system.via.value;
+      const innateMagic = this.defenderActor.system.mystic.innateMagic;
+      const innateVia = innateMagic.via.find(i => i.name == spellVia);
+      const innateMagicValue =
+        innateMagic.via.length !== 0 && innateVia
+          ? innateVia.system.final.value
+          : innateMagic.main.final.value;
+      mystic.spellInnate = innateMagicValue >= spell?.system.grades.base.zeon.value;
     }
 
     if (mysticShields.length > 0) {
@@ -689,7 +690,7 @@ export class CombatDefenseDialog extends FormApplication {
           ) ?? 0;
         const newPotentialBase = psychicPotentialEffect(
           psychicPotential.base,
-          imbalance,
+          0,
           inhuman,
           zen
         );
@@ -827,12 +828,15 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.system.mystic.preparedSpells.find(
         ps => ps.name == spell.name && ps.system.grade.value == mystic.spellGrade
       )?.system.prepared.value ?? false;
-    let actType = 'main';
-    mystic.spellInnate = innateCheck(
-      this.defenderActor.system.mystic.act[actType].final.value,
-      this.defenderActor.system.general.advantages,
-      spell?.system.grades[mystic.spellGrade].zeon.value
-    );
+    const spellVia = spell?.system.via.value;
+    const innateMagic = this.defenderActor.system.mystic.innateMagic;
+    const innateVia = innateMagic.via.find(i => i.name == spellVia);
+    const innateMagicValue =
+      innateMagic.via.length !== 0 && innateVia
+        ? innateVia.system.final.value
+        : innateMagic.main.final.value;
+    mystic.spellInnate =
+      innateMagicValue >= spell?.system.grades[mystic.spellGrade].zeon.value;
 
     const { mysticShields } = this.defenderActor.system.mystic;
     if (!mystic.shieldUsed) {

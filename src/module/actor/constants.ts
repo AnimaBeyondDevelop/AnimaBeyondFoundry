@@ -771,14 +771,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         }
       },
-      alternative: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        }
-      }
+      via: []
     },
     zeon: {
       accumulated: 0,
@@ -798,11 +791,14 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     },
     innateMagic: {
       main: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
-      alternative: {
-        value: 0
-      }
+      via: []
     },
     magicProjection: {
       base: {

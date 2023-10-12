@@ -16,10 +16,10 @@
           class="name"
           title=(localize "anima.ui.mystic.preparedSpells.name.title")
           hideTitle=(is "gt" @index 0)
-          disabled=(is 'eq' this.system.prepared.value true)
+          disabled=true
           inputType="text"
           inputName=(concat "system.dynamic.preparedSpells." this._id ".name")
-          inputValue=this.name
+          inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
@@ -30,25 +30,15 @@
           inputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.value")
           inputValue=this.system.zeonAcc.value
           hasSecondaryInput=true
-          disableSecondaryInput=(is 'eq' this.system.prepared.value true)
+          disableSecondaryInput=true
           secondaryInputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.max")
           secondaryInputValue=this.system.zeonAcc.max
         }}
-      </div>
-      <div data-item-id='{{this._id}}' class='prepared-spell-row'>
         {{>
-        "systems/animabf/templates/common/ui/custom-select-choices.hbs"
-          class="grade"
-          choices=xRoot.config.iterables.mystic.spellGrades
-          disabled=(is 'eq' this.system.prepared.value true)
-          inputName=(concat "system.dynamic.preparedSpells." this._id ".system.grade.value")
-          inputValue=this.system.grade.value
-        }}
-        {{>
-        'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
           class="prepared"
           title=(localize "anima.ui.mystic.preparedSpells.prepared.title")
-          hideTitle=true
+          hideTitle=(is "gt" @index 0)
           inputType="checkbox"
           inputName=(concat "system.dynamic.preparedSpells." this._id ".system.prepared.value")
           inputValue=(is 'eq' this.system.prepared.value true)
