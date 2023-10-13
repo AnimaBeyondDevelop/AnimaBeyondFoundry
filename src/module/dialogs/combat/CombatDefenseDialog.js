@@ -679,11 +679,7 @@ export class CombatDefenseDialog extends FormApplication {
         );
         psychicPotentialRoll.roll();
         newPsychicPotential = psychicPotentialRoll.total;
-        let imbalance =
-          psychicImbalanceCheck(
-            power?.system.discipline.value,
-            this.defenderActor.system.general.advantages
-          ) ?? 0;
+        let imbalance = psychicImbalanceCheck(this.defenderActor, power) ?? 0;
         const newPotentialBase = psychicPotentialEffect(
           psychicPotential.base,
           0,

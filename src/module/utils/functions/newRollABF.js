@@ -41,11 +41,7 @@ export const newPsychicRollABF = async (power, actor) => {
     actor.system
   );
   psychicPotentialRoll.roll();
-  let imbalance =
-    psychicImbalanceCheck(
-      power?.system.discipline.value,
-      actor.system.general.advantages
-    ) ?? 0;
+  let imbalance = psychicImbalanceCheck(actor, power) ?? 0;
   const newPotentialBase = psychicPotentialEffect(
     psychicPotential.base,
     0,
