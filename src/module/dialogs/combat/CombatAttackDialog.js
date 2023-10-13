@@ -3,6 +3,7 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { resistanceCheck } from '../../combat/utils/resistanceCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
+import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
@@ -191,18 +192,13 @@ export class CombatAttackDialog extends FormApplication {
       mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
       mystic.zeonAccumulated =
         this.attackerActor.system.mystic.zeon.accumulated.value ?? 0;
-      mystic.spellPrepared =
-        this.attackerActor.system.mystic.preparedSpells.find(
-          ps => ps.name == spell.name && ps.system.grade.value == mystic.spellGrade
-        )?.system.prepared.value ?? false;
-      const spellVia = spell?.system.via.value;
-      const innateMagic = this.attackerActor.system.mystic.innateMagic;
-      const innateVia = innateMagic.via.find(i => i.name == spellVia);
-      const innateMagicValue =
-        innateMagic.via.length !== 0 && innateVia
-          ? innateVia.system.final.value
-          : innateMagic.main.final.value;
-      mystic.spellInnate = innateMagicValue >= spell?.system.grades.base.zeon.value;
+      const mysticSpellCast = mysticSpellCastEvaluate(
+        this.attackerActor,
+        spell,
+        mystic.spellGrade
+      );
+      mystic.spellPrepared = mysticSpellCast.spellPrepared;
+      mystic.spellInnate = mysticSpellCast.spellInnate;
     }
 
     if (weapons.length > 0) {
@@ -726,19 +722,13 @@ export class CombatAttackDialog extends FormApplication {
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
-    mystic.spellPrepared =
-      this.attackerActor.system.mystic.preparedSpells.find(
-        ps => ps.name == spell.name && ps.system.grade.value == mystic.spellGrade
-      )?.system.prepared.value ?? false;
-    const spellVia = spell?.system.via.value;
-    const innateMagic = this.attackerActor.system.mystic.innateMagic;
-    const innateVia = innateMagic.via.find(i => i.name == spellVia);
-    const innateMagicValue =
-      innateMagic.via.length !== 0 && innateVia
-        ? innateVia.system.final.value
-        : innateMagic.main.final.value;
-    mystic.spellInnate =
-      innateMagicValue >= spell?.system.grades[mystic.spellGrade].zeon.value;
+    const mysticSpellCast = mysticSpellCastEvaluate(
+      this.attackerActor,
+      spell,
+      mystic.spellGrade
+    );
+    mystic.spellPrepared = mysticSpellCast.spellPrepared;
+    mystic.spellInnate = mysticSpellCast.spellInnate;
 
     const { weapons } = this.attackerActor.system.combat;
 

@@ -6,7 +6,7 @@ export const openComplexInputDialog = async (actor, dialogType) => {
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
       name: Templates.Dialog[dialogType],
-      context: {data: { actor } }
+      context: {data: { actor, mystic: {spellUsed: undefined, spellGrade: 'base', castInnate: false, castPrepared: false} } }
     },
     {
       name: Templates.Dialog.Icons.Accept

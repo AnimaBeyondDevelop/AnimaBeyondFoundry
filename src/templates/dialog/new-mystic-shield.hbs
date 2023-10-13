@@ -6,7 +6,7 @@
       inputName='new.mysticShield.id'
     }}
       {{#each_when data.actor.system.mystic.spells "system" "spellType" "value" "defense"}}
-        <option value='{{this._id}}'>{{this.name}}</option>
+        <option {{#if (is "eq" this._id ../data.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
       {{/each_when}}
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
@@ -14,11 +14,33 @@
       title=(localize 'dialogs.spellGrade.title')
       inputName='new.mysticShield.grade'
     }}
-      <option value='base'>{{localize 'dialogs.spellGrade.base.title'}}</option>
-      <option value='intermediate'>{{localize 'dialogs.spellGrade.intermediate.title'}}</option>
-      <option value='advanced'>{{localize 'dialogs.spellGrade.advanced.title'}}</option>
-      <option value='arcane'>{{localize 'dialogs.spellGrade.arcane.title'}}</option>
+      <option {{#if (is "eq" data.mystic.spellGrade 'base')}}selected{{/if}} value='base'>{{localize 'dialogs.spellGrade.base.title'}}</option>
+      <option {{#if (is "eq" data.mystic.spellGrade 'intermediate')}}selected{{/if}} value='intermediate'>{{localize 'dialogs.spellGrade.intermediate.title'}}</option>
+      <option {{#if (is "eq" data.mystic.spellGrade 'advanced')}}selected{{/if}} value='advanced'>{{localize 'dialogs.spellGrade.advanced.title'}}</option>
+      <option {{#if (is "eq" data.mystic.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'dialogs.spellGrade.arcane.title'}}</option>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
     </div>
   </div>
+<div class='columns'>
+  <div>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.castInnate.title')
+    inputType="checkbox"
+    inputName="new.mysticShield.castInnate"
+    inputValue=(is 'eq' data.mystic.castInnate true)
+    }}
+  </div>
+</div>
+<div class='columns'>
+  <div>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.castPrepared.title')
+    inputType="checkbox"
+    inputName="new.mysticShield.castPrepared"
+    inputValue=(is 'eq' data.mystic.castPrepared true)
+    }}
+  </div>
+</div>
 </form>

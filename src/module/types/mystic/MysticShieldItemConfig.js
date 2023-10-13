@@ -2,8 +2,11 @@ import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { SpellGrades } from './SpellItemConfig';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
+import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
+import { mysticCast } from '../../utils/functions/mysticCast';
 
 /**
  * Initial data for a new mystic shield. Used to infer the type of the data inside `mysticShield.system`
@@ -29,11 +32,28 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
     const results = await openComplexInputDialog(actor, 'newMysticShield');
     const spellID = results['new.mysticShield.id'];
     const spellGrade = results['new.mysticShield.grade'];
+    const castInnate = results['new.mysticShield.castInnate'];
+    const castPrepared = results['new.mysticShield.castPrepared'];
     const spell = actor.system.mystic.spells.find(i => i._id == spellID);
     if (!spell) {
       return;
     }
+    const zeonAccumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
+    const zeonCost = spell?.system.grades[spellGrade].zeon.value;
+    const mysticSpellCast = mysticSpellCastEvaluate(actor, spell, spellGrade);
+    const evaluateCastMsj = evaluateCast(
+      mysticSpellCast.spellInnate,
+      castInnate,
+      mysticSpellCast.spellPrepared,
+      castPrepared,
+      zeonAccumulated,
+      zeonCost
+    );
+    if (evaluateCastMsj !== undefined) {
+      return evaluateCastMsj;
+    }
     const name = spell.name;
+    mysticCast(actor, castInnate, castPrepared, zeonCost, name, spellGrade);
     const shieldPoints = shieldValueCheck(
       spell.system.grades[spellGrade].description.value
     )[0];
