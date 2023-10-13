@@ -55,12 +55,7 @@
       .psychic-discipline-row {
         margin-top: 0.75rem;
 
-        .input {
-          border-radius: $border-radius;
-          background: $light-cream;
-          font-weight: bold;
-          padding: 0.25rem 0.5rem;
-
+        .name .input-container{
           width: 100%;
         }
       }

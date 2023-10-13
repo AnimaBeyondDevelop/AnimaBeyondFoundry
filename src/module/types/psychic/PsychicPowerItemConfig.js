@@ -33,7 +33,12 @@ export const PsychicPowerDisciplines = {
     PHYSICAL_INCREASE: 'physicalIncrease',
     ENERGY: 'energy',
     TELEMETRY: 'telemetry',
-    SENTIENT: 'sentient'
+    SENTIENT: 'sentient',
+    CAUSALITY: 'causality',
+    ELECTROMAGNETISM: 'electromagnetism',
+    TELEPORTATION: 'teleportation',
+    LIGHT: 'light',
+    HIPERSENSIBILIDAD : 'hipersensibilidad'
 };
 
 /**

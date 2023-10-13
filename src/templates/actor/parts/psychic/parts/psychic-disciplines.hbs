@@ -11,12 +11,27 @@
   }}
     {{#each system.psychic.psychicDisciplines as |psychicDiscipline|}}
       <div data-item-id='{{psychicDiscipline._id}}' class='psychic-discipline-row'>
-        <input
-          name='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
-          type='text'
-          class='input'
-          value='{{psychicDiscipline.name}}'
-        />
+        {{#if psychicDiscipline.system.imbalance.value}}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="name"
+          hideTitle=true
+          disabled=true
+          inputType="text"
+          inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
+          inputValue=(concat  (localize (concat 'anima.ui.psychic.psychicPowers.discipline.' psychicDiscipline.name '.title')) " - " (localize 'anima.ui.psychic.psychicDiscipline.name.imbalance'))
+        }}
+        {{else}}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="name"
+          hideTitle=true
+          disabled=true
+          inputType="text"
+          inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
+          inputValue=(localize (concat 'anima.ui.psychic.psychicPowers.discipline.' psychicDiscipline.name '.title'))
+        }}
+        {{/if}}
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

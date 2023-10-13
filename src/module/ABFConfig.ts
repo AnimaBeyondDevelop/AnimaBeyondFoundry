@@ -128,7 +128,12 @@ ABFConfig.iterables = {
         [PsychicPowerDisciplines.PHYSICAL_INCREASE]: 'anima.ui.psychic.psychicPowers.discipline.physicalIncrease.title',
         [PsychicPowerDisciplines.ENERGY]: 'anima.ui.psychic.psychicPowers.discipline.energy.title',
         [PsychicPowerDisciplines.TELEMETRY]: 'anima.ui.psychic.psychicPowers.discipline.telemetry.title',
-        [PsychicPowerDisciplines.SENTIENT]: 'anima.ui.psychic.psychicPowers.discipline.sentient.title'
+        [PsychicPowerDisciplines.SENTIENT]: 'anima.ui.psychic.psychicPowers.discipline.sentient.title',
+        [PsychicPowerDisciplines.CAUSALITY]: 'anima.ui.psychic.psychicPowers.discipline.causality.title',
+        [PsychicPowerDisciplines.ELECTROMAGNETISM]: 'anima.ui.psychic.psychicPowers.discipline.electromagnetism.title',
+        [PsychicPowerDisciplines.TELEPORTATION]: 'anima.ui.psychic.psychicPowers.discipline.teleportation.title',
+        [PsychicPowerDisciplines.LIGHT]: 'anima.ui.psychic.psychicPowers.discipline.light.title',
+        [PsychicPowerDisciplines.HIPERSENSIBILIDAD]: 'anima.ui.psychic.psychicPowers.discipline.hipersensibilidad.title'
     },
     criticTypes,
         criticTypesWithNone: {

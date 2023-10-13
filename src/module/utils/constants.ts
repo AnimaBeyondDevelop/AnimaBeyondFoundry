@@ -6,6 +6,7 @@ export const Templates = {
     newMysticShield: 'systems/animabf/templates/dialog/new-mystic-shield.hbs',
     newPsychicShield: 'systems/animabf/templates/dialog/new-psychic-shield.hbs',
     newActVia: 'systems/animabf/templates/dialog/new-act-via.hbs',
+    newPsychicDiscipline: 'systems/animabf/templates/dialog/new-psychic-discipline.hbs',
     Combat: {
       CombatAttackDialog: {
         main: 'systems/animabf/templates/dialog/combat/combat-attack/combat-attack-dialog.hbs',
