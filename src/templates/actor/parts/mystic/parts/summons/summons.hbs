@@ -1,0 +1,49 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="summons"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.summon.title")
+    addRowButtonData="add-summon"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="summons"
+  }}
+    {{#each system.mystic.summons as |summon|}}
+      <div data-item-id='{{summon._id}}' class='summon-row'>
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
+          class="summon"
+          contractible=true
+          contractibleItemId=summon._id
+        }}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+            <div class='summon-header'>
+              <div class='first-row'>
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  class="name"
+                  hideTitle=true
+                  inputType="text"
+                  inputName=(concat "system.dynamic.summons." summon._id ".name")
+                  inputValue=summon.name
+                }}
+              </div>
+            </div>
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+            class="summon"
+          }}
+            <div class='summon-image'>
+              <img src='{{summon.img}}' title='{{summon.name}}' />
+            </div>
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+          <div class='summon-footer'>
+
+          </div>
+          {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

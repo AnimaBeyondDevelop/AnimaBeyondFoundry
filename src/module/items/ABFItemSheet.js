@@ -29,6 +29,8 @@ export default class ABFItemSheet extends ItemSheet {
     switch (this.item.type) {
       case ABFItems.SPELL:
         return 700;
+      case ABFItems.SUMMON:
+        return 700;
       case ABFItems.ARMOR:
         return 1000;
       case ABFItems.WEAPON:
@@ -41,6 +43,8 @@ export default class ABFItemSheet extends ItemSheet {
   getHeightFromType() {
     switch (this.item.type) {
       case ABFItems.SPELL:
+        return 450;
+      case ABFItems.SUMMON:
         return 450;
       case ABFItems.WEAPON:
         return 300;

@@ -387,13 +387,13 @@
     }
   }
 
-  .mystic-invocations-tab{
-    .invocations {
+  .mystic-summons-tab{
+    .summons {
       & > .group-body {
         display: flex;
         flex-wrap: wrap;
       }
-      .invocation-row {
+      .summon-row {
         width: calc(50% - 1rem);
         height: 100%;
 
@@ -406,7 +406,7 @@
           height: 1.25rem;
         }
 
-        .invocation-header {
+        .summon-header {
           padding-right: 0.5rem;
           padding-left: 0.5rem;
 
@@ -471,9 +471,19 @@
               width: 100%;
             }
           }
-        }
+        }          
 
-        .invocation-footer {
+        // Summon image
+        .summon-image {
+          margin-bottom: 0.75rem;
+
+          img {
+            width: calc(30% - 1rem);
+          }
+        }
+        // Summon image
+
+        .summon-footer {
           width: 100%;
           display: flex;
           justify-content: space-between;

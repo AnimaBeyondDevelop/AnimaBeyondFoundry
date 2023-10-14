@@ -2,7 +2,7 @@
   <nav class="abf-tabs mystic-tabs tabs secondary-tab" data-group="secondary">
     <a class="item active" data-tab="mystic-main">{{localize "anima.ui.mystic.tabs.main"}}</a>
     <a class="item" data-tab="mystic-spells">{{localize "anima.ui.mystic.tabs.secondaries"}}</a>
-    <a class="item" data-tab="mystic-invocations">{{localize "anima.ui.mystic.tabs.invocations"}}</a>
+    <a class="item" data-tab="mystic-summons">{{localize "anima.ui.mystic.tabs.summons"}}</a>
   </nav>
   <section class='mystic-body'>
     <div class='tab' data-group="secondary" data-tab="mystic-main">
@@ -25,7 +25,6 @@
         <div class='second-column'>
           {{> "systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs"}}
           {{> "systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs"}}
-          {{> "systems/animabf/templates/actor/parts/mystic/parts/summons.hbs"}}
           {{> "systems/animabf/templates/actor/parts/mystic/parts/metamagics.hbs"}}
         </div>
       </div>
@@ -37,9 +36,9 @@
       </div>
     </div>
 
-    <div class='tab' data-group="secondary" data-tab="mystic-invocations">
-      <div class='mystic-spells-tab'>
-          {{> "systems/animabf/templates/actor/parts/mystic/parts/invocations/invocations.hbs"}}
+    <div class='tab' data-group="secondary" data-tab="mystic-summons">
+      <div class='mystic-summons-tab'>
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/summons/summons.hbs"}}
       </div>
     </div>
   </section>

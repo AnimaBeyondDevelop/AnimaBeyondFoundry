@@ -50,7 +50,6 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [SelectedSpellItemConfig.type]: SelectedSpellItemConfig,
   [SpecialSkillItemConfig.type]: SpecialSkillItemConfig,
   [SpellMaintenanceItemConfig.type]: SpellMaintenanceItemConfig,
-  [SummonItemConfig.type]: SummonItemConfig,
   [TitleItemConfig.type]: TitleItemConfig,
   [InventoryItemItemConfig.type]: InventoryItemItemConfig
 };
@@ -61,6 +60,7 @@ export const ITEM_CONFIGURATIONS = {
   [ArmorItemConfig.type]: ArmorItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
   [SpellItemConfig.type]: SpellItemConfig,
+  [SummonItemConfig.type]: SummonItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,
   [NoteItemConfig.type]: NoteItemConfig,
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,

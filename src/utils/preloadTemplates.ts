@@ -49,6 +49,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/items/ammo/ammo.hbs',
     'systems/animabf/templates/items/armor/armor.hbs',
     'systems/animabf/templates/items/spell/spell.hbs',
+    'systems/animabf/templates/items/summon/summon.hbs',
     'systems/animabf/templates/items/psychicPower/psychicPower.hbs',
 
     // Actor sheet parts
@@ -103,7 +104,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/summoning.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spheres.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spells/spells.hbs',
-    'systems/animabf/templates/actor/parts/mystic/parts/invocations/invocations.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/summons/summons.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs',

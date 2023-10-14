@@ -7,6 +7,7 @@ import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
+import { INITIAL_SUMMON_DATA } from './mystic/SummonItemConfig';
 
 /**
  * @template TData - Type of the data inside the item's system attribute.
@@ -213,6 +214,8 @@ export type AmmoDataSource = ABFItemBaseDataSource<AmmoItemData>;
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 export type AmmoItemConfig = ABFItemConfig<AmmoItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type ArmorItemData = {
   cut: DerivedField;
   impact: DerivedField;
@@ -236,6 +239,8 @@ export type ArmorDataSource = ABFItemBaseDataSource<ArmorItemData>;
 export type ArmorChanges = ItemChanges<ArmorItemData>;
 export type ArmorItemConfig = ABFItemConfig<ArmorItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type ContactItemData = {
   description: { value: string };
 };
@@ -243,16 +248,22 @@ export type ContactChanges = ItemChanges<ContactItemData>;
 export type ContactDataSource = ABFItemBaseDataSource<ContactItemData>;
 export type ContactItemConfig = ABFItemConfig<ContactItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type CombatSpecialSkillItemData = Record<string, never>;
 export type CombatSpecialSkillDataSource =
   ABFItemBaseDataSource<CombatSpecialSkillItemData>;
 export type CombatSpecialSkillChanges = ItemChanges<CombatSpecialSkillItemData>;
 export type CombatSpecialSkillItemConfig = ABFItemConfig<CombatSpecialSkillItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type CombatTableItemData = Record<string, never>;
 export type CombatTableDataSource = ABFItemBaseDataSource<CombatTableItemData>;
 export type CombatTableChanges = ItemChanges<CombatTableItemData>;
 export type CombatTableItemConfig = ABFItemConfig<CombatTableItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // export type OptionalWeaponCritic = WeaponCritic | NoneWeaponCritic;
 export type WeaponItemData = typeof INITIAL_WEAPON_DATA;
@@ -261,10 +272,14 @@ export type WeaponDataSource = ABFItemBaseDataSource<WeaponItemData>;
 export type WeaponChanges = ItemChanges<WeaponItemData>;
 export type WeaponItemConfig = ABFItemConfig<WeaponItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type ArsMagnusItemData = Record<string, never>;
 export type ArsMagnusDataSource = ABFItemBaseDataSource<ArsMagnusItemData>;
 export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 export type ArsMagnusItemConfig = ABFItemConfig<ArsMagnusItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type CreatureItemData = {
   fire: { value: unknown };
@@ -277,15 +292,21 @@ export type CreatureDataSource = ABFItemBaseDataSource<CreatureItemData>;
 export type CreatureChanges = ItemChanges<CreatureItemData>;
 export type CreatureItemConfig = ABFItemConfig<CreatureItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type KiSkillItemData = Record<string, never>;
 export type KiSkillDataSource = ABFItemBaseDataSource<KiSkillItemData>;
 export type KiSkillChanges = ItemChanges<KiSkillItemData>;
 export type KiSkillItemConfig = ABFItemConfig<KiSkillItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type TechniqueItemData = typeof INITIAL_TECHNIQUE_DATA;
 export type TechniqueDataSource = ABFItemBaseDataSource<TechniqueItemData>;
 export type TechniqueChanges = ItemChanges<TechniqueItemData>;
 export type TechniqueItemConfig = ABFItemConfig<TechniqueItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type MartialArtItemData = {
   grade: { value: string };
@@ -294,15 +315,21 @@ export type MartialArtDataSource = ABFItemBaseDataSource<MartialArtItemData>;
 export type MartialArtChanges = ItemChanges<MartialArtItemData>;
 export type MartialArtItemConfig = ABFItemConfig<MartialArtItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type NemesisSkillItemData = Record<string, never>;
 export type NemesisSkillDataSource = ABFItemBaseDataSource<NemesisSkillItemData>;
 export type NemesisSkillChanges = ItemChanges<NemesisSkillItemData>;
 export type NemesisSkillItemConfig = ABFItemConfig<NemesisSkillItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type SpecialSkillItemData = Record<string, never>;
 export type SpecialSkillDataSource = ABFItemBaseDataSource<SpecialSkillItemData>;
 export type SpecialSkillChanges = ItemChanges<SpecialSkillItemData>;
 export type SpecialSkillItemConfig = ABFItemConfig<SpecialSkillItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type MetamagicItemData = {
   grade: { value: number };
@@ -311,12 +338,16 @@ export type MetamagicDataSource = ABFItemBaseDataSource<MetamagicItemData>;
 export type MetamagicChanges = ItemChanges<MetamagicItemData>;
 export type MetamagicItemConfig = ABFItemConfig<MetamagicItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type SelectedSpellItemData = {
   cost: { value: number };
 };
 export type SelectedSpellDataSource = ABFItemBaseDataSource<SelectedSpellItemData>;
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 export type SelectedSpellItemConfig = ABFItemConfig<SelectedSpellItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type SpellGrade = {
   name: { value: SpellGradeNames };
@@ -343,6 +374,8 @@ export type SpellDataSource = ABFItemBaseDataSource<SpellItemData>;
 export type SpellChanges = ItemChanges<SpellItemData>;
 export type SpellItemConfig = ABFItemConfig<SpellItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type SpellMaintenanceItemData = {
   cost: { value: number };
 };
@@ -350,10 +383,14 @@ export type SpellMaintenanceDataSource = ABFItemBaseDataSource<SpellMaintenanceI
 export type SpellMaintenanceChanges = ItemChanges<SpellMaintenanceItemData>;
 export type SpellMaintenanceItemConfig = ABFItemConfig<SpellMaintenanceItemData>;
 
-export type SummonItemData = Record<string, never>;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export type SummonItemData = typeof INITIAL_SUMMON_DATA;
 export type SummonDataSource = ABFItemBaseDataSource<SummonItemData>;
 export type SummonChanges = ItemChanges<SummonItemData>;
 export type SummonItemConfig = ABFItemConfig<SummonItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type SecondarySpecialSkillItemData = {
   level: { value: number };
@@ -361,6 +398,8 @@ export type SecondarySpecialSkillItemData = {
 export type SecondarySpecialSkillDataSource = ABFItemBaseDataSource<SecondarySpecialSkillItemData>;
 export type SecondarySpecialSkillChanges = ItemChanges<SecondarySpecialSkillItemData>;
 export type SecondarySpecialSkillItemConfig = ABFItemConfig<SecondarySpecialSkillItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type InnatePsychicPowerItemData = {
   effect: { value: string };
@@ -370,6 +409,8 @@ export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<InnatePsychicPo
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerItemConfig = ABFItemConfig<InnatePsychicPowerItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type MentalPatternItemData = {
   bonus: { value: number };
   penalty: { value: number };
@@ -378,25 +419,35 @@ export type MentalPatternDataSource = ABFItemBaseDataSource<MentalPatternItemDat
 export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 export type MentalPatternItemConfig = ABFItemConfig<MentalPatternItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type PsychicDisciplineItemData = Record<string, never>;
 export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type PsychicPowerItemData = typeof INITIAL_PSYCHIC_POWER_DATA;
 export type PsychicPowerDataSource = ABFItemBaseDataSource<PsychicPowerItemData>;
 export type PsychicPowerChanges = ItemChanges<PsychicPowerItemData>;
 export type PsychicPowerItemConfig = ABFItemConfig<PsychicPowerItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type AdvantageItemData = Record<string, never>;
 export type AdvantageDataSource = ABFItemBaseDataSource<AdvantageItemData>;
 export type AdvantageChanges = ItemChanges<AdvantageItemData>;
 export type AdvantageItemConfig = ABFItemConfig<AdvantageItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type DisadvantageItemData = Record<string, never>;
 export type DisadvantageDataSource = ABFItemBaseDataSource<DisadvantageItemData>;
 export type DisadvantageChanges = ItemChanges<DisadvantageItemData>;
 export type DisadvantageItemConfig = ABFItemConfig<DisadvantageItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type ElanItemData = {
   level: { value: string };
@@ -404,6 +455,8 @@ export type ElanItemData = {
 export type ElanDataSource = ABFItemBaseDataSource<ElanItemData>;
 export type ElanChanges = ItemChanges<ElanItemData>;
 export type ElanItemConfig = ABFItemConfig<ElanItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type ElanPowerItemData = {
   level: { value: number };
@@ -416,6 +469,8 @@ export type ElanPowerItemConfig = ABFItemConfig<
   ElanPowerChanges
 >;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type InventoryItemItemData = {
   amount: { value: number };
   weight: { value: number };
@@ -424,10 +479,14 @@ export type InventoryItemDataSource = ABFItemBaseDataSource<InventoryItemItemDat
 export type InventoryItemChanges = ItemChanges<InventoryItemItemData>;
 export type InventoryItemConfig = ABFItemConfig<InventoryItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type LanguageItemData = Record<string, never>;
 export type LanguageDataSource = ABFItemBaseDataSource<LanguageItemData>;
 export type LanguageChanges = ItemChanges<LanguageItemData>;
 export type LanguageItemConfig = ABFItemConfig<LanguageItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type LevelItemData = {
   level: { value: number };
@@ -436,12 +495,18 @@ export type LevelDataSource = ABFItemBaseDataSource<LevelItemData>;
 export type LevelChanges = ItemChanges<LevelItemData>;
 export type LevelItemConfig = ABFItemConfig<LevelItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type NoteItemData = Record<string, never>;
 export type NoteDataSource = ABFItemBaseDataSource<NoteItemData>;
 export type NoteChanges = ItemChanges<NoteItemData>;
 export type NoteItemConfig = ABFItemConfig<NoteItemData>;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type TitleItemData = Record<string, never>;
 export type TitleDataSource = ABFItemBaseDataSource<TitleItemData>;
 export type TitleChanges = ItemChanges<TitleItemData>;
 export type TitleItemConfig = ABFItemConfig<TitleItemData>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
