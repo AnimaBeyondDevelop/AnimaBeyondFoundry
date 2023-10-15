@@ -3,7 +3,7 @@
 }}
   {{>
   "systems/animabf/templates/common/ui/group-header.hbs"
-    title=(localize "anima.ui.mystic.summon.title")
+    title=(localize "anima.ui.mystic.summons.title")
     addRowButtonData="add-summon"
   }}
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
@@ -16,9 +16,19 @@
           contractible=true
           contractibleItemId=summon._id
         }}
-          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{>
+          "systems/animabf/templates/common/ui/group-header.hbs"
+            title=summon.name
+            addRowButtonData="add-summon-power"
+          }}
+          {{!-- {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='summon-header'>
               <div class='first-row'>
+                {{>
+                "systems/animabf/templates/common/ui/add-item-button.hbs"
+                  class="add-button"
+                  data="add-summon-power"
+                }}
                 {{>
                 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                   class="name"
@@ -29,18 +39,31 @@
                 }}
               </div>
             </div>
-          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}} --}}
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="summon"
           }}
-            <div class='summon-image'>
+            {{!-- <div class='summon-image'>
               <img src='{{summon.img}}' title='{{summon.name}}' />
-            </div>
+            </div> --}}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
-          <div class='summon-footer'>
-
-          </div>
+            <div class='summon-footer'>
+              {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                class="difficulty"
+                title=(localize "anima.ui.mystic.summon.difficulty.title")
+                inputName=(concat "system.dynamic.summons." summon._id ".system.difficulty.value")
+                inputValue=summon.system.difficulty.value
+              }}
+              {{>
+              'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+                class="cost"
+                title=(localize "anima.ui.mystic.summon.cost.title")
+                inputName=(concat "system.dynamic.summons." summon._id ".system.cost.value")
+                inputValue=summon.system.cost.value
+              }}
+            </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}
       </div>

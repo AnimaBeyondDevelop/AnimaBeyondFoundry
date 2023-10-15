@@ -399,7 +399,9 @@
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     },
     "summon":{
-      "description":{ "value": "description" }
+      "difficulty":{ "value": 0 },
+      "cost":{ "value": 0 },
+      "powers": []
     }
   }
 }

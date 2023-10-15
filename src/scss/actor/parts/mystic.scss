@@ -408,33 +408,10 @@
 
         .summon-header {
           padding-right: 0.5rem;
-          padding-left: 0.5rem;
 
           width: 100%;
 
-          .first-row {
-            width: 100%;
-
-            .name .input-container {
-              width: 100%;
-            }
-          }
-
-          .second-row {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-
-            .level, .via {
-              .input {
-                height: 1.5rem;
-              }
-            }
-
-            .via .input-container {
-              width: 8rem;
-            }
-          }
+          
         }
 
         .base-grade {

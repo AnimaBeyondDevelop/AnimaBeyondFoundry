@@ -8,7 +8,9 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @readonly
  */
 export const INITIAL_SUMMON_DATA = {
-  description: { value: "" },
+  cost: { value: 0 },
+  difficulty: { value: 0 },
+  powers: []
 };
 
 /** @type {import("../Items").SummonItemConfig} */

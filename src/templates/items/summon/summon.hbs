@@ -2,17 +2,21 @@
   {{#> "systems/animabf/templates/common/ui/group.hbs"
     class="summon-item-dialog"
   }}
-    {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
-      <div class='summon-header'>
-        {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-          class="name"
-          hideTitle=true
-          inputType="text"
-          inputName="name"
-          inputValue=item.name
-        }}
-      </div>
-    {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="summon"
+    }}
+      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+        <div class='summon-header'>
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="name"
+            hideTitle=true
+            inputType="text"
+            inputName="name"
+            inputValue=item.name
+          }}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}
 {{/"systems/animabf/templates/items/base/base-sheet.hbs"}}
