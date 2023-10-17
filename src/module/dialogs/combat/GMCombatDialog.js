@@ -196,12 +196,13 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-characteristic').click(async () => {
       const { i18n } = game;
+      const { specificAttack } = this.modalData.attacker.result.values;
       this.applyValuesIfBeAble();
       if (this.canApplyDamage) {
         this.defenderActor.applyDamage(this.modalData.calculations.damage);
       }
       const attackerCharacteristic =
-        this.modalData.attacker.result.values.specificAttack.characteristic;
+        specificAttack.characteristic;
       const defenderCharacteristic =
         this.modalData.defender.result.values.specificAttack.characteristic;
       const { difference, atResValue } = this.modalData.calculations;
@@ -266,6 +267,7 @@ export class GMCombatDialog extends FormApplication {
           roll: defenderCharacteristicRoll.total
         },
         result: Math.abs(attackerCharacteristicRoll.total - defenderCharacteristicRoll.total),
+        specificAttack: specificAttack.value,
         type: 'characteristic'
       };
 
@@ -284,7 +286,8 @@ export class GMCombatDialog extends FormApplication {
       this.mysticCastEvaluateIfAble();
       this.newSupernaturalShieldIfBeAble();
       this.accumulateDefensesIfAble();
-      this.executeMacro(this.modalData.attacker.result.values.specificAttack.causeDamage);
+      this.executeMacro(specificAttack.causeDamage,);
+      this.executeMacro(specificAttack.causeDamage, undefined, data);
       this.close();
     });
 
@@ -541,7 +544,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeMacro(appliedDamage, resistanceRoll) {
+  executeMacro(appliedDamage, resistanceRoll, specificAttackResult) {
     let macroName;
     const winner =
       this.modalData.calculations.winner == this.modalData.defender.token
@@ -559,7 +562,8 @@ export class GMCombatDialog extends FormApplication {
       isVisibleAttack: true,
       resistanceRoll,
       spellGrade: this.modalData.attacker.result.values.spellGrade,
-      hasPsychicFatigue: false
+      hasPsychicFatigue: false,
+      specificAttackResult
     };
 
     if (args.totalAttack < 80) {
@@ -595,6 +599,10 @@ export class GMCombatDialog extends FormApplication {
       this.modalData.attacker.result?.values.macro !== ''
     ) {
       macroName = this.modalData.attacker.result?.values.macro;
+    }
+
+    if(specificAttackResult !== undefined) {
+      macroName = "Specific Attack"
     }
 
     const macro = game.macros.getName(macroName);
