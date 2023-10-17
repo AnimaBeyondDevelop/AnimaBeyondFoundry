@@ -10,6 +10,7 @@ import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
+import { applyMigrations } from './module/migration/migrate';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -67,6 +68,8 @@ Hooks.once('ready', () => {
   registerCombatWebsocketRoutes();
 
   attachCustomMacroBar();
+
+  applyMigrations();
 });
 
 // Add any additional hooks if necessary
