@@ -591,15 +591,21 @@
               </button>
             {{/unless}}
           {{/if}}
-          {{#if this.attacker.result.values.checkResistance}}
+          {{#if this.ui.resistanceRoll}}
               <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
                       class='abf-button roll-resistance'>
                 {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
               </button>
           {{/if}}
+          {{#if this.ui.characteristicRoll}}
+              <button title='{{localize 'macros.combat.dialog.rollCharacteristicButtonTooltip.title'}}'
+                      class='abf-button roll-characteristic'>
+                {{localize 'macros.combat.dialog.rollCharacteristicButton.title'}}
+              </button>
+          {{/if}}
           {{#if
             (or (is 'gt' this.calculations.damage 0) (is 'gt' this.defender.result.values.fatigue 0) (is 'gt' this.attacker.result.values.fatigueUsed 0))}}
-            {{#unless this.attacker.result.values.checkResistance}}
+            {{#unless (or this.ui.resistanceRoll this.ui.characteristicRoll)}}
             <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
                     class='abf-button apply-values'>
               {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}

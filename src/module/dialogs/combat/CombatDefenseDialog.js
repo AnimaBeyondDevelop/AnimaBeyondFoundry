@@ -43,7 +43,8 @@ const getInitialData = (attacker, defender) => {
       visible: attacker.visible,
       projectile: attacker.projectile,
       damage: attacker.damage,
-      specialType: attacker.specialType
+      specialType: attacker.specialType,
+      specificAttack: attacker.specificAttack
     },
     defender: {
       token: defender,
@@ -52,6 +53,7 @@ const getInitialData = (attacker, defender) => {
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
       blindnessPen: 0,
       distance: attacker.distance,
+      specificAttack: { characteristic: undefined },
       zen: false,
       inhuman: false,
       inmaterial: false,
@@ -131,14 +133,18 @@ export class CombatDefenseDialog extends FormApplication {
     this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(
       defensesCounter.accumulated
     );
+    this.modalData.defender.specificAttack.characteristic = Math.max(
+      this.defenderActor.system.characteristics.primaries.strength.value,
+      this.defenderActor.system.characteristics.primaries.agility.value
+    );
     this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
     this.modalData.defender.inhuman =
       this.defenderActor.system.general.settings.inhuman.value;
     this.modalData.defender.inmaterial =
       this.defenderActor.system.general.settings.inmaterial.value;
     if (
-      this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
-      this.modalData.attacker.damage == 0
+      (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
+      this.modalData.attacker.damage == 0) || this.modalData.attacker.specificAttack.check
     ) {
       this.modalData.defender.combat.at.defense = true;
     }
@@ -239,8 +245,9 @@ export class CombatDefenseDialog extends FormApplication {
     }
 
     let at;
-
-    if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
+    if (!this.modalData.attacker.specificAttack.causeDamage) {
+      at = 0;
+    } else if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
       switch (this.modalData.attacker.critic) {
         case WeaponCritic.CUT:
           at = this.defenderActor.system.combat.totalArmor.at.cut.value;
@@ -331,7 +338,8 @@ export class CombatDefenseDialog extends FormApplication {
         },
         blindnessPen,
         distance,
-        inmaterial
+        inmaterial,
+        specificAttack
       } = this.modalData.defender;
       this.defenderActor.setFlag(
         'world',
@@ -405,12 +413,12 @@ export class CombatDefenseDialog extends FormApplication {
       const newModifier = combatModifier + modifier ?? 0;
       let atResValue = 0;
       if (at.defense) {
-        atResValue += at.final * 10 + 20 + 10;
+        atResValue += at.final * 10 + 20;
       }
 
       let formula = `1d100xa + ${newModifier} + ${fatigue ?? 0} * 15 - ${
         (multipleDefensesPenalty ?? 0) * -1
-      } + ${value + atResValue}`;
+      } + ${value}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -457,7 +465,8 @@ export class CombatDefenseDialog extends FormApplication {
           total: roll.total,
           unableToDefense,
           atResValue,
-          accumulateDefenses
+          accumulateDefenses,
+          specificAttack
         }
       });
 
@@ -498,7 +507,8 @@ export class CombatDefenseDialog extends FormApplication {
           newShield
         },
         combat: { at },
-        blindnessPen
+        blindnessPen,
+        specificAttack
       } = this.modalData.defender;
       const { spells, mysticShields } = this.defenderActor.system.mystic;
       let spell,
@@ -511,8 +521,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       const newModifier = blindnessPen + modifier ?? 0;
       const magicProjection =
-        this.defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value +
-        atResValue;
+        this.defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value;
       const baseMagicProjection =
         this.defenderActor.system.mystic.magicProjection.imbalance.defensive.base.value;
 
@@ -612,7 +621,8 @@ export class CombatDefenseDialog extends FormApplication {
           innate: spellInnate && castInnate,
           prepared: spellPrepared && castPrepared,
           zeonCost,
-          supShield
+          supShield,
+          specificAttack
         }
       });
 
@@ -626,6 +636,7 @@ export class CombatDefenseDialog extends FormApplication {
         psychic: { psychicPotential, powerUsed, modifier, shieldUsed, newShield },
         combat: { at },
         blindnessPen,
+        specificAttack,
         inhuman,
         zen
       } = this.modalData.defender;
@@ -643,7 +654,7 @@ export class CombatDefenseDialog extends FormApplication {
       const newModifier = blindnessPen + modifier ?? 0;
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
-          .value + atResValue;
+          .value;
       let formula = `1d100xa + ${psychicProjection} + ${newModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
@@ -769,7 +780,8 @@ export class CombatDefenseDialog extends FormApplication {
           dobleDamage: false,
           cantDamage: false,
           atResValue,
-          supShield
+          supShield,
+          specificAttack
         }
       });
 

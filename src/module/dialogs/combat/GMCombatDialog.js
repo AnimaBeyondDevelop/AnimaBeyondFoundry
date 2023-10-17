@@ -1,5 +1,6 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
+import { calculateCharacteristicImbalance } from '../../combat/utils/calculateCharacteristicImbalance';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
@@ -9,7 +10,9 @@ const getInitialData = (attacker, defender, options = {}) => {
 
   return {
     ui: {
-      isCounter: options.isCounter ?? false
+      isCounter: options.isCounter ?? false,
+      resistanceRoll: false,
+      characteristicRoll: false
     },
     attacker: {
       token: attacker,
@@ -140,14 +143,15 @@ export class GMCombatDialog extends FormApplication {
       this.executeMacro(true);
       this.close();
     });
-    html.find('.roll-resistance').click(() => {
+
+    html.find('.roll-resistance').click(async () => {
       this.applyValuesIfBeAble();
       const resType = this.modalData.attacker.result.values.resistanceType;
       const resCheck = this.modalData.attacker.result.values.resistanceCheck;
       const resistance =
         this.defenderActor.system.characteristics.secondaries.resistances[resType].base
           .value;
-      let formula = `1d100 + ${resistance ?? 0} - ${resCheck ?? 0}`;
+      let formula = `1d100 + ${resistance ?? 0}`;
       const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
       resistanceRoll.roll();
       const { i18n } = game;
@@ -158,16 +162,132 @@ export class GMCombatDialog extends FormApplication {
         speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
         flavor
       });
+
+      const data = {
+        attacker: {
+          name: this.attackerToken.name,
+          img: this.attackerToken.texture.src,
+        },
+        defender: {
+          name: this.defenderToken.name,
+          img: this.defenderToken.texture.src,
+        },
+        result: resistanceRoll.total - resCheck,
+        type: 'resistance',
+        resistCheck: resCheck
+      };
+
+      await renderTemplate(Templates.Chat.CheckResult, data).then(content => {
+        ChatMessage.create({
+          content
+        });
+      });
+
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
-        this.executeMacro(true, resistanceRoll.total);
+        this.executeMacro(true, resistanceRoll.total - resCheck);
       } else {
-        this.executeMacro(false, resistanceRoll.total);
+        this.executeMacro(false, resistanceRoll.total - resCheck);
       }
       this.mysticCastEvaluateIfAble();
       this.accumulateDefensesIfAble();
       this.close();
     });
+
+    html.find('.roll-characteristic').click(async () => {
+      const { i18n } = game;
+      this.applyValuesIfBeAble();
+      if (this.canApplyDamage) {
+        this.defenderActor.applyDamage(this.modalData.calculations.damage);
+      }
+      const attackerCharacteristic =
+        this.modalData.attacker.result.values.specificAttack.characteristic;
+      const defenderCharacteristic =
+        this.modalData.defender.result.values.specificAttack.characteristic;
+      const { difference, atResValue } = this.modalData.calculations;
+      const modAttacketChar =
+        difference - atResValue < 100 ? -3 : difference - atResValue > 200 ? 3 : 0;
+      const attacketModifier = calculateCharacteristicImbalance(
+        attackerCharacteristic,
+        defenderCharacteristic
+      );
+      const defenderModifier = calculateCharacteristicImbalance(
+        defenderCharacteristic,
+        attackerCharacteristic
+      );
+      let attackerFormula = `1d10ControlRoll + ${
+        attackerCharacteristic + attacketModifier
+      } + ${modAttacketChar}`;
+      let defenderFormula = `1d10ControlRoll + ${
+        defenderCharacteristic + defenderModifier
+      }`;
+
+      const attackerCharacteristicRoll = new ABFFoundryRoll(
+        attackerFormula,
+        this.attackerActor.system
+      );
+      attackerCharacteristicRoll.roll();
+      const attackerFlavor = i18n.format(
+        'macros.combat.dialog.physicalDefense.characteristic.title',
+        {
+          target: this.modalData.defender.token.name
+        }
+      );
+      attackerCharacteristicRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+        flavor: attackerFlavor
+      });
+
+      const defenderCharacteristicRoll = new ABFFoundryRoll(
+        defenderFormula,
+        this.defenderActor.system
+      );
+      defenderCharacteristicRoll.roll();
+      const defenderFlavor = i18n.format(
+        'macros.combat.dialog.physicalDefense.characteristic.title',
+        {
+          target: this.modalData.attacker.token.name
+        }
+      );
+      defenderCharacteristicRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+        flavor: defenderFlavor
+      });
+
+      const data = {
+        attacker: {
+          name: this.attackerToken.name,
+          img: this.attackerToken.texture.src,
+          roll: attackerCharacteristicRoll.total
+        },
+        defender: {
+          name: this.defenderToken.name,
+          img: this.defenderToken.texture.src,
+          roll: defenderCharacteristicRoll.total
+        },
+        result: Math.abs(attackerCharacteristicRoll.total - defenderCharacteristicRoll.total),
+        type: 'characteristic'
+      };
+
+      if (attackerCharacteristicRoll.total <= defenderCharacteristicRoll.total) {
+        data.winner = this.defenderToken.name;
+      } else {
+        data.winner = this.attackerToken.name;
+      }
+
+      await renderTemplate(Templates.Chat.CheckResult, data).then(content => {
+        ChatMessage.create({
+          content
+        });
+      });
+
+      this.mysticCastEvaluateIfAble();
+      this.newSupernaturalShieldIfBeAble();
+      this.accumulateDefensesIfAble();
+      this.executeMacro(this.modalData.attacker.result.values.specificAttack.causeDamage);
+      this.close();
+    });
+
     html.find('.show-results').click(async () => {
       const data = {
         attacker: {
@@ -267,11 +387,11 @@ export class GMCombatDialog extends FormApplication {
       const attackerTotal =
         attacker.result.values.total + this.modalData.attacker.customModifier;
       const defenderTotal =
-        defender.result.values.total +
-        this.modalData.defender.customModifier -
-        defender.result.values.atResValue;
+        defender.result.values.total + this.modalData.defender.customModifier;
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
+
+      const { atResValue } = this.modalData.defender.result.values;
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -293,6 +413,7 @@ export class GMCombatDialog extends FormApplication {
         ) {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
+            atResValue,
             canCounter: true,
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
@@ -300,6 +421,7 @@ export class GMCombatDialog extends FormApplication {
         } else {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
+            atResValue,
             canCounter: false,
             winner,
             damage: combatResult.damage
@@ -308,18 +430,22 @@ export class GMCombatDialog extends FormApplication {
       } else {
         this.modalData.calculations = {
           difference: attackerTotal - defenderTotal,
+          atResValue,
           canCounter: false,
           winner
         };
       }
 
-      if (
-        this.modalData.calculations.winner === this.modalData.attacker.token &&
-        this.modalData.attacker.result.values.checkResistance === true
-      ) {
-        //Revisar logica a implementar para nuevo dialogo
-      } else {
-        this.modalData.attacker.result.values.checkResistance = false;
+      if (winner === attacker.token) {
+        const minimumDamage10 = this.modalData.calculations.difference - atResValue >= 10;
+        if (minimumDamage10) {
+          if (this.modalData.attacker.result.values.checkResistance) {
+            this.modalData.ui.resistanceRoll = true;
+          }
+          if (this.modalData.attacker.result.values.specificAttack.check) {
+            this.modalData.ui.characteristicRoll = true;
+          }
+        }
       }
     }
 
