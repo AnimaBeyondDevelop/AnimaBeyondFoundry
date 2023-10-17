@@ -40,6 +40,7 @@ export class WSGMCombatManager extends WSCombatManager {
       const { projectile } = msg.payload.values;
       const { damage } = msg.payload.values;
       const { distance } = msg.payload.values;
+      const { specificAttack } = msg.payload.values;
 
       if (canOwnerReceiveMessage(defenderActor)) {
         const newMsg = {
@@ -63,7 +64,7 @@ export class WSGMCombatManager extends WSCombatManager {
             projectile,
             damage,
             distance
-          );
+          , specificAttack);
         } catch (err) {
           if (err) {
             Log.error(err);
@@ -291,6 +292,7 @@ export class WSGMCombatManager extends WSCombatManager {
               const { projectile } = result.values;
               const { damage } = result.values;
               const { distance } = result.values;
+              const { specificAttack } = result.values;
 
               try {
                 this.manageDefense(
@@ -302,7 +304,7 @@ export class WSGMCombatManager extends WSCombatManager {
                   projectile,
                   damage,
                   distance
-                );
+                , specificAttack);
               } catch (err) {
                 if (err) {
                   Log.error(err);
@@ -327,7 +329,7 @@ export class WSGMCombatManager extends WSCombatManager {
     projectile,
     damage,
     distance
-  ) {
+  , specificAttack) {
     this.defendDialog = new CombatDefenseDialog(
       {
         token: attacker,
@@ -336,7 +338,8 @@ export class WSGMCombatManager extends WSCombatManager {
         visible,
         projectile,
         damage,
-        distance
+        distance,
+        specificAttack
       },
       defender,
       {

@@ -53,6 +53,16 @@
           text-overflow: ellipsis;
           overflow: hidden;
         }
+
+        .roll {
+          margin-top: 1rem;
+          margin-bottom: 0;
+          font-size: 2rem;
+          font-weight: bold;
+          max-width: 100%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       }
     }
 
@@ -65,6 +75,11 @@
       }
 
       .counter {
+        width: 100%;
+        text-align: center;
+      }
+
+      .check {
         width: 100%;
         text-align: center;
       }

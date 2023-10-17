@@ -1,5 +1,6 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
+import { calculateCharacteristicImbalance } from '../../combat/utils/calculateCharacteristicImbalance';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
@@ -11,7 +12,8 @@ const getInitialData = (attacker, defender, options = {}) => {
   return {
     ui: {
       isCounter: options.isCounter ?? false,
-      resistanceRoll: false
+      resistanceRoll: false,
+      characteristicRoll: false
     },
     attacker: {
       token: attacker,
@@ -127,12 +129,13 @@ export class GMCombatDialog extends FormApplication {
       this.close();
     });
 
-    html.find('.roll-resistance').click(() => {
+
+    html.find('.roll-resistance').click(async () => {
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistance =
         this.defenderActor.system.characteristics.secondaries.resistances[type].base
           .value;
-      let formula = `1d100 + ${resistance ?? 0} - ${value ?? 0}`;
+      let formula = `1d100 + ${resistance ?? 0}`;
       const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
       resistanceRoll.roll();
       const { i18n } = game;
@@ -143,12 +146,125 @@ export class GMCombatDialog extends FormApplication {
         speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
         flavor
       });
+
+      const data = {
+        attacker: {
+          name: this.attackerToken.name,
+          img: this.attackerToken.texture.src,
+        },
+        defender: {
+          name: this.defenderToken.name,
+          img: this.defenderToken.texture.src,
+        },
+        result: resistanceRoll.total - resCheck,
+        type: 'resistance',
+        resistCheck: resCheck
+      };
+
+      await renderTemplate(Templates.Chat.CheckResult, data).then(content => {
+        ChatMessage.create({
+          content
+        });
+      });
+
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
       }
       this.applyValuesIfBeAble(resistanceRoll.total);
       this.close();
     });
+
+    html.find('.roll-characteristic').click(async () => {
+      const { i18n } = game;
+      if (this.canApplyDamage) {
+        this.defenderActor.applyDamage(this.modalData.calculations.damage);
+      }
+      const attackerCharacteristic =
+        this.modalData.attacker.result.values.specificAttack.characteristic;
+      const defenderCharacteristic =
+        this.modalData.defender.result.values.specificAttack.characteristic;
+      const { difference, atResValue } = this.modalData.calculations;
+      const modAttacketChar =
+        difference - atResValue < 100 ? -3 : difference - atResValue > 200 ? 3 : 0;
+      const attacketModifier = calculateCharacteristicImbalance(
+        attackerCharacteristic,
+        defenderCharacteristic
+      );
+      const defenderModifier = calculateCharacteristicImbalance(
+        defenderCharacteristic,
+        attackerCharacteristic
+      );
+      let attackerFormula = `1d10ControlRoll + ${
+        attackerCharacteristic + attacketModifier
+      } + ${modAttacketChar}`;
+      let defenderFormula = `1d10ControlRoll + ${
+        defenderCharacteristic + defenderModifier
+      }`;
+
+      const attackerCharacteristicRoll = new ABFFoundryRoll(
+        attackerFormula,
+        this.attackerActor.system
+      );
+      attackerCharacteristicRoll.roll();
+      const attackerFlavor = i18n.format(
+        'macros.combat.dialog.physicalDefense.characteristic.title',
+        {
+          target: this.modalData.defender.token.name
+        }
+      );
+      attackerCharacteristicRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+        flavor: attackerFlavor
+      });
+
+      const defenderCharacteristicRoll = new ABFFoundryRoll(
+        defenderFormula,
+        this.defenderActor.system
+      );
+      defenderCharacteristicRoll.roll();
+      const defenderFlavor = i18n.format(
+        'macros.combat.dialog.physicalDefense.characteristic.title',
+        {
+          target: this.modalData.attacker.token.name
+        }
+      );
+      defenderCharacteristicRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+        flavor: defenderFlavor
+      });
+
+      const data = {
+        attacker: {
+          name: this.attackerToken.name,
+          img: this.attackerToken.texture.src,
+          roll: attackerCharacteristicRoll.total
+        },
+        defender: {
+          name: this.defenderToken.name,
+          img: this.defenderToken.texture.src,
+          roll: defenderCharacteristicRoll.total
+        },
+        result: Math.abs(attackerCharacteristicRoll.total - defenderCharacteristicRoll.total),
+        type: 'characteristic'
+      };
+
+      if (attackerCharacteristicRoll.total <= defenderCharacteristicRoll.total) {
+        data.winner = this.defenderToken.name;
+      } else {
+        data.winner = this.attackerToken.name;
+      }
+
+      await renderTemplate(Templates.Chat.CheckResult, data).then(content => {
+        ChatMessage.create({
+          content
+        });
+      });
+
+
+      this.applyValuesIfBeAble(this.modalData.attacker.result.values.specificAttack.causeDamage);
+      this.close();
+    });
+
     html.find('.show-results').click(async () => {
       const data = {
         attacker: {
@@ -315,6 +431,9 @@ export class GMCombatDialog extends FormApplication {
         if (minimumDamage10) {
           if (attacker.result.values?.resistanceEffect.check) {
             this.modalData.ui.resistanceRoll = true;
+          }
+          if (this.modalData.attacker.result.values.specificAttack.check) {
+            this.modalData.ui.characteristicRoll = true;
           }
         }
       }

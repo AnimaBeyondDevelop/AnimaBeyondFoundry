@@ -37,7 +37,8 @@ const getInitialData = (attacker, defender) => {
       critic: attacker.critic,
       visible: attacker.visible,
       projectile: attacker.projectile,
-      damage: attacker.damage
+      damage: attacker.damage,
+      specificAttack: attacker.specificAttack
     },
     defender: {
       token: defender,
@@ -46,6 +47,7 @@ const getInitialData = (attacker, defender) => {
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
       blindness: false,
       distance: attacker.distance,
+      specificAttack: { characteristic: undefined },
       zen: defenderActor.system.general.settings.zen.value,
       inhuman: defenderActor.system.general.settings.inhuman.value,
       inmaterial: defenderActor.system.general.settings.inmaterial.value,
@@ -123,6 +125,29 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
+    const defensesCounter = this.defenderActor.getFlag(
+      'world',
+      `${this.defenderActor._id}.defensesCounter`
+    ) || { value: true, accumulated: 0 };
+    this.modalData.defender.combat.accumulateDefenses = defensesCounter.value;
+    this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(
+      defensesCounter.accumulated
+    );
+    this.modalData.defender.specificAttack.characteristic = Math.max(
+      this.defenderActor.system.characteristics.primaries.strength.value,
+      this.defenderActor.system.characteristics.primaries.agility.value
+    );
+    this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
+    this.modalData.defender.inhuman =
+      this.defenderActor.system.general.settings.inhuman.value;
+    this.modalData.defender.inmaterial =
+      this.defenderActor.system.general.settings.inmaterial.value;
+    if (
+      (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
+      this.modalData.attacker.damage == 0) || this.modalData.attacker.specificAttack.check
+    ) {
+      this.modalData.defender.combat.at.defense = true;
+    }
 
     const { psychic, mystic, combat } = this.modalData.defender;
     const { weapons, supernaturalShields } = this.defenderActor.system.combat;
@@ -222,6 +247,9 @@ export class CombatDefenseDialog extends FormApplication {
     if (at !== undefined) {
       combat.at.final = combat.at.special + at;
     }
+    if (!this.modalData.attacker.specificAttack.causeDamage) {
+      at = 0;
+    }
 
     this.hooks = hooks;
 
@@ -280,7 +308,8 @@ export class CombatDefenseDialog extends FormApplication {
           weaponUsed
         },
         blindness,
-        distance
+        distance,
+        specificAttack
       } = this.modalData.defender;
       this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
 
@@ -397,7 +426,8 @@ export class CombatDefenseDialog extends FormApplication {
           roll: rolled,
           total: roll.total,
           accumulateDefenses,
-          defenderCombatMod
+          defenderCombatMod,
+          specificAttack
         }
       });
 
@@ -434,7 +464,8 @@ export class CombatDefenseDialog extends FormApplication {
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
-        blindness
+        blindness,
+        specificAttack
       } = this.modalData.defender;
       const { i18n } = game;
       const { spells } = this.defenderActor.system.mystic;
@@ -530,7 +561,8 @@ export class CombatDefenseDialog extends FormApplication {
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
-        blindness
+        blindness,
+        specificAttack
       } = this.modalData.defender;
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
@@ -626,7 +658,8 @@ export class CombatDefenseDialog extends FormApplication {
           total: psychicFatigue ? 0 : psychicProjectionRoll.total,
           psychicFatigue,
           supShield,
-          defenderCombatMod
+          defenderCombatMod,
+          specificAttack
         }
       });
 

@@ -74,6 +74,30 @@
   secondaryInputValue=this.attacker.combat.damage.final
 }}
 
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.specificAttack.title')
+  disabled=this.attackSent
+  inputName='attacker.combat.specificAttack.value'
+}}
+  {{#each this.attacker.specificAttacks}}
+    <option {{#if (is "eq" ../this.attacker.combat.specificAttack.value this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.specificAttack.' this '.title')}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#if (and (is 'neq' this.attacker.combat.specificAttack.value 'none') (is 'neq' this.attacker.combat.specificAttack.value 'disarm'))}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.specificAttack.causeDamage.title')
+      inputType="checkbox"
+      inputName="attacker.combat.specificAttack.causeDamage"
+      inputValue=(is 'eq' this.attacker.combat.specificAttack.causeDamage true)
+    }}
+  </div>
+</div>
+{{/if}}
+
 {{#if this.attacker.combat.projectile.value}}
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>
