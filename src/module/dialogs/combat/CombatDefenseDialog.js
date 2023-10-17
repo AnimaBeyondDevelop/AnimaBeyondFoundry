@@ -43,7 +43,8 @@ const getInitialData = (attacker, defender) => {
       visible: attacker.visible,
       projectile: attacker.projectile,
       damage: attacker.damage,
-      specialType: attacker.specialType
+      specialType: attacker.specialType,
+      specificAttack: attacker.specificAttack
     },
     defender: {
       token: defender,
@@ -52,6 +53,7 @@ const getInitialData = (attacker, defender) => {
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
       blindnessPen: 0,
       distance: attacker.distance,
+      specificAttack: { characteristic: undefined },
       zen: false,
       inhuman: false,
       inmaterial: false,
@@ -137,14 +139,18 @@ export class CombatDefenseDialog extends FormApplication {
     this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(
       defensesCounter.accumulated
     );
+    this.modalData.defender.specificAttack.characteristic = Math.max(
+      this.defenderActor.system.characteristics.primaries.strength.value,
+      this.defenderActor.system.characteristics.primaries.agility.value
+    );
     this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
     this.modalData.defender.inhuman =
       this.defenderActor.system.general.settings.inhuman.value;
     this.modalData.defender.inmaterial =
       this.defenderActor.system.general.settings.inmaterial.value;
     if (
-      this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
-      this.modalData.attacker.damage == 0
+      (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
+      this.modalData.attacker.damage == 0) || this.modalData.attacker.specificAttack.check
     ) {
       this.modalData.defender.combat.at.defense = true;
     }
@@ -250,8 +256,9 @@ export class CombatDefenseDialog extends FormApplication {
     }
 
     let at;
-
-    if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
+    if (!this.modalData.attacker.specificAttack.causeDamage) {
+      at = 0;
+    } else if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
       switch (this.modalData.attacker.critic) {
         case WeaponCritic.CUT:
           at = this.defenderActor.system.combat.totalArmor.at.cut.value;
@@ -342,7 +349,8 @@ export class CombatDefenseDialog extends FormApplication {
         },
         blindnessPen,
         distance,
-        inmaterial
+        inmaterial,
+        specificAttack
       } = this.modalData.defender;
       this.defenderActor.setFlag(
         'world',
@@ -468,7 +476,8 @@ export class CombatDefenseDialog extends FormApplication {
           total: roll.total,
           unableToDefense,
           atResValue,
-          accumulateDefenses
+          accumulateDefenses,
+          specificAttack
         }
       });
 
@@ -498,7 +507,8 @@ export class CombatDefenseDialog extends FormApplication {
       const {
         mystic: { magicProjection, modifier, spellUsed, spellGrade, spellCasting, shieldUsed, newShield },
         combat: { at },
-        blindnessPen
+        blindnessPen,
+        specificAttack
       } = this.modalData.defender;
       const { spells, mysticShields } = this.defenderActor.system.mystic;
       let spell,
@@ -617,6 +627,7 @@ export class CombatDefenseDialog extends FormApplication {
         psychic: { psychicPotential, powerUsed, modifier, shieldUsed, newShield },
         combat: { at },
         blindnessPen,
+        specificAttack,
         inhuman,
         zen
       } = this.modalData.defender;
@@ -760,7 +771,8 @@ export class CombatDefenseDialog extends FormApplication {
           dobleDamage: false,
           cantDamage: false,
           atResValue,
-          supShield
+          supShield,
+          specificAttack
         }
       });
 
