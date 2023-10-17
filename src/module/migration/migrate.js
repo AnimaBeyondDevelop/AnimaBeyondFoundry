@@ -100,7 +100,6 @@ async function applyMigration(migration) {
     console.log(`AnimaBF | Migration ${migration.version} completed.`);
     game.settings.set('animabf', ABFSettingsKeys.SYSTEM_MIGRATION_VERSION, migration.version);
     // TODO: add french translation for the warning dialog also.
-    // TODO: update the migrations.md docs
     await ABFDialogs.prompt(
       game.i18n.format('dialogs.migrations.success', {
         version: migration.version,
