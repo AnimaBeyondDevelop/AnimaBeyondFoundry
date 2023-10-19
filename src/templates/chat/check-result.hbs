@@ -39,15 +39,14 @@
         </div>
       </div>
       <div class='combat-result'>
-        
         {{#if (is 'eq' this.type 'characteristic')}}
             <p class='check'>{{{localize "chat.combatResult.characteristic.title" winner=this.winner result=this.result}}}</p>
         {{else}}
-          {{#if (is 'eq' this.type 'characteristic')}}
-        <p class='check'>{{{localize "chat.combatResult.resist.success.title" defender=this.defender.name resistCheck=this.resistCheck}}}</p>
-          {{else}}
         <p class='result'>{{this.result}}</p>
+          {{#if (is 'lt' this.result 0)}}
         <p class='check'>{{{localize "chat.combatResult.resist.failure.title" defender=this.defender.name resistCheck=this.resistCheck}}}</p>
+          {{else}}
+        <p class='check'>{{{localize "chat.combatResult.resist.success.title" defender=this.defender.name resistCheck=this.resistCheck}}}</p>
           {{/if}}
         {{/if}}
       </div>
