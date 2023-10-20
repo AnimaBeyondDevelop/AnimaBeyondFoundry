@@ -146,10 +146,9 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-resistance').click(async () => {
       this.applyValuesIfBeAble();
-      const resType = this.modalData.attacker.result.values.resistanceType;
-      const resCheck = this.modalData.attacker.result.values.resistanceCheck;
+      const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistance =
-        this.defenderActor.system.characteristics.secondaries.resistances[resType].base
+        this.defenderActor.system.characteristics.secondaries.resistances[type].base
           .value;
       let formula = `1d100 + ${resistance ?? 0}`;
       const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
@@ -442,7 +441,7 @@ export class GMCombatDialog extends FormApplication {
       if (winner === attacker.token) {
         const minimumDamage10 = this.modalData.calculations.difference - atResValue >= 10;
         if (minimumDamage10) {
-          if (this.modalData.attacker.result.values.checkResistance) {
+          if (this.modalData.attacker.result.values?.resistanceEffect.check) {
             this.modalData.ui.resistanceRoll = true;
           }
           if (this.modalData.attacker.result.values.specificAttack.check) {
@@ -472,30 +471,38 @@ export class GMCombatDialog extends FormApplication {
 
   mysticCastEvaluateIfAble() {
     if (this.modalData.attacker.result?.type === 'mystic') {
-      if (this.modalData.attacker.result.values?.innate) {
-      } else if (this.modalData.attacker.result.values?.prepared) {
-        this.attackerActor.deletePreparedSpell(
-          this.modalData.attacker.result.values?.spellName,
-          this.modalData.attacker.result.values?.spellGrade
-        );
-      } else {
-        this.attackerActor.consumeAccumulatedZeon(
-          this.modalData.attacker.result.values?.zeonCost
-        );
+      const { spell, cast, override } =
+        this.modalData.attacker.result.values?.spellCasting;
+      if (!override.value) {
+        if (spell.innate && cast.innate) {
+        } else if (spell.prepared && cast.prepared) {
+          this.attackerActor.deletePreparedSpell(
+            this.modalData.attacker.result.values?.spellName,
+            this.modalData.attacker.result.values?.spellGrade
+          );
+        } else {
+          this.attackerActor.consumeAccumulatedZeon(
+            this.modalData.attacker.result.values?.zeonCost
+          );
+        }
       }
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
-      if (this.modalData.defender.result.values?.innate) {
-      } else if (this.modalData.defender.result.values?.prepared) {
-        this.defenderActor.deletePreparedSpell(
-          this.modalData.defender.result.values?.spellName,
-          this.modalData.defender.result.values?.spellGrade
-        );
-      } else {
-        this.defenderActor.consumeAccumulatedZeon(
-          this.modalData.defender.result.values?.zeonCost
-        );
+      const { spell, cast, override } =
+        this.modalData.defender.result.values?.spellCasting;
+      if (!override.value) {
+        if (spell.innate && cast.innate) {
+        } else if (spell.prepared && cast.prepared) {
+          this.defenderActor.deletePreparedSpell(
+            this.modalData.defender.result.values?.spellName,
+            this.modalData.defender.result.values?.spellGrade
+          );
+        } else {
+          this.defenderActor.consumeAccumulatedZeon(
+            this.modalData.defender.result.values?.zeonCost
+          );
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 export const mysticSpellCastEvaluate = (actor, spell, spellGrade) => {
-  const mysticSpellCast = { spellPrepared: false, spellInnate: false };
-  mysticSpellCast.spellPrepared =
+  const mysticSpellCheck = { prepared: false, innate: false };
+  mysticSpellCheck.prepared =
     actor.system.mystic.preparedSpells.find(
       ps => ps.name == spell.name && ps.system.grade.value == spellGrade
     )?.system.prepared.value ?? false;
@@ -11,7 +11,7 @@ export const mysticSpellCastEvaluate = (actor, spell, spellGrade) => {
     innateMagic.via.length !== 0 && innateVia
       ? innateVia.system.final.value
       : innateMagic.main.final.value;
-      mysticSpellCast.spellInnate =
+      mysticSpellCheck.innate =
     innateMagicValue >= spell?.system.grades[spellGrade].zeon.value;
-  return mysticSpellCast;
+  return mysticSpellCheck;
 };

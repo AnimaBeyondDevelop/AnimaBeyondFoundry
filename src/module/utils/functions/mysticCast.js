@@ -1,6 +1,6 @@
-export const mysticCast = (actor, castInnate, castPrepared, zeonCost, spellName, spellGrade) => {
-  if (castInnate){}
-  else if (castPrepared){
+export const mysticCast = (actor, spellCasting, zeonCost, spellName, spellGrade) => {
+  if (spellCasting.cast.innate){}
+  else if (spellCasting.cast.prepared){
     actor.deletePreparedSpell(spellName, spellGrade)
   } else {
     actor.consumeAccumulatedZeon(zeonCost)
