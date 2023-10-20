@@ -74,7 +74,7 @@ export class ABFActor extends Actor {
     executeArgsMacro(newShield.name, args);}, 100);
   }
 
-  applyDamageShieldSupernatural(
+  applyDamageSupernaturalShield(
     supShield: any,
     damage: number,
     dobleDamage: boolean,
@@ -94,7 +94,7 @@ export class ABFActor extends Actor {
     }
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {
-      const updates = [{ _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }];
+      let updates: any = [{ _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }];
       Item.updateDocuments(updates, { parent: this });
     } else {
       Item.deleteDocuments([shieldId], { parent: this });
