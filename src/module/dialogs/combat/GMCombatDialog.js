@@ -9,7 +9,8 @@ const getInitialData = (attacker, defender, options = {}) => {
 
   return {
     ui: {
-      isCounter: options.isCounter ?? false
+      isCounter: options.isCounter ?? false,
+      resistanceRoll: false
     },
     attacker: {
       token: attacker,
@@ -267,11 +268,11 @@ export class GMCombatDialog extends FormApplication {
       const attackerTotal =
         attacker.result.values.total + this.modalData.attacker.customModifier;
       const defenderTotal =
-        defender.result.values.total +
-        this.modalData.defender.customModifier -
-        defender.result.values.atResValue;
+        defender.result.values.total + this.modalData.defender.customModifier;
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
+
+      const { atResValue } = this.modalData.defender.result.values;
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -293,6 +294,7 @@ export class GMCombatDialog extends FormApplication {
         ) {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
+            atResValue,
             canCounter: true,
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
@@ -300,6 +302,7 @@ export class GMCombatDialog extends FormApplication {
         } else {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
+            atResValue,
             canCounter: false,
             winner,
             damage: combatResult.damage
@@ -308,18 +311,19 @@ export class GMCombatDialog extends FormApplication {
       } else {
         this.modalData.calculations = {
           difference: attackerTotal - defenderTotal,
+          atResValue,
           canCounter: false,
           winner
         };
       }
 
-      if (
-        this.modalData.calculations.winner === this.modalData.attacker.token &&
-        this.modalData.attacker.result.values.checkResistance === true
-      ) {
-        //Revisar logica a implementar para nuevo dialogo
-      } else {
-        this.modalData.attacker.result.values.checkResistance = false;
+      if (winner === attacker.token) {
+        const minimumDamage10 = this.modalData.calculations.difference - atResValue >= 10;
+        if (minimumDamage10) {
+          if (this.modalData.attacker.result.values.checkResistance) {
+            this.modalData.ui.resistanceRoll = true;
+          }
+        }
       }
     }
 

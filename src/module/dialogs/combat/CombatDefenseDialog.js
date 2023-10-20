@@ -405,12 +405,12 @@ export class CombatDefenseDialog extends FormApplication {
       const newModifier = combatModifier + modifier ?? 0;
       let atResValue = 0;
       if (at.defense) {
-        atResValue += at.final * 10 + 20 + 10;
+        atResValue += at.final * 10 + 20;
       }
 
       let formula = `1d100xa + ${newModifier} + ${fatigue ?? 0} * 15 - ${
         (multipleDefensesPenalty ?? 0) * -1
-      } + ${value + atResValue}`;
+      } + ${value}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -506,13 +506,12 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false },
         atResValue = 0;
       if (at.defense) {
-        atResValue += at.final * 10 + 20 + 10;
+        atResValue += at.final * 10 + 20;
       }
 
       const newModifier = blindnessPen + modifier ?? 0;
       const magicProjection =
-        this.defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value +
-        atResValue;
+        this.defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value;
       const baseMagicProjection =
         this.defenderActor.system.mystic.magicProjection.imbalance.defensive.base.value;
 
@@ -637,13 +636,13 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false },
         newPsychicPotential;
       if (at.defense) {
-        atResValue += at.final * 10 + 20 + 10;
+        atResValue += at.final * 10 + 20;
       }
 
       const newModifier = blindnessPen + modifier ?? 0;
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
-          .value + atResValue;
+          .value;
       let formula = `1d100xa + ${psychicProjection} + ${newModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
