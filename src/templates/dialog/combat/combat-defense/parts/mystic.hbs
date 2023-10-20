@@ -76,6 +76,22 @@
   </div>
 </div>
 {{/if}}
+
+{{#if this.defender.mystic.spellCasting.override.ui}}
+<div class='columns'>
+  <div>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.castOverride.title')
+    disabled=this.attackSent
+    inputType="checkbox"
+    inputName="defender.mystic.spellCasting.override.value"
+    inputValue=(is 'eq' this.defender.mystic.spellCasting.override.value true)
+    }}
+  </div>
+</div>
+{{/if}}
+
 {{else}}
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.mysticShield.title')
@@ -107,21 +123,6 @@
     }}
   </div>
 </div>
-
-{{#if this.defender.mystic.spellCasting.override.ui}}
-<div class='columns'>
-  <div>
-    {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-    title=(localize 'macros.combat.dialog.castOverride.title')
-    disabled=this.attackSent
-    inputType="checkbox"
-    inputName="defender.mystic.spellCasting.override.value"
-    inputValue=(is 'eq' this.defender.mystic.spellCasting.override.value true)
-    }}
-  </div>
-</div>
-{{/if}}
 
 {{#if this.defenseSent}}
   <div class='defense-sent'>
