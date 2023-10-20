@@ -420,6 +420,12 @@ export class GMCombatDialog extends FormApplication {
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
           };
+          if (
+            attacker.result.values.damage >
+            defender.result.values?.supShield.system.shieldPoints.value
+          ) {
+            this.modalData.calculations.canCounter = false;
+          }
         } else {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
@@ -542,11 +548,35 @@ export class GMCombatDialog extends FormApplication {
       !cantDamage
     ) {
       const { supShield } = this.modalData.defender.result?.values;
+      const newCombatResult = {
+        attack: 0,
+        at: 0,
+        halvedAbsorption: false
+      };
+
+      if (this.isDamagingCombat) {
+        const { attacker, defender } = this.modalData;
+
+        newCombatResult.attack = Math.max(
+          attacker.result.values.total + this.modalData.attacker.customModifier,
+          0
+        );
+        newCombatResult.at = Math.max(
+          defender.result.values.at - calculateATReductionByQuality(attacker.result),
+          0
+        );
+        newCombatResult.halvedAbsorption =
+          defender.result.type === 'resistance'
+            ? defender.result.values.surprised
+            : false;
+      }
+
       this.defenderActor.applyDamageSupernaturalShield(
         supShield,
         damage,
         dobleDamage,
-        this.modalData.defender.result?.type
+        this.modalData.defender.result?.type,
+        newCombatResult
       );
     }
   }

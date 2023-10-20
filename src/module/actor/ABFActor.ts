@@ -10,6 +10,9 @@ import ABFActorSheet from './ABFActorSheet';
 import { Log } from '../../utils/Log';
 import { migrateItem } from '../items/migrations/migrateItem';
 import { executeArgsMacro } from '../utils/functions/executeArgsMacro';
+import { ABFSettingsKeys } from '../../utils/registerSettings';
+import { calculateDamage } from '../combat/utils/calculateDamage';
+import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -64,50 +67,69 @@ export class ABFActor extends Actor {
 
     await this.createItem(supernaturalShieldData);
     setTimeout(() => {
-    let supShields = this.system[type][`${type}Shields`];
-    let shieldId = supShields[supShields.length - 1]._id;
-    let args = {
-      thisActor: this,
-      newShield: true,
-      shieldId
-    };
-    executeArgsMacro(newShield.name, args);}, 100);
+      let supShields = this.system[type][`${type}Shields`];
+      let shieldId = supShields[supShields.length - 1]._id;
+      let args = {
+        thisActor: this,
+        newShield: true,
+        shieldId
+      };
+      executeArgsMacro(newShield.name, args);
+    }, 100);
   }
 
   applyDamageSupernaturalShield(
     supShield: any,
     damage: number,
     dobleDamage: boolean,
-    type: string
+    type: string,
+    newCombatResult: any
   ) {
     setTimeout(() => {
-    const shieldValue = supShield.system.shieldPoints.value;
-    let shieldId: any;
-    if (supShield.id) {
-      shieldId = supShield.id;
-    } else {
-      let supShields = this.system[type][`${type}Shields`];
-      shieldId = supShields[supShields.length - 1]._id;
-      if (shieldId == undefined) {
-        return ui.notifications.warn('Escudo Sobrenatural no encontrado');
+      const shieldValue = supShield.system.shieldPoints.value;
+      let shieldId: any;
+      if (supShield.id) {
+        shieldId = supShield.id;
+      } else {
+        let supShields = this.system[type][`${type}Shields`];
+        shieldId = supShields[supShields.length - 1]._id;
+        if (shieldId == undefined) {
+          return ui.notifications.warn('Escudo Sobrenatural no encontrado');
+        }
       }
-    }
-    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
-    if (newShieldPoints > 0) {
-      const updates = [{ _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }];
-      Item.updateDocuments(updates, { parent: this });
-    } else {
-      Item.deleteDocuments([shieldId], { parent: this });
-      if (newShieldPoints < 0) {
-        this.applyDamage(Math.abs(newShieldPoints));
+      const newShieldPoints = dobleDamage
+        ? shieldValue - damage * 2
+        : shieldValue - damage;
+      if (newShieldPoints > 0) {
+        let updates: any = [
+          { _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }
+        ];
+        Item.updateDocuments(updates, { parent: this });
+      } else {
+        Item.deleteDocuments([shieldId], { parent: this });
+        if (newShieldPoints < 0 && newCombatResult) {
+          const needToRound = (game as Game).settings.get(
+            'animabf',
+            ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
+          );
+          const result = calculateDamage(
+            newCombatResult.attack,
+            0,
+            newCombatResult.at,
+            Math.abs(newShieldPoints),
+            newCombatResult.halvedAbsorption
+          );
+          const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
+          this.applyDamage(breakingDamage);
+        }
+        let args = {
+          thisActor: this,
+          newShield: false,
+          shieldId
+        };
+        executeArgsMacro(supShield.name, args);
       }
-      let args = {
-        thisActor: this,
-        newShield: false,
-        shieldId
-      };
-      executeArgsMacro(supShield.name, args);
-    }}, 100);
+    }, 100);
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
