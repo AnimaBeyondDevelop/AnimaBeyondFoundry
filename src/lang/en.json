@@ -616,6 +616,7 @@
   "macros.combat.dialog.zeonAccumulated.title": "Zeon accumulated",
   "macros.combat.dialog.castInnate.title": "Cast innate spell",
   "macros.combat.dialog.castPrepared.title": "Cast prepared spell",
+  "macros.combat.dialog.castOverride.title": "Cast spell without validations?",
   "macros.combat.dialog.critic.title": "Critic",
   "macros.combat.dialog.damage.title": "Damage",
   "macros.combat.dialog.psychic.damage.title": "Damage modifier",

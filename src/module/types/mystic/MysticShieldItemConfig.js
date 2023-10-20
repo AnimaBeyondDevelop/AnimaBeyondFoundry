@@ -39,21 +39,19 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
       return;
     }
     const zeonAccumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
-    const zeonCost = spell?.system.grades[spellGrade].zeon.value;
-    const mysticSpellCast = mysticSpellCastEvaluate(actor, spell, spellGrade);
-    const evaluateCastMsj = evaluateCast(
-      mysticSpellCast.spellInnate,
-      castInnate,
-      mysticSpellCast.spellPrepared,
-      castPrepared,
+    const mysticSpellCheck = mysticSpellCastEvaluate(actor, spell, spellGrade);
+    const spellCasting = {
       zeonAccumulated,
-      zeonCost
-    );
+      spell: mysticSpellCheck,
+      cast: { prepared: castPrepared, innate: castInnate }
+    };
+    const zeonCost = spell?.system.grades[spellGrade].zeon.value;
+    const evaluateCastMsj = evaluateCast(spellCasting, zeonCost);
     if (evaluateCastMsj !== undefined) {
       return evaluateCastMsj;
     }
     const name = spell.name;
-    mysticCast(actor, castInnate, castPrepared, zeonCost, name, spellGrade);
+    mysticCast(actor, spellCasting, zeonCost, name, spellGrade);
     const shieldPoints = shieldValueCheck(
       spell.system.grades[spellGrade].description.value
     )[0];

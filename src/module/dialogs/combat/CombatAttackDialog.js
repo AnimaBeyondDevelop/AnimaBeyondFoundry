@@ -1,7 +1,7 @@
 import { Templates } from '../../utils/constants';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { energyCheck } from '../../combat/utils/energyCheck.js';
-import { resistanceCheck } from '../../combat/utils/resistanceCheck.js';
+import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
 import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
@@ -51,6 +51,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         weaponUsed: undefined,
         criticSelected: undefined,
         weapon: undefined,
+        resistanceEffect: { value: 0, type: undefined, check: false },
         visible: true,
         highGround: false,
         distance: {
@@ -73,15 +74,14 @@ const getInitialData = (attacker, defender, options = {}) => {
         magicProjectionType: 'offensive',
         spellUsed: undefined,
         spellGrade: 'base',
-        spellPrepared: false,
-        castPrepared: false,
-        spellInnate: false,
-        castInnate: false,
-        zeonAccumulated: 0,
+        spellCasting: {
+          zeonAccumulated: 0,
+          spell: { prepared: false, innate: false },
+          cast: { prepared: false, innate: false },
+          override: { value: false, ui: false }
+        },
         critic: NoneWeaponCritic.NONE,
-        checkResistance: false,
-        resistanceType: undefined,
-        resistanceCheck: 0,
+        resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distance: {
           value: 0,
@@ -109,9 +109,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         powerUsed: undefined,
         critic: NoneWeaponCritic.NONE,
         fatigueCheck: false,
-        checkResistance: false,
-        resistanceType: undefined,
-        resistanceCheck: 0,
+        resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distance: {
           value: 0,
@@ -190,15 +188,20 @@ export class CombatAttackDialog extends FormApplication {
       const spell = spells.find(w => w._id === mystic.spellUsed);
       const spellUsedEffect = spell?.system.grades.base.description.value;
       mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
-      mystic.zeonAccumulated =
+      mystic.spellCasting.zeonAccumulated =
         this.attackerActor.system.mystic.zeon.accumulated.value ?? 0;
-      const mysticSpellCast = mysticSpellCastEvaluate(
+      const mysticSpellCheck = mysticSpellCastEvaluate(
         this.attackerActor,
         spell,
         mystic.spellGrade
       );
-      mystic.spellPrepared = mysticSpellCast.spellPrepared;
-      mystic.spellInnate = mysticSpellCast.spellInnate;
+      mystic.spellCasting.spell = mysticSpellCheck;
+      const spellCastingOverride = this.attackerActor.getFlag(
+        'world',
+        `${this.attackerActor._id}.spellCastingOverride`
+      );
+      mystic.spellCasting.override.value = spellCastingOverride || false;
+      mystic.spellCasting.override.ui = spellCastingOverride || false;
     }
 
     if (weapons.length > 0) {
@@ -359,9 +362,9 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const critic = criticSelected ?? WeaponCritic.IMPACT;
-        let checkRes = [false, '', 0];
+        let resistanceEffect = { value: 0, type: undefined, check: false };
         if (weapon !== undefined) {
-          checkRes = resistanceCheck(weapon.system.special.value);
+          resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
         }
         let specialTypeCheck = specialType;
         let unableToAttack = false;
@@ -373,7 +376,7 @@ export class CombatAttackDialog extends FormApplication {
         if (inmaterial && !inmaterialDefender) {
           damage.final = 0;
         } else {
-          checkRes = [false, '', 0];
+          resistanceEffect = { value: 0, type: undefined, check: false };
         }
         if (inmaterial) {
           specialTypeCheck = 'inmaterial';
@@ -399,9 +402,7 @@ export class CombatAttackDialog extends FormApplication {
             roll: rolled,
             total: roll.total,
             fumble: roll.fumbled,
-            checkResistance: checkRes[0],
-            resistanceType: checkRes[1],
-            resistanceCheck: checkRes[2],
+            resistanceEffect,
             visible,
             distance,
             projectile,
@@ -419,23 +420,24 @@ export class CombatAttackDialog extends FormApplication {
     html.find('.send-mystic-attack').click(() => {
       const {
         magicProjectionType,
-        spellGrade,
         spellUsed,
+        spellGrade,
+        spellCasting,
         modifier,
         critic,
         damage,
         projectile,
         specialType,
-        spellInnate,
-        castInnate,
-        spellPrepared,
-        castPrepared,
-        zeonAccumulated,
         distance
       } = this.modalData.attacker.mystic;
       const inmaterialDefender =
         this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (spellUsed) {
+        this.attackerActor.setFlag(
+          'world',
+          `${this.attackerActor._id}.spellCastingOverride`,
+          spellCasting.override.value
+        );
         this.attackerActor.setFlag(
           'world',
           `${this.attackerActor._id}.lastOffensiveSpellUsed`,
@@ -460,15 +462,11 @@ export class CombatAttackDialog extends FormApplication {
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
         const zeonCost = spell?.system.grades[spellGrade].zeon.value;
-        let evaluateCastMsj = evaluateCast(
-          spellInnate,
-          castInnate,
-          spellPrepared,
-          castPrepared,
-          zeonAccumulated,
-          zeonCost
-        );
+        let evaluateCastMsj = !spellCasting.override.value
+          ? evaluateCast(spellCasting, zeonCost)
+          : undefined;
         if (evaluateCastMsj !== undefined) {
+          spellCasting.override.ui = true;
           return evaluateCastMsj;
         }
         let visibleCheck = spell?.system.visible.value;
@@ -480,7 +478,8 @@ export class CombatAttackDialog extends FormApplication {
         } else if (spell?.system.via.value == 'darkness') {
           specialTypeCheck = 'attackSpellDarkness';
         }
-        let checkRes = resistanceCheck(spellUsedEffect);
+
+        let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
@@ -528,16 +527,13 @@ export class CombatAttackDialog extends FormApplication {
             roll: rolled,
             total: roll.total,
             fumble: roll.fumbled,
-            checkResistance: checkRes[0],
-            resistanceType: checkRes[1],
-            resistanceCheck: checkRes[2],
+            resistanceEffect,
             visible: visibleCheck,
             distance,
             projectile,
             specialType: specialTypeCheck,
             unableToAttack,
-            innate: spellInnate && castInnate,
-            prepared: spellPrepared && castPrepared,
+            spellCasting,
             zeonCost,
             macro: spell.macro
           }
@@ -602,7 +598,7 @@ export class CombatAttackDialog extends FormApplication {
         );
         const powerUsedEffect = power?.system.effects[newPotentialTotal].value;
         let newDamage = damageCheck(powerUsedEffect)[0] + damage;
-        let checkRes = resistanceCheck(powerUsedEffect);
+        let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let fatigueInmune = this.attackerActor.system.general.advantages.find(
           i => i.name === 'Res. a la fatiga psíquica'
         );
@@ -664,9 +660,7 @@ export class CombatAttackDialog extends FormApplication {
             roll: rolled,
             total: psychicProjectionRoll.total,
             fumble: psychicProjectionRoll.fumbled,
-            checkResistance: checkRes[0],
-            resistanceType: checkRes[1],
-            resistanceCheck: checkRes[2],
+            resistanceEffect,
             visible: visibleCheck,
             distance,
             projectile,
@@ -717,13 +711,12 @@ export class CombatAttackDialog extends FormApplication {
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
-    const mysticSpellCast = mysticSpellCastEvaluate(
+    const mysticSpellCheck = mysticSpellCastEvaluate(
       this.attackerActor,
       spell,
       mystic.spellGrade
     );
-    mystic.spellPrepared = mysticSpellCast.spellPrepared;
-    mystic.spellInnate = mysticSpellCast.spellInnate;
+    mystic.spellCasting.spell = mysticSpellCheck;
 
     const { weapons } = this.attackerActor.system.combat;
 

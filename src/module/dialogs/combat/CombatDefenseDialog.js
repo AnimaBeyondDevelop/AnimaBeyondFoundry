@@ -83,11 +83,12 @@ const getInitialData = (attacker, defender) => {
         magicProjectionType: 'defensive',
         spellUsed: undefined,
         spellGrade: 'base',
-        spellPrepared: false,
-        castPrepared: false,
-        spellInnate: false,
-        castInnate: false,
-        zeonAccumulated: 0,
+        spellCasting: {
+          zeonAccumulated: 0,
+          spell: { prepared: false, innate: false },
+          cast: { prepared: false, innate: false },
+          override: {value: false, ui: false}
+        },
         shieldUsed: undefined,
         shieldValue: 0,
         newShield: false
@@ -185,13 +186,18 @@ export class CombatDefenseDialog extends FormApplication {
       const spell = spells.find(w => w._id === mystic.spellUsed);
       mystic.zeonAccumulated =
         this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
-      const mysticSpellCast = mysticSpellCastEvaluate(
+      const mysticSpellCheck = mysticSpellCastEvaluate(
         this.defenderActor,
         spell,
         mystic.spellGrade
       );
-      mystic.spellPrepared = mysticSpellCast.spellPrepared;
-      mystic.spellInnate = mysticSpellCast.spellInnate;
+      mystic.spellCasting.spell = mysticSpellCheck;
+      const spellCastingOverride = this.defenderActor.getFlag(
+        'world',
+        `${this.defenderActor._id}.spellCastingOverride`
+      );
+      mystic.spellCasting.override.value = spellCastingOverride || false;
+      mystic.spellCasting.override.ui = spellCastingOverride || false;
     }
 
     if (mysticShields.length > 0) {
@@ -485,18 +491,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     html.find('.send-mystic-defense').click(() => {
       const {
-        mystic: {
-          modifier,
-          spellUsed,
-          spellGrade,
-          spellInnate,
-          castInnate,
-          spellPrepared,
-          castPrepared,
-          zeonAccumulated,
-          shieldUsed,
-          newShield
-        },
+        mystic: { modifier, spellUsed, spellGrade, spellCasting, shieldUsed, newShield },
         combat: { at },
         blindnessPen
       } = this.modalData.defender;
@@ -526,20 +521,21 @@ export class CombatDefenseDialog extends FormApplication {
       } else if (spellUsed) {
         this.defenderActor.setFlag(
           'world',
+          `${this.defenderActor._id}.spellCastingOverride`,
+          spellCasting.override.value
+        );
+        this.defenderActor.setFlag(
+          'world',
           `${this.defenderActor._id}.lastDefensiveSpellUsed`,
           spellUsed
         );
         spell = spells.find(w => w._id === spellUsed);
         zeonCost = spell?.system.grades[spellGrade].zeon.value;
-        let evaluateCastMsj = evaluateCast(
-          spellInnate,
-          castInnate,
-          spellPrepared,
-          castPrepared,
-          zeonAccumulated,
-          zeonCost
-        );
+        let evaluateCastMsj = !spellCasting.override.value
+          ? evaluateCast(spellCasting, zeonCost)
+          : undefined;
         if (evaluateCastMsj !== undefined) {
+          spellCasting.override.ui = true;
           return evaluateCastMsj;
         }
         const spellEffect = shieldValueCheck(
@@ -608,8 +604,7 @@ export class CombatDefenseDialog extends FormApplication {
           dobleDamage,
           cantDamage,
           atResValue,
-          innate: spellInnate && castInnate,
-          prepared: spellPrepared && castPrepared,
+          spellCasting,
           zeonCost,
           supShield
         }
@@ -815,13 +810,12 @@ export class CombatDefenseDialog extends FormApplication {
       )[0]?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    const mysticSpellCast = mysticSpellCastEvaluate(
+    const mysticSpellCheck = mysticSpellCastEvaluate(
       this.defenderActor,
       spell,
       mystic.spellGrade
     );
-    mystic.spellPrepared = mysticSpellCast.spellPrepared;
-    mystic.spellInnate = mysticSpellCast.spellInnate;
+    mystic.spellCasting.spell = mysticSpellCheck;
 
     const { mysticShields } = this.defenderActor.system.mystic;
     if (!mystic.shieldUsed) {

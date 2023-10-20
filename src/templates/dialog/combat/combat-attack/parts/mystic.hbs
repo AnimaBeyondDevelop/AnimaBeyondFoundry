@@ -2,8 +2,8 @@
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.zeonAccumulated.title")
   disabled=true
-  inputName="attacker.mystic.zeonAccumulated"
-  inputValue=this.attacker.mystic.zeonAccumulated
+  inputName="attacker.mystic.spellCasting.zeonAccumulated"
+  inputValue=this.attacker.mystic.spellCasting.zeonAccumulated
 }}
 
 {{>
@@ -79,7 +79,7 @@
 </div>
 {{/if}}
 
-{{#if this.attacker.mystic.spellInnate}}
+{{#if this.attacker.mystic.spellCasting.spell.innate}}
 <div class='columns'>
   <div>
     {{>
@@ -87,14 +87,14 @@
     title=(localize 'macros.combat.dialog.castInnate.title')
     disabled=this.attackSent
     inputType="checkbox"
-    inputName="attacker.mystic.castInnate"
-    inputValue=(is 'eq' this.attacker.mystic.castInnate true)
+    inputName="attacker.mystic.spellCasting.cast.innate"
+    inputValue=(is 'eq' this.attacker.mystic.spellCasting.cast.innate true)
     }}
   </div>
 </div>
 {{/if}}
 
-{{#if this.attacker.mystic.spellPrepared}}
+{{#if this.attacker.mystic.spellCasting.spell.prepared}}
 <div class='columns'>
   <div>
     {{>
@@ -102,8 +102,23 @@
     title=(localize 'macros.combat.dialog.castPrepared.title')
     disabled=this.attackSent
     inputType="checkbox"
-    inputName="attacker.mystic.castPrepared"
-    inputValue=(is 'eq' this.attacker.mystic.castPrepared true)
+    inputName="attacker.mystic.spellCasting.cast.prepared"
+    inputValue=(is 'eq' this.attacker.mystic.spellCasting.cast.prepared true)
+    }}
+  </div>
+</div>
+{{/if}}
+
+{{#if this.attacker.mystic.spellCasting.override.ui}}
+<div class='columns'>
+  <div>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.castOverride.title')
+    disabled=this.attackSent
+    inputType="checkbox"
+    inputName="attacker.mystic.spellCasting.override.value"
+    inputValue=(is 'eq' this.attacker.mystic.spellCasting.override.value true)
     }}
   </div>
 </div>
