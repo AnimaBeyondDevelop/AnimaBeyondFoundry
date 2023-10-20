@@ -448,7 +448,7 @@ export class GMCombatDialog extends FormApplication {
       if (winner === attacker.token) {
         const minimumDamage10 = this.modalData.calculations.difference - atResValue >= 10;
         if (minimumDamage10) {
-          if (this.modalData.attacker.result.values.checkResistance) {
+          if (this.modalData.attacker.result.values?.resistanceEffect.check) {
             this.modalData.ui.resistanceRoll = true;
           }
           if (this.modalData.attacker.result.values.specificAttack.check) {
