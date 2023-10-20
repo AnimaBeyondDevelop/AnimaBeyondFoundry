@@ -111,7 +111,7 @@ export class GMCombatDialog extends FormApplication {
     html.find('.cancel-button').click(async () => {
       this.mysticCastEvaluateIfAble();
       await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageShieldSupernaturalIfBeAble();
+      this.applyDamageSupernaturalShieldIfBeAble();
       this.accumulateDefensesIfAble();
       this.executeMacro(false);
       this.close();
@@ -120,7 +120,7 @@ export class GMCombatDialog extends FormApplication {
     html.find('.make-counter').click(async () => {
       this.mysticCastEvaluateIfAble();
       await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageShieldSupernaturalIfBeAble();
+      this.applyDamageSupernaturalShieldIfBeAble();
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
       this.executeMacro(false);
@@ -522,7 +522,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  applyDamageShieldSupernaturalIfBeAble() {
+  applyDamageSupernaturalShieldIfBeAble() {
     const cantDamage = this.modalData.defender.result?.values.cantDamage;
     const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
     const defenderIsWinner =
@@ -535,7 +535,7 @@ export class GMCombatDialog extends FormApplication {
       !cantDamage
     ) {
       const { supShield } = this.modalData.defender.result?.values;
-      this.defenderActor.applyDamageShieldSupernatural(
+      this.defenderActor.applyDamageSupernaturalShield(
         supShield,
         damage,
         dobleDamage,

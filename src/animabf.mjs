@@ -2,6 +2,7 @@ import { registerSettings } from './utils/registerSettings';
 import { preloadTemplates } from './utils/preloadTemplates';
 import { resetDefensesCounterHook } from './module/utils/hooks-scripts/resetDefensesCounterHook.js';
 import { zeonMaintained } from './module/utils/hooks-scripts/zeonMaintained.js';
+import { psychicShieldsMaintained } from './module/utils/hooks-scripts/psychicShieldsMaintained.js';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
@@ -77,6 +78,7 @@ Hooks.once('ready', () => {
 Hooks.on("combatRound", () => {
   resetDefensesCounterHook();
   zeonMaintained();
+  psychicShieldsMaintained();
 });
 
 Hooks.on("combatStart", () => resetDefensesCounterHook(true));

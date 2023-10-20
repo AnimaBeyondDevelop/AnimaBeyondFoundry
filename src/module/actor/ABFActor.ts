@@ -74,7 +74,7 @@ export class ABFActor extends Actor {
     executeArgsMacro(newShield.name, args);}, 100);
   }
 
-  applyDamageShieldSupernatural(
+  applyDamageSupernaturalShield(
     supShield: any,
     damage: number,
     dobleDamage: boolean,
