@@ -32,12 +32,15 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
     const results = await openComplexInputDialog(actor, 'newMysticShield');
     const spellID = results['new.mysticShield.id'];
     const spellGrade = results['new.mysticShield.grade'];
-    const castInnate = results['new.mysticShield.castInnate'];
-    const castPrepared = results['new.mysticShield.castPrepared'];
+    const castSpell = results['new.mysticShield.castSpell'];
+    const castInnate = castSpell == 'innate';
+    const castPrepared = castSpell == 'prepared';
+    const castOverride = castSpell == 'override';
     const spell = actor.system.mystic.spells.find(i => i._id == spellID);
     if (!spell) {
       return;
     }
+    actor.setFlag('world', `${actor._id}.spellCastingOverride`, castOverride);
     const zeonAccumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
     const mysticSpellCheck = mysticSpellCastEvaluate(actor, spell, spellGrade);
     const spellCasting = {
@@ -46,7 +49,9 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
       cast: { prepared: castPrepared, innate: castInnate }
     };
     const zeonCost = spell?.system.grades[spellGrade].zeon.value;
-    const evaluateCastMsj = evaluateCast(spellCasting, zeonCost);
+    const evaluateCastMsj = !castOverride
+      ? evaluateCast(spellCasting, zeonCost)
+      : undefined;
     if (evaluateCastMsj !== undefined) {
       return evaluateCastMsj;
     }

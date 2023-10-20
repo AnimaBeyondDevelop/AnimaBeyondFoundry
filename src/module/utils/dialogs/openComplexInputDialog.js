@@ -3,10 +3,28 @@ import { Templates } from '../constants';
 
 export const openComplexInputDialog = async (actor, dialogType) => {
   const referencedGame = game;
+  let castOverride = false;
+  if (dialogType  == 'newMysticShield'){
+    castOverride = actor.getFlag(
+      'world',
+      `${actor._id}.spellCastingOverride`
+    );
+  }
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
       name: Templates.Dialog[dialogType],
-      context: {data: { actor, mystic: {spellUsed: undefined, spellGrade: 'base', castInnate: false, castPrepared: false} } }
+      context: {
+        data: {
+          actor,
+          mystic: {
+            spellUsed: undefined,
+            spellGrade: 'base',
+            castInnate: false,
+            castPrepared: false,
+            castOverride
+          }
+        }
+      }
     },
     {
       name: Templates.Dialog.Icons.Accept
@@ -28,7 +46,7 @@ export const openComplexInputDialog = async (actor, dialogType) => {
           }
         }
       },
-      default: 'submit',
+      default: 'submit'
     }).render(true);
   });
 };
