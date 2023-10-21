@@ -1,9 +1,8 @@
-
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 export const getGeneralLocation = () => {
   const roll = new ABFFoundryRoll('1d100');
   roll.roll();
-  const generalLocation = { specific: 'none', general: 'none' };
+  const generalLocation = { specific: 'none', general: 'none', side: 'none' };
   if (roll.total < 11) {
     generalLocation.specific = 'ribs';
     generalLocation.general = 'torso';
@@ -24,40 +23,52 @@ export const getGeneralLocation = () => {
     generalLocation.general = 'torso';
   } else if (roll.total < 55) {
     generalLocation.specific = 'upperForearm';
-    generalLocation.general = 'rightArm';
+    generalLocation.general = 'arm';
+    generalLocation.side = 'right';
   } else if (roll.total < 59) {
     generalLocation.specific = 'lowerForearm';
-    generalLocation.general = 'rightArm';
+    generalLocation.general = 'arm';
+    generalLocation.side = 'right';
   } else if (roll.total < 61) {
     generalLocation.specific = 'hand';
-    generalLocation.general = 'rightArm';
+    generalLocation.general = 'arm';
+    generalLocation.side = 'right';
   } else if (roll.total < 65) {
     generalLocation.specific = 'upperForearm';
-    generalLocation.general = 'leftArm';
+    generalLocation.general = 'arm';
+    generalLocation.side = 'left';
   } else if (roll.total < 69) {
     generalLocation.specific = 'lowerForearm';
-    generalLocation.general = 'leftArm';
+    generalLocation.general = 'arm';
+    generalLocation.side = 'left';
   } else if (roll.total < 71) {
     generalLocation.specific = 'hand';
-    generalLocation.general = 'leftArm';
+    generalLocation.general = 'arm';
+    generalLocation.side = 'left';
   } else if (roll.total < 75) {
     generalLocation.specific = 'thigh';
-    generalLocation.general = 'rightLeg';
+    generalLocation.general = 'leg';
+    generalLocation.side = 'right';
   } else if (roll.total < 79) {
     generalLocation.specific = 'calf';
-    generalLocation.general = 'rightLeg';
+    generalLocation.general = 'leg';
+    generalLocation.side = 'right';
   } else if (roll.total < 81) {
     generalLocation.specific = 'foot';
-    generalLocation.general = 'rightLeg';
+    generalLocation.general = 'leg';
+    generalLocation.side = 'right';
   } else if (roll.total < 85) {
     generalLocation.specific = 'thigh';
-    generalLocation.general = 'leftLeg';
+    generalLocation.general = 'leg';
+    generalLocation.side = 'left';
   } else if (roll.total < 89) {
     generalLocation.specific = 'calf';
-    generalLocation.general = 'leftLeg';
+    generalLocation.general = 'leg';
+    generalLocation.side = 'left';
   } else if (roll.total < 91) {
     generalLocation.specific = 'foot';
-    generalLocation.general = 'leftLeg';
+    generalLocation.general = 'leg';
+    generalLocation.side = 'left';
   } else {
     generalLocation.specific = 'head';
     generalLocation.general = 'head';

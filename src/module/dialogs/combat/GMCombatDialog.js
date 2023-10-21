@@ -477,19 +477,25 @@ export class GMCombatDialog extends FormApplication {
         return;
       }
       const targeted = specificAttack.targeted !== 'none';
-      const generalLocation = targeted
-        ? specificAttack.targeted
-        : getGeneralLocation().specific;
+      const generalLocation = getGeneralLocation();
+      const location = targeted ? specificAttack.targeted : generalLocation.specific;
       let formula = `1d100CriticRoll + ${calculations.damage}`;
       const criticRoll = new ABFFoundryRoll(formula, this.attackerActor.system);
       criticRoll.roll();
       const { i18n } = game;
-      const flavor = `${i18n.format(
-        `macros.combat.dialog.hasCritic.title`,
-        {
+      let flavor;
+      if (generalLocation.side == 'none') {
+        flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
           target: this.modalData.defender.token.name
-        }
-      )} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${generalLocation}.title`)} )`;
+        })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
+      } else
+        flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
+          target: this.modalData.defender.token.name
+        })} ( ${i18n.format(
+          `macros.combat.dialog.targetedAttack.${location}.title`
+        )} ) ${i18n.format(
+          `macros.combat.dialog.targetedAttack.side.${generalLocation.side}.title`
+        )}`;
       criticRoll.toMessage({
         speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
         flavor
@@ -500,6 +506,13 @@ export class GMCombatDialog extends FormApplication {
         this.modalData.attacker.token,
         this.modalData.defender.token
       );
+      const macroName = 'Critical Attack';
+      const macro = game.macros.getName(macroName);
+      if (macro) {
+        macro.execute(args);
+      } else {
+        console.debug(`Macro '${macroName}' not found.`);
+      }
     }
   }
 
