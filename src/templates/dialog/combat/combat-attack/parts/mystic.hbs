@@ -77,7 +77,7 @@
 </div>
 {{/if}}
 
-{{#if this.attacker.mystic.spellCasting.spell.innate}}
+{{#if (and this.attacker.mystic.spellCasting.spell.innate (is 'eq' this.attacker.mystic.spellCasting.override.value false))}}
 <div class='columns'>
   <div>
     {{>
@@ -92,7 +92,7 @@
 </div>
 {{/if}}
 
-{{#if this.attacker.mystic.spellCasting.spell.prepared}}
+{{#if (and this.attacker.mystic.spellCasting.spell.prepared (is 'eq' this.attacker.mystic.spellCasting.override.value false))}}
 <div class='columns'>
   <div>
     {{>
