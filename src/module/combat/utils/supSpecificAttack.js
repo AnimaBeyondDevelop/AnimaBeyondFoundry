@@ -3,7 +3,9 @@ export const supSpecificAttack = effect => {
     value: 'none',
     causeDamage: false,
     characteristic: undefined,
-    check: false
+    check: false,
+    targeted: 'none',
+    weakspot: false
   };
   if (/Fuerza[^\d+]+\d+/i.test(effect)) {
     specificAttack.value = 'immobilize';

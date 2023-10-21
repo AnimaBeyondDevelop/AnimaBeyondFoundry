@@ -2,7 +2,9 @@ import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateCharacteristicImbalance } from '../../combat/utils/calculateCharacteristicImbalance';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
+import { getGeneralLocation } from '../../combat/utils/getGeneralLocation';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
+import { getResistanceRoll } from '../../utils/functions/getResistanceRoll';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -132,45 +134,15 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-resistance').click(async () => {
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
-      const resistance =
-        this.defenderActor.system.characteristics.secondaries.resistances[type].base
-          .value;
-      let formula = `1d100 + ${resistance ?? 0}`;
-      const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
-      resistanceRoll.roll();
-      const { i18n } = game;
-      const flavor = i18n.format('macros.combat.dialog.physicalDefense.resist.title', {
-        target: this.modalData.attacker.token.name
-      });
-      resistanceRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-        flavor
-      });
-
-      const data = {
-        attacker: {
-          name: this.attackerToken.name,
-          img: this.attackerToken.texture.src,
-        },
-        defender: {
-          name: this.defenderToken.name,
-          img: this.defenderToken.texture.src,
-        },
-        result: resistanceRoll.total - resCheck,
-        type: 'resistance',
-        resistCheck: resCheck
-      };
-
-      await renderTemplate(Templates.Chat.CheckResult, data).then(content => {
-        ChatMessage.create({
-          content
-        });
-      });
-
+      const resistanceRoll = await getResistanceRoll(
+        value,
+        type,
+        this.modalData.attacker.token,
+        this.modalData.defender.token
+      );
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
-      }
-      this.applyValuesIfBeAble(resistanceRoll.total);
+      this.applyValuesIfBeAble(resistanceRoll.total - value);
       this.close();
     });
 
@@ -178,10 +150,13 @@ export class GMCombatDialog extends FormApplication {
       const { i18n } = game;
       const { specificAttack } = this.modalData.attacker.result.values;
       if (this.canApplyDamage) {
-        this.defenderActor.applyDamage(this.modalData.calculations.damage);
+        const { calculations } = this.modalData;
+        const damage = calculations.isNonLethalDamage
+          ? calculations.nonLethalDamage
+          : calculations.damage;
+        this.defenderActor.applyDamage(damage);
       }
-      const attackerCharacteristic =
-        specificAttack.characteristic;
+      const attackerCharacteristic = specificAttack.characteristic;
       const defenderCharacteristic =
         this.modalData.defender.result.values.specificAttack.characteristic;
       const { difference, atResValue } = this.modalData.calculations;
@@ -245,7 +220,9 @@ export class GMCombatDialog extends FormApplication {
           img: this.defenderToken.texture.src,
           roll: defenderCharacteristicRoll.total
         },
-        result: Math.abs(attackerCharacteristicRoll.total - defenderCharacteristicRoll.total),
+        result: Math.abs(
+          attackerCharacteristicRoll.total - defenderCharacteristicRoll.total
+        ),
         specificAttack: specificAttack.value,
         type: 'characteristic'
       };
@@ -384,6 +361,10 @@ export class GMCombatDialog extends FormApplication {
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       const atResistance = defender.result.values?.at * 10 + 20;
+      const { specificAttack } = this.modalData.attacker.result.values;
+
+      const isNonLethalDamage =
+        specificAttack.value == 'disable' || specificAttack.value == 'knockOut';
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -416,7 +397,9 @@ export class GMCombatDialog extends FormApplication {
             atResistance,
             canCounter: false,
             winner,
-            damage: combatResult.damage
+            damage: combatResult.damage,
+            nonLethalDamage: combatResult.nonLethalDamage,
+            isNonLethalDamage
           };
         }
       } else {
@@ -434,7 +417,7 @@ export class GMCombatDialog extends FormApplication {
           if (attacker.result.values?.resistanceEffect.check) {
             this.modalData.ui.resistanceRoll = true;
           }
-          if (this.modalData.attacker.result.values.specificAttack.check) {
+          if (specificAttack.check) {
             this.modalData.ui.characteristicRoll = true;
           }
         }
@@ -460,6 +443,56 @@ export class GMCombatDialog extends FormApplication {
     if (this.modalData.defender.result?.type === 'combat') {
       this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigueUsed);
     }
+    this.mysticCastEvaluateIfAble();
+    this.accumulateDefensesIfAble();
+    const supShieldId = await this.newSupernaturalShieldIfBeAble();
+
+    if (this.canApplyDamage) {
+      this.defenderActor.applyDamage(this.modalData.calculations.damage);
+    } else {
+      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
+    }
+    await this.criticIfBeAble();
+
+    this.executeCombatMacro(resistanceRoll);
+  }
+
+  async criticIfBeAble() {
+    if (this.canApplyDamage) {
+      const { specificAttack } = this.modalData.attacker.result.values;
+      const { lifePoints } = this.modalData.defender.result.values;
+      const { calculations } = this.modalData;
+      const hasCritic = specificAttack.weakspot
+        ? calculations.damage >= lifePoints / 10
+        : calculations.damage >= lifePoints / 2;
+      if (!hasCritic) {
+        return;
+      }
+      const targeted = specificAttack.targeted !== 'none';
+      const generalLocation = targeted
+        ? specificAttack.targeted
+        : getGeneralLocation().specific;
+      let formula = `1d100CriticRoll + ${calculations.damage}`;
+      const criticRoll = new ABFFoundryRoll(formula, this.attackerActor.system);
+      criticRoll.roll();
+      const { i18n } = game;
+      const flavor = `${i18n.format(
+        `macros.combat.dialog.hasCritic.title`,
+        {
+          target: this.modalData.defender.token.name
+        }
+      )} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${generalLocation}.title`)} )`;
+      criticRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+        flavor
+      });
+      const ResistanceRoll = await getResistanceRoll(
+        criticRoll.total,
+        'physical',
+        this.modalData.attacker.token,
+        this.modalData.defender.token
+      );
+    }
 
     this.mysticCastEvaluateIfAble();
     this.accumulateDefensesIfAble();
@@ -472,6 +505,44 @@ export class GMCombatDialog extends FormApplication {
     }
 
     this.executeCombatMacro(resistanceRoll);
+  }
+
+  async criticIfBeAble() {
+    if (this.canApplyDamage) {
+      const { specificAttack } = this.modalData.attacker.result.values;
+      const { lifePoints } = this.modalData.defender.result.values;
+      const { calculations } = this.modalData;
+      const hasCritic = specificAttack.weakspot
+        ? calculations.damage >= lifePoints / 10
+        : calculations.damage >= lifePoints / 2;
+      if (!hasCritic) {
+        return;
+      }
+      const targeted = specificAttack.targeted !== 'none';
+      const generalLocation = targeted
+        ? specificAttack.targeted
+        : getGeneralLocation().specific;
+      let formula = `1d100CriticRoll + ${calculations.damage}`;
+      const criticRoll = new ABFFoundryRoll(formula, this.attackerActor.system);
+      criticRoll.roll();
+      const { i18n } = game;
+      const flavor = `${i18n.format(
+        `macros.combat.dialog.hasCritic.title`,
+        {
+          target: this.modalData.defender.token.name
+        }
+      )} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${generalLocation}.title`)} )`;
+      criticRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+        flavor
+      });
+      const ResistanceRoll = await getResistanceRoll(
+        criticRoll.total,
+        'physical',
+        this.modalData.attacker.token,
+        this.modalData.defender.token
+      );
+    }
   }
 
   mysticCastEvaluateIfAble() {
@@ -632,8 +703,8 @@ export class GMCombatDialog extends FormApplication {
       macroName = this.modalData.attacker.result?.values.macro;
     }
 
-    if(specificAttackResult !== undefined) {
-      macroName = "Specific Attack"
+    if (specificAttackResult !== undefined) {
+      macroName = 'Specific Attack';
     }
 
     const macro = game.macros.getName(macroName);

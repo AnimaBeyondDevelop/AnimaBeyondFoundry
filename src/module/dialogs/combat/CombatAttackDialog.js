@@ -46,7 +46,16 @@ const getInitialData = (attacker, defender, options = {}) => {
         enable: combatDistance,
         check: false
       },
-      specificAttacks: ['none', 'knockDown', 'disarm', 'immobilize'],
+      specificAttacks: [
+        'none',
+        'knockDown',
+        'disable',
+        'disarm',
+        'immobilize',
+        'knockOut',
+        'targeted'
+      ],
+      targetedAttacks: [],
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -70,7 +79,9 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: 'none',
           causeDamage: false,
           characteristic: undefined,
-          check: false
+          check: false,
+          targeted: 'none',
+          weakspot: false
         }
       },
       mystic: {
@@ -105,8 +116,12 @@ const getInitialData = (attacker, defender, options = {}) => {
       },
       psychic: {
         modifier: 0,
-        psychicProjection:
-          attackerActor.system.psychic.psychicProjection.imbalance.offensive.final.value,
+        psychicProjection: {
+          base: attackerActor.system.psychic.psychicProjection.imbalance.offensive.base
+            .value,
+          final:
+            attackerActor.system.psychic.psychicProjection.imbalance.offensive.final.value
+        },
         psychicPotential: {
           special: 0,
           final: attackerActor.system.psychic.psychicPotential.final.value
@@ -207,6 +222,26 @@ export class CombatAttackDialog extends FormApplication {
       combat.unarmed = true;
     }
 
+    this.modalData.attacker.targetedAttacks = [
+      { bodyPart: 'none', modifier: 0, weakspot: false },
+      { bodyPart: 'neck', modifier: -80, weakspot: true },
+      { bodyPart: 'head', modifier: -60, weakspot: true },
+      { bodyPart: 'elbow', modifier: -60, weakspot: false },
+      { bodyPart: 'heart', modifier: -60, weakspot: true },
+      { bodyPart: 'groin', modifier: -60, weakspot: false },
+      { bodyPart: 'foot', modifier: -50, weakspot: false },
+      { bodyPart: 'hand', modifier: -40, weakspot: false },
+      { bodyPart: 'knee', modifier: -40, weakspot: false },
+      { bodyPart: 'abdomen', modifier: -20, weakspot: false },
+      { bodyPart: 'arm', modifier: -20, weakspot: false },
+      { bodyPart: 'thigh', modifier: -20, weakspot: false },
+      { bodyPart: 'calf', modifier: -10, weakspot: false },
+      { bodyPart: 'torso', modifier: -10, weakspot: false },
+      { bodyPart: 'eye', modifier: -100, weakspot: false },
+      { bodyPart: 'wrist', modifier: -40, weakspot: false },
+      { bodyPart: 'shoulder', modifier: -30, weakspot: false }
+    ];
+
     this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
 
     this.hooks = hooks;
@@ -271,6 +306,7 @@ export class CombatAttackDialog extends FormApplication {
           specificAttack
         },
         distance,
+        targetedAttacks,
         highGround,
         poorVisibility,
         targetInCover
@@ -314,12 +350,13 @@ export class CombatAttackDialog extends FormApplication {
         ) {
           attackerCombatMod.secondaryCritic = { value: -10, apply: true };
         }
+        const critic = criticSelected ?? WeaponCritic.IMPACT;
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
         if (specificAttack.value !== 'none') {
-          specificAttack.check = true;
           if (specificAttack.value == 'knockDown') {
+            specificAttack.check = true;
             if (
               unarmed ||
               weapon.name == 'Desarmado' ||
@@ -330,9 +367,27 @@ export class CombatAttackDialog extends FormApplication {
               combatModifier -= 60;
             }
           } else if (specificAttack.value == 'disarm') {
+            specificAttack.check = true;
             combatModifier -= 40;
           } else if (specificAttack.value == 'immobilize') {
+            specificAttack.check = true;
             combatModifier -= 40;
+          } else if (specificAttack.value == 'knockOut') {
+            specificAttack.targeted = 'head';
+            if (critic !== NoneWeaponCritic.IMPACT) {
+              combatModifier -= 40;
+            }
+          }
+          if (specificAttack.targeted !== 'none') {
+            specificAttack.weakspot = targetedAttacks.find(
+              i => i.bodyPart == specificAttack.targeted
+            )?.weakspot;
+            if (specificAttack.value == 'disable') {
+              specificAttack.weakspot = true;
+            }
+            combatModifier +=
+              targetedAttacks.find(i => i.bodyPart == specificAttack.targeted)
+                ?.modifier ?? 0;
           }
         }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
@@ -372,7 +427,6 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const critic = criticSelected ?? WeaponCritic.IMPACT;
         let resistanceEffect = { value: 0, type: undefined, check: false };
         if (weapon !== undefined) {
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
@@ -384,6 +438,7 @@ export class CombatAttackDialog extends FormApplication {
           type: 'combat',
           values: {
             specificAttack,
+            targetedAttacks,
             unarmed,
             damage: damage.final,
             attack,
@@ -419,7 +474,7 @@ export class CombatAttackDialog extends FormApplication {
           damage,
           projectile,
           distanceCheck
-        }, distance } = this.modalData.attacker;
+        }, distance, targetedAttacks } = this.modalData.attacker;
       distance.check = distanceCheck
       if (spellUsed) {
         const attackerCombatMod = {
@@ -494,6 +549,7 @@ export class CombatAttackDialog extends FormApplication {
             projectile,
             spellCasting,
             specificAttack,
+            targetedAttacks,
             macro: spell.macro,
             attackerCombatMod
           }
@@ -514,7 +570,7 @@ export class CombatAttackDialog extends FormApplication {
         critic,
         damageModifier,
         projectile,
-        distanceCheck }, distance
+        distanceCheck }, distance, targetedAttacks
       } = this.modalData.attacker;
       distance.check = distanceCheck
       const { i18n } = game;
@@ -529,12 +585,12 @@ export class CombatAttackDialog extends FormApplication {
         for (const key in attackerCombatMod) {
           combatModifier += attackerCombatMod[key]?.value ?? 0;
         }
-        let formula = `1d100xa + ${psychicProjection} + ${combatModifier ?? 0}`;
+        let formula = `1d100xa + ${psychicProjection.final} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.system.psychic.psychicProjection.base.value >= 200) {
+        if (psychicProjection.base >= 200) {
           // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
@@ -587,7 +643,7 @@ export class CombatAttackDialog extends FormApplication {
         let visibleCheck = power?.system.visible;
 
         const rolled =
-          psychicProjectionRoll.total - psychicProjection - (combatModifier ?? 0);
+          psychicProjectionRoll.total - psychicProjection.final - (combatModifier ?? 0);
         this.hooks.onAttack({
           type: 'psychic',
           values: {
@@ -595,7 +651,7 @@ export class CombatAttackDialog extends FormApplication {
             powerUsed,
             powerName: power.name,
             psychicPotential: psychicPotentialRoll.total,
-            psychicProjection,
+            psychicProjection: psychicProjection.final,
             critic,
             damage,
             psychicFatigue,
@@ -607,6 +663,7 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             specificAttack,
+            targetedAttacks,
             macro: power.macro,
             attackerCombatMod
           }
@@ -664,8 +721,17 @@ export class CombatAttackDialog extends FormApplication {
     combat.specificAttack.characteristic = weaponSpecial
       ? weaponSpecial
       : Math.max(attackerStrength, attackerDexterity);
-    if (combat.specificAttack.value == 'disarm') {
+    if (
+      combat.specificAttack.value !== 'knockDown' &&
+      combat.specificAttack.value !== 'immobilize'
+    ) {
       combat.specificAttack.causeDamage = false;
+    }
+    if (
+      combat.specificAttack.value !== 'disable' &&
+      combat.specificAttack.value !== 'targeted'
+    ) {
+      combat.specificAttack.targeted = 'none';
     }
     combat.unarmed =
       weapons.length === 0 ||
@@ -676,11 +742,12 @@ export class CombatAttackDialog extends FormApplication {
         combat.damage.special +
         10 +
         this.attackerActor.system.characteristics.primaries.strength.mod;
-      combat.damage.final =
-        combat.specificAttack.value == 'none'
+      combat.damage.final = combat.specificAttack.causeDamage
+        ? roundTo5Multiples(unarmedDamage / 2)
+        : combat.specificAttack.value !== 'knockDown' &&
+          combat.specificAttack.value !== 'disarm' &&
+          combat.specificAttack.value !== 'immobilize'
           ? unarmedDamage
-          : combat.specificAttack.causeDamage
-          ? roundTo5Multiples(unarmedDamage / 2)
           : 0;
     } else {
       combat.weapon = weapon;
@@ -703,11 +770,12 @@ export class CombatAttackDialog extends FormApplication {
       ui.weaponHasSecondaryCritic =
         weapon.system.critic.secondary.value !== NoneWeaponCritic.NONE;
       const armedDamage = combat.damage.special + weapon.system.damage.final.value;
-      combat.damage.final =
-        combat.specificAttack.value == 'none'
+      combat.damage.final = combat.specificAttack.causeDamage
+        ? roundTo5Multiples(armedDamage / 2)
+        : combat.specificAttack.value !== 'knockDown' &&
+          combat.specificAttack.value !== 'disarm' &&
+          combat.specificAttack.value !== 'immobilize'
           ? armedDamage
-          : combat.specificAttack.causeDamage
-          ? roundTo5Multiples(armedDamage / 2)
           : 0;
     }
 

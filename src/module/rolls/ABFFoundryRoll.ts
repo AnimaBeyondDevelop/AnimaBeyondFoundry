@@ -3,6 +3,7 @@ import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 import ABFControlRoll from './ABFControlRoll/ABFControlRoll';
 import ABFPsychicRoll from './ABFPsychicRoll/ABFPsychicRoll';
+import ABFCriticRoll from './ABFCriticRoll/ABFCriticRoll';
 import { ABFActorDataSourceData } from '../types/Actor';
 
 /**
@@ -45,6 +46,10 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
 
     if (this.formula.includes('PsychicRoll')) {
       this.abfRoll = new ABFPsychicRoll(this);
+    }
+
+    if (this.formula.includes('CriticRoll')) {
+      this.abfRoll = new ABFCriticRoll(this);
     }
   }
 

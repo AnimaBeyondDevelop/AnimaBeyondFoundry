@@ -45,6 +45,7 @@ const getInitialData = (attacker, defender) => {
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
+      lifePoints: defenderActor.system.characteristics.secondaries.lifePoints.value,
       blindness: false,
       distance: attacker.distance,
       specificAttack: { characteristic: undefined },
@@ -99,8 +100,12 @@ const getInitialData = (attacker, defender) => {
           base: defenderActor.system.psychic.psychicPotential.base.value,
           final: defenderActor.system.psychic.psychicPotential.final.value
         },
-        psychicProjection:
-          defenderActor.system.psychic.psychicProjection.imbalance.defensive.final.value,
+        psychicProjection: {
+          base: defenderActor.system.psychic.psychicProjection.imbalance.defensive.base
+            .value,
+          final:
+            defenderActor.system.psychic.psychicProjection.imbalance.defensive.final.value
+        },
         powerUsed: undefined,
         supernaturalShield: {
           shieldUsed: undefined,
@@ -144,7 +149,8 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.system.general.settings.inmaterial.value;
     if (
       (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
-      this.modalData.attacker.damage == 0) || this.modalData.attacker.specificAttack.check
+        this.modalData.attacker.damage == 0) ||
+      this.modalData.attacker.specificAttack.check
     ) {
       this.modalData.defender.combat.at.defense = true;
     }
@@ -307,6 +313,7 @@ export class CombatDefenseDialog extends FormApplication {
           accumulateDefenses,
           weaponUsed
         },
+        lifePoints,
         blindness,
         distance,
         specificAttack
@@ -427,7 +434,8 @@ export class CombatDefenseDialog extends FormApplication {
           total: roll.total,
           accumulateDefenses,
           defenderCombatMod,
-          specificAttack
+          specificAttack,
+          lifePoints
         }
       });
 
@@ -464,6 +472,7 @@ export class CombatDefenseDialog extends FormApplication {
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
+        lifePoints,
         blindness,
         specificAttack
       } = this.modalData.defender;
@@ -544,7 +553,8 @@ export class CombatDefenseDialog extends FormApplication {
           spellCasting,
           supShield,
           defenderCombatMod,
-          specificAttack
+          specificAttack,
+          lifePoints
         }
       });
 
@@ -557,36 +567,34 @@ export class CombatDefenseDialog extends FormApplication {
       const {
         psychic: {
           psychicPotential,
-          powerUsed,
+          psychicProjection, powerUsed,
           modifier,
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
+        lifePoints,
         blindness,
         specificAttack
       } = this.modalData.defender;
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
-      const { supernaturalShields } = this.defenderActor.system.combat;
+      const { supernaturalShields} = this.defenderActor.system.combat;
       let power, psychicFatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
       };
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
-      const psychicProjection =
-        this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
-          .value;
       let combatModifier = 0;
       for (const key in defenderCombatMod) {
         combatModifier += defenderCombatMod[key]?.value ?? 0;
       }
-      let formula = `1d100xa + ${psychicProjection} + ${combatModifier}`;
+      let formula = `1d100xa + ${psychicProjection.final} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
       }
-      if (this.defenderActor.system.psychic.psychicProjection.base.value >= 200) {
+      if (psychicProjection.base >= 200) {
         // Mastery reduces the fumble range
         formula = formula.replace('xa', 'xamastery');
       }
@@ -596,7 +604,7 @@ export class CombatDefenseDialog extends FormApplication {
         this.defenderActor.system
       );
       psychicProjectionRoll.roll();
-      const rolled = psychicProjectionRoll.total - psychicProjection - combatModifier;
+      const rolled = psychicProjectionRoll.total - psychicProjection.final - combatModifier;
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -652,7 +660,7 @@ export class CombatDefenseDialog extends FormApplication {
         values: {
           modifier: combatModifier,
           powerUsed,
-          psychicProjection,
+          psychicProjection: psychicProjection.final,
           psychicPotential: newPsychicPotential ?? 0,
           at: at.final,
           roll: psychicFatigue ? 0 : rolled,
@@ -660,7 +668,8 @@ export class CombatDefenseDialog extends FormApplication {
           psychicFatigue,
           supShield,
           defenderCombatMod,
-          specificAttack
+          specificAttack,
+          lifePoints
         }
       });
 
