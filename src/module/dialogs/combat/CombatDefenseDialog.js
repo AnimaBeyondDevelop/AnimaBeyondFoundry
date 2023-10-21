@@ -613,7 +613,8 @@ export class CombatDefenseDialog extends FormApplication {
           cantDamage,
           atResValue,
           spellCasting,
-          supShield
+          supShield,
+          specificAttack
         }
       });
 
