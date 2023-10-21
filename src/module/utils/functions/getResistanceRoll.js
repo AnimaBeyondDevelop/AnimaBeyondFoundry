@@ -34,5 +34,5 @@ export const getResistanceRoll = async (value, type, attacker, defender) => {
       content
     });
   });
-  return resistanceRoll;
+  return resistanceRoll.total - value;
 };

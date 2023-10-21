@@ -476,40 +476,42 @@ export class GMCombatDialog extends FormApplication {
       if (!hasCritic) {
         return;
       }
+      const attacker = this.modalData.attacker.token;
+      const defender = this.modalData.defender.token;
       const targeted = specificAttack.targeted !== 'none';
       const generalLocation = getGeneralLocation();
       const location = targeted ? specificAttack.targeted : generalLocation.specific;
       let formula = `1d100CriticRoll + ${calculations.damage}`;
-      const criticRoll = new ABFFoundryRoll(formula, this.attackerActor.system);
+      const criticRoll = new ABFFoundryRoll(formula, attacker.actor.system);
       criticRoll.roll();
       const { i18n } = game;
       let flavor;
       if (generalLocation.side == 'none') {
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
-          target: this.modalData.defender.token.name
+          target: defender.name
         })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
       } else
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
-          target: this.modalData.defender.token.name
+          target: defender.name
         })} ( ${i18n.format(
           `macros.combat.dialog.targetedAttack.${location}.title`
         )} ) ${i18n.format(
           `macros.combat.dialog.targetedAttack.side.${generalLocation.side}.title`
         )}`;
       criticRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+        speaker: ChatMessage.getSpeaker({ token: attacker }),
         flavor
       });
-      const ResistanceRoll = await getResistanceRoll(
+      const resistanceRoll = await getResistanceRoll(
         criticRoll.total,
         'physical',
-        this.modalData.attacker.token,
-        this.modalData.defender.token
+        attacker,
+        defender
       );
       const macroName = 'Critical Attack';
       const macro = game.macros.getName(macroName);
       if (macro) {
-        macro.execute(args);
+        macro.execute({ attacker, defender, resistanceRoll });
       } else {
         console.debug(`Macro '${macroName}' not found.`);
       }
@@ -607,8 +609,8 @@ export class GMCombatDialog extends FormApplication {
         ? 'defender'
         : 'attacker';
     let args = {
-      attacker: this.attackerToken,
-      defender: this.defenderToken,
+      attacker: this.modalData.attacker.token,
+      defender: this.modalData.defender.token,
       winner,
       defenseType: this.modalData.defender.result.values.type,
       totalAttack: this.modalData.attacker.result.values.total,
