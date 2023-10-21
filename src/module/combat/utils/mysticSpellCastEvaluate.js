@@ -11,7 +11,7 @@ export const mysticSpellCastEvaluate = (actor, spell, spellGrade) => {
     innateMagic.via.length !== 0 && innateVia
       ? innateVia.system.final.value
       : innateMagic.main.final.value;
-      mysticSpellCheck.innate =
+  mysticSpellCheck.innate =
     innateMagicValue >= spell?.system.grades[spellGrade].zeon.value;
   return mysticSpellCheck;
 };

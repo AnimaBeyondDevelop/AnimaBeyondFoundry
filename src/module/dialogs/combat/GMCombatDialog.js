@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
+import { mysticCast } from '../../utils/functions/mysticCast';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -352,38 +353,16 @@ export class GMCombatDialog extends FormApplication {
 
   mysticCastEvaluateIfAble() {
     if (this.modalData.attacker.result?.type === 'mystic') {
-      const { spell, cast, override } =
-        this.modalData.attacker.result.values?.spellCasting;
-      if (!override.value) {
-        if (spell.innate && cast.innate) {
-        } else if (spell.prepared && cast.prepared) {
-          this.attackerActor.deletePreparedSpell(
-            this.modalData.attacker.result.values?.spellName,
-            this.modalData.attacker.result.values?.spellGrade
-          );
-        } else {
-          this.attackerActor.consumeAccumulatedZeon(
-            this.modalData.attacker.result.values?.zeonCost
-          );
-        }
-      }
+      const { spellCasting, spellName, spellGrade } =
+        this.modalData.attacker.result.values;
+      mysticCast(this.attackerActor, spellCasting, spellName, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
-      const { spell, cast, override } =
-        this.modalData.defender.result.values?.spellCasting;
-      if (!override.value) {
-        if (spell.innate && cast.innate) {
-        } else if (spell.prepared && cast.prepared) {
-          this.defenderActor.deletePreparedSpell(
-            this.modalData.defender.result.values?.spellName,
-            this.modalData.defender.result.values?.spellGrade
-          );
-        } else {
-          this.defenderActor.consumeAccumulatedZeon(
-            this.modalData.defender.result.values?.zeonCost
-          );
-        }
+      const { spellCasting, spellName, spellGrade, supShield } =
+        this.modalData.defender.result.values;
+      if (supShield.create) {
+        mysticCast(this.defenderActor, spellCasting, spellName, spellGrade);
       }
     }
   }

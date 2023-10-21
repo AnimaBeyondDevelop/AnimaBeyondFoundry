@@ -80,14 +80,19 @@ const getInitialData = (attacker, defender) => {
       },
       mystic: {
         modifier: 0,
-        magicProjectionType: 'defensive',
+        magicProjection: {
+          base: defenderActor.system.mystic.magicProjection.imbalance.defensive.base
+            .value,
+          final:
+          defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value
+        },
         spellUsed: undefined,
         spellGrade: 'base',
         spellCasting: {
-          zeonAccumulated: 0,
+          zeon: { accumulated: 0, cost: 0 },
           spell: { prepared: false, innate: false },
           cast: { prepared: false, innate: false },
-          override: {value: false, ui: false}
+          override: { value: false, ui: false }
         },
         shieldUsed: undefined,
         shieldValue: 0,
@@ -184,7 +189,7 @@ export class CombatDefenseDialog extends FormApplication {
         lastDefensiveSpellUsed ||
         spells.filter(w => w.system.combatType.value === 'defense')[0]?._id;
       const spell = spells.find(w => w._id === mystic.spellUsed);
-      mystic.zeonAccumulated =
+      mystic.spellCasting.zeon.accumulated =
         this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
       const mysticSpellCheck = mysticSpellCastEvaluate(
         this.defenderActor,
@@ -491,13 +496,12 @@ export class CombatDefenseDialog extends FormApplication {
 
     html.find('.send-mystic-defense').click(() => {
       const {
-        mystic: { modifier, spellUsed, spellGrade, spellCasting, shieldUsed, newShield },
+        mystic: { magicProjection, modifier, spellUsed, spellGrade, spellCasting, shieldUsed, newShield },
         combat: { at },
         blindnessPen
       } = this.modalData.defender;
       const { spells, mysticShields } = this.defenderActor.system.mystic;
       let spell,
-        zeonCost,
         supShield = { create: false },
         atResValue = 0;
       if (at.defense) {
@@ -505,10 +509,6 @@ export class CombatDefenseDialog extends FormApplication {
       }
 
       const newModifier = blindnessPen + modifier ?? 0;
-      const magicProjection =
-        this.defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value;
-      const baseMagicProjection =
-        this.defenderActor.system.mystic.magicProjection.imbalance.defensive.base.value;
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -530,10 +530,8 @@ export class CombatDefenseDialog extends FormApplication {
           spellUsed
         );
         spell = spells.find(w => w._id === spellUsed);
-        zeonCost = spell?.system.grades[spellGrade].zeon.value;
-        let evaluateCastMsj = !spellCasting.override.value
-          ? evaluateCast(spellCasting, zeonCost)
-          : undefined;
+        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+        let evaluateCastMsj = evaluateCast(spellCasting);
         if (evaluateCastMsj !== undefined) {
           spellCasting.override.ui = true;
           return evaluateCastMsj;
@@ -552,12 +550,12 @@ export class CombatDefenseDialog extends FormApplication {
         };
       }
 
-      let formula = `1d100xa + ${magicProjection} + ${newModifier}`;
+      let formula = `1d100xa + ${magicProjection.final} + ${newModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
       }
-      if (baseMagicProjection >= 200) {
+      if (magicProjection.base >= 200) {
         // Mastery reduces the fumble range
         formula = formula.replace('xa', 'xamastery');
       }
@@ -587,13 +585,13 @@ export class CombatDefenseDialog extends FormApplication {
       dobleDamage = shieldCheck[1];
       cantDamage = shieldCheck[2];
 
-      const rolled = roll.total - magicProjection - newModifier;
+      const rolled = roll.total - magicProjection.final - newModifier;
 
       this.hooks.onDefense({
         type: 'mystic',
         values: {
           modifier: newModifier,
-          magicProjection,
+          magicProjection: magicProjection.final,
           spellGrade,
           spellUsed,
           spellName: spell.name,
@@ -605,7 +603,6 @@ export class CombatDefenseDialog extends FormApplication {
           cantDamage,
           atResValue,
           spellCasting,
-          zeonCost,
           supShield
         }
       });
@@ -816,6 +813,12 @@ export class CombatDefenseDialog extends FormApplication {
       mystic.spellGrade
     );
     mystic.spellCasting.spell = mysticSpellCheck;
+    if (!mystic.spellCasting.spell.innate) {
+      mystic.spellCasting.cast.innate = false;
+    }
+    if (!mystic.spellCasting.spell.prepared) {
+      mystic.spellCasting.cast.prepared = false;
+    }
 
     const { mysticShields } = this.defenderActor.system.mystic;
     if (!mystic.shieldUsed) {
