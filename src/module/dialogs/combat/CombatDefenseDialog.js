@@ -543,7 +543,8 @@ export class CombatDefenseDialog extends FormApplication {
           total: roll.total,
           spellCasting,
           supShield,
-          defenderCombatMod
+          defenderCombatMod,
+          specificAttack
         }
       });
 
