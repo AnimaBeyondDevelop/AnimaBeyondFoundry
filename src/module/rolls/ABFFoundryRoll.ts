@@ -2,6 +2,7 @@ import ABFExploderRoll from './ABFExploderRoll/ABFExploderRoll';
 import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 import ABFControlRoll from './ABFControlRoll/ABFControlRoll';
+import ABFCriticRoll from './ABFCriticRoll/ABFCriticRoll';
 import { ABFActorDataSourceData } from '../types/Actor';
 
 /**
@@ -36,6 +37,10 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
 
     if (this.formula.includes('ControlRoll')) {
       this.abfRoll = new ABFControlRoll(this);
+    }
+
+    if (this.formula.includes('CriticRoll')) {
+      this.abfRoll = new ABFCriticRoll(this);
     }
   }
 
