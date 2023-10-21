@@ -33,30 +33,29 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
     const spellID = results['new.mysticShield.id'];
     const spellGrade = results['new.mysticShield.grade'];
     const castSpell = results['new.mysticShield.castSpell'];
-    const castInnate = castSpell == 'innate';
-    const castPrepared = castSpell == 'prepared';
-    const castOverride = castSpell == 'override';
+    const innate = castSpell == 'innate';
+    const prepared = castSpell == 'prepared';
+    const override = castSpell == 'override';
     const spell = actor.system.mystic.spells.find(i => i._id == spellID);
     if (!spell) {
       return;
     }
-    actor.setFlag('world', `${actor._id}.spellCastingOverride`, castOverride);
-    const zeonAccumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
+    actor.setFlag('world', `${actor._id}.spellCastingOverride`, override);
     const mysticSpellCheck = mysticSpellCastEvaluate(actor, spell, spellGrade);
     const spellCasting = {
-      zeonAccumulated,
+      zeon: { accumulated: 0, cost: 0 },
       spell: mysticSpellCheck,
-      cast: { prepared: castPrepared, innate: castInnate }
+      cast: { prepared, innate },
+      override: { value: override }
     };
-    const zeonCost = spell?.system.grades[spellGrade].zeon.value;
-    const evaluateCastMsj = !castOverride
-      ? evaluateCast(spellCasting, zeonCost)
-      : undefined;
+    spellCasting.zeon.accumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
+    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+    const evaluateCastMsj = evaluateCast(spellCasting);
     if (evaluateCastMsj !== undefined) {
       return evaluateCastMsj;
     }
     const name = spell.name;
-    mysticCast(actor, spellCasting, zeonCost, name, spellGrade);
+    mysticCast(actor, spellCasting, name, spellGrade);
     const shieldPoints = shieldValueCheck(
       spell.system.grades[spellGrade].description.value
     )[0];

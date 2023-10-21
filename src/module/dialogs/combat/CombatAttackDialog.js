@@ -81,11 +81,16 @@ const getInitialData = (attacker, defender, options = {}) => {
       },
       mystic: {
         modifier: 0,
-        magicProjectionType: 'offensive',
+        magicProjection: {
+          base: attackerActor.system.mystic.magicProjection.imbalance.offensive.base
+            .value,
+          final:
+            attackerActor.system.mystic.magicProjection.imbalance.offensive.final.value
+        },
         spellUsed: undefined,
         spellGrade: 'base',
         spellCasting: {
-          zeonAccumulated: 0,
+          zeon: { accumulated: 0, cost: 0 },
           spell: { prepared: false, innate: false },
           cast: { prepared: false, innate: false },
           override: { value: false, ui: false }
@@ -198,7 +203,7 @@ export class CombatAttackDialog extends FormApplication {
       const spell = spells.find(w => w._id === mystic.spellUsed);
       const spellUsedEffect = spell?.system.grades.base.description.value;
       mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
-      mystic.spellCasting.zeonAccumulated =
+      mystic.spellCasting.zeon.accumulated =
         this.attackerActor.system.mystic.zeon.accumulated.value ?? 0;
       const mysticSpellCheck = mysticSpellCastEvaluate(
         this.attackerActor,
@@ -448,7 +453,7 @@ export class CombatAttackDialog extends FormApplication {
 
     html.find('.send-mystic-attack').click(() => {
       const {
-        magicProjectionType,
+        magicProjection,
         spellUsed,
         spellGrade,
         spellCasting,
@@ -472,28 +477,11 @@ export class CombatAttackDialog extends FormApplication {
           `${this.attackerActor._id}.lastOffensiveSpellUsed`,
           spellUsed
         );
-        let baseMagicProjection;
-        let magicProjection;
-        if (magicProjectionType === 'normal') {
-          magicProjection = this.attackerActor.system.mystic.magicProjection.final.value;
-          baseMagicProjection =
-            this.attackerActor.system.mystic.magicProjection.base.value;
-        } else {
-          magicProjection =
-            this.attackerActor.system.mystic.magicProjection.imbalance.offensive.final
-              .value;
-          baseMagicProjection =
-            this.attackerActor.system.mystic.magicProjection.imbalance.offensive.base
-              .value;
-        }
-
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
-        const zeonCost = spell?.system.grades[spellGrade].zeon.value;
-        let evaluateCastMsj = !spellCasting.override.value
-          ? evaluateCast(spellCasting, zeonCost)
-          : undefined;
+        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+        let evaluateCastMsj = evaluateCast(spellCasting);
         if (evaluateCastMsj !== undefined) {
           spellCasting.override.ui = true;
           return evaluateCastMsj;
@@ -511,12 +499,12 @@ export class CombatAttackDialog extends FormApplication {
         let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
         const specificAttack = supSpecificAttack(spellUsedEffect);
 
-        let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
+        let formula = `1d100xa + ${magicProjection.final} + ${modifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (baseMagicProjection >= 200) {
+        if (magicProjection.base >= 200) {
           // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
@@ -538,7 +526,7 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const rolled = roll.total - magicProjection - (modifier ?? 0);
+        const rolled = roll.total - magicProjection.final - (modifier ?? 0);
         let unableToAttack = false;
         if (inmaterialDefender && specialTypeCheck == specialType) {
           unableToAttack = true;
@@ -551,7 +539,7 @@ export class CombatAttackDialog extends FormApplication {
             spellUsed,
             spellGrade,
             spellName: spell.name,
-            magicProjection,
+            magicProjection:magicProjection.final,
             critic,
             damage: damage.final,
             roll: rolled,
@@ -564,7 +552,6 @@ export class CombatAttackDialog extends FormApplication {
             specialType: specialTypeCheck,
             unableToAttack,
             spellCasting,
-            zeonCost,
             specificAttack,
             macro: spell.macro
           }
@@ -750,6 +737,12 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellGrade
     );
     mystic.spellCasting.spell = mysticSpellCheck;
+    if (!mystic.spellCasting.spell.innate) {
+      mystic.spellCasting.cast.innate = false;
+    }
+    if (!mystic.spellCasting.spell.prepared) {
+      mystic.spellCasting.cast.prepared = false;
+    }
 
     const { weapons } = this.attackerActor.system.combat;
 

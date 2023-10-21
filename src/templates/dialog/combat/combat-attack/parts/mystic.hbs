@@ -2,8 +2,8 @@
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.zeonAccumulated.title")
   disabled=true
-  inputName="attacker.mystic.spellCasting.zeonAccumulated"
-  inputValue=this.attacker.mystic.spellCasting.zeonAccumulated
+  inputName="attacker.mystic.spellCasting.zeon.accumulated"
+  inputValue=this.attacker.mystic.spellCasting.zeon.accumulated
 }}
 
 {{>
@@ -14,14 +14,12 @@
   inputValue=this.attacker.mystic.modifier
 }}
 
-{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+{{> 'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
   title=(localize 'macros.combat.dialog.magicProjection.title')
   disabled=this.attackSent
-  inputName='attacker.mystic.magicProjectionType'
+  inputName='attacker.mystic.magicProjection.final'
+  inputValue=this.attacker.mystic.magicProjection.final
 }}
-  <option {{#if (is "eq" this.attacker.mystic.magicProjectionType 'normal')}}selected{{/if}} value='normal'>{{concat (localize 'macros.combat.dialog.magicProjection.normal.title') " (" this.attacker.actor.system.mystic.magicProjection.final.value ")" }}</option>
-  <option {{#if (is "eq" this.attacker.mystic.magicProjectionType 'offensive')}}selected{{/if}} value='offensive'>{{concat (localize 'macros.combat.dialog.magicProjection.offensive.title') " (" this.attacker.actor.system.mystic.magicProjection.imbalance.offensive.final.value ")" }}</option>
-{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spell.title')
@@ -110,6 +108,7 @@
 {{/if}}
 
 {{#if this.attacker.mystic.spellCasting.override.ui}}
+<hr class='hr'/>
 <div class='columns'>
   <div>
     {{>

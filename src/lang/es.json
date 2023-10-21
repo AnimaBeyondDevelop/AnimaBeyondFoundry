@@ -624,7 +624,7 @@
   "macros.combat.dialog.zeonAccumulated.title": "Zeon acumulado",
   "macros.combat.dialog.castInnate.title": "Lanzar conjuro innato",
   "macros.combat.dialog.castPrepared.title": "Lanzar conjuro preparado",
-  "macros.combat.dialog.castOverride.title": "¿Lanzar conjuro sin validaciones?",
+  "macros.combat.dialog.castOverride.title": "Lanzar conjuro sin validaciones",
   "macros.combat.dialog.critic.title": "Crítico",
   "macros.combat.dialog.damage.title": "Daño",
   "macros.combat.dialog.psychic.damage.title": "Modificador al daño",
