@@ -45,7 +45,7 @@
   <option {{#if (is "eq" this.defender.mystic.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'macros.combat.dialog.spellGrade.arcane.title'}}</option>
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-  {{#if this.defender.mystic.spellCasting.spell.innate}}
+  {{#if (and this.defender.mystic.spellCasting.spell.innate (is 'eq' this.defender.mystic.spellCasting.override.value false))}}
   <div class='columns'>
     <div>
       {{>
@@ -60,7 +60,7 @@
   </div>
   {{/if}}
 
-  {{#if this.defender.mystic.spellCasting.spell.prepared}}
+  {{#if (and this.defender.mystic.spellCasting.spell.prepared (is 'eq' this.defender.mystic.spellCasting.override.value false))}}
   <div class='columns'>
     <div>
       {{>
