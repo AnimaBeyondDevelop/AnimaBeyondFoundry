@@ -391,7 +391,7 @@ export class CombatAttackDialog extends FormApplication {
           roll.total -
           counterAttackBonus -
           attack -
-          (modifier ?? 0) -
+          (newModifier ?? 0) -
           (fatigueUsed ?? 0) * 15;
 
         this.hooks.onAttack({
