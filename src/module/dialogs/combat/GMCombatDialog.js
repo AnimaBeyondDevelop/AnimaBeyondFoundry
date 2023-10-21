@@ -528,7 +528,7 @@ export class GMCombatDialog extends FormApplication {
       criticRoll.roll();
       const { i18n } = game;
       let flavor;
-      if (generalLocation.side == 'none') {
+      if (generalLocation?.side == undefined || generalLocation?.side == 'none') {
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
           target: defender.name
         })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
@@ -553,7 +553,7 @@ export class GMCombatDialog extends FormApplication {
       const macroName = 'Critical Attack';
       const macro = game.macros.getName(macroName);
       if (macro) {
-        macro.execute({ attacker, defender, resistanceRoll });
+        macro.execute({ attacker, defender, resistanceRoll, location});
       } else {
         console.debug(`Macro '${macroName}' not found.`);
       }
