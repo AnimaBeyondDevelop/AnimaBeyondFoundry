@@ -11,6 +11,11 @@
       value={{lookup xRoot.system.ui.contractibleItems this.contractibleItemId}}
     />
   {{/if}}
+  {{#if this.hasEffects}}
+    <a class="toggle-effects-button" data-effects-item-id='{{this.effectsItemId}}'>
+    <i class="fas {{#if this.effectsEnabled}}fa-times{{else}}fa-check{{/if}}" title="Activar efectos"></i>
+    </a>
+  {{/if}}
 
   {{> @partial-block}}
 </div>

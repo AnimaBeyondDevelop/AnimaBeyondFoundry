@@ -1,0 +1,127 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="technique-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="technique"
+    }}
+      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+        <div class='technique-header'>
+          <div class='first-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="name"
+              hideTitle=true
+              inputType="text"
+              inputName=(concat "name")
+              inputValue=item.name
+            }}
+          </div>
+          {{!-- <div class='second-row'>
+          </div> --}}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="technique"
+      }}
+        <div class="description">
+          <p class='label'>{{localize "anima.ui.descriptionSection.title"}}</p>
+          {{editor system.enrichedDescription target="system.description.value" button=true owner=true editable=true}}
+        </div>
+    <table class="item-list effects-list">
+        <tr>
+            <th>Effect</th>
+            <th>
+                <a class="effect-control" data-action="create">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </th>
+        </tr>
+        {{#each effects as |effect|}}
+        <tr class='item effect' data-effect-id="{{effect.id}}">
+            <td class="item-name effect-name">
+                <h4>{{effect.name}}</h4>
+            </td>
+            <td class="effect-controls">
+                <a class="effect-control" data-action="edit" title="Edit">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="effect-control" data-action="delete" title="Delete">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+        <div class='technique-footer'>
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="level"
+            title=(localize "anima.ui.domine.techniques.technique.footer.level.title")
+            inputType="text"
+            inputName=(concat "system.level.value")
+            inputValue=system.level.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="strength"
+            title=(localize "anima.ui.domine.techniques.technique.footer.strength.title")
+            inputType="text"
+            inputName=(concat "system.strength.value")
+            inputValue=system.strength.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="agility"
+            title=(localize "anima.ui.domine.techniques.technique.footer.agility.title")
+            inputType="text"
+            inputName=(concat "system.agility.value")
+            inputValue=system.agility.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="dexterity"
+            title=(localize "anima.ui.domine.techniques.technique.footer.dexterity.title")
+            inputType="text"
+            inputName=(concat "system.dexterity.value")
+            inputValue=system.dexterity.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="constitution"
+            title=(localize "anima.ui.domine.techniques.technique.footer.constitution.title")
+            inputType="text"
+            inputName=(concat "system.constitution.value")
+            inputValue=system.constitution.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="willPower"
+            title=(localize "anima.ui.domine.techniques.technique.footer.willPower.title")
+            inputType="text"
+            inputName=(concat "system.willPower.value")
+            inputValue=system.willPower.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="power"
+            title=(localize "anima.ui.domine.techniques.technique.footer.power.title")
+            inputType="text"
+            inputName=(concat "system.power.value")
+            inputValue=system.power.value
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="martial-knowledge"
+            title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
+            inputType="text"
+            inputName=(concat "system.martialKnowledge.value")
+            inputValue=system.martialKnowledge.value
+          }}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}
