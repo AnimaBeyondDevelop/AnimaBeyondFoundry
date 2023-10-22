@@ -70,6 +70,37 @@ export default class ABFItemSheet extends sveltify(ItemSheet) {
 
     sheet.config = CONFIG.config;
 
+    sheet.effects = sheet.item.getEmbeddedCollection('ActiveEffect').contents;
+
     return sheet;
+  }
+
+  activateListeners(html) {
+    if (this.isEditable) {
+      html.find('.effect-control').click(this._onEffectControl.bind(this));
+    }
+  }
+
+  _onEffectControl(event) {
+    event.preventDefault();
+    const owner = this.item;
+    const a = event.currentTarget;
+    const tr = a.closest('tr');
+    const effect = tr.dataset.effectId ? owner.effects.get(tr.dataset.effectId) : null;
+    switch (a.dataset.action) {
+      case 'create':
+        return owner.createEmbeddedDocuments('ActiveEffect', [
+          {
+            label: 'New Effect',
+            icon: 'icons/svg/aura.svg',
+            origin: owner.uuid,
+            disable: true
+          }
+        ]);
+      case 'edit':
+        return effect.sheet.render(true);
+      case 'delete':
+        return effect.delete();
+    }
   }
 }

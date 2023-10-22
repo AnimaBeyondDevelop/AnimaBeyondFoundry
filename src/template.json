@@ -654,7 +654,8 @@
       "constitution": { "value": 0 },
       "willPower": { "value": 0 },
       "power": { "value": 0 },
-      "martialKnowledge": { "value": 0 }
+      "martialKnowledge": { "value": 0 },
+      "activeEffect": { "hasEffects": false, "enabled": false }
     },
     "weapon": {
       "equipped": { "value": false },

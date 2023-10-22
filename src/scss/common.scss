@@ -129,6 +129,26 @@ img {
       } // End of removal after svelte
     }
 
+    .toggle-effects-button {
+      position: absolute;
+      padding: 2px 5px;
+      top: 1.8rem;
+      right: -0.5rem;
+      z-index: 10;
+      cursor: pointer;
+      background-color: white;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      border: none;
+
+      transition: background-color 0.3ms ease-in-out;
+
+      &:hover {
+        background-color: $light-gray;
+      }
+    }
+
     width: 100%;
 
     display: flex;

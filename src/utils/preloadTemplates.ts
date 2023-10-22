@@ -53,6 +53,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/items/armor/armor.hbs',
     'systems/animabf/templates/items/spell/spell.hbs',
     'systems/animabf/templates/items/psychicPower/psychicPower.hbs',
+    'systems/animabf/templates/items/technique/technique.hbs',
 
     // Actor sheet parts
     'systems/animabf/templates/actor/parts/header/header.hbs',

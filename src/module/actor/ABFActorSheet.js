@@ -115,6 +115,8 @@ export default class ABFActorSheet extends sveltify(
 
     sheet.config = CONFIG.config;
 
+    sheet.effects = sheet.actor.getEmbeddedCollection('ActiveEffect').contents;
+
     return sheet;
   }
 
@@ -146,6 +148,27 @@ export default class ABFActorSheet extends sveltify(
 
         this.actor.update({ system: { ui } });
       }
+    });
+
+    html.find('.toggle-effects-button').click(async e => {
+      const { effectsItemId } = e.currentTarget.dataset;
+      const item = this.actor.items.get(effectsItemId);
+      const effects = this.actor.getEmbeddedCollection('ActiveEffect').contents;
+      const relevantEffects = effects.filter(effect =>
+        effect.origin.endsWith(effectsItemId)
+      );
+
+      if (relevantEffects.length == 0) {
+        return;
+      }
+
+      const newStatus = !item.system.activeEffect.enabled;
+
+      for (const effect of relevantEffects) {
+        console.log(effect);
+        await effect.update({ disabled: !newStatus });
+      }
+      return item.update({ 'system.activeEffect.enabled': newStatus });
     });
 
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
