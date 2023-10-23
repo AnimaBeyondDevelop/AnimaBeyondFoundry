@@ -74,6 +74,102 @@
   secondaryInputValue=this.attacker.combat.damage.final
 }}
 
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.specificAttack.title')
+  disabled=this.attackSent
+  inputName='attacker.combat.specificAttack.value'
+}}
+  {{#each this.attacker.specificAttacks}}
+    <option {{#if (is "eq" ../this.attacker.combat.specificAttack.value this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.specificAttack.' this '.title')}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{#if (is 'eq' this.attacker.combat.specificAttack.value 'targeted')}}
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.targetedAttack.title')
+  disabled=this.attackSent
+  inputName='attacker.combat.specificAttack.targeted'
+}}
+  {{#each this.attacker.targetedAttacks}}
+    <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted this.bodyPart)}}selected{{/if}} value='{{this.bodyPart}}'>{{localize (concat 'macros.combat.dialog.targetedAttack.' this.bodyPart '.title')}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
+{{#if (is 'eq' this.attacker.combat.specificAttack.value 'disable')}}
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.targetedAttack.title')
+  disabled=this.attackSent
+  inputName='attacker.combat.specificAttack.targeted'
+}}
+  {{#each_when this.attacker.targetedAttacks "bodyPart" "" "" "none|elbow|foot|hand|knee|arm|thigh|calf|wrist"}}
+    <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted this.bodyPart)}}selected{{/if}} value='{{this.bodyPart}}'>{{localize (concat 'macros.combat.dialog.targetedAttack.' this.bodyPart '.title')}}</option>
+  {{/each_when}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
+{{#if (or (is 'eq' this.attacker.combat.specificAttack.value 'knockDown') (is 'eq' this.attacker.combat.specificAttack.value 'immobilize'))}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.specificAttack.causeDamage.title')
+      inputType="checkbox"
+      inputName="attacker.combat.specificAttack.causeDamage"
+      inputValue=(is 'eq' this.attacker.combat.specificAttack.causeDamage true)
+    }}
+  </div>
+</div>
+{{/if}}
+
+{{#if this.attacker.combat.projectile.value}}
+{{#if (is 'eq' this.attacker.combat.distance.enable false)}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.distance.title')
+      inputType="checkbox"
+      inputName="attacker.combat.distance.check"
+      inputValue=(is 'eq' this.attacker.combat.distance.check true)
+    }}
+  </div>
+</div>
+{{/if}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.highGround.title')
+      inputType="checkbox"
+      inputName="attacker.combat.highGround"
+      inputValue=(is 'eq' this.attacker.combat.highGround true)
+    }}
+  </div>
+</div>
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.poorVisibility.title')
+      inputType="checkbox"
+      inputName="attacker.poorVisibility"
+      inputValue=(is 'eq' this.attacker.poorVisibility true)
+    }}
+  </div>
+</div>
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.targetInCover.title')
+      inputType="checkbox"
+      inputName="attacker.targetInCover"
+      inputValue=(is 'eq' this.attacker.targetInCover true)
+    }}
+  </div>
+</div>
+{{/if}}
 
 {{#if this.attackSent}}
   <div class='attack-sent'>

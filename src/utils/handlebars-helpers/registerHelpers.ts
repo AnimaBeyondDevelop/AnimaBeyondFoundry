@@ -8,6 +8,7 @@ import { getDifficultyFromIndexHBSHelper } from './helpers/getDifficultyFromInde
 import { iterateNumberHBSHelper } from './helpers/iterateNumberHBSHelper';
 import { notHBSHelper } from './helpers/notHBSHelper';
 import { minNumberHBSHelper } from './helpers/minNumberHBSHelper';
+import { eachWhenHBSHelper } from './helpers/eachWhenHBSHelper';
 import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
@@ -26,6 +27,7 @@ export const registerHelpers = () => {
     manipulateStringHBSHelper,
     mathHBSHelper,
     minNumberHBSHelper,
+    eachWhenHBSHelper,
     logHBSHelper,
     calculateLanguagesHBSHelper,
     calculateLevelsHBSHelper

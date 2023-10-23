@@ -1,22 +1,75 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
  * @readonly
  * @enum {string}
  */
-const SpellGradeNames = {
+export const SpellGrades = {
+  BASE: 'base',
+  INTERMEDIATE: 'intermediate',
+  ADVANCED: 'advanced',
+  ARCANE: 'arcane'
+};
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const SpellGradeNames = {
   BASE: 'anima.ui.mystic.spell.grade.base.title',
   INTERMEDIATE: 'anima.ui.mystic.spell.grade.intermediate.title',
   ADVANCED: 'anima.ui.mystic.spell.grade.advanced.title',
   ARCANE: 'anima.ui.mystic.spell.grade.arcane.title'
 };
-
+export const INITIAL_MYSTIC_SPELL_DATA = {
+  description: { value: '' },
+  level: { value: 0 },
+  via: { value: '' },
+  hasDailyMaintenance: { value: false },
+  visible: { value: false },
+  critic: { value: NoneWeaponCritic.NONE },
+  spellType: { value: '' },
+  actionType: { value: '' },
+  combatType: { value: '' },
+  macro: { value: '' },
+  grades: {
+    base: {
+      name: { value: SpellGradeNames.BASE },
+      intRequired: { value: 0 },
+      maintenanceCost: { value: 0 },
+      zeon: { value: 0 },
+      description: { value: '' }
+    },
+    intermediate: {
+      name: { value: SpellGradeNames.INTERMEDIATE },
+      intRequired: { value: 0 },
+      maintenanceCost: { value: 0 },
+      zeon: { value: 0 },
+      description: { value: '' }
+    },
+    advanced: {
+      name: { value: SpellGradeNames.ADVANCED },
+      intRequired: { value: 0 },
+      maintenanceCost: { value: 0 },
+      zeon: { value: 0 },
+      description: { value: '' }
+    },
+    arcane: {
+      name: { value: SpellGradeNames.ARCANE },
+      intRequired: { value: 0 },
+      maintenanceCost: { value: 0 },
+      zeon: { value: 0 },
+      description: { value: '' }
+    }
+  }
+};
 /** @type {import("../Items").SpellItemConfig} */
 export const SpellItemConfig = ABFItemConfigFactory({
   type: ABFItems.SPELL,
   isInternal: false,
+  defaultValue: INITIAL_MYSTIC_SPELL_DATA,
   hasSheet: true,
   fieldPath: ['mystic', 'spells'],
   selectors: {
@@ -31,59 +84,16 @@ export const SpellItemConfig = ABFItemConfigFactory({
       content: i18n.localize('dialogs.items.spell.content')
     });
 
-    const InitialData = {
-      description: { value: '' },
-      level: { value: 0 },
-      via: { value: '' },
-      hasDailyMaintenance: { value: false },
-      spellType: { value: '' },
-      actionType: { value: '' },
-      grades: {
-        base: {
-          name: { value: SpellGradeNames.BASE },
-          intRequired: { value: 0 },
-          maintenanceCost: { value: 0 },
-          zeon: { value: 0 },
-          description: { value: '' }
-        },
-        intermediate: {
-          name: { value: SpellGradeNames.INTERMEDIATE },
-          intRequired: { value: 0 },
-          maintenanceCost: { value: 0 },
-          zeon: { value: 0 },
-          description: { value: '' }
-        },
-        advanced: {
-          name: { value: SpellGradeNames.ADVANCED },
-          intRequired: { value: 0 },
-          maintenanceCost: { value: 0 },
-          zeon: { value: 0 },
-          description: { value: '' }
-        },
-        arcane: {
-          name: { value: SpellGradeNames.ARCANE },
-          intRequired: { value: 0 },
-          maintenanceCost: { value: 0 },
-          zeon: { value: 0 },
-          description: { value: '' }
-        }
-      }
-    };
-    const itemCreateData = {
+    await actor.createItem({
       name,
       type: ABFItems.SPELL,
-      ...InitialData, // NOTE: (AB) Why do we have this repeated? (see `ABFItemBaseDataSource`)
-      system: InitialData
-    };
-
-    await actor.createItem(itemCreateData);
+      system: INITIAL_MYSTIC_SPELL_DATA
+    });
   },
   prepareItem: async (item) => {
     item.system.enrichedDescription = await TextEditor.enrichHTML(
       item.system.description?.value ?? '',
-      {
-        async: true
-      }
+      { async: true }
     );
   }
 });

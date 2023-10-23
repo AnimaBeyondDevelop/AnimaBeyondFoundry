@@ -50,6 +50,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/items/armor/armor.hbs',
     'systems/animabf/templates/items/spell/spell.hbs',
     'systems/animabf/templates/items/psychicPower/psychicPower.hbs',
+    'systems/animabf/templates/items/technique/technique.hbs',
 
     // Actor sheet parts
     'systems/animabf/templates/actor/parts/header/header.hbs',
@@ -106,6 +107,8 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spell-maintenances.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/prepared-spells.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/mystic-shields.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/summons.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/metamagics.hbs',
     'systems/animabf/templates/actor/parts/domine/domine.hbs',
@@ -126,11 +129,13 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/psychic/parts/innate-psychic-powers.hbs',
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-points.hbs',
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-disciplines.hbs',
+    'systems/animabf/templates/actor/parts/psychic/parts/psychic-shields.hbs',
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs',
     'systems/animabf/templates/actor/parts/settings/settings.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/advancedSettings.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/modifiers.hbs'
+    'systems/animabf/templates/actor/parts/settings/parts/advancedCharacteristics.hbs'
   ];
 
   return loadTemplates(templatePaths);

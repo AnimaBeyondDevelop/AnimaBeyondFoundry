@@ -1,5 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
@@ -8,7 +9,36 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  */
 export const PsychicPowerActionTypes = {
   ACTIVE: 'active',
-  PASSIVE: 'passive'
+  PASSIVE: 'passive',
+};
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const PsychicPowerCombatTypes = {
+  ATTACK: 'attack',
+  DEFENSE: 'defense',
+  NONE: 'none'
+};
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const PsychicPowerDisciplines = {
+    THE_MATRIAL_POWERS: 'matrial',
+    TELEPATHY: 'telepathy',
+    TELEKINESIS: 'telekenisis',
+    PYROKINESIS: 'pyrokinesis',
+    CRYOKINESIS: 'cryokinesis',
+    PHYSICAL_INCREASE: 'physicalIncrease',
+    ENERGY: 'energy',
+    TELEMETRY: 'telemetry',
+    SENTIENT: 'sentient',
+    CAUSALITY: 'causality',
+    ELECTROMAGNETISM: 'electromagnetism',
+    TELEPORTATION: 'teleportation',
+    LIGHT: 'light',
+    HIPERSENSIBILIDAD : 'hipersensibilidad'
 };
 
 /**
@@ -31,7 +61,12 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
     440: { value: '' }
   },
   actionType: { value: PsychicPowerActionTypes.ACTIVE },
+  combatType: { value: PsychicPowerCombatTypes.ATTACK },
+  discipline: { value: PsychicPowerDisciplines.THE_MATRIAL_POWERS },
+  critic: { value: NoneWeaponCritic.NONE },
   hasMaintenance: { value: false },
+  visible: { value: false },
+  macro: { value: '' },
   bonus: { value: 0 }
 };
 

@@ -1,6 +1,16 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
+import { energyCheck } from '../../combat/utils/energyCheck.js';
+import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
+import { evaluateCast } from '../../combat/utils/evaluateCast.js';
+import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
+import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
+import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
+import { shieldBaseValueCheck } from '../../combat/utils/shieldBaseValueCheck.js';
+import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
+import { shieldSupernaturalCheck } from '../../combat/utils/shieldSupernaturalCheck.js';
+import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
@@ -29,40 +39,85 @@ const getInitialData = (attacker, defender) => {
       token: attacker.token,
       actor: attackerActor,
       attackType: attacker.attackType,
-      critic: attacker.critic
+      critic: attacker.critic,
+      visible: attacker.visible,
+      projectile: attacker.projectile,
+      damage: attacker.damage,
+      specialType: attacker.specialType,
+      specificAttack: attacker.specificAttack
     },
     defender: {
       token: defender,
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
+      lifePoints: defenderActor.system.characteristics.secondaries.lifePoints.value,
+      blindnessPen: 0,
+      distance: attacker.distance,
+      specificAttack: { characteristic: undefined },
+      zen: false,
+      inhuman: false,
+      inmaterial: false,
+      specialType: {
+        material: true,
+        inmaterial: false,
+        intangible: false,
+        energy: false,
+        materialEnergy: true,
+        attackSpellLight: false,
+        attackSpellDarkness: false
+      },
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: 0,
+        accumulateDefenses: true,
         modifier: 0,
         weaponUsed: undefined,
         weapon: undefined,
         unarmed: false,
         at: {
           special: 0,
-          final: 0
+          final: 0,
+          defense: false
         }
       },
       mystic: {
         modifier: 0,
-        magicProjectionType: 'normal',
+        magicProjection: {
+          base: defenderActor.system.mystic.magicProjection.imbalance.defensive.base
+            .value,
+          final:
+            defenderActor.system.mystic.magicProjection.imbalance.defensive.final.value
+        },
         spellUsed: undefined,
-        spellGrade: 'base'
+        spellGrade: 'base',
+        spellCasting: {
+          zeon: { accumulated: 0, cost: 0 },
+          spell: { prepared: false, innate: false },
+          cast: { prepared: false, innate: false },
+          override: { value: false, ui: false }
+        },
+        shieldUsed: undefined,
+        shieldValue: 0,
+        newShield: false
       },
       psychic: {
         modifier: 0,
         psychicPotential: {
           special: 0,
+          base: defenderActor.system.psychic.psychicPotential.base.value,
           final: defenderActor.system.psychic.psychicPotential.final.value
         },
-        psychicProjection:
-          defenderActor.system.psychic.psychicProjection.imbalance.defensive.final.value,
-        powerUsed: undefined
+        psychicProjection: {
+          base: defenderActor.system.psychic.psychicProjection.imbalance.defensive.base
+            .value,
+          final:
+            defenderActor.system.psychic.psychicProjection.imbalance.defensive.final.value
+        },
+        powerUsed: undefined,
+        shieldUsed: undefined,
+        shieldValue: 0,
+        newShield: false
       },
       resistance: {
         surprised: false
@@ -81,13 +136,165 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
+    const defensesCounter = this.defenderActor.getFlag(
+      'world',
+      `${this.defenderActor._id}.defensesCounter`
+    ) || { value: true, accumulated: 0 };
+    this.modalData.defender.combat.accumulateDefenses = defensesCounter.value;
+    this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(
+      defensesCounter.accumulated
+    );
+    this.modalData.defender.specificAttack.characteristic = Math.max(
+      this.defenderActor.system.characteristics.primaries.strength.value,
+      this.defenderActor.system.characteristics.primaries.agility.value
+    );
+    this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
+    this.modalData.defender.inhuman =
+      this.defenderActor.system.general.settings.inhuman.value;
+    this.modalData.defender.inmaterial =
+      this.defenderActor.system.general.settings.inmaterial.value;
+    if (
+      (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
+        this.modalData.attacker.damage == 0) ||
+      this.modalData.attacker.specificAttack.check
+    ) {
+      this.modalData.defender.combat.at.defense = true;
+    }
 
     const { weapons } = this.defenderActor.system.combat;
+    const { spells } = this.defenderActor.system.mystic;
+    const { mysticShields } = this.defenderActor.system.mystic;
+    const { psychicPowers } = this.defenderActor.system.psychic;
+    const { psychicShields } = this.defenderActor.system.psychic;
+    const { psychic } = this.modalData.defender;
+    const { mystic } = this.modalData.defender;
+
+    if (psychicPowers.length > 0) {
+      const lastDefensivePowerUsed = this.defenderActor.getFlag(
+        'world',
+        `${this.defenderActor._id}.lastDefensivePowerUsed`
+      );
+      psychic.powerUsed =
+        lastDefensivePowerUsed ||
+        psychicPowers.filter(w => w.system.combatType.value === 'attack')[0]?._id;
+      const power = psychicPowers.find(w => w._id === psychicPowers.powerUsed);
+      this.defenderActor.system.psychic.psychicPotential.special =
+        power?.system.bonus.value;
+    }
+
+    if (psychicShields.length > 0) {
+      const psychicShield = psychicShields.filter(
+        w => w.system.shieldPoints?.value > 0
+      )[0];
+      psychic.shieldUsed = psychicShield?._id;
+      psychic.shieldValue = psychicShield?.system.shieldPoints?.value;
+    } else {
+      psychic.newShield = true;
+    }
+
+    if (spells.length > 0) {
+      const lastDefensiveSpellUsed = this.defenderActor.getFlag(
+        'world',
+        `${this.defenderActor._id}.lastDefensiveSpellUsed`
+      );
+      mystic.spellUsed =
+        lastDefensiveSpellUsed ||
+        spells.filter(w => w.system.combatType.value === 'defense')[0]?._id;
+      const spell = spells.find(w => w._id === mystic.spellUsed);
+      mystic.spellCasting.zeon.accumulated =
+        this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
+      const mysticSpellCheck = mysticSpellCastEvaluate(
+        this.defenderActor,
+        spell,
+        mystic.spellGrade
+      );
+      mystic.spellCasting.spell = mysticSpellCheck;
+      const spellCastingOverride = this.defenderActor.getFlag(
+        'world',
+        `${this.defenderActor._id}.spellCastingOverride`
+      );
+      mystic.spellCasting.override.value = spellCastingOverride || false;
+      mystic.spellCasting.override.ui = spellCastingOverride || false;
+    }
+
+    if (mysticShields.length > 0) {
+      mystic.shieldUsed = mysticShields.filter(
+        w => w.system.shieldPoints?.value > 0
+      )[0]?._id;
+    } else {
+      mystic.newShield = true;
+    }
 
     if (weapons.length > 0) {
-      this.modalData.defender.combat.weaponUsed = weapons[0]._id;
+      const lastDefensiveWeaponUsed = this.defenderActor.getFlag(
+        'world',
+        `${this.defenderActor._id}.lastDefensiveWeaponUsed`
+      );
+      this.modalData.defender.combat.weaponUsed =
+        lastDefensiveWeaponUsed || weapons[0]._id;
     } else {
       this.modalData.defender.combat.unarmed = true;
+    }
+    const perceiveMystic =
+      this.defenderActor.system.general.settings.perceiveMystic.value;
+    const perceivePsychic =
+      this.defenderActor.system.general.settings.perceivePsychic.value;
+    let blindness = false;
+    let attackType = this.modalData.attacker.attackType;
+    if (!this.modalData.attacker.visible) {
+      if (!perceiveMystic && !perceivePsychic) {
+        blindness = true;
+      } else if (attackType === 'mystic' && !perceiveMystic) {
+        blindness = true;
+      } else if (attackType === 'psychic' && !perceivePsychic) {
+        blindness = true;
+      }
+    }
+    if (blindness) {
+      if (
+        !this.defenderActor.effects.find(i => i.name === 'Ceguera absoluta') &&
+        !this.defenderActor.effects.find(i => i.name === 'Ceguera parcial')
+      ) {
+        this.modalData.defender.blindnessPen = -80;
+      } else if (!this.defenderActor.effects.find(i => i.name === 'Ceguera absoluta')) {
+        this.modalData.defender.blindnessPen = -50;
+      }
+    }
+
+    let at;
+    if (!this.modalData.attacker.specificAttack.causeDamage) {
+      at = 0;
+    } else if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
+      switch (this.modalData.attacker.critic) {
+        case WeaponCritic.CUT:
+          at = this.defenderActor.system.combat.totalArmor.at.cut.value;
+          break;
+        case WeaponCritic.IMPACT:
+          at = this.defenderActor.system.combat.totalArmor.at.impact.value;
+          break;
+        case WeaponCritic.THRUST:
+          at = this.defenderActor.system.combat.totalArmor.at.thrust.value;
+          break;
+        case WeaponCritic.HEAT:
+          at = this.defenderActor.system.combat.totalArmor.at.heat.value;
+          break;
+        case WeaponCritic.ELECTRICITY:
+          at = this.defenderActor.system.combat.totalArmor.at.electricity.value;
+          break;
+        case WeaponCritic.COLD:
+          at = this.defenderActor.system.combat.totalArmor.at.cold.value;
+          break;
+        case WeaponCritic.ENERGY:
+          at = this.defenderActor.system.combat.totalArmor.at.energy.value;
+          break;
+        default:
+          at = undefined;
+      }
+    }
+
+    if (at !== undefined) {
+      this.modalData.defender.combat.at.final =
+        this.modalData.defender.combat.at.special + at;
     }
 
     this.hooks = hooks;
@@ -136,24 +343,98 @@ export class CombatDefenseDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.send-defense').click(e => {
-      const { fatigue, modifier, weapon, multipleDefensesPenalty, at } =
-        this.modalData.defender.combat;
+      const {
+        combat: {
+          fatigue,
+          modifier,
+          weapon,
+          multipleDefensesPenalty,
+          at,
+          accumulateDefenses,
+          weaponUsed
+        },
+        lifePoints,
+        blindnessPen,
+        distance,
+        inmaterial,
+        specificAttack
+      } = this.modalData.defender;
+      this.defenderActor.setFlag(
+        'world',
+        `${this.defenderActor._id}.lastDefensiveWeaponUsed`,
+        weaponUsed
+      );
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
-
       let value;
       let baseDefense;
+      let unableToDefense = false;
+      let combatModifier = blindnessPen;
+      const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
         baseDefense = this.defenderActor.system.combat.dodge.base.value;
+        const maestry = baseDefense >= 200;
+        if (
+          ((!distance.enable && !distance.check) ||
+            (distance.enable && distance.value > 1)) &&
+          projectileType == 'shot' &&
+          !maestry
+        ) {
+          combatModifier -= 30;
+        }
       } else {
+        const attackerSpecialType = this.modalData.attacker.specialType;
+        let defenderSpecialType = this.modalData.defender.specialType;
+        if (attackerSpecialType == 'inmaterial' && !inmaterial) {
+          unableToDefense = true;
+        }
+        if (
+          energyCheck(weapon?.system.critic.primary.value) ||
+          energyCheck(weapon?.system.critic.secondary.value)
+        ) {
+          unableToDefense = false;
+        } else if (defenderSpecialType[attackerSpecialType] == false) {
+          if (attackerSpecialType == 'energy') {
+            combatModifier -= 120;
+          } else {
+            unableToDefense = true;
+          }
+        }
         value = weapon
           ? weapon.system.block.final.value
           : this.defenderActor.system.combat.block.final.value;
         baseDefense = this.defenderActor.system.combat.block.base.value;
+        const isShield = weapon?.system.isShield.value;
+        const maestry = baseDefense >= 200;
+        if (!distance.check || (distance.enable && distance.value > 1)) {
+          if (projectileType == 'shot') {
+            if (!maestry) {
+              if (!isShield) {
+                combatModifier -= 80;
+              } else {
+                combatModifier -= 30;
+              }
+            } else if (!isShield) {
+              combatModifier -= 20;
+            }
+          }
+          if (projectileType == 'throw') {
+            if (!maestry) {
+              if (!isShield) {
+                combatModifier -= 50;
+              }
+            }
+          }
+        }
+      }
+      const newModifier = combatModifier + modifier ?? 0;
+      let atResValue = 0;
+      if (at.defense) {
+        atResValue += at.final * 10 + 20;
       }
 
-      let formula = `1d100xa + ${modifier ?? 0} + ${fatigue ?? 0} * 15 - ${
+      let formula = `1d100xa + ${newModifier} + ${fatigue ?? 0} * 15 - ${
         (multipleDefensesPenalty ?? 0) * -1
       } + ${value}`;
       if (this.modalData.defender.withoutRoll) {
@@ -184,7 +465,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       const rolled =
         roll.total -
-        (modifier ?? 0) -
+        newModifier -
         (fatigue ?? 0) * 15 -
         (multipleDefensesPenalty ?? 0) -
         value;
@@ -194,12 +475,17 @@ export class CombatDefenseDialog extends FormApplication {
         values: {
           type,
           multipleDefensesPenalty,
-          modifier,
+          modifier: newModifier,
           fatigue,
           at: at.final,
           defense: value,
           roll: rolled,
-          total: roll.total
+          total: roll.total,
+          unableToDefense,
+          atResValue,
+          accumulateDefenses,
+          specificAttack,
+          lifePoints
         }
       });
 
@@ -226,171 +512,350 @@ export class CombatDefenseDialog extends FormApplication {
     });
 
     html.find('.send-mystic-defense').click(() => {
-      const { modifier, spellUsed, spellGrade } = this.modalData.defender.mystic;
-      const { at } = this.modalData.defender.combat;
+      const {
+        mystic: {
+          magicProjection,
+          modifier,
+          spellUsed,
+          spellGrade,
+          spellCasting,
+          shieldUsed,
+          newShield
+        },
+        combat: { at },
+        lifePoints,
+        blindnessPen,
+        specificAttack
+      } = this.modalData.defender;
+      const { spells, mysticShields } = this.defenderActor.system.mystic;
+      let spell,
+        supShield = { create: false },
+        atResValue = 0;
+      if (at.defense) {
+        atResValue += at.final * 10 + 20 + 10;
+      }
 
-      if (spellUsed) {
-        const magicProjection =
-          this.defenderActor.system.mystic.magicProjection.imbalance.defensive.final
-            .value;
-        const baseMagicProjection =
-          this.defenderActor.system.mystic.magicProjection.imbalance.defensive.base.value;
+      const newModifier = blindnessPen + modifier ?? 0;
 
-        let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
-        if (this.modalData.defender.withoutRoll) {
-          // Remove the dice from the formula
-          formula = formula.replace('1d100xa', '0');
+      if (!newShield) {
+        if (!shieldUsed) {
+          return ui.notifications.warn(
+            'No tienes escudos místicos activos, has click en Escudo nuevo'
+          );
         }
-        if (baseMagicProjection >= 200) {
-          // Mastery reduces the fumble range
-          formula = formula.replace('xa', 'xamastery');
+        spell = mysticShields.find(w => w._id === shieldUsed);
+        supShield = { ...spell, create: false, id: shieldUsed };
+      } else if (spellUsed) {
+        this.defenderActor.setFlag(
+          'world',
+          `${this.defenderActor._id}.spellCastingOverride`,
+          spellCasting.override.value
+        );
+        this.defenderActor.setFlag(
+          'world',
+          `${this.defenderActor._id}.lastDefensiveSpellUsed`,
+          spellUsed
+        );
+        spell = spells.find(w => w._id === spellUsed);
+        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+        let evaluateCastMsj = evaluateCast(spellCasting);
+        if (evaluateCastMsj !== undefined) {
+          spellCasting.override.ui = true;
+          return evaluateCastMsj;
         }
+        const spellEffect = shieldValueCheck(
+          spell?.system.grades[spellGrade].description.value ?? ''
+        );
+        supShield = {
+          name: spell.name,
+          system: {
+            grade: { value: spellGrade },
+            damageBarrier: { value: 0 },
+            shieldPoints: { value: spellEffect[0] }
+          },
+          create: true
+        };
+      }
 
-        const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
-        roll.roll();
+      let formula = `1d100xa + ${magicProjection.final} + ${newModifier}`;
+      if (this.modalData.defender.withoutRoll) {
+        // Remove the dice from the formula
+        formula = formula.replace('1d100xa', '0');
+      }
+      if (magicProjection.base >= 200) {
+        // Mastery reduces the fumble range
+        formula = formula.replace('xa', 'xamastery');
+      }
+      const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
+      roll.roll();
 
-        if (this.modalData.defender.showRoll) {
-          const { i18n } = game;
+      if (this.modalData.defender.showRoll) {
+        const { i18n } = game;
 
-          const { spells } = this.defenderActor.system.mystic;
-
-          const spell = spells.find(w => w._id === spellUsed);
-
-          const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
-            spell: spell.name,
-            target: this.modalData.attacker.token.name
-          });
-
-          roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-            flavor
-          });
-        }
-
-        const rolled = roll.total - magicProjection - (modifier ?? 0);
-
-        this.hooks.onDefense({
-          type: 'mystic',
-          values: {
-            modifier,
-            magicProjection,
-            spellGrade,
-            spellUsed,
-            at: at.final,
-            roll: rolled,
-            total: roll.total
-          }
+        const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
+          spell: spell.name,
+          target: this.modalData.attacker.token.name
         });
 
-        this.modalData.defenseSent = true;
-
-        this.render();
+        roll.toMessage({
+          speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+          flavor
+        });
       }
+
+      let unableToDefense = false,
+        dobleDamage = false,
+        cantDamage = false;
+      const attackerSpecialType = this.modalData.attacker.specialType;
+      const shieldCheck = shieldSupernaturalCheck(spell.name, attackerSpecialType);
+      unableToDefense = shieldCheck[0];
+      dobleDamage = shieldCheck[1];
+      cantDamage = shieldCheck[2];
+
+      const rolled = roll.total - magicProjection.final - newModifier;
+
+      this.hooks.onDefense({
+        type: 'mystic',
+        values: {
+          modifier: newModifier,
+          magicProjection: magicProjection.final,
+          spellGrade,
+          spellUsed,
+          spellName: spell.name,
+          at: at.final,
+          roll: rolled,
+          total: roll.total,
+          unableToDefense,
+          dobleDamage,
+          cantDamage,
+          atResValue,
+          spellCasting,
+          supShield,
+          specificAttack,
+          lifePoints
+        }
+      });
+
+      this.modalData.defenseSent = true;
+
+      this.render();
     });
 
     html.find('.send-psychic-defense').click(() => {
-      const { psychicProjection, psychicPotential, powerUsed, modifier } =
-        this.modalData.defender.psychic;
-      const { at } = this.modalData.defender.combat;
+      const {
+        psychic: { psychicPotential, psychicProjection, powerUsed, modifier, shieldUsed, newShield },
+        combat: { at },
+        lifePoints,
+        blindnessPen,
+        specificAttack,
+        inhuman,
+        zen
+      } = this.modalData.defender;
+      const { i18n } = game;
+      const { psychicPowers, psychicShields} = this.defenderActor.system.psychic;
+      let power,
+        fatigueCheck,
+        atResValue = 0,
+        supShield = { create: false },
+        newPsychicPotential;
+      if (at.defense) {
+        atResValue += at.final * 10 + 20 + 10;
+      }
 
-      if (powerUsed) {
-        let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
-        if (this.modalData.defender.withoutRoll) {
-          // Remove the dice from the formula
-          formula = formula.replace('1d100xa', '0');
+      const newModifier = blindnessPen + modifier ?? 0;
+      let formula = `1d100xa + ${psychicProjection.final} + ${newModifier}`;
+      if (this.modalData.defender.withoutRoll) {
+        // Remove the dice from the formula
+        formula = formula.replace('1d100xa', '0');
+      }
+      if (psychicProjection.base >= 200) {
+        // Mastery reduces the fumble range
+        formula = formula.replace('xa', 'xamastery');
+      }
+
+      const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
+      roll.roll();
+      const rolled = roll.total - psychicProjection.final - newModifier;
+
+      if (!newShield) {
+        if (!shieldUsed) {
+          return ui.notifications.warn(
+            'No tienes escudos psíquicos activos, has click en Escudo nuevo'
+          );
         }
-        if (this.defenderActor.system.psychic.psychicProjection.base.value >= 200) {
-          // Mastery reduces the fumble range
-          formula = formula.replace('xa', 'xamastery');
-        }
+        power = psychicShields.find(w => w._id === shieldUsed);
+        supShield = { ...power, create: false, id: shieldUsed };
+      } else if (powerUsed) {
+        this.defenderActor.setFlag(
+          'world',
+          `${this.defenderActor._id}.lastDefensivePowerUsed`,
+          powerUsed
+        );
+        power = psychicPowers.find(w => w._id === powerUsed);
+        const psychicPotentialRoll = new ABFFoundryRoll(
+          `1d100xa + ${psychicPotential.final}`,
+          this.modalData.defender.actor.system
+        );
+        psychicPotentialRoll.roll();
+        newPsychicPotential = psychicPotentialRoll.total;
+        let imbalance = psychicImbalanceCheck(this.defenderActor, power) ?? 0;
+        const newPotentialBase = psychicPotentialEffect(
+          psychicPotential.base,
+          0,
+          inhuman,
+          zen
+        );
+        const newPotentialTotal = psychicPotentialEffect(
+          psychicPotentialRoll.total,
+          imbalance,
+          inhuman,
+          zen
+        );
+        const baseEffect = shieldBaseValueCheck(newPotentialBase, power?.system.effects);
+        const finalEffect = shieldValueCheck(
+          power?.system.effects[newPotentialTotal].value ?? ''
+        );
+        const fatigueInmune = this.defenderActor.system.general.advantages.find(
+          i => i.name === 'Res. a la fatiga psíquica'
+        );
+        fatigueCheck = psychicFatigue(
+          power?.system.effects[newPotentialTotal].value,
+          fatigueInmune
+        );
+        const fatiguePen = fatigueCheck[1];
+        const maintain = baseEffect[0] >= finalEffect[0];
 
-        const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
-        roll.roll();
-
-        if (this.modalData.defender.showRoll) {
-          const { i18n } = game;
-
-          const powers = this.defenderActor.system.psychic.psychicPowers;
-
-          const power = powers.find(w => w._id === powerUsed);
-
-          const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
-            power: power.name,
-            target: this.modalData.attacker.token.name
-          });
-
-          roll.toMessage({
+        if (fatigueCheck[0]) {
+          psychicPotentialRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-            flavor
+            flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
+              fatiguePen
+            })
+          });
+          this.defenderActor.applyFatigue(fatiguePen);
+        } else {
+          supShield = {
+            name: power.name,
+            system: {
+              maintain: { value: maintain },
+              damageBarrier: { value: 0 },
+              shieldPoints: {
+                value: finalEffect[0],
+                maintainMax: baseEffect[0]
+              }
+            },
+            create: true
+          };
+          psychicPotentialRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+            flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
           });
         }
+      }
 
-        const rolled = roll.total - psychicProjection - (modifier ?? 0);
-
-        this.hooks.onDefense({
-          type: 'psychic',
-          values: {
-            modifier,
-            powerUsed,
-            psychicProjection,
-            psychicPotential: psychicPotential.final,
-            at: at.final,
-            roll: rolled,
-            total: roll.total
-          }
+      let unableToDefense = false;
+      const attackerSpecialType = this.modalData.attacker.specialType;
+      const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType);
+      unableToDefense = shieldCheck[0];
+      if (
+        this.modalData.defender.showRoll &&
+        (fatigueCheck == undefined || !fatigueCheck[0])
+      ) {
+        const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
+          power: power.name,
+          target: this.modalData.attacker.token.name
         });
 
-        this.modalData.defenseSent = true;
-
-        this.render();
+        roll.toMessage({
+          speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+          flavor
+        });
+      } else {
+        unableToDefense = true;
       }
+
+      this.hooks.onDefense({
+        type: 'psychic',
+        values: {
+          modifier: newModifier,
+          powerUsed,
+          psychicProjection: psychicProjection.final,
+          psychicPotential: newPsychicPotential ?? 0,
+          at: at.final,
+          roll: rolled,
+          total: roll.total,
+          unableToDefense,
+          dobleDamage: false,
+          cantDamage: false,
+          atResValue,
+          supShield,
+          specificAttack,
+          lifePoints
+        }
+      });
+
+      this.modalData.defenseSent = true;
+
+      this.render();
     });
   }
 
   getData() {
-    this.modalData.ui.hasFatiguePoints =
+    const {
+      defender: { combat, psychic, mystic },
+      ui
+    } = this.modalData;
+    ui.hasFatiguePoints =
       this.defenderActor.system.characteristics.secondaries.fatigue.value > 0;
 
-    this.modalData.defender.psychic.psychicPotential.final =
-      this.modalData.defender.psychic.psychicPotential.special +
-      this.defenderActor.system.psychic.psychicPotential.final.value;
+    const { psychicPowers } = this.defenderActor.system.psychic;
+    if (!psychic.powerUsed) {
+      psychic.powerUsed = psychicPowers.filter(
+        w => w.system.combatType.value === 'defense'
+      )[0]?._id;
+    }
+    const power = psychicPowers.find(w => w._id === psychic.powerUsed);
+    let psychicBonus = power?.system.bonus.value ?? 0;
+    psychic.psychicPotential.final =
+      psychic.psychicPotential.special +
+      this.defenderActor.system.psychic.psychicPotential.final.value +
+      psychicBonus;
 
-    let at;
+    const { psychicShields } = this.defenderActor.system.psychic;
+    if (!psychic.shieldUsed) {
+      psychic.shieldUsed = psychicShields.filter(
+        w => w.system.shieldPoints?.value > 0
+      )[0];
+    }
+    const psychicShield = psychicShields.find(w => w._id === psychic.shieldUsed);
+    psychic.shieldValue = psychicShield?.system.shieldPoints?.value ?? 0;
 
-    if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
-      switch (this.modalData.attacker.critic) {
-        case WeaponCritic.CUT:
-          at = this.defenderActor.system.combat.totalArmor.at.cut.value;
-          break;
-        case WeaponCritic.IMPACT:
-          at = this.defenderActor.system.combat.totalArmor.at.impact.value;
-          break;
-        case WeaponCritic.THRUST:
-          at = this.defenderActor.system.combat.totalArmor.at.thrust.value;
-          break;
-        case WeaponCritic.HEAT:
-          at = this.defenderActor.system.combat.totalArmor.at.heat.value;
-          break;
-        case WeaponCritic.ELECTRICITY:
-          at = this.defenderActor.system.combat.totalArmor.at.electricity.value;
-          break;
-        case WeaponCritic.COLD:
-          at = this.defenderActor.system.combat.totalArmor.at.cold.value;
-          break;
-        case WeaponCritic.ENERGY:
-          at = this.defenderActor.system.combat.totalArmor.at.energy.value;
-          break;
-        default:
-          at = undefined;
-      }
+    const { spells } = this.defenderActor.system.mystic;
+    if (!mystic.spellUsed) {
+      mystic.spellUsed = spells.filter(
+        w => w.system.combatType.value === 'attack'
+      )[0]?._id;
+    }
+    const spell = spells.find(w => w._id === mystic.spellUsed);
+    const mysticSpellCheck = mysticSpellCastEvaluate(
+      this.defenderActor,
+      spell,
+      mystic.spellGrade
+    );
+    mystic.spellCasting.spell = mysticSpellCheck;
+    if (!mystic.spellCasting.spell.innate) {
+      mystic.spellCasting.cast.innate = false;
+    }
+    if (!mystic.spellCasting.spell.prepared) {
+      mystic.spellCasting.cast.prepared = false;
     }
 
-    if (at !== undefined) {
-      this.modalData.defender.combat.at.final =
-        this.modalData.defender.combat.at.special + at;
+    const { mysticShields } = this.defenderActor.system.mystic;
+    if (!mystic.shieldUsed) {
+      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints?.value > 0)[0];
     }
-
-    const { combat } = this.modalData.defender;
+    const mysticShield = mysticShields.find(w => w._id === mystic.shieldUsed);
+    mystic.shieldValue = mysticShield?.system.shieldPoints?.value ?? 0;
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);

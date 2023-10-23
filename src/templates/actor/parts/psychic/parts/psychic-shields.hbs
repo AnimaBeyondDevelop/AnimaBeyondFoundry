@@ -1,0 +1,39 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="psychic-shields"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.psychic.psychicShields.title")
+    addRowButtonData="add-psychic-shield"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="psychic-shields"
+  }}
+    {{#each system.psychic.psychicShields as |psychicShield|}}
+      <div data-item-id='{{this._id}}' class='psychic-shield-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.psychic.psychicShields.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=(concat "system.dynamic.psychicShields." this._id ".name")
+          inputValue=this.name
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="shieldPoints"
+          title=(localize "anima.ui.psychic.psychicShields.shieldPoints.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "system.dynamic.psychicShields." this._id ".system.shieldPoints.value")
+          inputValue=this.system.shieldPoints.value
+          hasSecondaryInput=true
+          disableSecondaryInput=true
+          secondaryInputName=(concat "system.dynamic.psychicShields." this._id ".system.shieldPoints.maintainMax")
+          secondaryInputValue=this.system.shieldPoints.maintainMax
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

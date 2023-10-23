@@ -17,9 +17,14 @@ import { MetamagicItemConfig } from '../../../types/mystic/MetamagicItemConfig';
 import { NemesisSkillItemConfig } from '../../../types/domine/NemesisSkillItemConfig';
 import { NoteItemConfig } from '../../../types/general/NoteItemConfig';
 import { PsychicDisciplineItemConfig } from '../../../types/psychic/PsychicDisciplineItemConfig';
+import { PsychicShieldItemConfig } from '../../../types/psychic/PsychicShieldItemConfig';
 import { PsychicPowerItemConfig } from '../../../types/psychic/PsychicPowerItemConfig';
 import { SecondarySpecialSkillItemConfig } from '../../../types/secondaries/SecondarySpecialSkillItemConfig';
 import { SelectedSpellItemConfig } from '../../../types/mystic/SelectedSpellItemConfig';
+import { ActViaItemConfig } from '../../../types/mystic/ActViaItemConfig';
+import { InnateMagicViaItemConfig } from '../../../types/mystic/InnateMagicViaItemConfig';
+import { PreparedSpellItemConfig } from '../../../types/mystic/PreparedSpellItemConfig';
+import { MysticShieldItemConfig } from '../../../types/mystic/MysticShieldItemConfig';
 import { SpecialSkillItemConfig } from '../../../types/domine/SpecialSkillItemConfig';
 import { SpellMaintenanceItemConfig } from '../../../types/mystic/SpellMaintenanceItemConfig';
 import { SummonItemConfig } from '../../../types/mystic/SummonItemConfig';
@@ -50,6 +55,8 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [SelectedSpellItemConfig.type]: SelectedSpellItemConfig,
   [SpecialSkillItemConfig.type]: SpecialSkillItemConfig,
   [SpellMaintenanceItemConfig.type]: SpellMaintenanceItemConfig,
+  [ActViaItemConfig.type]: ActViaItemConfig,
+  [InnateMagicViaItemConfig.type]: InnateMagicViaItemConfig,
   [SummonItemConfig.type]: SummonItemConfig,
   [TitleItemConfig.type]: TitleItemConfig,
   [InventoryItemItemConfig.type]: InventoryItemItemConfig
@@ -61,9 +68,12 @@ export const ITEM_CONFIGURATIONS = {
   [ArmorItemConfig.type]: ArmorItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
   [SpellItemConfig.type]: SpellItemConfig,
+  [PreparedSpellItemConfig.type]: PreparedSpellItemConfig,
+  [MysticShieldItemConfig.type]: MysticShieldItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,
   [NoteItemConfig.type]: NoteItemConfig,
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,
+  [PsychicShieldItemConfig.type]: PsychicShieldItemConfig,
   [PsychicPowerItemConfig.type]: PsychicPowerItemConfig,
   [TechniqueItemConfig.type]: TechniqueItemConfig,
   [WeaponItemConfig.type]: WeaponItemConfig

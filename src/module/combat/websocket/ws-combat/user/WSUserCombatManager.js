@@ -169,7 +169,13 @@ export class WSUserCombatManager extends WSCombatManager {
         {
           token: attacker,
           attackType: result.type,
-          critic: result.values.critic
+          critic: result.values.critic,
+          visible: result.values.visible,
+          projectile: result.values.projectile,
+          damage: result.values.damage,
+          specialType: result.values.specialType,
+          distance: result.values.distance,
+          specificAttack: result.values.specificAttack
         },
         defender,
         {

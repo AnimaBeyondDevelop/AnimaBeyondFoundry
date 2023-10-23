@@ -1,0 +1,35 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="mystic-shields"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.mysticShields.title")
+    addRowButtonData="add-mystic-shield"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="mystic-shields"
+  }}
+    {{#each system.mystic.mysticShields as |mysticShield|}}
+      <div data-item-id='{{this._id}}' class='mystic-shield-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.mysticShields.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=(concat "system.dynamic.mysticShields." this._id ".name")
+          inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="value"
+          title=(localize "anima.ui.mystic.mysticShields.value.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "system.dynamic.mysticShields." this._id ".system.shieldPoints.value")
+          inputValue=this.system.shieldPoints.value
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

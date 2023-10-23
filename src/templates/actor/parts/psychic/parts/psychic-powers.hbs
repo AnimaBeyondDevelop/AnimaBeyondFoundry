@@ -39,9 +39,17 @@
                 }}
                 {{>
                 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                  class="combat-type"
+                  choices=xRoot.config.iterables.psychic.combatTypes
+                  title=(localize "anima.ui.psychic.psychicPowers.power.header.combatType.title")
+                  inputName=(concat "system.dynamic.psychicPowers." power._id ".system.combatType.value")
+                  inputValue=power.system.combatType.value
+                }}
+                {{>
+                'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                   class="action-type"
                   choices=xRoot.config.iterables.psychic.actionTypes
-                  title=(localize "anima.ui.psychic.psychicPowers.power.footer.actionType.title")
+                  title=(localize "anima.ui.psychic.psychicPowers.power.header.actionType.title")
                   inputName=(concat "system.dynamic.psychicPowers." power._id ".system.actionType.value")
                   inputValue=power.system.actionType.value
                 }}
@@ -77,6 +85,14 @@
                 inputType="checkbox"
                 inputName=(concat "system.dynamic.psychicPowers." power._id ".system.hasMaintenance.value")
                 inputValue=(is 'eq' power.system.hasMaintenance.value true)
+              }}
+              {{>
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                class="critic"
+                disabled=true
+                choices=xRoot.config.iterables.psychic.criticTypesWithNone
+                inputName=(concat "system.dynamic.psychicPowers." power._id ".system.critic.value")
+                inputValue=power.system.critic.value
               }}
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"

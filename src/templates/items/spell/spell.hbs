@@ -26,6 +26,22 @@
               inputValue=system.level.value
             }}
             {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="macro"
+              title="Macro"
+              inputType="text"
+              inputName="system.macro.value"
+              inputValue=system.macro.value
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+              class="visible"
+              title=(localize "anima.ui.mystic.spell.visible.title")
+              inputType="checkbox"
+              inputName="system.visible.value"
+              inputValue=(is 'eq' system.visible.value true)
+            }}
+            {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
               class="via"
               choices=config.iterables.mystic.vias
@@ -108,6 +124,14 @@
             title=(localize "anima.ui.mystic.spell.actionType.title")
             inputName="system.actionType.value"
             inputValue=system.actionType.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="critic"
+            title=(localize "anima.ui.mystic.spell.critic.title")
+            choices=config.iterables.mystic.criticTypesWithNone
+            inputName=(concat "system.critic.value")
+            inputValue=system.critic.value
           }}
           {{>
           'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'

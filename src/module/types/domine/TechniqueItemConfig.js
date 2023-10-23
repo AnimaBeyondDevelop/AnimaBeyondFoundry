@@ -15,13 +15,16 @@ export const INITIAL_TECHNIQUE_DATA = {
   constitution: { value: 0 },
   willPower: { value: 0 },
   power: { value: 0 },
-  martialKnowledge: { value: 0 }
+  martialKnowledge: { value: 0 },
+  activeEffect: { hasEffects: false, enabled: false }
 };
 
 /** @type {import("../Items").TechniqueItemConfig} */
 export const TechniqueItemConfig = ABFItemConfigFactory({
   type: ABFItems.TECHNIQUE,
   isInternal: false,
+  defaultValue: INITIAL_TECHNIQUE_DATA,
+  hasSheet: true,
   fieldPath: ['domine', 'techniques'],
   selectors: {
     addItemButtonSelector: 'add-technique',
@@ -43,12 +46,10 @@ export const TechniqueItemConfig = ABFItemConfigFactory({
   },
   // TODO: This should go inside prepareItem, as in spellItemConfig. Same for other TextEditors
   // That it's called also when opening the standalone sheet.
-  onAttach: async (actor, technique) => {
+  prepareItem: async technique => {
     technique.system.enrichedDescription = await TextEditor.enrichHTML(
       technique.system.description?.value ?? '',
-      {
-        async: true
-      }
+      { async: true }
     );
   }
 });
