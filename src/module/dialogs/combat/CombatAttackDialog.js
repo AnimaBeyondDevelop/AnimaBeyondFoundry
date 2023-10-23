@@ -83,7 +83,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         specificAttack: {
           value: 'none',
-          causeDamage: false,
+          causeDamage: true,
           characteristic: undefined,
           check: false,
           targeted: 'none',
@@ -824,6 +824,9 @@ export class CombatAttackDialog extends FormApplication {
       combat.specificAttack.value !== 'knockDown' &&
       combat.specificAttack.value !== 'immobilize'
     ) {
+      combat.specificAttack.causeDamage = true;
+    }
+    if (combat.specificAttack.value == 'disarm') {
       combat.specificAttack.causeDamage = false;
     }
     if (
