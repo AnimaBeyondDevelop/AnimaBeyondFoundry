@@ -1,0 +1,41 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="effects-list"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.effects.effectsList.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="effects-list"
+  }}
+  <table class="item-list effects-list">
+        <tr>
+            <th>{{localize "anima.ui.effects.effectsList.name.title"}}</th>
+            <th>
+                <a class="effect-control" data-action="create">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </th>
+        </tr>
+        {{#each effects as |effect|}}
+        <tr class='item effect' data-effect-id="{{effect.id}}">
+            <td class="item-name effect-name">
+                <h4>{{effect.name}}</h4>
+            </td>
+            <td class="effect-controls">
+                <a class="effect-control" data-action="toggle"
+                   title="{{#if effect.disabled}}{{localize "anima.ui.effects.effectsList.enable.title"}}{{else}}{{localize "anima.ui.effects.effectsList.disable.title"}}{{/if}}">
+                    <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}"></i>
+                </a>
+                <a class="effect-control" data-action="edit" title="{{localize "anima.ui.effects.effectsList.edit.title"}}">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="effect-control" data-action="delete" title="{{localize "anima.ui.effects.effectsList.delete.title"}}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
