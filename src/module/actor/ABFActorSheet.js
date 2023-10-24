@@ -150,6 +150,8 @@ export default class ABFActorSheet extends sveltify(
       }
     });
 
+    html.find('.effect-control').click(this._onEffectControl.bind(this));
+
     html.find('.toggle-effects-button').click(async e => {
       const { effectsItemId } = e.currentTarget.dataset;
       const item = this.actor.items.get(effectsItemId);
@@ -165,7 +167,6 @@ export default class ABFActorSheet extends sveltify(
       const newStatus = !item.system.activeEffect.enabled;
 
       for (const effect of relevantEffects) {
-        console.log(effect);
         await effect.update({ disabled: !newStatus });
       }
       return item.update({ 'system.activeEffect.enabled': newStatus });
@@ -183,6 +184,32 @@ export default class ABFActorSheet extends sveltify(
       html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
         item.onCreate(this.actor);
       });
+    }
+  }
+
+  _onEffectControl(event) {
+    event.preventDefault();
+    const owner = this.actor;
+    const a = event.currentTarget;
+    const tr = a.closest('tr');
+    const effect = tr.dataset.effectId ? owner.effects.get(tr.dataset.effectId) : null;
+    const status = effect?.disabled
+    switch (a.dataset.action) {
+      case 'create':
+        return owner.createEmbeddedDocuments('ActiveEffect', [
+          {
+            label: 'New Effect',
+            icon: 'icons/svg/aura.svg',
+            origin: owner.uuid,
+            disable: true
+          }
+        ]);
+      case 'toggle':
+        return effect.update({ disabled: !status });
+      case 'edit':
+        return effect.sheet.render(true);
+      case 'delete':
+        return effect.delete();
     }
   }
 
