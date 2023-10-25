@@ -511,9 +511,12 @@ export class GMCombatDialog extends FormApplication {
       const macroName = 'Critical Attack';
       const macro = game.macros.getName(macroName);
       if (macro) {
-        macro.execute({ attacker, defender, resistanceRoll, location});
+        macro.execute({ attacker, defender, resistanceRoll, location });
       } else {
         console.debug(`Macro '${macroName}' not found.`);
+      }
+      if (resistanceRoll < 0) {
+        this.defenderActor.applyCriticEffect(Math.abs(resistanceRoll));
       }
     }
   }
