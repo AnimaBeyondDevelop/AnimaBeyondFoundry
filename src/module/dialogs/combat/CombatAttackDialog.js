@@ -745,13 +745,15 @@ export class CombatAttackDialog extends FormApplication {
         combat.damage.special +
         10 +
         this.attackerActor.system.characteristics.primaries.strength.mod;
-      combat.damage.final = combat.specificAttack.causeDamage
-        ? roundTo5Multiples(unarmedDamage / 2)
-        : combat.specificAttack.value !== 'knockDown' &&
-          combat.specificAttack.value !== 'disarm' &&
-          combat.specificAttack.value !== 'immobilize'
-          ? unarmedDamage
-          : 0;
+      combat.damage.final = unarmedDamage;
+      if (!combat.specificAttack.causeDamage) {
+        combat.damage.final = 0;
+      } else if (
+        combat.specificAttack.value == 'knockDown' ||
+        combat.specificAttack.value == 'immobilize'
+      ) {
+        combat.damage.final = roundTo5Multiples(unarmedDamage / 2);
+      }
     } else {
       combat.weapon = weapon;
       if (weapon?.system.isRanged.value) {
@@ -773,13 +775,15 @@ export class CombatAttackDialog extends FormApplication {
       ui.weaponHasSecondaryCritic =
         weapon.system.critic.secondary.value !== NoneWeaponCritic.NONE;
       const armedDamage = combat.damage.special + weapon.system.damage.final.value;
-      combat.damage.final = combat.specificAttack.causeDamage
-        ? roundTo5Multiples(armedDamage / 2)
-        : combat.specificAttack.value !== 'knockDown' &&
-          combat.specificAttack.value !== 'disarm' &&
-          combat.specificAttack.value !== 'immobilize'
-          ? armedDamage
-          : 0;
+      combat.damage.final = armedDamage;
+      if (!combat.specificAttack.causeDamage) {
+        combat.damage.final = 0;
+      } else if (
+        combat.specificAttack.value == 'knockDown' ||
+        combat.specificAttack.value == 'immobilize'
+      ) {
+        combat.damage.final = roundTo5Multiples(armedDamage / 2);
+      }
     }
 
     this.modalData.config = ABFConfig;
