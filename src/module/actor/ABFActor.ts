@@ -13,6 +13,7 @@ import { executeArgsMacro } from '../utils/functions/executeArgsMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
+import { domineTechniqueEvaluate } from '../combat/utils/domineTechniqueEvaluate';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -56,12 +57,41 @@ export class ABFActor extends Actor {
       }
     });
   }
+  activateTechnique(techniqueId: string) {
+    const technique = this.items.get(techniqueId);
+    if (technique == undefined) {
+      return;
+    }
+    const newStatus = !technique.system.activeEffect.enabled;
+    if (!newStatus) {
+      return ui.notifications.warn('La técnica ya se encuentra activa');
+    }
+    const kiEvaluate = domineTechniqueEvaluate(this, technique);
+    if (!kiEvaluate) {
+      return ui.notifications.warn(
+        'No cuentas con suficiente Ki para activar la técnica'
+      );
+    }
+    const effects = this.getEmbeddedCollection('ActiveEffect').contents;
+    const relevantEffects = effects.filter(effect => effect.origin.endsWith(techniqueId));
+    if (relevantEffects.length == 0) {
+      return;
+    }
+    if (newStatus) {
+      for (const effect of relevantEffects) {
+        effect.update({ disabled: !newStatus });
+      }
+      technique.update({ 'system.activeEffect.enabled': newStatus });
+    }
+    return
+  }
 
   applyCriticEffect(criticLevel: number) {
     const newAllActionsPenalty =
       this.system.general.modifiers.allActions.base.value - criticLevel;
     const criticPenalty: any = this.getFlag('world', `${this._id}.criticPenalty`) || 0;
-    const newCriticPenalty = criticPenalty - (criticLevel <= 50? criticLevel: Math.round(criticLevel/2));
+    const newCriticPenalty =
+      criticPenalty - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
 
     this.update({
       system: {
