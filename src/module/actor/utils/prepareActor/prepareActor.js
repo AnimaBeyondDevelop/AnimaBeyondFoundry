@@ -13,6 +13,7 @@ import { mutateTechniquesData } from './calculations/items/technique/mutateTechn
 import { mutateSecondariesData } from './calculations/actor/secondaries/mutateSecondariesData';
 import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
 import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
+import { mutateResistances } from './calculations/actor/general/mutateResistances.js';
 import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
 import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicData';
 import { mutateDomineData } from './calculations/actor/domine/mutateDomineData';
@@ -38,7 +39,8 @@ const DERIVED_DATA_FUNCTIONS = [
   mutateMysticData,
   mutatePsychicData,
   mutateDomineData,
-  mutateTechniquesData
+  mutateTechniquesData,
+  mutateResistances
 ];
 
 export const prepareActor = async actor => {
