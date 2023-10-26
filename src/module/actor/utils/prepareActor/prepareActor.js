@@ -9,6 +9,7 @@ import { mutatePhysicalModifier } from './calculations/actor/modifiers/mutatePhy
 import { mutatePerceptionPenalty } from './calculations/actor/modifiers/mutatePerceptionPenalty';
 import { mutateAllActionsModifier } from './calculations/actor/modifiers/mutateAllActionsModifier';
 import { mutateTechniquesData } from './calculations/items/technique/mutateTechniquesData';
+//import { mutateNaturalPenalty } from './calculations/actor/natural-penalty/mutateNaturalPenalty';
 import { mutateSecondariesData } from './calculations/actor/secondaries/mutateSecondariesData';
 import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
 import { mutateMovementType } from './calculations/actor/general/mutateMovementType';

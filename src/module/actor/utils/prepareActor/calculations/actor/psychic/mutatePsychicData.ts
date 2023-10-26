@@ -27,7 +27,7 @@ export const mutatePsychicData = (data: ABFActorDataSourceData) => {
     psychic.psychicPotential.base.value + Math.min(allActionsPenalty, 0),
     0
   );
-  
+
   if (psychic.psychicShields.length !== 0) {
     for (let psychicShield of psychic.psychicShields) {
       const { shieldPoints } = psychicShield.system;

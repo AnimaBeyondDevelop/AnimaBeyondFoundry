@@ -1,0 +1,22 @@
+@import '../../variable';
+
+.effects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+  .effects-list {
+    .items-list {
+      display: flex;
+      .item {
+        .item-name {
+          .effect-image {
+            width: 5px;
+            height: 5px;
+            border: none;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}

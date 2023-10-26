@@ -10,7 +10,7 @@ export const psychicShieldsMaintained = () => {
       const { psychicShields } = combantant.actor.system.psychic;
       for (let psychicShield of psychicShields) {
         if (!psychicShield.system.maintain.value) {
-          const supShield = { system: psychicShield.system, id: psychicShield._id };
+          const supShield = {system: psychicShield.system, id: psychicShield._id};
           combantant.actor.applyDamageSupernaturalShield(supShield, 5, false, 'psychic');
         }
       }

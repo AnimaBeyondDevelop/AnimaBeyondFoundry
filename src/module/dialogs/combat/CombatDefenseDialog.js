@@ -532,7 +532,7 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false },
         atResValue = 0;
       if (at.defense) {
-        atResValue += at.final * 10 + 20 + 10;
+        atResValue += at.final * 10 + 20;
       }
 
       const newModifier = blindnessPen + modifier ?? 0;
@@ -659,7 +659,7 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false },
         newPsychicPotential;
       if (at.defense) {
-        atResValue += at.final * 10 + 20 + 10;
+        atResValue += at.final * 10 + 20;
       }
 
       const newModifier = blindnessPen + modifier ?? 0;
