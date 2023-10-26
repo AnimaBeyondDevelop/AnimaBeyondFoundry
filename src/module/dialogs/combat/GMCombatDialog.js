@@ -197,12 +197,10 @@ export class GMCombatDialog extends FormApplication {
         defenderCharacteristic,
         attackerCharacteristic
       );
-      let attackerFormula = `1d10ControlRoll + ${
-        attackerCharacteristic + attacketModifier
-      } + ${modAttacketChar}`;
-      let defenderFormula = `1d10ControlRoll + ${
-        defenderCharacteristic + defenderModifier
-      }`;
+      let attackerFormula = `1d10ControlRoll + ${attackerCharacteristic + attacketModifier
+        } + ${modAttacketChar}`;
+      let defenderFormula = `1d10ControlRoll + ${defenderCharacteristic + defenderModifier
+        }`;
 
       const attackerCharacteristicRoll = new ABFFoundryRoll(
         attackerFormula,
@@ -387,11 +385,8 @@ export class GMCombatDialog extends FormApplication {
         const combatResult = calculateCombatResult(
           Math.max(attackerTotal, 0),
           Math.max(defenderTotal, 0),
-          Math.max(
-            defender.result.values.at - calculateATReductionByQuality(attacker.result),
-            0
-          ),
-          attacker.result.values.damage,
+          defender.result.values.at,
+          Math.max(attacker.result.values.damage - defender.result.values.reducedDamage, 0),
           defender.result.type === 'resistance' ? defender.result.values.surprised : false
         );
         const { distance, projectile } = attacker.result.values;
@@ -511,7 +506,7 @@ export class GMCombatDialog extends FormApplication {
       const macroName = 'Critical Attack';
       const macro = game.macros.getName(macroName);
       if (macro) {
-        macro.execute({ attacker, defender, resistanceRoll, location});
+        macro.execute({ attacker, defender, resistanceRoll, location });
       } else {
         console.debug(`Macro '${macroName}' not found.`);
       }

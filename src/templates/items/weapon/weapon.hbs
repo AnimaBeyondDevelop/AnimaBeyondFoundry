@@ -108,15 +108,13 @@
         inputName="system.ignoreArmor.value"
         inputValue=system.ignoreArmor.value
       }}
-      {{#if (is 'eq' system.ignoreArmor.value false)}}
-        {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-          class="extra-reduced-armor"
-          title=(localize "anima.ui.combat.weapons.extraReducedArmor.title")
-          inputName="system.extraReducedArmor.value"
-          inputValue=system.extraReducedArmor.value
-        }}
-      {{/if}}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="extra-reduced-armor"
+        title=(localize "anima.ui.combat.weapons.extraReducedArmor.title")
+        inputName="system.extraReducedArmor.value"
+        inputValue=system.extraReducedArmor.value
+      }}
       {{>
       'systems/animabf/templates/common/ui/custom-select-choices.hbs'
         class="used-attribute"

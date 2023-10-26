@@ -42,6 +42,7 @@ export class WSGMCombatManager extends WSCombatManager {
       const { specialType } = msg.payload.values;
       const { distance } = msg.payload.values;
       const { specificAttack } = msg.payload.values;
+      const { reducedArmor } = msg.payload.values;
 
       if (canOwnerReceiveMessage(defenderActor)) {
         const newMsg = {
@@ -56,7 +57,7 @@ export class WSGMCombatManager extends WSCombatManager {
         this.emit(newMsg);
       } else {
         try {
-          this.manageDefense(attackerToken, defenderToken, msg.payload.type, critic, visible, projectile, damage, specialType, distance, specificAttack);
+          this.manageDefense(attackerToken, defenderToken, msg.payload.type, critic, visible, projectile, damage, specialType, distance, specificAttack, reducedArmor);
         } catch (err) {
           if (err) {
             Log.error(err);
@@ -286,9 +287,10 @@ export class WSGMCombatManager extends WSCombatManager {
               const { specialType } = result.values;
               const { distance } = result.values;
               const { specificAttack } = result.values;
+              const { reducedArmor } = result.values;
 
               try {
-                this.manageDefense(attacker, defender, result.type, critic, visible, projectile, damage, specialType, distance, specificAttack);
+                this.manageDefense(attacker, defender, result.type, critic, visible, projectile, damage, specialType, distance, specificAttack, reducedArmor);
               } catch (err) {
                 if (err) {
                   Log.error(err);
@@ -304,7 +306,7 @@ export class WSGMCombatManager extends WSCombatManager {
     );
   }
 
-  manageDefense(attacker, defender, attackType, critic, visible, projectile, damage, specialType, distance, specificAttack) {
+  manageDefense(attacker, defender, attackType, critic, visible, projectile, damage, specialType, distance, specificAttack, reducedArmor) {
     this.defendDialog = new CombatDefenseDialog(
       {
         token: attacker,
@@ -315,7 +317,8 @@ export class WSGMCombatManager extends WSCombatManager {
         damage,
         specialType,
         distance,
-        specificAttack
+        specificAttack,
+        reducedArmor
       },
       defender,
       {

@@ -83,6 +83,8 @@
   "anima.ui.combat.baseValues.title": "Valores base",
   "anima.ui.combat.baseValues.wearArmor.title": "Llevar armadura",
   "anima.ui.combat.baseValues.incomingDamageReduction.title": "Reducción de Daño",
+  "anima.ui.combat.baseValues.ignoreArmor.title": "Ignora Armadura",
+  "anima.ui.combat.baseValues.inmodifiableArmor.title": "Armadura Inmodificable",
 	"anima.ui.combat.baseValues.extraArmor.title": "TAs extra",
 	"anima.ui.combat.baseValues.extraReducedArmor.title": "TAs reducidas extra",
   "anima.ui.combat.combatSpecialSkill.title": "Habilidades especiales",

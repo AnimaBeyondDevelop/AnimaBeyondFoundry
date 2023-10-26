@@ -8,8 +8,8 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const initiativeMod = data.general.modifiers.initiativeMod.value;
 
   const penalty =
-    Math.ceil(Math.min(general.modifiers.allActions.final.value + general.modifiers.physicalActions.value, 0) / 2) + general.modifiers.naturalPenalty.byArmors.value;
-
+    Math.ceil(Math.min(general.modifiers.allActions.final.value + general.modifiers.physicalActions.final.value, 0) / 2) + general.modifiers.naturalPenalty.final.value;
+  console.log(penalty);
   const { initiative } = data.characteristics.secondaries;
 
   initiative.final.value = initiative.base.value + penalty + initiativeMod;

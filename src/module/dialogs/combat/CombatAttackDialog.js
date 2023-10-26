@@ -10,6 +10,7 @@ import { supSpecificAttack } from '../../combat/utils/supSpecificAttack.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
 import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
+import { getReducedArmor } from '../../combat/utils/getReducedArmor.js';
 import { roundTo5Multiples } from '../../combat/utils/roundTo5Multiples';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
@@ -239,8 +240,12 @@ export class CombatAttackDialog extends FormApplication {
         'world',
         `${this.attackerActor._id}.lastOffensiveWeaponUsed`
       );
-      this.modalData.attacker.combat.weaponUsed =
-        lastOffensiveWeaponUsed || weapons[0]._id;
+      if (weapons.find(weapon => weapon._id == lastOffensiveWeaponUsed)) {
+        this.modalData.attacker.combat.weaponUsed = lastOffensiveWeaponUsed;
+      }
+      else {
+        this.modalData.attacker.combat.weaponUsed = weapons[0]._id;
+      }
     } else {
       this.modalData.attacker.combat.unarmed = true;
     }
@@ -415,9 +420,8 @@ export class CombatAttackDialog extends FormApplication {
         }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
         const newModifier = combatModifier + modifier ?? 0;
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${newModifier} + ${
-          fatigueUsed ?? 0
-        }* 15`;
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${newModifier} + ${fatigueUsed ?? 0
+          }* 15`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
@@ -436,12 +440,12 @@ export class CombatAttackDialog extends FormApplication {
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-                weapon: weapon?.name,
-                target: this.modalData.defender.token.name
-              })
+              weapon: weapon?.name,
+              target: this.modalData.defender.token.name
+            })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                target: this.modalData.defender.token.name
-              });
+              target: this.modalData.defender.token.name
+            });
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
@@ -468,6 +472,8 @@ export class CombatAttackDialog extends FormApplication {
         if (inmaterial) {
           specialTypeCheck = 'inmaterial';
         }
+
+        const reducedArmor = getReducedArmor(this.attackerActor, weapon);
 
         const rolled =
           roll.total -
@@ -496,7 +502,8 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             specialType: specialTypeCheck,
-            unableToAttack
+            unableToAttack,
+            reducedArmor
           }
         });
 

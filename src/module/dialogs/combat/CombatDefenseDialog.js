@@ -10,6 +10,7 @@ import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffec
 import { shieldBaseValueCheck } from '../../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 import { shieldSupernaturalCheck } from '../../combat/utils/shieldSupernaturalCheck.js';
+import { getFinalArmor } from '../../combat/utils/getFinalArmor.js';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
@@ -44,7 +45,8 @@ const getInitialData = (attacker, defender) => {
       projectile: attacker.projectile,
       damage: attacker.damage,
       specialType: attacker.specialType,
-      specificAttack: attacker.specificAttack
+      specificAttack: attacker.specificAttack,
+      reducedArmor: attacker.reducedArmor,
     },
     defender: {
       token: defender,
@@ -267,25 +269,25 @@ export class CombatDefenseDialog extends FormApplication {
     } else if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
       switch (this.modalData.attacker.critic) {
         case WeaponCritic.CUT:
-          at = this.defenderActor.system.combat.totalArmor.at.cut.value;
+          at = this.defenderActor.system.combat.totalArmor.at.cut.final.value;
           break;
         case WeaponCritic.IMPACT:
-          at = this.defenderActor.system.combat.totalArmor.at.impact.value;
+          at = this.defenderActor.system.combat.totalArmor.at.impact.final.value;
           break;
         case WeaponCritic.THRUST:
-          at = this.defenderActor.system.combat.totalArmor.at.thrust.value;
+          at = this.defenderActor.system.combat.totalArmor.at.thrust.final.value;
           break;
         case WeaponCritic.HEAT:
-          at = this.defenderActor.system.combat.totalArmor.at.heat.value;
+          at = this.defenderActor.system.combat.totalArmor.at.heat.final.value;
           break;
         case WeaponCritic.ELECTRICITY:
-          at = this.defenderActor.system.combat.totalArmor.at.electricity.value;
+          at = this.defenderActor.system.combat.totalArmor.at.electricity.final.value;
           break;
         case WeaponCritic.COLD:
-          at = this.defenderActor.system.combat.totalArmor.at.cold.value;
+          at = this.defenderActor.system.combat.totalArmor.at.cold.final.value;
           break;
         case WeaponCritic.ENERGY:
-          at = this.defenderActor.system.combat.totalArmor.at.energy.value;
+          at = this.defenderActor.system.combat.totalArmor.at.energy.final.value;
           break;
         default:
           at = undefined;
@@ -429,6 +431,9 @@ export class CombatDefenseDialog extends FormApplication {
         }
       }
       const newModifier = combatModifier + modifier ?? 0;
+
+      at.final = getFinalArmor(this.defenderActor, at.final, this.modalData.attacker.reducedArmor);
+
       let atResValue = 0;
       if (at.defense) {
         atResValue += at.final * 10 + 20;
@@ -463,6 +468,8 @@ export class CombatDefenseDialog extends FormApplication {
         });
       }
 
+      const reducedDamage = this.defenderActor.system.combat.incomingDamageReduction.value;
+
       const rolled =
         roll.total -
         newModifier -
@@ -485,7 +492,8 @@ export class CombatDefenseDialog extends FormApplication {
           atResValue,
           accumulateDefenses,
           specificAttack,
-          lifePoints
+          lifePoints,
+          reducedDamage
         }
       });
 

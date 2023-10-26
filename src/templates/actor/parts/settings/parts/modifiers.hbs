@@ -31,6 +31,22 @@
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="ignore-armor"
+      title=(localize "anima.ui.combat.baseValues.ignoreArmor.title")
+      inputType="checkbox"
+      inputName="system.combat.ignoreArmor.value"
+      inputValue=system.combat.ignoreArmor.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="inmodifiable-armor"
+      title=(localize "anima.ui.combat.baseValues.inmodifiableArmor.title")
+      inputType="checkbox"
+      inputName="system.combat.inmodifiableArmor.value"
+      inputValue=system.combat.inmodifiableArmor.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="incoming-damage-reduction"
       title=(localize "anima.ui.combat.baseValues.incomingDamageReduction.title")
       inputName="system.combat.incomingDamageReduction.value"

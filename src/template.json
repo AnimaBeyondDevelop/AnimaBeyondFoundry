@@ -185,6 +185,8 @@
         "armors": [],
         "extraArmor": { "value": 0 },
         "extraReducedArmor": { "value": 0 },
+        "ignoreArmor": { "value": false },
+        "inmodifiableArmor": { "value": false },
         "incomingDamageReduction": { "value": 0 }
       },
       "mystic": {
