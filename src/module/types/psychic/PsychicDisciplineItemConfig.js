@@ -3,7 +3,7 @@ import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDial
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
- * Initial data for a new act type. Used to infer the type of the data inside `actVia.system`
+ * Initial data, used to infer the type of the data inside an item's `system`
  * @readonly
  */
 export const INITIAL_PSYCHIC_DISCIPLINE_DATA = {
