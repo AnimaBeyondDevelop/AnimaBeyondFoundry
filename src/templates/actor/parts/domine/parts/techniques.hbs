@@ -21,6 +21,7 @@
         }}
           {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='technique-header'>
+              <div class='first-row'>
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
@@ -30,14 +31,7 @@
                 inputValue=technique.name
               }}
             </div>
-          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
-          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
-            class="technique"
-          }}
-            {{editor technique.system.enrichedDescription target=(concat "system.dynamic.techniques." technique._id ".system.description.value") button=true owner=true editable=true}}
-          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
-            <div class='technique-footer'>
+            <div class='second-row'>
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="level"
@@ -46,6 +40,47 @@
                 inputName=(concat "system.dynamic.techniques." technique._id ".system.level.value")
                 inputValue=technique.system.level.value
               }}
+              {{>
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                class="sustenance"
+                choices=xRoot.config.iterables.domine.sustenanceTypes
+                title=(localize "anima.ui.domine.sustenance.title")
+                inputName=(concat "system.dynamic.techniques." technique._id ".system.sustenance.value")
+                inputValue=technique.system.sustenance.value
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                class="martial-knowledge"
+                title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
+                inputType='text'
+                inputName=(concat "system.dynamic.techniques." technique._id ".system.martialKnowledge.value")
+                inputValue=technique.system.martialKnowledge.value
+              }}
+          </div>
+        </div>
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+            class="technique"
+          }}
+            {{editor technique.system.enrichedDescription target=(concat "system.dynamic.techniques." technique._id ".system.description.value") button=true owner=true editable=true}}
+        <table class="item-list effects-list">
+          {{#each technique.effects as |effect|}}
+          <tr class='item effect' data-effect-id="{{effect.id}}" data-item-id="{{technique._id}}">
+              <td class="item-name effect-name">
+                  <img class="item-effect-image" src="{{effect.icon}}"/>{{effect.name}}
+              </td>
+              <td class="effect-controls">
+                  <a class="effect-control" data-action="toggle"
+                    title="{{#if effect.disabled}}{{localize "anima.ui.effects.effectsList.enable.title"}}{{else}}{{localize "anima.ui.effects.effectsList.disable.title"}}{{/if}}">
+                      <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}"></i>
+                  </a>
+              </td>
+          </tr>
+          {{/each}}
+        </table>
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+            <div class='technique-footer'>
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="strength"
@@ -96,11 +131,19 @@
               }}
               {{>
               "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-                class="martial-knowledge"
-                title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
-                inputType='text'
-                inputName=(concat "system.dynamic.techniques." technique._id ".system.martialKnowledge.value")
-                inputValue=technique.system.martialKnowledge.value
+                class="maintenance-cost"
+                title=(localize "anima.ui.domine.techniques.technique.footer.maintenance.title")
+                inputType="text"
+                inputName=(concat "system.dynamic.techniques." technique._id ".system.maintenance.cost")
+                inputValue=system.maintenance.cost
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                class="maintenance"
+                hideTitle=true
+                inputType="checkbox"
+                inputName=(concat "system.dynamic.techniques." technique._id ".system.maintenance.value")
+                inputValue=system.maintenance.value
               }}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
