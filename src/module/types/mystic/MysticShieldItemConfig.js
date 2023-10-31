@@ -40,7 +40,7 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
     if (!spell) {
       return;
     }
-    actor.setFlag('world', `${actor._id}.spellCastingOverride`, override);
+    actor.setFlag('animabf', `spellCastingOverride`, override);
     const mysticSpellCheck = mysticSpellCastEvaluate(actor, spell, spellGrade);
     const spellCasting = {
       zeon: { accumulated: 0, cost: 0 },
