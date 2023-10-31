@@ -152,6 +152,12 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         specialType: 'intangible',
         damage: 0
+      },
+      domine: {
+        techniqueUsed: undefined,
+        technique: undefined,
+        isTechniqueActive: false,
+        kiAccumulation: attackerActor.system.domine.kiAccumulation
       }
     },
     defender: {
@@ -169,6 +175,10 @@ export class CombatAttackDialog extends FormApplication {
     super(getInitialData(attacker, defender, options));
 
     this.modalData = getInitialData(attacker, defender, options);
+    this._tabs[0].callback = (event, tabs, tabName) => {
+      this.modalData.ui.activeTab = tabName;
+      this.render(true);
+    };
     this.modalData.attacker.zen = this.attackerActor.system.general.settings.zen.value;
     this.modalData.attacker.inhuman =
       this.attackerActor.system.general.settings.inhuman.value;
@@ -190,6 +200,7 @@ export class CombatAttackDialog extends FormApplication {
     const { weapons } = this.attackerActor.system.combat;
     const { spells } = this.attackerActor.system.mystic;
     const { psychicPowers } = this.attackerActor.system.psychic;
+    const { techniques } = this.attackerActor.system.domine;
 
     if (psychicPowers.length > 0) {
       const { psychic } = this.modalData.attacker;
@@ -243,6 +254,15 @@ export class CombatAttackDialog extends FormApplication {
         lastOffensiveWeaponUsed || weapons[0]._id;
     } else {
       this.modalData.attacker.combat.unarmed = true;
+    }
+
+    if (techniques.length > 0) {
+      const { domine } = this.modalData.attacker;
+      domine.techniqueUsed = techniques.find(w =>
+        w.system.combatVisibility.includes('attack')
+      )?._id;
+      domine.technique = techniques.find(w => w._id === domine.techniqueUsed);
+      domine.isTechniqueActive = domine.technique?.system.activeEffect.enabled;
     }
 
     this.modalData.attacker.targetedAttacks = [
@@ -760,16 +780,66 @@ export class CombatAttackDialog extends FormApplication {
         this.render();
       }
     });
+
+    html.find('.activate-domine-technique').click(e => {
+      e.preventDefault();
+      const { techniqueUsed } = this.modalData.attacker.domine;
+      if (techniqueUsed) {
+        let activateTechnique = this.attackerActor.activateTechnique(techniqueUsed);
+        if (activateTechnique !== undefined) {
+          return activateTechnique;
+        }
+      }
+      setTimeout(() => {this.render();}, 50);
+    });
+
+    html.find('.effect-control').click(this._onEffectControl.bind(this));
+    html.find('.technique-options').change(this._onTechniqueChange.bind(this));
+  }
+  async _onEffectControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const tr = a.closest('tr');
+    const item = this.attackerActor.items.get(tr.dataset.itemId);
+    const effect = item.effects.get(tr.dataset.effectId);
+    const effects = this.attackerActor.getEmbeddedCollection('ActiveEffect').contents;
+    const relevantEffect = effects.find(
+      eff =>
+        eff.origin.endsWith(tr.dataset.itemId) &&
+        JSON.stringify(eff.changes) == JSON.stringify(effect.changes)
+    );
+    if (!relevantEffect) {
+      return;
+    }
+    const status = effect.disabled;
+    await effect.update({ disabled: !status });
+    await relevantEffect.update({ disabled: !status });
+    setTimeout(() => {this.render();}, 50);
+  }
+
+  async _onTechniqueChange(event) {
+    console.log(event.currentTarget)
+    console.log(this.modalData.attacker.domine.techniqueUsed)
   }
 
   getData() {
     const {
-      attacker: { combat, psychic, mystic },
+      attacker: { combat, psychic, mystic, domine },
       ui
     } = this.modalData;
 
     ui.hasFatiguePoints =
       this.attackerActor.system.characteristics.secondaries.fatigue.value > 0;
+
+    const { techniques } = this.attackerActor.system.domine;
+    if (!domine.techniqueUsed) {
+      domine.techniqueUsed = techniques.find(w =>
+        w.system.combatVisibility.includes('attack')
+      )?._id;
+    }
+    domine.technique = techniques.find(w => w._id === domine.techniqueUsed);
+    domine.kiAccumulation = this.attackerActor.system.domine.kiAccumulation;
+    domine.isTechniqueActive = domine.technique?.system.activeEffect.enabled;
 
     const { psychicPowers } = this.attackerActor.system.psychic;
     if (!psychic.powerUsed) {
@@ -787,9 +857,7 @@ export class CombatAttackDialog extends FormApplication {
 
     const { spells } = this.attackerActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.filter(
-        w => w.system.combatType.value === 'attack'
-      )[0]?._id;
+      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
     mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;

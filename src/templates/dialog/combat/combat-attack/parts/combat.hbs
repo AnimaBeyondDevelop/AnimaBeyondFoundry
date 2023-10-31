@@ -122,6 +122,20 @@
 </div>
 {{/if}}
 
+{{#if (is 'gt' this.attacker.actor.system.domine.techniques.length 0)}}
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.combat.technique.title')
+  disabled=this.attackSent
+  inputName='attacker.domine.techniqueUsed'
+  class='technique-options'
+}}
+    <option {{#if (is "eq" this._id ../this.attacker.domine.techniqueUsed)}}selected{{/if}} value='-'>-</option>
+  {{#each this.attacker.actor.system.domine.techniques}}
+    <option {{#if (is "eq" this._id ../this.attacker.domine.techniqueUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
 {{#if this.attacker.combat.projectile.value}}
 {{#if (is 'eq' this.attacker.combat.distance.enable false)}}
 <div class='columns'>

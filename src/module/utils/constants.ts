@@ -13,7 +13,8 @@ export const Templates = {
         parts: {
           combat: 'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs',
           mystic: 'systems/animabf/templates/dialog/combat/combat-attack/parts/mystic.hbs',
-          psychic: 'systems/animabf/templates/dialog/combat/combat-attack/parts/psychic.hbs'
+          psychic: 'systems/animabf/templates/dialog/combat/combat-attack/parts/psychic.hbs',
+          domine: 'systems/animabf/templates/dialog/combat/combat-attack/parts/domine.hbs'
         }
       },
       CombatDefenseDialog: {
@@ -22,7 +23,8 @@ export const Templates = {
           combat: 'systems/animabf/templates/dialog/combat/combat-defense/parts/combat.hbs',
           damageResistance: 'systems/animabf/templates/dialog/combat/combat-defense/parts/damage-resistance.hbs',
           mystic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/mystic.hbs',
-          psychic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/psychic.hbs'
+          psychic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/psychic.hbs',
+          domine: 'systems/animabf/templates/dialog/combat/combat-defense/parts/domine.hbs'
         }
       },
       CombatRequestDialog: 'systems/animabf/templates/dialog/combat/combat-request-dialog.hbs',

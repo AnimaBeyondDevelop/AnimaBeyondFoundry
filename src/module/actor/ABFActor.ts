@@ -77,8 +77,12 @@ export class ABFActor extends Actor {
     if (relevantEffects.length == 0) {
       return;
     }
+    const itemEffects = technique.getEmbeddedCollection('ActiveEffect').contents;
     if (newStatus) {
       for (const effect of relevantEffects) {
+        effect.update({ disabled: !newStatus });
+      }
+      for (const effect of itemEffects) {
         effect.update({ disabled: !newStatus });
       }
       technique.update({ 'system.activeEffect.enabled': newStatus });

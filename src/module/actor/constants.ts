@@ -1035,6 +1035,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         value: 0,
         max: 0
       }
+    },
+    kiMaintained: {
+      value: 0
     }
   },
 

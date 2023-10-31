@@ -1,0 +1,128 @@
+<section class='ki-row'>
+  <div class="vertical common-titled-input">
+    <p class="label">Ki</p>
+    <p class="label">Acum.</p>
+  </div>
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.strength.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.strength.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.strength.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.agility.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.agility.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.agility.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.dexterity.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.dexterity.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.dexterity.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.constitution.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.constitution.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.constitution.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.willPower.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.willPower.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.willPower.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.power.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.power.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.power.accumulated.value
+}}
+  <div class="vertical common-titled-input">
+    <p class="label">Coste</p>
+  </div>
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  hideTitle=true
+  disabled=this.attackSent
+  inputName="attacker.domine.technique.system.strength.value"
+  inputValue=this.attacker.domine.technique.system.strength.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  hideTitle=true
+  disabled=this.attackSent
+  inputName="attacker.domine.technique.system.agility.value"
+  inputValue=this.attacker.domine.technique.system.agility.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  hideTitle=true
+  disabled=this.attackSent
+  inputName="attacker.domine.technique.system.dexterity.value"
+  inputValue=this.attacker.domine.technique.system.dexterity.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  hideTitle=true
+  disabled=this.attackSent
+  inputName="attacker.domine.technique.system.constitution.value"
+  inputValue=this.attacker.domine.technique.system.constitution.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  hideTitle=true
+  disabled=this.attackSent
+  inputName="attacker.domine.technique.system.willPower.value"
+  inputValue=this.attacker.domine.technique.system.willPower.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  hideTitle=true
+  disabled=this.attackSent
+  inputName="attacker.domine.technique.system.power.value"
+  inputValue=this.attacker.domine.technique.system.power.value
+}}
+</section>
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'anima.ui.domine.kiAccumulation.reserve.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.generic.value"
+  inputValue=this.attacker.domine.kiAccumulation.generic.value
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.domine.kiAccumulation.generic.max"
+  secondaryInputValue=this.attacker.domine.kiAccumulation.generic.max
+}}
+
+<table class="item-list effects-list">
+  {{#each this.attacker.domine.technique.effects as |effect|}}
+      <tr class='item effect' data-effect-id="{{effect.id}}" data-item-id="{{../this.attacker.domine.techniqueUsed}}">
+          <td class="item-name effect-name">
+              <img class="item-effect-image" src="{{effect.icon}}"/>{{effect.name}}
+            </td>
+            <td class="effect-controls">
+              <a class="effect-control" data-action="toggle"
+                  title="{{#if effect.disabled}}{{localize "anima.ui.effects.effectsList.enable.title"}}{{else}}{{localize "anima.ui.effects.effectsList.disable.title"}}{{/if}}">
+                  <i class="fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}" name="effect.disabled"></i>
+              </a>
+          </td>
+      </tr>
+  {{/each}}
+</table>
+
+{{#if this.attacker.domine.isTechniqueActive}}
+<h4 class="label">Esta tecnica se encuentra activada</h4>
+{{/if}}
+<button class='abf-button activate-domine-technique'>
+  {{localize 'macros.combat.dialog.activateTechniqueButton.title'}}
+</button>

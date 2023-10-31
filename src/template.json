@@ -264,7 +264,8 @@
           "willPower": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
           "power": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
           "generic": { "value": 0, "max": 0 }
-        }
+        },
+        "kiMaintained": { "value": 0 }
       },
       "psychic": {
         "psychicPotential": { "base": { "value": 0 }, "final": { "value": 0 } },
@@ -401,6 +402,9 @@
       "willPower": { "value": 0 },
       "power": { "value": 0 },
       "martialKnowledge": { "value": 0 },
+      "maintenance": { "value": false, "cost": 0 },
+      "sustenance": { "value": "none" },
+      "combatVisibility": [1],
       "activeEffect": { "hasEffects": false, "enabled": false }
     },
     "weapon": {

@@ -1,0 +1,78 @@
+<div class='combat-technique-footer'>
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.strength.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.strength.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.strength.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.agility.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.agility.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.agility.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.dexterity.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.dexterity.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.dexterity.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.constitution.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.constitution.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.constitution.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.willPower.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.willPower.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.willPower.accumulated.value
+}}
+{{>
+"systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+  title=(localize 'anima.ui.domine.techniques.technique.footer.power.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.power.accumulated.value"
+  inputValue=this.attacker.domine.kiAccumulation.power.accumulated.value
+}}
+</div>
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'anima.ui.domine.kiAccumulation.reserve.title')
+  disabled=this.attackSent
+  inputName="attacker.domine.kiAccumulation.generic.value"
+  inputValue=this.attacker.domine.kiAccumulation.generic.value.
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.domine.kiAccumulation.generic.max"
+  secondaryInputValue=this.attacker.domine.kiAccumulation.generic.max
+}}
+
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  title=(localize 'macros.combat.dialog.psychicPower.title')
+  disabled=this.attackSent
+  inputName='attacker.domine.techniqueUsed'
+}}
+  {{#each this.attacker.actor.system.domine.techniques}}
+    <option {{#if (is "eq" this._id ../this.attacker.domine.techniqueUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+  {{/each}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+{{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+  disabled=this.attackSent
+  choices=config.iterables.combat.weapon.criticTypesWithNone
+  title=(localize "macros.combat.dialog.weapon.critic.title")
+  inputName='attacker.psychic.critic'
+  inputValue=this.attacker.psychic.critic
+}}
+
+<button class='abf-button activate-domine-technique'>
+  {{localize 'macros.combat.dialog.activateTechniqueButton.title'}}
+</button>

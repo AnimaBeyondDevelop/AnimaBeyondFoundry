@@ -97,5 +97,22 @@
     .hr {
       border-bottom: 1px solid $red;
     }
+
+    .ki-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-column-gap: 0.9rem;
+      grid-row-gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .effects-list {
+      .item-effect-image {
+        width: 20px;
+        height: 20px;
+        border: none;
+        margin-right: 10px;
+      }
+    }
   }
 }

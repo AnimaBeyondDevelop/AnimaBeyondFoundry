@@ -14,8 +14,9 @@
           <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
           {{#if (is 'gt' this.attacker.actor.system.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
           {{#if (is 'gt' this.attacker.actor.system.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
+          {{#if (is 'neq' this.attacker.domine.technique undefined)}}<a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>{{/if}}
         </nav>
-
+      {{#if (is 'neq' this.ui.activeTab 'domine')}}
       <div class='columns'>
         <div>
           {{>
@@ -39,6 +40,7 @@
           {{/if}}
         </div>
       </div>
+      {{/if}}
 
         {{#if this.attacker.counterAttackBonus}}
           {{>
@@ -60,6 +62,10 @@
 
           <div class="tab psychic" data-group="primary" data-tab="psychic">
             {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/psychic.hbs' this=this}}
+          </div>
+
+          <div class="tab domine" data-group="primary" data-tab="domine">
+            {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/domine.hbs' this=this}}
           </div>
         </section>
       {{else}}
