@@ -17,8 +17,59 @@
               inputValue=item.name
             }}
           </div>
-          {{!-- <div class='second-row'>
-          </div> --}}
+          <div class='second-row'>
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="level"
+            title=(localize "anima.ui.domine.techniques.technique.footer.level.title")
+            inputType="text"
+            inputName=(concat "system.level.value")
+            inputValue=system.level.value
+          }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="sustenance"
+              choices=xRoot.config.iterables.domine.sustenanceTypes
+              title=(localize "anima.ui.domine.sustenance.title")
+              inputName=(concat "system.sustenance.value")
+              inputValue=system.sustenance.value
+            }}
+            {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="combat-visibility" 
+            title=(localize "anima.ui.combatVisibility.attack.title")
+            combatVisibility=xRoot.config.ui.CombatVisibility.ATTACK
+            inputType="checkbox"
+            inputName=""
+            inputValue=(arrayLookUp ../this.system.combatVisibility xRoot.config.ui.CombatVisibility.ATTACK)
+          }}
+            {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="combat-visibility" 
+            title=(localize "anima.ui.combatVisibility.defense.title")
+            combatVisibility=xRoot.config.ui.CombatVisibility.DEFENSE
+            inputType="checkbox"
+            inputName=""
+            inputValue=(arrayLookUp ../this.system.combatVisibility xRoot.config.ui.CombatVisibility.DEFENSE)
+          }}
+            {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="combat-visibility" 
+            title=(localize "anima.ui.combatVisibility.counterAttack.title")
+            combatVisibility=xRoot.config.ui.CombatVisibility.COUNTER_ATTACK
+            inputType="checkbox"
+            inputName=""
+            inputValue=(arrayLookUp ../this.system.combatVisibility xRoot.config.ui.CombatVisibility.COUNTER_ATTACK)
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="martial-knowledge"
+            title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
+            inputType="text"
+            inputName=(concat "system.martialKnowledge.value")
+            inputValue=system.martialKnowledge.value
+          }}
+          </div>
         </div>
       {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
       {{#> "systems/animabf/templates/common/ui/group-body.hbs"
@@ -56,14 +107,6 @@
       {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
       {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
         <div class='technique-footer'>
-          {{>
-          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-            class="level"
-            title=(localize "anima.ui.domine.techniques.technique.footer.level.title")
-            inputType="text"
-            inputName=(concat "system.level.value")
-            inputValue=system.level.value
-          }}
           {{>
           "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
             class="strength"
@@ -114,11 +157,19 @@
           }}
           {{>
           "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-            class="martial-knowledge"
-            title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
+            class="maintenance-cost"
+            title=(localize "anima.ui.domine.techniques.technique.footer.maintenance.title")
             inputType="text"
-            inputName=(concat "system.martialKnowledge.value")
-            inputValue=system.martialKnowledge.value
+            inputName=(concat "system.maintenance.cost")
+            inputValue=system.maintenance.cost
+          }}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="maintenance"
+            hideTitle=true
+            inputType="checkbox"
+            inputName=(concat "system.maintenance.value")
+            inputValue=system.maintenance.value
           }}
         </div>
       {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}

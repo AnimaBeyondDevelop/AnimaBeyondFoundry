@@ -12,6 +12,7 @@ import { eachWhenHBSHelper } from './helpers/eachWhenHBSHelper';
 import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
+import { arrayLookUpHBSHelper } from './helpers/arrayLookUpHBSHelper';
 
 export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
 
@@ -30,7 +31,8 @@ export const registerHelpers = () => {
     eachWhenHBSHelper,
     logHBSHelper,
     calculateLanguagesHBSHelper,
-    calculateLevelsHBSHelper
+    calculateLevelsHBSHelper,
+    arrayLookUpHBSHelper
   ];
 
   for (const helper of helpers) {

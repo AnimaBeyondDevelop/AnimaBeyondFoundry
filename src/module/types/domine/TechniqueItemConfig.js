@@ -3,6 +3,26 @@ import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
+ * @readonly
+ * @enum {string}
+ */
+export const CombatVisibility = {
+  ATTACK: 'attack',
+  DEFENSE: 'defense',
+  COUNTER_ATTACK: 'counterAttack'
+};
+
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const SustenanceTypes = {
+  NONE: 'none',
+  LESSER: 'lesser',
+  GREATER: 'greater'
+};
+
+/**
  * Initial data for a new technique. Used to infer the type of the data inside `technique.system`
  * @readonly
  */
@@ -16,6 +36,9 @@ export const INITIAL_TECHNIQUE_DATA = {
   willPower: { value: 0 },
   power: { value: 0 },
   martialKnowledge: { value: 0 },
+  maintenance: { value: false, cost: 0 },
+  sustenance: { value: SustenanceTypes.NONE },
+  combatVisibility: [CombatVisibility.ATTACK],
   activeEffect: { hasEffects: false, enabled: false }
 };
 

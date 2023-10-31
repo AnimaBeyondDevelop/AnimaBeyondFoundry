@@ -123,18 +123,22 @@ export default class ABFActorSheet extends ActorSheet {
     html.find('.toggle-effects-button').click(async e => {
       const { effectsItemId } = e.currentTarget.dataset;
       const item = this.actor.items.get(effectsItemId);
+      const itemEffects = item.getEmbeddedCollection('ActiveEffect').contents
       const effects = this.actor.getEmbeddedCollection('ActiveEffect').contents;
       const relevantEffects = effects.filter(effect =>
         effect.origin.endsWith(effectsItemId)
       );
 
-      if (relevantEffects.length == 0) {
+      if (relevantEffects.length == 0 || itemEffects.length == 0) {
         return;
       }
 
       const newStatus = !item.system.activeEffect.enabled;
 
       for (const effect of relevantEffects) {
+        await effect.update({ disabled: !newStatus });
+      }
+      for (const effect of itemEffects) {
         await effect.update({ disabled: !newStatus });
       }
       return item.update({ 'system.activeEffect.enabled': newStatus });
@@ -157,11 +161,25 @@ export default class ABFActorSheet extends ActorSheet {
 
   _onEffectControl(event) {
     event.preventDefault();
-    const owner = this.actor;
+    let owner = this.actor;
     const a = event.currentTarget;
     const tr = a.closest('tr');
+    if (tr.dataset.itemId) {
+      const item = this.actor.items.get(tr.dataset.itemId);
+      const effect = item.effects.get(tr.dataset.effectId);
+      const effects = this.actor.getEmbeddedCollection('ActiveEffect').contents;
+      const relevantEffect = effects.find(eff =>
+        eff.origin.endsWith(tr.dataset.itemId) && JSON.stringify(eff.changes) == JSON.stringify(effect.changes)
+      );
+      if (!relevantEffect) {
+        return;
+      }
+      const status = effect.disabled;
+      effect.update({ disabled: !status });
+      return relevantEffect.update({ disabled: !status });
+    }
     const effect = tr.dataset.effectId ? owner.effects.get(tr.dataset.effectId) : null;
-    const status = effect?.disabled
+    const status = effect?.disabled;
     switch (a.dataset.action) {
       case 'create':
         return owner.createEmbeddedDocuments('ActiveEffect', [

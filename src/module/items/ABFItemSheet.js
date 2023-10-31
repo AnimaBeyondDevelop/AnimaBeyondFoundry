@@ -72,6 +72,7 @@ export default class ABFItemSheet extends ItemSheet {
   activateListeners(html) {
     if (this.isEditable) {
       html.find('.effect-control').click(this._onEffectControl.bind(this));
+      html.find('.combat-visibility').click(this._onCombatVsibility.bind(this));
     }
   }
 
@@ -96,5 +97,15 @@ export default class ABFItemSheet extends ItemSheet {
       case 'delete':
         return effect.delete();
     }
+  }
+
+  _onCombatVsibility(event) {
+    event.preventDefault();
+    const array = this.item.system.combatVisibility;
+    const { combat } = event.currentTarget.dataset;
+    if (array.includes(combat)) {
+      array.splice(array.indexOf(combat), 1);
+    } else array.push(combat);
+    return this.item.sheet.render(true);
   }
 }

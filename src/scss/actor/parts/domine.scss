@@ -325,7 +325,7 @@
 
         font-weight: inherit;
 
-        height: 10rem;
+        height: 5rem;
         width: 100%;
 
         margin-top: 0;
@@ -336,14 +336,27 @@
         width: 100%;
         padding-left: 0.5rem;
 
-        .name {
-          .input-container {
+        .first-row {
+          width: 100%;
+
+          .input {
+            height: 1rem;
+          }
+
+          .name .input-container {
             width: 100%;
           }
         }
+        .second-row {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
 
-        .input {
-          height: 1rem;
+          .sustenance {
+            .input {
+              height: 1.5rem;
+            }
+          }
         }
       }
 
@@ -358,6 +371,15 @@
 
         .input-container {
           width: 2rem;
+        }
+      }
+
+      .effects-list {
+        .item-effect-image {
+          width: 20px;
+          height: 20px;
+          border: none;
+          margin-right: 10px;
         }
       }
     }
