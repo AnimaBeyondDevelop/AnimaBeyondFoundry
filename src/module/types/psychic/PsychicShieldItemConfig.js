@@ -12,7 +12,7 @@ import { executeMacro } from '../../utils/functions/executeMacro';
  * @readonly
  */
 export const INITIAL_PSYCHIC_SHIELD_DATA = {
-  overmantained,
+  overmantained: false,
   damageBarrier: { value: 0 },
   shieldPoints: {
     value: 0,
