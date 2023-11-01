@@ -58,24 +58,22 @@ export class ABFActor extends Actor {
   }
 
   async newSupernaturalShield(newShield: any, type: string) {
-    const itemType = type === 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
+    const itemType =
+      type === 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
     const supernaturalShieldData = {
       name: newShield.name,
       type: itemType,
       system: newShield.system
     };
 
-    await this.createItem(supernaturalShieldData);
-    setTimeout(() => {
-      let supShields = this.system[type][`${type}Shields`];
-      let shieldId = supShields[supShields.length - 1]._id;
-      let args = {
-        thisActor: this,
-        newShield: true,
-        shieldId
-      };
-      executeMacro(newShield.name, args);
-    }, 100);
+    const item = await this.createItem(supernaturalShieldData);
+    let args = {
+      thisActor: this,
+      newShield: true,
+      shieldId: item._id
+    };
+    executeMacro(newShield.name, args);
+    return item._id;
   }
 
   applyDamageSupernaturalShield(
@@ -85,51 +83,37 @@ export class ABFActor extends Actor {
     type: string,
     newCombatResult: any
   ) {
-    setTimeout(() => {
-      const shieldValue = supShield.system.shieldPoints.value;
-      let shieldId: any;
-      if (supShield.id) {
-        shieldId = supShield.id;
-      } else {
-        let supShields = this.system[type][`${type}Shields`];
-        shieldId = supShields[supShields.length - 1]._id;
-        if (shieldId == undefined) {
-          return ui.notifications.warn('Escudo Sobrenatural no encontrado');
-        }
+    const shieldValue = supShield.system.shieldPoints.value;
+    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
+    if (newShieldPoints > 0) {
+      let updates: any = [
+        { _id: supShield.id, ['system.shieldPoints.value']: newShieldPoints }
+      ];
+      Item.updateDocuments(updates, { parent: this });
+    } else {
+      Item.deleteDocuments([supShield.id], { parent: this });
+      if (newShieldPoints < 0 && newCombatResult) {
+        const needToRound = (game as Game).settings.get(
+          'animabf',
+          ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
+        );
+        const result = calculateDamage(
+          newCombatResult.attack,
+          0,
+          newCombatResult.at,
+          Math.abs(newShieldPoints),
+          newCombatResult.halvedAbsorption
+        );
+        const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
+        this.applyDamage(breakingDamage);
       }
-      const newShieldPoints = dobleDamage
-        ? shieldValue - damage * 2
-        : shieldValue - damage;
-      if (newShieldPoints > 0) {
-        let updates: any = [
-          { _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }
-        ];
-        Item.updateDocuments(updates, { parent: this });
-      } else {
-        Item.deleteDocuments([shieldId], { parent: this });
-        if (newShieldPoints < 0 && newCombatResult) {
-          const needToRound = (game as Game).settings.get(
-            'animabf',
-            ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
-          );
-          const result = calculateDamage(
-            newCombatResult.attack,
-            0,
-            newCombatResult.at,
-            Math.abs(newShieldPoints),
-            newCombatResult.halvedAbsorption
-          );
-          const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
-          this.applyDamage(breakingDamage);
-        }
-        let args = {
-          thisActor: this,
-          newShield: false,
-          shieldId
-        };
-        executeMacro(supShield.name, args);
-      }
-    }, 100);
+      let args = {
+        thisActor: this,
+        newShield: false,
+        shieldId: supShield.id
+      };
+      executeMacro(supShield.name, args);
+    }
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
@@ -206,13 +190,14 @@ export class ABFActor extends Actor {
     name: string;
     system?: unknown;
   }) {
-    await this.createEmbeddedDocuments('Item', [
+    const items = await this.createEmbeddedDocuments('Item', [
       {
         type,
         name,
         system
       }
     ]);
+    return items[0];
   }
 
   public async createInnerItem({

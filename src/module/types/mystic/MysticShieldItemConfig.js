@@ -60,7 +60,7 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
       spell.system.grades[spellGrade].description.value
     )[0];
 
-    await actor.createItem({
+    const item = await actor.createItem({
       name,
       type: ABFItems.MYSTIC_SHIELD,
       system: {
@@ -69,15 +69,11 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
         shieldPoints: { value: shieldPoints }
       }
     });
-    setTimeout(() => {
-      let supShields = actor.system.mystic.mysticShields;
-      let shieldId = supShields[supShields.length - 1]._id;
-      let args = {
-        thisActor: actor,
-        newShield: true,
-        shieldId
-      };
-      executeMacro(name, args);
-    }, 100);
+    let args = {
+      thisActor: actor,
+      newShield: true,
+      shieldId: item._id
+    };
+    executeMacro(name, args);
   }
 });

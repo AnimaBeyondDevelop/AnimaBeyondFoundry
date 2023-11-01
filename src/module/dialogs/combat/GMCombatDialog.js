@@ -109,8 +109,8 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.cancel-button').click(async () => {
       this.mysticCastEvaluateIfAble();
-      await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageSupernaturalShieldIfBeAble();
+      const supShieldId = await this.newSupernaturalShieldIfBeAble();
+      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
       this.accumulateDefensesIfAble();
       this.executeCombatMacro(false);
       this.close();
@@ -118,8 +118,8 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.make-counter').click(async () => {
       this.mysticCastEvaluateIfAble();
-      await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageSupernaturalShieldIfBeAble();
+      const supShieldId = await this.newSupernaturalShieldIfBeAble();
+      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
       this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
       this.executeCombatMacro(false);
@@ -382,14 +382,15 @@ export class GMCombatDialog extends FormApplication {
         this.modalData.defender.result?.type === 'psychic') &&
       supShield.create
     ) {
-      await this.defenderActor.newSupernaturalShield(
+      const supShieldId = await this.defenderActor.newSupernaturalShield(
         supShield,
         this.modalData.defender.result.type
       );
+      return supShieldId;
     }
   }
 
-  applyDamageSupernaturalShieldIfBeAble() {
+  applyDamageSupernaturalShieldIfBeAble(supShieldId) {
     const cantDamage = this.modalData.defender.result?.values.cantDamage;
     const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
     const defenderIsWinner =
@@ -423,6 +424,10 @@ export class GMCombatDialog extends FormApplication {
           defender.result.type === 'resistance'
             ? defender.result.values.surprised
             : false;
+      }
+
+      if (supShieldId) {
+        supShield.id = supShieldId;
       }
 
       this.defenderActor.applyDamageSupernaturalShield(
