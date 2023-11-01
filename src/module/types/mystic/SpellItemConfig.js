@@ -28,12 +28,12 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
   level: { value: 0 },
   via: { value: '' },
   hasDailyMaintenance: { value: false },
-  visible: { value: false },
+  visible: false,
   critic: { value: NoneWeaponCritic.NONE },
   spellType: { value: '' },
   actionType: { value: '' },
   combatType: { value: '' },
-  macro: { value: '' },
+  macro: '',
   grades: {
     base: {
       name: { value: SpellGradeNames.BASE },

@@ -2,13 +2,10 @@ import { renderTemplates } from '../renderTemplates';
 import { Templates } from '../constants';
 
 export const openComplexInputDialog = async (actor, dialogType) => {
-  const referencedGame = game;
+  const i18n = game.i18n;
   let castOverride = false;
-  if (dialogType  == 'newMysticShield'){
-    castOverride = actor.getFlag(
-      'world',
-      `${actor._id}.spellCastingOverride`
-    );
+  if (dialogType == 'newMysticShield') {
+    castOverride = actor.getFlag('animabf', 'spellCastingOverride');
   }
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
@@ -33,12 +30,12 @@ export const openComplexInputDialog = async (actor, dialogType) => {
 
   return new Promise(resolve => {
     new Dialog({
-      title: referencedGame.i18n.localize('dialogs.title'),
+      title: i18n.localize('dialogs.title'),
       content: dialogHTML,
       buttons: {
         submit: {
           icon: iconHTML,
-          label: referencedGame.i18n.localize('dialogs.continue'),
+          label: i18n.localize('dialogs.continue'),
           callback: html => {
             const results = new FormDataExtended(html.find('form')[0], {}).object;
 

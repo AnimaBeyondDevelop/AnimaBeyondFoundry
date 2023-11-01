@@ -58,7 +58,7 @@ export class ABFActor extends Actor {
   }
 
   async newSupernaturalShield(newShield: any, type: string) {
-    const itemType = type == 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
+    const itemType = type === 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
     const supernaturalShieldData = {
       name: newShield.name,
       type: itemType,
@@ -133,41 +133,31 @@ export class ABFActor extends Actor {
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
-    const defensesCounter: any = this.getFlag('world', `${this._id}.defensesCounter`) || {
-      value: true,
-      accumulated: 0
+    const defensesCounter: any = this.getFlag('animabf', 'defensesCounter') || {
+      accumulated: 0,
+      keepAccumulating
     };
     const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
-      this.update({
-        flags: {
-          world: {
-            [`${this._id}.defensesCounter`]: {
-              accumulated: newDefensesCounter,
-              value: true
-            }
-          }
-        }
+      this.setFlag('animabf', 'defensesCounter', {
+        accumulated: newDefensesCounter,
+        keepAccumulating
       });
     } else {
-      this.update({
-        flags: {
-          world: {
-            [`${this._id}.defensesCounter`]: { value: false }
-          }
-        }
-      });
+      this.setFlag('animabf', 'defensesCounter.keepAccumulating', keepAccumulating);
     }
   }
 
   resetDefensesCounter() {
-    this.update({
-      flags: {
-        world: {
-          [`${this._id}.defensesCounter`]: { accumulated: 0 }
-        }
-      }
-    });
+    const defensesCounter = this.getFlag('animabf', 'defensesCounter');
+    if (defensesCounter === undefined) {
+      this.setFlag('animabf', 'defensesCounter', {
+        accumulated: 0,
+        keepAccumulating: true
+      });
+    } else {
+      this.setFlag('animabf', 'defensesCounter.accumulated', 0);
+    }
   }
 
   consumeAccumulatedZeon(zeonCost: number) {

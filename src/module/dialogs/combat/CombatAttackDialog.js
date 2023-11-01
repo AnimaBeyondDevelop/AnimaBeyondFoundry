@@ -41,9 +41,9 @@ const getInitialData = (attacker, defender, options = {}) => {
       poorVisibility: false,
       targetInCover: false,
       counterAttackBonus: options.counterAttackBonus,
-      zen: false,
-      inhuman: false,
-      inmaterial: false,
+      zen: attackerActor.system.general.settings.zen.value,
+      inhuman: attackerActor.system.general.settings.inhuman.value,
+      inmaterial: attackerActor.system.general.settings.inmaterial.value,
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -131,7 +131,8 @@ const getInitialData = (attacker, defender, options = {}) => {
     },
     defender: {
       token: defender,
-      actor: defenderActor
+      actor: defenderActor,
+      inmaterial: defenderActor.system.general.settings.inmaterial.value
     },
     attackSent: false,
     allowed: false,
@@ -144,11 +145,6 @@ export class CombatAttackDialog extends FormApplication {
     super(getInitialData(attacker, defender, options));
 
     this.modalData = getInitialData(attacker, defender, options);
-    this.modalData.attacker.zen = this.attackerActor.system.general.settings.zen.value;
-    this.modalData.attacker.inhuman =
-      this.attackerActor.system.general.settings.inhuman.value;
-    this.modalData.attacker.inmaterial =
-      this.attackerActor.system.general.settings.inmaterial.value;
 
     if (this.modalData.attacker.combat.distance.enable) {
       const calculateDistance = Math.floor(
@@ -169,8 +165,8 @@ export class CombatAttackDialog extends FormApplication {
     if (psychicPowers.length > 0) {
       const { psychic } = this.modalData.attacker;
       const lastOffensivePowerUsed = this.attackerActor.getFlag(
-        'world',
-        `${this.attackerActor._id}.lastOffensivePowerUsed`
+        'animabf',
+        'lastOffensivePowerUsed'
       );
       psychic.powerUsed =
         lastOffensivePowerUsed ||
@@ -184,8 +180,8 @@ export class CombatAttackDialog extends FormApplication {
     if (spells.length > 0) {
       const { mystic } = this.modalData.attacker;
       const lastOffensiveSpellUsed = this.attackerActor.getFlag(
-        'world',
-        `${this.attackerActor._id}.lastOffensiveSpellUsed`
+        'animabf',
+        'lastOffensiveSpellUsed'
       );
       mystic.spellUsed =
         lastOffensiveSpellUsed ||
@@ -202,8 +198,8 @@ export class CombatAttackDialog extends FormApplication {
       );
       mystic.spellCasting.spell = mysticSpellCheck;
       const spellCastingOverride = this.attackerActor.getFlag(
-        'world',
-        `${this.attackerActor._id}.spellCastingOverride`
+        'animabf',
+        'spellCastingOverride'
       );
       mystic.spellCasting.override.value = spellCastingOverride || false;
       mystic.spellCasting.override.ui = spellCastingOverride || false;
@@ -211,8 +207,8 @@ export class CombatAttackDialog extends FormApplication {
 
     if (weapons.length > 0) {
       const lastOffensiveWeaponUsed = this.attackerActor.getFlag(
-        'world',
-        `${this.attackerActor._id}.lastOffensiveWeaponUsed`
+        'animabf',
+        'lastOffensiveWeaponUsed'
       );
       this.modalData.attacker.combat.weaponUsed =
         lastOffensiveWeaponUsed || weapons[0]._id;
@@ -290,11 +286,7 @@ export class CombatAttackDialog extends FormApplication {
       } = this.modalData.attacker;
       const inmaterialDefender =
         this.modalData.defender.actor.system.general.settings.inmaterial.value;
-      this.attackerActor.setFlag(
-        'world',
-        `${this.attackerActor._id}.lastOffensiveWeaponUsed`,
-        weaponUsed
-      );
+      this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
         let combatModifier = 0;
         let projectile = { value: false, type: '' };
@@ -439,15 +431,11 @@ export class CombatAttackDialog extends FormApplication {
         this.modalData.defender.actor.system.general.settings.inmaterial.value;
       if (spellUsed) {
         this.attackerActor.setFlag(
-          'world',
-          `${this.attackerActor._id}.spellCastingOverride`,
+          'animabf',
+          'spellCastingOverride',
           spellCasting.override.value
         );
-        this.attackerActor.setFlag(
-          'world',
-          `${this.attackerActor._id}.lastOffensiveSpellUsed`,
-          spellUsed
-        );
+        this.attackerActor.setFlag('animabf', 'lastOffensiveSpellUsed', spellUsed);
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
@@ -457,7 +445,7 @@ export class CombatAttackDialog extends FormApplication {
           spellCasting.override.ui = true;
           return evaluateCastMsj;
         }
-        let visibleCheck = spell?.system.visible.value;
+        let visibleCheck = spell?.system.visible;
         let specialTypeCheck = specialType;
         if (spell?.system.spellType.value == 'animatic') {
           specialTypeCheck = 'intangible';
@@ -498,7 +486,7 @@ export class CombatAttackDialog extends FormApplication {
 
         const rolled = roll.total - magicProjection.final - (modifier ?? 0);
         let unableToAttack = false;
-        if (inmaterialDefender && specialTypeCheck == specialType) {
+        if (inmaterialDefender && specialTypeCheck === specialType) {
           unableToAttack = true;
         }
 
@@ -509,7 +497,7 @@ export class CombatAttackDialog extends FormApplication {
             spellUsed,
             spellGrade,
             spellName: spell.name,
-            magicProjection:magicProjection.final,
+            magicProjection: magicProjection.final,
             critic,
             damage: damage.final,
             roll: rolled,
@@ -545,14 +533,9 @@ export class CombatAttackDialog extends FormApplication {
         distance
       } = this.modalData.attacker.psychic;
       const { inhuman, zen } = this.modalData.attacker;
-      const inmaterialDefender =
-        this.modalData.defender.actor.system.general.settings.inmaterial.value;
+      const inmaterialDefender = this.modalData.defender.inmaterial;
       if (powerUsed) {
-        this.attackerActor.setFlag(
-          'world',
-          `${this.attackerActor._id}.lastOffensivePowerUsed`,
-          powerUsed
-        );
+        this.attackerActor.setFlag('animabf', 'lastOffensivePowerUsed', powerUsed);
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
@@ -591,7 +574,7 @@ export class CombatAttackDialog extends FormApplication {
         );
         let fatigueCheck = psychicFatigue(powerUsedEffect, fatigueInmune);
         let fatiguePen = fatigueCheck[1];
-        let visibleCheck = power?.system.visible.value;
+        let visibleCheck = power?.system.visible;
         let specialTypeCheck = specialType;
         if (visibleCheck) {
           specialTypeCheck = 'energy';

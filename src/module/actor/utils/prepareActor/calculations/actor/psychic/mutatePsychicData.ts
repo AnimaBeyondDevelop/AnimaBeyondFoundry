@@ -32,9 +32,9 @@ export const mutatePsychicData = (data: ABFActorDataSourceData) => {
     for (let psychicShield of psychic.psychicShields) {
       const { shieldPoints } = psychicShield.system;
       if (shieldPoints.maintainMax >= shieldPoints.value) {
-        psychicShield.system.maintain.value = true;
+        psychicShield.system.overmantained = true;
       } else {
-        psychicShield.system.maintain.value = false;
+        psychicShield.system.overmantained = false;
       }
     }
   }

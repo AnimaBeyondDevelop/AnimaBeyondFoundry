@@ -66,7 +66,7 @@ export const newPsychicRollABF = async (power, actor) => {
     fatigueInmune
   );
   const fatiguePen = fatigueCheck[1];
-  const maintain = baseEffect[0] >= finalEffect[0];
+  const overmantained = baseEffect[0] >= finalEffect[0];
 
   if (fatigueCheck[0]) {
     psychicPotentialRoll.toMessage({
@@ -80,7 +80,7 @@ export const newPsychicRollABF = async (power, actor) => {
     supShield = {
       name: power.name,
       system: {
-        maintain: { value: maintain },
+        overmantained,
         damageBarrier: { value: 0 },
         shieldPoints: {
           value: finalEffect[0],

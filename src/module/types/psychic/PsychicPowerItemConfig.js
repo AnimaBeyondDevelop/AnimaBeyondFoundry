@@ -9,7 +9,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  */
 export const PsychicPowerActionTypes = {
   ACTIVE: 'active',
-  PASSIVE: 'passive',
+  PASSIVE: 'passive'
 };
 /**
  * @readonly
@@ -25,20 +25,20 @@ export const PsychicPowerCombatTypes = {
  * @enum {string}
  */
 export const PsychicPowerDisciplines = {
-    THE_MATRIAL_POWERS: 'matrial',
-    TELEPATHY: 'telepathy',
-    TELEKINESIS: 'telekenisis',
-    PYROKINESIS: 'pyrokinesis',
-    CRYOKINESIS: 'cryokinesis',
-    PHYSICAL_INCREASE: 'physicalIncrease',
-    ENERGY: 'energy',
-    TELEMETRY: 'telemetry',
-    SENTIENT: 'sentient',
-    CAUSALITY: 'causality',
-    ELECTROMAGNETISM: 'electromagnetism',
-    TELEPORTATION: 'teleportation',
-    LIGHT: 'light',
-    HIPERSENSIBILIDAD : 'hipersensibilidad'
+  MATRIX_POWERS: 'matrixPowers',
+  TELEPATHY: 'telepathy',
+  TELEKINESIS: 'telekenisis',
+  PYROKINESIS: 'pyrokinesis',
+  CRYOKINESIS: 'cryokinesis',
+  PHYSICAL_INCREASE: 'physicalIncrease',
+  ENERGY: 'energy',
+  TELEMETRY: 'telemetry',
+  SENTIENT: 'sentient',
+  CAUSALITY: 'causality',
+  ELECTROMAGNETISM: 'electromagnetism',
+  TELEPORTATION: 'teleportation',
+  LIGHT: 'light',
+  HYPERSENSITIVITY: 'hipersensitivity'
 };
 
 /**
@@ -62,11 +62,11 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   },
   actionType: { value: PsychicPowerActionTypes.ACTIVE },
   combatType: { value: PsychicPowerCombatTypes.ATTACK },
-  discipline: { value: PsychicPowerDisciplines.THE_MATRIAL_POWERS },
+  discipline: { value: PsychicPowerDisciplines.MATRIX_POWERS },
   critic: { value: NoneWeaponCritic.NONE },
   hasMaintenance: { value: false },
-  visible: { value: false },
-  macro: { value: '' },
+  visible: false,
+  macro: '',
   bonus: { value: 0 }
 };
 
@@ -95,7 +95,7 @@ export const PsychicPowerItemConfig = ABFItemConfigFactory({
       system: INITIAL_PSYCHIC_POWER_DATA
     });
   },
-  prepareItem: async (psychicPower) => {
+  prepareItem: async psychicPower => {
     psychicPower.system.enrichedDescription = await TextEditor.enrichHTML(
       psychicPower.system.description?.value ?? '',
       { async: true }

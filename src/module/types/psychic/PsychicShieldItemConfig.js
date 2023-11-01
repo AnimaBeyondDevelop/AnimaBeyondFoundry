@@ -12,7 +12,7 @@ import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
  * @readonly
  */
 export const INITIAL_PSYCHIC_SHIELD_DATA = {
-  maintain: { value: false },
+  overmantained,
   damageBarrier: { value: 0 },
   shieldPoints: {
     value: 0,
@@ -55,12 +55,12 @@ export const PsychicShieldItemConfig = ABFItemConfigFactory({
       const shieldPoints = shieldValueCheck(
         power.system.effects[powerDifficulty].value
       )[0];
-      const maintain = maintainMax >= shieldPoints;
+      const overmantained = maintainMax >= shieldPoints;
       await actor.createItem({
         name,
         type: ABFItems.PSYCHIC_SHIELD,
         system: {
-          maintain: { value: maintain },
+          overmantained,
           damageBarrier: { value: 0 },
           shieldPoints: {
             value: shieldPoints,

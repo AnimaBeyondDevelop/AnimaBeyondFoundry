@@ -335,8 +335,8 @@
       "combatType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
       "critic": { "value": "-" },
-      "visible": { "value": false },
-      "macro": { "value": "" },
+      "visible": false,
+      "macro": "",
       "grades": {
         "base": {
           "name": { "value": "" },
@@ -385,11 +385,11 @@
       },
       "actionType": { "value": "active" },
       "combatType": { "value": "attack" },
-      "discipline": { "value": "matrial" },
+      "discipline": { "value": "matrixPowers" },
       "critic": { "value": "-" },
-      "macro": { "value": "" },
+      "macro": "",
       "hasMaintenance": { "value": false },
-      "visible": { "value": false },
+      "visible": false,
       "bonus": { "value": 0 }
     },
     "technique": {
