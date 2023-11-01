@@ -45,7 +45,7 @@
   <option {{#if (is "eq" this.defender.mystic.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'macros.combat.dialog.spellGrade.arcane.title'}}</option>
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-  {{#if (and this.defender.mystic.spellCasting.spell.innate (is 'eq' this.defender.mystic.spellCasting.override.value false))}}
+  {{#if (and this.defender.mystic.spellCasting.canCast.innate (is 'eq' this.defender.mystic.spellCasting.override.value false))}}
   <div class='columns'>
     <div>
       {{>
@@ -53,14 +53,14 @@
       title=(localize 'macros.combat.dialog.castInnate.title')
       disabled=this.defenseSent
       inputType="checkbox"
-      inputName="defender.mystic.spellCasting.cast.innate"
-      inputValue=(is 'eq' this.defender.mystic.spellCasting.cast.innate true)
+      inputName="defender.mystic.spellCasting.casted.innate"
+      inputValue=(is 'eq' this.defender.mystic.spellCasting.casted.innate true)
       }}
     </div>
   </div>
   {{/if}}
 
-  {{#if (and this.defender.mystic.spellCasting.spell.prepared (is 'eq' this.defender.mystic.spellCasting.override.value false))}}
+  {{#if (and this.defender.mystic.spellCasting.canCast.prepared (is 'eq' this.defender.mystic.spellCasting.override.value false))}}
   <div class='columns'>
     <div>
       {{>
@@ -68,8 +68,8 @@
       title=(localize 'macros.combat.dialog.castPrepared.title')
       disabled=this.defenseSent
       inputType="checkbox"
-      inputName="defender.mystic.spellCasting.cast.prepared"
-      inputValue=(is 'eq' this.defender.mystic.spellCasting.cast.prepared true)
+      inputName="defender.mystic.spellCasting.casted.prepared"
+      inputValue=(is 'eq' this.defender.mystic.spellCasting.casted.prepared true)
       }}
     </div>
   </div>

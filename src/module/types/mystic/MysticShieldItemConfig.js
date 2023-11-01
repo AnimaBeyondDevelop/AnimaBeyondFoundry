@@ -44,8 +44,8 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
     const mysticSpellCheck = mysticSpellCastEvaluate(actor, spell, spellGrade);
     const spellCasting = {
       zeon: { accumulated: 0, cost: 0 },
-      spell: mysticSpellCheck,
-      cast: { prepared, innate },
+      canCast: mysticSpellCheck,
+      casted: { prepared, innate },
       override: { value: override }
     };
     spellCasting.zeon.accumulated = actor.system.mystic.zeon.accumulated.value ?? 0;

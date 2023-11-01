@@ -1,12 +1,12 @@
 export const mysticCast = (actor, spellCasting, spellName, spellGrade) => {
-  const { zeon, cast, override } = spellCasting;
+  const { zeon, casted, override } = spellCasting;
   if (override.value) {
     return;
   }
-  if (cast.innate) {
+  if (casted.innate) {
     return;
   }
-  if (cast.prepared) {
+  if (casted.prepared) {
     actor.deletePreparedSpell(spellName, spellGrade);
   } else {
     actor.consumeAccumulatedZeon(zeon.cost);

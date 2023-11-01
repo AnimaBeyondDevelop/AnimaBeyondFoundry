@@ -95,8 +95,8 @@ const getInitialData = (attacker, defender) => {
         spellGrade: 'base',
         spellCasting: {
           zeon: { accumulated: 0, cost: 0 },
-          spell: { prepared: false, innate: false },
-          cast: { prepared: false, innate: false },
+          canCast: { prepared: false, innate: false },
+          casted: { prepared: false, innate: false },
           override: { value: false, ui: false }
         },
         shieldUsed: undefined,
@@ -185,7 +185,7 @@ export class CombatDefenseDialog extends FormApplication {
         spell,
         mystic.spellGrade
       );
-      mystic.spellCasting.spell = mysticSpellCheck;
+      mystic.spellCasting.canCast = mysticSpellCheck;
       const spellCastingOverride = this.defenderActor.getFlag(
         'animabf',
         'spellCastingOverride'
@@ -770,12 +770,12 @@ export class CombatDefenseDialog extends FormApplication {
       spell,
       mystic.spellGrade
     );
-    mystic.spellCasting.spell = mysticSpellCheck;
-    if (!mystic.spellCasting.spell.innate) {
-      mystic.spellCasting.cast.innate = false;
+    mystic.spellCasting.canCast = mysticSpellCheck;
+    if (!mystic.spellCasting.canCast.innate) {
+      mystic.spellCasting.casted.innate = false;
     }
-    if (!mystic.spellCasting.spell.prepared) {
-      mystic.spellCasting.cast.prepared = false;
+    if (!mystic.spellCasting.canCast.prepared) {
+      mystic.spellCasting.casted.prepared = false;
     }
 
     const { mysticShields } = this.defenderActor.system.mystic;
