@@ -9,7 +9,7 @@ import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
 import { Log } from '../../utils/Log';
 import { migrateItem } from '../items/migrations/migrateItem';
-import { executeArgsMacro } from '../utils/functions/executeArgsMacro';
+import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
@@ -74,7 +74,7 @@ export class ABFActor extends Actor {
         newShield: true,
         shieldId
       };
-      executeArgsMacro(newShield.name, args);
+      executeMacro(newShield.name, args);
     }, 100);
   }
 
@@ -127,7 +127,7 @@ export class ABFActor extends Actor {
           newShield: false,
           shieldId
         };
-        executeArgsMacro(supShield.name, args);
+        executeMacro(supShield.name, args);
       }
     }, 100);
   }

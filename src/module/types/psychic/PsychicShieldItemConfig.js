@@ -5,7 +5,7 @@ import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 import { newPsychicRollABF } from '../../utils/functions/newRollABF';
 import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
 import { shieldBaseValueCheck } from '../../combat/utils/shieldBaseValueCheck.js';
-import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
+import { executeMacro } from '../../utils/functions/executeMacro';
 
 /**
  * Initial data for a new psychic power. Used to infer the type of the data inside `power.system`
@@ -77,7 +77,7 @@ export const PsychicShieldItemConfig = ABFItemConfigFactory({
         newShield: true,
         shieldId
       };
-      executeArgsMacro(name, args);
+      executeMacro(name, args);
     }, 100);
   }
 });

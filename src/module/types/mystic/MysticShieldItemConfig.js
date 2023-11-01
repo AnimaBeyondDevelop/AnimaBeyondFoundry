@@ -5,7 +5,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
 import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
-import { executeArgsMacro } from '../../utils/functions/executeArgsMacro';
+import { executeMacro } from '../../utils/functions/executeMacro';
 import { mysticCast } from '../../utils/functions/mysticCast';
 
 /**
@@ -77,7 +77,7 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
         newShield: true,
         shieldId
       };
-      executeArgsMacro(name, args);
+      executeMacro(name, args);
     }, 100);
   }
 });
