@@ -8,6 +8,7 @@ import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
 import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
 import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
+import { INITIAL_PREPARED_SPELL_DATA } from './mystic/PreparedSpellItemConfig';
 import { INITIAL_MYSTIC_SHIELD_DATA } from './mystic/MysticShieldItemConfig';
 import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './psychic/PsychicDisciplineItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
@@ -334,13 +335,7 @@ export type InnateMagicViaDataSource = ABFItemBaseDataSource<InnateMagicViaItemD
 export type InnateMagicViaChanges = ItemChanges<InnateMagicViaItemData>;
 export type InnateMagicViaItemConfig = ABFItemConfig<InnateMagicViaItemData>;
 
-export type PreparedSpellItemData = {
-  system: {
-    grade: { value: string };
-    zeonAcc: { value: number, max: number };
-    prepared: { value: boolean };
-  };
-};
+export type PreparedSpellItemData = typeof INITIAL_PREPARED_SPELL_DATA;
 export type PreparedSpellDataSource = ABFItemBaseDataSource<PreparedSpellItemData>;
 export type PreparedSpellChanges = ItemChanges<PreparedSpellItemData>;
 export type PreparedSpellItemConfig = ABFItemConfig<PreparedSpellItemData>;
