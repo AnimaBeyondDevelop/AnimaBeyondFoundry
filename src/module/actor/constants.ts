@@ -56,7 +56,10 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       dodgeMod: {
           value: 0
       },
-      projectionMod: {
+      magicProjectionMod: {
+          value: 0
+      },
+      psychicProjectionMod: {
           value: 0
       },
       initiativeMod: {
