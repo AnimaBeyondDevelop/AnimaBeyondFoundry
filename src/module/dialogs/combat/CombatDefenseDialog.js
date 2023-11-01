@@ -2,7 +2,7 @@ import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { energyCheck } from '../../combat/utils/energyCheck.js';
-import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
+import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
@@ -180,12 +180,8 @@ export class CombatDefenseDialog extends FormApplication {
       const spell = spells.find(w => w._id === mystic.spellUsed);
       mystic.spellCasting.zeon.accumulated =
         this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
-      const mysticSpellCheck = mysticSpellCastEvaluate(
-        this.defenderActor,
-        spell,
-        mystic.spellGrade
-      );
-      mystic.spellCasting.canCast = mysticSpellCheck;
+      const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);
+      mystic.spellCasting.canCast = canCast;
       const spellCastingOverride = this.defenderActor.getFlag(
         'animabf',
         'spellCastingOverride'
@@ -765,12 +761,8 @@ export class CombatDefenseDialog extends FormApplication {
       )[0]?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    const mysticSpellCheck = mysticSpellCastEvaluate(
-      this.defenderActor,
-      spell,
-      mystic.spellGrade
-    );
-    mystic.spellCasting.canCast = mysticSpellCheck;
+    const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);
+    mystic.spellCasting.canCast = canCast;
     if (!mystic.spellCasting.canCast.innate) {
       mystic.spellCasting.casted.innate = false;
     }

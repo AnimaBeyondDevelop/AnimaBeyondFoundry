@@ -2,7 +2,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { SpellGrades } from './SpellItemConfig';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
-import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
+import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 import { executeMacro } from '../../utils/functions/executeMacro';
@@ -41,10 +41,10 @@ export const MysticShieldItemConfig = ABFItemConfigFactory({
       return;
     }
     actor.setFlag('animabf', 'spellCastingOverride', override);
-    const mysticSpellCheck = mysticSpellCastEvaluate(actor, spell, spellGrade);
+    const canCast = mysticCanCastEvaluate(actor, spell, spellGrade);
     const spellCasting = {
       zeon: { accumulated: 0, cost: 0 },
-      canCast: mysticSpellCheck,
+      canCast,
       casted: { prepared, innate },
       override: { value: override }
     };

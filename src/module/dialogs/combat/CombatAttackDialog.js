@@ -3,7 +3,7 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
-import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
+import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
@@ -197,12 +197,8 @@ export class CombatAttackDialog extends FormApplication {
       mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
       mystic.spellCasting.zeon.accumulated =
         this.attackerActor.system.mystic.zeon.accumulated.value ?? 0;
-      const mysticSpellCheck = mysticSpellCastEvaluate(
-        this.attackerActor,
-        spell,
-        mystic.spellGrade
-      );
-      mystic.spellCasting.canCast = mysticSpellCheck;
+      const canCast = mysticCanCastEvaluate(this.attackerActor, spell, mystic.spellGrade);
+      mystic.spellCasting.canCast = canCast;
       const spellCastingOverride = this.attackerActor.getFlag(
         'animabf',
         'spellCastingOverride'
@@ -690,12 +686,8 @@ export class CombatAttackDialog extends FormApplication {
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
-    const mysticSpellCheck = mysticSpellCastEvaluate(
-      this.attackerActor,
-      spell,
-      mystic.spellGrade
-    );
-    mystic.spellCasting.canCast = mysticSpellCheck;
+    const canCast = mysticCanCastEvaluate(this.attackerActor, spell, mystic.spellGrade);
+    mystic.spellCasting.canCast = canCast;
     if (!mystic.spellCasting.canCast.innate) {
       mystic.spellCasting.casted.innate = false;
     }
