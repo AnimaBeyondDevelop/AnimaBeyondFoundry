@@ -135,22 +135,23 @@ export class CombatDefenseDialog extends FormApplication {
       this.render(true);
     };
 
+    const { psychic, mystic, combat } = this.modalData.defender;
     const { weapons } = this.defenderActor.system.combat;
-    const { spells } = this.defenderActor.system.mystic;
-    const { mysticShields } = this.defenderActor.system.mystic;
-    const { psychicPowers } = this.defenderActor.system.psychic;
-    const { psychicShields } = this.defenderActor.system.psychic;
-    const { psychic } = this.modalData.defender;
-    const { mystic } = this.modalData.defender;
+    const { spells, mysticShields } = this.defenderActor.system.mystic;
+    const { psychicPowers, psychicShields } = this.defenderActor.system.psychic;
 
     if (psychicPowers.length > 0) {
       const lastDefensivePowerUsed = this.defenderActor.getFlag(
         'animabf',
         'lastDefensivePowerUsed'
       );
-      psychic.powerUsed =
-        lastDefensivePowerUsed ||
-        psychicPowers.filter(w => w.system.combatType.value === 'attack')[0]?._id;
+      if (psychicPowers.find(w => w._id === lastDefensivePowerUsed)) {
+        psychic.powerUsed = lastDefensivePowerUsed;
+      } else {
+        psychic.powerUsed = psychicPowers.find(
+          w => w.system.combatType.value === 'defense'
+        )?._id;
+      }
       const power = psychicPowers.find(w => w._id === psychicPowers.powerUsed);
       this.defenderActor.system.psychic.psychicPotential.special =
         power?.system.bonus.value;
@@ -171,9 +172,11 @@ export class CombatDefenseDialog extends FormApplication {
         'animabf',
         'lastDefensiveSpellUsed'
       );
-      mystic.spellUsed =
-        lastDefensiveSpellUsed ||
-        spells.filter(w => w.system.combatType.value === 'defense')[0]?._id;
+      if (spells.find(w => w._id === lastDefensiveSpellUsed)) {
+        mystic.spellUsed = lastDefensiveSpellUsed;
+      } else {
+        mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
+      }
       const spell = spells.find(w => w._id === mystic.spellUsed);
       mystic.spellCasting.zeon.accumulated =
         this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
@@ -192,9 +195,7 @@ export class CombatDefenseDialog extends FormApplication {
     }
 
     if (mysticShields.length > 0) {
-      mystic.shieldUsed = mysticShields.filter(
-        w => w.system.shieldPoints?.value > 0
-      )[0]?._id;
+      mystic.shieldUsed = mysticShields.find(w => w.system.shieldPoints?.value > 0)?._id;
     } else {
       mystic.newShield = true;
     }
@@ -204,10 +205,13 @@ export class CombatDefenseDialog extends FormApplication {
         'animabf',
         'lastDefensiveWeaponUsed'
       );
-      this.modalData.defender.combat.weaponUsed =
-        lastDefensiveWeaponUsed || weapons[0]._id;
+      if (weapons.find(weapon => weapon._id == lastDefensiveWeaponUsed)) {
+        combat.weaponUsed = lastDefensiveWeaponUsed;
+      } else {
+        combat.weaponUsed = weapons[0]._id;
+      }
     } else {
-      this.modalData.defender.combat.unarmed = true;
+      combat.unarmed = true;
     }
     const perceiveMystic =
       this.defenderActor.system.general.settings.perceiveMystic.value;
@@ -239,8 +243,7 @@ export class CombatDefenseDialog extends FormApplication {
     let at = this.defenderActor.system.combat.totalArmor.at[critic]?.value;
 
     if (at !== undefined) {
-      this.modalData.defender.combat.at.final =
-        this.modalData.defender.combat.at.special + at;
+      combat.at.final = combat.at.special + at;
     }
 
     this.hooks = hooks;

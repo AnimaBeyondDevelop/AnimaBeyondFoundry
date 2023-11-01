@@ -146,6 +146,8 @@ export class CombatAttackDialog extends FormApplication {
 
     this.modalData = getInitialData(attacker, defender, options);
 
+    const { combat, psychic, mystic } = this.modalData.attacker;
+
     if (this.modalData.attacker.combat.distance.enable) {
       const calculateDistance = Math.floor(
         canvas.grid.measureDistance(
@@ -153,9 +155,9 @@ export class CombatAttackDialog extends FormApplication {
           this.modalData.defender.token
         )
       );
-      this.modalData.attacker.combat.distance.value = calculateDistance;
-      this.modalData.attacker.mystic.distance.value = calculateDistance;
-      this.modalData.attacker.psychic.distance.value = calculateDistance;
+      combat.distance.value = calculateDistance;
+      psychic.distance.value = calculateDistance;
+      mystic.distance.value = calculateDistance;
     }
 
     const { weapons } = this.attackerActor.system.combat;
@@ -163,14 +165,17 @@ export class CombatAttackDialog extends FormApplication {
     const { psychicPowers } = this.attackerActor.system.psychic;
 
     if (psychicPowers.length > 0) {
-      const { psychic } = this.modalData.attacker;
       const lastOffensivePowerUsed = this.attackerActor.getFlag(
         'animabf',
         'lastOffensivePowerUsed'
       );
-      psychic.powerUsed =
-        lastOffensivePowerUsed ||
-        psychicPowers.filter(w => w.system.combatType.value === 'attack')[0]?._id;
+      if (psychicPowers.find(w => w._id === lastOffensivePowerUsed)) {
+        psychic.powerUsed = lastOffensivePowerUsed;
+      } else {
+        psychic.powerUsed = psychicPowers.find(
+          w => w.system.combatType.value === 'attack'
+        )?._id;
+      }
       const power = psychicPowers.find(w => w._id === psychic.powerUsed);
       this.attackerActor.system.psychic.psychicPotential.special =
         power?.system.bonus.value;
@@ -178,14 +183,15 @@ export class CombatAttackDialog extends FormApplication {
     }
 
     if (spells.length > 0) {
-      const { mystic } = this.modalData.attacker;
       const lastOffensiveSpellUsed = this.attackerActor.getFlag(
         'animabf',
         'lastOffensiveSpellUsed'
       );
-      mystic.spellUsed =
-        lastOffensiveSpellUsed ||
-        spells.filter(w => w.system.combatType.value === 'attack')[0]?._id;
+      if (spells.find(w => w._id === lastOffensiveSpellUsed)) {
+        mystic.spellUsed = lastOffensiveSpellUsed;
+      } else {
+        mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
+      }
       const spell = spells.find(w => w._id === mystic.spellUsed);
       const spellUsedEffect = spell?.system.grades.base.description.value;
       mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
@@ -210,10 +216,13 @@ export class CombatAttackDialog extends FormApplication {
         'animabf',
         'lastOffensiveWeaponUsed'
       );
-      this.modalData.attacker.combat.weaponUsed =
-        lastOffensiveWeaponUsed || weapons[0]._id;
+      if (weapons.find(weapon => weapon._id == lastOffensiveWeaponUsed)) {
+        combat.weaponUsed = lastOffensiveWeaponUsed;
+      } else {
+        combat.weaponUsed = weapons[0]._id;
+      }
     } else {
-      this.modalData.attacker.combat.unarmed = true;
+      combat.unarmed = true;
     }
 
     this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
