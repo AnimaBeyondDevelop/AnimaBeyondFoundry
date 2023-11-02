@@ -21,6 +21,6 @@ Enfin, `/src/module/migration/migrations/index.js` permet d'utiliser le module `
 
 # Comment ajouter une nouvelle migration
 
-1. Créez un nouveau fichier de migrations dans `/src/module/migration/migrations`. Son nom doit commencer par son numéro de migration et s'expliquer par lui-même; comme ci-après `42-objectif-de-cette-migration.js`.
+1. Créez un nouveau fichier de migrations dans `/src/module/migration/migrations`. Son nom doit commencer par son numéro de migration et s'expliquer par lui-même; comme ci-après `42-purpose-of-this-migration.js`.
 2. A l'intérieur de ce fichier, écrivez et exportez l'objet de la migration, implémentant les transformations requises pour la migration des données.
 3. Exportez l'objet de la migration à partir du fichier `/src/module/migration/migrations/index.js`.
