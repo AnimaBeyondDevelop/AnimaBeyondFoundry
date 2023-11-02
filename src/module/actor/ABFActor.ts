@@ -157,14 +157,20 @@ export class ABFActor extends Actor {
   }
 
   deletePreparedSpell(spellName: string, spellGrade: string) {
-    let preparedSpell = this.system.mystic.preparedSpells.find(
+    let preparedSpellId = this.system.mystic.preparedSpells.find(
       (ps: any) =>
         ps.name == spellName &&
         ps.system.grade.value == spellGrade &&
         ps.system.prepared.value == true
     )._id;
-    if (preparedSpell !== undefined) {
-      this.deleteEmbeddedDocuments('Item', [preparedSpell]);
+    if (preparedSpellId !== undefined) {
+      let items = this.getPreparedSpells();
+      items = items.filter(item => item._id !== preparedSpellId);
+      const fieldPath = ['mystic', 'preparedSpells'];
+      const dataToUpdate = {
+        system: getUpdateObjectFromPath(items, fieldPath)
+      };
+      this.update(dataToUpdate);
     }
   }
 
@@ -291,7 +297,7 @@ export class ABFActor extends Actor {
         }
 
         if (system) {
-          item.system = system;
+          item.system = mergeObject(item.system, system);
         }
 
         await this.update({

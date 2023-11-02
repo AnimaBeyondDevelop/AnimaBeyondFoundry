@@ -16,7 +16,7 @@ export const INITIAL_PREPARED_SPELL_DATA = {
 /** @type {import("../Items").PreparedSpellItemConfig} */
 export const PreparedSpellItemConfig = ABFItemConfigFactory({
   type: ABFItems.PREPARED_SPELL,
-  isInternal: false,
+  isInternal: true,
   fieldPath: ['mystic', 'preparedSpells'],
   selectors: {
     addItemButtonSelector: 'add-prepared-spell',
@@ -34,7 +34,7 @@ export const PreparedSpellItemConfig = ABFItemConfigFactory({
     const name = spell.name;
     const zeonCost = spell.system.grades[spellGrade].zeon.value;
 
-    await actor.createItem({
+    await actor.createInnerItem({
       name,
       type: ABFItems.PREPARED_SPELL,
       system: {

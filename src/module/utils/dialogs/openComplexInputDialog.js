@@ -2,7 +2,7 @@ import { renderTemplates } from '../renderTemplates';
 import { Templates } from '../constants';
 
 export const openComplexInputDialog = async (actor, dialogType) => {
-  const i18n = game.i18n;
+  const { i18n } = game;
   let castOverride = false;
   if (dialogType == 'newMysticShield') {
     castOverride = actor.getFlag('animabf', 'spellCastingOverride');
