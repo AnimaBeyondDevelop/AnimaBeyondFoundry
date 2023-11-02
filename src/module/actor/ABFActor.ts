@@ -115,13 +115,14 @@ export class ABFActor extends Actor {
     }
   }
 
-  async psychicShieldsMaintaining() {
+  async psychicShieldsMaintaining(revert: boolean) {
     const { psychicShields } = this.system.psychic;
 
     for (let psychicShield of psychicShields) {
       if (!psychicShield.system.overmantained) {
-        const supShield = {system: psychicShield.system, id: psychicShield._id};
-        this.applyDamageSupernaturalShield(supShield, 5, false, undefined);
+        const supShield = { system: psychicShield.system, id: psychicShield._id };
+        const damage = revert ? -5 : 5;
+        this.applyDamageSupernaturalShield(supShield, damage, false, undefined);
       }
     }
   }
@@ -166,11 +167,13 @@ export class ABFActor extends Actor {
     });
   }
 
-  consumeMaintainedZeon() {
+  async consumeMaintainedZeon(revert: boolean) {
     const { zeon, zeonMaintained } = this.system.mystic;
-    const updatedZeon = zeon.value - zeonMaintained.value;
+    const updatedZeon = revert
+      ? zeon.value + zeonMaintained.value
+      : zeon.value - zeonMaintained.value;
 
-    this.update({
+    return this.update({
       system: {
         mystic: {
           zeon: { value: updatedZeon }
