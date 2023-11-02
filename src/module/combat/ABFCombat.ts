@@ -1,5 +1,4 @@
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
-import { psychicShieldsMaintained } from '../utils/hooks-scripts/psychicShieldsMaintained.js';
 
 export default class ABFCombat extends Combat {
   constructor(
