@@ -80,7 +80,6 @@ export class ABFActor extends Actor {
     supShield: any,
     damage: number,
     dobleDamage: boolean,
-    type: string,
     newCombatResult: any
   ) {
     const shieldValue = supShield.system.shieldPoints.value;
@@ -113,6 +112,17 @@ export class ABFActor extends Actor {
         shieldId: supShield.id
       };
       executeMacro(supShield.name, args);
+    }
+  }
+
+  async psychicShieldsMaintaining() {
+    const { psychicShields } = this.system.psychic;
+
+    for (let psychicShield of psychicShields) {
+      if (!psychicShield.system.overmantained) {
+        const supShield = {system: psychicShield.system, id: psychicShield._id};
+        this.applyDamageSupernaturalShield(supShield, 5, false, undefined);
+      }
     }
   }
 
@@ -151,6 +161,19 @@ export class ABFActor extends Actor {
       system: {
         mystic: {
           zeon: { accumulated: { value: newAccumulateZeon } }
+        }
+      }
+    });
+  }
+
+  consumeMaintainedZeon() {
+    const { zeon, zeonMaintained } = this.system.mystic;
+    const updatedZeon = zeon.value - zeonMaintained.value;
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { value: updatedZeon }
         }
       }
     });

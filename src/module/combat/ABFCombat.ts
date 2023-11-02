@@ -1,4 +1,5 @@
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { psychicShieldsMaintained } from '../utils/hooks-scripts/psychicShieldsMaintained.js';
 
 export default class ABFCombat extends Combat {
   constructor(
@@ -20,6 +21,15 @@ export default class ABFCombat extends Combat {
     // Reset initiative for everyone when going to the next round
     await this.resetAll();
     this.setFlag('world', 'newRound', true);
+
+    const combatants = this.combatants.map(c => c.token)
+    if (combatants.length !== 0) {
+      for (let token of combatants) {
+        token?.actor?.resetDefensesCounter();
+        token?.actor?.consumeMaintainedZeon();
+        token?.actor?.psychicShieldsMaintaining();
+      }
+    }
 
     return super.nextRound();
   }
