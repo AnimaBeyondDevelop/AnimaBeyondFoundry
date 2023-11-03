@@ -5,9 +5,6 @@ import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.
 import { damageCheck } from '../../combat/utils/damageCheck.js';
 import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
-import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
-import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
-import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
@@ -126,7 +123,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           type: 'shot'
         },
         specialType: 'intangible',
-        damage: 0
+        damageModifier: 0
       }
     },
     defender: {
@@ -194,7 +191,7 @@ export class CombatAttackDialog extends FormApplication {
       }
       const spell = spells.find(w => w._id === mystic.spellUsed);
       const spellUsedEffect = spell?.system.grades.base.description.value;
-      mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
+      mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
       mystic.spellCasting.zeon.accumulated =
         this.attackerActor.system.mystic.zeon.accumulated.value ?? 0;
       const canCast = mysticCanCastEvaluate(this.attackerActor, spell, mystic.spellGrade);
@@ -525,21 +522,23 @@ export class CombatAttackDialog extends FormApplication {
       }
     });
 
-    html.find('.send-psychic-attack').click(() => {
+    html.find('.send-psychic-attack').click(async () => {
       const {
         powerUsed,
         modifier,
         psychicPotential,
         psychicProjection,
         critic,
-        damage,
+        damageModifier,
         projectile,
         specialType,
         distance
       } = this.modalData.attacker.psychic;
-      const { inhuman, zen } = this.modalData.attacker;
       const inmaterialDefender = this.modalData.defender.inmaterial;
+      const { i18n } = game;
       if (powerUsed) {
+        const { psychicPowers } = this.attackerActor.system.psychic;
+        const power = psychicPowers.find(w => w._id === powerUsed);
         this.attackerActor.setFlag('animabf', 'lastOffensivePowerUsed', powerUsed);
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
@@ -558,49 +557,25 @@ export class CombatAttackDialog extends FormApplication {
         psychicProjectionRoll.roll();
 
         const psychicPotentialRoll = new ABFFoundryRoll(
-          `1d100xa + ${psychicPotential.final}`,
-          this.modalData.attacker.actor.system
+          `1d100PsychicRoll + ${psychicPotential.final}`,
+          { ...this.attackerActor.system, power }
         );
         psychicPotentialRoll.roll();
-        const { psychicPowers } = this.attackerActor.system.psychic;
-        const power = psychicPowers.find(w => w._id === powerUsed);
-        let imbalance = psychicImbalanceCheck(this.attackerActor, power) ?? 0;
-        const newPotentialTotal = psychicPotentialEffect(
-          psychicPotentialRoll.total,
-          imbalance,
-          inhuman,
-          zen
-        );
-        const powerUsedEffect = power?.system.effects[newPotentialTotal].value;
-        let newDamage = damageCheck(powerUsedEffect)[0] + damage;
-        let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
-        let fatigueInmune = this.attackerActor.system.general.advantages.find(
-          i => i.name === 'Res. a la fatiga psíquica'
-        );
-        let fatigueCheck = psychicFatigue(powerUsedEffect, fatigueInmune);
-        let fatiguePen = fatigueCheck[1];
-        let visibleCheck = power?.system.visible;
-        let specialTypeCheck = specialType;
-        if (visibleCheck) {
-          specialTypeCheck = 'energy';
+        if (this.modalData.attacker.showRoll) {
+          psychicPotentialRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+            flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
+          });
         }
 
-        if (this.modalData.attacker.showRoll) {
-          const { i18n } = game;
+        const fatigue = await this.attackerActor.evaluatePsychicFatigue(
+          power,
+          psychicPotentialRoll.total,
+          this.modalData.attacker.showRoll
+        );
 
-          if (fatigueCheck[0]) {
-            psychicPotentialRoll.toMessage({
-              speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
-              flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
-                fatiguePen
-              })
-            });
-            this.attackerActor.applyFatigue(fatiguePen);
-          } else {
-            psychicPotentialRoll.toMessage({
-              speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
-              flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
-            });
+        if (this.modalData.attacker.showRoll) {
+          if (!fatigue) {
             const projectionFlavor = i18n.format(
               'macros.combat.dialog.psychicAttack.title',
               {
@@ -614,6 +589,15 @@ export class CombatAttackDialog extends FormApplication {
               flavor: projectionFlavor
             });
           }
+        }
+
+        const powerUsedEffect = power?.system.effects[psychicPotentialRoll.total].value;
+        let damage = damageCheck(powerUsedEffect) + damageModifier;
+        let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
+        let visibleCheck = power?.system.visible;
+        let specialTypeCheck = specialType;
+        if (visibleCheck) {
+          specialTypeCheck = 'energy';
         }
 
         const rolled = psychicProjectionRoll.total - psychicProjection - (modifier ?? 0);
@@ -630,8 +614,8 @@ export class CombatAttackDialog extends FormApplication {
             psychicPotential: psychicPotentialRoll.total,
             psychicProjection,
             critic,
-            damage: newDamage,
-            fatigueCheck: fatigueCheck[0],
+            damage,
+            fatigueCheck: fatigue.value,
             roll: rolled,
             total: psychicProjectionRoll.total,
             fumble: psychicProjectionRoll.fumbled,
@@ -685,7 +669,7 @@ export class CombatAttackDialog extends FormApplication {
     mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
-    mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect)[0];
+    mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
     const canCast = mysticCanCastEvaluate(this.attackerActor, spell, mystic.spellGrade);
     mystic.spellCasting.canCast = canCast;
     if (!mystic.spellCasting.canCast.innate) {

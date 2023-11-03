@@ -1,11 +1,8 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
+import { openModDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
-import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
-import { newPsychicRollABF } from '../../utils/functions/newRollABF';
-import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
-import { shieldBaseValueCheck } from '../../combat/utils/shieldBaseValueCheck.js';
-import { executeMacro } from '../../utils/functions/executeMacro';
+import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 
 /**
  * Initial data for a new psychic power. Used to infer the type of the data inside `power.system`
@@ -33,48 +30,42 @@ export const PsychicShieldItemConfig = ABFItemConfigFactory({
   onCreate: async actor => {
     const results = await openComplexInputDialog(actor, 'newPsychicShield');
     const powerID = results['new.psychicShield.id'];
-    const powerDifficulty = results['new.psychicShield.difficulty'];
+    const showRoll = true;
+    let powerDifficulty = results['new.psychicShield.difficulty'];
     const power = actor.system.psychic.psychicPowers.find(i => i._id == powerID);
-    const name = power.name;
     if (!power) {
       return;
     }
-    let item;
+
     if (powerDifficulty == 'roll') {
-      const supShield = await newPsychicRollABF(power, actor);
-      item = await actor.createItem({
-        name,
-        type: ABFItems.PSYCHIC_SHIELD,
-        system: supShield.system
+      console.log(actor);
+      const { i18n } = game;
+      const mod = await openModDialog();
+      const psychicPotential = actor.system.psychic.psychicPotential.final.value;
+      const psychicPotentialRoll = new ABFFoundryRoll(
+        `1d100PsychicRoll + ${psychicPotential} + ${mod}`,
+        { ...actor.system, power }
+      );
+      psychicPotentialRoll.roll();
+      powerDifficulty = psychicPotentialRoll.total;
+      psychicPotentialRoll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
       });
-    } else {
-      const maintainMax =
-        shieldBaseValueCheck(
-          psychicPotentialEffect(actor.system.psychic.psychicPotential.base.value, 0),
-          power?.system.effects
-        )[0] ?? 0;
-      const shieldPoints = shieldValueCheck(
-        power.system.effects[powerDifficulty].value
-      )[0];
-      const overmantained = maintainMax >= shieldPoints;
-      item = await actor.createItem({
-        name,
-        type: ABFItems.PSYCHIC_SHIELD,
-        system: {
-          overmantained,
-          damageBarrier: { value: 0 },
-          shieldPoints: {
-            value: shieldPoints,
-            maintainMax: maintainMax
-          }
-        }
-      });
+      const fatigue = await actor.evaluatePsychicFatigue(
+        power,
+        psychicPotentialRoll.total,
+        showRoll
+      );
+      if (fatigue) {
+        return;
+      }
     }
-    let args = {
-      thisActor: actor,
-      newShield: true,
-      shieldId: item._id
-    };
-    executeMacro(name, args);
+    const supernaturalShieldData = await actor.supernaturalShieldData(
+      'psychic',
+      power,
+      powerDifficulty
+    );
+    await actor.newSupernaturalShield(supernaturalShieldData, 'psychic');
   }
 });

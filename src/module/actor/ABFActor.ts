@@ -13,6 +13,10 @@ import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
+import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.js';
+import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
+import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
+import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -55,6 +59,49 @@ export class ABFActor extends Actor {
         }
       }
     });
+  }
+
+  async supernaturalShieldData(type: string, power: any, psychicDifficulty: number) {
+    const supernaturalShieldData = {
+      name: '',
+      type: '',
+      system: {}
+    };
+
+    if (type === 'psychic') {
+      const {
+        general: {
+          settings: { inhuman, zen }
+        },
+        psychic
+      } = this.system;
+
+      const newPotentialBase = psychicPotentialEffect(
+        psychic.psychicPotential.base.value,
+        0,
+        inhuman.value,
+        zen.value
+      );
+      const baseEffect =
+        shieldBaseValueCheck(newPotentialBase, power?.system.effects) ?? 0;
+      const finalEffect = shieldValueCheck(
+        power?.system.effects[psychicDifficulty].value ?? ''
+      );
+      supernaturalShieldData.name = power.name;
+      supernaturalShieldData.type = ABFItems.PSYCHIC_SHIELD;
+      supernaturalShieldData.system = {
+        overmantained: baseEffect >= finalEffect,
+        damageBarrier: { value: 0 },
+        shieldPoints: {
+          value: finalEffect,
+          maintainMax: baseEffect
+        }
+      };
+    } else if (type === 'mystic') {
+      supernaturalShieldData.type = ABFItems.MYSTIC_SHIELD;
+    }
+
+    return supernaturalShieldData;
   }
 
   async newSupernaturalShield(newShield: any, type: string) {
@@ -113,6 +160,37 @@ export class ABFActor extends Actor {
       };
       executeMacro(supShield.name, args);
     }
+  }
+
+  async evaluatePsychicFatigue(
+    power: any,
+    psychicDifficulty: number,
+    showMessage: boolean
+  ) {
+    const fatigueInmune = this.system.general.advantages.find(
+      (i: any) => i.name === 'Res. a la fatiga psíquica'
+    );
+    const fatigue = {
+      value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
+      inmune: fatigueInmune
+    };
+
+    if (fatigue.value) {
+      if (showMessage) {
+        const { i18n } = game;
+        ChatMessage.create({
+          speaker: ChatMessage.getSpeaker({ actor: this }),
+          flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
+            fatiguePen: fatigue.inmune ? 0 : fatigue.value
+          })
+        });
+      }
+      if (!fatigue.inmune) {
+        this.applyFatigue(fatigue.value);
+      }
+    }
+
+    return fatigue.value;
   }
 
   async psychicShieldsMaintaining(revert: boolean) {

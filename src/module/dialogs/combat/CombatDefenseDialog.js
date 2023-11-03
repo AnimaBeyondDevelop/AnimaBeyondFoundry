@@ -4,10 +4,6 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
-import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
-import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
-import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
-import { shieldBaseValueCheck } from '../../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 import { shieldSupernaturalCheck } from '../../combat/utils/shieldSupernaturalCheck.js';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
@@ -570,7 +566,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.render();
     });
 
-    html.find('.send-psychic-defense').click(() => {
+    html.find('.send-psychic-defense').click(async () => {
       const {
         psychic: { psychicPotential, powerUsed, modifier, shieldUsed, newShield },
         combat: { at },
@@ -581,10 +577,11 @@ export class CombatDefenseDialog extends FormApplication {
       const { i18n } = game;
       const { psychicPowers, psychicShields } = this.defenderActor.system.psychic;
       let power,
-        fatigueCheck,
+        fatigue,
         atResValue = 0,
         supShield = { create: false },
-        newPsychicPotential;
+        newPsychicPotential,
+        unableToDefense = false;
       if (at.defense) {
         atResValue += at.final * 10 + 20;
       }
@@ -603,9 +600,12 @@ export class CombatDefenseDialog extends FormApplication {
         formula = formula.replace('xa', 'xamastery');
       }
 
-      const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
-      roll.roll();
-      const rolled = roll.total - psychicProjection - newModifier;
+      const psychicProjectionRoll = new ABFFoundryRoll(
+        formula,
+        this.defenderActor.system
+      );
+      psychicProjectionRoll.roll();
+      const rolled = psychicProjectionRoll.total - psychicProjection - newModifier;
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -619,83 +619,50 @@ export class CombatDefenseDialog extends FormApplication {
         this.defenderActor.setFlag('animabf', 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
         const psychicPotentialRoll = new ABFFoundryRoll(
-          `1d100xa + ${psychicPotential.final}`,
-          this.modalData.defender.actor.system
+          `1d100PsychicRoll + ${psychicPotential.final}`,
+          { ...this.defenderActor.system, power }
         );
         psychicPotentialRoll.roll();
         newPsychicPotential = psychicPotentialRoll.total;
-        let imbalance = psychicImbalanceCheck(this.defenderActor, power) ?? 0;
-        const newPotentialBase = psychicPotentialEffect(
-          psychicPotential.base,
-          0,
-          inhuman,
-          zen
-        );
-        const newPotentialTotal = psychicPotentialEffect(
-          psychicPotentialRoll.total,
-          imbalance,
-          inhuman,
-          zen
-        );
-        const baseEffect = shieldBaseValueCheck(newPotentialBase, power?.system.effects);
-        const finalEffect = shieldValueCheck(
-          power?.system.effects[newPotentialTotal].value ?? ''
-        );
-        const fatigueInmune = this.defenderActor.system.general.advantages.find(
-          i => i.name === 'Res. a la fatiga psíquica'
-        );
-        fatigueCheck = psychicFatigue(
-          power?.system.effects[newPotentialTotal].value,
-          fatigueInmune
-        );
-        const fatiguePen = fatigueCheck[1];
-        const overmantained = baseEffect[0] >= finalEffect[0];
-
-        if (fatigueCheck[0]) {
-          psychicPotentialRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-            flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
-              fatiguePen
-            })
-          });
-          this.defenderActor.applyFatigue(fatiguePen);
-        } else {
-          supShield = {
-            name: power.name,
-            system: {
-              overmantained,
-              damageBarrier: { value: 0 },
-              shieldPoints: {
-                value: finalEffect[0],
-                maintainMax: baseEffect[0]
-              }
-            },
-            create: true
-          };
+        if (this.modalData.defender.showRoll) {
           psychicPotentialRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
             flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
           });
         }
+
+        fatigue = await this.defenderActor.evaluatePsychicFatigue(
+          power,
+          psychicPotentialRoll.total,
+          this.modalData.attacker.showRoll
+        );
+
+        if (!fatigue) {
+          const supernaturalShieldData =
+            await this.modalData.defender.actor.supernaturalShieldData(
+              'psychic',
+              power,
+              psychicPotentialRoll.total
+            );
+          supShield = { ...supernaturalShieldData, create: true };
+        }
       }
 
-      let unableToDefense = false;
-      const attackerSpecialType = this.modalData.attacker.specialType;
-      const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType);
-      unableToDefense = shieldCheck[0];
-      if (
-        this.modalData.defender.showRoll &&
-        (fatigueCheck == undefined || !fatigueCheck[0])
-      ) {
-        const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
-          power: power.name,
-          target: this.modalData.attacker.token.name
-        });
+      if (!fatigue) {
+        const attackerSpecialType = this.modalData.attacker.specialType;
+        const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType);
+        unableToDefense = shieldCheck[0];
+        if (this.modalData.defender.showRoll) {
+          const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
+            power: power.name,
+            target: this.modalData.attacker.token.name
+          });
 
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-          flavor
-        });
+          psychicProjectionRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+            flavor
+          });
+        }
       } else {
         unableToDefense = true;
       }
@@ -709,7 +676,7 @@ export class CombatDefenseDialog extends FormApplication {
           psychicPotential: newPsychicPotential ?? 0,
           at: at.final,
           roll: rolled,
-          total: roll.total,
+          total: psychicProjectionRoll.total,
           unableToDefense,
           dobleDamage: false,
           cantDamage: false,
