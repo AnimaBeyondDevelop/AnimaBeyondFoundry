@@ -165,7 +165,7 @@ export class ABFActor extends Actor {
   async evaluatePsychicFatigue(
     power: any,
     psychicDifficulty: number,
-    showMessage: boolean
+    sendToChat: boolean
   ) {
     const fatigueInmune = this.system.general.advantages.find(
       (i: any) => i.name === 'Res. a la fatiga psíquica'
@@ -176,7 +176,7 @@ export class ABFActor extends Actor {
     };
 
     if (fatigue.value) {
-      if (showMessage) {
+      if (sendToChat) {
         const { i18n } = game;
         ChatMessage.create({
           speaker: ChatMessage.getSpeaker({ actor: this }),
