@@ -17,6 +17,8 @@ import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.j
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
+import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
+import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -59,6 +61,37 @@ export class ABFActor extends Actor {
         }
       }
     });
+  }
+
+  async rollAbility(ability: string, sendToChat = true) {
+    const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
+    const { secondaries } = this.system;
+    let groupPath = '';
+    for (const groupKey in secondaries) {
+      for (const abilityKey in secondaries[groupKey]) {
+        if (abilityKey === ability) {
+          groupPath = groupKey;
+        }
+      }
+    }
+    if (groupPath === '') {
+      return;
+    }
+    const abilityValue = this.system.secondaries[groupPath][ability].final.value;
+    console.log(abilityValue);
+    const label = name ? `Rolling ${name}` : '';
+    const mod = await openModDialog();
+    let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
+    if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
+    const roll = new ABFFoundryRoll(formula, this.system);
+    roll.roll();
+    if (sendToChat) {
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor: label
+      });
+    }
+    return roll.total;
   }
 
   async supernaturalShieldData(type: string, power: any, psychicDifficulty: number) {
@@ -162,11 +195,7 @@ export class ABFActor extends Actor {
     }
   }
 
-  async evaluatePsychicFatigue(
-    power: any,
-    psychicDifficulty: number,
-    sendToChat: boolean
-  ) {
+  async evaluatePsychicFatigue(power: any, psychicDifficulty: number, sendToChat = true) {
     const fatigueInmune = this.system.general.advantages.find(
       (i: any) => i.name === 'Res. a la fatiga psíquica'
     );
