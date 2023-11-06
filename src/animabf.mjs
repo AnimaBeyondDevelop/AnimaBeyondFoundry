@@ -10,7 +10,6 @@ import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
-import { newRollABF } from './module/utils/functions/newRollABF';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -59,7 +58,6 @@ Hooks.once('init', async () => {
 Hooks.once('setup', () => {
   // Do anything after initialization but before
   // ready
-globalThis.newRollABF = newRollABF
 });
 
 /* ------------------------------------ */
