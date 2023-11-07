@@ -108,42 +108,41 @@ export class GMCombatDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.cancel-button').click(async () => {
-      this.mysticCastEvaluateIfAble();
-      const supShieldId = await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
-      this.accumulateDefensesIfAble();
-      this.executeCombatMacro(false);
       this.close();
     });
 
     html.find('.make-counter').click(async () => {
+      this.applyValuesIfBeAble();
       this.mysticCastEvaluateIfAble();
+      this.accumulateDefensesIfAble();
       const supShieldId = await this.newSupernaturalShieldIfBeAble();
       this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
-      this.accumulateDefensesIfAble();
-      this.applyValuesIfBeAble();
-      this.executeCombatMacro(false);
+      this.executeCombatMacro();
 
       if (this.modalData.calculations?.canCounter) {
         this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
       }
     });
 
-    html.find('.apply-values').click(() => {
+    html.find('.apply-values').click(async () => {
       this.applyValuesIfBeAble();
+      this.mysticCastEvaluateIfAble();
+      this.accumulateDefensesIfAble();
+      const supShieldId = await this.newSupernaturalShieldIfBeAble();
 
-      if (!this.modalData.calculations?.canCounter && this.canApplyDamage) {
+      if (this.canApplyDamage) {
         this.defenderActor.applyDamage(this.modalData.calculations.damage);
+      } else {
+        this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
       }
 
-      this.mysticCastEvaluateIfAble();
-      this.newSupernaturalShieldIfBeAble();
-      this.accumulateDefensesIfAble();
-      this.executeCombatMacro(true);
+      this.executeCombatMacro();
       this.close();
     });
     html.find('.roll-resistance').click(() => {
       this.applyValuesIfBeAble();
+      this.mysticCastEvaluateIfAble();
+      this.accumulateDefensesIfAble();
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistance =
         this.defenderActor.system.characteristics.secondaries.resistances[type].base
@@ -161,12 +160,8 @@ export class GMCombatDialog extends FormApplication {
       });
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
-        this.executeCombatMacro(true, resistanceRoll.total);
-      } else {
-        this.executeCombatMacro(false, resistanceRoll.total);
       }
-      this.mysticCastEvaluateIfAble();
-      this.accumulateDefensesIfAble();
+      this.executeCombatMacro(resistanceRoll.total);
       this.close();
     });
     html.find('.show-results').click(async () => {
@@ -272,7 +267,7 @@ export class GMCombatDialog extends FormApplication {
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
-      const { atResValue } = this.modalData.defender.result.values;
+      const atResistance = this.modalData.defender.result.values?.at * 10 + 20;
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -294,7 +289,7 @@ export class GMCombatDialog extends FormApplication {
         ) {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
-            atResValue,
+            atResistance,
             canCounter: true,
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
@@ -308,7 +303,7 @@ export class GMCombatDialog extends FormApplication {
         } else {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
-            atResValue,
+            atResistance,
             canCounter: false,
             winner,
             damage: combatResult.damage
@@ -317,20 +312,24 @@ export class GMCombatDialog extends FormApplication {
       } else {
         this.modalData.calculations = {
           difference: attackerTotal - defenderTotal,
-          atResValue,
+          atResistance,
           canCounter: false,
           winner
         };
       }
 
+      const minimumDamage10 = this.modalData.calculations.difference - atResistance >= 10;
       if (winner === attacker.token) {
-        const minimumDamage10 = this.modalData.calculations.difference - atResValue >= 10;
         if (minimumDamage10) {
           if (this.modalData.attacker.result.values?.resistanceEffect.check) {
             this.modalData.ui.resistanceRoll = true;
           }
         }
       }
+      if (winner === defender.token || !minimumDamage10) {
+        this.modalData.ui.resistanceRoll = false;
+      }
+      console.log(this.modalData);
     }
 
     return this.modalData;
@@ -440,7 +439,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeCombatMacro(appliedDamage, resistanceRoll) {
+  executeCombatMacro(resistanceRoll) {
     let macroName;
     const winner =
       this.modalData.calculations.winner == this.modalData.defender.token
@@ -452,7 +451,7 @@ export class GMCombatDialog extends FormApplication {
       winner,
       defenseType: this.modalData.defender.result.values.type,
       totalAttack: this.modalData.attacker.result.values.total,
-      appliedDamage,
+      appliedDamage: this.canApplyDamage,
       bloodColor: 'red', // agregar valor de color de sangre al actor
       missedAttack: false,
       isVisibleAttack: true,
