@@ -75,8 +75,7 @@ const getInitialData = (attacker, defender) => {
         unarmed: false,
         at: {
           special: 0,
-          final: 0,
-          defense: attacker.critic !== NoneWeaponCritic.NONE && attacker.damage == 0
+          final: 0
         }
       },
       mystic: {
@@ -364,10 +363,6 @@ export class CombatDefenseDialog extends FormApplication {
         }
       }
       const newModifier = combatModifier + modifier ?? 0;
-      let atResValue = 0;
-      if (at.defense) {
-        atResValue += at.final * 10 + 20;
-      }
 
       let formula = `1d100xa + ${newModifier} + ${fatigue ?? 0} * 15 - ${
         (multipleDefensesPenalty ?? 0) * -1
@@ -417,7 +412,6 @@ export class CombatDefenseDialog extends FormApplication {
           roll: rolled,
           total: roll.total,
           unableToDefense,
-          atResValue,
           accumulateDefenses
         }
       });
@@ -460,12 +454,7 @@ export class CombatDefenseDialog extends FormApplication {
       } = this.modalData.defender;
       const { spells, mysticShields } = this.defenderActor.system.mystic;
       let spell,
-        supShield = { create: false },
-        atResValue = 0;
-      if (at.defense) {
-        atResValue += at.final * 10 + 20;
-      }
-
+        supShield = { create: false };
       const newModifier = blindnessPen + modifier ?? 0;
 
       if (!newShield) {
@@ -555,7 +544,6 @@ export class CombatDefenseDialog extends FormApplication {
           unableToDefense,
           dobleDamage,
           cantDamage,
-          atResValue,
           spellCasting,
           supShield
         }
@@ -578,13 +566,9 @@ export class CombatDefenseDialog extends FormApplication {
       const { psychicPowers, psychicShields } = this.defenderActor.system.psychic;
       let power,
         fatigue,
-        atResValue = 0,
         supShield = { create: false },
         newPsychicPotential,
         unableToDefense = false;
-      if (at.defense) {
-        atResValue += at.final * 10 + 20;
-      }
 
       const newModifier = blindnessPen + modifier ?? 0;
       const psychicProjection =
@@ -680,7 +664,6 @@ export class CombatDefenseDialog extends FormApplication {
           unableToDefense,
           dobleDamage: false,
           cantDamage: false,
-          atResValue,
           supShield
         }
       });
