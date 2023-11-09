@@ -647,9 +647,9 @@ export class CombatAttackDialog extends FormApplication {
 
     const { psychicPowers } = this.attackerActor.system.psychic;
     if (!psychic.powerUsed) {
-      psychic.powerUsed = psychicPowers.filter(
+      psychic.powerUsed = psychicPowers.find(
         w => w.system.combatType.value === 'attack'
-      )[0]?._id;
+      )?._id;
     }
     const power = psychicPowers.find(w => w._id === psychic.powerUsed);
     psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
@@ -661,9 +661,9 @@ export class CombatAttackDialog extends FormApplication {
 
     const { spells } = this.attackerActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.filter(
+      mystic.spellUsed = spells.find(
         w => w.system.combatType.value === 'attack'
-      )[0]?._id;
+      )?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
     mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;

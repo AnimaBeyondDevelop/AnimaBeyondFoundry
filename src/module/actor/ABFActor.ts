@@ -78,7 +78,6 @@ export class ABFActor extends Actor {
       return;
     }
     const abilityValue = this.system.secondaries[groupPath][ability].final.value;
-    console.log(abilityValue);
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog();
     let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
@@ -94,11 +93,18 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
-  async supernaturalShieldData(type: string, power: any, psychicDifficulty: number) {
+  async supernaturalShieldData(
+    type: string,
+    power: any,
+    psychicDifficulty: number,
+    spell: any,
+    spellGrade: string
+  ) {
     const supernaturalShieldData = {
       name: '',
-      type: '',
-      system: {}
+      type: ABFItems.SUPERNATURAL_SHIELD,
+      system: {},
+      psychic: {}
     };
 
     if (type === 'psychic') {
@@ -121,39 +127,64 @@ export class ABFActor extends Actor {
         power?.system.effects[psychicDifficulty].value ?? ''
       );
       supernaturalShieldData.name = power.name;
-      supernaturalShieldData.type = ABFItems.PSYCHIC_SHIELD;
       supernaturalShieldData.system = {
-        overmantained: baseEffect >= finalEffect,
-        damageBarrier: { value: 0 },
-        shieldPoints: {
-          value: finalEffect,
-          maintainMax: baseEffect
-        }
+        type: 'psychic',
+        damageBarrier: 0,
+        shieldPoints: finalEffect,
+        origin: this.uuid
+      };
+      supernaturalShieldData.psychic = {
+        overmantained: finalEffect > baseEffect,
+        maintainMax: baseEffect
       };
     } else if (type === 'mystic') {
-      supernaturalShieldData.type = ABFItems.MYSTIC_SHIELD;
+      const finalEffect = shieldValueCheck(
+        spell?.system.grades[spellGrade].description.value ?? ''
+      );
+      supernaturalShieldData.name = spell.name;
+      supernaturalShieldData.system = {
+        type: 'mystic',
+        spellGrade,
+        damageBarrier: 0,
+        shieldPoints: finalEffect,
+        origin: this.uuid
+      };
     }
 
     return supernaturalShieldData;
   }
 
-  async newSupernaturalShield(newShield: any, type: string) {
-    const itemType =
-      type === 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
+  async newSupernaturalShield(newShield: any) {
     const supernaturalShieldData = {
       name: newShield.name,
-      type: itemType,
+      type: ABFItems.SUPERNATURAL_SHIELD,
       system: newShield.system
     };
-
     const item = await this.createItem(supernaturalShieldData);
     let args = {
       thisActor: this,
       newShield: true,
       shieldId: item._id
     };
+    if (newShield.psychic.overmantained) {
+      item.setFlag('animabf', 'psychic', newShield.psychic);
+    }
     executeMacro(newShield.name, args);
     return item._id;
+  }
+
+  async deleteSupernaturalShield(supShieldId: any) {
+    const { supernaturalShields } = this.system.combat;
+    const supShield = supernaturalShields.find(w => w._id === supShieldId);
+    if (supShield) {
+      Item.deleteDocuments([supShieldId], { parent: this });
+      let args = {
+        thisActor: this,
+        newShield: false,
+        shieldId: supShieldId
+      };
+      executeMacro(supShield.name, args);
+    }
   }
 
   applyDamageSupernaturalShield(
@@ -162,15 +193,15 @@ export class ABFActor extends Actor {
     dobleDamage: boolean,
     newCombatResult: any
   ) {
-    const shieldValue = supShield.system.shieldPoints.value;
+    const shieldValue = supShield.system.shieldPoints;
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {
       let updates: any = [
-        { _id: supShield.id, ['system.shieldPoints.value']: newShieldPoints }
+        { _id: supShield.id, ['system.shieldPoints']: newShieldPoints }
       ];
       Item.updateDocuments(updates, { parent: this });
     } else {
-      Item.deleteDocuments([supShield.id], { parent: this });
+      this.deleteSupernaturalShield(supShield.id);
       if (newShieldPoints < 0 && newCombatResult) {
         const needToRound = (game as Game).settings.get(
           'animabf',
@@ -186,12 +217,6 @@ export class ABFActor extends Actor {
         const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
         this.applyDamage(breakingDamage);
       }
-      let args = {
-        thisActor: this,
-        newShield: false,
-        shieldId: supShield.id
-      };
-      executeMacro(supShield.name, args);
     }
   }
 
@@ -223,13 +248,21 @@ export class ABFActor extends Actor {
   }
 
   async psychicShieldsMaintaining(revert: boolean) {
-    const { psychicShields } = this.system.psychic;
+    const { supernaturalShields } = this.system.combat;
 
-    for (let psychicShield of psychicShields) {
-      if (!psychicShield.system.overmantained) {
-        const supShield = { system: psychicShield.system, id: psychicShield._id };
-        const damage = revert ? -5 : 5;
-        this.applyDamageSupernaturalShield(supShield, damage, false, undefined);
+    for (const supernaturalShield of supernaturalShields) {
+      const psychic = supernaturalShield.getFlag('animabf', 'psychic');
+      if (psychic?.overmantained) {
+        if (psychic.maintainMax >= supernaturalShield.system.shieldPoints) {
+          supernaturalShield.unsetFlag('animabf', 'psychic');
+        } else {
+          const supShield = {
+            system: supernaturalShield.system,
+            id: supernaturalShield._id
+          };
+          const damage = revert ? -5 : 5;
+          this.applyDamageSupernaturalShield(supShield, damage, false, undefined);
+        }
       }
     }
   }
@@ -472,8 +505,8 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.PREPARED_SPELL);
   }
 
-  public getMysticShields() {
-    return this.getItemsOf(ABFItems.MYSTIC_SHIELD);
+  public getSupernaturalShields() {
+    return this.getItemsOf(ABFItems.SUPERNATURAL_SHIELD);
   }
 
   public getKnownMetamagics() {
@@ -530,10 +563,6 @@ export class ABFActor extends Actor {
 
   public getInnatePsychicPowers() {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
-  }
-
-  public getPsychicShields() {
-    return this.getItemsOf(ABFItems.PSYCHIC_SHIELD);
   }
 
   public getPsychicPowers() {

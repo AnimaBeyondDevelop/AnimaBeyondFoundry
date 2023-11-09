@@ -1,4 +1,4 @@
-{{#if this.defender.mystic.newShield}}
+{{#if this.defender.mystic.supernaturalShield.newShield}}
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.zeonAccumulated.title")
@@ -23,7 +23,7 @@
   inputValue=this.defender.mystic.magicProjection.final
 }}
 
-{{#if this.defender.mystic.newShield}}
+{{#if this.defender.mystic.supernaturalShield.newShield}}
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spell.title')
   disabled=this.defenseSent
@@ -79,19 +79,21 @@
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.mysticShield.title')
     disabled=this.defenseSent
-    inputName='defender.mystic.shieldUsed'
+    inputName='defender.mystic.supernaturalShield.shieldUsed'
   }}
-    {{#each this.defender.actor.system.mystic.mysticShields}}
-      <option {{#if (is "eq" this._id ../this.defender.mystic.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-    {{/each}}
+    {{#each_when this.defender.actor.system.combat.supernaturalShields "system" "type" "" "mystic"}}
+      {{#if (is "eq" this.system.origin ../this.defender.actor.uuid)}}
+        <option {{#if (is "eq" this._id ../this.defender.mystic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/if}}
+    {{/each_when}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize "macros.combat.dialog.shieldValue.title")
     disabled=this.defenseSent
-    inputName="defender.mystic.shieldValue"
-    inputValue=this.defender.mystic.shieldValue
+    inputName="defender.mystic.supernaturalShield.shieldValue"
+    inputValue=this.defender.mystic.supernaturalShield.shieldValue
   }}
 {{/if}}
 
@@ -101,13 +103,13 @@
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.newShield.title')
       inputType="checkbox"
-      inputName="defender.mystic.newShield"
-      inputValue=(is 'eq' defender.mystic.newShield true)
+      inputName="defender.mystic.supernaturalShield.newShield"
+      inputValue=(is 'eq' defender.mystic.supernaturalShield.newShield true)
     }}
   </div>
 </div>
 
-{{#if (and this.defender.mystic.spellCasting.override.ui this.defender.mystic.newShield)}}
+{{#if (and this.defender.mystic.spellCasting.override.ui this.defender.mystic.supernaturalShield.newShield)}}
 <hr class='hr'/>
 <div class='columns'>
   <div>

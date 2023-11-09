@@ -296,7 +296,7 @@ export class GMCombatDialog extends FormApplication {
           };
           if (
             attacker.result.values.damage >
-            defender.result.values?.supShield.system.shieldPoints.value
+            defender.result.values.supShield?.system.shieldPoints
           ) {
             this.modalData.calculations.canCounter = false;
           }
@@ -329,7 +329,6 @@ export class GMCombatDialog extends FormApplication {
       if (winner === defender.token || !minimumDamage10) {
         this.modalData.ui.resistanceRoll = false;
       }
-      console.log(this.modalData);
     }
 
     return this.modalData;

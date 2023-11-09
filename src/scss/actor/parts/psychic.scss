@@ -55,32 +55,12 @@
       .psychic-discipline-row {
         margin-top: 0.75rem;
 
-        .name .input-container{
-          width: 100%;
-        }
-      }
-    }
-    // Psychic Disciplines
-
-    // Psychic Shields
-    .psychic-shields {
-      .psychic-shield-row:first-child {
-        margin-top: 0;
-      }
-
-      .psychic-shield-row {
-        margin-top: 0.75rem;
-
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-column-gap: 0.1rem;
-
         .name .input-container {
           width: 100%;
         }
       }
     }
-    // Psychic Shields
+    // Psychic Disciplines
 
     // Mental Patterns
     .mental-patterns {

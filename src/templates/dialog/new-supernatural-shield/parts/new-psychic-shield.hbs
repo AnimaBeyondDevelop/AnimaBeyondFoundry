@@ -1,11 +1,8 @@
-<form>
-  <div class='form-group'>
-    <div>
-    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
       title=(localize 'dialogs.psychicShield.power.title')
       inputName='new.psychicShield.id'
     }}
-      {{#each_when data.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
+      {{#each_when this.data.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
         <option value='{{this._id}}'>{{this.name}}</option>
       {{/each_when}}
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
@@ -25,6 +22,3 @@
       <option value='280'>280</option>
       <option value='320'>320</option>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
-    </div>
-  </div>
-</form>

@@ -179,7 +179,8 @@
         "combatTables": [],
         "ammo": [],
         "weapons": [],
-        "armors": []
+        "armors": [],
+        "supernaturalShields": []
       },
       "mystic": {
         "act": {
@@ -229,8 +230,7 @@
         "selectedSpells": [],
         "summons": [],
         "metamagics": [],
-        "preparedSpells": [],
-        "mysticShields": []
+        "preparedSpells": []
       },
       "domine": {
         "kiSkills": [],
@@ -282,8 +282,7 @@
         "psychicDisciplines": [],
         "mentalPatterns": [],
         "innatePsychicPower": { "amount": { "value": 0 } },
-        "innatePsychicPowers": [],
-        "psychicShields": []
+        "innatePsychicPowers": []
       }
     }
   },
@@ -294,12 +293,11 @@
       "armor",
       "disadvantage",
       "spell",
-      "mysticShield",
+      "supernaturalShield",
       "mentalPattern",
       "note",
       "psychicDiscipline",
       "psychicPower",
-      "psychicShield",
       "technique",
       "weapon"
     ],

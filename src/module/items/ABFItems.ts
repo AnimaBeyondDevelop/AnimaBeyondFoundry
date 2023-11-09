@@ -6,7 +6,6 @@ export enum ABFItems {
   ACT_VIA = 'actVia',
   INNATE_MAGIC_VIA = 'innateMagicVia',
   PREPARED_SPELL = 'preparedSpell',
-  MYSTIC_SHIELD = 'mysticShield',
   METAMAGIC = 'metamagic',
   SUMMON = 'summon',
   LEVEL = 'level',
@@ -21,7 +20,6 @@ export enum ABFItems {
   PSYCHIC_DISCIPLINE = 'psychicDiscipline',
   MENTAL_PATTERN = 'mentalPattern',
   INNATE_PSYCHIC_POWER = 'innatePsychicPower',
-  PSYCHIC_SHIELD = 'psychicShield',
   PSYCHIC_POWER = 'psychicPower',
   KI_SKILL = 'kiSkill',
   NEMESIS_SKILL = 'nemesisSkill',
@@ -35,5 +33,6 @@ export enum ABFItems {
   AMMO = 'ammo',
   WEAPON = 'weapon',
   ARMOR = 'armor',
+  SUPERNATURAL_SHIELD = 'supernaturalShield',
   INVENTORY_ITEM = 'inventoryItem',
 }

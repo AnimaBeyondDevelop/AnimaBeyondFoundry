@@ -184,7 +184,8 @@ export default class ABFActorSheet extends ActorSheet {
   buildCommonContextualMenu = itemConfig => {
     const {
       selectors: { containerSelector, rowSelector },
-      fieldPath
+      fieldPath,
+      hideDeleteRow
     } = itemConfig;
 
     const deleteRowMessage =
@@ -218,9 +219,8 @@ export default class ABFActorSheet extends ActorSheet {
       });
     }
 
-    return new ContextMenu($(containerSelector), rowSelector, [
-      ...otherItems,
-      {
+    if (!hideDeleteRow) {
+      otherItems.push({
         name: deleteRowMessage,
         icon: '<i class="fas fa-trash fa-fw"></i>',
         callback: target => {
@@ -266,7 +266,9 @@ export default class ABFActorSheet extends ActorSheet {
             );
           }
         }
-      }
-    ]);
+      });
+    }
+
+    return new ContextMenu($(containerSelector), rowSelector, [...otherItems]);
   };
 }

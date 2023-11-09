@@ -9,6 +9,7 @@ import { iterateNumberHBSHelper } from './helpers/iterateNumberHBSHelper';
 import { notHBSHelper } from './helpers/notHBSHelper';
 import { minNumberHBSHelper } from './helpers/minNumberHBSHelper';
 import { eachWhenHBSHelper } from './helpers/eachWhenHBSHelper';
+import { getNameActorUuid } from './helpers/getNameActorUuid';
 import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
@@ -28,6 +29,7 @@ export const registerHelpers = () => {
     mathHBSHelper,
     minNumberHBSHelper,
     eachWhenHBSHelper,
+    getNameActorUuid,
     logHBSHelper,
     calculateLanguagesHBSHelper,
     calculateLevelsHBSHelper

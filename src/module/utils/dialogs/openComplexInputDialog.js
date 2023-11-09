@@ -4,12 +4,13 @@ import { Templates } from '../constants';
 export const openComplexInputDialog = async (actor, dialogType) => {
   const { i18n } = game;
   let castOverride = false;
-  if (dialogType == 'newMysticShield') {
-    castOverride = actor.getFlag('animabf', 'spellCastingOverride');
-  }
+  castOverride = actor.getFlag('animabf', 'spellCastingOverride') || false;
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
-      name: Templates.Dialog[dialogType],
+      name:
+        dialogType === 'newSupernaturalShield'
+          ? Templates.Dialog[dialogType].main
+          : Templates.Dialog[dialogType],
       context: {
         data: {
           actor,
@@ -29,21 +30,36 @@ export const openComplexInputDialog = async (actor, dialogType) => {
   );
 
   return new Promise(resolve => {
-    new Dialog({
-      title: i18n.localize('dialogs.title'),
-      content: dialogHTML,
-      buttons: {
-        submit: {
-          icon: iconHTML,
-          label: i18n.localize('dialogs.continue'),
-          callback: html => {
-            const results = new FormDataExtended(html.find('form')[0], {}).object;
-
-            resolve(results);
+    new Dialog(
+      {
+        title: i18n.localize('dialogs.title'),
+        content: dialogHTML,
+        buttons: {
+          submit: {
+            icon: iconHTML,
+            label: i18n.localize('dialogs.continue'),
+            callback: html => {
+              const results = new FormDataExtended(html.find('form')[0], {}).object;
+              if (html.find('.psychic.active').length !== 0) {
+                results.tab = 'psychic'
+              }
+              if (html.find('.mystic.active').length !== 0) {
+                results.tab = 'mystic'
+              }
+              resolve(results);
+            }
           }
-        }
+        },
+        default: 'submit'
       },
-      default: 'submit'
-    }).render(true);
+      {
+        tabs: [
+          {
+            navSelector: '.sheet-tabs',
+            contentSelector: '.sheet-body'
+          }
+        ]
+      }
+    ).render(true);
   });
 };
