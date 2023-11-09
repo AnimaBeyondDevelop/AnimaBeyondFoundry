@@ -193,9 +193,6 @@ export class GMCombatDialog extends FormApplication {
   }
 
   updateAttackerData(result) {
-    if (result.values.unableToAttack) {
-      result.values.total = 0;
-    }
     result.values.total = Math.max(0, result.values.total);
     this.modalData.attacker.result = result;
 
