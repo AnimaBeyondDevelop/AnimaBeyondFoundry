@@ -466,6 +466,7 @@ export class CombatDefenseDialog extends FormApplication {
         combat: { at },
         blindnessPen
       } = this.modalData.defender;
+      const { i18n } = game;
       const { spells } = this.defenderActor.system.mystic;
       const { supernaturalShields } = this.defenderActor.system.combat;
       let spell,
@@ -475,7 +476,7 @@ export class CombatDefenseDialog extends FormApplication {
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            'No tienes escudos místicos activos, has click en Escudo nuevo'
+            i18n.localize('macros.combat.dialog.warning.supernaturalShield.mystic')
           );
         }
         spell = supernaturalShields.find(w => w._id === shieldUsed);
@@ -518,7 +519,6 @@ export class CombatDefenseDialog extends FormApplication {
       roll.roll();
 
       if (this.modalData.defender.showRoll) {
-        const { i18n } = game;
 
         const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
           spell: spell.name,
@@ -610,7 +610,7 @@ export class CombatDefenseDialog extends FormApplication {
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            'No tienes escudos psíquicos activos, has click en Escudo nuevo'
+            i18n.localize('macros.combat.dialog.warning.supernaturalShield.psychic')
           );
         }
         power = supernaturalShields.find(w => w._id === shieldUsed);
@@ -713,9 +713,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.find(
-        w => w.system.combatType.value === 'attack'
-      )?._id;
+      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
     const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);

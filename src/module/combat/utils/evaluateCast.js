@@ -1,22 +1,29 @@
 export const evaluateCast = spellCasting => {
+  const { i18n } = game;
   const { canCast, casted, zeon, override } = spellCasting;
   if (override.value) {
     return;
   }
   if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
     return ui.notifications.warn(
-      'Debes elegir entre Lanzar conjuro innato o Lanzar conjuro preparado'
+      i18n.localize('dialogs.spellCasting.warning.mustChoose')
     );
   }
   if (canCast.innate && casted.innate) {
     return;
   } else if (!canCast.innate && casted.innate) {
-    return ui.notifications.warn('No cuentas con suficiente Magia Innata');
+    return ui.notifications.warn(
+      i18n.localize('dialogs.spellCasting.warning.innateMagic')
+    );
   } else if (canCast.prepared && casted.prepared) {
     return;
   } else if (!canCast.prepared && casted.prepared) {
-    return ui.notifications.warn('No tienes este Conjuro Preparado');
+    return ui.notifications.warn(
+      i18n.localize('dialogs.spellCasting.warning.preparedSpell')
+    );
   } else if (zeon.accumulated < zeon.cost) {
-    return ui.notifications.warn('No cuentas con suficiente Zeon Acumulado');
+    return ui.notifications.warn(
+      i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
+    );
   } else return;
 };
