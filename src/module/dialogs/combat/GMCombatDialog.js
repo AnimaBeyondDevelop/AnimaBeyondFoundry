@@ -17,7 +17,6 @@ const getInitialData = (attacker, defender, options = {}) => {
       token: attacker,
       actor: attackerActor,
       customModifier: 0,
-      damageModifier: 0,
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },

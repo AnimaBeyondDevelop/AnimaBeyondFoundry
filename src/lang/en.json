@@ -707,6 +707,8 @@
   "macros.combat.dialog.spellGrade.intermediate.title": "Intermediate",
   "macros.combat.dialog.spellGrade.title": "Spell grade",
   "macros.combat.dialog.total.title": "Total",
+  "macros.combat.dialog.dobleDamage.title": "Shield takes double damage",
+  "macros.combat.dialog.immuneToDamage.title": "Shield immune to damage type",
   "macros.combat.dialog.waitRequest.title": "Attack request sent. Waiting for DM response...",
   "macros.combat.dialog.waitingAttack.title": "Waiting for attacker...",
   "macros.combat.dialog.waitingDefense.title": "Waiting for defender...",

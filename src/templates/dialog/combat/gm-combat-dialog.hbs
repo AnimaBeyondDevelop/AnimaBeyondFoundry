@@ -517,6 +517,32 @@
                 }}
               {{/if}}
             </div>
+            
+            {{#if (is "eq" this.calculations.winner._id this.defender.token._id)}}
+              {{#if (or (is "eq" this.defender.result.type 'psychic') (is "eq" this.defender.result.type 'mystic'))}}
+              <div class="supernaturalShield">
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="dobleDamage"
+                    title=(localize 'macros.combat.dialog.dobleDamage.title')
+                    inputType="checkbox"
+                    disabled=false
+                    inputName="defender.supernaturalShield.dobleDamage"
+                    inputValue=(is 'eq' this.defender.supernaturalShield.dobleDamage true)
+                  }}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="immuneToDamage"
+                    title=(localize 'macros.combat.dialog.immuneToDamage.title')
+                    inputType="checkbox"
+                    disabled=false
+                    inputName="defender.supernaturalShield.immuneToDamage"
+                    inputValue=(is 'eq' this.defender.supernaturalShield.immuneToDamage true)
+                  }}
+                </div>
+              {{/if}}
+            {{/if}}
+
           {{else}}
             <div class='waiting-row'>
               {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
