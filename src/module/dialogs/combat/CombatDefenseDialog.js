@@ -1,9 +1,7 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
-import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
-import { shieldSupernaturalCheck } from '../../combat/utils/shieldSupernaturalCheck.js';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
@@ -41,8 +39,7 @@ const getInitialData = (attacker, defender) => {
       critic: attacker.critic,
       visible: attacker.visible,
       projectile: attacker.projectile,
-      damage: attacker.damage,
-      specialType: attacker.specialType
+      damage: attacker.damage
     },
     defender: {
       token: defender,
@@ -54,15 +51,6 @@ const getInitialData = (attacker, defender) => {
       zen: defenderActor.system.general.settings.zen.value,
       inhuman: defenderActor.system.general.settings.inhuman.value,
       inmaterial: defenderActor.system.general.settings.inmaterial.value,
-      specialType: {
-        material: true,
-        inmaterial: false,
-        intangible: false,
-        energy: false,
-        materialEnergy: true,
-        attackSpellLight: false,
-        attackSpellDarkness: false
-      },
       combat: {
         fatigue: 0,
         multipleDefensesPenalty: defensesCounterCheck(defensesCounter.accumulated),
@@ -309,15 +297,13 @@ export class CombatDefenseDialog extends FormApplication {
           weaponUsed
         },
         blindnessPen,
-        distance,
-        inmaterial
+        distance
       } = this.modalData.defender;
       this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
       let baseDefense;
-      let unableToDefense = false;
       let combatModifier = blindnessPen;
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
@@ -333,23 +319,6 @@ export class CombatDefenseDialog extends FormApplication {
           combatModifier -= 30;
         }
       } else {
-        const attackerSpecialType = this.modalData.attacker.specialType;
-        let defenderSpecialType = this.modalData.defender.specialType;
-        if (attackerSpecialType == 'inmaterial' && !inmaterial) {
-          unableToDefense = true;
-        }
-        if (
-          energyCheck(weapon?.system.critic.primary.value) ||
-          energyCheck(weapon?.system.critic.secondary.value)
-        ) {
-          unableToDefense = false;
-        } else if (defenderSpecialType[attackerSpecialType] == false) {
-          if (attackerSpecialType == 'energy') {
-            combatModifier -= 120;
-          } else {
-            unableToDefense = true;
-          }
-        }
         value = weapon
           ? weapon.system.block.final.value
           : this.defenderActor.system.combat.block.final.value;
@@ -426,7 +395,6 @@ export class CombatDefenseDialog extends FormApplication {
           defense: value,
           roll: rolled,
           total: roll.total,
-          unableToDefense,
           accumulateDefenses
         }
       });
@@ -519,7 +487,6 @@ export class CombatDefenseDialog extends FormApplication {
       roll.roll();
 
       if (this.modalData.defender.showRoll) {
-
         const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
           spell: spell.name,
           target: this.modalData.attacker.token.name
@@ -530,15 +497,6 @@ export class CombatDefenseDialog extends FormApplication {
           flavor
         });
       }
-
-      let unableToDefense = false,
-        dobleDamage = false,
-        cantDamage = false;
-      const attackerSpecialType = this.modalData.attacker.specialType;
-      const shieldCheck = shieldSupernaturalCheck(spell.name, attackerSpecialType);
-      unableToDefense = shieldCheck[0];
-      dobleDamage = shieldCheck[1];
-      cantDamage = shieldCheck[2];
 
       const rolled = roll.total - magicProjection.final - newModifier;
 
@@ -553,9 +511,6 @@ export class CombatDefenseDialog extends FormApplication {
           at: at.final,
           roll: rolled,
           total: roll.total,
-          unableToDefense,
-          dobleDamage,
-          cantDamage,
           spellCasting,
           supShield
         }
@@ -583,8 +538,7 @@ export class CombatDefenseDialog extends FormApplication {
       let power,
         fatigue,
         supShield = { create: false },
-        newPsychicPotential,
-        unableToDefense = false;
+        newPsychicPotential;
 
       const newModifier = blindnessPen + modifier ?? 0;
       const psychicProjection =
@@ -649,9 +603,6 @@ export class CombatDefenseDialog extends FormApplication {
       }
 
       if (!fatigue) {
-        const attackerSpecialType = this.modalData.attacker.specialType;
-        const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType);
-        unableToDefense = shieldCheck[0];
         if (this.modalData.defender.showRoll) {
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
             power: power.name,
@@ -663,8 +614,6 @@ export class CombatDefenseDialog extends FormApplication {
             flavor
           });
         }
-      } else {
-        unableToDefense = true;
       }
 
       this.hooks.onDefense({
@@ -677,9 +626,7 @@ export class CombatDefenseDialog extends FormApplication {
           at: at.final,
           roll: rolled,
           total: psychicProjectionRoll.total,
-          unableToDefense,
-          dobleDamage: false,
-          cantDamage: false,
+          fatigue,
           supShield
         }
       });

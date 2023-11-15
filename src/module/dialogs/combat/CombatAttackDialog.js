@@ -1,6 +1,5 @@
 import { Templates } from '../../utils/constants';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
-import { energyCheck } from '../../combat/utils/energyCheck.js';
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
 import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
@@ -60,7 +59,6 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: false,
           type: ''
         },
-        specialType: 'material',
         damage: {
           special: 0,
           final: 0
@@ -94,7 +92,6 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: true,
           type: 'shot'
         },
-        specialType: 'energy',
         damage: {
           special: 0,
           final: 0
@@ -122,7 +119,6 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: true,
           type: 'shot'
         },
-        specialType: 'intangible',
         damageModifier: 0
       }
     },
@@ -278,7 +274,6 @@ export class CombatAttackDialog extends FormApplication {
           weaponUsed,
           unarmed,
           visible,
-          specialType,
           distance
         },
         highGround,
@@ -363,13 +358,6 @@ export class CombatAttackDialog extends FormApplication {
         if (weapon !== undefined) {
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
         }
-        let specialTypeCheck = specialType;
-        if (energyCheck(critic)) {
-          specialTypeCheck = 'materialEnergy';
-        }
-        if (inmaterial) {
-          specialTypeCheck = 'inmaterial';
-        }
 
         const rolled =
           roll.total -
@@ -394,8 +382,7 @@ export class CombatAttackDialog extends FormApplication {
             resistanceEffect,
             visible,
             distance,
-            projectile,
-            specialType: specialTypeCheck
+            projectile
           }
         });
 
@@ -415,7 +402,6 @@ export class CombatAttackDialog extends FormApplication {
         critic,
         damage,
         projectile,
-        specialType,
         distance
       } = this.modalData.attacker.mystic;
       if (spellUsed) {
@@ -435,14 +421,6 @@ export class CombatAttackDialog extends FormApplication {
           return evaluateCastMsj;
         }
         let visibleCheck = spell?.system.visible;
-        let specialTypeCheck = specialType;
-        if (spell?.system.spellType.value == 'animatic') {
-          specialTypeCheck = 'intangible';
-        } else if (spell?.system.via.value == 'light') {
-          specialTypeCheck = 'attackSpellLight';
-        } else if (spell?.system.via.value == 'darkness') {
-          specialTypeCheck = 'attackSpellDarkness';
-        }
 
         let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
 
@@ -492,7 +470,6 @@ export class CombatAttackDialog extends FormApplication {
             visible: visibleCheck,
             distance,
             projectile,
-            specialType: specialTypeCheck,
             spellCasting,
             macro: spell.macro
           }
@@ -513,7 +490,6 @@ export class CombatAttackDialog extends FormApplication {
         critic,
         damageModifier,
         projectile,
-        specialType,
         distance
       } = this.modalData.attacker.psychic;
       const { i18n } = game;
@@ -576,10 +552,6 @@ export class CombatAttackDialog extends FormApplication {
         let damage = damageCheck(powerUsedEffect) + damageModifier;
         let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let visibleCheck = power?.system.visible;
-        let specialTypeCheck = specialType;
-        if (visibleCheck) {
-          specialTypeCheck = 'energy';
-        }
 
         const rolled = psychicProjectionRoll.total - psychicProjection - (modifier ?? 0);
         this.hooks.onAttack({
@@ -600,7 +572,6 @@ export class CombatAttackDialog extends FormApplication {
             visible: visibleCheck,
             distance,
             projectile,
-            specialType: specialTypeCheck,
             macro: power.macro
           }
         });

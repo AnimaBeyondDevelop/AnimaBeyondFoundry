@@ -17,6 +17,7 @@ const getInitialData = (attacker, defender, options = {}) => {
       token: attacker,
       actor: attackerActor,
       customModifier: 0,
+      damageModifier: 0,
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
@@ -24,6 +25,10 @@ const getInitialData = (attacker, defender, options = {}) => {
       token: defender,
       actor: defenderActor,
       customModifier: 0,
+      supernaturalShield: {
+        dobleDamage: false,
+        immuneToDamage: false
+      },
       isReady: false
     }
   };
@@ -224,9 +229,6 @@ export class GMCombatDialog extends FormApplication {
   }
 
   updateDefenderData(result) {
-    if (result.values.unableToDefense) {
-      result.values.total = 0;
-    }
     result.values.total = Math.max(0, result.values.total);
     this.modalData.defender.result = result;
 
@@ -239,9 +241,12 @@ export class GMCombatDialog extends FormApplication {
     }
 
     if (result.type === 'psychic') {
-      const powers = this.defenderActor.system.psychic.psychicPowers;
+      if (result.values.fatigue) {
+        result.values.total = 0;
+      }
+      const { psychicPowers } = this.defenderActor.system.psychic;
 
-      this.modalData.defender.result.power = powers.find(
+      this.modalData.defender.result.power = psychicPowers.find(
         w => w._id === result.values.powerUsed
       );
     }
@@ -249,7 +254,7 @@ export class GMCombatDialog extends FormApplication {
     this.render();
   }
 
-  getData() {
+  getData() {console.log(this)
     const { attacker, defender } = this.modalData;
 
     attacker.isReady = !!attacker.result;
@@ -386,8 +391,7 @@ export class GMCombatDialog extends FormApplication {
   }
 
   applyDamageSupernaturalShieldIfBeAble(supShieldId) {
-    const cantDamage = this.modalData.defender.result?.values.cantDamage;
-    const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
+    const { dobleDamage, immuneToDamage } = this.modalData.defender.supernaturalShield;
     const defenderIsWinner =
       this.modalData.calculations.winner == this.modalData.defender.token;
     const damage = this.modalData.attacker.result?.values.damage;
@@ -395,7 +399,7 @@ export class GMCombatDialog extends FormApplication {
       defenderIsWinner &&
       (this.modalData.defender.result?.type === 'mystic' ||
         this.modalData.defender.result?.type === 'psychic') &&
-      !cantDamage
+      !immuneToDamage
     ) {
       const { supShield } = this.modalData.defender.result?.values;
       const newCombatResult = {
