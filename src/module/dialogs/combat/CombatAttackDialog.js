@@ -278,12 +278,11 @@ export class CombatAttackDialog extends FormApplication {
         },
         highGround,
         poorVisibility,
-        targetInCover,
-        inmaterial
+        targetInCover
       } = this.modalData.attacker;
       this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
-        let combatModifier = 0;
+        const attackerCombatMod = [{ modifier }];
         let projectile = { value: false, type: '' };
         if (weapon?.system.isRanged.value) {
           projectile = {
@@ -294,16 +293,16 @@ export class CombatAttackDialog extends FormApplication {
             (!distance.enable && distance.check) ||
             (distance.enable && distance.value <= 1)
           ) {
-            combatModifier += 30;
+            attackerCombatMod.push({ projectileDistance: 30 });
           }
           if (highGround) {
-            combatModifier += 20;
+            attackerCombatMod.push({ highGround: 20 });
           }
           if (poorVisibility) {
-            combatModifier -= 20;
+            attackerCombatMod.push({ poorVisibility: -20 });
           }
           if (targetInCover) {
-            combatModifier -= 40;
+            attackerCombatMod.push({ targetInCover: -40 });
           }
         }
         if (
@@ -311,15 +310,18 @@ export class CombatAttackDialog extends FormApplication {
           criticSelected !== NoneWeaponCritic.NONE &&
           criticSelected == weapon?.system.critic.secondary.value
         ) {
-          combatModifier -= 10;
+          attackerCombatMod.push({ secondaryCritic: -10 });
         }
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
 
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
-        const newModifier = combatModifier + modifier ?? 0;
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${newModifier} + ${
+        const combatModifier = attackerCombatMod.reduce(
+          (prev, curr) => prev + Object.values(curr)[0],
+          0
+        );
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${combatModifier} + ${
           fatigueUsed ?? 0
         }* 15`;
         if (this.modalData.attacker.withoutRoll) {
@@ -363,7 +365,7 @@ export class CombatAttackDialog extends FormApplication {
           roll.total -
           counterAttackBonus -
           attack -
-          (newModifier ?? 0) -
+          (combatModifier ?? 0) -
           (fatigueUsed ?? 0) * 15;
 
         this.hooks.onAttack({
@@ -374,7 +376,7 @@ export class CombatAttackDialog extends FormApplication {
             attack,
             weaponUsed,
             critic,
-            modifier: newModifier,
+            modifier: combatModifier,
             fatigueUsed,
             roll: rolled,
             total: roll.total,
@@ -382,7 +384,8 @@ export class CombatAttackDialog extends FormApplication {
             resistanceEffect,
             visible,
             distance,
-            projectile
+            projectile,
+            attackerCombatMod
           }
         });
 
@@ -405,6 +408,7 @@ export class CombatAttackDialog extends FormApplication {
         distance
       } = this.modalData.attacker.mystic;
       if (spellUsed) {
+        const attackerCombatMod = [{ modifier }];
         this.attackerActor.setFlag(
           'animabf',
           'spellCastingOverride',
@@ -424,7 +428,11 @@ export class CombatAttackDialog extends FormApplication {
 
         let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
 
-        let formula = `1d100xa + ${magicProjection.final} + ${modifier ?? 0}`;
+        const combatModifier = attackerCombatMod.reduce(
+          (prev, curr) => prev + Object.values(curr)[0],
+          0
+        );
+        let formula = `1d100xa + ${magicProjection.final} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
@@ -451,12 +459,12 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const rolled = roll.total - magicProjection.final - (modifier ?? 0);
+        const rolled = roll.total - magicProjection.final - (combatModifier ?? 0);
 
         this.hooks.onAttack({
           type: 'mystic',
           values: {
-            modifier,
+            modifier: combatModifier,
             spellUsed,
             spellGrade,
             spellName: spell.name,
@@ -471,7 +479,8 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             spellCasting,
-            macro: spell.macro
+            macro: spell.macro,
+            attackerCombatMod
           }
         });
 
@@ -494,10 +503,15 @@ export class CombatAttackDialog extends FormApplication {
       } = this.modalData.attacker.psychic;
       const { i18n } = game;
       if (powerUsed) {
+        const attackerCombatMod = [{ modifier }];
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
         this.attackerActor.setFlag('animabf', 'lastOffensivePowerUsed', powerUsed);
-        let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
+        const combatModifier = attackerCombatMod.reduce(
+          (prev, curr) => prev + Object.values(curr)[0],
+          0
+        );
+        let formula = `1d100xa + ${psychicProjection} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
@@ -553,11 +567,12 @@ export class CombatAttackDialog extends FormApplication {
         let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let visibleCheck = power?.system.visible;
 
-        const rolled = psychicProjectionRoll.total - psychicProjection - (modifier ?? 0);
+        const rolled =
+          psychicProjectionRoll.total - psychicProjection - (combatModifier ?? 0);
         this.hooks.onAttack({
           type: 'psychic',
           values: {
-            modifier,
+            modifier: combatModifier,
             powerUsed,
             powerName: power.name,
             psychicPotential: psychicPotentialRoll.total,
@@ -572,7 +587,8 @@ export class CombatAttackDialog extends FormApplication {
             visible: visibleCheck,
             distance,
             projectile,
-            macro: power.macro
+            macro: power.macro,
+            attackerCombatMod
           }
         });
 

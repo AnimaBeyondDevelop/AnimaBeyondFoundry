@@ -304,7 +304,7 @@ export class CombatDefenseDialog extends FormApplication {
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
       let baseDefense;
-      let combatModifier = blindnessPen;
+      const defenderCombatMod = [{ modifier }, { blindnessPen }];
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
@@ -316,7 +316,7 @@ export class CombatDefenseDialog extends FormApplication {
           projectileType == 'shot' &&
           !maestry
         ) {
-          combatModifier -= 30;
+          defenderCombatMod.push({ projectileDistance: -30 });
         }
       } else {
         value = weapon
@@ -329,26 +329,29 @@ export class CombatDefenseDialog extends FormApplication {
           if (projectileType == 'shot') {
             if (!maestry) {
               if (!isShield) {
-                combatModifier -= 80;
+                defenderCombatMod.push({ projectileParry: -80 });
               } else {
-                combatModifier -= 30;
+                defenderCombatMod.push({ projectileShieldParry: -30 });
               }
             } else if (!isShield) {
-              combatModifier -= 20;
+              defenderCombatMod.push({ projectileMaestryParry: -20 });
             }
           }
           if (projectileType == 'throw') {
             if (!maestry) {
               if (!isShield) {
-                combatModifier -= 50;
+                defenderCombatMod.push({ throwParry: -50 });
               }
             }
           }
         }
       }
-      const newModifier = combatModifier + modifier ?? 0;
+      const combatModifier = defenderCombatMod.reduce(
+        (prev, curr) => prev + Object.values(curr)[0],
+        0
+      );
 
-      let formula = `1d100xa + ${newModifier} + ${fatigue ?? 0} * 15 - ${
+      let formula = `1d100xa + ${combatModifier} + ${fatigue ?? 0} * 15 - ${
         (multipleDefensesPenalty ?? 0) * -1
       } + ${value}`;
       if (this.modalData.defender.withoutRoll) {
@@ -379,7 +382,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       const rolled =
         roll.total -
-        newModifier -
+        combatModifier -
         (fatigue ?? 0) * 15 -
         (multipleDefensesPenalty ?? 0) -
         value;
@@ -389,13 +392,14 @@ export class CombatDefenseDialog extends FormApplication {
         values: {
           type,
           multipleDefensesPenalty,
-          modifier: newModifier,
+          modifier: combatModifier,
           fatigue,
           at: at.final,
           defense: value,
           roll: rolled,
           total: roll.total,
-          accumulateDefenses
+          accumulateDefenses,
+          defenderCombatMod
         }
       });
 
@@ -439,7 +443,7 @@ export class CombatDefenseDialog extends FormApplication {
       const { supernaturalShields } = this.defenderActor.system.combat;
       let spell,
         supShield = { create: false };
-      const newModifier = blindnessPen + modifier ?? 0;
+      const defenderCombatMod = [{ modifier }, { blindnessPen }];
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -474,7 +478,11 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { ...supernaturalShieldData, create: true };
       }
 
-      let formula = `1d100xa + ${magicProjection.final} + ${newModifier}`;
+      const combatModifier = defenderCombatMod.reduce(
+        (prev, curr) => prev + Object.values(curr)[0],
+        0
+      );
+      let formula = `1d100xa + ${magicProjection.final} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -503,7 +511,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.hooks.onDefense({
         type: 'mystic',
         values: {
-          modifier: newModifier,
+          modifier: combatModifier,
           magicProjection: magicProjection.final,
           spellGrade,
           spellUsed,
@@ -512,7 +520,8 @@ export class CombatDefenseDialog extends FormApplication {
           roll: rolled,
           total: roll.total,
           spellCasting,
-          supShield
+          supShield,
+          defenderCombatMod
         }
       });
 
@@ -540,11 +549,15 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false },
         newPsychicPotential;
 
-      const newModifier = blindnessPen + modifier ?? 0;
+      const defenderCombatMod = [{ modifier }, { blindnessPen }];
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
           .value;
-      let formula = `1d100xa + ${psychicProjection} + ${newModifier}`;
+      const combatModifier = defenderCombatMod.reduce(
+        (prev, curr) => prev + Object.values(curr)[0],
+        0
+      );
+      let formula = `1d100xa + ${psychicProjection} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -559,7 +572,7 @@ export class CombatDefenseDialog extends FormApplication {
         this.defenderActor.system
       );
       psychicProjectionRoll.roll();
-      const rolled = psychicProjectionRoll.total - psychicProjection - newModifier;
+      const rolled = psychicProjectionRoll.total - psychicProjection - combatModifier;
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -619,7 +632,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.hooks.onDefense({
         type: 'psychic',
         values: {
-          modifier: newModifier,
+          modifier: combatModifier,
           powerUsed,
           psychicProjection,
           psychicPotential: newPsychicPotential ?? 0,
@@ -627,7 +640,8 @@ export class CombatDefenseDialog extends FormApplication {
           roll: rolled,
           total: psychicProjectionRoll.total,
           fatigue,
-          supShield
+          supShield,
+          defenderCombatMod
         }
       });
 
