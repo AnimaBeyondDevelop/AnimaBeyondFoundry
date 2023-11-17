@@ -7,6 +7,7 @@
       "esnext"
     ],
     "types": [
+      "svelte",
       "@types/jest"
     ],
     "moduleResolution": "node",

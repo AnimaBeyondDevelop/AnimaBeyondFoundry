@@ -78,7 +78,7 @@ Hooks.once('ready', () => {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line func-names
-Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
+Handlebars.JavaScriptCompiler.prototype.nameLookup = function(parent, name) {
   if (name.indexOf('xRoot') === 0) {
     return 'data.root';
   }
