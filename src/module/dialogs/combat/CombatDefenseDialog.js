@@ -52,7 +52,7 @@ const getInitialData = (attacker, defender) => {
       inhuman: defenderActor.system.general.settings.inhuman.value,
       inmaterial: defenderActor.system.general.settings.inmaterial.value,
       combat: {
-        fatigue: 0,
+        fatigueUsed: 0,
         multipleDefensesPenalty: defensesCounterCheck(defensesCounter.accumulated),
         accumulateDefenses: defensesCounter.keepAccumulating,
         modifier: 0,
@@ -288,7 +288,7 @@ export class CombatDefenseDialog extends FormApplication {
     html.find('.send-defense').click(e => {
       const {
         combat: {
-          fatigue,
+          fatigueUsed,
           modifier,
           weapon,
           multipleDefensesPenalty,
@@ -304,7 +304,15 @@ export class CombatDefenseDialog extends FormApplication {
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
       let baseDefense;
-      const defenderCombatMod = [{ modifier }, { blindnessPen }];
+      const defenderCombatMod = {
+        modifier: { value: modifier, apply: true },
+        blindnessPen: { value: blindnessPen, apply: true },
+        fatigueUsed: { value: fatigueUsed * 15, apply: true },
+        multipleDefensesPenalty: {
+          value: multipleDefensesPenalty,
+          apply: true
+        }
+      };
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
@@ -316,7 +324,10 @@ export class CombatDefenseDialog extends FormApplication {
           projectileType == 'shot' &&
           !maestry
         ) {
-          defenderCombatMod.push({ projectileDistance: -30 });
+          defenderCombatMod.dodgeProjectile = {
+            value: -30,
+            apply: true
+          };
         }
       } else {
         value = weapon
@@ -329,31 +340,41 @@ export class CombatDefenseDialog extends FormApplication {
           if (projectileType == 'shot') {
             if (!maestry) {
               if (!isShield) {
-                defenderCombatMod.push({ projectileParry: -80 });
+                defenderCombatMod.parryProjectile = {
+                  value: -80,
+                  apply: true
+                };
               } else {
-                defenderCombatMod.push({ projectileShieldParry: -30 });
+                defenderCombatMod.shieldParryProjectile = {
+                  value: -30,
+                  apply: true
+                };
               }
             } else if (!isShield) {
-              defenderCombatMod.push({ projectileMaestryParry: -20 });
+              defenderCombatMod.maestryParryProjectile = {
+                value: -20,
+                apply: true
+              };
             }
           }
           if (projectileType == 'throw') {
             if (!maestry) {
               if (!isShield) {
-                defenderCombatMod.push({ throwParry: -50 });
+                defenderCombatMod.parryThrow = {
+                  value: -50,
+                  apply: true
+                };
               }
             }
           }
         }
       }
-      const combatModifier = defenderCombatMod.reduce(
-        (prev, curr) => prev + Object.values(curr)[0],
-        0
-      );
 
-      let formula = `1d100xa + ${combatModifier} + ${fatigue ?? 0} * 15 - ${
-        (multipleDefensesPenalty ?? 0) * -1
-      } + ${value}`;
+      let combatModifier = 0;
+      for (const key in defenderCombatMod) {
+        combatModifier += defenderCombatMod[key]?.value ?? 0;
+      }
+      let formula = `1d100xa + ${combatModifier} + ${value}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -380,20 +401,14 @@ export class CombatDefenseDialog extends FormApplication {
         });
       }
 
-      const rolled =
-        roll.total -
-        combatModifier -
-        (fatigue ?? 0) * 15 -
-        (multipleDefensesPenalty ?? 0) -
-        value;
+      const rolled = roll.total - combatModifier - value;
 
       this.hooks.onDefense({
         type: 'combat',
         values: {
           type,
-          multipleDefensesPenalty,
           modifier: combatModifier,
-          fatigue,
+          fatigueUsed,
           at: at.final,
           defense: value,
           roll: rolled,
@@ -443,7 +458,10 @@ export class CombatDefenseDialog extends FormApplication {
       const { supernaturalShields } = this.defenderActor.system.combat;
       let spell,
         supShield = { create: false };
-      const defenderCombatMod = [{ modifier }, { blindnessPen }];
+      const defenderCombatMod = {
+        modifier: { value: modifier, apply: true },
+        blindnessPen: { value: blindnessPen, apply: true }
+      };
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -478,10 +496,10 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { ...supernaturalShieldData, create: true };
       }
 
-      const combatModifier = defenderCombatMod.reduce(
-        (prev, curr) => prev + Object.values(curr)[0],
-        0
-      );
+      let combatModifier = 0;
+      for (const key in defenderCombatMod) {
+        combatModifier += defenderCombatMod[key]?.value ?? 0;
+      }
       let formula = `1d100xa + ${magicProjection.final} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
@@ -506,7 +524,7 @@ export class CombatDefenseDialog extends FormApplication {
         });
       }
 
-      const rolled = roll.total - magicProjection.final - newModifier;
+      const rolled = roll.total - magicProjection.final - combatModifier;
 
       this.hooks.onDefense({
         type: 'mystic',
@@ -549,14 +567,17 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false },
         newPsychicPotential;
 
-      const defenderCombatMod = [{ modifier }, { blindnessPen }];
+      const defenderCombatMod = {
+        modifier: { value: modifier, apply: true },
+        blindnessPen: { value: blindnessPen, apply: true }
+      };
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
           .value;
-      const combatModifier = defenderCombatMod.reduce(
-        (prev, curr) => prev + Object.values(curr)[0],
-        0
-      );
+      let combatModifier = 0;
+      for (const key in defenderCombatMod) {
+        combatModifier += defenderCombatMod[key]?.value ?? 0;
+      }
       let formula = `1d100xa + ${psychicProjection} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula

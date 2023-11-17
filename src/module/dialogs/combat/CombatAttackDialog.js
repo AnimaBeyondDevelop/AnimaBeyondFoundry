@@ -282,7 +282,10 @@ export class CombatAttackDialog extends FormApplication {
       } = this.modalData.attacker;
       this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
-        const attackerCombatMod = [{ modifier }];
+        const attackerCombatMod = {
+          modifier: { value: modifier, apply: true },
+          fatigueUsed: { value: fatigueUsed * 15, apply: true }
+        };
         let projectile = { value: false, type: '' };
         if (weapon?.system.isRanged.value) {
           projectile = {
@@ -293,16 +296,19 @@ export class CombatAttackDialog extends FormApplication {
             (!distance.enable && distance.check) ||
             (distance.enable && distance.value <= 1)
           ) {
-            attackerCombatMod.push({ projectileDistance: 30 });
+            attackerCombatMod.pointBlank = {
+              value: 30,
+              apply: true
+            };
           }
           if (highGround) {
-            attackerCombatMod.push({ highGround: 20 });
+            attackerCombatMod.highGround = { value: 20, apply: true };
           }
           if (poorVisibility) {
-            attackerCombatMod.push({ poorVisibility: -20 });
+            attackerCombatMod.poorVisibility = { value: -20, apply: true };
           }
           if (targetInCover) {
-            attackerCombatMod.push({ targetInCover: -40 });
+            attackerCombatMod.targetInCover = { value: -40, apply: true };
           }
         }
         if (
@@ -310,20 +316,18 @@ export class CombatAttackDialog extends FormApplication {
           criticSelected !== NoneWeaponCritic.NONE &&
           criticSelected == weapon?.system.critic.secondary.value
         ) {
-          attackerCombatMod.push({ secondaryCritic: -10 });
+          attackerCombatMod.secondaryCritic = { value: -10, apply: true };
         }
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
 
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
-        const combatModifier = attackerCombatMod.reduce(
-          (prev, curr) => prev + Object.values(curr)[0],
-          0
-        );
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${combatModifier} + ${
-          fatigueUsed ?? 0
-        }* 15`;
+        let combatModifier = 0;
+        for (const key in attackerCombatMod) {
+          combatModifier += attackerCombatMod[key]?.value ?? 0;
+        }
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${combatModifier}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
@@ -361,12 +365,7 @@ export class CombatAttackDialog extends FormApplication {
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
         }
 
-        const rolled =
-          roll.total -
-          counterAttackBonus -
-          attack -
-          (combatModifier ?? 0) -
-          (fatigueUsed ?? 0) * 15;
+        const rolled = roll.total - counterAttackBonus - attack - (combatModifier ?? 0);
 
         this.hooks.onAttack({
           type: 'combat',
@@ -408,7 +407,9 @@ export class CombatAttackDialog extends FormApplication {
         distance
       } = this.modalData.attacker.mystic;
       if (spellUsed) {
-        const attackerCombatMod = [{ modifier }];
+        const attackerCombatMod = {
+          modifier: { value: modifier, apply: true }
+        };
         this.attackerActor.setFlag(
           'animabf',
           'spellCastingOverride',
@@ -428,10 +429,10 @@ export class CombatAttackDialog extends FormApplication {
 
         let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
 
-        const combatModifier = attackerCombatMod.reduce(
-          (prev, curr) => prev + Object.values(curr)[0],
-          0
-        );
+        let combatModifier = 0;
+        for (const key in attackerCombatMod) {
+          combatModifier += attackerCombatMod[key]?.value ?? 0;
+        }
         let formula = `1d100xa + ${magicProjection.final} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
@@ -503,14 +504,16 @@ export class CombatAttackDialog extends FormApplication {
       } = this.modalData.attacker.psychic;
       const { i18n } = game;
       if (powerUsed) {
-        const attackerCombatMod = [{ modifier }];
+        const attackerCombatMod = {
+          modifier: { value: modifier, apply: true }
+        };
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
         this.attackerActor.setFlag('animabf', 'lastOffensivePowerUsed', powerUsed);
-        const combatModifier = attackerCombatMod.reduce(
-          (prev, curr) => prev + Object.values(curr)[0],
-          0
-        );
+        let combatModifier = 0;
+        for (const key in attackerCombatMod) {
+          combatModifier += attackerCombatMod[key]?.value ?? 0;
+        }
         let formula = `1d100xa + ${psychicProjection} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
