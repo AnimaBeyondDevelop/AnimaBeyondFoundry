@@ -3,6 +3,8 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
+import CombatSvelte from '../../../svelte/components/combat.svelte';
+import { sveltify } from '../../../svelte';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const showRollByDefault = !!game.settings.get(
@@ -70,21 +72,34 @@ const getInitialData = (attacker, defender, options = {}) => {
   };
 };
 
-export class CombatAttackDialog extends FormApplication {
+const svelteDescriptor = {
+  combat: {
+    componentConstructor: CombatSvelte,
+  }
+};
+
+/** @typedef {ReturnType<getInitialData>} TData */
+/** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
+
+export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */(FormApplication)) {
+  static get svelteDescriptors() {
+    return [
+      { componentConstructor: CombatSvelte, selector: '#svelte-combat' }
+    ]
+  }
+
   constructor(attacker, defender, hooks, options = {}) {
     super(getInitialData(attacker, defender, options));
-
-    this.modalData = getInitialData(attacker, defender, options);
 
     const { weapons } = this.attackerActor.system.combat;
 
     if (weapons.length > 0) {
-      this.modalData.attacker.combat.weaponUsed = weapons[0]._id;
+      this.object.attacker.combat.weaponUsed = weapons[0]._id;
     } else {
-      this.modalData.attacker.combat.unarmed = true;
+      this.object.attacker.combat.unarmed = true;
     }
 
-    this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
+    this.object.allowed = game.user?.isGM || (options.allowed ?? false);
 
     this.hooks = hooks;
 
@@ -112,11 +127,11 @@ export class CombatAttackDialog extends FormApplication {
   }
 
   get attackerActor() {
-    return this.modalData.attacker.token.actor;
+    return this.object.attacker.token.actor;
   }
 
   updatePermissions(allowed) {
-    this.modalData.allowed = allowed;
+    this.object.allowed = allowed;
 
     this.render();
   }
@@ -142,19 +157,18 @@ export class CombatAttackDialog extends FormApplication {
         damage,
         weaponUsed,
         unarmed
-      } = this.modalData.attacker.combat;
+      } = this.object.attacker.combat;
 
       if (typeof damage !== 'undefined') {
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
 
-        const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
+        const counterAttackBonus = this.object.attacker.counterAttackBonus ?? 0;
 
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${
-          fatigueUsed ?? 0
-        }* 15`;
-        if (this.modalData.attacker.withoutRoll) {
+        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${modifier ?? 0} + ${fatigueUsed ?? 0
+          }* 15`;
+        if (this.object.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
@@ -167,20 +181,20 @@ export class CombatAttackDialog extends FormApplication {
 
         roll.roll();
 
-        if (this.modalData.attacker.showRoll) {
+        if (this.object.attacker.showRoll) {
           const { i18n } = game;
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-                weapon: weapon?.name,
-                target: this.modalData.defender.token.name
-              })
+              weapon: weapon?.name,
+              target: this.object.defender.token.name
+            })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                target: this.modalData.defender.token.name
-              });
+              target: this.object.defender.token.name
+            });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor
           });
         }
@@ -210,7 +224,7 @@ export class CombatAttackDialog extends FormApplication {
           }
         });
 
-        this.modalData.attackSent = true;
+        this.object.attackSent = true;
 
         this.render();
       }
@@ -218,7 +232,7 @@ export class CombatAttackDialog extends FormApplication {
 
     html.find('.send-mystic-attack').click(() => {
       const { magicProjectionType, spellGrade, spellUsed, modifier, critic, damage } =
-        this.modalData.attacker.mystic;
+        this.object.attacker.mystic;
 
       if (spellUsed) {
         let baseMagicProjection;
@@ -237,7 +251,7 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         let formula = `1d100xa + ${magicProjection} + ${modifier ?? 0}`;
-        if (this.modalData.attacker.withoutRoll) {
+        if (this.object.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
@@ -249,7 +263,7 @@ export class CombatAttackDialog extends FormApplication {
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
         roll.roll();
 
-        if (this.modalData.attacker.showRoll) {
+        if (this.object.attacker.showRoll) {
           const { i18n } = game;
 
           const { spells } = this.attackerActor.system.mystic;
@@ -258,11 +272,11 @@ export class CombatAttackDialog extends FormApplication {
 
           const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
             spell: spell.name,
-            target: this.modalData.defender.token.name
+            target: this.object.defender.token.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor
           });
         }
@@ -284,7 +298,7 @@ export class CombatAttackDialog extends FormApplication {
           }
         });
 
-        this.modalData.attackSent = true;
+        this.object.attackSent = true;
 
         this.render();
       }
@@ -292,11 +306,11 @@ export class CombatAttackDialog extends FormApplication {
 
     html.find('.send-psychic-attack').click(() => {
       const { powerUsed, modifier, psychicPotential, psychicProjection, critic, damage } =
-        this.modalData.attacker.psychic;
+        this.object.attacker.psychic;
 
       if (powerUsed) {
         let formula = `1d100xa + ${psychicProjection} + ${modifier ?? 0}`;
-        if (this.modalData.attacker.withoutRoll) {
+        if (this.object.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
@@ -313,11 +327,11 @@ export class CombatAttackDialog extends FormApplication {
 
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100xa + ${psychicPotential.final}`,
-          this.modalData.attacker.actor.system
+          this.object.attacker.actor.system
         );
         psychicPotentialRoll.roll();
 
-        if (this.modalData.attacker.showRoll) {
+        if (this.object.attacker.showRoll) {
           const { i18n } = game;
 
           const powers = this.attackerActor.system.psychic.psychicPowers;
@@ -325,7 +339,7 @@ export class CombatAttackDialog extends FormApplication {
           const power = powers.find(w => w._id === powerUsed);
 
           psychicPotentialRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
           });
 
@@ -333,13 +347,13 @@ export class CombatAttackDialog extends FormApplication {
             'macros.combat.dialog.psychicAttack.title',
             {
               power: power.name,
-              target: this.modalData.defender.token.name,
+              target: this.object.defender.token.name,
               potential: psychicPotentialRoll.total
             }
           );
 
           psychicProjectionRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
             flavor: projectionFlavor
           });
         }
@@ -361,7 +375,7 @@ export class CombatAttackDialog extends FormApplication {
           }
         });
 
-        this.modalData.attackSent = true;
+        this.object.attackSent = true;
 
         this.render();
       }
@@ -372,7 +386,7 @@ export class CombatAttackDialog extends FormApplication {
     const {
       attacker: { combat, psychic },
       ui
-    } = this.modalData;
+    } = this.object;
 
     ui.hasFatiguePoints =
       this.attackerActor.system.characteristics.secondaries.fatigue.value > 0;
@@ -405,18 +419,18 @@ export class CombatAttackDialog extends FormApplication {
       combat.damage.final = combat.damage.special + weapon.system.damage.final.value;
     }
 
-    this.modalData.config = ABFConfig;
+    this.object.config = ABFConfig;
 
-    return this.modalData;
+    return this.object;
   }
 
   async _updateObject(event, formData) {
-    const prevWeapon = this.modalData.attacker.combat.weaponUsed;
+    const prevWeapon = this.object.attacker.combat.weaponUsed;
 
-    this.modalData = mergeObject(this.modalData, formData);
+    this.object = mergeObject(this.object, formData);
 
-    if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
-      this.modalData.attacker.combat.criticSelected = undefined;
+    if (prevWeapon !== this.object.attacker.combat.weaponUsed) {
+      this.object.attacker.combat.criticSelected = undefined;
     }
 
     this.render();

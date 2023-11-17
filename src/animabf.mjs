@@ -11,6 +11,9 @@ import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 
+import './scss/animabf.scss';
+import { TestApp } from './svelte/TestSvelteApp';
+
 /* ------------------------------------ */
 /* Initialize system */
 /* ------------------------------------ */
@@ -67,6 +70,7 @@ Hooks.once('ready', () => {
   registerCombatWebsocketRoutes();
 
   attachCustomMacroBar();
+  let app = new TestApp().render(true);
 });
 
 // Add any additional hooks if necessary
