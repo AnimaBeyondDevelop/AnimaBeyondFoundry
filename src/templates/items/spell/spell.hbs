@@ -30,16 +30,16 @@
               class="macro"
               title="Macro"
               inputType="text"
-              inputName="system.macro.value"
-              inputValue=system.macro.value
+              inputName="system.macro"
+              inputValue=system.macro
             }}
             {{>
             'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
               class="visible"
               title=(localize "anima.ui.mystic.spell.visible.title")
               inputType="checkbox"
-              inputName="system.visible.value"
-              inputValue=(is 'eq' system.visible.value true)
+              inputName="system.visible"
+              inputValue=(is 'eq' system.visible true)
             }}
             {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
@@ -129,7 +129,7 @@
           'systems/animabf/templates/common/ui/custom-select-choices.hbs'
             class="critic"
             title=(localize "anima.ui.mystic.spell.critic.title")
-            choices=config.iterables.mystic.criticTypesWithNone
+            choices=config.iterables.combat.weapon.criticTypesWithNone
             inputName=(concat "system.critic.value")
             inputValue=system.critic.value
           }}

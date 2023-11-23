@@ -10,13 +10,13 @@
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.fatigue.title')
     disabled=this.defenseSent
-    inputName="defender.combat.fatigue"
-    inputValue=this.defender.combat.fatigue
+    inputName="defender.combat.fatigueUsed"
+    inputValue=this.defender.combat.fatigueUsed
   }}
-    <option {{#if (is "eq" 0 this.defender.combat.fatigue)}}selected{{/if}} value='0'>0</option>
+    <option {{#if (is "eq" 0 this.defender.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
 
     {{#iterateNumber this.defender.actor.system.characteristics.secondaries.fatigue.value}}
-      <option {{#if (is "eq" (math this "+" 1) ../this.defender.combat.fatigue)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+      <option {{#if (is "eq" (math this "+" 1) ../this.defender.combat.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
     {{/iterateNumber}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{else}}

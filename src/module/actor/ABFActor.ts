@@ -9,10 +9,16 @@ import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
 import { Log } from '../../utils/Log';
 import { migrateItem } from '../items/migrations/migrateItem';
-import { executeArgsMacro } from '../utils/functions/executeArgsMacro';
+import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
+import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.js';
+import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
+import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
+import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
+import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
+import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -57,117 +63,236 @@ export class ABFActor extends Actor {
     });
   }
 
-  async newSupernaturalShield(newShield: any, type: string) {
-    const itemType = type == 'psychic' ? ABFItems.PSYCHIC_SHIELD : ABFItems.MYSTIC_SHIELD;
+  async rollAbility(ability: string, sendToChat = true) {
+    const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
+    const { secondaries } = this.system;
+    let groupPath = '';
+    for (const groupKey in secondaries) {
+      for (const abilityKey in secondaries[groupKey]) {
+        if (abilityKey === ability) {
+          groupPath = groupKey;
+        }
+      }
+    }
+    if (groupPath === '') {
+      return;
+    }
+    const abilityValue = this.system.secondaries[groupPath][ability].final.value;
+    const label = name ? `Rolling ${name}` : '';
+    const mod = await openModDialog();
+    let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
+    if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
+    const roll = new ABFFoundryRoll(formula, this.system);
+    roll.roll();
+    if (sendToChat) {
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor: label
+      });
+    }
+    return roll.total;
+  }
+
+  async supernaturalShieldData(
+    type: string,
+    power: any,
+    psychicDifficulty: number,
+    spell: any,
+    spellGrade: string
+  ) {
     const supernaturalShieldData = {
-      name: newShield.name,
-      type: itemType,
-      system: newShield.system
+      name: '',
+      type: ABFItems.SUPERNATURAL_SHIELD,
+      system: {},
+      psychic: {}
     };
 
-    await this.createItem(supernaturalShieldData);
-    setTimeout(() => {
-      let supShields = this.system[type][`${type}Shields`];
-      let shieldId = supShields[supShields.length - 1]._id;
+    if (type === 'psychic') {
+      const {
+        general: {
+          settings: { inhuman, zen }
+        },
+        psychic
+      } = this.system;
+
+      const newPotentialBase = psychicPotentialEffect(
+        psychic.psychicPotential.base.value,
+        0,
+        inhuman.value,
+        zen.value
+      );
+      const baseEffect =
+        shieldBaseValueCheck(newPotentialBase, power?.system.effects) ?? 0;
+      const finalEffect = shieldValueCheck(
+        power?.system.effects[psychicDifficulty].value ?? ''
+      );
+      supernaturalShieldData.name = power.name;
+      supernaturalShieldData.system = {
+        type: 'psychic',
+        damageBarrier: 0,
+        shieldPoints: finalEffect,
+        origin: this.uuid
+      };
+      supernaturalShieldData.psychic = {
+        overmantained: finalEffect > baseEffect,
+        maintainMax: baseEffect
+      };
+    } else if (type === 'mystic') {
+      const finalEffect = shieldValueCheck(
+        spell?.system.grades[spellGrade].description.value ?? ''
+      );
+      supernaturalShieldData.name = spell.name;
+      supernaturalShieldData.system = {
+        type: 'mystic',
+        spellGrade,
+        damageBarrier: 0,
+        shieldPoints: finalEffect,
+        origin: this.uuid
+      };
+    }
+
+    return supernaturalShieldData;
+  }
+
+  async newSupernaturalShield(newShield: any) {
+    const supernaturalShieldData = {
+      name: newShield.name,
+      type: ABFItems.SUPERNATURAL_SHIELD,
+      system: newShield.system
+    };
+    const item = await this.createItem(supernaturalShieldData);
+    let args = {
+      thisActor: this,
+      newShield: true,
+      shieldId: item._id
+    };
+    if (newShield.psychic.overmantained) {
+      item.setFlag('animabf', 'psychic', newShield.psychic);
+    }
+    executeMacro(newShield.name, args);
+    return item._id;
+  }
+
+  async deleteSupernaturalShield(supShieldId: any) {
+    const { supernaturalShields } = this.system.combat;
+    const supShield = supernaturalShields.find(w => w._id === supShieldId);
+    if (supShield) {
+      Item.deleteDocuments([supShieldId], { parent: this });
       let args = {
         thisActor: this,
-        newShield: true,
-        shieldId
+        newShield: false,
+        shieldId: supShieldId
       };
-      executeArgsMacro(newShield.name, args);
-    }, 100);
+      executeMacro(supShield.name, args);
+    }
   }
 
   applyDamageSupernaturalShield(
     supShield: any,
     damage: number,
     dobleDamage: boolean,
-    type: string,
     newCombatResult: any
   ) {
-    setTimeout(() => {
-      const shieldValue = supShield.system.shieldPoints.value;
-      let shieldId: any;
-      if (supShield.id) {
-        shieldId = supShield.id;
-      } else {
-        let supShields = this.system[type][`${type}Shields`];
-        shieldId = supShields[supShields.length - 1]._id;
-        if (shieldId == undefined) {
-          return ui.notifications.warn('Escudo Sobrenatural no encontrado');
+    const shieldValue = supShield.system.shieldPoints;
+    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
+    if (newShieldPoints > 0) {
+      let updates: any = [
+        { _id: supShield.id, ['system.shieldPoints']: newShieldPoints }
+      ];
+      Item.updateDocuments(updates, { parent: this });
+    } else {
+      this.deleteSupernaturalShield(supShield.id);
+      if (newShieldPoints < 0 && newCombatResult) {
+        const needToRound = (game as Game).settings.get(
+          'animabf',
+          ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
+        );
+        const result = calculateDamage(
+          newCombatResult.attack,
+          0,
+          newCombatResult.at,
+          Math.abs(newShieldPoints),
+          newCombatResult.halvedAbsorption
+        );
+        const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
+        this.applyDamage(breakingDamage);
+      }
+    }
+  }
+
+  async evaluatePsychicFatigue(power: any, psychicDifficulty: number, sendToChat = true) {
+    const fatigueInmune = this.system.general.advantages.find(
+      (i: any) => i.name === 'Res. a la fatiga psíquica'
+    );
+    const fatigue = {
+      value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
+      inmune: fatigueInmune
+    };
+
+    if (fatigue.value) {
+      if (sendToChat) {
+        const { i18n } = game;
+        ChatMessage.create({
+          speaker: ChatMessage.getSpeaker({ actor: this }),
+          flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
+            fatiguePen: fatigue.inmune ? 0 : fatigue.value
+          })
+        });
+      }
+      if (!fatigue.inmune) {
+        this.applyFatigue(fatigue.value);
+      }
+    }
+
+    return fatigue.value;
+  }
+
+  async psychicShieldsMaintaining(revert: boolean) {
+    const { supernaturalShields } = this.system.combat;
+
+    for (const supernaturalShield of supernaturalShields) {
+      const psychic = supernaturalShield.getFlag('animabf', 'psychic');
+      if (psychic?.overmantained) {
+        if (psychic.maintainMax >= supernaturalShield.system.shieldPoints) {
+          supernaturalShield.unsetFlag('animabf', 'psychic');
+        } else {
+          const supShield = {
+            system: supernaturalShield.system,
+            id: supernaturalShield._id
+          };
+          const damage = revert ? -5 : 5;
+          this.applyDamageSupernaturalShield(supShield, damage, false, undefined);
         }
       }
-      const newShieldPoints = dobleDamage
-        ? shieldValue - damage * 2
-        : shieldValue - damage;
-      if (newShieldPoints > 0) {
-        let updates: any = [
-          { _id: shieldId, ['system.shieldPoints.value']: newShieldPoints }
-        ];
-        Item.updateDocuments(updates, { parent: this });
-      } else {
-        Item.deleteDocuments([shieldId], { parent: this });
-        if (newShieldPoints < 0 && newCombatResult) {
-          const needToRound = (game as Game).settings.get(
-            'animabf',
-            ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
-          );
-          const result = calculateDamage(
-            newCombatResult.attack,
-            0,
-            newCombatResult.at,
-            Math.abs(newShieldPoints),
-            newCombatResult.halvedAbsorption
-          );
-          const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
-          this.applyDamage(breakingDamage);
-        }
-        let args = {
-          thisActor: this,
-          newShield: false,
-          shieldId
-        };
-        executeArgsMacro(supShield.name, args);
-      }
-    }, 100);
+    }
   }
 
   accumulateDefenses(keepAccumulating: boolean) {
-    const defensesCounter: any = this.getFlag('world', `${this._id}.defensesCounter`) || {
-      value: true,
-      accumulated: 0
+    const defensesCounter: any = this.getFlag('animabf', 'defensesCounter') || {
+      accumulated: 0,
+      keepAccumulating
     };
     const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
-      this.update({
-        flags: {
-          world: {
-            [`${this._id}.defensesCounter`]: {
-              accumulated: newDefensesCounter,
-              value: true
-            }
-          }
-        }
+      this.setFlag('animabf', 'defensesCounter', {
+        accumulated: newDefensesCounter,
+        keepAccumulating
       });
     } else {
-      this.update({
-        flags: {
-          world: {
-            [`${this._id}.defensesCounter`]: { value: false }
-          }
-        }
-      });
+      this.setFlag('animabf', 'defensesCounter.keepAccumulating', keepAccumulating);
     }
   }
 
   resetDefensesCounter() {
-    this.update({
-      flags: {
-        world: {
-          [`${this._id}.defensesCounter`]: { accumulated: 0 }
-        }
-      }
-    });
+    const defensesCounter = this.getFlag('animabf', 'defensesCounter');
+    if (defensesCounter === undefined) {
+      this.setFlag('animabf', 'defensesCounter', {
+        accumulated: 0,
+        keepAccumulating: true
+      });
+    } else {
+      this.setFlag('animabf', 'defensesCounter.accumulated', 0);
+    }
   }
 
   consumeAccumulatedZeon(zeonCost: number) {
@@ -182,15 +307,36 @@ export class ABFActor extends Actor {
     });
   }
 
+  async consumeMaintainedZeon(revert: boolean) {
+    const { zeon, zeonMaintained } = this.system.mystic;
+    const updatedZeon = revert
+      ? zeon.value + zeonMaintained.value
+      : zeon.value - zeonMaintained.value;
+
+    return this.update({
+      system: {
+        mystic: {
+          zeon: { value: updatedZeon }
+        }
+      }
+    });
+  }
+
   deletePreparedSpell(spellName: string, spellGrade: string) {
-    let preparedSpell = this.system.mystic.preparedSpells.find(
+    let preparedSpellId = this.system.mystic.preparedSpells.find(
       (ps: any) =>
         ps.name == spellName &&
         ps.system.grade.value == spellGrade &&
         ps.system.prepared.value == true
     )._id;
-    if (preparedSpell !== undefined) {
-      this.deleteEmbeddedDocuments('Item', [preparedSpell]);
+    if (preparedSpellId !== undefined) {
+      let items = this.getPreparedSpells();
+      items = items.filter(item => item._id !== preparedSpellId);
+      const fieldPath = ['mystic', 'preparedSpells'];
+      const dataToUpdate = {
+        system: getUpdateObjectFromPath(items, fieldPath)
+      };
+      this.update(dataToUpdate);
     }
   }
 
@@ -216,13 +362,14 @@ export class ABFActor extends Actor {
     name: string;
     system?: unknown;
   }) {
-    await this.createEmbeddedDocuments('Item', [
+    const items = await this.createEmbeddedDocuments('Item', [
       {
         type,
         name,
         system
       }
     ]);
+    return items[0];
   }
 
   public async createInnerItem({
@@ -316,7 +463,7 @@ export class ABFActor extends Actor {
         }
 
         if (system) {
-          item.system = system;
+          item.system = mergeObject(item.system, system);
         }
 
         await this.update({
@@ -358,8 +505,8 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.PREPARED_SPELL);
   }
 
-  public getMysticShields() {
-    return this.getItemsOf(ABFItems.MYSTIC_SHIELD);
+  public getSupernaturalShields() {
+    return this.getItemsOf(ABFItems.SUPERNATURAL_SHIELD);
   }
 
   public getKnownMetamagics() {
@@ -416,10 +563,6 @@ export class ABFActor extends Actor {
 
   public getInnatePsychicPowers() {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
-  }
-
-  public getPsychicShields() {
-    return this.getItemsOf(ABFItems.PSYCHIC_SHIELD);
   }
 
   public getPsychicPowers() {

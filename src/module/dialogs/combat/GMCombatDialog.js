@@ -29,6 +29,10 @@ const getInitialData = (attacker, defender, options = {}) => {
       token: defender,
       actor: defenderActor,
       customModifier: 0,
+      supernaturalShield: {
+        dobleDamage: false,
+        immuneToDamage: false
+      },
       isReady: false
     }
   };
@@ -113,21 +117,16 @@ export class GMCombatDialog extends FormApplication {
     super.activateListeners(html);
 
     html.find('.cancel-button').click(async () => {
-      this.mysticCastEvaluateIfAble();
-      await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageSupernaturalShieldIfBeAble();
-      this.accumulateDefensesIfAble();
-      this.executeMacro(false);
       this.close();
     });
 
     html.find('.make-counter').click(async () => {
-      this.mysticCastEvaluateIfAble();
-      await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageSupernaturalShieldIfBeAble();
-      this.accumulateDefensesIfAble();
       this.applyValuesIfBeAble();
-      this.executeMacro(false);
+      this.mysticCastEvaluateIfAble();
+      this.accumulateDefensesIfAble();
+      const supShieldId = await this.newSupernaturalShieldIfBeAble();
+      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
+      this.executeCombatMacro();
 
       if (this.modalData.calculations?.canCounter) {
         this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
@@ -136,25 +135,25 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.apply-values').click(async () => {
       this.applyValuesIfBeAble();
+      this.mysticCastEvaluateIfAble();
+      this.accumulateDefensesIfAble();
+      const supShieldId = await this.newSupernaturalShieldIfBeAble();
 
-      if (!this.modalData.calculations?.canCounter && this.canApplyDamage) {
-        const { calculations } = this.modalData;
-        const damage = calculations.isNonLethalDamage
-          ? calculations.nonLethalDamage
-          : calculations.damage;
-        this.defenderActor.applyDamage(damage);
+      if (this.canApplyDamage) {
+        this.defenderActor.applyDamage(this.modalData.calculations.damage);
+      } else {
+        this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
       }
       await this.criticIfBeAble();
 
-      this.mysticCastEvaluateIfAble();
-      this.newSupernaturalShieldIfBeAble();
-      this.accumulateDefensesIfAble();
-      this.executeMacro(true);
+      this.executeCombatMacro();
       this.close();
     });
 
     html.find('.roll-resistance').click(async () => {
       this.applyValuesIfBeAble();
+      this.mysticCastEvaluateIfAble();
+      this.accumulateDefensesIfAble();
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistanceRoll = await getResistanceRoll(
         value,
@@ -164,12 +163,8 @@ export class GMCombatDialog extends FormApplication {
       );
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
-        this.executeMacro(true, resistanceRoll.total - value);
-      } else {
-        this.executeMacro(false, resistanceRoll.total - value);
       }
-      this.mysticCastEvaluateIfAble();
-      this.accumulateDefensesIfAble();
+      this.executeCombatMacro(resistanceRoll.total);
       this.close();
     });
 
@@ -302,66 +297,57 @@ export class GMCombatDialog extends FormApplication {
   }
 
   updateAttackerData(result) {
-    if (result.values.unableToAttack) {
-      result.values.total = 0;
-    }
+    const { attacker } = this.modalData;
+    result.values.initialTotal ||= result.values.total;
     result.values.total = Math.max(0, result.values.total);
-    this.modalData.attacker.result = result;
+    attacker.result = result;
 
     if (result.type === 'combat') {
       const { weapons } = this.attackerActor.system.combat;
 
-      this.modalData.attacker.result.weapon = weapons.find(
-        w => w._id === result.values.weaponUsed
-      );
+      attacker.result.weapon = weapons.find(w => w._id === result.values.weaponUsed);
     }
 
     if (result.type === 'mystic') {
       const { spells } = this.attackerActor.system.mystic;
 
-      this.modalData.attacker.result.spell = spells.find(
-        w => w._id === result.values.spellUsed
-      );
+      attacker.result.spell = spells.find(w => w._id === result.values.spellUsed);
     }
 
     if (result.type === 'psychic') {
       const powers = this.attackerActor.system.psychic.psychicPowers;
 
-      this.modalData.attacker.result.power = powers.find(
-        w => w._id === result.values.powerUsed
-      );
+      attacker.result.power = powers.find(w => w._id === result.values.powerUsed);
     }
 
     this.render();
   }
 
   updateDefenderData(result) {
-    if (result.values.unableToDefense) {
-      result.values.total = 0;
-    }
+    const { defender } = this.modalData;
+    result.values.initialTotal ||= result.values.total;
     result.values.total = Math.max(0, result.values.total);
-    this.modalData.defender.result = result;
+    defender.result = result;
 
     if (result.type === 'mystic') {
       const { spells } = this.defenderActor.system.mystic;
 
-      this.modalData.defender.result.spell = spells.find(
-        w => w._id === result.values.spellUsed
-      );
+      defender.result.spell = spells.find(w => w._id === result.values.spellUsed);
     }
 
     if (result.type === 'psychic') {
-      const powers = this.defenderActor.system.psychic.psychicPowers;
+      if (result.values.fatigue) {
+        result.values.total = 0;
+      }
+      const { psychicPowers } = this.defenderActor.system.psychic;
 
-      this.modalData.defender.result.power = powers.find(
-        w => w._id === result.values.powerUsed
-      );
+      defender.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
     this.render();
   }
 
-  getData() {
+  getData() {console.log(this.modalData)
     const { attacker, defender } = this.modalData;
 
     attacker.isReady = !!attacker.result;
@@ -369,10 +355,35 @@ export class GMCombatDialog extends FormApplication {
     defender.isReady = !!defender.result;
 
     if (attacker.result && defender.result) {
-      const attackerTotal =
-        attacker.result.values.total + this.modalData.attacker.customModifier;
-      const defenderTotal =
-        defender.result.values.total + this.modalData.defender.customModifier;
+      const { attackerCombatMod } = attacker.result.values;
+      const { defenderCombatMod } = defender.result.values;
+
+      let attackerModifier = 0;
+      for (const key in attackerCombatMod) {
+        if (attackerCombatMod[key]?.apply) {
+          attackerModifier += attackerCombatMod[key]?.value ?? 0;
+        }
+      }
+      attacker.result.values.total =
+        attacker.result.values.initialTotal -
+        attacker.result.values.modifier +
+        attackerModifier;
+      attacker.result.values.total = Math.max(0, attacker.result.values.total);
+
+      let defenderModifier = 0;
+      for (const key in defenderCombatMod) {
+        if (defenderCombatMod[key]?.apply) {
+          defenderModifier += defenderCombatMod[key]?.value ?? 0;
+        }
+      }
+      defender.result.values.total =
+        defender.result.values.initialTotal -
+        defender.result.values.modifier +
+        defenderModifier;
+      defender.result.values.total = Math.max(0, defender.result.values.total);
+
+      const attackerTotal = attacker.result.values.total + attacker.customModifier;
+      const defenderTotal = defender.result.values.total + defender.customModifier;
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
@@ -381,6 +392,7 @@ export class GMCombatDialog extends FormApplication {
 
       const isNonLethalDamage =
         specificAttack.value == 'disable' || specificAttack.value == 'knockOut';
+      const atResistance = defender.result.values?.at * 10 + 20;
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -399,21 +411,21 @@ export class GMCombatDialog extends FormApplication {
         ) {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
-            atResValue,
+            atResistance,
             canCounter: true,
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
           };
           if (
             attacker.result.values.damage >
-            defender.result.values?.supShield?.system.shieldPoints.value
+            defender.result.values.supShield?.system.shieldPoints
           ) {
             this.modalData.calculations.canCounter = false;
           }
         } else {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
-            atResValue,
+            atResistance,
             canCounter: false,
             winner,
             damage: combatResult.damage,
@@ -424,22 +436,25 @@ export class GMCombatDialog extends FormApplication {
       } else {
         this.modalData.calculations = {
           difference: attackerTotal - defenderTotal,
-          atResValue,
+          atResistance,
           canCounter: false,
           winner
         };
       }
 
+      const minimumDamage10 = this.modalData.calculations.difference - atResistance >= 10;
       if (winner === attacker.token) {
-        const minimumDamage10 = this.modalData.calculations.difference - atResValue >= 10;
         if (minimumDamage10) {
-          if (this.modalData.attacker.result.values?.resistanceEffect.check) {
+          if (attacker.result.values?.resistanceEffect.check) {
             this.modalData.ui.resistanceRoll = true;
           }
           if (specificAttack.check) {
             this.modalData.ui.characteristicRoll = true;
           }
         }
+      }
+      if (winner === defender.token || !minimumDamage10) {
+        this.modalData.ui.resistanceRoll = false;
       }
     }
 
@@ -457,7 +472,7 @@ export class GMCombatDialog extends FormApplication {
     }
 
     if (this.modalData.defender.result?.type === 'combat') {
-      this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigue);
+      this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigueUsed);
     }
   }
 
@@ -550,16 +565,16 @@ export class GMCombatDialog extends FormApplication {
         this.modalData.defender.result?.type === 'psychic') &&
       supShield.create
     ) {
-      await this.defenderActor.newSupernaturalShield(
+      const supShieldId = await this.defenderActor.newSupernaturalShield(
         supShield,
         this.modalData.defender.result.type
       );
+      return supShieldId;
     }
   }
 
-  applyDamageSupernaturalShieldIfBeAble() {
-    const cantDamage = this.modalData.defender.result?.values.cantDamage;
-    const dobleDamage = this.modalData.defender.result?.values.dobleDamage;
+  applyDamageSupernaturalShieldIfBeAble(supShieldId) {
+    const { dobleDamage, immuneToDamage } = this.modalData.defender.supernaturalShield;
     const defenderIsWinner =
       this.modalData.calculations.winner == this.modalData.defender.token;
     const damage = this.modalData.attacker.result?.values.damage;
@@ -567,7 +582,7 @@ export class GMCombatDialog extends FormApplication {
       defenderIsWinner &&
       (this.modalData.defender.result?.type === 'mystic' ||
         this.modalData.defender.result?.type === 'psychic') &&
-      !cantDamage
+      !immuneToDamage
     ) {
       const { supShield } = this.modalData.defender.result?.values;
       const newCombatResult = {
@@ -593,6 +608,10 @@ export class GMCombatDialog extends FormApplication {
             : false;
       }
 
+      if (supShieldId) {
+        supShield.id = supShieldId;
+      }
+
       this.defenderActor.applyDamageSupernaturalShield(
         supShield,
         damage,
@@ -603,7 +622,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeMacro(appliedDamage, resistanceRoll, specificAttackResult) {
+  executeCombatMacro(resistanceRoll) {
     let macroName;
     const winner =
       this.modalData.calculations.winner == this.modalData.defender.token
@@ -615,7 +634,7 @@ export class GMCombatDialog extends FormApplication {
       winner,
       defenseType: this.modalData.defender.result.values.type,
       totalAttack: this.modalData.attacker.result.values.total,
-      appliedDamage,
+      appliedDamage: this.canApplyDamage,
       bloodColor: 'red', // agregar valor de color de sangre al actor
       missedAttack: false,
       isVisibleAttack: true,
@@ -643,7 +662,7 @@ export class GMCombatDialog extends FormApplication {
       macroName = this.modalData.attacker.result.values.spellName;
     } else if (this.modalData.attacker.result?.type === 'psychic') {
       macroName = this.modalData.attacker.result.values.powerName;
-      args.hasPsychicFatigue = this.modalData.attacker.result.values.fatigueCheck;
+      args.hasPsychicFatigue = this.modalData.attacker.result.values.fatigue;
     }
 
     if (

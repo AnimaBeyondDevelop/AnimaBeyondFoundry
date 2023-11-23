@@ -3,29 +3,44 @@ export const Templates = {
     ModDialog: 'systems/animabf/templates/dialog/mod-dialog.html',
     DamageCalculator: 'systems/animabf/templates/dialog/damage-calculator.hbs',
     newPreparedSpell: 'systems/animabf/templates/dialog/new-prepared-spell.hbs',
-    newMysticShield: 'systems/animabf/templates/dialog/new-mystic-shield.hbs',
-    newPsychicShield: 'systems/animabf/templates/dialog/new-psychic-shield.hbs',
+    newSupernaturalShield: {
+      main: 'systems/animabf/templates/dialog/new-supernatural-shield/new-supernatural-shield.hbs',
+      parts: {
+        mystic:
+          'systems/animabf/templates/dialog/new-supernatural-shield/parts/new-mystic-shield.hbs',
+        psychic:
+          'systems/animabf/templates/dialog/new-supernatural-shield/parts/new-psychic-shield.hbs'
+      }
+    },
     newActVia: 'systems/animabf/templates/dialog/new-act-via.hbs',
     newPsychicDiscipline: 'systems/animabf/templates/dialog/new-psychic-discipline.hbs',
     Combat: {
       CombatAttackDialog: {
         main: 'systems/animabf/templates/dialog/combat/combat-attack/combat-attack-dialog.hbs',
         parts: {
-          combat: 'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs',
-          mystic: 'systems/animabf/templates/dialog/combat/combat-attack/parts/mystic.hbs',
-          psychic: 'systems/animabf/templates/dialog/combat/combat-attack/parts/psychic.hbs'
+          combat:
+            'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs',
+          mystic:
+            'systems/animabf/templates/dialog/combat/combat-attack/parts/mystic.hbs',
+          psychic:
+            'systems/animabf/templates/dialog/combat/combat-attack/parts/psychic.hbs'
         }
       },
       CombatDefenseDialog: {
         main: 'systems/animabf/templates/dialog/combat/combat-defense/combat-defense-dialog.hbs',
         parts: {
-          combat: 'systems/animabf/templates/dialog/combat/combat-defense/parts/combat.hbs',
-          damageResistance: 'systems/animabf/templates/dialog/combat/combat-defense/parts/damage-resistance.hbs',
-          mystic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/mystic.hbs',
-          psychic: 'systems/animabf/templates/dialog/combat/combat-defense/parts/psychic.hbs'
+          combat:
+            'systems/animabf/templates/dialog/combat/combat-defense/parts/combat.hbs',
+          damageResistance:
+            'systems/animabf/templates/dialog/combat/combat-defense/parts/damage-resistance.hbs',
+          mystic:
+            'systems/animabf/templates/dialog/combat/combat-defense/parts/mystic.hbs',
+          psychic:
+            'systems/animabf/templates/dialog/combat/combat-defense/parts/psychic.hbs'
         }
       },
-      CombatRequestDialog: 'systems/animabf/templates/dialog/combat/combat-request-dialog.hbs',
+      CombatRequestDialog:
+        'systems/animabf/templates/dialog/combat/combat-request-dialog.hbs',
       GMCombatDialog: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs'
     },
     GenericDialog: 'systems/animabf/templates/dialog/generic-dialog/generic-dialog.hbs',

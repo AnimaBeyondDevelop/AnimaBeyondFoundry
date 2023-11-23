@@ -32,34 +32,28 @@
           <p class='attack-type label'>
             {{localize (concat 'macros.combat.dialog.attackType.' this.attacker.result.type '.title')}}
           </p>
-
           <div class='values'>
             {{#if (is "eq" this.attacker.result.type 'combat')}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="modifier"
-                title=(localize 'macros.combat.dialog.modifier.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.modifier
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="fatigue"
-                title=(localize 'macros.combat.dialog.fatigueUsed.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.fatigueUsed
-              }}
               {{#unless this.attacker.result.values.unarmed}}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="weapon-used"
-                  title=(localize 'macros.combat.dialog.weaponUsed.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.attacker.result.weapon.name
-                }}
+                {{#unless (is "eq" this.attacker.result.weapon.system.quality.value 0)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="weapon-used"
+                    title=(localize 'macros.combat.dialog.weaponUsed.title')
+                    inputType="text"
+                    disabled=true
+                    inputValue=(concat this.attacker.result.weapon.name " + " this.attacker.result.weapon.system.quality.value)
+                  }}
+                {{else}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="weapon-used"
+                    title=(localize 'macros.combat.dialog.weaponUsed.title')
+                    inputType="text"
+                    disabled=true
+                    inputValue=this.attacker.result.weapon.name
+                  }}
+                {{/unless}}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                   class="weapon-attack"
@@ -67,13 +61,6 @@
                   inputType="text"
                   disabled=true
                   inputValue=this.attacker.result.values.attack
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="weapon-quality"
-                  title=(localize 'macros.combat.dialog.weaponQuality.title')
-                  disabled=true
-                  inputValue=this.attacker.result.weapon.system.quality.value
                 }}
               {{else}}
                 {{>
@@ -93,6 +80,58 @@
                   inputValue=this.attacker.result.values.attack
                 }}
               {{/unless}}
+            {{/if}}
+
+            {{#if (is "eq" this.attacker.result.type 'mystic')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="spell-used"
+                title=(concat (localize 'macros.combat.dialog.spell.title') ' - ' (localize (concat 'anima.ui.mystic.spell.grade.' this.attacker.result.values.spellGrade '.title')))
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.spell.name
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="magic-projection"
+                title=(localize 'macros.combat.dialog.gm.projection.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.magicProjection
+              }}
+            {{/if}}
+
+            {{#if (is "eq" this.attacker.result.type 'psychic')}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="psychic-potential"
+                title=(localize 'macros.combat.dialog.gm.psychicPotential.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.psychicPotential
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="power-used"
+                title=(localize 'macros.combat.dialog.gm.psychicPower.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.power.name
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="psychic-projection"
+                title=(localize 'macros.combat.dialog.gm.projection.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.attacker.result.values.psychicProjection
+              }}
+            {{/if}}
+
+          </div>
+          <div class='values'>
+
+            {{#if (is "neq" this.attacker.result.values.critic '-')}}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="critic"
@@ -109,163 +148,46 @@
                 disabled=true
                 inputValue=this.attacker.result.values.damage
               }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="roll"
-                title=(localize 'macros.combat.dialog.rolled.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.roll
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="total"
-                title=(localize 'macros.combat.dialog.total.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.total
-              }}
             {{/if}}
-
-            {{#if (is "eq" this.attacker.result.type 'mystic')}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="modifier"
-                title=(localize 'macros.combat.dialog.modifier.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.modifier
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="magic-projection"
-                title=(localize 'macros.combat.dialog.magicProjection.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.magicProjection
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="spell-used"
-                title=(localize 'macros.combat.dialog.spell.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.spell.name
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="spell-grade"
-                title=(localize 'macros.combat.dialog.spellGrade.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.spellGrade
-              }}
-              {{#if (is "neq" this.attacker.result.values.critic '-')}}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="critic"
-                  title=(localize 'macros.combat.dialog.critic.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="damage"
-                  title=(localize 'macros.combat.dialog.damage.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.attacker.result.values.damage
-                }}
-              {{/if}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="roll"
-                title=(localize 'macros.combat.dialog.rolled.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.roll
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="total"
-                title=(localize 'macros.combat.dialog.total.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.total
-              }}
-            {{/if}}
-
-            {{#if (is "eq" this.attacker.result.type 'psychic')}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="modifier"
-                title=(localize 'macros.combat.dialog.modifier.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.modifier
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="psychic-projection"
-                title=(localize 'macros.combat.dialog.psychicProjection.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.psychicProjection
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="psychic-potential"
-                title=(localize 'macros.combat.dialog.psychicPotential.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.psychicPotential
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="power-used"
-                title=(localize 'macros.combat.dialog.psychicPower.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.power.name
-              }}
-              {{#if (is "neq" this.attacker.result.values.critic '-')}}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="critic"
-                  title=(localize 'macros.combat.dialog.critic.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=(localize (concat 'anima.ui.combat.armors.at.' this.attacker.result.values.critic '.title'))
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="damage"
-                  title=(localize 'macros.combat.dialog.damage.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.attacker.result.values.damage
-                }}
-              {{/if}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="roll"
-                title=(localize 'macros.combat.dialog.rolled.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.roll
-              }}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="total"
-                title=(localize 'macros.combat.dialog.total.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.attacker.result.values.total
-              }}
-            {{/if}}
-
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="roll"
+              title=(localize 'macros.combat.dialog.rolled.title')
+              inputType="text"
+              disabled=true
+              inputValue=this.attacker.result.values.roll
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="total"
+              title=(localize 'macros.combat.dialog.total.title')
+              inputType="text"
+              disabled=true
+              inputValue=this.attacker.result.values.total
+            }}
           </div>
+            <div class="combat-mod">
+              {{#each this.attacker.result.values.attackerCombatMod as |attackerCombatMod|}}
+                {{#unless (is "eq" attackerCombatMod.value 0)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="combatMod-value"
+                    title=(localize (concat 'macros.combat.dialog.combatMod.' @key '.title'))
+                    inputType="text"
+                    disabled=true
+                    inputValue=attackerCombatMod.value
+                  }}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="combatMod-apply"
+                    inputType="checkbox"
+                    disabled=false
+                    inputName=(concat "attacker.result.values.attackerCombatMod." @key ".apply")
+                    inputValue=(is 'eq' attackerCombatMod.apply true)
+                  }}
+                {{/unless}}
+              {{/each}}
+            </div>
         {{else}}
           <div class='waiting-row'>
             {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
@@ -318,14 +240,6 @@
               {{#if (is "eq" this.defender.result.type 'combat')}}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="modifier"
-                  title=(localize 'macros.combat.dialog.modifier.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.modifier
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                   class="combat-defense-type"
                   inputType="text"
                   title=(localize 'macros.combat.dialog.defenseType.title')
@@ -351,61 +265,69 @@
                     inputValue=this.defender.result.values.defense
                   }}
                 {{/if}}
+              {{/if}}
+
+              {{#if (is "eq" this.defender.result.type 'mystic')}}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="fatigue"
-                  title=(localize 'macros.combat.dialog.fatigueUsed.title')
+                  class="spell-used"
+                title=(concat (localize 'macros.combat.dialog.spell.title') ' - ' (localize (concat 'anima.ui.mystic.spell.grade.' this.defender.result.values.spellGrade '.title')))
                   inputType="text"
                   disabled=true
-                  inputValue=this.defender.result.values.fatigue
+                  inputValue=this.defender.result.spell.name
                 }}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="defense-count"
-                  title=(localize 'macros.combat.dialog.defenseCount.title')
+                  class="magic-projection"
+                  title=(localize 'macros.combat.dialog.gm.projection.title')
                   inputType="text"
                   disabled=true
-                  inputValue=this.defender.result.values.multipleDefensesPenalty
-                }}
-                {{#if (is 'neq' this.defender.result.values.at undefined)}}
-                  {{>
-                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                    class="at-value"
-                    title=(localize 'macros.combat.dialog.at.title')
-                    inputType="text"
-                    disabled=true
-                    inputValue=this.defender.result.values.at
-                  }}
-                {{/if}}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="roll"
-                  title=(localize 'macros.combat.dialog.rolled.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.roll
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="total"
-                  title=(localize 'macros.combat.dialog.total.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.total
+                  inputValue=this.defender.result.values.magicProjection
                 }}
               {{/if}}
 
-              {{#if (is "eq" this.defender.result.type 'resistance')}}
-                {{#if (is 'neq' this.defender.result.values.at undefined)}}
+              {{#if (is "eq" this.defender.result.type 'psychic')}}
+                {{#unless (is "eq" this.defender.result.values.psychicPotential 0)}}
                   {{>
                   "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                    class="at-value"
-                    title=(localize 'macros.combat.dialog.at.title')
+                    class="psychic-potential"
+                    title=(localize 'macros.combat.dialog.gm.psychicPotential.title')
                     inputType="text"
                     disabled=true
-                    inputValue=this.defender.result.values.at
+                    inputValue=this.defender.result.values.psychicPotential
                   }}
-                {{/if}}
+                {{/unless}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="power-used"
+                  title=(localize 'macros.combat.dialog.gm.psychicPower.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.power.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="psychic-projection"
+                  title=(localize 'macros.combat.dialog.gm.projection.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.psychicProjection
+                }}
+              {{/if}}
+            </div>
+
+            <div class='values'>
+              {{#if (is 'neq' this.defender.result.values.at undefined)}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="at-value"
+                  title=(localize 'macros.combat.dialog.at.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.defender.result.values.at
+                }}
+              {{/if}}
+              {{#if (is "eq" this.defender.result.type 'resistance')}}
                 {{>
                 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                   title=(localize 'macros.combat.dialog.surprised.title')
@@ -413,92 +335,7 @@
                   inputName="defender.result.values.surprised"
                   inputValue=(is 'eq' this.defender.result.values.surprised true)
                 }}
-              {{/if}}
-
-              {{#if (is "eq" this.defender.result.type 'mystic')}}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="modifier"
-                  title=(localize 'macros.combat.dialog.modifier.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.modifier
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="magic-projection"
-                  title=(localize 'macros.combat.dialog.magicProjection.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.magicProjection
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="spell-used"
-                  title=(localize 'macros.combat.dialog.spell.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.spell.name
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="spell-grade"
-                  title=(localize 'macros.combat.dialog.spellGrade.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=(localize (concat 'anima.ui.mystic.spell.grade.' this.defender.result.values.spellGrade '.title'))
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="roll"
-                  title=(localize 'macros.combat.dialog.rolled.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.roll
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="total"
-                  title=(localize 'macros.combat.dialog.total.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.total
-                }}
-              {{/if}}
-
-              {{#if (is "eq" this.defender.result.type 'psychic')}}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="modifier"
-                  title=(localize 'macros.combat.dialog.modifier.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.modifier
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="psychic-projection"
-                  title=(localize 'macros.combat.dialog.psychicProjection.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.psychicProjection
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="psychic-potential"
-                  title=(localize 'macros.combat.dialog.psychicPotential.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.values.psychicPotential
-                }}
-                {{>
-                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                  class="power-used"
-                  title=(localize 'macros.combat.dialog.psychicPower.title')
-                  inputType="text"
-                  disabled=true
-                  inputValue=this.defender.result.power.name
-                }}
+              {{else}}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                   class="roll"
@@ -517,6 +354,55 @@
                 }}
               {{/if}}
             </div>
+
+            <div class="combat-mod">
+              {{#each this.defender.result.values.defenderCombatMod as |defenderCombatMod|}}
+                {{#unless (is "eq" defenderCombatMod.value 0)}}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="combatMod-value"
+                    title=(localize (concat 'macros.combat.dialog.combatMod.' @key '.title'))
+                    inputType="text"
+                    disabled=true
+                    inputValue=defenderCombatMod.value
+                  }}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="combatMod-apply"
+                    inputType="checkbox"
+                    disabled=false
+                    inputName=(concat "defender.result.values.defenderCombatMod." @key ".apply")
+                    inputValue=(is 'eq' defenderCombatMod.apply true)
+                  }}
+                {{/unless}}
+              {{/each}}
+            </div>
+            
+            {{#if (is "eq" this.calculations.winner._id this.defender.token._id)}}
+              {{#if (or (is "eq" this.defender.result.type 'psychic') (is "eq" this.defender.result.type 'mystic'))}}
+              <div class="supernatural-shield">
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="doble-damage"
+                    title=(localize 'macros.combat.dialog.dobleDamage.title')
+                    inputType="checkbox"
+                    disabled=false
+                    inputName="defender.supernaturalShield.dobleDamage"
+                    inputValue=(is 'eq' this.defender.supernaturalShield.dobleDamage true)
+                  }}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="immune-to-damage"
+                    title=(localize 'macros.combat.dialog.immuneToDamage.title')
+                    inputType="checkbox"
+                    disabled=false
+                    inputName="defender.supernaturalShield.immuneToDamage"
+                    inputValue=(is 'eq' this.defender.supernaturalShield.immuneToDamage true)
+                  }}
+                </div>
+              {{/if}}
+            {{/if}}
+
           {{else}}
             <div class='waiting-row'>
               {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
@@ -592,10 +478,10 @@
             {{/unless}}
           {{/if}}
           {{#if this.ui.resistanceRoll}}
-              <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
-                      class='abf-button roll-resistance'>
-                {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
-              </button>
+            <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
+                    class='abf-button roll-resistance'>
+              {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
+            </button>
           {{/if}}
           {{#if this.ui.characteristicRoll}}
               <button title='{{localize 'macros.combat.dialog.rollCharacteristicButtonTooltip.title'}}'
@@ -606,12 +492,12 @@
           {{#if
             (or (is 'gt' this.calculations.damage 0) (is 'gt' this.defender.result.values.fatigue 0) (is 'gt' this.attacker.result.values.fatigueUsed 0))}}
             {{#unless (or this.ui.resistanceRoll this.ui.characteristicRoll)}}
+          {{#unless this.ui.resistanceRoll}}
             <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
                     class='abf-button apply-values'>
               {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
             </button>
-            {{/unless}}
-          {{/if}}
+          {{/unless}}
           <button class='abf-button cancel-button'>
             {{localize 'macros.combat.dialog.cancelButton.title'}}
           </button>

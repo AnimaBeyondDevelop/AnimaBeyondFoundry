@@ -18,7 +18,7 @@
           hideTitle=(is "gt" @index 0)
           disabled=true
           inputType="text"
-          inputName=(concat "system.dynamic.preparedSpells." this._id ".name")
+          inputName=""
           inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
         }}
         {{>

@@ -39,7 +39,6 @@ export class WSGMCombatManager extends WSCombatManager {
       const { visible } = msg.payload.values;
       const { projectile } = msg.payload.values;
       const { damage } = msg.payload.values;
-      const { specialType } = msg.payload.values;
       const { distance } = msg.payload.values;
       const { specificAttack } = msg.payload.values;
       const { reducedArmor } = msg.payload.values;
@@ -57,7 +56,19 @@ export class WSGMCombatManager extends WSCombatManager {
         this.emit(newMsg);
       } else {
         try {
-          this.manageDefense(attackerToken, defenderToken, msg.payload.type, critic, visible, projectile, damage, specialType, distance, specificAttack, reducedArmor);
+          this.manageDefense(
+            attackerToken,
+            defenderToken,
+            msg.payload.type,
+            critic,
+            visible,
+            projectile,
+            damage,
+            specialType,
+            distance,
+            specificAttack,
+            reducedArmor
+          );
         } catch (err) {
           if (err) {
             Log.error(err);
@@ -284,13 +295,24 @@ export class WSGMCombatManager extends WSCombatManager {
               const { visible } = result.values;
               const { projectile } = result.values;
               const { damage } = result.values;
-              const { specialType } = result.values;
               const { distance } = result.values;
               const { specificAttack } = result.values;
               const { reducedArmor } = result.values;
 
               try {
-                this.manageDefense(attacker, defender, result.type, critic, visible, projectile, damage, specialType, distance, specificAttack, reducedArmor);
+                this.manageDefense(
+                  attacker,
+                  defender,
+                  result.type,
+                  critic,
+                  visible,
+                  projectile,
+                  damage,
+                  specialType,
+                  distance,
+                  specificAttack,
+                  reducedArmor
+                );
               } catch (err) {
                 if (err) {
                   Log.error(err);
@@ -306,7 +328,19 @@ export class WSGMCombatManager extends WSCombatManager {
     );
   }
 
-  manageDefense(attacker, defender, attackType, critic, visible, projectile, damage, specialType, distance, specificAttack, reducedArmor) {
+  manageDefense(
+    attacker,
+    defender,
+    attackType,
+    critic,
+    visible,
+    projectile,
+    damage,
+      specialType,
+    distance,
+      specificAttack,
+      reducedArmor
+  ) {
     this.defendDialog = new CombatDefenseDialog(
       {
         token: attacker,

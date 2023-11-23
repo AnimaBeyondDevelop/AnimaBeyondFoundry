@@ -39,8 +39,8 @@
               class="macro"
               title=(localize "anima.ui.psychic.psychicPowers.power.header.macro.title")
               inputType="text"
-              inputName=(concat "system.macro.value")
-              inputValue=system.macro.value
+              inputName=(concat "system.macro")
+              inputValue=system.macro
             }}
             {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
@@ -92,14 +92,14 @@
             class="visible"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.visible.title")
             inputType="checkbox"
-            inputName=(concat "system.visible.value")
-            inputValue=(is 'eq' system.visible.value true)
+            inputName=(concat "system.visible")
+            inputValue=(is 'eq' system.visible true)
           }}
           {{>
           'systems/animabf/templates/common/ui/custom-select-choices.hbs'
             class="critic"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.critic.title")
-            choices=xRoot.config.iterables.psychic.criticTypesWithNone
+            choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
             inputName=(concat "system.critic.value")
             inputValue=system.critic.value
           }}

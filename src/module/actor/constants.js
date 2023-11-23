@@ -92,7 +92,10 @@ export const INITIAL_ACTOR_DATA = {
       dodgeMod: {
           value: 0
       },
-      projectionMod: {
+      magicProjectionMod: {
+          value: 0
+      },
+      psychicProjectionMod: {
           value: 0
       },
       initiativeMod: {
@@ -1006,7 +1009,8 @@ export const INITIAL_ACTOR_DATA = {
     },
     incomingDamageReduction: {
       value: 0
-    }
+    },
+    supernaturalShields: []
   },
 
   mystic: {
@@ -1156,8 +1160,7 @@ export const INITIAL_ACTOR_DATA = {
     selectedSpells: [],
     summons: [],
     metamagics: [],
-    preparedSpells: [],
-    mysticShields: []
+    preparedSpells: []
   },
 
   domine: {
@@ -1333,7 +1336,6 @@ export const INITIAL_ACTOR_DATA = {
         value: 0
       }
     },
-    innatePsychicPowers: [],
-    psychicShields: []
+    innatePsychicPowers: []
   }
 };

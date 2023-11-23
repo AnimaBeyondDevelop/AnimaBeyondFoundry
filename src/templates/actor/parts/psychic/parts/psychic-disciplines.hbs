@@ -11,7 +11,7 @@
   }}
     {{#each system.psychic.psychicDisciplines as |psychicDiscipline|}}
       <div data-item-id='{{psychicDiscipline._id}}' class='psychic-discipline-row'>
-        {{#if psychicDiscipline.system.imbalance.value}}
+        {{#if psychicDiscipline.system.imbalance}}
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"

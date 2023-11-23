@@ -31,7 +31,8 @@
           "attackMod": { "value": 0 },
           "blockMod": { "value": 0 },
           "dodgeMod": { "value": 0 },
-          "projectionMod": { "value": 0 },
+          "magicProjectionMod": { "value": 0 },
+          "psychicProjectionMod": { "value": 0 },
           "initiativeMod": { "value": 0 },
           "extraDamage": { "value": 0 }
         },
@@ -187,7 +188,8 @@
         "extraReducedArmor": { "value": 0 },
         "ignoreArmor": { "value": false },
         "inmodifiableArmor": { "value": false },
-        "incomingDamageReduction": { "value": 0 }
+        "incomingDamageReduction": { "value": 0 },
+        "supernaturalShields": []
       },
       "mystic": {
         "act": {
@@ -237,8 +239,7 @@
         "selectedSpells": [],
         "summons": [],
         "metamagics": [],
-        "preparedSpells": [],
-        "mysticShields": []
+        "preparedSpells": []
       },
       "domine": {
         "kiSkills": [],
@@ -290,8 +291,7 @@
         "psychicDisciplines": [],
         "mentalPatterns": [],
         "innatePsychicPower": { "amount": { "value": 0 } },
-        "innatePsychicPowers": [],
-        "psychicShields": []
+        "innatePsychicPowers": []
       }
     }
   },
@@ -302,13 +302,11 @@
       "armor",
       "disadvantage",
       "spell",
-      "preparedSpell",
-      "mysticShield",
+      "supernaturalShield",
       "mentalPattern",
       "note",
       "psychicDiscipline",
       "psychicPower",
-      "psychicShield",
       "technique",
       "weapon"
     ],
@@ -346,8 +344,8 @@
       "combatType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
       "critic": { "value": "-" },
-      "visible": { "value": false },
-      "macro": { "value": "" },
+      "visible": false,
+      "macro": "",
       "grades": {
         "base": {
           "name": { "value": "" },
@@ -396,11 +394,11 @@
       },
       "actionType": { "value": "active" },
       "combatType": { "value": "attack" },
-      "discipline": { "value": "matrial" },
+      "discipline": { "value": "matrixPowers" },
       "critic": { "value": "-" },
-      "macro": { "value": "" },
+      "macro": "",
       "hasMaintenance": { "value": false },
-      "visible": { "value": false },
+      "visible": false,
       "bonus": { "value": 0 }
     },
     "technique": {

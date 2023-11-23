@@ -1,0 +1,86 @@
+@import '../variable';
+
+.new-supernatural-shield {
+  height: auto !important;
+
+
+  .window-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .common-group {
+    height: 100%;
+  }
+
+  .sheet-tabs {
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: inherit;
+
+    margin-bottom: 0.75rem;
+
+    border-top: 1px solid $red;
+    border-bottom: 1px solid $red;
+
+    .item {
+      background: transparent;
+      border-radius: $border-radius;
+      color: $black;
+      font-weight: 600;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .active {
+      text-shadow: none;
+      background-color: $red;
+      color: $white;
+      font-weight: 600;
+    }
+  }
+
+  .group-body {
+    overflow-y: scroll;
+    height: 100%;
+    margin-top: -2rem;
+
+    .attack-sent,
+    .mystic-attack-sent,
+    .psychic-attack-sent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      margin-top: 2rem;
+
+      .label {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .abf-button {
+      margin-top: 2rem;
+    }
+
+    .columns {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hr {
+      border-bottom: 1px solid $red;
+    }
+  }
+}

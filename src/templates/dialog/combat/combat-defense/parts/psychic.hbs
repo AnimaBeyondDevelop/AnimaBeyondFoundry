@@ -14,7 +14,7 @@
   inputValue=this.defender.psychic.psychicProjection.final
 }}
 
-{{#if this.defender.psychic.newShield}}
+{{#if this.defender.psychic.supernaturalShield.newShield}}
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.psychicPotential.title')
@@ -41,19 +41,21 @@
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.psychicShield.title')
   disabled=this.defenseSent
-  inputName='defender.psychic.shieldUsed'
+  inputName='defender.psychic.supernaturalShield.shieldUsed'
 }}
-  {{#each this.defender.actor.system.psychic.psychicShields}}
-    <option {{#if (is "eq" this._id ../this.defender.psychic.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-  {{/each}}
+  {{#each_when this.defender.actor.system.combat.supernaturalShields "system" "type" "" "psychic"}}
+    {{#if (is "eq" this.system.origin ../this.defender.actor.uuid)}}
+      <option {{#if (is "eq" this._id ../this.defender.psychic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+    {{/if}}
+  {{/each_when}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.shieldValue.title")
   disabled=this.defenseSent
-  inputName="defender.psychic.shieldValue"
-  inputValue=this.defender.psychic.shieldValue
+  inputName="defender.psychic.supernaturalShield.shieldValue"
+  inputValue=this.defender.psychic.supernaturalShield.shieldValue
 }}
 {{/if}}
 
@@ -63,8 +65,8 @@
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.newShield.title')
       inputType="checkbox"
-      inputName="defender.psychic.newShield"
-      inputValue=(is 'eq' defender.psychic.newShield true)
+      inputName="defender.psychic.supernaturalShield.newShield"
+      inputValue=(is 'eq' defender.psychic.supernaturalShield.newShield true)
     }}
   </div>
 </div>

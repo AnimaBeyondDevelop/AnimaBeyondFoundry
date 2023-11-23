@@ -6,13 +6,13 @@ import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 import { INITIAL_ARMOR_DATA } from './combat/ArmorItemConfig';
+import { INITIAL_SUPERNATURAL_SHIELD_DATA } from './combat/SupernaturalShieldItemConfig';
 import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
 import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
 import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
-import { INITIAL_MYSTIC_SHIELD_DATA } from './mystic/MysticShieldItemConfig';
-import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './mystic/PsychicDisciplineItemConfig';
+import { INITIAL_PREPARED_SPELL_DATA } from './mystic/PreparedSpellItemConfig';
+import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './psychic/PsychicDisciplineItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
-import { INITIAL_PSYCHIC_SHIELD_DATA } from './psychic/PsychicShieldItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
 
 /**
@@ -262,6 +262,11 @@ export type ArsMagnusDataSource = ABFItemBaseDataSource<ArsMagnusItemData>;
 export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 export type ArsMagnusItemConfig = ABFItemConfig<ArsMagnusItemData>;
 
+export type SupernaturalShieldItemData = typeof INITIAL_SUPERNATURAL_SHIELD_DATA;
+export type SupernaturalShieldDataSource = ABFItemBaseDataSource<SupernaturalShieldItemData>;
+export type SupernaturalShieldChanges = ItemChanges<SupernaturalShieldItemData>;
+export type SupernaturalShieldItemConfig = ABFItemConfig<SupernaturalShieldItemData>;
+
 export type CreatureItemData = {
   fire: { value: unknown };
   water: { value: unknown };
@@ -324,21 +329,10 @@ export type InnateMagicViaDataSource = ABFItemBaseDataSource<InnateMagicViaItemD
 export type InnateMagicViaChanges = ItemChanges<InnateMagicViaItemData>;
 export type InnateMagicViaItemConfig = ABFItemConfig<InnateMagicViaItemData>;
 
-export type PreparedSpellItemData = {
-  system: {
-    grade: { value: string };
-    zeonAcc: { value: number, max: number };
-    prepared: { value: boolean };
-  };
-};
+export type PreparedSpellItemData = typeof INITIAL_PREPARED_SPELL_DATA;
 export type PreparedSpellDataSource = ABFItemBaseDataSource<PreparedSpellItemData>;
 export type PreparedSpellChanges = ItemChanges<PreparedSpellItemData>;
 export type PreparedSpellItemConfig = ABFItemConfig<PreparedSpellItemData>;
-
-export type MysticShieldItemData = typeof INITIAL_MYSTIC_SHIELD_DATA;
-export type MysticShieldDataSource = ABFItemBaseDataSource<MysticShieldItemData>;
-export type MysticShieldChanges = ItemChanges<MysticShieldItemData>;
-export type MysticShieldItemConfig = ABFItemConfig<MysticShieldItemData>;
 
 export type SpellItemData = typeof INITIAL_MYSTIC_SPELL_DATA;
 export type SpellDataSource = ABFItemBaseDataSource<SpellItemData>;
@@ -384,11 +378,6 @@ export type PsychicDisciplineItemData = typeof INITIAL_PSYCHIC_DISCIPLINE_DATA;
 export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;
-
-export type PsychicShieldItemData = typeof INITIAL_PSYCHIC_SHIELD_DATA;
-export type PsychicShieldDataSource = ABFItemBaseDataSource<PsychicShieldItemData>;
-export type PsychicShieldChanges = ItemChanges<PsychicShieldItemData>;
-export type PsychicShieldItemConfig = ABFItemConfig<PsychicShieldItemData>;
 
 export type PsychicPowerItemData = typeof INITIAL_PSYCHIC_POWER_DATA;
 export type PsychicPowerDataSource = ABFItemBaseDataSource<PsychicPowerItemData>;

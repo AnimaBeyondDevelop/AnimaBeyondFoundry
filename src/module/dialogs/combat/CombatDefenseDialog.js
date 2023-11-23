@@ -1,8 +1,6 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
-import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
-import { energyCheck } from '../../combat/utils/energyCheck.js';
-import { mysticSpellCastEvaluate } from '../../combat/utils/mysticSpellCastEvaluate.js';
+import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
 import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { psychicFatigue } from '../../combat/utils/psychicFatigue.js';
 import { psychicImbalanceCheck } from '../../combat/utils/psychicImbalanceCheck.js';
@@ -28,6 +26,11 @@ const getInitialData = (attacker, defender) => {
     defenderActor.system.general.settings.defenseType.value === 'resistance'
       ? 'damageResistance'
       : 'combat';
+
+  const defensesCounter = defenderActor.getFlag('animabf', 'defensesCounter') || {
+    accumulated: 0,
+    keepAccumulating: true
+  };
 
   return {
     ui: {
@@ -57,9 +60,6 @@ const getInitialData = (attacker, defender) => {
       blindnessPen: 0,
       distance: attacker.distance,
       specificAttack: { characteristic: undefined },
-      zen: false,
-      inhuman: false,
-      inmaterial: false,
       specialType: {
         material: true,
         inmaterial: false,
@@ -69,18 +69,25 @@ const getInitialData = (attacker, defender) => {
         attackSpellLight: false,
         attackSpellDarkness: false
       },
+      zen: defenderActor.system.general.settings.zen.value,
+      inhuman: defenderActor.system.general.settings.inhuman.value,
+      inmaterial: defenderActor.system.general.settings.inmaterial.value,
       combat: {
-        fatigue: 0,
-        multipleDefensesPenalty: 0,
-        accumulateDefenses: true,
+        fatigueUsed: 0,
+        multipleDefensesPenalty: defensesCounterCheck(defensesCounter.accumulated),
+        accumulateDefenses: defensesCounter.keepAccumulating,
         modifier: 0,
         weaponUsed: undefined,
         weapon: undefined,
         unarmed: false,
         at: {
           special: 0,
-          final: 0,
-          defense: false
+          final: 0
+        },
+        supernaturalShield: {
+          shieldUsed: undefined,
+          shieldValue: 0,
+          newShield: true
         }
       },
       mystic: {
@@ -95,13 +102,15 @@ const getInitialData = (attacker, defender) => {
         spellGrade: 'base',
         spellCasting: {
           zeon: { accumulated: 0, cost: 0 },
-          spell: { prepared: false, innate: false },
-          cast: { prepared: false, innate: false },
+          canCast: { prepared: false, innate: false },
+          casted: { prepared: false, innate: false },
           override: { value: false, ui: false }
         },
-        shieldUsed: undefined,
-        shieldValue: 0,
-        newShield: false
+        supernaturalShield: {
+          shieldUsed: undefined,
+          shieldValue: 0,
+          newShield: true
+        }
       },
       psychic: {
         modifier: 0,
@@ -117,9 +126,11 @@ const getInitialData = (attacker, defender) => {
             defenderActor.system.psychic.psychicProjection.imbalance.defensive.final.value
         },
         powerUsed: undefined,
-        shieldUsed: undefined,
-        shieldValue: 0,
-        newShield: false
+        supernaturalShield: {
+          shieldUsed: undefined,
+          shieldValue: 0,
+          newShield: true
+        }
       },
       resistance: {
         surprised: false
@@ -163,79 +174,87 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.defender.combat.at.defense = true;
     }
 
-    const { weapons } = this.defenderActor.system.combat;
+    const { psychic, mystic, combat } = this.modalData.defender;
+    const { weapons, supernaturalShields } = this.defenderActor.system.combat;
     const { spells } = this.defenderActor.system.mystic;
-    const { mysticShields } = this.defenderActor.system.mystic;
     const { psychicPowers } = this.defenderActor.system.psychic;
-    const { psychicShields } = this.defenderActor.system.psychic;
-    const { psychic } = this.modalData.defender;
-    const { mystic } = this.modalData.defender;
 
     if (psychicPowers.length > 0) {
       const lastDefensivePowerUsed = this.defenderActor.getFlag(
-        'world',
-        `${this.defenderActor._id}.lastDefensivePowerUsed`
+        'animabf',
+        'lastDefensivePowerUsed'
       );
-      psychic.powerUsed =
-        lastDefensivePowerUsed ||
-        psychicPowers.filter(w => w.system.combatType.value === 'attack')[0]?._id;
+      if (psychicPowers.find(w => w._id === lastDefensivePowerUsed)) {
+        psychic.powerUsed = lastDefensivePowerUsed;
+      } else {
+        psychic.powerUsed = psychicPowers.find(
+          w => w.system.combatType.value === 'defense'
+        )?._id;
+      }
       const power = psychicPowers.find(w => w._id === psychicPowers.powerUsed);
       this.defenderActor.system.psychic.psychicPotential.special =
         power?.system.bonus.value;
     }
 
-    if (psychicShields.length > 0) {
-      const psychicShield = psychicShields.filter(
-        w => w.system.shieldPoints?.value > 0
-      )[0];
-      psychic.shieldUsed = psychicShield?._id;
-      psychic.shieldValue = psychicShield?.system.shieldPoints?.value;
-    } else {
-      psychic.newShield = true;
-    }
-
     if (spells.length > 0) {
       const lastDefensiveSpellUsed = this.defenderActor.getFlag(
-        'world',
-        `${this.defenderActor._id}.lastDefensiveSpellUsed`
+        'animabf',
+        'lastDefensiveSpellUsed'
       );
-      mystic.spellUsed =
-        lastDefensiveSpellUsed ||
-        spells.filter(w => w.system.combatType.value === 'defense')[0]?._id;
+      if (spells.find(w => w._id === lastDefensiveSpellUsed)) {
+        mystic.spellUsed = lastDefensiveSpellUsed;
+      } else {
+        mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
+      }
       const spell = spells.find(w => w._id === mystic.spellUsed);
       mystic.spellCasting.zeon.accumulated =
         this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
-      const mysticSpellCheck = mysticSpellCastEvaluate(
-        this.defenderActor,
-        spell,
-        mystic.spellGrade
-      );
-      mystic.spellCasting.spell = mysticSpellCheck;
+      const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);
+      mystic.spellCasting.canCast = canCast;
       const spellCastingOverride = this.defenderActor.getFlag(
-        'world',
-        `${this.defenderActor._id}.spellCastingOverride`
+        'animabf',
+        'spellCastingOverride'
       );
       mystic.spellCasting.override.value = spellCastingOverride || false;
       mystic.spellCasting.override.ui = spellCastingOverride || false;
     }
 
-    if (mysticShields.length > 0) {
-      mystic.shieldUsed = mysticShields.filter(
-        w => w.system.shieldPoints?.value > 0
-      )[0]?._id;
-    } else {
-      mystic.newShield = true;
+    if (supernaturalShields.length > 0) {
+      const mysticShield = supernaturalShields.find(
+        w => w.system.type === 'mystic' && w.system.origin === this.defenderActor.uuid
+      );
+      if (mysticShield) {
+        mystic.supernaturalShield = {
+          shieldUsed: mysticShield?._id,
+          shieldValue: mysticShield?.system.shieldPoints,
+          newShield: false
+        };
+      }
+
+      const psychicShield = supernaturalShields.find(
+        w => w.system.type === 'psychic' && w.system.origin === this.defenderActor.uuid
+      );
+      if (psychicShield) {
+        psychic.supernaturalShield = {
+          shieldUsed: psychicShield?._id,
+          shieldValue: psychicShield?.system.shieldPoints,
+          newShield: false
+        };
+      }
     }
 
     if (weapons.length > 0) {
       const lastDefensiveWeaponUsed = this.defenderActor.getFlag(
-        'world',
-        `${this.defenderActor._id}.lastDefensiveWeaponUsed`
+        'animabf',
+        'lastDefensiveWeaponUsed'
       );
-      this.modalData.defender.combat.weaponUsed =
-        lastDefensiveWeaponUsed || weapons[0]._id;
+      if (weapons.find(weapon => weapon._id == lastDefensiveWeaponUsed)) {
+        combat.weaponUsed = lastDefensiveWeaponUsed;
+      } else {
+        combat.weaponUsed = weapons[0]._id;
+      }
     } else {
-      this.modalData.defender.combat.unarmed = true;
+      combat.unarmed = true;
     }
     const perceiveMystic =
       this.defenderActor.system.general.settings.perceiveMystic.value;
@@ -263,40 +282,11 @@ export class CombatDefenseDialog extends FormApplication {
       }
     }
 
-    let at;
-    if (!this.modalData.attacker.specificAttack.causeDamage) {
-      at = 0;
-    } else if (this.modalData.attacker.critic !== NoneWeaponCritic.NONE) {
-      switch (this.modalData.attacker.critic) {
-        case WeaponCritic.CUT:
-          at = this.defenderActor.system.combat.totalArmor.at.cut.final.value;
-          break;
-        case WeaponCritic.IMPACT:
-          at = this.defenderActor.system.combat.totalArmor.at.impact.final.value;
-          break;
-        case WeaponCritic.THRUST:
-          at = this.defenderActor.system.combat.totalArmor.at.thrust.final.value;
-          break;
-        case WeaponCritic.HEAT:
-          at = this.defenderActor.system.combat.totalArmor.at.heat.final.value;
-          break;
-        case WeaponCritic.ELECTRICITY:
-          at = this.defenderActor.system.combat.totalArmor.at.electricity.final.value;
-          break;
-        case WeaponCritic.COLD:
-          at = this.defenderActor.system.combat.totalArmor.at.cold.final.value;
-          break;
-        case WeaponCritic.ENERGY:
-          at = this.defenderActor.system.combat.totalArmor.at.energy.final.value;
-          break;
-        default:
-          at = undefined;
-      }
-    }
+    let critic = this.modalData.attacker.critic;
+    let at = this.defenderActor.system.combat.totalArmor.at[critic]?.value;
 
     if (at !== undefined) {
-      this.modalData.defender.combat.at.final =
-        this.modalData.defender.combat.at.special + at;
+      combat.at.final = combat.at.special + at;
     }
 
     this.hooks = hooks;
@@ -347,7 +337,7 @@ export class CombatDefenseDialog extends FormApplication {
     html.find('.send-defense').click(e => {
       const {
         combat: {
-          fatigue,
+          fatigueUsed,
           modifier,
           weapon,
           multipleDefensesPenalty,
@@ -361,17 +351,20 @@ export class CombatDefenseDialog extends FormApplication {
         inmaterial,
         specificAttack
       } = this.modalData.defender;
-      this.defenderActor.setFlag(
-        'world',
-        `${this.defenderActor._id}.lastDefensiveWeaponUsed`,
-        weaponUsed
-      );
+      this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
       let baseDefense;
-      let unableToDefense = false;
-      let combatModifier = blindnessPen;
+      const defenderCombatMod = {
+        modifier: { value: modifier, apply: true },
+        blindnessPen: { value: blindnessPen, apply: true },
+        fatigueUsed: { value: fatigueUsed * 15, apply: true },
+        multipleDefensesPenalty: {
+          value: multipleDefensesPenalty,
+          apply: true
+        }
+      };
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
@@ -383,26 +376,12 @@ export class CombatDefenseDialog extends FormApplication {
           projectileType == 'shot' &&
           !maestry
         ) {
-          combatModifier -= 30;
+          defenderCombatMod.dodgeProjectile = {
+            value: -30,
+            apply: true
+          };
         }
       } else {
-        const attackerSpecialType = this.modalData.attacker.specialType;
-        let defenderSpecialType = this.modalData.defender.specialType;
-        if (attackerSpecialType == 'inmaterial' && !inmaterial) {
-          unableToDefense = true;
-        }
-        if (
-          energyCheck(weapon?.system.critic.primary.value) ||
-          energyCheck(weapon?.system.critic.secondary.value)
-        ) {
-          unableToDefense = false;
-        } else if (defenderSpecialType[attackerSpecialType] == false) {
-          if (attackerSpecialType == 'energy') {
-            combatModifier -= 120;
-          } else {
-            unableToDefense = true;
-          }
-        }
         value = weapon
           ? weapon.system.block.final.value
           : this.defenderActor.system.combat.block.final.value;
@@ -413,18 +392,30 @@ export class CombatDefenseDialog extends FormApplication {
           if (projectileType == 'shot') {
             if (!maestry) {
               if (!isShield) {
-                combatModifier -= 80;
+                defenderCombatMod.parryProjectile = {
+                  value: -80,
+                  apply: true
+                };
               } else {
-                combatModifier -= 30;
+                defenderCombatMod.shieldParryProjectile = {
+                  value: -30,
+                  apply: true
+                };
               }
             } else if (!isShield) {
-              combatModifier -= 20;
+              defenderCombatMod.maestryParryProjectile = {
+                value: -20,
+                apply: true
+              };
             }
           }
           if (projectileType == 'throw') {
             if (!maestry) {
               if (!isShield) {
-                combatModifier -= 50;
+                defenderCombatMod.parryThrow = {
+                  value: -50,
+                  apply: true
+                };
               }
             }
           }
@@ -439,9 +430,11 @@ export class CombatDefenseDialog extends FormApplication {
         atResValue += at.final * 10 + 20;
       }
 
-      let formula = `1d100xa + ${newModifier} + ${fatigue ?? 0} * 15 - ${
-        (multipleDefensesPenalty ?? 0) * -1
-      } + ${value}`;
+      let combatModifier = 0;
+      for (const key in defenderCombatMod) {
+        combatModifier += defenderCombatMod[key]?.value ?? 0;
+      }
+      let formula = `1d100xa + ${combatModifier} + ${value}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -470,20 +463,14 @@ export class CombatDefenseDialog extends FormApplication {
 
       const reducedDamage = this.defenderActor.system.combat.incomingDamageReduction.value;
 
-      const rolled =
-        roll.total -
-        newModifier -
-        (fatigue ?? 0) * 15 -
-        (multipleDefensesPenalty ?? 0) -
-        value;
+      const rolled = roll.total - combatModifier - value;
 
       this.hooks.onDefense({
         type: 'combat',
         values: {
           type,
-          multipleDefensesPenalty,
-          modifier: newModifier,
-          fatigue,
+          modifier: combatModifier,
+          fatigueUsed,
           at: at.final,
           defense: value,
           roll: rolled,
@@ -493,7 +480,8 @@ export class CombatDefenseDialog extends FormApplication {
           accumulateDefenses,
           specificAttack,
           lifePoints,
-          reducedDamage
+          reducedDamage,
+          defenderCombatMod
         }
       });
 
@@ -519,7 +507,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.render();
     });
 
-    html.find('.send-mystic-defense').click(() => {
+    html.find('.send-mystic-defense').click(async () => {
       const {
         mystic: {
           magicProjection,
@@ -527,43 +515,38 @@ export class CombatDefenseDialog extends FormApplication {
           spellUsed,
           spellGrade,
           spellCasting,
-          shieldUsed,
-          newShield
+          supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
         lifePoints,
         blindnessPen,
         specificAttack
       } = this.modalData.defender;
-      const { spells, mysticShields } = this.defenderActor.system.mystic;
+      const { i18n } = game;
+      const { spells } = this.defenderActor.system.mystic;
+      const { supernaturalShields } = this.defenderActor.system.combat;
       let spell,
-        supShield = { create: false },
-        atResValue = 0;
-      if (at.defense) {
-        atResValue += at.final * 10 + 20;
-      }
-
-      const newModifier = blindnessPen + modifier ?? 0;
+        supShield = { create: false };
+      const defenderCombatMod = {
+        modifier: { value: modifier, apply: true },
+        blindnessPen: { value: blindnessPen, apply: true }
+      };
 
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            'No tienes escudos místicos activos, has click en Escudo nuevo'
+            i18n.localize('macros.combat.dialog.warning.supernaturalShield.mystic')
           );
         }
-        spell = mysticShields.find(w => w._id === shieldUsed);
+        spell = supernaturalShields.find(w => w._id === shieldUsed);
         supShield = { ...spell, create: false, id: shieldUsed };
       } else if (spellUsed) {
         this.defenderActor.setFlag(
-          'world',
-          `${this.defenderActor._id}.spellCastingOverride`,
+          'animabf',
+          'spellCastingOverride',
           spellCasting.override.value
         );
-        this.defenderActor.setFlag(
-          'world',
-          `${this.defenderActor._id}.lastDefensiveSpellUsed`,
-          spellUsed
-        );
+        this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         let evaluateCastMsj = evaluateCast(spellCasting);
@@ -571,21 +554,22 @@ export class CombatDefenseDialog extends FormApplication {
           spellCasting.override.ui = true;
           return evaluateCastMsj;
         }
-        const spellEffect = shieldValueCheck(
-          spell?.system.grades[spellGrade].description.value ?? ''
-        );
-        supShield = {
-          name: spell.name,
-          system: {
-            grade: { value: spellGrade },
-            damageBarrier: { value: 0 },
-            shieldPoints: { value: spellEffect[0] }
-          },
-          create: true
-        };
+        const supernaturalShieldData =
+          await this.modalData.defender.actor.supernaturalShieldData(
+            'mystic',
+            {},
+            0,
+            spell,
+            spellGrade
+          );
+        supShield = { ...supernaturalShieldData, create: true };
       }
 
-      let formula = `1d100xa + ${magicProjection.final} + ${newModifier}`;
+      let combatModifier = 0;
+      for (const key in defenderCombatMod) {
+        combatModifier += defenderCombatMod[key]?.value ?? 0;
+      }
+      let formula = `1d100xa + ${magicProjection.final} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -598,8 +582,6 @@ export class CombatDefenseDialog extends FormApplication {
       roll.roll();
 
       if (this.modalData.defender.showRoll) {
-        const { i18n } = game;
-
         const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
           spell: spell.name,
           target: this.modalData.attacker.token.name
@@ -611,21 +593,12 @@ export class CombatDefenseDialog extends FormApplication {
         });
       }
 
-      let unableToDefense = false,
-        dobleDamage = false,
-        cantDamage = false;
-      const attackerSpecialType = this.modalData.attacker.specialType;
-      const shieldCheck = shieldSupernaturalCheck(spell.name, attackerSpecialType);
-      unableToDefense = shieldCheck[0];
-      dobleDamage = shieldCheck[1];
-      cantDamage = shieldCheck[2];
-
-      const rolled = roll.total - magicProjection.final - newModifier;
+      const rolled = roll.total - magicProjection.final - combatModifier;
 
       this.hooks.onDefense({
         type: 'mystic',
         values: {
-          modifier: newModifier,
+          modifier: combatModifier,
           magicProjection: magicProjection.final,
           spellGrade,
           spellUsed,
@@ -633,14 +606,11 @@ export class CombatDefenseDialog extends FormApplication {
           at: at.final,
           roll: rolled,
           total: roll.total,
-          unableToDefense,
-          dobleDamage,
-          cantDamage,
-          atResValue,
           spellCasting,
           supShield,
           specificAttack,
-          lifePoints
+          lifePoints,
+          defenderCombatMod
         }
       });
 
@@ -649,29 +619,37 @@ export class CombatDefenseDialog extends FormApplication {
       this.render();
     });
 
-    html.find('.send-psychic-defense').click(() => {
+    html.find('.send-psychic-defense').click(async () => {
       const {
-        psychic: { psychicPotential, psychicProjection, powerUsed, modifier, shieldUsed, newShield },
+        psychic: {
+          psychicPotential,
+          powerUsed,
+          modifier,
+          supernaturalShield: { shieldUsed, newShield }
+        },
         combat: { at },
-        lifePoints,
-        blindnessPen,
-        specificAttack,
-        inhuman,
-        zen
+        blindnessPen
       } = this.modalData.defender;
       const { i18n } = game;
-      const { psychicPowers, psychicShields} = this.defenderActor.system.psychic;
+      const { psychicPowers } = this.defenderActor.system.psychic;
+      const { supernaturalShields } = this.defenderActor.system.combat;
       let power,
-        fatigueCheck,
-        atResValue = 0,
+        fatigue,
         supShield = { create: false },
         newPsychicPotential;
-      if (at.defense) {
-        atResValue += at.final * 10 + 20;
-      }
 
-      const newModifier = blindnessPen + modifier ?? 0;
-      let formula = `1d100xa + ${psychicProjection.final} + ${newModifier}`;
+      const defenderCombatMod = {
+        modifier: { value: modifier, apply: true },
+        blindnessPen: { value: blindnessPen, apply: true }
+      };
+      const psychicProjection =
+        this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
+          .value;
+      let combatModifier = 0;
+      for (const key in defenderCombatMod) {
+        combatModifier += defenderCombatMod[key]?.value ?? 0;
+      }
+      let formula = `1d100xa + ${psychicProjection} + ${combatModifier}`;
       if (this.modalData.defender.withoutRoll) {
         // Remove the dice from the formula
         formula = formula.replace('1d100xa', '0');
@@ -681,124 +659,87 @@ export class CombatDefenseDialog extends FormApplication {
         formula = formula.replace('xa', 'xamastery');
       }
 
-      const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
-      roll.roll();
-      const rolled = roll.total - psychicProjection.final - newModifier;
+      const psychicProjectionRoll = new ABFFoundryRoll(
+        formula,
+        this.defenderActor.system
+      );
+      psychicProjectionRoll.roll();
+      const rolled = psychicProjectionRoll.total - psychicProjection - combatModifier;
 
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            'No tienes escudos psíquicos activos, has click en Escudo nuevo'
+            i18n.localize('macros.combat.dialog.warning.supernaturalShield.psychic')
           );
         }
-        power = psychicShields.find(w => w._id === shieldUsed);
+        power = supernaturalShields.find(w => w._id === shieldUsed);
         supShield = { ...power, create: false, id: shieldUsed };
       } else if (powerUsed) {
-        this.defenderActor.setFlag(
-          'world',
-          `${this.defenderActor._id}.lastDefensivePowerUsed`,
-          powerUsed
-        );
+        this.defenderActor.setFlag('animabf', 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
         const psychicPotentialRoll = new ABFFoundryRoll(
-          `1d100xa + ${psychicPotential.final}`,
-          this.modalData.defender.actor.system
+          `1d100PsychicRoll + ${psychicPotential.final}`,
+          { ...this.defenderActor.system, power }
         );
         psychicPotentialRoll.roll();
         newPsychicPotential = psychicPotentialRoll.total;
-        let imbalance = psychicImbalanceCheck(this.defenderActor, power) ?? 0;
-        const newPotentialBase = psychicPotentialEffect(
-          psychicPotential.base,
-          0,
-          inhuman,
-          zen
-        );
-        const newPotentialTotal = psychicPotentialEffect(
-          psychicPotentialRoll.total,
-          imbalance,
-          inhuman,
-          zen
-        );
-        const baseEffect = shieldBaseValueCheck(newPotentialBase, power?.system.effects);
-        const finalEffect = shieldValueCheck(
-          power?.system.effects[newPotentialTotal].value ?? ''
-        );
-        const fatigueInmune = this.defenderActor.system.general.advantages.find(
-          i => i.name === 'Res. a la fatiga psíquica'
-        );
-        fatigueCheck = psychicFatigue(
-          power?.system.effects[newPotentialTotal].value,
-          fatigueInmune
-        );
-        const fatiguePen = fatigueCheck[1];
-        const maintain = baseEffect[0] >= finalEffect[0];
-
-        if (fatigueCheck[0]) {
-          psychicPotentialRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-            flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
-              fatiguePen
-            })
-          });
-          this.defenderActor.applyFatigue(fatiguePen);
-        } else {
-          supShield = {
-            name: power.name,
-            system: {
-              maintain: { value: maintain },
-              damageBarrier: { value: 0 },
-              shieldPoints: {
-                value: finalEffect[0],
-                maintainMax: baseEffect[0]
-              }
-            },
-            create: true
-          };
+        if (this.modalData.defender.showRoll) {
           psychicPotentialRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
             flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
           });
         }
+
+        fatigue = await this.defenderActor.evaluatePsychicFatigue(
+          power,
+          psychicPotentialRoll.total,
+          this.modalData.attacker.showRoll
+        );
+
+        if (!fatigue) {
+          const supernaturalShieldData =
+            await this.modalData.defender.actor.supernaturalShieldData(
+              'psychic',
+              power,
+              psychicPotentialRoll.total
+            );
+          supShield = { ...supernaturalShieldData, create: true };
+        }
       }
 
-      let unableToDefense = false;
-      const attackerSpecialType = this.modalData.attacker.specialType;
-      const shieldCheck = shieldSupernaturalCheck(power.name, attackerSpecialType);
-      unableToDefense = shieldCheck[0];
-      if (
-        this.modalData.defender.showRoll &&
-        (fatigueCheck == undefined || !fatigueCheck[0])
-      ) {
-        const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
-          power: power.name,
-          target: this.modalData.attacker.token.name
-        });
+      if (!fatigue) {
+        if (this.modalData.defender.showRoll) {
+          const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
+            power: power.name,
+            target: this.modalData.attacker.token.name
+          });
 
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
-          flavor
-        });
-      } else {
-        unableToDefense = true;
+          psychicProjectionRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+            flavor
+          });
+        }
       }
 
       this.hooks.onDefense({
         type: 'psychic',
         values: {
-          modifier: newModifier,
+          modifier: combatModifier,
           powerUsed,
           psychicProjection: psychicProjection.final,
           psychicPotential: newPsychicPotential ?? 0,
           at: at.final,
           roll: rolled,
-          total: roll.total,
           unableToDefense,
           dobleDamage: false,
           cantDamage: false,
           atResValue,
-          supShield,
           specificAttack,
-          lifePoints
+          lifePoints,
+          total: psychicProjectionRoll.total,
+          fatigue,
+          supShield,
+          defenderCombatMod
         }
       });
 
@@ -818,9 +759,9 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { psychicPowers } = this.defenderActor.system.psychic;
     if (!psychic.powerUsed) {
-      psychic.powerUsed = psychicPowers.filter(
+      psychic.powerUsed = psychicPowers.find(
         w => w.system.combatType.value === 'defense'
-      )[0]?._id;
+      )?._id;
     }
     const power = psychicPowers.find(w => w._id === psychic.powerUsed);
     let psychicBonus = power?.system.bonus.value ?? 0;
@@ -829,41 +770,40 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.system.psychic.psychicPotential.final.value +
       psychicBonus;
 
-    const { psychicShields } = this.defenderActor.system.psychic;
-    if (!psychic.shieldUsed) {
-      psychic.shieldUsed = psychicShields.filter(
-        w => w.system.shieldPoints?.value > 0
-      )[0];
-    }
-    const psychicShield = psychicShields.find(w => w._id === psychic.shieldUsed);
-    psychic.shieldValue = psychicShield?.system.shieldPoints?.value ?? 0;
-
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.filter(
-        w => w.system.combatType.value === 'attack'
-      )[0]?._id;
+      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    const mysticSpellCheck = mysticSpellCastEvaluate(
-      this.defenderActor,
-      spell,
-      mystic.spellGrade
-    );
-    mystic.spellCasting.spell = mysticSpellCheck;
-    if (!mystic.spellCasting.spell.innate) {
-      mystic.spellCasting.cast.innate = false;
+    const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);
+    mystic.spellCasting.canCast = canCast;
+    if (!mystic.spellCasting.canCast.innate) {
+      mystic.spellCasting.casted.innate = false;
     }
-    if (!mystic.spellCasting.spell.prepared) {
-      mystic.spellCasting.cast.prepared = false;
+    if (!mystic.spellCasting.canCast.prepared) {
+      mystic.spellCasting.casted.prepared = false;
     }
 
-    const { mysticShields } = this.defenderActor.system.mystic;
-    if (!mystic.shieldUsed) {
-      mystic.shieldUsed = mysticShields.filter(w => w.system.shieldPoints?.value > 0)[0];
+    const { supernaturalShields } = this.defenderActor.system.combat;
+    if (!mystic.supernaturalShield.shieldUsed) {
+      mystic.supernaturalShield.shieldUsed = supernaturalShields.find(
+        w => w.system.type === 'mystic' && w.system.origin === this.defenderActor.uuid
+      );
     }
-    const mysticShield = mysticShields.find(w => w._id === mystic.shieldUsed);
-    mystic.shieldValue = mysticShield?.system.shieldPoints?.value ?? 0;
+    const mysticShield = supernaturalShields.find(
+      w => w._id === mystic.supernaturalShield.shieldUsed
+    );
+    mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
+
+    if (!psychic.supernaturalShield.shieldUsed) {
+      psychic.supernaturalShield.shieldUsed = supernaturalShields.find(
+        w => w.system.type === 'psychic' && w.system.origin === this.defenderActor.uuid
+      );
+    }
+    const psychicShield = supernaturalShields.find(
+      w => w._id === psychic.supernaturalShield.shieldUsed
+    );
+    psychic.supernaturalShield.shieldValue = psychicShield?.system.shieldPoints ?? 0;
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);

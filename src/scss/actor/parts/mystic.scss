@@ -266,26 +266,6 @@
     }
     // Prepared Spells
 
-    // Mystic Shields
-    .mystic-shields {
-      .mystic-shield-row:first-child {
-        margin-top: 0;
-      }
-
-      .mystic-shield-row {
-        margin-top: 0.75rem;
-
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-column-gap: 0.1rem;
-
-        .name .input-container {
-          width: 100%;
-        }
-      }
-    }
-    // Mystic Shields
-
     // Summons
     .summons {
       .summon-row:first-child {
@@ -329,6 +309,7 @@
   }
 
   .mystic-spells-tab {
+    // Spells
     .spells {
       & > .group-body {
         display: flex;
@@ -367,7 +348,15 @@
             display: flex;
             justify-content: space-between;
 
-            .level, .via {
+            .level {
+              .input {
+                height: 1.5rem;
+              }
+              .input-container {
+                width: 2.5rem;
+              }
+            }
+            .via {
               .input {
                 height: 1.5rem;
               }
@@ -396,7 +385,7 @@
         .intermediate-grade,
         .advanced-grade {
           .grade-name {
-            min-width: 5rem;
+            min-width: 4.5rem;
           }
         }
 
@@ -404,9 +393,11 @@
           display: flex;
           justify-content: start;
 
-          .int-required {
+          .int-required,
+          .zeon,
+          .maintenance-cost {
             .input-container {
-              width: 3.5rem;
+              width: 3rem;
             }
           }
 
@@ -430,8 +421,14 @@
           .input {
             height: 1.5rem;
           }
+          .has-daily-maintenance {
+            .input-container {
+              width: 1rem;
+            }
+          }
         }
       }
     }
+    // Spells
   }
 }

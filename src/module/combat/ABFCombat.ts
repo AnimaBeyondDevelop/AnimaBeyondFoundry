@@ -21,7 +21,32 @@ export default class ABFCombat extends Combat {
     await this.resetAll();
     this.setFlag('world', 'newRound', true);
 
+    const combatants = this.combatants.map(c => c.token)
+    if (combatants.length !== 0) {
+      for (let token of combatants) {
+        token?.actor?.resetDefensesCounter();
+        token?.actor?.consumeMaintainedZeon();
+        token?.actor?.psychicShieldsMaintaining();
+      }
+    }
+
     return super.nextRound();
+  }
+
+  async previousRound() {
+    // Reset initiative for everyone when going to the next round
+    await this.resetAll();
+
+    const combatants = this.combatants.map(c => c.token)
+    if (combatants.length !== 0) {
+      for (let token of combatants) {
+        const revert = true
+        token?.actor?.consumeMaintainedZeon(revert);
+        token?.actor?.psychicShieldsMaintaining(revert);
+      }
+    }
+
+    return super.previousRound();
   }
 
   prepareDerivedData() {

@@ -3,6 +3,7 @@ import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 import ABFControlRoll from './ABFControlRoll/ABFControlRoll';
 import ABFCriticRoll from './ABFCriticRoll/ABFCriticRoll';
+import ABFPsychicRoll from './ABFPsychicRoll/ABFPsychicRoll';
 import { ABFActorDataSourceData } from '../types/Actor';
 
 /**
@@ -12,7 +13,11 @@ import { ABFActorDataSourceData } from '../types/Actor';
 export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
   private readonly abfRoll: ABFRoll | undefined;
 
-  constructor(rawFormula: string, data?: ABFActorDataSourceData, options?: Partial<RollTerm.EvaluationOptions>) {
+  constructor(
+    rawFormula: string,
+    data?: ABFActorDataSourceData,
+    options?: Partial<RollTerm.EvaluationOptions>
+  ) {
     let formula = rawFormula.trim();
 
     // In FoundryVTT 0.8.8 I don't know why but the system inserts at the end a "+ "
@@ -39,8 +44,11 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
       this.abfRoll = new ABFControlRoll(this);
     }
 
-    if (this.formula.includes('CriticRoll')) {
-      this.abfRoll = new ABFCriticRoll(this);
+      if (this.formula.includes('CriticRoll')) {
+          this.abfRoll = new ABFCriticRoll(this);
+      }
+    if (this.formula.includes('PsychicRoll')) {
+      this.abfRoll = new ABFPsychicRoll(this);
     }
   }
 
@@ -59,6 +67,12 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
 
   recalculateTotal(mod = 0) {
     this._total = this._evaluateTotal() + mod;
+  }
+
+  overrideTotal(newtotal = 0) {
+    if (newtotal) {
+      this._total = newtotal;
+    }
   }
 
   getResults(): number[] {
