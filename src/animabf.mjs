@@ -14,6 +14,7 @@ import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { newRollABF, newPsychicRollABF } from './module/utils/functions/newRollABF';
+import { applyMigrations } from './module/migration/migrate';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -73,6 +74,8 @@ Hooks.once('ready', () => {
   registerCombatWebsocketRoutes();
 
   attachCustomMacroBar();
+
+  applyMigrations();
 });
 
 Hooks.on("combatRound", () => {

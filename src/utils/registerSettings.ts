@@ -6,6 +6,7 @@ export enum ABFSettingsKeys {
   DEVELOP_MODE = 'DEVELOP_MODE',
   AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE',
   AUTOMATE_CRIT = 'AUTOMATE_CRIT',
+  SYSTEM_MIGRATION_VERSION = 'SYSTEM_MIGRATION_VERSION'
 }
 
 export const registerSettings = () => {
@@ -72,5 +73,13 @@ export const registerSettings = () => {
     config: true,
     default: false,
     type: Boolean
+  });
+
+  // This is for migration purposes, it stores the last migration version runned for the world.
+  typedGame.settings.register('animabf', ABFSettingsKeys.SYSTEM_MIGRATION_VERSION, {
+    config: false,
+    scope: 'world',
+    type: Number,
+    default: 0
   });
 };

@@ -75,4 +75,5 @@ b) Para continuar tu trabajo o el trabajo de otro: Lo mismo que lo anterior pero
 
 - [Cómo publicar una nueva versión del sistema](publish-new-version.md)
 - [Cómo crear un nuevo tipo de item](add-new-item.md)
+- [Cómo crear una migración de datos](./migrations.md)
 - [Test en Cypress](cypress_integration_tests.md)
