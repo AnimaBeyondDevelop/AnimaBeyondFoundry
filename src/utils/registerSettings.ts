@@ -4,7 +4,8 @@ export enum ABFSettingsKeys {
   SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT = 'SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT',
   USE_DAMAGE_TABLE = 'USE_DAMAGE_TABLE',
   DEVELOP_MODE = 'DEVELOP_MODE',
-  AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE'
+  AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE',
+  AUTOMATE_CRIT = 'AUTOMATE_CRIT',
 }
 
 export const registerSettings = () => {
@@ -49,6 +50,15 @@ export const registerSettings = () => {
   typedGame.settings.register('animabf', ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE, {
     name: 'anima.ui.systemSettings.useDistanceAutomation.title',
     hint: 'anima.ui.systemSettings.useDistanceAutomation.hint.title',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.AUTOMATE_CRIT, {
+    name: 'Automate crit',
+    hint: 'Rolls automatically crit check',
     scope: 'world',
     config: true,
     default: false,

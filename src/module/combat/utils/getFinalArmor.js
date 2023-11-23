@@ -7,7 +7,6 @@ export const getFinalArmor = (actor, at, reducedArmor) => {
 
     const isInmodifiable = equippedArmors.find(i => i.system.isInmodifiable.value == true) != undefined || actor.system.combat.inmodifiableArmor.value;
     let finalAt = 0;
-    console.log(reducedArmor.value);
     if (isInmodifiable && reducedArmor.ignoreArmor) {
         finalAt = Math.ceil(at / 2);
     }
@@ -18,7 +17,6 @@ export const getFinalArmor = (actor, at, reducedArmor) => {
         finalAt = 0;
     }
     else {
-        console.log(reducedArmor.value);
         finalAt = at - reducedArmor.value;
     }
 

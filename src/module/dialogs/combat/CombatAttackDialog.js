@@ -590,6 +590,7 @@ export class CombatAttackDialog extends FormApplication {
             flavor
           });
         }
+        const reducedArmor=0;
 
         const rolled = roll.total - magicProjection.final - (modifier ?? 0);
         let unableToAttack = false;
@@ -619,7 +620,8 @@ export class CombatAttackDialog extends FormApplication {
             spellCasting,
             specificAttack,
             targetedAttacks,
-            macro: spell.macro
+            macro: spell.macro,
+            reducedArmor
           }
         });
 
@@ -729,6 +731,8 @@ export class CombatAttackDialog extends FormApplication {
             });
           }
         }
+        
+        const reducedArmor=0;
 
         const rolled =
           psychicProjectionRoll.total - psychicProjection.final - (modifier ?? 0);
@@ -758,7 +762,8 @@ export class CombatAttackDialog extends FormApplication {
             unableToAttack,
             specificAttack,
             targetedAttacks,
-            macro: power.macro
+            macro: power.macro,
+            reducedArmor
           }
         });
 

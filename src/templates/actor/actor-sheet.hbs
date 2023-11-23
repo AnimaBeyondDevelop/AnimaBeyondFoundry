@@ -14,7 +14,8 @@
       <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>{{/if}}
     {{#if system.ui.tabVisibility.psychic.value}}
       <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
-    <a class="item" data-tab="effects">{{localize "anima.ui.tabs.effects"}}</a>
+    {{#if system.ui.tabVisibility.effects.value}}
+    <a class="item" data-tab="effects">{{localize "anima.ui.tabs.effects"}}</a>{{/if}}
     <a class="item" data-tab="settings"><img src='/systems/animabf/assets/icons/game-icons.net/ffffff/lorc/cog.svg'></a>
   </nav>
 

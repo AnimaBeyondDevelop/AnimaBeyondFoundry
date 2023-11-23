@@ -6,6 +6,7 @@ import { getGeneralLocation } from '../../combat/utils/getGeneralLocation';
 import { mysticCast } from '../../utils/functions/mysticCast';
 import { getResistanceRoll } from '../../utils/functions/getResistanceRoll';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const attackerActor = attacker.actor;
@@ -468,7 +469,12 @@ export class GMCombatDialog extends FormApplication {
       const hasCritic = specificAttack.weakspot
         ? calculations.damage >= lifePoints / 10
         : calculations.damage >= lifePoints / 2;
-      if (!hasCritic) {
+
+        const automateCrit = !!game.settings.get(
+          'animabf',
+          ABFSettingsKeys.AUTOMATE_CRIT
+        );
+      if (!hasCritic || !automateCrit) {
         return;
       }
       const attacker = this.modalData.attacker.token;

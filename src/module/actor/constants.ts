@@ -13,6 +13,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       },
       psychic: {
         value: false
+      },
+      effects: {
+        value: false
       }
     }
   },

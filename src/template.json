@@ -6,7 +6,7 @@
       "version": 0,
       "ui": {
         "contractibleItems": {},
-        "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false } }
+        "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false }, "effects": { "value": false }  }
       },
       "automationOptions": {
         "calculateFatigueModifier": { "value": true}
