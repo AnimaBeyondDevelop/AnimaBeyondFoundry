@@ -34,6 +34,6 @@ export const Templates = {
     CombatResult: 'systems/animabf/templates/chat/combat-result.hbs'
   },
   Svelte: {
-    SvelteApp: 'systems/animabf/templates/svelte/svelte-application.hbs'
+    SvelteApp: 'systems/animabf/templates/svelte/svelte-application.html'
   }
 };

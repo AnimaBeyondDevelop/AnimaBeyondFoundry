@@ -1,4 +1,5 @@
 import { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+import { Subscriber, Unsubscriber, Writable } from 'svelte/store';
 
 /**
  * Object describing the component associated to a `SvelteElement`
@@ -17,3 +18,12 @@ export type ComponentDescriptor<T extends SvelteComponent = SvelteComponent> = {
    */
   selector?: string
 };
+
+export type DebouncedStore<T> = Writable<T> & {
+  /**
+   * Debounced subscription on value changes
+   * @param fn - subscription callback
+   * @param timeout - Timeout in miliseconds for debouncing, default 500
+   */
+  debounceSubscribe(fn: Subscriber<T>, timeout: number): Unsubscriber
+}
