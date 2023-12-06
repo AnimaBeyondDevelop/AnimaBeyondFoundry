@@ -87,7 +87,7 @@ function migrateTokens(migration) {
 
 /**
  * @param {Migration} migration - The migration version to be applied
- * @returns {boolean} - Whether the migration has been succesfully applied or not.
+ * @returns {Promise<boolean>} - Whether the migration has been succesfully applied or not.
  */
 async function applyMigration(migration) {
   try {
@@ -128,9 +128,9 @@ export function applyMigrations() {
   migrations.forEach(migration => ABFDialogs.confirm(
     game.i18n.localize('dialogs.migrations.title'),
     `${game.i18n.localize('dialogs.migrations.content')}<br><hr><br>` +
-      '<h4>Details of the migration (only English available):</h4>' +
-      `<strong>Title:</strong> ${migration.title}<br>` +
-      `<strong>Description:</strong> ${migration.description}`,
+    '<h4>Details of the migration (only English available):</h4>' +
+    `<strong>Title:</strong> ${migration.title}<br>` +
+    `<strong>Description:</strong> ${migration.description}`,
     {
       onConfirm: () => applyMigration(migration),
     }
