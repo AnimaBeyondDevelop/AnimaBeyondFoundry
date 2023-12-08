@@ -465,7 +465,7 @@ export class CombatDefenseDialog extends FormApplication {
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            i18n.localize('macros.combat.dialog.warning.supernaturalShield.mystic')
+            i18n.localize('macros.combat.dialog.warning.supernaturalShieldNotFound.mystic')
           );
         }
         spell = supernaturalShields.find(w => w._id === shieldUsed);
@@ -592,7 +592,7 @@ export class CombatDefenseDialog extends FormApplication {
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            i18n.localize('macros.combat.dialog.warning.supernaturalShield.psychic')
+            i18n.localize('macros.combat.dialog.warning.supernaturalShieldNotFound.psychic')
           );
         }
         power = supernaturalShields.find(w => w._id === shieldUsed);
