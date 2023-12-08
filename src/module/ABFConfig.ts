@@ -157,7 +157,7 @@ ABFConfig.iterables = {
       [PsychicPowerDisciplines.LIGHT]:
         'anima.ui.psychic.psychicPowers.discipline.light.title',
       [PsychicPowerDisciplines.HYPERSENSITIVITY]:
-        'anima.ui.psychic.psychicPowers.discipline.hipersensitivity.title'
+        'anima.ui.psychic.psychicPowers.discipline.hypersensitivity.title'
     }
   }
 };

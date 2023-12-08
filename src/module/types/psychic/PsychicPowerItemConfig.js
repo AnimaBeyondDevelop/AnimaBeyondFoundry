@@ -38,7 +38,7 @@ export const PsychicPowerDisciplines = {
   ELECTROMAGNETISM: 'electromagnetism',
   TELEPORTATION: 'teleportation',
   LIGHT: 'light',
-  HYPERSENSITIVITY: 'hipersensitivity'
+  HYPERSENSITIVITY: 'hypersensitivity'
 };
 
 /**
