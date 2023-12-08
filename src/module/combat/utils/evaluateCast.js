@@ -2,28 +2,31 @@ export const evaluateCast = spellCasting => {
   const { i18n } = game;
   const { canCast, casted, zeon, override } = spellCasting;
   if (override.value) {
-    return;
+    return false;
   }
   if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
-    return ui.notifications.warn(
+    ui.notifications.warn(
       i18n.localize('dialogs.spellCasting.warning.mustChoose')
     );
+    return true;
   }
   if (canCast.innate && casted.innate) {
     return;
   } else if (!canCast.innate && casted.innate) {
-    return ui.notifications.warn(
+    ui.notifications.warn(
       i18n.localize('dialogs.spellCasting.warning.innateMagic')
     );
+    return true;
   } else if (canCast.prepared && casted.prepared) {
-    return;
+    return false;
   } else if (!canCast.prepared && casted.prepared) {
     return ui.notifications.warn(
       i18n.localize('dialogs.spellCasting.warning.preparedSpell')
     );
   } else if (zeon.accumulated < zeon.cost) {
-    return ui.notifications.warn(
+    ui.notifications.warn(
       i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
     );
-  } else return;
+    return true;
+  } else return false;
 };

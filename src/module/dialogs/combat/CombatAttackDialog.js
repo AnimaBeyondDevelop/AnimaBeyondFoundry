@@ -420,10 +420,9 @@ export class CombatAttackDialog extends FormApplication {
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-        let evaluateCastMsj = evaluateCast(spellCasting);
-        if (evaluateCastMsj !== undefined) {
+        if (evaluateCast(spellCasting)) {
           spellCasting.override.ui = true;
-          return evaluateCastMsj;
+          return;
         }
         let visibleCheck = spell?.system.visible;
 

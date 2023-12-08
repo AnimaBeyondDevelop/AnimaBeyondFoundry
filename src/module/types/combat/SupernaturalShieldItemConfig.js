@@ -73,9 +73,8 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       };
       spellCasting.zeon.accumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
       spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-      const evaluateCastMsj = evaluateCast(spellCasting);
-      if (evaluateCastMsj !== undefined) {
-        return evaluateCastMsj;
+      if (evaluateCast(spellCasting)) {
+        return;
       }
       mysticCast(actor, spellCasting, spell.name, spellGrade);
       const supernaturalShieldData = await actor.supernaturalShieldData(

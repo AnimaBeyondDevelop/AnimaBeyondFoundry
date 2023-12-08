@@ -456,8 +456,7 @@ export class CombatDefenseDialog extends FormApplication {
       const { i18n } = game;
       const { spells } = this.defenderActor.system.mystic;
       const { supernaturalShields } = this.defenderActor.system.combat;
-      let spell,
-        supShield = { create: false };
+      let spell, supShield;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
         blindnessPen: { value: blindnessPen, apply: true }
@@ -480,10 +479,9 @@ export class CombatDefenseDialog extends FormApplication {
         this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-        let evaluateCastMsj = evaluateCast(spellCasting);
-        if (evaluateCastMsj !== undefined) {
+        if (evaluateCast(spellCasting)) {
           spellCasting.override.ui = true;
-          return evaluateCastMsj;
+          return;
         }
         const supernaturalShieldData =
           await this.modalData.defender.actor.supernaturalShieldData(
