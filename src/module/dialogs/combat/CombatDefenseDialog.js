@@ -560,11 +560,7 @@ export class CombatDefenseDialog extends FormApplication {
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
       const { supernaturalShields } = this.defenderActor.system.combat;
-      let power,
-        fatigue,
-        supShield = { create: false },
-        newPsychicPotential;
-
+      let power, fatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
         blindnessPen: { value: blindnessPen, apply: true }
