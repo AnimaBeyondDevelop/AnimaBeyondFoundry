@@ -291,8 +291,8 @@ export class GMCombatDialog extends FormApplication {
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
-          Math.max(attackerTotal, 0),
-          Math.max(defenderTotal, 0),
+          attackerTotal,
+          defenderTotal,
           Math.max(
             defender.result.values.at - calculateATReductionByQuality(attacker.result),
             0
