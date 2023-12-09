@@ -40,6 +40,11 @@ const getInitialData = (attacker, defender, options = {}) => {
       zen: attackerActor.system.general.settings.zen.value,
       inhuman: attackerActor.system.general.settings.inhuman.value,
       inmaterial: attackerActor.system.general.settings.inmaterial.value,
+      distance: {
+        value: 0,
+        enable: combatDistance,
+        check: false
+      },
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -50,11 +55,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: true,
         highGround: false,
-        distance: {
-          value: 0,
-          enable: combatDistance,
-          check: false
-        },
+        distanceCheck: false,
         projectile: {
           value: false,
           type: ''
@@ -83,11 +84,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         critic: NoneWeaponCritic.NONE,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
-        distance: {
-          value: 0,
-          enable: combatDistance,
-          check: false
-        },
+        distanceCheck: false,
         projectile: {
           value: true,
           type: 'shot'
@@ -110,11 +107,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         fatigueCheck: false,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
-        distance: {
-          value: 0,
-          enable: combatDistance,
-          check: false
-        },
+        distanceCheck: false,
         projectile: {
           value: true,
           type: 'shot'
@@ -141,16 +134,14 @@ export class CombatAttackDialog extends FormApplication {
 
     const { combat, psychic, mystic } = this.modalData.attacker;
 
-    if (this.modalData.attacker.combat.distance.enable) {
+    if (this.modalData.attacker.distance.enable) {
       const calculateDistance = Math.floor(
         canvas.grid.measureDistance(
           this.modalData.attacker.token,
           this.modalData.defender.token
         )
       );
-      combat.distance.value = calculateDistance;
-      psychic.distance.value = calculateDistance;
-      mystic.distance.value = calculateDistance;
+      this.modalData.attacker.distance.value = calculateDistance;
     }
 
     const { weapons } = this.attackerActor.system.combat;
@@ -274,12 +265,14 @@ export class CombatAttackDialog extends FormApplication {
           weaponUsed,
           unarmed,
           visible,
-          distance
+          distanceCheck
         },
+        distance,
         highGround,
         poorVisibility,
         targetInCover
       } = this.modalData.attacker;
+      distance.check = distanceCheck
       this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
         const attackerCombatMod = {
@@ -346,12 +339,12 @@ export class CombatAttackDialog extends FormApplication {
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-                weapon: weapon?.name,
-                target: this.modalData.defender.token.name
-              })
+              weapon: weapon?.name,
+              target: this.modalData.defender.token.name
+            })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                target: this.modalData.defender.token.name
-              });
+              target: this.modalData.defender.token.name
+            });
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
@@ -396,16 +389,17 @@ export class CombatAttackDialog extends FormApplication {
 
     html.find('.send-mystic-attack').click(() => {
       const {
-        magicProjection,
-        spellUsed,
-        spellGrade,
-        spellCasting,
-        modifier,
-        critic,
-        damage,
-        projectile,
-        distance
-      } = this.modalData.attacker.mystic;
+        mystic: { magicProjection,
+          spellUsed,
+          spellGrade,
+          spellCasting,
+          modifier,
+          critic,
+          damage,
+          projectile,
+          distanceCheck
+        }, distance } = this.modalData.attacker;
+      distance.check = distanceCheck
       if (spellUsed) {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true }
@@ -491,7 +485,7 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-psychic-attack').click(async () => {
-      const {
+      const { psychic: {
         powerUsed,
         modifier,
         psychicPotential,
@@ -499,8 +493,9 @@ export class CombatAttackDialog extends FormApplication {
         critic,
         damageModifier,
         projectile,
-        distance
-      } = this.modalData.attacker.psychic;
+        distanceCheck }, distance
+      } = this.modalData.attacker;
+      distance.check = distanceCheck
       const { i18n } = game;
       if (powerUsed) {
         const attackerCombatMod = {

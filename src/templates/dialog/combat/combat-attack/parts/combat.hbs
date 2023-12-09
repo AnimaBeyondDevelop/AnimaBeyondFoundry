@@ -75,15 +75,15 @@
 }}
 
 {{#if this.attacker.combat.projectile.value}}
-{{#if (is 'eq' this.attacker.combat.distance.enable false)}}
+{{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>
   <div>
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.distance.title')
       inputType="checkbox"
-      inputName="attacker.combat.distance.check"
-      inputValue=(is 'eq' this.attacker.combat.distance.check true)
+      inputName="attacker.combat.distanceCheck"
+      inputValue=(is 'eq' this.attacker.combat.distanceCheck true)
     }}
   </div>
 </div>
