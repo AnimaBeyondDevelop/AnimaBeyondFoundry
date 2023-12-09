@@ -448,7 +448,6 @@ export class GMCombatDialog extends FormApplication {
         supShield.id,
         damage,
         dobleDamage,
-        this.modalData.defender.result?.type,
         newCombatResult
       );
     }
