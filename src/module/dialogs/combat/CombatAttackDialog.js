@@ -175,9 +175,6 @@ export class CombatAttackDialog extends FormApplication {
       } else {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
       }
-      const spell = spells.find(w => w._id === mystic.spellUsed);
-      const spellUsedEffect = spell?.system.grades.base.description.value;
-      mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
       const spellCastingOverride = this.attackerActor.getFlag(
         'animabf',
         'spellCastingOverride'
