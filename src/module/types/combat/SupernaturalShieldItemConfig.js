@@ -48,18 +48,14 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
   onCreate: async actor => {
     const results = await openComplexInputDialog(actor, 'newSupernaturalShield');
     const { tab } = results;
-    const spellID = results['new.mysticShield.id'];
-    const spellGrade = results['new.mysticShield.grade'];
-    const castSpell = results['new.mysticShield.castSpell'];
-    const innate = castSpell == 'innate';
-    const prepared = castSpell == 'prepared';
-    const override = castSpell == 'override';
-    const spell = actor.system.mystic.spells.find(i => i._id == spellID);
-    const powerID = results['new.psychicShield.id'];
-    const showRoll = true;
-    let powerDifficulty = results['new.psychicShield.difficulty'];
-    const power = actor.system.psychic.psychicPowers.find(i => i._id == powerID);
     if (tab === 'mystic') {
+      const spellID = results['new.mysticShield.id'];
+      const spellGrade = results['new.mysticShield.grade'];
+      const castSpell = results['new.mysticShield.castSpell'];
+      const innate = castSpell == 'innate';
+      const prepared = castSpell == 'prepared';
+      const override = castSpell == 'override';
+      const spell = actor.system.mystic.spells.find(i => i._id == spellID);
       if (!spell) {
         return;
       }
@@ -77,15 +73,18 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
         return;
       }
       mysticCast(actor, spellCasting, spell.name, spellGrade);
-      const supernaturalShieldData = await actor.supernaturalShieldData(
+      actor.newSupernaturalShield(
         'mystic',
         {},
         0,
         spell,
         spellGrade
       );
-      actor.newSupernaturalShield(supernaturalShieldData);
     } else if (tab === 'psychic') {
+      const powerID = results['new.psychicShield.id'];
+      const showRoll = true;
+      let powerDifficulty = results['new.psychicShield.difficulty'];
+      const power = actor.system.psychic.psychicPowers.find(i => i._id == powerID);
       if (!power) {
         return;
       }
@@ -112,12 +111,11 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
           return;
         }
       }
-      const supernaturalShieldData = await actor.supernaturalShieldData(
+      actor.newSupernaturalShield(
         'psychic',
         power,
         powerDifficulty
       );
-      await actor.newSupernaturalShield(supernaturalShieldData);
     }
   }
 });

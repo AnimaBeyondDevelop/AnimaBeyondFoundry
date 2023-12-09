@@ -26,7 +26,7 @@ export default class ABFCombat extends Combat {
       for (let token of combatants) {
         token?.actor?.resetDefensesCounter();
         token?.actor?.consumeMaintainedZeon();
-        token?.actor?.psychicShieldsMaintaining();
+        token?.actor?.psychicShieldsMaintenance();
       }
     }
 
@@ -42,7 +42,7 @@ export default class ABFCombat extends Combat {
       for (let token of combatants) {
         const revert = true
         token?.actor?.consumeMaintainedZeon(revert);
-        token?.actor?.psychicShieldsMaintaining(revert);
+        token?.actor?.psychicShieldsMaintenance(revert);
       }
     }
 

@@ -469,7 +469,7 @@ export class CombatDefenseDialog extends FormApplication {
           );
         }
         spell = supernaturalShields.find(w => w._id === shieldUsed);
-        supShield = { ...spell, create: false, id: shieldUsed };
+        supShield = { create: false, id: shieldUsed };
       } else if (spellUsed) {
         this.defenderActor.setFlag(
           'animabf',
@@ -483,15 +483,7 @@ export class CombatDefenseDialog extends FormApplication {
           spellCasting.override.ui = true;
           return;
         }
-        const supernaturalShieldData =
-          await this.modalData.defender.actor.supernaturalShieldData(
-            'mystic',
-            {},
-            0,
-            spell,
-            spellGrade
-          );
-        supShield = { ...supernaturalShieldData, create: true };
+        supShield.create = true;
       }
 
       let combatModifier = 0;
@@ -596,7 +588,7 @@ export class CombatDefenseDialog extends FormApplication {
           );
         }
         power = supernaturalShields.find(w => w._id === shieldUsed);
-        supShield = { ...power, create: false, id: shieldUsed };
+        supShield = { create: false, id: shieldUsed };
       } else if (powerUsed) {
         this.defenderActor.setFlag('animabf', 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
@@ -620,13 +612,7 @@ export class CombatDefenseDialog extends FormApplication {
         );
 
         if (!fatigue) {
-          const supernaturalShieldData =
-            await this.modalData.defender.actor.supernaturalShieldData(
-              'psychic',
-              power,
-              psychicPotentialRoll.total
-            );
-          supShield = { ...supernaturalShieldData, create: true };
+          supShield = { create: true }
         }
       }
 

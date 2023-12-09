@@ -93,7 +93,7 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
-  async supernaturalShieldData(
+  async newSupernaturalShield(
     type: string,
     power: any,
     psychicDifficulty: number,
@@ -104,9 +104,8 @@ export class ABFActor extends Actor {
       name: '',
       type: ABFItems.SUPERNATURAL_SHIELD,
       system: {},
-      psychic: {}
+      psychic: { overmantained: false, maintainMax: 0 }
     };
-
     if (type === 'psychic') {
       const {
         general: {
@@ -151,25 +150,16 @@ export class ABFActor extends Actor {
       };
     }
 
-    return supernaturalShieldData;
-  }
-
-  async newSupernaturalShield(newShield: any) {
-    const supernaturalShieldData = {
-      name: newShield.name,
-      type: ABFItems.SUPERNATURAL_SHIELD,
-      system: newShield.system
-    };
     const item = await this.createItem(supernaturalShieldData);
     let args = {
       thisActor: this,
       newShield: true,
       shieldId: item._id
     };
-    if (newShield.psychic.overmantained) {
-      item.setFlag('animabf', 'psychic', newShield.psychic);
+    if (supernaturalShieldData.psychic.overmantained) {
+      item.setFlag('animabf', 'psychic', supernaturalShieldData.psychic);
     }
-    executeMacro(newShield.name, args);
+    executeMacro(supernaturalShieldData.name, args);
     return item._id;
   }
 
@@ -188,20 +178,23 @@ export class ABFActor extends Actor {
   }
 
   applyDamageSupernaturalShield(
-    supShield: any,
+    supShieldId: any,
     damage: number,
     dobleDamage: boolean,
     newCombatResult: any
   ) {
+    const { supernaturalShields } = this.system.combat;
+    const supShield = supernaturalShields.find(w => w._id === supShieldId);
     const shieldValue = supShield.system.shieldPoints;
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {
       let updates: any = [
-        { _id: supShield.id, ['system.shieldPoints']: newShieldPoints }
+        { _id: supShieldId, ['system.shieldPoints']: newShieldPoints }
       ];
       Item.updateDocuments(updates, { parent: this });
     } else {
-      this.deleteSupernaturalShield(supShield.id);
+      this.deleteSupernaturalShield(supShieldId);
+      // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && newCombatResult) {
         const needToRound = (game as Game).settings.get(
           'animabf',
@@ -247,18 +240,18 @@ export class ABFActor extends Actor {
     return fatigue.value;
   }
 
-  async psychicShieldsMaintaining(revert: boolean) {
-    const { supernaturalShields } = this.system.combat;
+  async psychicShieldsMaintenance(revert: boolean) {
+    const psychicShields = this.system.combat.supernaturalShields.filter(s => s.system.type === 'psychic');
 
-    for (const supernaturalShield of supernaturalShields) {
-      const psychic = supernaturalShield.getFlag('animabf', 'psychic');
+    for (const psychicShield of psychicShields) {
+      const psychic = psychicShield.getFlag('animabf', 'psychic');
       if (psychic?.overmantained) {
-        if (psychic.maintainMax >= supernaturalShield.system.shieldPoints) {
-          supernaturalShield.unsetFlag('animabf', 'psychic');
+        if (psychic.maintainMax >= psychicShield.system.shieldPoints) {
+          psychicShield.unsetFlag('animabf', 'psychic');
         } else {
           const supShield = {
-            system: supernaturalShield.system,
-            id: supernaturalShield._id
+            system: psychicShield.system,
+            id: psychicShield._id
           };
           const damage = revert ? -5 : 5;
           this.applyDamageSupernaturalShield(supShield, damage, false, undefined);

@@ -247,7 +247,7 @@ export class GMCombatDialog extends FormApplication {
     this.render();
   }
 
-  getData() {console.log(this.modalData)
+  getData() {
     const { attacker, defender } = this.modalData;
 
     attacker.isReady = !!attacker.result;
@@ -314,12 +314,6 @@ export class GMCombatDialog extends FormApplication {
             winner,
             counterAttackBonus: combatResult.counterAttackBonus
           };
-          if (
-            attacker.result.values.damage >
-            defender.result.values.supShield?.system.shieldPoints
-          ) {
-            this.modalData.calculations.canCounter = false;
-          }
         } else {
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
@@ -401,8 +395,11 @@ export class GMCombatDialog extends FormApplication {
       supShield.create
     ) {
       const supShieldId = await this.defenderActor.newSupernaturalShield(
-        supShield,
-        this.modalData.defender.result.type
+        this.modalData.defender.result.type,
+        this.modalData.defender.result?.power ?? {},
+        this.modalData.defender.result.values?.psychicPotential ?? 0,
+        this.modalData.defender.result.spell ?? {},
+        this.modalData.defender.result.values?.spellGrade
       );
       return supShieldId;
     }
@@ -448,7 +445,7 @@ export class GMCombatDialog extends FormApplication {
       }
 
       this.defenderActor.applyDamageSupernaturalShield(
-        supShield,
+        supShield.id,
         damage,
         dobleDamage,
         this.modalData.defender.result?.type,
