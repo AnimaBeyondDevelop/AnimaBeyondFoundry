@@ -282,8 +282,8 @@ export class GMCombatDialog extends FormApplication {
         defenderModifier;
       defender.result.values.total = Math.max(0, defender.result.values.total);
 
-      const attackerTotal = attacker.result.values.total + attacker.customModifier;
-      const defenderTotal = defender.result.values.total + defender.customModifier;
+      const attackerTotal = Math.max(0, attacker.result.values.total + attacker.customModifier);
+      const defenderTotal = Math.max(0, defender.result.values.total + defender.customModifier);
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
