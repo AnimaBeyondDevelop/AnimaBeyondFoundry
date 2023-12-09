@@ -2,8 +2,6 @@ import { Templates } from '../../utils/constants';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
-import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
-import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
@@ -79,8 +77,9 @@ const getInitialData = (attacker, defender, options = {}) => {
           zeon: { accumulated: 0, cost: 0 },
           canCast: { prepared: false, innate: false },
           casted: { prepared: false, innate: false },
-          override: { value: false, ui: false }
+          override: false
         },
+        overrideMysticCast: false,
         critic: NoneWeaponCritic.NONE,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
@@ -179,16 +178,12 @@ export class CombatAttackDialog extends FormApplication {
       const spell = spells.find(w => w._id === mystic.spellUsed);
       const spellUsedEffect = spell?.system.grades.base.description.value;
       mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
-      mystic.spellCasting.zeon.accumulated =
-        this.attackerActor.system.mystic.zeon.accumulated.value ?? 0;
-      const canCast = mysticCanCastEvaluate(this.attackerActor, spell, mystic.spellGrade);
-      mystic.spellCasting.canCast = canCast;
       const spellCastingOverride = this.attackerActor.getFlag(
         'animabf',
         'spellCastingOverride'
       );
-      mystic.spellCasting.override.value = spellCastingOverride || false;
-      mystic.spellCasting.override.ui = spellCastingOverride || false;
+      mystic.spellCasting.override = spellCastingOverride || false;
+      mystic.overrideMysticCast = spellCastingOverride || false;
     }
 
     if (weapons.length > 0) {
@@ -407,15 +402,14 @@ export class CombatAttackDialog extends FormApplication {
         this.attackerActor.setFlag(
           'animabf',
           'spellCastingOverride',
-          spellCasting.override.value
+          spellCasting.override
         );
         this.attackerActor.setFlag('animabf', 'lastOffensiveSpellUsed', spellUsed);
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
-        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-        if (evaluateCast(spellCasting)) {
-          spellCasting.override.ui = true;
+        if (this.attackerActor.evaluateCast(spellCasting)) {
+          this.modalData.attacker.mystic.overrideMysticCast = true;
           return;
         }
         let visibleCheck = spell?.system.visible;
@@ -628,14 +622,7 @@ export class CombatAttackDialog extends FormApplication {
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
-    const canCast = mysticCanCastEvaluate(this.attackerActor, spell, mystic.spellGrade);
-    mystic.spellCasting.canCast = canCast;
-    if (!mystic.spellCasting.canCast.innate) {
-      mystic.spellCasting.casted.innate = false;
-    }
-    if (!mystic.spellCasting.canCast.prepared) {
-      mystic.spellCasting.casted.prepared = false;
-    }
+    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
 
     const { weapons } = this.attackerActor.system.combat;
 

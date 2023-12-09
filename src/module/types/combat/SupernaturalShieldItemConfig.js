@@ -60,19 +60,11 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
         return;
       }
       actor.setFlag('animabf', 'spellCastingOverride', override);
-      const canCast = mysticCanCastEvaluate(actor, spell, spellGrade);
-      const spellCasting = {
-        zeon: { accumulated: 0, cost: 0 },
-        canCast,
-        casted: { prepared, innate },
-        override: { value: override }
-      };
-      spellCasting.zeon.accumulated = actor.system.mystic.zeon.accumulated.value ?? 0;
-      spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-      if (evaluateCast(spellCasting)) {
+      const spellCasting = actor.mysticCanCastEvaluate(spell, spellGrade, { innate, prepared }, override);
+      if (actor.evaluateCast(spellCasting)) {
         return;
       }
-      mysticCast(actor, spellCasting, spell.name, spellGrade);
+      actor.mysticCast(spellCasting, spell.name, spellGrade);
       actor.newSupernaturalShield(
         'mystic',
         {},

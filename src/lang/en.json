@@ -599,7 +599,7 @@
   "dialogs.spellCasting.warning.mustChoose": "You must choose between Cast innate spell or Cast prepared spell",
   "dialogs.spellCasting.warning.innateMagic": "You don't have enough Innate Magic",
   "dialogs.spellCasting.warning.preparedSpell": "You do not have this Spell Prepared",
-  "dialogs.spellCasting.warning.accumulatedZeon": "You don't have enough Accumulated Zeon",
+  "dialogs.spellCasting.warning.zeonAccumulated": "You don't have enough Accumulated Zeon",
   "macros.combat.dialog.applyAndCloseButton.title": "Apply and close",
   "anima.ui.systemSettings.autoAcceptCombatRequests.title": "Auto accept combat requests",
   "anima.ui.systemSettings.autoAcceptCombatRequests.hint.title": "Combat requests sent to GM will be auto accepted depending if this option is active",

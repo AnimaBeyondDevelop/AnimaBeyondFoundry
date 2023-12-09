@@ -164,8 +164,7 @@ export class ABFActor extends Actor {
   }
 
   async deleteSupernaturalShield(supShieldId: any) {
-    const { supernaturalShields } = this.system.combat;
-    const supShield = supernaturalShields.find(w => w._id === supShieldId);
+    const supShield = this.getItem(supShieldId);
     if (supShield) {
       this.deleteItem(supShieldId)
       let args = {
@@ -177,15 +176,14 @@ export class ABFActor extends Actor {
     }
   }
 
-  applyDamageSupernaturalShield(
+  async applyDamageSupernaturalShield(
     supShieldId: any,
     damage: number,
-    dobleDamage: boolean,
+    dobleDamage?: boolean,
     newCombatResult?: any
   ) {
-    const { supernaturalShields } = this.system.combat;
-    const supShield = supernaturalShields.find(w => w._id === supShieldId);
-    const shieldValue = supShield.system.shieldPoints;
+    const supShield = this.getItem(supShieldId);
+    const shieldValue = supShield?.system.shieldPoints;
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {
       this.updateItem({
@@ -285,6 +283,102 @@ export class ABFActor extends Actor {
       });
     } else {
       this.setFlag('animabf', 'defensesCounter.accumulated', 0);
+    }
+  }
+
+  mysticCanCastEvaluate(spell: any, spellGrade: string, casted = { prepared: false, innate: false }, override = false) {
+    const spellCasting: {
+      zeon: {
+        accumulated: number;
+        cost: number;
+      };
+      canCast: {
+        prepared: boolean;
+        innate: boolean;
+      };
+      casted: {
+        prepared: boolean;
+        innate: boolean;
+      };
+      override: boolean;
+    } = {
+      zeon: { accumulated: 0, cost: 0 },
+      canCast: { prepared: false, innate: false },
+      casted,
+      override
+    };
+    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated.value ?? 0;
+
+    if (override) { return spellCasting };
+
+    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+    spellCasting.canCast.prepared =
+      this.system.mystic.preparedSpells.find(
+        ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+      )?.system.prepared.value ?? false;
+    const spellVia = spell?.system.via.value;
+    const innateMagic = this.system.mystic.innateMagic;
+    const innateVia = innateMagic.via.find(i => i.name == spellVia);
+    const innateMagicValue =
+      innateMagic.via.length !== 0 && innateVia
+        ? innateVia.system.final.value
+        : innateMagic.main.final.value;
+    spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
+
+    if (!spellCasting.canCast.innate) {
+      spellCasting.casted.innate = false;
+    }
+    if (!spellCasting.canCast.prepared) {
+      spellCasting.casted.prepared = false;
+    }
+    return spellCasting;
+  }
+
+  evaluateCast(spellCasting: any) {
+    const { i18n } = game;
+    const { canCast, casted, zeon, override } = spellCasting;
+    if (override) {
+      return false;
+    }
+    if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
+      ui.notifications.warn(
+        i18n.localize('dialogs.spellCasting.warning.mustChoose')
+      );
+      return true;
+    }
+    if (canCast.innate && casted.innate) {
+      return;
+    } else if (!canCast.innate && casted.innate) {
+      ui.notifications.warn(
+        i18n.localize('dialogs.spellCasting.warning.innateMagic')
+      );
+      return true;
+    } else if (canCast.prepared && casted.prepared) {
+      return false;
+    } else if (!canCast.prepared && casted.prepared) {
+      return ui.notifications.warn(
+        i18n.localize('dialogs.spellCasting.warning.preparedSpell')
+      );
+    } else if (zeon.accumulated < zeon.cost) {
+      ui.notifications.warn(
+        i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
+      );
+      return true;
+    } else return false;
+  };
+
+  mysticCast(spellCasting: any, spellName: string, spellGrade: string) {
+    const { zeon, casted, override } = spellCasting;
+    if (override) {
+      return;
+    }
+    if (casted.innate) {
+      return;
+    }
+    if (casted.prepared) {
+      this.deletePreparedSpell(spellName, spellGrade);
+    } else {
+      this.consumeAccumulatedZeon(zeon.cost);
     }
   }
 

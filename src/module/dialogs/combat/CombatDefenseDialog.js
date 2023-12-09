@@ -1,7 +1,5 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
-import { mysticCanCastEvaluate } from '../../combat/utils/mysticCanCastEvaluate.js';
-import { evaluateCast } from '../../combat/utils/evaluateCast.js';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
@@ -83,8 +81,9 @@ const getInitialData = (attacker, defender) => {
           zeon: { accumulated: 0, cost: 0 },
           canCast: { prepared: false, innate: false },
           casted: { prepared: false, innate: false },
-          override: { value: false, ui: false }
+          override: false
         },
+        overrideMysticCast: false,
         supernaturalShield: {
           shieldUsed: undefined,
           shieldValue: 0,
@@ -157,17 +156,12 @@ export class CombatDefenseDialog extends FormApplication {
       } else {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
-      const spell = spells.find(w => w._id === mystic.spellUsed);
-      mystic.spellCasting.zeon.accumulated =
-        this.defenderActor.system.mystic.zeon.accumulated.value ?? 0;
-      const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);
-      mystic.spellCasting.canCast = canCast;
       const spellCastingOverride = this.defenderActor.getFlag(
         'animabf',
         'spellCastingOverride'
       );
-      mystic.spellCasting.override.value = spellCastingOverride || false;
-      mystic.spellCasting.override.ui = spellCastingOverride || false;
+      mystic.spellCasting.override = spellCastingOverride || false;
+      mystic.overrideMysticCast = spellCastingOverride || false;
     }
 
     if (supernaturalShields.length > 0) {
@@ -474,16 +468,16 @@ export class CombatDefenseDialog extends FormApplication {
         this.defenderActor.setFlag(
           'animabf',
           'spellCastingOverride',
-          spellCasting.override.value
+          spellCasting.override
         );
         this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-        if (evaluateCast(spellCasting)) {
-          spellCasting.override.ui = true;
+        if (this.defenderActor.evaluateCast(spellCasting)) {
+          this.modalData.defender.mystic.overrideMysticCast = true;
           return;
         }
-        supShield.create = true;
+        supShield = { create: true };
       }
 
       let combatModifier = 0;
@@ -678,14 +672,7 @@ export class CombatDefenseDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    const canCast = mysticCanCastEvaluate(this.defenderActor, spell, mystic.spellGrade);
-    mystic.spellCasting.canCast = canCast;
-    if (!mystic.spellCasting.canCast.innate) {
-      mystic.spellCasting.casted.innate = false;
-    }
-    if (!mystic.spellCasting.canCast.prepared) {
-      mystic.spellCasting.casted.prepared = false;
-    }
+    mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
 
     const { supernaturalShields } = this.defenderActor.system.combat;
     if (!mystic.supernaturalShield.shieldUsed) {

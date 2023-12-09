@@ -1,7 +1,6 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
-import { mysticCast } from '../../utils/functions/mysticCast';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -367,14 +366,14 @@ export class GMCombatDialog extends FormApplication {
     if (this.modalData.attacker.result?.type === 'mystic') {
       const { spellCasting, spellName, spellGrade } =
         this.modalData.attacker.result.values;
-      mysticCast(this.attackerActor, spellCasting, spellName, spellGrade);
+      this.attackerActor.mysticCast(spellCasting, spellName, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
       const { spellCasting, spellName, spellGrade, supShield } =
         this.modalData.defender.result.values;
       if (supShield.create) {
-        mysticCast(this.defenderActor, spellCasting, spellName, spellGrade);
+        this.defenderActor.mysticCast(spellCasting, spellName, spellGrade);
       }
     }
   }

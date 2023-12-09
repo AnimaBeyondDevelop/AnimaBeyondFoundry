@@ -1,7 +1,7 @@
 export const evaluateCast = spellCasting => {
   const { i18n } = game;
   const { canCast, casted, zeon, override } = spellCasting;
-  if (override.value) {
+  if (override) {
     return false;
   }
   if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {

@@ -77,7 +77,7 @@
 </div>
 {{/if}}
 
-{{#if (and this.attacker.mystic.spellCasting.canCast.innate (is 'eq' this.attacker.mystic.spellCasting.override.value false))}}
+{{#if (and this.attacker.mystic.spellCasting.canCast.innate (is 'eq' this.attacker.mystic.spellCasting.override false))}}
 <div class='columns'>
   <div>
     {{>
@@ -92,7 +92,7 @@
 </div>
 {{/if}}
 
-{{#if (and this.attacker.mystic.spellCasting.canCast.prepared (is 'eq' this.attacker.mystic.spellCasting.override.value false))}}
+{{#if (and this.attacker.mystic.spellCasting.canCast.prepared (is 'eq' this.attacker.mystic.spellCasting.override false))}}
 <div class='columns'>
   <div>
     {{>
@@ -107,7 +107,7 @@
 </div>
 {{/if}}
 
-{{#if this.attacker.mystic.spellCasting.override.ui}}
+{{#if this.attacker.mystic.overrideMysticCast}}
 <hr class='hr'/>
 <div class='columns'>
   <div>
@@ -116,8 +116,8 @@
     title=(localize 'macros.combat.dialog.castOverride.title')
     disabled=this.attackSent
     inputType="checkbox"
-    inputName="attacker.mystic.spellCasting.override.value"
-    inputValue=(is 'eq' this.attacker.mystic.spellCasting.override.value true)
+    inputName="attacker.mystic.spellCasting.override"
+    inputValue=(is 'eq' this.attacker.mystic.spellCasting.override true)
     }}
   </div>
 </div>
