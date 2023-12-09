@@ -167,7 +167,7 @@ export class ABFActor extends Actor {
     const { supernaturalShields } = this.system.combat;
     const supShield = supernaturalShields.find(w => w._id === supShieldId);
     if (supShield) {
-      Item.deleteDocuments([supShieldId], { parent: this });
+      this.deleteItem(supShieldId)
       let args = {
         thisActor: this,
         newShield: false,
@@ -181,17 +181,17 @@ export class ABFActor extends Actor {
     supShieldId: any,
     damage: number,
     dobleDamage: boolean,
-    newCombatResult: any
+    newCombatResult?: any
   ) {
     const { supernaturalShields } = this.system.combat;
     const supShield = supernaturalShields.find(w => w._id === supShieldId);
     const shieldValue = supShield.system.shieldPoints;
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {
-      let updates: any = [
-        { _id: supShieldId, ['system.shieldPoints']: newShieldPoints }
-      ];
-      Item.updateDocuments(updates, { parent: this });
+      this.updateItem({
+        id: supShieldId,
+        system: { shieldPoints: newShieldPoints }
+      })
     } else {
       this.deleteSupernaturalShield(supShieldId);
       // If shield breaks, apply damage to actor
@@ -393,6 +393,14 @@ export class ABFActor extends Actor {
         configuration.fieldPath
       )
     });
+  }
+
+  public async deleteItem(id: string) {
+    const item = this.getItem(id);
+
+    if (item) {
+      await item.delete();
+    }
   }
 
   public async updateItem({
