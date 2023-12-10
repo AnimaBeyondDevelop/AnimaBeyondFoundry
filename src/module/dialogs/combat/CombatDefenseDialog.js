@@ -289,13 +289,13 @@ export class CombatDefenseDialog extends FormApplication {
       let baseDefense;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
-        blindness: { value: -80, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
         multipleDefensesPenalty: {
           value: multipleDefensesPenalty,
           apply: true
         }
       };
+      if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
@@ -441,9 +441,9 @@ export class CombatDefenseDialog extends FormApplication {
       const { supernaturalShields } = this.defenderActor.system.combat;
       let spell, supShield;
       const defenderCombatMod = {
-        modifier: { value: modifier, apply: true },
-        blindness: { value: -80, apply: true }
+        modifier: { value: modifier, apply: true }
       };
+      if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
       if (!newShield) {
         if (!shieldUsed) {
@@ -538,8 +538,9 @@ export class CombatDefenseDialog extends FormApplication {
       let power, fatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
-        blindness: { value: -80, apply: true }
       };
+      if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
+
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
           .value;
