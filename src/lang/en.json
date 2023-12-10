@@ -621,7 +621,7 @@
   "macros.combat.dialog.blockValue.title": "Block value",
   "macros.combat.dialog.cancelButton.title": "Cancel",
   "macros.combat.dialog.combatMod.modifier.title": "Modifier",
-  "macros.combat.dialog.combatMod.blindnessPen.title": "Absolute blindness",
+  "macros.combat.dialog.combatMod.blindness.title": "Absolute blindness",
   "macros.combat.dialog.combatMod.dodgeProjectile.title": "Dodge vs. projectile",
   "macros.combat.dialog.combatMod.parryProjectile.title": "Parry vs. projectile",
   "macros.combat.dialog.combatMod.maestryParryProjectile.title": "Maestry parry vs. projectile",

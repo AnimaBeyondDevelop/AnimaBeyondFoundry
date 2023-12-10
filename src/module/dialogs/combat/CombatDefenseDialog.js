@@ -44,7 +44,7 @@ const getInitialData = (attacker, defender) => {
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
       withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
-      blindnessPen: 0,
+      blindness: false,
       distance: attacker.distance,
       zen: defenderActor.system.general.settings.zen.value,
       inhuman: defenderActor.system.general.settings.inhuman.value,
@@ -205,25 +205,14 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.system.general.settings.perceiveMystic.value;
     const perceivePsychic =
       this.defenderActor.system.general.settings.perceivePsychic.value;
-    let blindness = false;
     let attackType = this.modalData.attacker.attackType;
     if (!this.modalData.attacker.visible) {
       if (!perceiveMystic && !perceivePsychic) {
-        blindness = true;
+        this.modalData.defender.blindness = true;
       } else if (attackType === 'mystic' && !perceiveMystic) {
-        blindness = true;
+        this.modalData.defender.blindness = true;
       } else if (attackType === 'psychic' && !perceivePsychic) {
-        blindness = true;
-      }
-    }
-    if (blindness) {
-      if (
-        !this.defenderActor.effects.find(i => i.name === 'Ceguera absoluta') &&
-        !this.defenderActor.effects.find(i => i.name === 'Ceguera parcial')
-      ) {
-        this.modalData.defender.blindnessPen = -80;
-      } else if (!this.defenderActor.effects.find(i => i.name === 'Ceguera absoluta')) {
-        this.modalData.defender.blindnessPen = -50;
+        this.modalData.defender.blindness = true;
       }
     }
 
@@ -290,7 +279,7 @@ export class CombatDefenseDialog extends FormApplication {
           accumulateDefenses,
           weaponUsed
         },
-        blindnessPen,
+        blindness,
         distance
       } = this.modalData.defender;
       this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
@@ -300,7 +289,7 @@ export class CombatDefenseDialog extends FormApplication {
       let baseDefense;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
-        blindnessPen: { value: blindnessPen, apply: true },
+        blindness: { value: -80, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
         multipleDefensesPenalty: {
           value: multipleDefensesPenalty,
@@ -445,7 +434,7 @@ export class CombatDefenseDialog extends FormApplication {
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
-        blindnessPen
+        blindness
       } = this.modalData.defender;
       const { i18n } = game;
       const { spells } = this.defenderActor.system.mystic;
@@ -453,7 +442,7 @@ export class CombatDefenseDialog extends FormApplication {
       let spell, supShield;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
-        blindnessPen: { value: blindnessPen, apply: true }
+        blindness: { value: -80, apply: true }
       };
 
       if (!newShield) {
@@ -541,7 +530,7 @@ export class CombatDefenseDialog extends FormApplication {
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
-        blindnessPen
+        blindness
       } = this.modalData.defender;
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
@@ -549,7 +538,7 @@ export class CombatDefenseDialog extends FormApplication {
       let power, fatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
-        blindnessPen: { value: blindnessPen, apply: true }
+        blindness: { value: -80, apply: true }
       };
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
