@@ -366,6 +366,7 @@
         }
       }
     },
+    "psychicDiscipline": { "imbalance": false },
     "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
     "psychicPower": {
       "level": { "value": 0 },
@@ -423,6 +424,13 @@
       "sizeProportion": { "value": "" },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
+    },
+    "supernaturalShield": {
+      "type": { "value": "none" },
+      "spellGrade": { "value": "" },
+      "damageBarrier": { "value": 0 },
+      "shieldPoints": { "value": 0 },
+      "origin": { "value": "" }
     }
   }
 }
