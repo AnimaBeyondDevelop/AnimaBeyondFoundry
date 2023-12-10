@@ -1,1 +1,1 @@
-export { SvelteApplication } from "./SvelteApplication";
+export { sveltify } from './sveltify';

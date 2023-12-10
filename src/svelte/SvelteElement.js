@@ -25,7 +25,7 @@ export class SvelteElement {
 
   /**
    * Props used to inject the svelte component
-   * @type{import('svelte').ComponentProps<T>}
+   * @type{Partial<import('svelte').ComponentProps<T>>}
    * @private
    */
   _props;
@@ -44,7 +44,7 @@ export class SvelteElement {
     const { selector, componentConstructor, props } = descriptor;
     this._componentConstructor = componentConstructor;
     this._props = props || {};
-    this._selector = selector;
+    this._selector = selector || `#svelte-${this.name}`;
   }
 
   /**
@@ -68,7 +68,7 @@ export class SvelteElement {
    * @returns {string}
    */
   get selector() {
-    return this._selector || `#svelte-${this.name}`
+    return this._selector;
   }
 
   /**
