@@ -125,6 +125,7 @@ export class GMCombatDialog extends FormApplication {
       this.applyValuesIfBeAble();
       this.close();
     });
+
     html.find('.roll-resistance').click(() => {
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistance =
