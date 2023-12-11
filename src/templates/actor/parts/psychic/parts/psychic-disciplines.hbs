@@ -18,7 +18,7 @@
           hideTitle=(is "gt" @index 0)
           disabled=true
           inputType="text"
-          inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
+          inputName=(concat "system.dynamic.psychicDisciplines." psychicDiscipline._id ".name")
           inputValue=(localize (concat 'anima.ui.psychic.psychicPowers.discipline.' psychicDiscipline.name '.title'))
         }}
         {{>
@@ -28,8 +28,8 @@
           hideTitle=(is "gt" @index 0)
           disabled=false
           inputType="checkbox"
-          inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.imbalance'
-          inputValue=(is 'eq' psychicDiscipline.imbalance true)
+          inputName=(concat "system.dynamic.psychicDisciplines." psychicDiscipline._id ".system.imbalance")
+          inputValue=(is 'eq' psychicDiscipline.system.imbalance true)
         }}
       </div>
     {{/each}}
