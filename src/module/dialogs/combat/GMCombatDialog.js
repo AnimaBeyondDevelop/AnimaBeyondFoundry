@@ -116,12 +116,6 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.make-counter').click(async () => {
       this.applyValuesIfBeAble();
-      this.mysticCastEvaluateIfAble();
-      this.accumulateDefensesIfAble();
-      const supShieldId = await this.newSupernaturalShieldIfBeAble();
-      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
-      this.executeCombatMacro();
-
       if (this.modalData.calculations?.canCounter) {
         this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
       }
@@ -129,23 +123,9 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.apply-values').click(async () => {
       this.applyValuesIfBeAble();
-      this.mysticCastEvaluateIfAble();
-      this.accumulateDefensesIfAble();
-      const supShieldId = await this.newSupernaturalShieldIfBeAble();
-
-      if (this.canApplyDamage) {
-        this.defenderActor.applyDamage(this.modalData.calculations.damage);
-      } else {
-        this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
-      }
-
-      this.executeCombatMacro();
       this.close();
     });
     html.find('.roll-resistance').click(() => {
-      this.applyValuesIfBeAble();
-      this.mysticCastEvaluateIfAble();
-      this.accumulateDefensesIfAble();
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistance =
         this.defenderActor.system.characteristics.secondaries.resistances[type].base
@@ -164,7 +144,7 @@ export class GMCombatDialog extends FormApplication {
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
       }
-      this.executeCombatMacro(resistanceRoll.total);
+      this.applyValuesIfBeAble(resistanceRoll.total);
       this.close();
     });
     html.find('.show-results').click(async () => {
@@ -352,7 +332,7 @@ export class GMCombatDialog extends FormApplication {
 
     this.render();
   }
-  applyValuesIfBeAble() {
+  async applyValuesIfBeAble(resistanceRoll) {
     if (this.modalData.attacker.result?.type === 'combat') {
       this.attackerActor.applyFatigue(this.modalData.attacker.result.values.fatigueUsed);
     }
@@ -360,6 +340,18 @@ export class GMCombatDialog extends FormApplication {
     if (this.modalData.defender.result?.type === 'combat') {
       this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigueUsed);
     }
+
+    this.mysticCastEvaluateIfAble();
+    this.accumulateDefensesIfAble();
+    const supShieldId = await this.newSupernaturalShieldIfBeAble();
+
+    if (this.canApplyDamage) {
+      this.defenderActor.applyDamage(this.modalData.calculations.damage);
+    } else {
+      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
+    }
+
+    this.executeCombatMacro(resistanceRoll);
   }
 
   mysticCastEvaluateIfAble() {
