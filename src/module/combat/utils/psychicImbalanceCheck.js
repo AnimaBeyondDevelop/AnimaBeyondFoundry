@@ -5,11 +5,5 @@ export const psychicImbalanceCheck = (data, power) => {
   if (psychicDisciplines.find(i => i.name == powerDiscipline)?.system.imbalance) {
     extraLevels++;
   }
-  if (
-    power?.system.combatType.value == 'attack' &&
-    mentalPatterns.find(i => i.name == 'courage')
-  ) {
-    extraLevels++;
-  }
   return extraLevels;
 };
