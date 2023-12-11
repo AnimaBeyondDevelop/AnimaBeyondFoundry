@@ -11,27 +11,26 @@
   }}
     {{#each system.psychic.psychicDisciplines as |psychicDiscipline|}}
       <div data-item-id='{{psychicDiscipline._id}}' class='psychic-discipline-row'>
-        {{#if psychicDiscipline.system.imbalance}}
         {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
-          hideTitle=true
-          disabled=true
-          inputType="text"
-          inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
-          inputValue=(concat  (localize (concat 'anima.ui.psychic.psychicPowers.discipline.' psychicDiscipline.name '.title')) " - " (localize 'anima.ui.psychic.psychicDiscipline.name.imbalance'))
-        }}
-        {{else}}
-        {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-          class="name"
-          hideTitle=true
+          title=(localize "anima.ui.psychic.psychicDiscipline.name.title")
+          hideTitle=(is "gt" @index 0)
           disabled=true
           inputType="text"
           inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.name'
           inputValue=(localize (concat 'anima.ui.psychic.psychicPowers.discipline.' psychicDiscipline.name '.title'))
         }}
-        {{/if}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="imbalance"
+          title=(localize "anima.ui.psychic.psychicDiscipline.imbalance.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=false
+          inputType="checkbox"
+          inputName='system.dynamic.psychicDisciplines.{{psychicDiscipline._id}}.imbalance'
+          inputValue=(is 'eq' psychicDiscipline.imbalance true)
+        }}
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
