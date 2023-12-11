@@ -1080,6 +1080,9 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
       value: 0,
       max: 0
     },
+    psychicSettings: {
+      fatigueResistance: false
+    },
     psychicPowers: [],
     psychicDisciplines: [],
     mentalPatterns: [],

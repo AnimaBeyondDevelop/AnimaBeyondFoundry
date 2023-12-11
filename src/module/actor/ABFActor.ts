@@ -270,12 +270,10 @@ export class ABFActor extends Actor {
    * @returns {number} The calculated psychic fatigue value.
    */
   async evaluatePsychicFatigue(power: any, psychicDifficulty: number, sendToChat = true) {
-    const fatigueInmune = this.system.general.advantages.find(
-      (i: any) => i.name === 'Res. a la fatiga psíquica'
-    );
+    const { fatigueResistance } = this.system.psychic.psychicSettings
     const fatigue = {
       value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
-      inmune: fatigueInmune
+      inmune: fatigueResistance
     };
 
     if (fatigue.value) {
