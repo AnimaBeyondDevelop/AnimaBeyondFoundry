@@ -51,6 +51,12 @@ export class ABFActor extends Actor {
     await prepareActor(this);
   }
 
+  /**
+   * Updates the value of the 'fatigue' secondary characteristic of an ABFActor object.
+   * 
+   * @param {number} fatigueUsed - The amount of fatigue to be subtracted from the current value.
+   * @returns {void}
+   */
   applyFatigue(fatigueUsed: number) {
     const newFatigue =
       this.system.characteristics.secondaries.fatigue.value - fatigueUsed;
@@ -64,6 +70,19 @@ export class ABFActor extends Actor {
     });
   }
 
+  /**
+   * Rolls an ability check for the ABFActor class.
+   * 
+   * @param {string} ability - The name of the ability to roll.
+   * @param {boolean} sendToChat - Whether to send the roll result to the chat. Default is true.
+   * @returns {Promise<number>} - The total result of the dice roll.
+   * 
+   * @example
+   * const actor = new ABFActor(data, context);
+   * await actor.rollAbility('agility', true);
+   * 
+   * This code creates a new instance of the ABFActor class and calls the `rollAbility` method with the ability name 'agility' and the `sendToChat` parameter set to true. The method will calculate the ability value, prompt the user for a modifier, roll the dice, and display the result in the chat.
+   */
   async rollAbility(ability: string, sendToChat = true) {
     const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
     const { secondaries } = this.system;
@@ -94,6 +113,16 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
+  /**
+   * Creates a new supernatural shield item for the ABFActor class and execute a macro using the shield's name.
+   * 
+   * @param {string} type - The type of the supernatural shield ('psychic' or 'mystic').
+   * @param {any} power - The power object containing information about the psychic power. Only needed if type = 'psychic'.
+   * @param {number} psychicDifficulty - The difficulty level of the psychic power. Only needed if type = 'psychic'.
+   * @param {any} spell - The spell object containing information about the mystic spell. Only needed if type = 'mystic'.
+   * @param {string} spellGrade - The grade of the mystic spell. Only needed if type = 'mystic'.
+   * @returns {Promise<string>} - The ID of the newly created supernatural shield item.
+   */
   async newSupernaturalShield(
     type: string,
     power: any,
@@ -164,7 +193,13 @@ export class ABFActor extends Actor {
     return item._id;
   }
 
-  async deleteSupernaturalShield(supShieldId: any) {
+  /**
+   * Deletes a supernatural shield item from the actor's inventory and exucute a macro passing argument 'newShield: false, shieldId: supShieldId' to stop the corresponding the animation.
+   * 
+   * @param supShieldId - The ID of the supernatural shield item to be deleted.
+   * @returns {void} 
+   */
+  async deleteSupernaturalShield(supShieldId: string) {
     const supShield = this.getItem(supShieldId);
     if (supShield) {
       this.deleteItem(supShieldId)
@@ -173,12 +208,23 @@ export class ABFActor extends Actor {
         newShield: false,
         shieldId: supShieldId
       };
-      executeMacro(supShield.name, args);
+      executeMacro(supShield.name ?? undefined, args);
     }
   }
 
+  /**
+   * Applies damage to a supernatural shield.
+   * If the damage reduces the shield's points to zero or below, the shield is deleted and the remaining damage is recalculated and applied to the actor.
+   * 
+   * @param {string} supShieldId - The ID of the supernatural shield to apply damage to.
+   * @param {number} damage - The amount of damage to apply to the shield.
+   * @param {boolean} [dobleDamage] - Whether to apply double damage or not. Default is `false`.
+   * @param {object} [newCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
+   * 
+   * @returns {void}
+   */
   async applyDamageSupernaturalShield(
-    supShieldId: any,
+    supShieldId: string,
     damage: number,
     dobleDamage?: boolean,
     newCombatResult?: any
@@ -212,6 +258,17 @@ export class ABFActor extends Actor {
     }
   }
 
+  /**
+   * Evaluates the psychic fatigue caused by using a power in the game.
+   * It checks if the actor has immunity to fatigue and calculates the fatigue value based on the power's effects and the psychic difficulty.
+   * If the actor is not immune to fatigue, it applies the fatigue value to the actor's characteristics.
+   * 
+   * @param {object} power - The power for which the psychic fatigue is being evaluated.
+   * @param {number} psychicDifficulty - The difficulty level of the psychic power.
+   * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
+   * 
+   * @returns {number} The calculated psychic fatigue value.
+   */
   async evaluatePsychicFatigue(power: any, psychicDifficulty: number, sendToChat = true) {
     const fatigueInmune = this.system.general.advantages.find(
       (i: any) => i.name === 'Res. a la fatiga psíquica'
@@ -239,6 +296,14 @@ export class ABFActor extends Actor {
     return fatigue.value;
   }
 
+  /**
+   * Performs maintenance on psychic shields by checking if they are overmaintained or need to be damaged.
+   * If a psychic shield is overmaintained, it is either unset or damaged based on the `revert` parameter.
+   * Its executed in every next turn in ABFCombat, if the combat goes to a previous turn the 'revert' parameter is set to true.
+   * 
+   * @param revert - A flag indicating whether to revert the maintenance or not.
+   * @returns {void}
+   */
   async psychicShieldsMaintenance(revert: boolean) {
     const psychicShields = this.system.combat.supernaturalShields.filter(s => s.system.type === 'psychic');
 
@@ -253,12 +318,18 @@ export class ABFActor extends Actor {
             id: psychicShield._id
           };
           const damage = revert ? -5 : 5;
-          this.applyDamageSupernaturalShield(supShield, damage, false, undefined);
+          this.applyDamageSupernaturalShield(supShield.id, damage, false, undefined);
         }
       }
     }
   }
 
+  /**
+   * Updates the defenses counter for an actor based on the value of the `keepAccumulating` parameter.
+   * 
+   * @param {boolean} keepAccumulating - A flag indicating whether to continue accumulating defenses or not.
+   * @returns {void}
+   */
   accumulateDefenses(keepAccumulating: boolean) {
     const defensesCounter: any = this.getFlag('animabf', 'defensesCounter') || {
       accumulated: 0,
@@ -275,6 +346,15 @@ export class ABFActor extends Actor {
     }
   }
 
+  /**
+   * Resets the accumulated defenses counter for an ABFActor object.
+   * 
+   * @example
+   * const actor = new ABFActor(data, context);
+   * actor.resetDefensesCounter();
+   * 
+   * @returns {void} 
+   */
   resetDefensesCounter() {
     const defensesCounter = this.getFlag('animabf', 'defensesCounter');
     if (defensesCounter === undefined) {
@@ -373,7 +453,7 @@ export class ABFActor extends Actor {
    * @param spellName - The name of the spell being casted.
    * @param spellGrade - The grade of the spell being casted.
    * 
-   * @returns None. The method performs actions based on the inputs but does not return any value.
+   * @returns {void}
    */
   mysticCast(spellCasting: SpellCasting, spellName: string, spellGrade: string) {
     const { zeon, casted, override } = spellCasting;
@@ -390,6 +470,12 @@ export class ABFActor extends Actor {
     }
   }
 
+  /**
+   * Updates the accumulated zeon value of a mystic character by subtracting the zeon cost of a spell.
+   * 
+   * @param {number} zeonCost - The amount of zeon to be consumed.
+   * @returns {void}
+   */
   consumeAccumulatedZeon(zeonCost: number) {
     const newAccumulateZeon = this.system.mystic.zeon.accumulated.value - zeonCost;
 
@@ -402,6 +488,13 @@ export class ABFActor extends Actor {
     });
   }
 
+  /**
+   * Consumes or restores the amount of maintained Zeon for a Mystic character.
+   * Used in every turn change in ABFCombat.
+   * 
+   * @param {boolean} revert - A flag indicating whether to consume or restore the maintained Zeon. If `true`, the maintained Zeon will be restored to the character's total Zeon value. If `false`, the maintained Zeon will be consumed from the character's total Zeon value.
+   * @returns A promise that resolves when the update is complete.
+   */
   async consumeMaintainedZeon(revert: boolean) {
     const { zeon, zeonMaintained } = this.system.mystic;
     const updatedZeon = revert
@@ -417,6 +510,14 @@ export class ABFActor extends Actor {
     });
   }
 
+
+  /**
+   * Deletes a prepared spell from the `mystic.preparedSpells` array of the `ABFActor` class.
+   * 
+   * @param spellName - The name of the spell to be deleted.
+   * @param spellGrade - The grade of the spell to be deleted.
+   * @returns None. The method updates the `mystic.preparedSpells` array of the actor.
+   */
   deletePreparedSpell(spellName: string, spellGrade: string) {
     let preparedSpellId = this.system.mystic.preparedSpells.find(
       (ps: any) =>
@@ -431,10 +532,16 @@ export class ABFActor extends Actor {
       const dataToUpdate = {
         system: getUpdateObjectFromPath(items, fieldPath)
       };
-      this.update(dataToUpdate);
+      return this.update(dataToUpdate);
     }
   }
 
+  /**
+   * Updates the `lifePoints` attribute of an `ABFActor` object by subtracting the specified `damage` value.
+   * @param {number} damage - The amount of damage to be subtracted from the `lifePoints` attribute.
+   * @returns {void}
+   * @example
+   */
   applyDamage(damage: number) {
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
