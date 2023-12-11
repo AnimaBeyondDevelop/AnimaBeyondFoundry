@@ -1,6 +1,15 @@
 import { ABFItems } from '../../items/ABFItems';
-import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+
+/**
+ * Initial data, used to infer the type of the data inside an item's `system`
+ * @readonly
+ */
+export const INITIAL_MENTAL_PATTERN_DATA = {
+  bonus: { value: "" },
+  penalty: { value: "" }
+};
 
 /** @type {import("../Items").MentalPatternItemConfig} */
 export const MentalPatternItemConfig = ABFItemConfigFactory({
@@ -13,19 +22,13 @@ export const MentalPatternItemConfig = ABFItemConfigFactory({
     rowSelector: '.mental-pattern-row'
   },
   onCreate: async (actor) => {
-    const { i18n } = game;
-
-    const name = await openSimpleInputDialog({
-      content: i18n.localize('dialogs.items.mentalPattern.content')
-    });
+    const results = await openComplexInputDialog(actor, 'newMentalPattern');
+    const name = results['new.mentalPattern.name'];
 
     await actor.createItem({
       name,
       type: ABFItems.MENTAL_PATTERN,
-      system: {
-        bonus: { value: 0 },
-        penalty: { value: 0 }
-      }
+      system: INITIAL_MENTAL_PATTERN_DATA
     });
   }
 });

@@ -11,6 +11,7 @@ import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig
 import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
 import { INITIAL_PREPARED_SPELL_DATA } from './mystic/PreparedSpellItemConfig';
 import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './psychic/PsychicDisciplineItemConfig';
+import { INITIAL_MENTAL_PATTERN_DATA } from './psychic/MentalPatternItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
 
@@ -376,10 +377,7 @@ export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<InnatePsychicPo
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerItemConfig = ABFItemConfig<InnatePsychicPowerItemData>;
 
-export type MentalPatternItemData = {
-  bonus: { value: number };
-  penalty: { value: number };
-};
+export type MentalPatternItemData = typeof INITIAL_MENTAL_PATTERN_DATA;
 export type MentalPatternDataSource = ABFItemBaseDataSource<MentalPatternItemData>;
 export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 export type MentalPatternItemConfig = ABFItemConfig<MentalPatternItemData>;

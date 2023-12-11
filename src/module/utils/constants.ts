@@ -14,6 +14,7 @@ export const Templates = {
     },
     newActVia: 'systems/animabf/templates/dialog/new-act-via.hbs',
     newPsychicDiscipline: 'systems/animabf/templates/dialog/new-psychic-discipline.hbs',
+    newMentalPattern: 'systems/animabf/templates/dialog/new-mental-pattern.hbs',
     Combat: {
       CombatAttackDialog: {
         main: 'systems/animabf/templates/dialog/combat/combat-attack/combat-attack-dialog.hbs',
