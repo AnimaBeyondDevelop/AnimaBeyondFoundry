@@ -17,6 +17,7 @@ import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.j
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
+import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
@@ -286,27 +287,19 @@ export class ABFActor extends Actor {
     }
   }
 
+  /**
+   * Determines if a mystic character can cast a specific spell at a specific grade.
+   * 
+   * @param spell - The spell object that contains information about the spell, including the zeon cost for each grade.
+   * @param spellGrade - The grade of the spell that the character wants to cast.
+   * @param casted - An object that indicates whether the spell has been casted before, either as a prepared spell or an innate spell. Default is { prepared: false, innate: false }.
+   * @param override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting. Default is false.
+   * @returns {SpellCasting} - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
+   */
   mysticCanCastEvaluate(spell: any, spellGrade: string, casted = { prepared: false, innate: false }, override = false) {
-    const spellCasting: {
-      zeon: {
-        accumulated: number;
-        cost: number;
-      };
-      canCast: {
-        prepared: boolean;
-        innate: boolean;
-      };
-      casted: {
-        prepared: boolean;
-        innate: boolean;
-      };
-      override: boolean;
-    } = {
-      zeon: { accumulated: 0, cost: 0 },
-      canCast: { prepared: false, innate: false },
-      casted,
-      override
-    };
+    const spellCasting = SpellCasting;
+    spellCasting.casted = casted
+    spellCasting.override = override
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated.value ?? 0;
 
     if (override) { return spellCasting };
@@ -334,7 +327,13 @@ export class ABFActor extends Actor {
     return spellCasting;
   }
 
-  evaluateCast(spellCasting: any) {
+  /**
+   * Evaluates the spell casting conditions and returns a boolean value indicating whether the spell can be cast or not.
+   * 
+   * @param {SpellCasting} spellCasting - - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
+   * @returns {boolean} - A boolean value indicating whether the spell can be cast or not.
+   */
+  evaluateCast(spellCasting: SpellCasting) {
     const { i18n } = game;
     const { canCast, casted, zeon, override } = spellCasting;
     if (override) {
@@ -367,7 +366,16 @@ export class ABFActor extends Actor {
     } else return false;
   };
 
-  mysticCast(spellCasting: any, spellName: string, spellGrade: string) {
+  /**
+   * Handles the casting of mystic spells by an actor in the ABFActor class.
+   * 
+   * @param {SpellCasting} spellCasting - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
+   * @param spellName - The name of the spell being casted.
+   * @param spellGrade - The grade of the spell being casted.
+   * 
+   * @returns None. The method performs actions based on the inputs but does not return any value.
+   */
+  mysticCast(spellCasting: SpellCasting, spellName: string, spellGrade: string) {
     const { zeon, casted, override } = spellCasting;
     if (override) {
       return;
