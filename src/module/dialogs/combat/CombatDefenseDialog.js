@@ -589,18 +589,18 @@ export class CombatDefenseDialog extends FormApplication {
           });
         }
 
-        fatigue = await this.defenderActor.evaluatePsychicFatigue(
+        psychicFatigue = await this.defenderActor.evaluatePsychicFatigue(
           power,
           psychicPotentialRoll.total,
           this.modalData.attacker.showRoll
         );
 
-        if (!fatigue) {
+        if (!psychicFatigue) {
           supShield = { create: true }
         }
       }
 
-      if (!fatigue) {
+      if (!psychicFatigue) {
         if (this.modalData.defender.showRoll) {
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
             power: power.name,
@@ -622,9 +622,9 @@ export class CombatDefenseDialog extends FormApplication {
           psychicProjection,
           psychicPotential: newPsychicPotential ?? 0,
           at: at.final,
-          roll: rolled,
-          total: psychicProjectionRoll.total,
-          fatigue,
+          roll: psychicFatigue ? 0 : rolled,
+          total: psychicFatigue ? 0 : psychicProjectionRoll.total,
+          psychicFatigue,
           supShield,
           defenderCombatMod
         }

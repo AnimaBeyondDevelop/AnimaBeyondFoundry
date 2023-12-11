@@ -195,9 +195,9 @@ export class GMCombatDialog extends FormApplication {
     }
 
     if (result.type === 'psychic') {
-      const powers = this.attackerActor.system.psychic.psychicPowers;
+      const { psychicPowers } = this.attackerActor.system.psychic;
 
-      attacker.result.power = powers.find(w => w._id === result.values.powerUsed);
+      attacker.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
     this.render();
@@ -216,9 +216,6 @@ export class GMCombatDialog extends FormApplication {
     }
 
     if (result.type === 'psychic') {
-      if (result.values.fatigue) {
-        result.values.total = 0;
-      }
       const { psychicPowers } = this.defenderActor.system.psychic;
 
       defender.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
@@ -463,7 +460,8 @@ export class GMCombatDialog extends FormApplication {
       isVisibleAttack: true,
       resistanceRoll,
       spellGrade: this.modalData.attacker.result.values.spellGrade,
-      hasPsychicFatigue: false
+      attackerPsychicFatigue: this.modalData.attacker.result.values?.psychicFatigue,
+      defenderPsychicFatigue: this.modalData.defender.result.values?.psychicFatigue
     };
 
     if (args.totalAttack < 80) {
@@ -484,7 +482,6 @@ export class GMCombatDialog extends FormApplication {
       macroName = this.modalData.attacker.result.values.spellName;
     } else if (this.modalData.attacker.result?.type === 'psychic') {
       macroName = this.modalData.attacker.result.values.powerName;
-      args.hasPsychicFatigue = this.modalData.attacker.result.values.fatigue;
     }
 
     if (

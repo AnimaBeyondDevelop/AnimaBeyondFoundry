@@ -527,14 +527,14 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const fatigue = await this.attackerActor.evaluatePsychicFatigue(
+        const psychicFatigue = await this.attackerActor.evaluatePsychicFatigue(
           power,
           psychicPotentialRoll.total,
           this.modalData.attacker.showRoll
         );
 
         if (this.modalData.attacker.showRoll) {
-          if (!fatigue) {
+          if (!psychicFatigue) {
             const projectionFlavor = i18n.format(
               'macros.combat.dialog.psychicAttack.title',
               {
@@ -567,10 +567,10 @@ export class CombatAttackDialog extends FormApplication {
             psychicProjection,
             critic,
             damage,
-            fatigueCheck: fatigue.value,
-            roll: rolled,
-            total: psychicProjectionRoll.total,
-            fumble: psychicProjectionRoll.fumbled,
+            psychicFatigue,
+            roll: psychicFatigue ? 0 : rolled,
+            total: psychicFatigue ? 0 : psychicProjectionRoll.total,
+            fumble: psychicFatigue ? false : psychicProjectionRoll.fumbled,
             resistanceEffect,
             visible: visibleCheck,
             distance,

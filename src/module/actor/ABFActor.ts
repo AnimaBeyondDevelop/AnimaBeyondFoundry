@@ -271,27 +271,27 @@ export class ABFActor extends Actor {
    */
   async evaluatePsychicFatigue(power: any, psychicDifficulty: number, sendToChat = true) {
     const { fatigueResistance } = this.system.psychic.psychicSettings
-    const fatigue = {
+    const psychicFatigue = {
       value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
       inmune: fatigueResistance
     };
 
-    if (fatigue.value) {
+    if (psychicFatigue.value) {
       if (sendToChat) {
         const { i18n } = game;
         ChatMessage.create({
           speaker: ChatMessage.getSpeaker({ actor: this }),
           flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
-            fatiguePen: fatigue.inmune ? 0 : fatigue.value
+            fatiguePen: psychicFatigue.inmune ? 0 : psychicFatigue.value
           })
         });
       }
-      if (!fatigue.inmune) {
-        this.applyFatigue(fatigue.value);
+      if (!psychicFatigue.inmune) {
+        this.applyFatigue(psychicFatigue.value);
       }
     }
 
-    return fatigue.value;
+    return psychicFatigue.value;
   }
 
   /**
