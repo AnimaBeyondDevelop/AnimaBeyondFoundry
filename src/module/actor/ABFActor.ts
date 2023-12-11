@@ -144,14 +144,14 @@ export class ABFActor extends Actor {
         psychic
       } = this.system;
 
-      const newPotentialBase = psychicPotentialEffect(
+      const potentialBaseDifficulty = psychicPotentialEffect(
         psychic.psychicPotential.base.value,
         0,
         inhuman.value,
         zen.value
       );
       const baseEffect =
-        shieldBaseValueCheck(newPotentialBase, power?.system.effects) ?? 0;
+        shieldBaseValueCheck(potentialBaseDifficulty, power?.system.effects) ?? 0;
       const finalEffect = shieldValueCheck(
         power?.system.effects[psychicDifficulty].value ?? ''
       );
