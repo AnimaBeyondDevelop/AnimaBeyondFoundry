@@ -44,6 +44,14 @@ export function sveltify(Base) {
     }
 
     /**
+     * Whether the application is an ActorSheet / ItemSheet or other application.
+     * @returns {boolean}
+     */
+    get isSheet() {
+      return this.options.baseApplication?.includes("Sheet") || false;
+    }
+
+    /**
      * @param {any[]} args
      * @inheritdoc
      */
@@ -53,7 +61,9 @@ export function sveltify(Base) {
       this.updateStore();
 
       if ('_updateObject' in this) {
-        this.dataStore.debounceSubscribe(v => this._updateObject({ type: 'storeUpdated' }, v));
+        this.dataStore.debounceSubscribe(
+          v => this['_updateObject']({ type: 'storeUpdated' }, (this.isSheet && v['data']) ? v['data'] : v)
+        );
       }
 
       /** @type {import('.').ComponentDescriptor[]} */
@@ -79,17 +89,17 @@ export function sveltify(Base) {
         id: 'svelte-application',
         title: 'Svelte Application',
       }
-      return mergeObject(super.defaultOptions, options);
+      return mergeObject(super['defaultOptions'], options);
     }
 
     /**
      * @inheritdoc
-     * For a SvelteApplication, the returned object is passed to every SvelteComponent as a prop
-     * called `data`.
      * @param {Partial<ApplicationOptions>} [options]
      * @returns {TData | Promise<TData>} The data used for rendering the application
      */
+    // @ts-ignore
     getData(options) {
+      // @ts-ignore
       return super.getData(options)
     }
 
@@ -138,7 +148,7 @@ export function sveltify(Base) {
 
     /**
      * @inheritdoc
-     * @param {TData} data
+     * @param {object} data Data used to render the template (the return of `.getData()`)
      */
     async _renderInner(data) {
       this.updateStore();
@@ -150,10 +160,11 @@ export function sveltify(Base) {
     * @param {Application.CloseOptions} [options]
     */
     async close(options) {
-      for (const element of this._svelteElements) {
-        element.destroy();
-      }
-      return super.close(options);
+      return super.close(options).then(_ => {
+        for (const element of this._svelteElements) {
+          element.destroy();
+        }
+      });
     }
   };
 
