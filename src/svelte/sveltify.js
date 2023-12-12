@@ -2,12 +2,19 @@ import { Templates } from '../module/utils/constants';
 import { debouncedStore } from './store';
 import { SvelteElement } from './SvelteElement';
 
+const RENDER_STATES = Application.RENDER_STATES;
+
 /**
  * @template {Application} T
  * @typedef {abstract new(...args: any[]) => T} Constructor
  **/
 
 /**
+ * Transforms a Foundry Application / FormApplication into a (possible mixed) Svelte powered Application.
+ * 
+ * **Note:** In this case, the implementation asumes `.getData()` to return `this.object`;
+ * otherwise `this.onStoreUpdate()` method should be overriden to update the object correctly.
+ * 
  * @template {Application} TBase
  * @template TData Type of the data used for render the application
  * @param {abstract new(...args: any[]) => TBase} Base Constructor of the Application (sub)class to sveltify.
@@ -59,12 +66,7 @@ export function sveltify(Base) {
       super(...args)
 
       this.updateStore();
-
-      if ('_updateObject' in this) {
-        this.dataStore.debounceSubscribe(
-          v => this['_updateObject']({ type: 'storeUpdated' }, (this.isSheet && v['data']) ? v['data'] : v)
-        );
-      }
+      this.dataStore.debounceSubscribe(v => this.onStoreUpdate(v));
 
       /** @type {import('.').ComponentDescriptor[]} */
       const descriptors = /** @type {typeof SvelteApplication} */(this.constructor).svelteDescriptors;
@@ -100,7 +102,7 @@ export function sveltify(Base) {
     // @ts-ignore
     getData(options) {
       // @ts-ignore
-      return super.getData(options)
+      return super.getData(options);
     }
 
     /**
@@ -108,7 +110,40 @@ export function sveltify(Base) {
      * @param {Partial<ApplicationOptions>} [options] options parameter passed to `.getData()`
      */
     async updateStore(options = {}) {
-      this.dataStore.set(await this.getData(options));
+      let data = await this.getData(options);
+      this.dataStore.set(data);
+    }
+
+    /**
+     * Method in charge of reporting back to Foundry's App the changes made inside the Svelte part.
+     * It gets triggered every time `this.dataStore` is updated, and does one of the following:
+     * - If the Application `isSheet`, then updates the base document using `super._updateObject()`.
+     * - If `this.object` exists (e.g. when `Base` is `FormApplication`), updates `this.object`
+     *   the updated version in the dataStore, and then calls `super._updateObject()`.
+     *   **Note:** In this case, the implementation asumes `.getData()` to return `this.object`;
+     *   otherwise this method should be overriden to update the object correctly.
+     * - Otherwise, it yields an error informing the user that they should override this method.
+     *
+     * @param {TData} value The new value in the store.
+     */
+    onStoreUpdate(value) {
+      if (!this.isSheet && !('object' in this)) {
+        throw new Error(
+          // @ts-ignore
+          `${this.constructor.name} must override the method '.onStoreUpdate()', `
+          + `since neither it has 'this.object' nor it is an Actor or Item sheet.`
+        );
+      }
+
+      if (this.isSheet) {
+        // If this is a sheet, the value in the store has the data needed for document.update(),
+        // and we pass that to the _updateObject()
+        this['_updateObject']({ type: 'storeUpdated' }, value['data']);
+      } else {
+        // Else, we pass in the whole 'value', which is assumed to be the updated version of this.object.
+        this.object = value;
+        this.render(false, { skipUpdateStore: true });
+      }
     }
 
     /**
@@ -124,12 +159,25 @@ export function sveltify(Base) {
     /**
      * @inheritdoc
      * @param {boolean} [force]
-     * @param {Application.RenderOptions} [options]
+     * @param {Application.RenderOptions & {skipUpdateStore?: boolean}} [options]
+     */
+    render(force, options) {
+      return super.render(force, options)
+    }
+
+    /**
+     * @inheritdoc
+     * @param {boolean} [force]
+     * @param {Application.RenderOptions & {skipUpdateStore?: boolean}} [options]
      */
     async _render(force, options) {
-      // If the application is already rendered and doesn't have handlebars, just update the store
-      if (this.element?.length && !this.hasHandlebars) {
+      // Update store if required
+      if (!options?.skipUpdateStore) {
         this.updateStore();
+      }
+
+      // If the application is already rendered and doesn't have handlebars, no need to render more
+      if (this.element?.length && !this.hasHandlebars) {
         return
       }
       // otherwise, render the handlebars application and then inject svelteElements
@@ -137,22 +185,15 @@ export function sveltify(Base) {
 
       for (const element of this._svelteElements) {
         const target = this.element.find(element.selector).get(0);
-        if (!target) {
+        if (target) {
+          element.inject(target);
+          // @ts-ignore
+        } else if (this._state > RENDER_STATES.CLOSED) {
           throw new Error(
             `Error rendering SvelteApp: element '${element.selector}' not found in the HTML.`
           );
         }
-        element.inject(target);
       }
-    }
-
-    /**
-     * @inheritdoc
-     * @param {object} data Data used to render the template (the return of `.getData()`)
-     */
-    async _renderInner(data) {
-      this.updateStore();
-      return super._renderInner(data);
     }
 
     /**
