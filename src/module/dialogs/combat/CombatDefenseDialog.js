@@ -291,9 +291,9 @@ export class CombatDefenseDialog extends FormApplication {
         modifier: { value: modifier, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
         multipleDefensesPenalty: {
-          value: multipleDefensesPenalty,
+          value: multipleDefensesPenalty * 1,
           apply: true
-        }
+        } 
       };
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
       const projectileType = this.modalData.attacker.projectile?.type;
