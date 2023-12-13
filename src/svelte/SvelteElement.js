@@ -115,6 +115,6 @@ export class SvelteElement {
 
   destroy() {
     this._component?.$destroy();
-    this._htmlElement?.remove();
+    this._htmlElement = undefined;
   }
 }

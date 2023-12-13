@@ -117,33 +117,36 @@ export function sveltify(Base) {
     /**
      * Method in charge of reporting back to Foundry's App the changes made inside the Svelte part.
      * It gets triggered every time `this.dataStore` is updated, and does one of the following:
-     * - If the Application `isSheet`, then updates the base document using `super._updateObject()`.
+     * - If the Application `isSheet`, then updates the base document using and re-renders the sheet
+     *   (skiping the store update during render).
      * - If `this.object` exists (e.g. when `Base` is `FormApplication`), updates `this.object`
-     *   the updated version in the dataStore, and then calls `super._updateObject()`.
+     *   the updated version in the dataStore, and then re-renders the application (skiping the store
+     *   update during render).
      *   **Note:** In this case, the implementation asumes `.getData()` to return `this.object`;
      *   otherwise this method should be overriden to update the object correctly.
      * - Otherwise, it yields an error informing the user that they should override this method.
      *
      * @param {TData} value The new value in the store.
      */
-    onStoreUpdate(value) {
+    async onStoreUpdate(value) {
       if (!this.isSheet && !('object' in this)) {
         throw new Error(
           // @ts-ignore
           `${this.constructor.name} must override the method '.onStoreUpdate()', `
           + `since neither it has 'this.object' nor it is an Actor or Item sheet.`
         );
+        return
       }
 
       if (this.isSheet) {
         // If this is a sheet, the value in the store has the data needed for document.update(),
         // and we pass that to the _updateObject()
-        this['_updateObject']({ type: 'storeUpdated' }, value['data']);
+        await this.object.update(value['data'], { render: false });
       } else {
         // Else, we pass in the whole 'value', which is assumed to be the updated version of this.object.
         this.object = value;
-        this.render(false, { skipUpdateStore: true });
       }
+      this.render(false, { skipUpdateStore: true });
     }
 
     /**
