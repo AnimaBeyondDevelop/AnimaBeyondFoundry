@@ -7,8 +7,13 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
+import { sveltify } from '../../svelte';
+import PruebaSvelte from '../../svelte/components/prueba.svelte';
 
-export default class ABFActorSheet extends ActorSheet {
+/** @typedef {import('./constants').TActorData} TData */
+/** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
+// /** @extends FormApplication<FormApplicationOptions, TData, TData> */
+export default class ABFActorSheet extends sveltify(/** @type {TFormApplication} */(ActorSheet)) {
   i18n;
 
   constructor(actor, options) {
@@ -17,6 +22,12 @@ export default class ABFActorSheet extends ActorSheet {
     this.i18n = game.i18n;
 
     this.position.width = this.getWidthDependingFromContent();
+  }
+
+  static get svelteDescriptors() {
+    return [
+      { componentConstructor: PruebaSvelte, selector: '#svelte-app' }
+    ];
   }
 
   static get defaultOptions() {

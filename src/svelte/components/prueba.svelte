@@ -2,5 +2,5 @@
   export let data;
 </script>
 
-<p>Prueba! {$data.name}</p>
-<input bind:value={$data.name} />
+<p>Prueba! {$data.data.name}</p>
+<input bind:value={$data.data.name} />
