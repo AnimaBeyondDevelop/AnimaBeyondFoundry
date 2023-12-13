@@ -84,6 +84,11 @@ export type ABFItemConfigMinimal<
   };
 
   /**
+   * Hides DeleteRow from contextMenuConfig
+   */
+  hideDeleteRow?: boolean;
+
+  /**
    * Method called to create a new item
    * @param actor
    * @param otherArgs
