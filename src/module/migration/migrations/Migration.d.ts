@@ -1,6 +1,7 @@
 import { ABFItemBaseDataSource } from '../../../animabf.types';
 import { TokenData } from '../../../types/foundry-vtt-types/src/foundry/common/data/module.mjs';
 import { ABFActor } from '../../actor/ABFActor';
+import ABFItem from '../../items/ABFItem';
 import { ABFActorDataSourceData } from '../../types/Actor';
 
 /**
@@ -35,7 +36,7 @@ export interface Migration {
    * @param actor - The actor to migrate
    * @returns The actor after the changes in the migration.
    */
-  updateActor?(actor: ABFActor): ABFActor;
+  updateActor?(actor: ABFActor): ABFActor | Promise<ABFActor>;
 
   /**
    * Update the item to the latest schema version, handling changes that must happen before any other migration in a
@@ -44,7 +45,7 @@ export interface Migration {
    * @param actor - If the item is part of an actor, this is set to the actor itself
    * @returns The item after the changes in the migration
    */
-  preUpdateItem?(item: ABFItem, actor?: ABFActor): ABFItem;
+  preUpdateItem?(item: ABFItem, actor?: ABFActor): ABFItem | Promise<ABFItem>;
 
   /**
    * Update the item to the latest schema version.
@@ -52,7 +53,7 @@ export interface Migration {
    * @param actor - If the item is part of an actor, this is set to the actor itself
    * @returns The item after the changes in the migration
    */
-  updateItem?(item: ABFItem, actor?: ABFActor): ABFItem;
+  updateItem?(item: ABFItem, actor?: ABFActor): ABFItem | Promise<ABFItem>;
 
   /**
    * Update the token to the latest schema version.

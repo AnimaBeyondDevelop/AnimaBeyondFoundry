@@ -50,7 +50,7 @@ async function migrateAllActors(migration) {
 
     for (const actor of actors) {
       console.log(`AnimaBF | Migrating actor ${actor.name} (${actor.id}).`);
-      const updateData = migration.updateActor(actor).toObject();
+      const updateData = (await migration.updateActor(actor)).toObject();
       await actor.update(updateData);
     }
 
