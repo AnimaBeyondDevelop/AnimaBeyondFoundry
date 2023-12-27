@@ -32,33 +32,27 @@ export interface Migration {
 
   /**
    * Update the actor to the latest schema version.
-   * @param data - This should be effectively a `ABFActorDataSourceData` from the previous version.
-   * @returns The updated version of `data`.
+   * @param actor - The actor to migrate
+   * @returns The actor after the changes in the migration.
    */
-  updateActor?(data: ABFActorDataSourceData): ABFActorDataSourceData;
+  updateActor?(actor: ABFActor): ABFActor;
 
   /**
    * Update the item to the latest schema version, handling changes that must happen before any other migration in a
    * given list.
-   * @param data - Item to update. This should be an `ItemData` from the previous version
-   * @param actorData - If the item is part of an actor, this is set to the actor data
-   * @returns The updated version of `data`.
+   * @param item - Item to update.
+   * @param actor - If the item is part of an actor, this is set to the actor itself
+   * @returns The item after the changes in the migration
    */
-  preUpdateItem?(
-    data: ABFItemBaseDataSource,
-    actorData?: ABFActorDataSourceData
-  ): ABFItemBaseDataSource;
+  preUpdateItem?(item: ABFItem, actor?: ABFActor): ABFItem;
 
   /**
    * Update the item to the latest schema version.
-   * @param data Item to update. This should be an `ItemData` from the previous version.
-   * @param actorData If the item is part of an actor, this is set to the actor. For instance
-   * @returns The updated version of `data`.
+   * @param item - Item to update.
+   * @param actor - If the item is part of an actor, this is set to the actor itself
+   * @returns The item after the changes in the migration
    */
-  updateItem?(
-    data: ABFItemBaseDataSource,
-    actorData?: ABFActorDataSourceData
-  ): ABFItemBaseDataSource;
+  updateItem?(item: ABFItem, actor?: ABFActor): ABFItem;
 
   /**
    * Update the token to the latest schema version.

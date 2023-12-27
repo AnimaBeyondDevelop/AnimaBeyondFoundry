@@ -50,8 +50,8 @@ async function migrateAllActors(migration) {
 
     for (const actor of actors) {
       console.log(`AnimaBF | Migrating actor ${actor.name} (${actor.id}).`);
-      const system = migration.updateActor(actor.system);
-      await actor.update({ system });
+      const updateData = migration.updateActor(actor).toObject();
+      await actor.update(updateData);
     }
 
     // Lock again packs which where locked
