@@ -11,15 +11,15 @@ export const ABFDialogs = {
     body: string,
     { onConfirm, onCancel }: { onConfirm?: () => void; onCancel?: () => void } = {}
   ) =>
-    new Promise<void>(resolve => {
+    new Promise<string>(resolve => {
       new ConfirmationDialog(title, body, {
         onConfirm: () => {
           onConfirm?.();
-          resolve();
+          resolve("confirm");
         },
         onCancel: () => {
           onCancel?.();
-          resolve();
+          resolve("cancel");
         }
       });
     })

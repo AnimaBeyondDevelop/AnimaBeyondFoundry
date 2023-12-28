@@ -120,19 +120,24 @@ async function applyMigration(migration) {
 }
 
 /** This is the only function on the script meant to be called from outside the script */
-export function applyMigrations() {
+export async function applyMigrations() {
   if (!game.user.isGM) { return; }
 
   const migrations = Object.values(MigrationList).filter(migration => migrationApplies(migration));
+  migrations.sort((a, b) => a.version - b.version);
 
-  migrations.forEach(migration => ABFDialogs.confirm(
-    game.i18n.localize('dialogs.migrations.title'),
-    `${game.i18n.localize('dialogs.migrations.content')}<br><hr><br>` +
-    '<h4>Details of the migration (only English available):</h4>' +
-    `<strong>Title:</strong> ${migration.title}<br>` +
-    `<strong>Description:</strong> ${migration.description}`,
-    {
-      onConfirm: () => applyMigration(migration),
+  for (const migration of migrations) {
+    const result = await ABFDialogs.confirm(
+      game.i18n.localize('dialogs.migrations.title'),
+      `${game.i18n.localize('dialogs.migrations.content')}<br><hr><br>` +
+      '<h4>Details of the migration (only English available):</h4>' +
+      `<strong>Title:</strong> ${migration.title}<br>` +
+      `<strong>Description:</strong> ${migration.description}`,
+    )
+    if (result === "confirm") {
+      await applyMigration(migration);
+    } else {
+      break;
     }
-  ));
+  }
 }
