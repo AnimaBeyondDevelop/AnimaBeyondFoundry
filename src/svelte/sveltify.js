@@ -1,4 +1,5 @@
 import { Templates } from '../module/utils/constants';
+import { ABFSettingsKeys } from '../utils/registerSettings';
 import { debouncedStore } from './store';
 import { SvelteElement } from './SvelteElement';
 
@@ -185,15 +186,43 @@ export function sveltify(Base) {
       }
       // otherwise, render the handlebars application and then inject svelteElements
       await super._render(force, options)
+    }
 
+    /**
+     * @inheritdoc
+     * @param {JQuery<HTMLElement>} element
+     * @param {JQuery<HTMLElement>} html
+     */
+    _replaceHTML(element, html) {
+      super._replaceHTML(element, html);
+      this._renderSvelte();
+    }
+
+    /**
+     * @inheritdoc
+     * @param {JQuery<HTMLElement>} element
+     * @param {JQuery<HTMLElement>} html
+     */
+    _injectHTML(html) {
+      super._injectHTML(html);
+      this._renderSvelte();
+    }
+
+    /**
+     * Renders all the svelte compontens
+     */
+    _renderSvelte() {
       for (const element of this._svelteElements) {
         const target = this.element.find(element.selector).get(0);
         if (target) {
           element.inject(target);
-          // @ts-ignore
-        } else if (this._state > RENDER_STATES.CLOSED) {
-          throw new Error(
-            `Error rendering SvelteApp: element '${element.selector}' not found in the HTML.`
+        } else if (
+          this._state > RENDER_STATES.CLOSED &&
+          game.settings.get("animabf", ABFSettingsKeys.DEVELOP_MODE)
+        ) {
+          console.warn(
+            `AnimaBF | Error rendering SvelteApplication ${this.appId}: element '${element.selector}' `
+            + 'not found in the HTML.'
           );
         }
       }
