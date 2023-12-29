@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 /**
  * Creates a writable store with a debounced subscribe method
@@ -12,15 +12,16 @@ export function debouncedStore(value) {
   /** @type {number[]} */
   let timeoutIDs = [];
 
-  store.debounceSubscribe = function(fn, timeout = 500) {
-    let id = timeoutIDs.length;
-    return store.subscribe(v => {
-      clearTimeout(timeoutIDs[id]);
-      timeoutIDs[id] = setTimeout(() => {
-        fn(v)
-      }, timeout);
-    })
-  }
-
-  return store
+  return {
+    ...store,
+    debounceSubscribe(fn, timeout = 500) {
+      let id = timeoutIDs.length;
+      return store.subscribe(v => {
+        clearTimeout(timeoutIDs[id]);
+        timeoutIDs[id] = setTimeout(() => {
+          fn(v);
+        }, timeout);
+      });
+    }
+  };
 }
