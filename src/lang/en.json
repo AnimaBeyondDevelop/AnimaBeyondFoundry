@@ -485,6 +485,7 @@
   "contextualMenu.common.options.edit": "Edit",
   "contextualMenu.elan.options.addPower": "Add power",
   "contextualMenu.elan.options.deletePower": "Delete power",
+  "dialogs.select.custom": "[Custom]",
   "dialogs.accept": "Accept",
   "dialogs.cancel": "Cancel",
   "dialogs.continue": "Continue",

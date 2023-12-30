@@ -1,6 +1,6 @@
 <script>
-  import TitledInput from '../ui/titledInput.svelte';
-  import CustomSelect from '../ui/customSelect.svelte';
+  import TitledInput from '@svelte/ui/titledInput.svelte';
+  import CustomSelect from '@svelte/ui/customSelect.svelte';
 
   export let data;
 

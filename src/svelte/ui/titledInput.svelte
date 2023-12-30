@@ -1,10 +1,12 @@
 <script>
+  export let cssClass = '';
   export let vertical = false;
   /**
    * @type {string | undefined}
    */
   export let title = undefined;
   /**
+   * Input type. Default 'number'
    * @type {'number' | 'text' | 'checkbox'}
    */
   export let type = 'number';
@@ -14,7 +16,7 @@
   export let secondaryEnabled = false;
 </script>
 
-<div class="common-titled-input" class:vertical>
+<div class="{cssClass} common-titled-input" class:vertical>
   {#if title}
     <p class="label">{title}</p>
   {/if}

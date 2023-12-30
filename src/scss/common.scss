@@ -56,7 +56,7 @@ img {
 
 .common- {
   &group {
-    & .contractible-group {
+    &.contractible-group {
       position: relative;
 
       &.contracted {

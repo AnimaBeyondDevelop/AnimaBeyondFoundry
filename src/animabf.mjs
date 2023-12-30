@@ -12,7 +12,7 @@ import { registerCombatWebsocketRoutes } from './module/combat/websocket/registe
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 
 import './scss/animabf.scss';
-import { TestApp } from './svelte/TestSvelteApp';
+import { TestApp } from '@svelte/TestSvelteApp';
 
 /* ------------------------------------ */
 /* Initialize system */

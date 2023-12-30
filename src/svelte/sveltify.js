@@ -1,7 +1,8 @@
-import { Templates } from '../module/utils/constants';
+import { Templates } from '@module/utils/constants';
 import { ABFSettingsKeys } from '../utils/registerSettings';
-import { debouncedStore } from './store';
-import { SvelteElement } from './SvelteElement';
+import { debouncedStore } from '@svelte/store';
+import { SvelteElement } from '@svelte/SvelteElement';
+import { ITEM_CONFIGURATIONS } from '@module/actor/utils/prepareItems/constants';
 
 const RENDER_STATES = Application.RENDER_STATES;
 
@@ -12,10 +13,10 @@ const RENDER_STATES = Application.RENDER_STATES;
 
 /**
  * Transforms a Foundry Application / FormApplication into a (possible mixed) Svelte powered Application.
- * 
+ *
  * **Note:** In this case, the implementation asumes `.getData()` to return `this.object`;
  * otherwise `this.onStoreUpdate()` method should be overriden to update the object correctly.
- * 
+ *
  * @template {Application} TBase
  * @template TData Type of the data used for render the application
  * @param {abstract new(...args: any[]) => TBase} Base Constructor of the Application (sub)class to sveltify.
@@ -26,11 +27,10 @@ export function sveltify(Base) {
    * @inheritdoc
    */
   class SvelteApplication extends Base {
-
     /**
-    * Array of the `SvelteElement`s in the Application
-    * @type {SvelteElement[]}
-    */
+     * Array of the `SvelteElement`s in the Application
+     * @type {SvelteElement[]}
+     */
     _svelteElements = [];
 
     /**
@@ -40,15 +40,15 @@ export function sveltify(Base) {
     dataStore = debouncedStore();
 
     /**
-    * Whether the application uses handlebars or is completely Svelte-based.
-    * Uses the Application's template to check if it uses handlebars,
-    * thus it returns `undefined` if `this.options.template` is undefined.
-    * If the extension of the Application's template is `.hbs`, `hasHandlebars` is `true`,
-    * otherwise it is false.
-    * @returns {boolean | undefined}
-    */
+     * Whether the application uses handlebars or is completely Svelte-based.
+     * Uses the Application's template to check if it uses handlebars,
+     * thus it returns `undefined` if `this.options.template` is undefined.
+     * If the extension of the Application's template is `.hbs`, `hasHandlebars` is `true`,
+     * otherwise it is false.
+     * @returns {boolean | undefined}
+     */
     get hasHandlebars() {
-      return this.options.template?.endsWith(".hbs")
+      return this.template.endsWith('.hbs');
     }
 
     /**
@@ -56,7 +56,7 @@ export function sveltify(Base) {
      * @returns {boolean}
      */
     get isSheet() {
-      return this.options.baseApplication?.includes("Sheet") || false;
+      return this.options.baseApplication?.includes('Sheet') || false;
     }
 
     /**
@@ -64,13 +64,14 @@ export function sveltify(Base) {
      * @inheritdoc
      */
     constructor(...args) {
-      super(...args)
+      super(...args);
 
       this.updateStore();
       this.dataStore.debounceSubscribe(v => this.onStoreUpdate(v));
 
       /** @type {import('.').ComponentDescriptor[]} */
-      const descriptors = /** @type {typeof SvelteApplication} */(this.constructor).svelteDescriptors;
+      const descriptors = /** @type {typeof SvelteApplication} */ (this.constructor)
+        .svelteDescriptors;
       for (const descriptor of descriptors) {
         const element = new SvelteElement(descriptor);
         element.updateProps({ data: this.dataStore });
@@ -90,8 +91,8 @@ export function sveltify(Base) {
         height: 160,
         template: Templates.Svelte.SvelteApp,
         id: 'svelte-application',
-        title: 'Svelte Application',
-      }
+        title: 'Svelte Application'
+      };
       return mergeObject(super['defaultOptions'], options);
     }
 
@@ -118,9 +119,9 @@ export function sveltify(Base) {
     /**
      * Method in charge of reporting back to Foundry's App the changes made inside the Svelte part.
      * It gets triggered every time `this.dataStore` is updated, and does one of the following:
-     * - If the Application `isSheet`, then updates the base document using and re-renders the sheet
-     *   (skiping the store update during render).
-     * - If `this.object` exists (e.g. when `Base` is `FormApplication`), updates `this.object`
+     * - If the Application `isSheet`, then updates the base document using (which makws foundry
+     *   re-render the sheet.
+     * - If not, but `this.object` exists (e.g. when `Base` is `FormApplication`), updates `this.object`
      *   the updated version in the dataStore, and then re-renders the application (skiping the store
      *   update during render).
      *   **Note:** In this case, the implementation asumes `.getData()` to return `this.object`;
@@ -133,18 +134,37 @@ export function sveltify(Base) {
       if (!this.isSheet && !('object' in this)) {
         throw new Error(
           // @ts-ignore
-          `${this.constructor.name} must override the method '.onStoreUpdate()', `
-          + `since neither it has 'this.object' nor it is an Actor or Item sheet.`
+          `${this.constructor.name} must override the method '.onStoreUpdate()', ` +
+            `since neither it has 'this.object' nor it is an Actor or Item sheet.`
         );
-        return
+        return;
       }
 
       if (this.isSheet) {
         // If this is a sheet, the value in the store has the data needed for document.update(),
-        // and we pass that to the _updateObject()
-        await this.object.update(value['data'], { render: false });
+        // which will re-render the application after updating.
+        const document =
+          /**
+           * @type {import('../module/actor/ABFActor').ABFActor | import('../module/items/ABFItem').default}
+           */
+          (this.object);
+
+        const { name, img, system } = value['document'];
+        const diff = await document.updateSource({ name, img, system }, { dryRun: true });
+        if (!diff) return;
+        // If the current document is equal to the document in the store value, no need to re-update
+        if (isEmpty(diff)) return;
+        // If the only difference is on the arrays of external items, return aswell
+        const itemsPaths = Object.values(ITEM_CONFIGURATIONS).map(itemConfig =>
+          ['system', ...itemConfig.fieldPath].join('.')
+        );
+        const diffKeys = Object.keys(flattenObject(diff));
+        if (diffKeys.filter(k => !itemsPaths.includes(k)).length === 0) return;
+
+        await document.update({ name, img, system });
+        // Render again for the window title to be updated
       } else {
-        // Else, we pass in the whole 'value', which is assumed to be the updated version of this.object.
+        // Else, we update the object and re-render.
         this.object = value;
       }
       this.render(false, { skipUpdateStore: true });
@@ -156,8 +176,10 @@ export function sveltify(Base) {
      * @returns {import('.').ComponentDescriptor[]} A list of Svelte elements' descriptors.
      */
     static get svelteDescriptors() {
-      throw new Error(`${this.constructor.name} must implement a static method 'svelteElements'.`);
-      return []
+      throw new Error(
+        `${this.constructor.name} must implement a static method 'svelteElements'.`
+      );
+      return [];
     }
 
     /**
@@ -166,7 +188,7 @@ export function sveltify(Base) {
      * @param {Application.RenderOptions & {skipUpdateStore?: boolean}} [options]
      */
     render(force, options) {
-      return super.render(force, options)
+      return super.render(force, options);
     }
 
     /**
@@ -182,10 +204,10 @@ export function sveltify(Base) {
 
       // If the application is already rendered and doesn't have handlebars, no need to render more
       if (this.element?.length && !this.hasHandlebars) {
-        return
+        return;
       }
       // otherwise, render the handlebars application and then inject svelteElements
-      await super._render(force, options)
+      await super._render(force, options);
     }
 
     /**
@@ -218,20 +240,20 @@ export function sveltify(Base) {
           element.inject(target);
         } else if (
           this._state > RENDER_STATES.CLOSED &&
-          game.settings.get("animabf", ABFSettingsKeys.DEVELOP_MODE)
+          game.settings.get('animabf', ABFSettingsKeys.DEVELOP_MODE)
         ) {
           console.warn(
-            `AnimaBF | Error rendering SvelteApplication ${this.appId}: element '${element.selector}' `
-            + 'not found in the HTML.'
+            `AnimaBF | Error rendering SvelteApplication ${this.appId}: element '${element.selector}' ` +
+              'not found in the HTML.'
           );
         }
       }
     }
 
     /**
-    * @inheritdoc
-    * @param {Application.CloseOptions} [options]
-    */
+     * @inheritdoc
+     * @param {Application.CloseOptions} [options]
+     */
     async close(options) {
       return super.close(options).then(_ => {
         for (const element of this._svelteElements) {
@@ -239,7 +261,7 @@ export function sveltify(Base) {
         }
       });
     }
-  };
+  }
 
   return SvelteApplication;
-};
+}

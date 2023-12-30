@@ -1,9 +1,17 @@
 import { defineConfig } from 'vite'
 import copy from "rollup-plugin-copy";
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@svelte': path.resolve(__dirname, "./src/svelte"),
+      '@module': path.resolve(__dirname, "./src/module"),
+      '@assets': path.resolve(__dirname, "./src/assets"),
+    },
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,

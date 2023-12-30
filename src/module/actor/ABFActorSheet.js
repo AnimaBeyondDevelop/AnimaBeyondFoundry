@@ -7,12 +7,11 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
-import { sveltify } from '../../svelte';
-import PruebaSvelte from '../../svelte/components/prueba.svelte';
+import { sveltify } from '@svelte/sveltify';
+import SpellsBoard from '@svelte/components/spellBoard.svelte';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-// /** @extends FormApplication<FormApplicationOptions, TData, TData> */
 export default class ABFActorSheet extends sveltify(/** @type {TFormApplication} */(ActorSheet)) {
   i18n;
 
@@ -26,7 +25,7 @@ export default class ABFActorSheet extends sveltify(/** @type {TFormApplication}
 
   static get svelteDescriptors() {
     return [
-      { componentConstructor: PruebaSvelte, selector: '#svelte-app' }
+      { componentConstructor: SpellsBoard, selector: '#svelte-spell-board' }
     ];
   }
 

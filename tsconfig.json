@@ -10,6 +10,17 @@
       "svelte",
       "@types/jest"
     ],
+    "paths": {
+      "@svelte/*": [
+        "./src/svelte/*"
+      ],
+      "@module/*": [
+        "./src/module/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
+    },
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -17,7 +28,7 @@
     "checkJs": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "outDir": "dist",
   },
   "include": [
     "src"
