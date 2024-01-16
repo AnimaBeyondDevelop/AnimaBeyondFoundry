@@ -15,7 +15,7 @@ export const INITIAL_ACTOR_DATA = {
       }
     }
   },
-  automationOptiona: {
+  automationOptions: {
     calculateFatigueModifier: { value: true }
   },
   general: {
