@@ -1,5 +1,3 @@
-import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { ArmorDataSource } from '../../../../../../types/Items';
 import { calculateArmorIntegrity } from './calculations/calculateArmorIntegrity';
 import { calculateArmorPresence } from './calculations/calculateArmorPresence';
 import { calculateArmorTA } from './calculations/calculateArmorTA';
@@ -8,8 +6,12 @@ import { calculateArmorNaturalPenalty } from './calculations/calculateArmorNatur
 import { calculateArmorPerceptionPenalty } from './calculations/calculateArmorPerceptionPenalty';
 import { calculateArmorWearArmorRequirement } from './calculations/calculateArmorWearArmorRequirement';
 
-export const mutateArmorsData = (data: ABFActorDataSourceData) => {
-  const combat = data.combat as { armors: ArmorDataSource[] };
+/**
+ * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const mutateArmorsData = data => {
+  /** @type {{armors: import('../../../../../../types/Items').ArmorDataSource[]}} */
+  const combat = data.combat;
 
   combat.armors = combat.armors.map(armor => {
     armor.system.cut = {

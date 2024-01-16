@@ -1,6 +1,7 @@
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
-
-export const calculateFatigue = (data: ABFActorDataSourceData) => {
+/**
+ * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const calculateFatigue = data => {
   const currentFatigue = data.characteristics.secondaries.fatigue.value;
   const maxFatigue = data.characteristics.secondaries.fatigue.max;
 

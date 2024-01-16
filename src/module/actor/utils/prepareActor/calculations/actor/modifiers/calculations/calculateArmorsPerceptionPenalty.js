@@ -1,11 +1,12 @@
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { ArmorLocation } from '../../../../../../../types/combat/ArmorItemConfig';
-import { ArmorDataSource } from '../../../../../../../types/Items';
 
-export const calculateArmorsPerceptionPenalty = (
-  data: ABFActorDataSourceData
-): number => {
-  const combat = data.combat as { armors: ArmorDataSource[] };
+/**
+ * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
+ * @returns {number}
+ */
+export const calculateArmorsPerceptionPenalty = data => {
+  /** @type {{armors: import('../../../../../../../types/Items').ArmorDataSource[]}} */
+  const combat = data.combat;
 
   const equippedArmors = combat.armors.filter(
     armor =>

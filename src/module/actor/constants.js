@@ -1,6 +1,5 @@
-import { ABFActorDataSourceData } from '../types/Actor';
-
-export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
+/** @type {import("../types/Actor").ABFActorDataSourceData} */
+export const INITIAL_ACTOR_DATA = {
   version: 1,
   ui: {
     contractibleItems: {},
@@ -17,7 +16,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
     }
   },
   automationOptiona: {
-    calculateFatigueModifier: {value: true}
+    calculateFatigueModifier: { value: true }
   },
   general: {
     settings: {
@@ -300,7 +299,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       athleticism: {
@@ -311,7 +310,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       ride: {
@@ -322,7 +321,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       swim: {
@@ -333,7 +332,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       climb: {
@@ -344,7 +343,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       jump: {
@@ -355,7 +354,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "strength"
+          value: 'strength'
         }
       },
       piloting: {
@@ -366,7 +365,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       }
     },
@@ -379,7 +378,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "willPower"
+          value: 'willPower'
         }
       },
       featsOfStrength: {
@@ -390,7 +389,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "strength"
+          value: 'strength'
         }
       },
       withstandPain: {
@@ -401,7 +400,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "willPower"
+          value: 'willPower'
         }
       }
     },
@@ -414,7 +413,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "perception"
+          value: 'perception'
         }
       },
       search: {
@@ -425,7 +424,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "perception"
+          value: 'perception'
         }
       },
       track: {
@@ -436,7 +435,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "perception"
+          value: 'perception'
         }
       }
     },
@@ -449,7 +448,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       science: {
@@ -460,7 +459,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       law: {
@@ -471,7 +470,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       herbalLore: {
@@ -482,7 +481,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       history: {
@@ -493,7 +492,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       tactics: {
@@ -504,7 +503,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agiliintelligencety"
+          value: 'agiliintelligencety'
         }
       },
       medicine: {
@@ -515,7 +514,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       memorize: {
@@ -526,7 +525,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       navigation: {
@@ -537,7 +536,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       occult: {
@@ -548,7 +547,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       appraisal: {
@@ -559,7 +558,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       magicAppraisal: {
@@ -570,7 +569,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       }
     },
@@ -583,7 +582,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       },
       intimidate: {
@@ -594,7 +593,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "willPower"
+          value: 'willPower'
         }
       },
       leadership: {
@@ -605,7 +604,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       },
       persuasion: {
@@ -616,7 +615,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       trading: {
@@ -627,7 +626,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       streetwise: {
@@ -638,7 +637,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       etiquette: {
@@ -649,7 +648,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       }
     },
@@ -662,7 +661,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       disguise: {
@@ -673,7 +672,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       hide: {
@@ -684,7 +683,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "perception"
+          value: 'perception'
         }
       },
       theft: {
@@ -695,7 +694,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       stealth: {
@@ -706,7 +705,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       trapLore: {
@@ -717,7 +716,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       poisons: {
@@ -728,7 +727,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       }
     },
@@ -741,7 +740,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       },
       dance: {
@@ -752,7 +751,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "agility"
+          value: 'agility'
         }
       },
       forging: {
@@ -763,7 +762,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       runes: {
@@ -774,7 +773,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       alchemy: {
@@ -785,7 +784,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "intelligence"
+          value: 'intelligence'
         }
       },
       animism: {
@@ -796,7 +795,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       },
       music: {
@@ -807,7 +806,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       },
       sleightOfHand: {
@@ -818,7 +817,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       ritualCalligraphy: {
@@ -829,7 +828,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       jewelry: {
@@ -840,7 +839,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       tailoring: {
@@ -851,7 +850,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "dexterity"
+          value: 'dexterity'
         }
       },
       puppetMaking: {
@@ -862,7 +861,7 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
           value: 0
         },
         attribute: {
-          value: "power"
+          value: 'power'
         }
       }
     },
