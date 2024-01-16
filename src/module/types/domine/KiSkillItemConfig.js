@@ -12,7 +12,7 @@ export const KiSkillItemConfig = ABFItemConfigFactory({
     containerSelector: '#ki-skills-context-menu-container',
     rowSelector: '.ki-skill-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

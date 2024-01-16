@@ -12,7 +12,7 @@ export const LevelItemConfig = ABFItemConfigFactory({
     containerSelector: '#level-context-menu-container',
     rowSelector: '.level-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

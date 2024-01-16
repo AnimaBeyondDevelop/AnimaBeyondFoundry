@@ -42,7 +42,7 @@ export const ElanPowerItemConfig = ABFItemConfigFactory({
     if (elan) {
       const { system } = elan;
 
-    /** @type {import("../Items").ElanPowerDataSource[]} */
+      /** @type {import("../Items").ElanPowerDataSource[]} */
       const powers = [];
 
       if (!system.powers) {

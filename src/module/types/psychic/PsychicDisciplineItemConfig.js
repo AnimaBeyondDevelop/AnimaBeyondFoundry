@@ -12,7 +12,7 @@ export const PsychicDisciplineItemConfig = ABFItemConfigFactory({
     containerSelector: '#psychic-disciplines-context-menu-container',
     rowSelector: '.psychic-discipline-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

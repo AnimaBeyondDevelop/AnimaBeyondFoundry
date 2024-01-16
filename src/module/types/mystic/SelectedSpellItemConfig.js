@@ -12,7 +12,7 @@ export const SelectedSpellItemConfig = ABFItemConfigFactory({
     containerSelector: '#selected-spells-context-menu-container',
     rowSelector: '.selected-spell-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

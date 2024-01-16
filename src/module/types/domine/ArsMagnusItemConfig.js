@@ -12,7 +12,7 @@ export const ArsMagnusItemConfig = ABFItemConfigFactory({
     containerSelector: '#ars-magnus-context-menu-container',
     rowSelector: '.ars-magnus-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

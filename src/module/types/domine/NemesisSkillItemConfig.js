@@ -12,7 +12,7 @@ export const NemesisSkillItemConfig = ABFItemConfigFactory({
     containerSelector: '#nemesis-skills-context-menu-container',
     rowSelector: '.nemesis-skill-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

@@ -63,7 +63,7 @@ export const ArmorItemConfig = ABFItemConfigFactory({
     containerSelector: '#armors-context-menu-container',
     rowSelector: '.armor-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

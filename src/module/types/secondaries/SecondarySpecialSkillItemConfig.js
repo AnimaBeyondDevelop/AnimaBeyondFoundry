@@ -12,13 +12,17 @@ export const SecondarySpecialSkillItemConfig = ABFItemConfigFactory({
     containerSelector: '#secondary-special-skills-context-menu-container',
     rowSelector: '.secondary-special-skill-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.secondarySkill.content')
     });
 
-    actor.createInnerItem({ type: ABFItems.SECONDARY_SPECIAL_SKILL, name, system: { level: { value: 0 } } });
+    actor.createInnerItem({
+      type: ABFItems.SECONDARY_SPECIAL_SKILL,
+      name,
+      system: { level: { value: 0 } }
+    });
   }
 });

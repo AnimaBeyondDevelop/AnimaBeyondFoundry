@@ -2,7 +2,7 @@ import { calculateMovementInMetersFromMovementType } from './calculations/calcul
 import { getEquippedArmors } from '../../../utils/getEquippedArmors';
 import { calculateEquippedArmorsRequirement } from '../modifiers/calculations/calculateArmorPhysicalPenalty';
 
-const calculateArmorsMovementTypeModifier = (data) => {
+const calculateArmorsMovementTypeModifier = data => {
   const armorsMovementRestrictions = getEquippedArmors(data).reduce(
     (prev, curr) => prev + curr.system.movementRestriction.final.value,
     0
@@ -11,12 +11,14 @@ const calculateArmorsMovementTypeModifier = (data) => {
   const totalWearRequirement = calculateEquippedArmorsRequirement(data);
   const wearArmor = data.combat.wearArmor.value;
 
-  const wearArmorModifier = Math.floor(Math.max(0, wearArmor - totalWearRequirement) / 50);
+  const wearArmorModifier = Math.floor(
+    Math.max(0, wearArmor - totalWearRequirement) / 50
+  );
 
   return Math.min(0, wearArmorModifier + armorsMovementRestrictions);
 };
 
-export const mutateMovementType = (data) => {
+export const mutateMovementType = data => {
   const armorsMovementRestrictions = calculateArmorsMovementTypeModifier(data);
 
   const { movementType } = data.characteristics.secondaries;
@@ -29,10 +31,8 @@ export const mutateMovementType = (data) => {
 
   movementType.final.value = Math.max(0, movementType.final.value);
 
-  data.characteristics.secondaries.movement.maximum.value = calculateMovementInMetersFromMovementType(
-    movementType.final.value
-  );
-  data.characteristics.secondaries.movement.running.value = calculateMovementInMetersFromMovementType(
-    Math.max(0, movementType.final.value - 2)
-  );
+  data.characteristics.secondaries.movement.maximum.value =
+    calculateMovementInMetersFromMovementType(movementType.final.value);
+  data.characteristics.secondaries.movement.running.value =
+    calculateMovementInMetersFromMovementType(Math.max(0, movementType.final.value - 2));
 };

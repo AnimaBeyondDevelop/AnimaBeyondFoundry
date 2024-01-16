@@ -15,7 +15,7 @@ export const LanguageItemConfig = ABFItemConfigFactory({
     containerSelector: '#languages-context-menu-container',
     rowSelector: '.language-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
