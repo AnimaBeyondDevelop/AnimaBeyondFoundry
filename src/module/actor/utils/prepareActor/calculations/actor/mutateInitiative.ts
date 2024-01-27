@@ -6,9 +6,14 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };
   const { general } = data;
 
-  const penalty =
-    Math.ceil(Math.min(general.modifiers.allActions.final.value + general.modifiers.physicalActions.value, 0) / 2) + general.modifiers.naturalPenalty.byArmors.value;
-
+  const allActionMod =general.modifiers.allActions.final.value;
+  const physicalActionMod = general.modifiers.physicalActions.final.value;
+  const naturalPenaltyMod = general.modifiers.naturalPenalty.final.value;
+  console.log(allActionMod);
+  console.log(physicalActionMod);
+  console.log(naturalPenaltyMod);
+  const penalty = Math.ceil(Math.min(allActionMod + general.modifiers.physicalActions.final.value, 0) / 2) + general.modifiers.naturalPenalty.final.value;
+  console.log(penalty);
   const { initiative } = data.characteristics.secondaries;
 
   initiative.final.value = initiative.base.value + penalty;
@@ -51,3 +56,4 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
     }
   }
 };
+

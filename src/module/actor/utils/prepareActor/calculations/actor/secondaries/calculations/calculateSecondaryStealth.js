@@ -6,5 +6,9 @@ export const calculateSecondaryStealth = data =>
   data.secondaries.subterfuge.stealth.base.value +
   data.general.modifiers.allActions.final.value +
   data.general.modifiers.physicalActions.final.value +
-  data.general.modifiers.naturalPenalty.final.value -
-  Math.floor(data.general.modifiers.naturalPenalty.reduction.value / 2);
+  Math.min(
+    Math.ceil((data.general.modifiers.naturalPenalty.final.value - data.general.modifiers.naturalPenalty.reduction.value)/2),
+    data.general.modifiers.naturalPenalty.final.value
+  );
+  // Math.min(data.general.modifiers.naturalPenalty.final.value - data.general.modifiers.naturalPenalty.reduction.value,
+  // Math.floor(data.general.modifiers.naturalPenalty.final.value / 2));
