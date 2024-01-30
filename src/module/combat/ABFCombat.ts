@@ -45,9 +45,8 @@ export default class ABFCombat extends Combat {
 
     const combatants = this.combatants.map(c => c.token)
     for (let token of combatants) {
-      const revert = true
-      token?.actor?.consumeMaintainedZeon(revert);
-      token?.actor?.psychicShieldsMaintenance(revert);
+      token?.actor?.consumeMaintainedZeon(true);
+      token?.actor?.psychicShieldsMaintenance(true);
     }
 
     return super.previousRound();
