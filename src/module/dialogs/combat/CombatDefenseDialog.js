@@ -535,7 +535,7 @@ export class CombatDefenseDialog extends FormApplication {
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
       const { supernaturalShields } = this.defenderActor.system.combat;
-      let power, fatigue, supShield, newPsychicPotential;
+      let power, psychicFatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
       };
