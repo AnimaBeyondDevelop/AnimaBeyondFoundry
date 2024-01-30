@@ -9,6 +9,14 @@ export default class ABFCombat extends Combat {
     this.setFlag('world', 'newRound', true);
   }
 
+  async startCombat() {
+    const combatants = this.combatants.map(c => c.token)
+    for (let token of combatants) {
+      token?.actor?.resetDefensesCounter();
+    }
+    return super.startCombat();
+  }
+
   async nextTurn() {
     if (this.getFlag('world', 'newRound')) {
       this.setFlag('world', 'newRound', false);
@@ -22,12 +30,10 @@ export default class ABFCombat extends Combat {
     this.setFlag('world', 'newRound', true);
 
     const combatants = this.combatants.map(c => c.token)
-    if (combatants.length !== 0) {
-      for (let token of combatants) {
-        token?.actor?.resetDefensesCounter();
-        token?.actor?.consumeMaintainedZeon();
-        token?.actor?.psychicShieldsMaintenance();
-      }
+    for (let token of combatants) {
+      token?.actor?.resetDefensesCounter();
+      token?.actor?.consumeMaintainedZeon();
+      token?.actor?.psychicShieldsMaintenance();
     }
 
     return super.nextRound();
@@ -38,12 +44,10 @@ export default class ABFCombat extends Combat {
     await this.resetAll();
 
     const combatants = this.combatants.map(c => c.token)
-    if (combatants.length !== 0) {
-      for (let token of combatants) {
-        const revert = true
-        token?.actor?.consumeMaintainedZeon(revert);
-        token?.actor?.psychicShieldsMaintenance(revert);
-      }
+    for (let token of combatants) {
+      const revert = true
+      token?.actor?.consumeMaintainedZeon(revert);
+      token?.actor?.psychicShieldsMaintenance(revert);
     }
 
     return super.previousRound();
