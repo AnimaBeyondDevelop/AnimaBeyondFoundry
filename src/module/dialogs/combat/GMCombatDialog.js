@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -448,6 +449,18 @@ export class GMCombatDialog extends FormApplication {
       this.modalData.calculations.winner == this.modalData.defender.token
         ? 'defender'
         : 'attacker';
+    const missedAttackValue = game.settings.get(
+      'animabf',
+      ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
+    );
+    const macroPorjectileDefault = game.settings.get(
+      'animabf',
+      ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
+    );
+    const macroPrefixAttack = game.settings.get(
+      'animabf',
+      ABFSettingsKeys.MACRO_PREFIX_ATTACK
+    );
     let args = {
       attacker: this.attackerToken,
       defender: this.defenderToken,
@@ -455,7 +468,7 @@ export class GMCombatDialog extends FormApplication {
       defenseType: this.modalData.defender.result.values.type,
       totalAttack: this.modalData.attacker.result.values.total,
       appliedDamage: this.canApplyDamage,
-      bloodColor: 'red', // agregar valor de color de sangre al actor
+      bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
       resistanceRoll,
@@ -463,19 +476,18 @@ export class GMCombatDialog extends FormApplication {
       attackerPsychicFatigue: this.modalData.attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: this.modalData.defender.result.values?.psychicFatigue
     };
-
-    if (args.totalAttack < 80) {
+    if (args.totalAttack < missedAttackValue) {
       args.missedAttack = true;
-    } //cambiar valor fijo 80 por variable en ABFSettings
+    }
 
     if (this.modalData.attacker.result?.type === 'combat') {
       const { name } = this.modalData.attacker.result.weapon;
-      macroName = `Atk ${name}`;
+      macroName = macroPrefixAttack + name;
       const { projectile } = this.modalData.attacker.result.values;
       if (projectile) {
         args = { ...args, projectile: projectile };
         if (projectile.type == 'shot') {
-          macroName = 'Atk Projectil Flecha';
+          macroName = macroPorjectileDefault;
         }
       }
     } else if (this.modalData.attacker.result?.type === 'mystic') {

@@ -4,7 +4,10 @@ export enum ABFSettingsKeys {
   SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT = 'SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT',
   USE_DAMAGE_TABLE = 'USE_DAMAGE_TABLE',
   DEVELOP_MODE = 'DEVELOP_MODE',
-  AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE'
+  AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE',
+  MACRO_PREFIX_ATTACK = 'MACRO_PREFIX_ATTACK',
+  MACRO_PROJECTILE_DEFAULT = 'MACRO_PROJECTILE_DEFAULT',
+  MACRO_MISS_ATTACK_VALUE = 'MACRO_MISS_ATTACK_VALUE'
 }
 
 export const registerSettings = () => {
@@ -53,6 +56,33 @@ export const registerSettings = () => {
     config: true,
     default: false,
     type: Boolean
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_PREFIX_ATTACK, {
+    name: 'anima.ui.systemSettings.prefixAttackMacro.title',
+    hint: 'anima.ui.systemSettings.prefixAttackMacro.hint.title',
+    scope: 'world',
+    config: true,
+    default: '',
+    type: String
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT, {
+    name: 'anima.ui.systemSettings.defaultProjectileMacro.title',
+    hint: 'anima.ui.systemSettings.defaultProjectileMacro.hint.title',
+    scope: 'world',
+    config: true,
+    default: 'Atk Projectil Flecha',
+    type: String
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE, {
+    name: 'anima.ui.systemSettings.missValueAttackMacro.title',
+    hint: 'anima.ui.systemSettings.missValueAttackMacro.hint.title',
+    scope: 'world',
+    config: true,
+    default: 80,
+    type: Number
   });
 
   typedGame.settings.register('animabf', ABFSettingsKeys.DEVELOP_MODE, {
