@@ -1,4 +1,5 @@
 import { Templates } from '../../utils/constants';
+import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
@@ -131,8 +132,8 @@ export class CombatDefenseDialog extends FormApplication {
       this.render(true);
     };
     const defensesCounter = this.defenderActor.getFlag(
-      'world',
-      `${this.defenderActor._id}.defensesCounter`
+      'animabf',
+      'defensesCounter'
     ) || { value: true, accumulated: 0 };
     this.modalData.defender.combat.accumulateDefenses = defensesCounter.value;
     this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(
@@ -254,7 +255,7 @@ export class CombatDefenseDialog extends FormApplication {
       combat.at.final = combat.at.special + at;
     }
     if (!this.modalData.attacker.specificAttack.causeDamage) {
-      at = 0;
+      combat.at.final = 0;
     }
 
     this.hooks = hooks;

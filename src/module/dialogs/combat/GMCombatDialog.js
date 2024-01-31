@@ -141,27 +141,20 @@ export class GMCombatDialog extends FormApplication {
         this.modalData.defender.token
       );
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
-        this.defenderActor.applyDamage(this.modalData.attacker.result.values.damage);
-      this.applyValuesIfBeAble(resistanceRoll.total - value);
-      this.close();
+        this.applyValuesIfBeAble(resistanceRoll.total - value);
+        this.close();
+      }
     });
 
     html.find('.roll-characteristic').click(async () => {
       const { i18n } = game;
       const { specificAttack } = this.modalData.attacker.result.values;
-      if (this.canApplyDamage) {
-        const { calculations } = this.modalData;
-        const damage = calculations.isNonLethalDamage
-          ? calculations.nonLethalDamage
-          : calculations.damage;
-        this.defenderActor.applyDamage(damage);
-      }
       const attackerCharacteristic = specificAttack.characteristic;
       const defenderCharacteristic =
         this.modalData.defender.result.values.specificAttack.characteristic;
-      const { difference, atResValue } = this.modalData.calculations;
+      const { difference, atResistance } = this.modalData.calculations;
       const modAttacketChar =
-        difference - atResValue < 100 ? -3 : difference - atResValue > 200 ? 3 : 0;
+        difference - atResistance < 100 ? -3 : difference - atResistance > 200 ? 3 : 0;
       const attacketModifier = calculateCharacteristicImbalance(
         attackerCharacteristic,
         defenderCharacteristic
@@ -170,12 +163,10 @@ export class GMCombatDialog extends FormApplication {
         defenderCharacteristic,
         attackerCharacteristic
       );
-      let attackerFormula = `1d10ControlRoll + ${
-        attackerCharacteristic + attacketModifier
-      } + ${modAttacketChar}`;
-      let defenderFormula = `1d10ControlRoll + ${
-        defenderCharacteristic + defenderModifier
-      }`;
+      let attackerFormula = `1d10ControlRoll + ${attackerCharacteristic + attacketModifier
+        } + ${modAttacketChar}`;
+      let defenderFormula = `1d10ControlRoll + ${defenderCharacteristic + defenderModifier
+        }`;
 
       const attackerCharacteristicRoll = new ABFFoundryRoll(
         attackerFormula,
@@ -240,7 +231,7 @@ export class GMCombatDialog extends FormApplication {
       });
 
 
-      this.applyValuesIfBeAble(data);
+      this.applyValuesIfBeAble(undefined, data);
       this.close();
     });
 
@@ -435,7 +426,7 @@ export class GMCombatDialog extends FormApplication {
 
     this.render();
   }
-  async applyValuesIfBeAble(resistanceRoll) {
+  async applyValuesIfBeAble(resistanceRoll, specificAttackResult) {
     if (this.modalData.attacker.result?.type === 'combat') {
       this.attackerActor.applyFatigue(this.modalData.attacker.result.values.fatigueUsed);
     }
@@ -448,13 +439,17 @@ export class GMCombatDialog extends FormApplication {
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
 
     if (this.canApplyDamage) {
-      this.defenderActor.applyDamage(this.modalData.calculations.damage);
+      const { calculations } = this.modalData;
+      const damage = calculations.isNonLethalDamage
+        ? calculations.nonLethalDamage
+        : calculations.damage;
+      this.defenderActor.applyDamage(damage);
     } else {
       this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
     }
     await this.criticIfBeAble();
 
-    this.executeCombatMacro(resistanceRoll);
+    this.executeCombatMacro(resistanceRoll, specificAttackResult);
   }
 
   async criticIfBeAble() {
@@ -468,92 +463,42 @@ export class GMCombatDialog extends FormApplication {
       if (!hasCritic) {
         return;
       }
-      const targeted = specificAttack.targeted !== 'none';
-      const generalLocation = targeted
-        ? specificAttack.targeted
-        : getGeneralLocation().specific;
-      let formula = `1d100CriticRoll + ${calculations.damage}`;
-      const criticRoll = new ABFFoundryRoll(formula, this.attackerActor.system);
-      criticRoll.roll();
-      const { i18n } = game;
-      const flavor = `${i18n.format(
-        `macros.combat.dialog.hasCritic.title`,
-        {
-          target: this.modalData.defender.token.name
-        }
-      )} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${generalLocation}.title`)} )`;
-      criticRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
-        flavor
-      });
-      const ResistanceRoll = await getResistanceRoll(
-        criticRoll.total,
-        'physical',
-        this.modalData.attacker.token,
-        this.modalData.defender.token
-      );
-    }
-
-    this.mysticCastEvaluateIfAble();
-    this.accumulateDefensesIfAble();
-    const supShieldId = await this.newSupernaturalShieldIfBeAble();
-
-    if (this.canApplyDamage) {
-      this.defenderActor.applyDamage(this.modalData.calculations.damage);
-    } else {
-      this.applyDamageSupernaturalShieldIfBeAble(supShieldId);
-    }
-
-    this.executeCombatMacro(resistanceRoll);
-  }
-
-  async criticIfBeAble() {
-    if (this.canApplyDamage) {
-      const { specificAttack } = this.modalData.attacker.result.values;
-      const { lifePoints } = this.modalData.defender.result.values;
-      const { calculations } = this.modalData;
-      const hasCritic = specificAttack.weakspot
-        ? calculations.damage >= lifePoints / 10
-        : calculations.damage >= lifePoints / 2;
-      if (!hasCritic) {
-        return;
-      }
-      const attacker = this.modalData.attacker.token;
-      const defender = this.modalData.defender.token;
+      const attackerTokenDocument = this.modalData.attacker.token;
+      const defenderTokenDocument = this.modalData.defender.token;
       const targeted = specificAttack.targeted !== 'none';
       const generalLocation = getGeneralLocation();
       const location = targeted ? specificAttack.targeted : generalLocation.specific;
       let formula = `1d100CriticRoll + ${calculations.damage}`;
-      const criticRoll = new ABFFoundryRoll(formula, attacker.actor.system);
+      const criticRoll = new ABFFoundryRoll(formula, attackerTokenDocument.actor.system);
       criticRoll.roll();
       const { i18n } = game;
       let flavor;
-      if (generalLocation?.side == undefined || generalLocation?.side == 'none') {
+      if (targeted || generalLocation?.side == undefined || generalLocation?.side == 'none') {
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
-          target: defender.name
+          target: defenderTokenDocument.name
         })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
       } else
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
-          target: defender.name
+          target: defenderTokenDocument.name
         })} ( ${i18n.format(
           `macros.combat.dialog.targetedAttack.${location}.title`
         )} ) ${i18n.format(
           `macros.combat.dialog.targetedAttack.side.${generalLocation.side}.title`
         )}`;
       criticRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: attacker }),
+        speaker: ChatMessage.getSpeaker({ token: attackerTokenDocument }),
         flavor
       });
       const resistanceRoll = await getResistanceRoll(
         criticRoll.total,
         'physical',
-        attacker,
-        defender
+        attackerTokenDocument,
+        defenderTokenDocument
       );
       const macroName = 'Critical Attack';
       const macro = game.macros.getName(macroName);
       if (macro) {
-        macro.execute({ attacker, defender, resistanceRoll, location });
+        macro.execute({ attacker: attackerTokenDocument, defender: defenderTokenDocument, resistanceRoll, location });
       } else {
         console.debug(`Macro '${macroName}' not found.`);
       }

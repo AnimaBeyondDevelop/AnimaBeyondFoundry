@@ -102,7 +102,7 @@ export class ABFActor extends Actor {
   applyCriticEffect(criticLevel: number) {
     const newAllActionsPenalty =
       this.system.general.modifiers.allActions.base.value - criticLevel;
-    const criticPenalty: any = this.getFlag('world', `${this._id}.criticPenalty`) || 0;
+    const criticPenalty: any = this.getFlag('animabf', 'criticPenalty') || 0;
     const newCriticPenalty =
       criticPenalty - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
 
@@ -111,13 +111,9 @@ export class ABFActor extends Actor {
         general: {
           modifiers: { allActions: { base: { value: newAllActionsPenalty } } }
         }
-      },
-      flags: {
-        world: {
-          [`${this._id}.criticPenalty`]: newCriticPenalty
-        }
       }
     });
+    this.setFlag('animabf', 'criticPenalty', newCriticPenalty)
   }
 
   /**

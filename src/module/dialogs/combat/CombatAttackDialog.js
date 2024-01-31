@@ -128,7 +128,6 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         powerUsed: undefined,
         critic: NoneWeaponCritic.NONE,
-        fatigueCheck: false,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distanceCheck: false,
@@ -362,20 +361,20 @@ export class CombatAttackDialog extends FormApplication {
               weapon.name == 'Desarmado' ||
               weapon.system.size.value !== 'small'
             ) {
-              combatModifier -= 30;
+              attackerCombatMod.knockDown = { value: -30, apply: true }
             } else {
-              combatModifier -= 60;
+              attackerCombatMod.knockDownSmallWeapon = { value: -60, apply: true }
             }
           } else if (specificAttack.value == 'disarm') {
             specificAttack.check = true;
-            combatModifier -= 40;
+            attackerCombatMod.disarm = { value: -40, apply: true }
           } else if (specificAttack.value == 'immobilize') {
             specificAttack.check = true;
-            combatModifier -= 40;
+            attackerCombatMod.immobilize = { value: -40, apply: true }
           } else if (specificAttack.value == 'knockOut') {
             specificAttack.targeted = 'head';
             if (critic !== NoneWeaponCritic.IMPACT) {
-              combatModifier -= 40;
+              attackerCombatMod.knockOut = { value: -40, apply: true }
             }
           }
           if (specificAttack.targeted !== 'none') {
@@ -385,9 +384,10 @@ export class CombatAttackDialog extends FormApplication {
             if (specificAttack.value == 'disable') {
               specificAttack.weakspot = true;
             }
-            combatModifier +=
-              targetedAttacks.find(i => i.bodyPart == specificAttack.targeted)
-                ?.modifier ?? 0;
+            attackerCombatMod.targeted = {
+              value: targetedAttacks.find(i => i.bodyPart == specificAttack.targeted)
+                ?.modifier ?? 0, apply: true
+            }
           }
         }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
