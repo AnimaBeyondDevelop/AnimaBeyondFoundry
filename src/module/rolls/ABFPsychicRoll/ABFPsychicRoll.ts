@@ -23,7 +23,7 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
     );
     if (!psychicFatigueCheck(power?.system.effects[newPotentialTotal].value)) {
       if (power?.system.combatType.value === 'attack' &&
-        mentalPatterns.find(i => i.name == 'courage')) {
+        mentalPatterns.find(i => i.name === 'courage')) {
         newPotentialTotal = psychicPotentialEffect(
           newPotentialTotal,
           1,

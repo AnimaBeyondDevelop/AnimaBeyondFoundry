@@ -27,7 +27,7 @@ export const PreparedSpellItemConfig = ABFItemConfigFactory({
     const results = await openComplexInputDialog(actor, 'newPreparedSpell');
     const spellID = results['new.preparedSpell.id'];
     const spellGrade = results['new.preparedSpell.grade'];
-    const spell = actor.system.mystic.spells.find(i => i._id == spellID);
+    const spell = actor.system.mystic.spells.find(i => i._id === spellID);
     if (!spell) {
       return;
     }

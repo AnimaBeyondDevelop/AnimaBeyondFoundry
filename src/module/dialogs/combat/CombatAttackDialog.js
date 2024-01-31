@@ -212,7 +212,7 @@ export class CombatAttackDialog extends FormApplication {
         'animabf',
         'lastOffensiveWeaponUsed'
       );
-      if (weapons.find(weapon => weapon._id == lastOffensiveWeaponUsed)) {
+      if (weapons.find(weapon => weapon._id === lastOffensiveWeaponUsed)) {
         combat.weaponUsed = lastOffensiveWeaponUsed;
       } else {
         combat.weaponUsed = weapons[0]._id;
@@ -345,7 +345,7 @@ export class CombatAttackDialog extends FormApplication {
         if (
           weapon !== undefined &&
           criticSelected !== NoneWeaponCritic.NONE &&
-          criticSelected == weapon?.system.critic.secondary.value
+          criticSelected === weapon?.system.critic.secondary.value
         ) {
           attackerCombatMod.secondaryCritic = { value: -10, apply: true };
         }
@@ -354,24 +354,24 @@ export class CombatAttackDialog extends FormApplication {
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
         if (specificAttack.value !== 'none') {
-          if (specificAttack.value == 'knockDown') {
+          if (specificAttack.value === 'knockDown') {
             specificAttack.check = true;
             if (
               unarmed ||
-              weapon.name == 'Desarmado' ||
+              weapon.name === 'Desarmado' ||
               weapon.system.size.value !== 'small'
             ) {
               attackerCombatMod.knockDown = { value: -30, apply: true }
             } else {
               attackerCombatMod.knockDownSmallWeapon = { value: -60, apply: true }
             }
-          } else if (specificAttack.value == 'disarm') {
+          } else if (specificAttack.value === 'disarm') {
             specificAttack.check = true;
             attackerCombatMod.disarm = { value: -40, apply: true }
-          } else if (specificAttack.value == 'immobilize') {
+          } else if (specificAttack.value === 'immobilize') {
             specificAttack.check = true;
             attackerCombatMod.immobilize = { value: -40, apply: true }
-          } else if (specificAttack.value == 'knockOut') {
+          } else if (specificAttack.value === 'knockOut') {
             specificAttack.targeted = 'head';
             if (critic !== NoneWeaponCritic.IMPACT) {
               attackerCombatMod.knockOut = { value: -40, apply: true }
@@ -379,13 +379,13 @@ export class CombatAttackDialog extends FormApplication {
           }
           if (specificAttack.targeted !== 'none') {
             specificAttack.weakspot = targetedAttacks.find(
-              i => i.bodyPart == specificAttack.targeted
+              i => i.bodyPart === specificAttack.targeted
             )?.weakspot;
-            if (specificAttack.value == 'disable') {
+            if (specificAttack.value === 'disable') {
               specificAttack.weakspot = true;
             }
             attackerCombatMod.targeted = {
-              value: targetedAttacks.find(i => i.bodyPart == specificAttack.targeted)
+              value: targetedAttacks.find(i => i.bodyPart === specificAttack.targeted)
                 ?.modifier ?? 0, apply: true
             }
           }
@@ -727,7 +727,7 @@ export class CombatAttackDialog extends FormApplication {
     ) {
       combat.specificAttack.causeDamage = true;
     }
-    if (combat.specificAttack.value == 'disarm') {
+    if (combat.specificAttack.value === 'disarm') {
       combat.specificAttack.causeDamage = false;
     }
     if (
@@ -738,7 +738,7 @@ export class CombatAttackDialog extends FormApplication {
     }
     combat.unarmed =
       weapons.length === 0 ||
-      (combat.specificAttack.value == 'immobilize' && !weaponSpecial);
+      (combat.specificAttack.value === 'immobilize' && !weaponSpecial);
 
     if (combat.unarmed) {
       const unarmedDamage =
@@ -749,8 +749,8 @@ export class CombatAttackDialog extends FormApplication {
       if (!combat.specificAttack.causeDamage) {
         combat.damage.final = 0;
       } else if (
-        combat.specificAttack.value == 'knockDown' ||
-        combat.specificAttack.value == 'immobilize'
+        combat.specificAttack.value === 'knockDown' ||
+        combat.specificAttack.value === 'immobilize'
       ) {
         combat.damage.final = roundTo5Multiples(unarmedDamage / 2);
       }
@@ -779,8 +779,8 @@ export class CombatAttackDialog extends FormApplication {
       if (!combat.specificAttack.causeDamage) {
         combat.damage.final = 0;
       } else if (
-        combat.specificAttack.value == 'knockDown' ||
-        combat.specificAttack.value == 'immobilize'
+        combat.specificAttack.value === 'knockDown' ||
+        combat.specificAttack.value === 'immobilize'
       ) {
         combat.damage.final = roundTo5Multiples(armedDamage / 2);
       }

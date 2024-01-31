@@ -150,7 +150,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.defenderActor.system.general.settings.inmaterial.value;
     if (
       (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
-        this.modalData.attacker.damage == 0) ||
+        this.modalData.attacker.damage === 0) ||
       this.modalData.attacker.specificAttack.check
     ) {
       this.modalData.defender.combat.at.defense = true;
@@ -225,7 +225,7 @@ export class CombatDefenseDialog extends FormApplication {
         'animabf',
         'lastDefensiveWeaponUsed'
       );
-      if (weapons.find(weapon => weapon._id == lastDefensiveWeaponUsed)) {
+      if (weapons.find(weapon => weapon._id === lastDefensiveWeaponUsed)) {
         combat.weaponUsed = lastDefensiveWeaponUsed;
       } else {
         combat.weaponUsed = weapons[0]._id;
@@ -341,7 +341,7 @@ export class CombatDefenseDialog extends FormApplication {
         if (
           ((!distance.enable && !distance.check) ||
             (distance.enable && distance.value > 1)) &&
-          projectileType == 'shot' &&
+          projectileType === 'shot' &&
           !maestry
         ) {
           defenderCombatMod.dodgeProjectile = {
@@ -357,7 +357,7 @@ export class CombatDefenseDialog extends FormApplication {
         const isShield = weapon?.system.isShield.value;
         const maestry = baseDefense >= 200;
         if (!distance.check || (distance.enable && distance.value > 1)) {
-          if (projectileType == 'shot') {
+          if (projectileType === 'shot') {
             if (!maestry) {
               if (!isShield) {
                 defenderCombatMod.parryProjectile = {
@@ -377,7 +377,7 @@ export class CombatDefenseDialog extends FormApplication {
               };
             }
           }
-          if (projectileType == 'throw') {
+          if (projectileType === 'throw') {
             if (!maestry) {
               if (!isShield) {
                 defenderCombatMod.parryThrow = {

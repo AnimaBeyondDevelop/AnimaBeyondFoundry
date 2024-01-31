@@ -355,7 +355,7 @@ export class GMCombatDialog extends FormApplication {
       const { specificAttack } = this.modalData.attacker.result.values;
 
       const isNonLethalDamage =
-        specificAttack.value == 'disable' || specificAttack.value == 'knockOut';
+        specificAttack.value === 'disable' || specificAttack.value === 'knockOut';
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -473,7 +473,7 @@ export class GMCombatDialog extends FormApplication {
       criticRoll.roll();
       const { i18n } = game;
       let flavor;
-      if (targeted || generalLocation?.side == undefined || generalLocation?.side == 'none') {
+      if (targeted || generalLocation?.side === undefined || generalLocation?.side === 'none') {
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
           target: defenderTokenDocument.name
         })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
@@ -553,7 +553,7 @@ export class GMCombatDialog extends FormApplication {
   applyDamageSupernaturalShieldIfBeAble(supShieldId) {
     const { dobleDamage, immuneToDamage } = this.modalData.defender.supernaturalShield;
     const defenderIsWinner =
-      this.modalData.calculations.winner == this.modalData.defender.token;
+      this.modalData.calculations.winner === this.modalData.defender.token;
     const damage = this.modalData.attacker.result?.values.damage;
     if (
       defenderIsWinner &&
@@ -601,7 +601,7 @@ export class GMCombatDialog extends FormApplication {
   executeCombatMacro(resistanceRoll, specificAttackResult) {
     let macroName;
     const winner =
-      this.modalData.calculations.winner == this.modalData.defender.token
+      this.modalData.calculations.winner === this.modalData.defender.token
         ? 'defender'
         : 'attacker';
     const missedAttackValue = game.settings.get(
@@ -642,7 +642,7 @@ export class GMCombatDialog extends FormApplication {
       const { projectile } = this.modalData.attacker.result.values;
       if (projectile) {
         args = { ...args, projectile: projectile };
-        if (projectile.type == 'shot') {
+        if (projectile.type === 'shot') {
           macroName = macroPorjectileDefault;
         }
       }

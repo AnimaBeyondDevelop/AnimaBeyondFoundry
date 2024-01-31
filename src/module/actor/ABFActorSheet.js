@@ -128,7 +128,7 @@ export default class ABFActorSheet extends ActorSheet {
         effect.origin.endsWith(effectsItemId)
       );
 
-      if (relevantEffects.length == 0) {
+      if (relevantEffects.length === 0) {
         return;
       }
 

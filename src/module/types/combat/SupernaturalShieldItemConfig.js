@@ -49,10 +49,10 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       const spellID = results['new.mysticShield.id'];
       const spellGrade = results['new.mysticShield.grade'];
       const castSpell = results['new.mysticShield.castSpell'];
-      const innate = castSpell == 'innate';
-      const prepared = castSpell == 'prepared';
-      const override = castSpell == 'override';
-      const spell = actor.system.mystic.spells.find(i => i._id == spellID);
+      const innate = castSpell === 'innate';
+      const prepared = castSpell === 'prepared';
+      const override = castSpell === 'override';
+      const spell = actor.system.mystic.spells.find(i => i._id === spellID);
       if (!spell) {
         return;
       }
@@ -73,11 +73,11 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       const powerID = results['new.psychicShield.id'];
       const showRoll = true;
       let powerDifficulty = results['new.psychicShield.difficulty'];
-      const power = actor.system.psychic.psychicPowers.find(i => i._id == powerID);
+      const power = actor.system.psychic.psychicPowers.find(i => i._id === powerID);
       if (!power) {
         return;
       }
-      if (powerDifficulty == 'roll') {
+      if (powerDifficulty === 'roll') {
         const { i18n } = game;
         const mod = await openModDialog();
         const psychicPotential = actor.system.psychic.psychicPotential.final.value;

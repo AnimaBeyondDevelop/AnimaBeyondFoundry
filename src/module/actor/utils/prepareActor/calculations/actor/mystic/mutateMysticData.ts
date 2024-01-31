@@ -25,7 +25,7 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
     calculateInnateMagic(mystic.act.main.final.value);
   if (mystic.innateMagic.via.length !== 0) {
     for (const innateMagicVia of mystic.innateMagic.via) {
-      const actVia = mystic.act.via.find(i => i.name == innateMagicVia.name);
+      const actVia = mystic.act.via.find(i => i.name === innateMagicVia.name);
       const actViaValue =
         mystic.act.via.length !== 0 && actVia
           ? actVia.system.final.value

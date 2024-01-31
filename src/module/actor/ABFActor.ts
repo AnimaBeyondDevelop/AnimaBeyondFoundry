@@ -72,7 +72,7 @@ export class ABFActor extends Actor {
   }
   activateTechnique(techniqueId: string) {
     const technique = this.items.get(techniqueId);
-    if (technique == undefined) {
+    if (technique === undefined) {
       return;
     }
     const newStatus = !technique.system.activeEffect.enabled;
@@ -87,7 +87,7 @@ export class ABFActor extends Actor {
     }
     const effects = this.getEmbeddedCollection('ActiveEffect').contents;
     const relevantEffects = effects.filter(effect => effect.origin.endsWith(techniqueId));
-    if (relevantEffects.length == 0) {
+    if (relevantEffects.length === 0) {
       return;
     }
     if (newStatus) {
@@ -431,11 +431,11 @@ export class ABFActor extends Actor {
     spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
     spellCasting.canCast.prepared =
       this.system.mystic.preparedSpells.find(
-        ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+        ps => ps.name === spell.name && ps.system.grade.value === spellGrade
       )?.system.prepared.value ?? false;
     const spellVia = spell?.system.via.value;
     const innateMagic = this.system.mystic.innateMagic;
-    const innateVia = innateMagic.via.find(i => i.name == spellVia);
+    const innateVia = innateMagic.via.find(i => i.name === spellVia);
     const innateMagicValue =
       innateMagic.via.length !== 0 && innateVia
         ? innateVia.system.final.value
@@ -565,9 +565,9 @@ export class ABFActor extends Actor {
   deletePreparedSpell(spellName: string, spellGrade: string) {
     let preparedSpellId = this.system.mystic.preparedSpells.find(
       (ps: any) =>
-        ps.name == spellName &&
-        ps.system.grade.value == spellGrade &&
-        ps.system.prepared.value == true
+        ps.name === spellName &&
+        ps.system.grade.value === spellGrade &&
+        ps.system.prepared.value === true
     )._id;
     if (preparedSpellId !== undefined) {
       let items = this.getPreparedSpells();
