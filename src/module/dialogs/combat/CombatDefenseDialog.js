@@ -131,14 +131,6 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
-    const defensesCounter = this.defenderActor.getFlag(
-      'animabf',
-      'defensesCounter'
-    ) || { value: true, accumulated: 0 };
-    this.modalData.defender.combat.accumulateDefenses = defensesCounter.value;
-    this.modalData.defender.combat.multipleDefensesPenalty = defensesCounterCheck(
-      defensesCounter.accumulated
-    );
     this.modalData.defender.specificAttack.characteristic = Math.max(
       this.defenderActor.system.characteristics.primaries.strength.value,
       this.defenderActor.system.characteristics.primaries.agility.value
