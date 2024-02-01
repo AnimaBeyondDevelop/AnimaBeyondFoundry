@@ -330,7 +330,7 @@ export class CombatDefenseDialog extends FormApplication {
         multipleDefensesPenalty: {
           value: multipleDefensesPenalty * 1,
           apply: true
-        } 
+        }
       };
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
       const projectileType = this.modalData.attacker.projectile?.type;
@@ -579,7 +579,7 @@ export class CombatDefenseDialog extends FormApplication {
       } = this.modalData.defender;
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
-      const { supernaturalShields} = this.defenderActor.system.combat;
+      const { supernaturalShields } = this.defenderActor.system.combat;
       let power, psychicFatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
