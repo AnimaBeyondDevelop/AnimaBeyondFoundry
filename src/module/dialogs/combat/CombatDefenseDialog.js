@@ -49,7 +49,12 @@ const getInitialData = (attacker, defender) => {
       lifePoints: defenderActor.system.characteristics.secondaries.lifePoints.value,
       blindness: false,
       distance: attacker.distance,
-      specificAttack: { characteristic: undefined },
+      specificAttack: {
+        characteristic: Math.max(
+          defenderActor.system.characteristics.primaries.strength.value,
+          defenderActor.system.characteristics.primaries.agility.value
+        )
+      },
       zen: defenderActor.system.general.settings.zen.value,
       inhuman: defenderActor.system.general.settings.inhuman.value,
       inmaterial: defenderActor.system.general.settings.inmaterial.value,
@@ -131,22 +136,6 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.ui.activeTab = tabName;
       this.render(true);
     };
-    this.modalData.defender.specificAttack.characteristic = Math.max(
-      this.defenderActor.system.characteristics.primaries.strength.value,
-      this.defenderActor.system.characteristics.primaries.agility.value
-    );
-    this.modalData.defender.zen = this.defenderActor.system.general.settings.zen.value;
-    this.modalData.defender.inhuman =
-      this.defenderActor.system.general.settings.inhuman.value;
-    this.modalData.defender.inmaterial =
-      this.defenderActor.system.general.settings.inmaterial.value;
-    if (
-      (this.modalData.attacker.critic !== NoneWeaponCritic.NONE &&
-        this.modalData.attacker.damage === 0) ||
-      this.modalData.attacker.specificAttack.check
-    ) {
-      this.modalData.defender.combat.at.defense = true;
-    }
 
     const { psychic, mystic, combat } = this.modalData.defender;
     const { weapons, supernaturalShields } = this.defenderActor.system.combat;
@@ -560,7 +549,8 @@ export class CombatDefenseDialog extends FormApplication {
       const {
         psychic: {
           psychicPotential,
-          psychicProjection, powerUsed,
+          psychicProjection,
+          powerUsed,
           modifier,
           supernaturalShield: { shieldUsed, newShield }
         },

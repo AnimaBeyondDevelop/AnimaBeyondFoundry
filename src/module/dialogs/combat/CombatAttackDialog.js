@@ -570,7 +570,9 @@ export class CombatAttackDialog extends FormApplication {
         critic,
         damageModifier,
         projectile,
-        distanceCheck }, distance, targetedAttacks
+        distanceCheck },
+        distance,
+        targetedAttacks
       } = this.modalData.attacker;
       distance.check = distanceCheck
       const { i18n } = game;

@@ -8,8 +8,6 @@ import { getResistanceRoll } from '../../utils/functions/getResistanceRoll';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
-  const attackerActor = attacker.actor;
-  const defenderActor = defender.actor;
 
   return {
     ui: {
@@ -19,14 +17,14 @@ const getInitialData = (attacker, defender, options = {}) => {
     },
     attacker: {
       token: attacker,
-      actor: attackerActor,
+      actor: attacker.actor,
       customModifier: 0,
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
     defender: {
       token: defender,
-      actor: defenderActor,
+      actor: defender.actor,
       customModifier: 0,
       supernaturalShield: {
         dobleDamage: false,
@@ -137,8 +135,8 @@ export class GMCombatDialog extends FormApplication {
       const resistanceRoll = await getResistanceRoll(
         value,
         type,
-        this.modalData.attacker.token,
-        this.modalData.defender.token
+        this.attackerToken,
+        this.defenderToken
       );
       if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
         this.applyValuesIfBeAble(resistanceRoll.total - value);
@@ -180,7 +178,7 @@ export class GMCombatDialog extends FormApplication {
         }
       );
       attackerCharacteristicRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
+        speaker: ChatMessage.getSpeaker({ token: this.attackerToken }),
         flavor: attackerFlavor
       });
 
@@ -192,11 +190,11 @@ export class GMCombatDialog extends FormApplication {
       const defenderFlavor = i18n.format(
         'macros.combat.dialog.physicalDefense.characteristic.title',
         {
-          target: this.modalData.attacker.token.name
+          target: this.attackerToken.name
         }
       );
       defenderCharacteristicRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
+        speaker: ChatMessage.getSpeaker({ token: this.defenderToken }),
         flavor: defenderFlavor
       });
 
@@ -463,42 +461,40 @@ export class GMCombatDialog extends FormApplication {
       if (!hasCritic) {
         return;
       }
-      const attackerTokenDocument = this.modalData.attacker.token;
-      const defenderTokenDocument = this.modalData.defender.token;
       const targeted = specificAttack.targeted !== 'none';
       const generalLocation = getGeneralLocation();
       const location = targeted ? specificAttack.targeted : generalLocation.specific;
       let formula = `1d100CriticRoll + ${calculations.damage}`;
-      const criticRoll = new ABFFoundryRoll(formula, attackerTokenDocument.actor.system);
+      const criticRoll = new ABFFoundryRoll(formula, this.attackerActor.system);
       criticRoll.roll();
       const { i18n } = game;
       let flavor;
       if (targeted || generalLocation?.side === undefined || generalLocation?.side === 'none') {
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
-          target: defenderTokenDocument.name
+          target: this.defenderToken.name
         })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
       } else
         flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
-          target: defenderTokenDocument.name
+          target: this.defenderToken.name
         })} ( ${i18n.format(
           `macros.combat.dialog.targetedAttack.${location}.title`
         )} ) ${i18n.format(
           `macros.combat.dialog.targetedAttack.side.${generalLocation.side}.title`
         )}`;
       criticRoll.toMessage({
-        speaker: ChatMessage.getSpeaker({ token: attackerTokenDocument }),
+        speaker: ChatMessage.getSpeaker({ token: this.attackerToken }),
         flavor
       });
       const resistanceRoll = await getResistanceRoll(
         criticRoll.total,
         'physical',
-        attackerTokenDocument,
-        defenderTokenDocument
+        this.attackerToken,
+        this.defenderToken
       );
       const macroName = 'Critical Attack';
       const macro = game.macros.getName(macroName);
       if (macro) {
-        macro.execute({ attacker: attackerTokenDocument, defender: defenderTokenDocument, resistanceRoll, location });
+        macro.execute({ attacker: this.attackerToken, defender: this.defenderToken, resistanceRoll, location });
       } else {
         console.debug(`Macro '${macroName}' not found.`);
       }
@@ -533,35 +529,37 @@ export class GMCombatDialog extends FormApplication {
   }
 
   async newSupernaturalShieldIfBeAble() {
-    const { supShield } = this.modalData.defender.result?.values;
+    const { defender } = this.modalData
+    const { supShield } = defender.result?.values;
     if (
-      (this.modalData.defender.result?.type === 'mystic' ||
-        this.modalData.defender.result?.type === 'psychic') &&
+      (defender.result?.type === 'mystic' ||
+        defender.result?.type === 'psychic') &&
       supShield.create
     ) {
       const supShieldId = await this.defenderActor.newSupernaturalShield(
-        this.modalData.defender.result.type,
-        this.modalData.defender.result?.power ?? {},
-        this.modalData.defender.result.values?.psychicPotential ?? 0,
-        this.modalData.defender.result.spell ?? {},
-        this.modalData.defender.result.values?.spellGrade
+        defender.result.type,
+        defender.result?.power ?? {},
+        defender.result.values?.psychicPotential ?? 0,
+        defender.result?.spell ?? {},
+        defender.result.values?.spellGrade
       );
       return supShieldId;
     }
   }
 
   applyDamageSupernaturalShieldIfBeAble(supShieldId) {
-    const { dobleDamage, immuneToDamage } = this.modalData.defender.supernaturalShield;
+    const { attacker, defender } = this.modalData;
+    const { dobleDamage, immuneToDamage } = defender.supernaturalShield;
     const defenderIsWinner =
-      this.modalData.calculations.winner === this.modalData.defender.token;
+      this.modalData.calculations.winner === this.defenderToken;
     const damage = this.modalData.attacker.result?.values.damage;
     if (
       defenderIsWinner &&
-      (this.modalData.defender.result?.type === 'mystic' ||
-        this.modalData.defender.result?.type === 'psychic') &&
+      (defender.result?.type === 'mystic' ||
+        defender.result?.type === 'psychic') &&
       !immuneToDamage
     ) {
-      const { supShield } = this.modalData.defender.result?.values;
+      const { supShield } = defender.result?.values;
       const newCombatResult = {
         attack: 0,
         at: 0,
@@ -569,10 +567,9 @@ export class GMCombatDialog extends FormApplication {
       };
 
       if (this.isDamagingCombat) {
-        const { attacker, defender } = this.modalData;
 
         newCombatResult.attack = Math.max(
-          attacker.result.values.total + this.modalData.attacker.customModifier,
+          attacker.result.values.total + attacker.customModifier,
           0
         );
         newCombatResult.at = Math.max(
@@ -601,7 +598,7 @@ export class GMCombatDialog extends FormApplication {
   executeCombatMacro(resistanceRoll, specificAttackResult) {
     let macroName;
     const winner =
-      this.modalData.calculations.winner === this.modalData.defender.token
+      this.modalData.calculations.winner === this.defenderToken
         ? 'defender'
         : 'attacker';
     const missedAttackValue = game.settings.get(
@@ -617,8 +614,8 @@ export class GMCombatDialog extends FormApplication {
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
     let args = {
-      attacker: this.modalData.attacker.token,
-      defender: this.modalData.defender.token,
+      attacker: this.attackerToken,
+      defender: this.defenderToken,
       winner,
       defenseType: this.modalData.defender.result.values.type,
       totalAttack: this.modalData.attacker.result.values.total,
@@ -668,7 +665,7 @@ export class GMCombatDialog extends FormApplication {
 
     if (specificAttackResult !== undefined) {
       macroName = 'Specific Attack';
-    }
+    }//quitar esta parte, hacer que el macro lea el resultado y apunte a este otro macro
 
     const macro = game.macros.getName(macroName);
     if (macro) {
