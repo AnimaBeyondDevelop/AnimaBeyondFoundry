@@ -15,8 +15,7 @@ export const INITIAL_TECHNIQUE_DATA = {
   constitution: { value: 0 },
   willPower: { value: 0 },
   power: { value: 0 },
-  martialKnowledge: { value: 0 },
-  activeEffect: { hasEffects: false, enabled: false }
+  martialKnowledge: { value: 0 }
 };
 
 /** @type {import("../Items").TechniqueItemConfig} */

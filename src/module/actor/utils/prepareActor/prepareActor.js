@@ -8,7 +8,6 @@ import { mutateNaturalPenalty } from './calculations/actor/modifiers/mutateNatur
 import { mutatePhysicalModifier } from './calculations/actor/modifiers/mutatePhysicalModifier';
 import { mutatePerceptionPenalty } from './calculations/actor/modifiers/mutatePerceptionPenalty';
 import { mutateAllActionsModifier } from './calculations/actor/modifiers/mutateAllActionsModifier';
-import { mutateTechniquesData } from './calculations/items/technique/mutateTechniquesData';
 import { mutateSecondariesData } from './calculations/actor/secondaries/mutateSecondariesData';
 import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
 import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
@@ -36,8 +35,7 @@ const DERIVED_DATA_FUNCTIONS = [
   mutateInitiative,
   mutateMysticData,
   mutatePsychicData,
-  mutateDomineData,
-  mutateTechniquesData
+  mutateDomineData
 ];
 
 export const prepareActor = async actor => {
