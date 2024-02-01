@@ -20,7 +20,6 @@ import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
-import { domineTechniqueEvaluate } from '../combat/utils/domineTechniqueEvaluate';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -69,34 +68,6 @@ export class ABFActor extends Actor {
         }
       }
     });
-  }
-  activateTechnique(techniqueId: string) {
-    const technique = this.items.get(techniqueId);
-    if (technique === undefined) {
-      return;
-    }
-    const newStatus = !technique.system.activeEffect.enabled;
-    if (!newStatus) {
-      return ui.notifications.warn('La técnica ya se encuentra activa');
-    }
-    const kiEvaluate = domineTechniqueEvaluate(this, technique);
-    if (!kiEvaluate) {
-      return ui.notifications.warn(
-        'No cuentas con suficiente Ki para activar la técnica'
-      );
-    }
-    const effects = this.getEmbeddedCollection('ActiveEffect').contents;
-    const relevantEffects = effects.filter(effect => effect.origin.endsWith(techniqueId));
-    if (relevantEffects.length === 0) {
-      return;
-    }
-    if (newStatus) {
-      for (const effect of relevantEffects) {
-        effect.update({ disabled: !newStatus });
-      }
-      technique.update({ 'system.activeEffect.enabled': newStatus });
-    }
-    return
   }
 
   applyCriticEffect(criticLevel: number) {
