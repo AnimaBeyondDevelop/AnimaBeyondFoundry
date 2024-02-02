@@ -71,6 +71,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       );
     } else if (tab === 'psychic') {
       const powerID = results['new.psychicShield.id'];
+      const eliminateFatigue = results['new.psychicShield.eliminateFatigue']; console.log(eliminateFatigue);
       const showRoll = true;
       let powerDifficulty = results['new.psychicShield.difficulty'];
       const power = actor.system.psychic.psychicPowers.find(i => i._id === powerID);
@@ -94,6 +95,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
         const fatigue = await actor.evaluatePsychicFatigue(
           power,
           psychicPotentialRoll.total,
+          eliminateFatigue,
           showRoll
         );
         if (fatigue) {

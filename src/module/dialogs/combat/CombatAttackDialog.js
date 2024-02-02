@@ -128,6 +128,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         powerUsed: undefined,
         critic: NoneWeaponCritic.NONE,
+        eliminateFatigue: false,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distanceCheck: false,
@@ -568,6 +569,7 @@ export class CombatAttackDialog extends FormApplication {
         psychicPotential,
         psychicProjection,
         critic,
+        eliminateFatigue,
         damageModifier,
         projectile,
         distanceCheck },
@@ -618,6 +620,7 @@ export class CombatAttackDialog extends FormApplication {
         const psychicFatigue = await this.attackerActor.evaluatePsychicFatigue(
           power,
           psychicPotentialRoll.total,
+          eliminateFatigue,
           this.modalData.attacker.showRoll
         );
 

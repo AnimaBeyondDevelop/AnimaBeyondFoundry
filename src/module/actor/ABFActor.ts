@@ -314,15 +314,16 @@ export class ABFActor extends Actor {
    * 
    * @param {object} power - The power for which the psychic fatigue is being evaluated.
    * @param {number} psychicDifficulty - The difficulty level of the psychic power.
+   * @param {boolean} eliminateFatigue - Whether to apply the fatigue value or not to the actor's characteristics.
    * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
    * 
    * @returns {number} The calculated psychic fatigue value.
    */
-  async evaluatePsychicFatigue(power: any, psychicDifficulty: number, sendToChat = true) {
+  async evaluatePsychicFatigue(power: any, psychicDifficulty: number, eliminateFatigue: boolean, sendToChat = true) {
     const { psychic: { psychicSettings: { fatigueResistance }, psychicPoints } } = this.system
     const psychicFatigue = {
       value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
-      inmune: fatigueResistance
+      inmune: fatigueResistance || eliminateFatigue
     };
 
     if (psychicFatigue.value) {
@@ -335,7 +336,7 @@ export class ABFActor extends Actor {
           })
         });
       }
-      if (!psychicFatigue.inmune) {
+      if (!psychicFatigue.inmune && !eliminateFatigue) {
         this.applyFatigue(psychicFatigue.value - psychicPoints.value);
         this.update({
           system: {
@@ -345,6 +346,15 @@ export class ABFActor extends Actor {
           }
         })
       }
+    }
+    if (eliminateFatigue) {
+      this.update({
+        system: {
+          psychic: {
+            psychicPoints: { value: psychicPoints.value - 1 }
+          }
+        }
+      })
     }
 
     return psychicFatigue.value;

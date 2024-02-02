@@ -117,7 +117,8 @@ const getInitialData = (attacker, defender) => {
           shieldUsed: undefined,
           shieldValue: 0,
           newShield: true
-        }
+        },
+        eliminateFatigue: false
       },
       resistance: {
         surprised: false
@@ -552,6 +553,7 @@ export class CombatDefenseDialog extends FormApplication {
           psychicProjection,
           powerUsed,
           modifier,
+          eliminateFatigue,
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
@@ -616,6 +618,7 @@ export class CombatDefenseDialog extends FormApplication {
         psychicFatigue = await this.defenderActor.evaluatePsychicFatigue(
           power,
           psychicPotentialRoll.total,
+          eliminateFatigue,
           this.modalData.attacker.showRoll
         );
 
