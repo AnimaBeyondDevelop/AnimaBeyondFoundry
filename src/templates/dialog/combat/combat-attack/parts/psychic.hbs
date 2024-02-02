@@ -52,6 +52,20 @@
   inputValue=this.attacker.psychic.damageModifier
 }}
 
+{{#if (and (is 'gt' this.attacker.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.attacker.actor.system.psychic.psychicSettings.fatigueResistance false))}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.eliminateFatigue.title')
+      inputType="checkbox"
+      inputName="attacker.psychic.eliminateFatigue"
+      inputValue=(is 'eq' this.attacker.psychic.eliminateFatigue true)
+    }}
+  </div>
+</div>
+{{/if}}
+
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>
   <div>

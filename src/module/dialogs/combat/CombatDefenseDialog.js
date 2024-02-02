@@ -104,7 +104,8 @@ const getInitialData = (attacker, defender) => {
           shieldUsed: undefined,
           shieldValue: 0,
           newShield: true
-        }
+        },
+        eliminateFatigue: false
       },
       resistance: {
         surprised: false
@@ -293,7 +294,7 @@ export class CombatDefenseDialog extends FormApplication {
         multipleDefensesPenalty: {
           value: multipleDefensesPenalty * 1,
           apply: true
-        } 
+        }
       };
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
       const projectileType = this.modalData.attacker.projectile?.type;
@@ -527,6 +528,7 @@ export class CombatDefenseDialog extends FormApplication {
           psychicPotential,
           powerUsed,
           modifier,
+          eliminateFatigue,
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
@@ -592,6 +594,7 @@ export class CombatDefenseDialog extends FormApplication {
         psychicFatigue = await this.defenderActor.evaluatePsychicFatigue(
           power,
           psychicPotentialRoll.total,
+          eliminateFatigue,
           this.modalData.attacker.showRoll
         );
 
