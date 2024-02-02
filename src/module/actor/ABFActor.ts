@@ -17,6 +17,7 @@ import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.j
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
+import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
@@ -71,20 +72,51 @@ export class ABFActor extends Actor {
   }
 
   applyCriticEffect(criticLevel: number) {
-    const newAllActionsPenalty =
-      this.system.general.modifiers.allActions.base.value - criticLevel;
-    const criticPenalty: any = this.getFlag('animabf', 'criticPenalty') || 0;
-    const newCriticPenalty =
-      criticPenalty - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
+    const { pain } = this.system.general.modifiers;
+    const newPhysicalPain =
+      pain.physical.value - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
+    const newIncapacitationPain =
+      pain.incapacitation.value - (criticLevel > 50 ? Math.round(criticLevel / 2) : 0);
 
     this.update({
       system: {
         general: {
-          modifiers: { allActions: { base: { value: newAllActionsPenalty } } }
+          modifiers: { pain: { physical: { value: newPhysicalPain }, incapacitation: { value: newIncapacitationPain } } }
         }
       }
     });
-    this.setFlag('animabf', 'criticPenalty', newCriticPenalty)
+  }
+
+  async withstandPain(sendToChat = true) {
+    const { pain } = this.system.general.modifiers;
+    const withstandPainRoll = await this.rollAbility('withstandPain', sendToChat)
+    const { inhuman, zen } = this.system.general.settings;
+    const withstandPainTotal = psychicPotentialEffect(withstandPainRoll, 0, inhuman, zen)
+    const withstandPain = withstandPainBonus(withstandPainTotal)
+    const newWithstandPain =
+      pain.withstandPain.value > withstandPain ? pain.withstandPain.value : withstandPain;
+
+    this.update({
+      system: {
+        general: {
+          modifiers: { pain: { withstandPain: { value: newWithstandPain } } }
+        }
+      }
+    });
+    return newWithstandPain
+  }
+
+  physicalPainDisappearing() {
+    const { pain } = this.system.general.modifiers;
+    const newPhysicalPain = pain.physical.value + 5;
+
+    this.update({
+      system: {
+        general: {
+          modifiers: { pain: { physical: { value: Math.min(newPhysicalPain, 0) } } }
+        }
+      }
+    });
   }
 
   /**
@@ -116,7 +148,7 @@ export class ABFActor extends Actor {
     }
     const abilityValue = this.system.secondaries[groupPath][ability].final.value;
     const label = name ? `Rolling ${name}` : '';
-    const mod = await openModDialog();
+    const mod = await openModDialog(name);
     let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
     if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
     const roll = new ABFFoundryRoll(formula, this.system);

@@ -24,6 +24,7 @@
           "physicalActions": { "value": 0 },
           "allActions": { "base": { "value": 0 }, "final": { "value": 0 } },
           "naturalPenalty": { "byArmors": { "value": 0 }, "byWearArmorRequirement": { "value": 0 } },
+          "pain": { "fatigue": { "value": 0 }, "physical": { "value": 0 }, "incapacitation": { "value": 0 }, "withstandPain": { "value": 0 } },
           "attackMod": { "value": 0 },
           "blockMod": { "value": 0 },
           "dodgeMod": { "value": 0 },

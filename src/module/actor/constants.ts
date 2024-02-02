@@ -44,6 +44,20 @@ export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
         byArmors: { value: 0 },
         byWearArmorRequirement: { value: 0 }
       },
+      pain: {
+        fatigue: {
+          value: 0
+        },
+        physical: {
+          value: 0
+        },
+        incapacitation: {
+          value: 0
+        },
+        withstandPain: {
+          value: 0
+        }
+      },
       extraDamage: {
         value: 0
       },

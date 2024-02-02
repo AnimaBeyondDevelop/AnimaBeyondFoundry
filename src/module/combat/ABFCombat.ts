@@ -34,6 +34,7 @@ export default class ABFCombat extends Combat {
       token?.actor?.resetDefensesCounter();
       token?.actor?.consumeMaintainedZeon();
       token?.actor?.psychicShieldsMaintenance();
+      token?.actor?.physicalPainDisappearing();
     }
 
     return super.nextRound();

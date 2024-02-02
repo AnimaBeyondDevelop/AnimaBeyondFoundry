@@ -43,11 +43,11 @@ export const openSimpleInputDialog = async ({
 };
 
 // Open the mod Dialog window. It returns resolver(html), which in turn returns the modifier
-export const openModDialog = async () => {
+export const openModDialog = async (extraContent) => {
   const referencedGame = game;
 
   return openSimpleInputDialog({
-    content: referencedGame.i18n.localize('dialogs.mod.content'),
+    content: referencedGame.i18n.localize('dialogs.mod.content') + (extraContent ? ` ${extraContent}` : ''),
     placeholder: '0'
   });
 };

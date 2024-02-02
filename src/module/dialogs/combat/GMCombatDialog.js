@@ -499,6 +499,7 @@ export class GMCombatDialog extends FormApplication {
         console.debug(`Macro '${macroName}' not found.`);
       }
       if (resistanceRoll < 0) {
+        await this.defenderActor.withstandPain()
         this.defenderActor.applyCriticEffect(Math.abs(resistanceRoll));
       }
     }
