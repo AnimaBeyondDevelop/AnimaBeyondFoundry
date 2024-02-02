@@ -138,9 +138,9 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/advancedSettings.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/advancedCharacteristics.hbs',
-    'systems/animabf/templates/actor/parts/effects/effects.hbs',
-    'systems/animabf/templates/actor/parts/effects/parts/effects-list.hbs',
-    'systems/animabf/templates/actor/parts/effects/parts/pain-modifiers.hbs'
+    'systems/animabf/templates/actor/parts/status/status.hbs',
+    'systems/animabf/templates/actor/parts/status/parts/effects-list.hbs',
+    'systems/animabf/templates/actor/parts/status/parts/pain-modifiers.hbs'
   ];
 
   return loadTemplates(templatePaths);
