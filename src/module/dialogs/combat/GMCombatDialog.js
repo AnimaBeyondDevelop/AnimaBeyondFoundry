@@ -306,6 +306,12 @@ export class GMCombatDialog extends FormApplication {
       defender.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
+    const { combat } = game
+    if (combat.getCombatantByToken(this.attackerToken._id).initiative -
+      combat.getCombatantByToken(this.defenderToken._id).initiative > 150) {
+      defender.result.values.defenderCombatMod.surprised = { value: -90, apply: false }
+    };
+
     this.render();
   }
 
