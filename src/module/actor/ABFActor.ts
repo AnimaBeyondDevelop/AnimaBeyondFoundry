@@ -106,17 +106,26 @@ export class ABFActor extends Actor {
     return newWithstandPain
   }
 
-  physicalPainDisappearing() {
+  physicalPainDisappearing(reset: boolean) {
     const { pain } = this.system.general.modifiers;
     const newPhysicalPain = pain.physical.value + 5;
-
-    this.update({
-      system: {
-        general: {
-          modifiers: { pain: { physical: { value: Math.min(newPhysicalPain, 0) } } }
+    if (reset) {
+      this.update({
+        system: {
+          general: {
+            modifiers: { pain: { physical: { value: 0 } } }
+          }
         }
-      }
-    });
+      });
+    } else {
+      this.update({
+        system: {
+          general: {
+            modifiers: { pain: { physical: { value: Math.min(newPhysicalPain, 0) } } }
+          }
+        }
+      });
+    }
   }
 
   /**
