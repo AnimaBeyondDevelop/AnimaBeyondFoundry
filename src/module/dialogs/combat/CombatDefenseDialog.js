@@ -236,7 +236,7 @@ export class CombatDefenseDialog extends FormApplication {
     if (at !== undefined) {
       combat.at.final = combat.at.special + at;
     }
-    if (!this.modalData.attacker.specificAttack.causeDamage) {
+    if (this.modalData.attacker.specificAttack.value !== 'none' && !this.modalData.attacker.specificAttack.causeDamage) {
       combat.at.final = 0;
     }
 

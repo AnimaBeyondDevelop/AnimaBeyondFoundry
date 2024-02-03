@@ -632,6 +632,7 @@
   "dialogs.spellCasting.warning.innateMagic": "No cuentas con suficiente Magia Innata",
   "dialogs.spellCasting.warning.preparedSpell": "No tienes este Conjuro Preparado",
   "dialogs.spellCasting.warning.zeonAccumulated": "No cuentas con suficiente Zeon Acumulado",
+  "dialogs.specificAttack.warning.disableMustChoose": "Debes elegir un Ataque Apuntado",
   "macros.combat.dialog.applyAndCloseButton.title": "Aplicar y salir",
   "macros.combat.dialog.applyAndCloseButtonTooltip.title": "Aplicar cambios como los puntos de fatiga usados o el daño en las fichas de los personajes implicados",
   "macros.combat.dialog.at.title": "TA",

@@ -311,6 +311,7 @@ export class CombatAttackDialog extends FormApplication {
         poorVisibility,
         targetInCover
       } = this.modalData.attacker;
+      const { i18n } = game;
       distance.check = distanceCheck
       this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
@@ -389,6 +390,11 @@ export class CombatAttackDialog extends FormApplication {
               value: targetedAttacks.find(i => i.bodyPart === specificAttack.targeted)
                 ?.modifier ?? 0, apply: true
             }
+          } else if (specificAttack.value === 'disable') {
+            ui.notifications.warn(
+              i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
+            );
+            return
           }
         }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
@@ -411,7 +417,6 @@ export class CombatAttackDialog extends FormApplication {
         roll.roll();
 
         if (this.modalData.attacker.showRoll) {
-          const { i18n } = game;
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
