@@ -307,8 +307,8 @@ export class GMCombatDialog extends FormApplication {
     }
 
     const { combat } = game
-    if (combat.getCombatantByToken(this.attackerToken._id).initiative -
-      combat.getCombatantByToken(this.defenderToken._id).initiative > 150) {
+    if (combat?.getCombatantByToken(this.attackerToken._id)?.initiative -
+      combat?.getCombatantByToken(this.defenderToken._id)?.initiative > 150) {
       defender.result.values.defenderCombatMod.surprised = { value: -90, apply: false }
     };
 
