@@ -64,7 +64,7 @@ export class WSGMCombatManager extends WSCombatManager {
             projectile,
             damage,
             distance
-          , specificAttack);
+            , specificAttack);
         } catch (err) {
           if (err) {
             Log.error(err);
@@ -274,7 +274,9 @@ export class WSGMCombatManager extends WSCombatManager {
 
           if (this.combat) {
             this.combat.updateAttackerData(result);
-
+            if (result.values.psychicFatigue) {
+              return
+            }
             if (canOwnerReceiveMessage(defender.actor)) {
               const newMsg = {
                 type: GMMessageTypes.Attack,
@@ -304,7 +306,7 @@ export class WSGMCombatManager extends WSCombatManager {
                   projectile,
                   damage,
                   distance
-                , specificAttack);
+                  , specificAttack);
               } catch (err) {
                 if (err) {
                   Log.error(err);
@@ -329,7 +331,7 @@ export class WSGMCombatManager extends WSCombatManager {
     projectile,
     damage,
     distance
-  , specificAttack) {
+    , specificAttack) {
     this.defendDialog = new CombatDefenseDialog(
       {
         token: attacker,

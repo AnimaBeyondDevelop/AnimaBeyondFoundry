@@ -404,10 +404,16 @@
             {{/if}}
 
           {{else}}
-            <div class='waiting-row'>
-              {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
-              <p class='label'>{{localize 'macros.combat.dialog.waitingDefense.title'}}</p>
-            </div>
+            {{#if (is 'gt' this.attacker.result.values.psychicFatigue 0)}}
+              <div class='waiting-row'>
+                <p class='label'>{{localize 'macros.combat.dialog.psychicFatigue.title'}}</p>
+              </div>
+              {{else}}
+              <div class='waiting-row'>
+                {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+                <p class='label'>{{localize 'macros.combat.dialog.waitingDefense.title'}}</p>
+              </div>
+            {{/if}}
           {{/if}}
         {{else}}
           <div class='waiting-row'>

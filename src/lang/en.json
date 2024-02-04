@@ -774,6 +774,7 @@
   "macros.combat.dialog.waitingAttack.title": "Waiting for attacker...",
   "macros.combat.dialog.waitingDefense.title": "Waiting for defender...",
   "macros.combat.dialog.waitingDefenseForAttack.title": "Waiting for attacker sent the attack...",
+  "macros.combat.dialog.psychicFatigue.title": "The Attacker failed Psychic Potential",
   "macros.combat.dialog.warning.supernaturalShieldNotFound.mystic": "You do not have any active mystic shields, click on New Shield",
   "macros.combat.dialog.warning.supernaturalShieldNotFound.psychic": "You do not have any active psychic shields, click on New Shield",
   "macros.combat.dialog.hasCritic.title": "Perform a critical attack on {target}",

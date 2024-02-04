@@ -774,6 +774,7 @@
   "macros.combat.dialog.waitingAttack.title": "Esperando por el atacante...",
   "macros.combat.dialog.waitingDefense.title": "Esperando por el defensor...",
   "macros.combat.dialog.waitingDefenseForAttack.title": "Esperando al atacante para enviar petición de defensa...",
+  "macros.combat.dialog.psychicFatigue.title": "El atacante ha fallado el Potencial Psiquico",
   "macros.combat.dialog.warning.supernaturalShieldNotFound.mystic": "No tienes escudos místicos activos, has click en Escudo nuevo",
   "macros.combat.dialog.warning.supernaturalShieldNotFound.psychic": "No tienes escudos psíquicos activos, has click en Escudo nuevo",
   "macros.combat.dialog.hasCritic.title": "Realiza un crítico a {target}",
