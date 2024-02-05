@@ -138,10 +138,8 @@ export class GMCombatDialog extends FormApplication {
         this.attackerToken,
         this.defenderToken
       );
-      if (resistanceRoll.total < 0 && this.modalData.attacker.result.values.damage > 0) {
-        this.applyValuesIfBeAble(resistanceRoll.total - value);
-        this.close();
-      }
+      this.applyValuesIfBeAble(resistanceRoll);
+      this.close();
     });
 
     html.find('.roll-characteristic').click(async () => {
