@@ -130,12 +130,17 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-resistance').click(() => {
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
-      const resistance =
-        this.defenderActor.system.characteristics.secondaries.resistances[type].base
-          .value;
-      let formula = `1d100 + ${resistance ?? 0} - ${value ?? 0}`;
-      const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
-      resistanceRoll.roll();
+      const resistanceRoll = await getResistanceRoll(
+        value,
+        type,
+        this.attackerToken,
+        this.defenderToken
+      );
+      this.applyValuesIfBeAble(resistanceRoll);
+      this.close();
+    });
+
+    html.find('.roll-characteristic').click(async () => {
       const { i18n } = game;
       const flavor = i18n.format('macros.combat.dialog.physicalDefense.resist.title', {
         target: this.modalData.attacker.token.name
