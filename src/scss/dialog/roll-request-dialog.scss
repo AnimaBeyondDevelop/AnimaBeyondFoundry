@@ -1,0 +1,69 @@
+@import '../variable';
+
+.roll-request-dialog {
+  height: auto !important;
+
+  width: 550px;
+
+  .window-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .common-group {
+    height: 100%;
+  }
+
+  .group-body {
+    .roll-sent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      margin-top: 2rem;
+
+      .label {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .roll-amount {
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .abf-button {
+      margin-top: 2rem;
+    }
+
+    .waiting-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+
+      .label {
+        margin-top: 1rem;
+        text-align: center;
+      }
+    }
+
+    .columns {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hr {
+      border-bottom: 1px solid $red;
+    }
+  }
+}

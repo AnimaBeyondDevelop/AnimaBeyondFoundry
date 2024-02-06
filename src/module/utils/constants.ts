@@ -42,7 +42,8 @@ export const Templates = {
       },
       CombatRequestDialog:
         'systems/animabf/templates/dialog/combat/combat-request-dialog.hbs',
-      GMCombatDialog: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs'
+      GMCombatDialog: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs',
+      RollRequestDialog: 'systems/animabf/templates/dialog/combat/roll-request-dialog.hbs'
     },
     GenericDialog: 'systems/animabf/templates/dialog/generic-dialog/generic-dialog.hbs',
     Icons: {

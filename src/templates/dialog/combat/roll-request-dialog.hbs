@@ -1,0 +1,68 @@
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="roll-values"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize 'macros.combat.dialog.rolling.title')
+    }}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="roll-values"
+    }}
+      <div class='columns'>
+        <div>
+          {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.noRoll.title')
+              disabled=this.rollSent
+              inputType="checkbox"
+              inputName="tokenDocument.withoutRoll"
+              inputValue=(is 'eq' this.tokenDocument.withoutRoll true)
+          }}
+        </div>
+        <div>
+          {{#if this.ui.isGM}}
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.showRoll.title')
+              disabled=this.rollSent
+              inputType="checkbox"
+              inputName="tokenDocument.showRoll"
+              inputValue=(is 'eq' this.tokenDocument.showRoll true)
+            }}
+          {{/if}}
+        </div>
+      </div>
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.modifier.title')
+      disabled=this.rollSent
+      inputName="roll.modifier"
+      inputValue=this.roll.modifier
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize "macros.combat.dialog.rollValue.title")
+      disabled=true
+      inputName="roll.value"
+      inputValue=this.roll.value
+    }}
+
+    {{#if this.rollSent}}
+      <div class='roll-sent'>
+        {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+        <p class='label'>
+          {{localize 'macros.combat.dialog.rollSent.title'}}
+        </p>
+      </div>
+      {{else}}
+        <button class='abf-button send-roll' data-type='roll'>
+          {{localize 'macros.combat.dialog.rollButton.title'}}
+        </button>
+    {{/if}}
+
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>

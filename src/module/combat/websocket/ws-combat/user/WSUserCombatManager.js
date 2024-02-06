@@ -4,6 +4,7 @@ import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
 import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
 import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
+import { RollRequestDialog } from '../../../../dialogs/combat/RollRequestDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { getTargetToken } from '../util/getTargetToken';
@@ -26,6 +27,9 @@ export class WSUserCombatManager extends WSCombatManager {
       case GMMessageTypes.CounterAttack:
         this.manageCounterAttack(msg);
         break;
+      case GMMessageTypes.RollRequest:
+        this.manageRollRequest(msg);
+        break;
       default:
         Log.warn('Unknown message', msg);
     }
@@ -42,6 +46,12 @@ export class WSUserCombatManager extends WSCombatManager {
       this.defenseDialog.close({ force: true });
 
       this.defenseDialog = undefined;
+    }
+
+    if (this.rollRequestDialog) {
+      this.rollRequestDialog.close({ force: true });
+
+      this.rollRequestDialog = undefined;
     }
   }
 
@@ -181,6 +191,44 @@ export class WSUserCombatManager extends WSCombatManager {
             const newMsg = {
               type: UserMessageTypes.Defend,
               payload: res
+            };
+
+            this.emit(newMsg);
+          }
+        }
+      );
+    } catch (err) {
+      if (err) {
+        Log.error(err);
+      }
+
+      this.endCombat();
+    }
+  }
+  async manageRollRequest(msg) {
+    const { tokenId, rollRequest } = msg.payload;
+
+    if (!this.isMyToken(tokenId)) {
+      return;
+    }
+
+    const token = this.findTokenById(tokenId)
+
+    try {
+      this.rollRequestDialog = new RollRequestDialog(
+        token,
+        rollRequest,
+        {
+          onRoll: res => {
+            const newMsg = {
+              type: UserMessageTypes.Roll,
+              payload: res
+            };
+
+            if (this.rollRequestDialog) {
+              this.rollRequestDialog.close({ force: true });
+
+              this.rollRequestDialog = undefined;
             };
 
             this.emit(newMsg);

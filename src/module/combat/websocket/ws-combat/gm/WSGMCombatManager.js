@@ -6,6 +6,7 @@ import { GMCombatDialog } from '../../../../dialogs/combat/GMCombatDialog';
 import { CombatDialogs } from '../../dialogs/CombatDialogs';
 import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
 import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
+import { RollRequestDialog } from '../../../../dialogs/combat/RollRequestDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
 import { getTargetToken } from '../util/getTargetToken';
@@ -23,6 +24,9 @@ export class WSGMCombatManager extends WSCombatManager {
         break;
       case UserMessageTypes.Defend:
         this.manageUserDefense(msg);
+        break;
+      case UserMessageTypes.Roll:
+        this.manageUserRoll(msg);
         break;
       default:
         Log.warn('Unknown message', msg);
@@ -81,7 +85,15 @@ export class WSGMCombatManager extends WSCombatManager {
     if (this.combat) {
       this.combat.updateDefenderData(msg.payload);
     } else {
-      Log.warn('User attack received but none combat is running');
+      Log.warn('User defend received but none combat is running');
+    }
+  }
+
+  manageUserRoll(msg) {
+    if (this.combat) {
+      this.combat.updateRollData(msg.payload);
+    } else {
+      Log.warn('User roll received but none combat is running');
     }
   }
 
@@ -109,6 +121,12 @@ export class WSGMCombatManager extends WSCombatManager {
       this.attackDialog.close({ force: true });
 
       this.attackDialog = undefined;
+    }
+
+    if (this.rollRequestDialog) {
+      this.rollRequestDialog.close({ force: true });
+
+      this.rollRequestDialog = undefined;
     }
   }
 
@@ -257,6 +275,27 @@ export class WSGMCombatManager extends WSCombatManager {
         } else {
           this.manageAttack(defender, attacker, bonus);
         }
+      },
+      onRollRequest: (token, roll) => {
+        if (this.rollRequestDialog) {
+          Log.warn(
+            'Token is already in a Roll Check'
+          );
+          return;
+        }
+        if (canOwnerReceiveMessage(token.actor)) {
+          const newMsg = {
+            type: GMMessageTypes.RollRequest,
+            payload: {
+              tokenId: token.id,
+              rollRequest: roll
+            }
+          };
+
+          this.emit(newMsg);
+        } else {
+          this.manageRoll(token, roll);
+        }
       }
     });
   }
@@ -348,6 +387,27 @@ export class WSGMCombatManager extends WSCombatManager {
 
             if (this.combat) {
               this.combat.updateDefenderData(result);
+            }
+          }
+        }
+      }
+    );
+  }
+  manageRoll(
+    token, roll) {
+    this.rollRequestDialog = new RollRequestDialog(
+      token,
+      roll,
+      {
+        onRoll: result => {
+          if (this.rollRequestDialog) {
+            this.rollRequestDialog.close({ force: true });
+
+            this.rollRequestDialog = undefined;
+
+            if (this.combat) {
+              console.log(result)
+              this.combat.updateRollData(result);
             }
           }
         }
