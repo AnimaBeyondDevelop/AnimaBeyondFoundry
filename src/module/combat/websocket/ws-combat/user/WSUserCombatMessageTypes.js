@@ -1,5 +1,6 @@
 export const UserMessageTypes = {
   RequestToAttack: 'UserRequestToAttackRequest',
   Attack: 'UserAttack',
-  Defend: 'UserDefend'
+  Defend: 'UserDefend',
+  Roll: 'UserRoll'
 };

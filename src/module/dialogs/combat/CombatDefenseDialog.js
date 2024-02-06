@@ -1,5 +1,4 @@
 import { Templates } from '../../utils/constants';
-import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';

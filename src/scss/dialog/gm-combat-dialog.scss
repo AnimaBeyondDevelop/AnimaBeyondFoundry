@@ -64,7 +64,6 @@
 
       .values {
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
 
         .input-container {
@@ -201,6 +200,12 @@
             color: white;
           }
         }
+      }
+      .roll-request-sent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem
       }
     }
   }

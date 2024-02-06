@@ -12,8 +12,7 @@ const getInitialData = (attacker, defender, options = {}) => {
   return {
     ui: {
       isCounter: options.isCounter ?? false,
-      resistanceRoll: false,
-      characteristicRoll: false
+      waitingRollRequest: false,
     },
     attacker: {
       token: attacker,
@@ -31,6 +30,12 @@ const getInitialData = (attacker, defender, options = {}) => {
         immuneToDamage: false
       },
       isReady: false
+    },
+    roll: {
+      characteristicRoll: { request: false, sent: false, attackerValue: 0, defenderValue: 0 },
+      resistanceRoll: { request: false, sent: false, check: 0, value: 0 },
+      withstandPainRoll: { request: false, sent: false, check: 0, value: 0 },
+      criticRoll: { request: false, sent: false, check: 0, value: 0 }
     }
   };
 };
@@ -129,17 +134,10 @@ export class GMCombatDialog extends FormApplication {
       this.close();
     });
 
-
     html.find('.roll-resistance').click(async () => {
-      const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
-      const resistanceRoll = await getResistanceRoll(
-        value,
-        type,
-        this.attackerToken,
-        this.defenderToken
-      );
-      this.applyValuesIfBeAble(resistanceRoll);
-      this.close();
+      this.modalData.ui.waitingRollRequest = true;
+      const { type, value } = this.modalData.attacker.result.values?.resistanceEffect;
+      this.hooks.onRollRequest(this.defenderToken, { resistance: { main: type, secondary: 'none' }, check: value })
     });
 
     html.find('.roll-characteristic').click(async () => {
@@ -226,8 +224,7 @@ export class GMCombatDialog extends FormApplication {
         });
       });
 
-
-      this.applyValuesIfBeAble(undefined, data);
+      this.applyValuesIfBeAble();
       this.close();
     });
 
@@ -312,9 +309,37 @@ export class GMCombatDialog extends FormApplication {
 
     this.render();
   }
+  updateRollData(result) {
+    const { attacker, defender, ui, roll } = this.modalData;
+    const { type, total, check } = result.values;
+    ui.waitingRollRequest = false;
+
+    if (result.token._id === defender.token._id) {
+      if (type === "resistance") {
+        roll.resistanceRoll.sent = true;
+        roll.resistanceRoll.value = total;
+        roll.resistanceRoll.check = check
+      }
+      if (type === "withstandPain") {
+        roll.withstandPainRoll.sent = true;
+        roll.withstandPainRoll.value = total;
+        roll.withstandPainRoll.check = check
+      }
+    }
+    else if (result.token._id === attacker.token._id) {
+      if (type === "critic") {
+        roll.criticRoll.sent = true;
+        roll.criticRoll.value = total;
+        roll.criticRoll.check = check
+      }
+    }
+
+    this.render();
+  }
 
   getData() {
-    const { attacker, defender } = this.modalData;
+    console.log(this.modalData)
+    const { attacker, defender, roll } = this.modalData;
 
     attacker.isReady = !!attacker.result;
 
@@ -408,15 +433,20 @@ export class GMCombatDialog extends FormApplication {
       if (winner === attacker.token) {
         if (minimumDamage10) {
           if (attacker.result.values?.resistanceEffect.check) {
-            this.modalData.ui.resistanceRoll = true;
+            roll.resistanceRoll.request = true;
           }
           if (specificAttack.check) {
-            this.modalData.ui.characteristicRoll = true;
+            roll.characteristicRoll.request = true;
           }
         }
       }
       if (winner === defender.token || !minimumDamage10) {
-        this.modalData.ui.resistanceRoll = false;
+        roll.resistanceRoll.request = false;
+      }
+      for (const key in roll) {
+        if (roll[key].sent) {
+          roll[key].request = false
+        }
       }
     }
 
@@ -428,7 +458,7 @@ export class GMCombatDialog extends FormApplication {
 
     this.render();
   }
-  async applyValuesIfBeAble(resistanceRoll, specificAttackResult) {
+  async applyValuesIfBeAble() {
     if (this.modalData.attacker.result?.type === 'combat') {
       this.attackerActor.applyFatigue(this.modalData.attacker.result.values.fatigueUsed);
     }
@@ -451,7 +481,7 @@ export class GMCombatDialog extends FormApplication {
     }
     await this.criticIfBeAble();
 
-    this.executeCombatMacro(resistanceRoll, specificAttackResult);
+    this.executeCombatMacro();
   }
 
   async criticIfBeAble() {
@@ -600,12 +630,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeCombatMacro(resistanceRoll, specificAttackResult) {
-    let macroName;
-    const winner =
-      this.modalData.calculations.winner === this.defenderToken
-        ? 'defender'
-        : 'attacker';
+  executeCombatMacro() {
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
@@ -618,62 +643,71 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
+    const winner =
+      this.modalData.calculations.winner === this.defenderToken
+        ? 'defender'
+        : 'attacker';
+    const { attacker, defender, roll } = this.modalData
+    const resistanceValue = attacker.result.values?.resistanceEffect.value
+    const specificAttackResult = attacker.result.values?.specificAttack
+    let macroName;
     let args = {
       attacker: this.attackerToken,
       defender: this.defenderToken,
       winner,
-      defenseType: this.modalData.defender.result.values.type,
-      totalAttack: this.modalData.attacker.result.values.total,
+      defenseType: defender.result.values.type,
+      totalAttack: attacker.result.values.total,
       appliedDamage: this.canApplyDamage,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
-      resistanceRoll,
-      spellGrade: this.modalData.attacker.result.values.spellGrade,
-      attackerPsychicFatigue: this.modalData.attacker.result.values?.psychicFatigue,
-      defenderPsychicFatigue: this.modalData.defender.result.values?.psychicFatigue,
+      resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - resistanceValue : undefined,
+      spellGrade: attacker.result.values.spellGrade,
+      attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
+      defenderPsychicFatigue: defender.result.values?.psychicFatigue,
       specificAttackResult
     };
     if (args.totalAttack < missedAttackValue) {
       args.missedAttack = true;
     }
 
-    if (this.modalData.attacker.result?.type === 'combat') {
-      const { name } = this.modalData.attacker.result.weapon;
+    if (attacker.result?.type === 'combat') {
+      const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
-      const { projectile } = this.modalData.attacker.result.values;
+      const { projectile } = attacker.result.values;
       if (projectile) {
         args = { ...args, projectile: projectile };
         if (projectile.type === 'shot') {
           macroName = macroPorjectileDefault;
         }
       }
-    } else if (this.modalData.attacker.result?.type === 'mystic') {
-      macroName = this.modalData.attacker.result.values.spellName;
-    } else if (this.modalData.attacker.result?.type === 'psychic') {
-      macroName = this.modalData.attacker.result.values.powerName;
+    } else if (attacker.result?.type === 'mystic') {
+      macroName = attacker.result.values.spellName;
+    } else if (attacker.result?.type === 'psychic') {
+      macroName = attacker.result.values.powerName;
     }
 
     if (
-      this.modalData.attacker.result.values.visible !== undefined &&
-      !this.modalData.attacker.result.values.visible
+      attacker.result.values.visible !== undefined &&
+      !attacker.result.values.visible
     ) {
       args.isVisibleAttack = false;
     }
 
     if (
-      this.modalData.attacker.result?.values.macro !== undefined &&
-      this.modalData.attacker.result?.values.macro !== ''
+      attacker.result?.values.macro !== undefined &&
+      attacker.result?.values.macro !== ''
     ) {
-      macroName = this.modalData.attacker.result?.values.macro;
+      macroName = attacker.result?.values.macro;
     }
 
-    if (specificAttackResult !== undefined) {
+    if (specificAttackResult.check) {
       macroName = 'Specific Attack';
     }//quitar esta parte, hacer que el macro lea el resultado y apunte a este otro macro
 
     const macro = game.macros.getName(macroName);
     if (macro) {
+      console.log(args);
       macro.execute(args);
     } else {
       console.debug(`Macro '${macroName}' not found.`);

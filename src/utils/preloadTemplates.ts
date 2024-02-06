@@ -18,6 +18,7 @@ export const preloadTemplates = () => {
     Templates.Dialog.Combat.CombatDefenseDialog.parts.psychic,
     Templates.Dialog.Combat.CombatRequestDialog,
     Templates.Dialog.Combat.GMCombatDialog,
+    Templates.Dialog.Combat.RollRequestDialog,
     Templates.Dialog.Icons.Accept,
     Templates.Dialog.Icons.Cancel,
     Templates.CustomHotBar,
