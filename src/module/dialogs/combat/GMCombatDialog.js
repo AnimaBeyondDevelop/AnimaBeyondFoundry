@@ -589,7 +589,7 @@ export class GMCombatDialog extends FormApplication {
         : 'attacker';
     const { attacker, defender, roll } = this.modalData
     const specificAttackResult = {
-      specificAttack: attacker.result.values?.specificAttack,
+      specificAttack: attacker.result.values?.specificAttack.value,
       result: roll.oppousedCheckRoll.attacker.value - roll.oppousedCheckRoll.defender.value
     };
     let macroName;
