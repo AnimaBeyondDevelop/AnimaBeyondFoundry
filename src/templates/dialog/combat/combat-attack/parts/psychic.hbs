@@ -66,6 +66,7 @@
 </div>
 {{/if}}
 
+{{#unless (isArrayEmpty this.attacker.actor.system.psychic.mentalPatterns)}}
 <div class='columns'>
   <div>
     {{>
@@ -77,6 +78,7 @@
     }}
   </div>
 </div>
+{{/unless}}
 
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>
