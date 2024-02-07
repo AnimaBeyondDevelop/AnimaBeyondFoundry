@@ -8,16 +8,16 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
 
   const { mystic } = data;
 
-  mystic.act.main.final.value = Math.round(Math.max(
-    mystic.act.main.base.value + Math.min(allActionsPenalty / 2, 0),
+  mystic.act.main.final.value = Math.max(
+    mystic.act.main.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
     0
-  ));
+  );
   if (mystic.act.via.length !== 0) {
     for (const actVia of mystic.act.via) {
-      actVia.system.final.value = Math.round(Math.max(
-        actVia.system.base.value + Math.min(allActionsPenalty / 2, 0),
+      actVia.system.final.value = Math.max(
+        actVia.system.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
         0
-      ));
+      );
     }
   }
   mystic.innateMagic.main.final.value =
