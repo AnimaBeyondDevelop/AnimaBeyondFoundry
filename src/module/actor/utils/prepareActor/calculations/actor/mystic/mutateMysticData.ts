@@ -9,13 +9,13 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   const { mystic } = data;
 
   mystic.act.main.final.value = Math.max(
-    mystic.act.main.base.value + Math.min(allActionsPenalty / 2, 0),
+    mystic.act.main.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
     0
   );
   if (mystic.act.via.length !== 0) {
     for (const actVia of mystic.act.via) {
       actVia.system.final.value = Math.max(
-        actVia.system.base.value + Math.min(allActionsPenalty / 2, 0),
+        actVia.system.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
         0
       );
     }
@@ -40,15 +40,15 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   );
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
     mystic.magicProjection.imbalance.offensive.base.value +
-      allActionsPenalty +
-      magicProjectionMod,
+    allActionsPenalty +
+    magicProjectionMod,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
     mystic.magicProjection.imbalance.defensive.base.value +
-      allActionsPenalty +
-      magicProjectionMod,
+    allActionsPenalty +
+    magicProjectionMod,
     0
   );
 
