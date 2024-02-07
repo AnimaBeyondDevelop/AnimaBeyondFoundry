@@ -13,7 +13,7 @@ import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
-import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.js';
+import { difficultyAchieved } from '../combat/utils/difficultyAchieved.js';
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
@@ -91,7 +91,7 @@ export class ABFActor extends Actor {
     const { pain } = this.system.general.modifiers;
     const withstandPainRoll = await this.rollAbility('withstandPain', sendToChat)
     const { inhuman, zen } = this.system.general.settings;
-    const withstandPainTotal = psychicPotentialEffect(withstandPainRoll, 0, inhuman, zen)
+    const withstandPainTotal = difficultyAchieved(withstandPainRoll, 0, inhuman, zen)
     const withstandPain = withstandPainBonus(withstandPainTotal)
     const newWithstandPain =
       pain.withstandPain.value > withstandPain ? pain.withstandPain.value : withstandPain;
@@ -202,7 +202,7 @@ export class ABFActor extends Actor {
         psychic
       } = this.system;
 
-      const potentialBaseDifficulty = psychicPotentialEffect(
+      const potentialBaseDifficulty = difficultyAchieved(
         psychic.psychicPotential.base.value,
         0,
         inhuman.value,

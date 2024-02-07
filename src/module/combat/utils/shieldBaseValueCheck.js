@@ -1,4 +1,4 @@
-import { difficultyRange } from './psychicPotentialEffect';
+import { difficultyRange } from './difficultyAchieved';
 export const shieldBaseValueCheck = (potential, effectsList) => {
   let index = difficultyRange.findIndex(e => e === potential);
 
