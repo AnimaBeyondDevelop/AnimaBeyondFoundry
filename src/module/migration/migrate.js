@@ -11,7 +11,10 @@ import * as MigrationList from './migrations';
  */
 function migrationApplies(migration) {
   /** @type {number} */
-  const currentVersion = game.settings.get('animabf', ABFSettingsKeys.SYSTEM_MIGRATION_VERSION);
+  const currentVersion = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.SYSTEM_MIGRATION_VERSION
+  );
   if (currentVersion < migration.version) {
     return true;
   }
@@ -29,21 +32,31 @@ function migrationApplies(migration) {
 async function migrateAllActors(migration) {
   if (migration.updateActor) {
     // migrate world actors and unlinked token actors
-    const unlinkedTokenActors = game.scenes.map(
-      scene => scene.tokens.filter(token => !token.actorLink && token.actor).map(token => token.actor)
-    ).flat();
+    const unlinkedTokenActors = game.scenes
+      .map(scene =>
+        scene.tokens
+          .filter(token => !token.actorLink && token.actor)
+          .map(token => token.actor)
+      )
+      .flat();
 
     // add the actors in the compendia
-    const actorPacks = await Promise.all(game.packs.filter(pack => pack.metadata.type === "Actor").map(
-      async actorPack => {
-        const packObj = { pack: actorPack, wasLocked: actorPack.locked };
-        await actorPack.configure({ locked: false });
-        return packObj;
-      }
-    ));
-    const compendiaActors = (await Promise.all(actorPacks.map(packObject => {
-      return packObject.pack.getDocuments();
-    }))).flat();
+    const actorPacks = await Promise.all(
+      game.packs
+        .filter(pack => pack.metadata.type === 'Actor')
+        .map(async actorPack => {
+          const packObj = { pack: actorPack, wasLocked: actorPack.locked };
+          await actorPack.configure({ locked: false });
+          return packObj;
+        })
+    );
+    const compendiaActors = (
+      await Promise.all(
+        actorPacks.map(packObject => {
+          return packObject.pack.getDocuments();
+        })
+      )
+    ).flat();
 
     /** @type {ABFActor[]} */
     const actors = [...game.actors, ...unlinkedTokenActors, ...compendiaActors];
@@ -55,9 +68,11 @@ async function migrateAllActors(migration) {
     }
 
     // Lock again packs which where locked
-    actorPacks.filter(packObject => packObject.wasLocked).forEach(async packObject => {
-      await packObject.pack.configure({ locked: true });
-    });
+    actorPacks
+      .filter(packObject => packObject.wasLocked)
+      .forEach(async packObject => {
+        await packObject.pack.configure({ locked: true });
+      });
   }
 }
 
@@ -98,7 +113,11 @@ async function applyMigration(migration) {
     migrateTokens(migration);
 
     console.log(`AnimaBF | Migration ${migration.version} completed.`);
-    game.settings.set('animabf', ABFSettingsKeys.SYSTEM_MIGRATION_VERSION, migration.version);
+    game.settings.set(
+      'animabf',
+      ABFSettingsKeys.SYSTEM_MIGRATION_VERSION,
+      migration.version
+    );
     // TODO: add french translation for the warning dialog also.
     await ABFDialogs.prompt(
       game.i18n.format('dialogs.migrations.success', {
@@ -108,7 +127,9 @@ async function applyMigration(migration) {
     );
     return true;
   } catch (err) {
-    console.error(`AnimaBF | Error when trying to apply migration ${migration.version}:\n${err}`);
+    console.error(
+      `AnimaBF | Error when trying to apply migration ${migration.version}:\n${err}`
+    );
     await ABFDialogs.prompt(
       game.i18n.format('dialogs.migrations.error', {
         version: migration.version,
@@ -121,20 +142,24 @@ async function applyMigration(migration) {
 
 /** This is the only function on the script meant to be called from outside the script */
 export async function applyMigrations() {
-  if (!game.user.isGM) { return; }
+  if (!game.user.isGM) {
+    return;
+  }
 
-  const migrations = Object.values(MigrationList).filter(migration => migrationApplies(migration));
+  const migrations = Object.values(MigrationList).filter(migration =>
+    migrationApplies(migration)
+  );
   migrations.sort((a, b) => a.version - b.version);
 
   for (const migration of migrations) {
     const result = await ABFDialogs.confirm(
       game.i18n.localize('dialogs.migrations.title'),
       `${game.i18n.localize('dialogs.migrations.content')}<br><hr><br>` +
-      '<h4>Details of the migration (only English available):</h4>' +
-      `<strong>Title:</strong> ${migration.title}<br>` +
-      `<strong>Description:</strong> ${migration.description}`,
-    )
-    if (result === "confirm") {
+        '<h4>Details of the migration (only English available):</h4>' +
+        `<strong>Title:</strong> ${migration.title}<br>` +
+        `<strong>Description:</strong> ${migration.description}`
+    );
+    if (result === 'confirm') {
       await applyMigration(migration);
     } else {
       break;
