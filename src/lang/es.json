@@ -728,6 +728,7 @@
   "macros.combat.dialog.newShield.title": "¿Escudo nuevo?",
   "macros.combat.dialog.psychicProjection.title": "Proyección psíquica",
   "macros.combat.dialog.eliminateFatigue.title": "Eliminar la fatiga",
+  "macros.combat.dialog.mentalPatternImbalance.title": "Desequilibrio de Patrón Mental",
   "macros.combat.dialog.requestPermission.title": " te ha enviado una petición de ataque hacia ",
   "macros.combat.dialog.rolled.title": "Tirada del dado",
   "macros.combat.dialog.showResultsButton.title": "Enviar al chat los resultados",

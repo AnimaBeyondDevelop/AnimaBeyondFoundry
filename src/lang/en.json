@@ -728,6 +728,7 @@
   "macros.combat.dialog.newShield.title": "New shield?",
   "macros.combat.dialog.psychicProjection.title": "Psychic projection",
   "macros.combat.dialog.eliminateFatigue.title": "Eliminate Fatigue",
+  "macros.combat.dialog.mentalPatternImbalance.title": "Mental Pattern Imbalance",
   "macros.combat.dialog.requestPermission.title": " requests permission to attack ",
   "macros.combat.dialog.rolled.title": "Dice rolled",
   "macros.combat.dialog.showResultsButton.title": "Send to chat the results",

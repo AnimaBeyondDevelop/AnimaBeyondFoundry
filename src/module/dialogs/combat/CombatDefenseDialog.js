@@ -105,6 +105,7 @@ const getInitialData = (attacker, defender) => {
           shieldValue: 0,
           newShield: true
         },
+        mentalPatternImbalance: false,
         eliminateFatigue: false
       },
       resistance: {
@@ -529,6 +530,7 @@ export class CombatDefenseDialog extends FormApplication {
           powerUsed,
           modifier,
           eliminateFatigue,
+          mentalPatternImbalance,
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
@@ -580,7 +582,7 @@ export class CombatDefenseDialog extends FormApplication {
         power = psychicPowers.find(w => w._id === powerUsed);
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,
-          { ...this.defenderActor.system, power }
+          { ...this.defenderActor.system, power, mentalPatternImbalance }
         );
         psychicPotentialRoll.roll();
         newPsychicPotential = psychicPotentialRoll.total;
