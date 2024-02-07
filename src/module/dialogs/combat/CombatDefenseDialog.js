@@ -48,12 +48,6 @@ const getInitialData = (attacker, defender) => {
       lifePoints: defenderActor.system.characteristics.secondaries.lifePoints.value,
       blindness: false,
       distance: attacker.distance,
-      specificAttack: {
-        characteristic: Math.max(
-          defenderActor.system.characteristics.primaries.strength.value,
-          defenderActor.system.characteristics.primaries.agility.value
-        )
-      },
       zen: defenderActor.system.general.settings.zen.value,
       inhuman: defenderActor.system.general.settings.inhuman.value,
       inmaterial: defenderActor.system.general.settings.inmaterial.value,
@@ -297,8 +291,7 @@ export class CombatDefenseDialog extends FormApplication {
         },
         lifePoints,
         blindness,
-        distance,
-        specificAttack
+        distance
       } = this.modalData.defender;
       this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
 
@@ -416,7 +409,6 @@ export class CombatDefenseDialog extends FormApplication {
           total: roll.total,
           accumulateDefenses,
           defenderCombatMod,
-          specificAttack,
           lifePoints
         }
       });
@@ -455,8 +447,7 @@ export class CombatDefenseDialog extends FormApplication {
         },
         combat: { at },
         lifePoints,
-        blindness,
-        specificAttack
+        blindness
       } = this.modalData.defender;
       const { i18n } = game;
       const { spells } = this.defenderActor.system.mystic;
@@ -535,7 +526,6 @@ export class CombatDefenseDialog extends FormApplication {
           spellCasting,
           supShield,
           defenderCombatMod,
-          specificAttack,
           lifePoints
         }
       });
@@ -557,8 +547,7 @@ export class CombatDefenseDialog extends FormApplication {
         },
         combat: { at },
         lifePoints,
-        blindness,
-        specificAttack
+        blindness
       } = this.modalData.defender;
       const { i18n } = game;
       const { psychicPowers } = this.defenderActor.system.psychic;
@@ -653,7 +642,6 @@ export class CombatDefenseDialog extends FormApplication {
           psychicFatigue,
           supShield,
           defenderCombatMod,
-          specificAttack,
           lifePoints
         }
       });

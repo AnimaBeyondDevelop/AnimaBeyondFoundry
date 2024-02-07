@@ -411,7 +411,6 @@ export class WSGMCombatManager extends WSCombatManager {
             this.rollRequestDialog = undefined;
 
             if (this.combat) {
-              console.log(result)
               this.combat.updateRollData(result);
             }
           }

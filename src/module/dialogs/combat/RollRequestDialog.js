@@ -9,30 +9,41 @@ const getInitialData = (token, roll) => {
   );
   const isGM = !!game.user?.isGM;
   const actor = token.actor;
-  const { resistance, specificAttack, critic, withstandPain, check } = roll
+  const { type, resistance, oppousedCheck, critic, check } = roll
 
   return {
     ui: {
       isGM,
       hasFatiguePoints: actor.system.characteristics.secondaries.fatigue.value > 0,
+      characteristics: {
+        special: oppousedCheck?.specialCharacteristic ? true : false,
+        strength: true,
+        agility: false,
+        dexterity: false
+      },
+      resistances: {
+        disease: false,
+        magic: false,
+        physical: false,
+        poison: false,
+        psychic: false
+      }
     },
-    tokenDocument: {
-      token,
-      actor,
-      showRoll: !isGM || showRollByDefault,
-      withoutRoll: actor.system.general.settings.defenseType.value === 'mass',
-      zen: actor.system.general.settings.zen.value,
-      inhuman: actor.system.general.settings.inhuman.value,
-    },
+    token,
+    actor,
+    showRoll: !isGM || showRollByDefault,
+    withoutRoll: actor.system.general.settings.defenseType.value === 'mass',
     roll: {
-      resistance,
+      type,
+      resistance: resistance?.main,
       value: 0,
       modifier: 0,
+      fatigueUsed: 0,
       check
     },
-    specificAttack,
+    resistance,
+    oppousedCheck,
     critic,
-    withstandPain,
     rollSent: false
   };
 };
@@ -42,8 +53,26 @@ export class RollRequestDialog extends FormApplication {
     super(getInitialData(token, roll));
 
     this.modalData = getInitialData(token, roll);
+    const { ui: { characteristics, resistances }, roll: { type }, resistance, oppousedCheck } = this.modalData;
 
+    if (oppousedCheck) {
+      if (oppousedCheck?.specificAttack === 'disarm') {
 
+        characteristics.dexterity = true
+
+      } else {
+        characteristics.agility = !oppousedCheck.attacker
+        characteristics.dexterity = oppousedCheck.attacker
+      }
+    }
+
+    if (type === 'resistance') {
+      for (const key in resistances) {
+        if (resistance.main === key || resistance.secondary === key) {
+          resistances[key] = true
+        }
+      }
+    }
 
     this.hooks = hooks;
 
@@ -64,7 +93,7 @@ export class RollRequestDialog extends FormApplication {
   }
 
   get actor() {
-    return this.modalData.tokenDocument.actor;
+    return this.modalData.actor;
   }
 
   async close(options) {
@@ -79,63 +108,122 @@ export class RollRequestDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('.send-roll').click(e => {
+    html.find('.send-roll').click(() => {
       const {
-        tokenDocument: {
-          token,
-          actor,
-          showRoll,
-          withoutRoll },
+        token,
+        actor,
+        showRoll,
+        withoutRoll,
         roll: {
+          type,
           resistance,
+          value,
           modifier,
+          fatigueUsed,
           check
         },
-        specificAttack,
-        critic,
-        withstandPain
+        oppousedCheck,
+        critic
       } = this.modalData;
       const { i18n } = game;
-      const resistanceValue = actor.system.characteristics.secondaries.resistances[resistance.main].base.value;
+      let total;
+      if (type === 'resistance') {
 
-      let formula = `1d100xa + ${resistanceValue} + ${modifier}`;
-      if (withoutRoll) {
-        // Remove the dice from the formula
-        formula = formula.replace('1d100xa', '0');
+        let formula = `1d100xa + ${value} + ${modifier}`;
+        if (withoutRoll) {
+          // Remove the dice from the formula
+          formula = formula.replace('1d100xa', '0');
+        }
+        if (value >= 200) {
+          // Mastery reduces the fumble range
+          formula = formula.replace('xa', 'xamastery');
+        }
+
+        const resistanceRoll = new ABFFoundryRoll(formula, actor.system);
+
+        resistanceRoll.roll();
+        total = resistanceRoll.total;
+
+        if (showRoll) {
+
+          const flavor = i18n.format(`macros.combat.dialog.roll.resistanceRoll.title`, {
+            check
+          });
+
+          resistanceRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token }),
+            flavor
+          });
+        }
       }
-      if (resistanceValue >= 200) {
-        // Mastery reduces the fumble range
-        formula = formula.replace('xa', 'xamastery');
+      if (type === 'critic') {
+        const { targeted, generalLocation, location, defender } = critic
+
+        let formula = `1d100CriticRoll + ${value} + ${modifier}`;
+        if (withoutRoll) {
+          // Remove the dice from the formula
+          formula = formula.replace('1d100CriticRoll', '0');
+        }
+        const criticRoll = new ABFFoundryRoll(formula, actor.system);
+
+        criticRoll.roll();
+        total = criticRoll.total;
+
+        if (showRoll) {
+          let flavor;
+
+          if (targeted || generalLocation?.side === undefined || generalLocation?.side === 'none') {
+            flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
+              target: defender
+            })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
+          } else {
+            flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
+              target: defender
+            })} ( ${i18n.format(
+              `macros.combat.dialog.targetedAttack.${location}.title`
+            )} ) ${i18n.format(
+              `macros.combat.dialog.targetedAttack.side.${generalLocation.side}.title`
+            )}`;
+          }
+
+          criticRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token }),
+            flavor
+          });
+        }
       }
+      if (type === 'oppousedCheck') {
+        let formula = `1d10ControlRoll + ${value} + ${oppousedCheck.modifier ?? 0} + ${fatigueUsed} + ${modifier}`;
+        if (withoutRoll) {
+          // Remove the dice from the formula
+          formula = formula.replace('1d10ControlRoll', '0');
+        }
+        const oppousedCheckRoll = new ABFFoundryRoll(formula, actor.system);
 
-      const roll = new ABFFoundryRoll(formula, actor.system);
+        oppousedCheckRoll.roll();
+        total = oppousedCheckRoll.total;
 
-      roll.roll();
-
-      if (showRoll) {
-
-        const flavor = i18n.format(`macros.combat.dialog.physicalDefense.resist.title`, {
-          check
-        });
-
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ token }),
-          flavor
-        });
+        if (showRoll) {
+          const flavor = i18n.format(
+            'macros.combat.dialog.roll.oppousedCheckRoll.title',
+          );
+          oppousedCheckRoll.toMessage({
+            speaker: ChatMessage.getSpeaker({ token }),
+            flavor
+          });
+        }
       }
-
-      const rolled = roll.total - resistanceValue - modifier;
 
       this.hooks.onRoll({
-        type: 'roll',
+        type,
         token,
         values: {
-          type: withstandPain ? "withstandPain" : critic ? "critic" : "resistance",
           resistance,
           modifier,
-          roll: rolled,
-          total: roll.total,
-          check
+          fatigueUsed,
+          total,
+          check,
+          characteristic: oppousedCheck?.characteristic
         }
       });
 
@@ -147,22 +235,37 @@ export class RollRequestDialog extends FormApplication {
 
   getData() {
     const {
-      tokenDocument: { actor },
-      roll: { resistance },
+      ui,
+      actor,
+      roll: { resistance, type },
       critic,
-      withstandPain
+      oppousedCheck
     } = this.modalData;
 
-    if (resistance) {
-      this.modalData.roll.value = actor.system.characteristics.secondaries.resistances[resistance.main].base.value
+    if (type === 'resistance') {
+      this.modalData.roll.value = actor.system.characteristics.secondaries.resistances[resistance].base.value
     };
 
-    if (critic) {
-      this.modalData.roll.value = critic?.value
+    if (type === 'critic') {
+      this.modalData.roll.value = critic.damage;
     };
 
-    if (withstandPain) {
-      this.modalData.roll.value = withstandPain?.value
+    if (type === 'oppousedCheck') {
+      if (!oppousedCheck?.characteristic) {
+        const { strength, agility, dexterity } = actor.system.characteristics.primaries
+        if (ui.characteristics.agility) {
+          oppousedCheck.characteristic = strength.value > agility.value ? 'strength' : 'agility'
+        } else {
+          oppousedCheck.characteristic = strength.value > dexterity.value ? 'strength' : 'dexterity'
+        }
+      }
+      if (oppousedCheck?.characteristic === 'special') {
+
+        this.modalData.roll.value = oppousedCheck.specialCharacteristic;
+
+      } else {
+        this.modalData.roll.value = actor.system.characteristics.primaries[oppousedCheck.characteristic].value;
+      }
     };
 
     return this.modalData;

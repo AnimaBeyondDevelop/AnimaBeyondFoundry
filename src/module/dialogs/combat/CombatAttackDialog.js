@@ -78,7 +78,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         specificAttack: {
           value: 'none',
           causeDamage: true,
-          characteristic: undefined,
+          specialCharacteristic: undefined,
           check: false,
           targeted: 'none',
           weakspot: false
@@ -395,6 +395,9 @@ export class CombatAttackDialog extends FormApplication {
               i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
             );
             return
+          }
+          if (unarmed || weapon.name === 'Desarmado') {
+            specificAttack.specialCharacteristic = undefined
           }
         }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
@@ -723,14 +726,7 @@ export class CombatAttackDialog extends FormApplication {
     const { weapons } = this.attackerActor.system.combat;
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);
-    const weaponSpecial = weaponSpecialCheck(weapon);
-    const attackerStrength =
-      this.attackerActor.system.characteristics.primaries.strength.value;
-    const attackerDexterity =
-      this.attackerActor.system.characteristics.primaries.dexterity.value;
-    combat.specificAttack.characteristic = weaponSpecial
-      ? weaponSpecial
-      : Math.max(attackerStrength, attackerDexterity);
+    combat.specificAttack.specialCharacteristic = weaponSpecialCheck(weapon);
     if (
       combat.specificAttack.value !== 'knockDown' &&
       combat.specificAttack.value !== 'immobilize'
@@ -748,7 +744,7 @@ export class CombatAttackDialog extends FormApplication {
     }
     combat.unarmed =
       weapons.length === 0 ||
-      (combat.specificAttack.value === 'immobilize' && !weaponSpecial);
+      (combat.specificAttack.value === 'immobilize' && !combat.specificAttack.specialCharacteristic);
 
     if (combat.unarmed) {
       const unarmedDamage =

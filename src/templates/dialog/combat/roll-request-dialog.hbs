@@ -4,7 +4,7 @@
   }}
     {{>
     "systems/animabf/templates/common/ui/group-header.hbs"
-      title=(localize 'macros.combat.dialog.rolling.title')
+      title=(localize (concat 'macros.combat.dialog.rolling.' this.roll.type '.title'))
     }}
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="roll-values"
@@ -16,8 +16,8 @@
               title=(localize 'macros.combat.dialog.noRoll.title')
               disabled=this.rollSent
               inputType="checkbox"
-              inputName="tokenDocument.withoutRoll"
-              inputValue=(is 'eq' this.tokenDocument.withoutRoll true)
+              inputName="withoutRoll"
+              inputValue=(is 'eq' this.withoutRoll true)
           }}
         </div>
         <div>
@@ -27,8 +27,8 @@
               title=(localize 'macros.combat.dialog.showRoll.title')
               disabled=this.rollSent
               inputType="checkbox"
-              inputName="tokenDocument.showRoll"
-              inputValue=(is 'eq' this.tokenDocument.showRoll true)
+              inputName="showRoll"
+              inputValue=(is 'eq' this.showRoll true)
             }}
           {{/if}}
         </div>
@@ -49,6 +49,72 @@
       inputName="roll.value"
       inputValue=this.roll.value
     }}
+
+    {{#if (is "eq" this.roll.type "resistance")}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        class="resistance"
+        title=(localize 'macros.combat.dialog.rolling.resistance.title')
+        disabled=this.rollSent
+        inputName='roll.resistance'
+        inputValue=this.roll.resistance
+      }}
+        {{#if this.ui.resistances.disease}}
+          <option {{#if (is "eq" this.roll.resistance "disease")}}selected{{/if}} value="disease">{{localize 'anima.ui.resistances.disease'}}</option>
+        {{/if}}
+        {{#if this.ui.resistances.magic}}
+          <option {{#if (is "eq" this.roll.resistance "magic")}}selected{{/if}} value="magic">{{localize 'anima.ui.resistances.magic'}}</option>
+        {{/if}}
+        {{#if this.ui.resistances.physical}}
+          <option {{#if (is "eq" this.roll.resistance "physical")}}selected{{/if}} value="physical">{{localize 'anima.ui.resistances.physical'}}</option>
+        {{/if}}
+        {{#if this.ui.resistances.poison}}
+          <option {{#if (is "eq" this.roll.resistance "poison")}}selected{{/if}} value="poison">{{localize 'anima.ui.resistances.poison'}}</option>
+        {{/if}}
+        {{#if this.ui.resistances.psychic}}
+          <option {{#if (is "eq" this.roll.resistance "psychic")}}selected{{/if}} value="psychic">{{localize 'anima.ui.resistances.psychic'}}</option>
+        {{/if}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/if}}
+
+    {{#if (is "eq" this.roll.type "oppousedCheck")}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        class="oppoused-check-characteristic"
+        title=(localize 'macros.combat.dialog.oppousedCheck.characteristic.title')
+        disabled=this.rollSent
+        inputName='oppousedCheck.characteristic'
+        inputValue=this.oppousedCheck.characteristic
+      }}
+        {{#if this.ui.characteristics.special}}
+          <option {{#if (is "eq" this.oppousedCheck.characteristic "special")}}selected{{/if}} value="special">{{localize 'macros.combat.dialog.oppousedCheck.characteristic.special.title'}}</option>
+        {{/if}}
+        {{#if this.ui.characteristics.strength}}
+          <option {{#if (is "eq" this.oppousedCheck.characteristic "strength")}}selected{{/if}} value="strength">{{localize 'macros.combat.dialog.oppousedCheck.characteristic.strength.title'}}</option>
+        {{/if}}
+        {{#if this.ui.characteristics.agility}}
+          <option {{#if (is "eq" this.oppousedCheck.characteristic "agility")}}selected{{/if}} value="agility">{{localize 'macros.combat.dialog.oppousedCheck.characteristic.agility.title'}}</option>
+        {{/if}}
+        {{#if this.ui.characteristics.dexterity}}
+          <option {{#if (is "eq" this.oppousedCheck.characteristic "dexterity")}}selected{{/if}} value="dexterity">{{localize 'macros.combat.dialog.oppousedCheck.characteristic.dexterity.title'}}</option>
+        {{/if}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+      {{#if this.ui.hasFatiguePoints}}
+        {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+          title=(localize 'macros.combat.dialog.fatigue.title')
+          disabled=this.rollSent
+          inputName="roll.fatigueUsed"
+          inputValue=this.roll.fatigueUsed
+        }}
+          <option {{#if (is "eq" 0 this.roll.fatigueUsed)}}selected{{/if}} value='0'>0</option>
+
+        {{#iterateNumber this.actor.system.characteristics.secondaries.fatigue.value}}
+          <option {{#if (is "eq" (math this "+" 1) ../this.roll.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+        {{/iterateNumber}}
+        {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+        {{else}}
+        <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
+      {{/if}}
+    {{/if}}
 
     {{#if this.rollSent}}
       <div class='roll-sent'>
