@@ -66,6 +66,18 @@
 </div>
 {{/if}}
 
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
+      inputType="checkbox"
+      inputName="attacker.psychic.mentalPatternImbalance"
+      inputValue=(is 'eq' this.attacker.psychic.mentalPatternImbalance true)
+    }}
+  </div>
+</div>
+
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>
   <div>

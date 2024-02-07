@@ -71,7 +71,8 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       );
     } else if (tab === 'psychic') {
       const powerID = results['new.psychicShield.id'];
-      const eliminateFatigue = results['new.psychicShield.eliminateFatigue']; console.log(eliminateFatigue);
+      const eliminateFatigue = results['new.psychicShield.eliminateFatigue'];
+      const mentalPatternImbalance = results['new.psychicShield.mentalPatternImbalance'];
       const showRoll = true;
       let powerDifficulty = results['new.psychicShield.difficulty'];
       const power = actor.system.psychic.psychicPowers.find(i => i._id === powerID);
@@ -84,7 +85,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
         const psychicPotential = actor.system.psychic.psychicPotential.final.value;
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential} + ${mod}`,
-          { ...actor.system, power }
+          { ...actor.system, power, mentalPatternImbalance }
         );
         psychicPotentialRoll.roll();
         powerDifficulty = psychicPotentialRoll.total;

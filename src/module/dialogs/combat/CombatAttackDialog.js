@@ -129,6 +129,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         powerUsed: undefined,
         critic: NoneWeaponCritic.NONE,
         eliminateFatigue: false,
+        mentalPatternImbalance: false,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distanceCheck: false,
@@ -136,7 +137,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: true,
           type: 'shot'
         },
-        damageModifier: 0
+        damageModifier: 0,
       }
     },
     defender: {
@@ -579,6 +580,7 @@ export class CombatAttackDialog extends FormApplication {
         critic,
         eliminateFatigue,
         damageModifier,
+        mentalPatternImbalance,
         projectile,
         distanceCheck },
         distance,
@@ -615,7 +617,7 @@ export class CombatAttackDialog extends FormApplication {
 
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,
-          { ...this.attackerActor.system, power }
+          { ...this.attackerActor.system, power, mentalPatternImbalance }
         );
         psychicPotentialRoll.roll();
         if (this.modalData.attacker.showRoll) {
