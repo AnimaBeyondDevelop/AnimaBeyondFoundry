@@ -22,20 +22,21 @@
       <option value='280'>280</option>
       <option value='320'>320</option>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
-    {{#if (and (is 'gt' this.data.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.data.actor.system.psychic.psychicSettings.fatigueResistance false))}}
 
+    {{#if (and (is 'gt' this.data.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.data.actor.system.psychic.psychicSettings.fatigueResistance false))}}
       {{>
         'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
         title=(localize 'macros.combat.dialog.eliminateFatigue.title')
         inputType='checkbox'
         inputName='new.psychicShield.eliminateFatigue'
       }}
-
+    {{/if}}
+    
+    {{#unless (isArrayEmpty this.data.actor.system.psychic.mentalPatterns)}}
       {{>
         'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
         title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
         inputType='checkbox'
         inputName='new.psychicShield.mentalPatternImbalance'
       }}
-
-    {{/if}}
+    {{/unless}}

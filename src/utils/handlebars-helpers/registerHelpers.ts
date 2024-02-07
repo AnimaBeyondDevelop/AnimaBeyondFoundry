@@ -10,6 +10,7 @@ import { notHBSHelper } from './helpers/notHBSHelper';
 import { minNumberHBSHelper } from './helpers/minNumberHBSHelper';
 import { eachWhenHBSHelper } from './helpers/eachWhenHBSHelper';
 import { getNameActorUuid } from './helpers/getNameActorUuid';
+import { isArrayEmpty } from './helpers/isArrayEmpty';
 import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
@@ -30,6 +31,7 @@ export const registerHelpers = () => {
     minNumberHBSHelper,
     eachWhenHBSHelper,
     getNameActorUuid,
+    isArrayEmpty,
     logHBSHelper,
     calculateLanguagesHBSHelper,
     calculateLevelsHBSHelper
