@@ -2,13 +2,21 @@
  * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
  * @returns {number}
  */
-export const calculateSecondaryStealth = data =>
-  data.secondaries.subterfuge.stealth.base.value +
-  data.general.modifiers.allActions.final.value +
-  data.general.modifiers.physicalActions.final.value +
-  Math.min(
-    Math.ceil((data.general.modifiers.naturalPenalty.final.value - data.general.modifiers.naturalPenalty.reduction.value)/2),
-    data.general.modifiers.naturalPenalty.final.value
+export const calculateSecondaryStealth = data => {
+  const { modifiers } = data.general;
+
+  const stealthNaturalPenaltyReduction = Math.min(
+    modifiers.naturalPenalty.reduction.value,
+    Math.floor(-modifiers.naturalPenalty.unreduced.value / 2)
   );
-  // Math.min(data.general.modifiers.naturalPenalty.final.value - data.general.modifiers.naturalPenalty.reduction.value,
-  // Math.floor(data.general.modifiers.naturalPenalty.final.value / 2));
+  const unreducedNaturalPenalty =
+    modifiers.naturalPenalty.final.value - modifiers.naturalPenalty.reduction.value;
+  const stealthNaturalPenalty = unreducedNaturalPenalty + stealthNaturalPenaltyReduction;
+
+  return (
+    data.secondaries.subterfuge.stealth.base.value +
+    modifiers.allActions.final.value +
+    modifiers.physicalActions.final.value +
+    stealthNaturalPenalty
+  );
+};
