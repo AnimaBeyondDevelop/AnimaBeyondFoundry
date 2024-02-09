@@ -21,6 +21,11 @@ const DEFAULT_GM_MACROS: DefaultMacroConfig[] = [
     macroSelectorId: '#custom-hotbar-send-attack',
     hotkey: e => e.ctrlKey && e.key === '2',
     fn: () => window.Websocket.sendAttack?.()
+  },
+  {
+    macroSelectorId: '#custom-hotbar-mystic-act',
+    hotkey: e => e.ctrlKey && e.key === '3',
+    fn: () => ABFMacros.mysticAct()
   }
 ];
 

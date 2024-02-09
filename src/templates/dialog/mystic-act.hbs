@@ -1,0 +1,76 @@
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="mystic-act"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.dialog.mystic-act.title'))
+    }}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="mystic-act"
+    }}
+      <div class='columns'>
+        <div>
+          {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.noRoll.title')
+              disabled=true
+              inputType="checkbox"
+              inputName="withoutRoll"
+              inputValue=(is 'eq' this.withoutRoll true)
+          }}
+        </div>
+        <div>
+          {{#if this.ui.isGM}}
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.combat.dialog.showRoll.title')
+              disabled=true
+              inputType="checkbox"
+              inputName="showRoll"
+              inputValue=(is 'eq' this.showRoll true)
+            }}
+          {{/if}}
+        </div>
+      </div>
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.modifier.title')
+      disabled=false
+      inputName="roll.modifier"
+      inputValue=this.roll.modifier
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize "macros.combat.dialog.rollValue.title")
+      disabled=true
+      inputName="roll.value"
+      inputValue=this.roll.value
+    }}
+
+    {{#if this.ui.hasFatiguePoints}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'macros.combat.dialog.fatigue.title')
+        disabled=this.rollSent
+        inputName="roll.fatigueUsed"
+        inputValue=this.roll.fatigueUsed
+      }}
+        <option {{#if (is "eq" 0 this.roll.fatigueUsed)}}selected{{/if}} value='0'>0</option>
+
+      {{#iterateNumber this.actor.system.characteristics.secondaries.fatigue.value}}
+        <option {{#if (is "eq" (math this "+" 1) ../this.roll.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+      {{/iterateNumber}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+      {{else}}
+      <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
+    {{/if}}
+
+    <button class='abf-button send-roll' data-type='roll'>
+      {{localize 'macros.combat.dialog.rollButton.title'}}
+    </button>
+
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>
