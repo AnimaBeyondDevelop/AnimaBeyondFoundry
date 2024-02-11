@@ -2,6 +2,8 @@
  * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const calculateFatigue = data => {
+  if (!data.automationOptions.calculateFatigueModifier.value) return 0;
+
   const currentFatigue = data.characteristics.secondaries.fatigue.value;
   const maxFatigue = data.characteristics.secondaries.fatigue.max;
 
