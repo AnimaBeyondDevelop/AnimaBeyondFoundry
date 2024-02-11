@@ -461,6 +461,8 @@
   "anima.ui.settings.advancedSettings.fumbles.title": "Fumble Range",
   "anima.ui.settings.advancedSettings.openRolls.title": "Open Roll Range",
   "anima.ui.settings.advancedSettings.title": "Advanced Settings",
+  "anima.ui.settings.automationOptions.title": "Automation options",
+  "anima.ui.settings.automationOptions.calculateFatigueModifier.title": "Calculate fatigue modifier",
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title": "Floor items in multiples of 5. Applies for damage",
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.title": "¿Floor calculated damage in multiples of 5?",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Inside managed combat system, the \"Show roll\" checkbox will be checked by default depending on this value",
