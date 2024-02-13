@@ -12,7 +12,7 @@
     "systems/animabf/templates/common/ui/group-header-title.hbs"
       title=(localize 'anima.ui.languageSection.title')
     }}
-    <input type='number' class='input' />
+    <input type='number' class='input' value='{{calculateLanguages system.characteristics.primaries.intelligence.value}}' disabled='true'/>
   {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="languages"
