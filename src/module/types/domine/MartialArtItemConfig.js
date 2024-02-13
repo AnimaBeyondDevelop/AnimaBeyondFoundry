@@ -12,7 +12,7 @@ export const MartialArtItemConfig = ABFItemConfigFactory({
     containerSelector: '#martial-arts-context-menu-container',
     rowSelector: '.martial-art-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

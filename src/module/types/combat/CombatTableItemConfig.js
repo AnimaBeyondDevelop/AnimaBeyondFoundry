@@ -12,7 +12,7 @@ export const CombatTableItemConfig = ABFItemConfigFactory({
     containerSelector: '#combat-tables-context-menu-container',
     rowSelector: '.combat-table-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

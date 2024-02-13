@@ -12,7 +12,7 @@ export const InventoryItemItemConfig = ABFItemConfigFactory({
     containerSelector: '#inventory-items-context-menu-container',
     rowSelector: '.inventory-item-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

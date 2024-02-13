@@ -12,7 +12,7 @@ export const MentalPatternItemConfig = ABFItemConfigFactory({
     containerSelector: '#mental-patterns-context-menu-container',
     rowSelector: '.mental-pattern-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

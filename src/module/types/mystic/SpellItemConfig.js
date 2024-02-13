@@ -24,7 +24,7 @@ export const SpellItemConfig = ABFItemConfigFactory({
     containerSelector: '#spells-context-menu-container',
     rowSelector: '.spell-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
@@ -78,7 +78,7 @@ export const SpellItemConfig = ABFItemConfigFactory({
 
     await actor.createItem(itemCreateData);
   },
-  prepareItem: async (item) => {
+  prepareItem: async item => {
     item.system.enrichedDescription = await TextEditor.enrichHTML(
       item.system.description?.value ?? '',
       {

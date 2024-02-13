@@ -12,7 +12,7 @@ export const SummonItemConfig = ABFItemConfigFactory({
     containerSelector: '#summons-context-menu-container',
     rowSelector: '.summon-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

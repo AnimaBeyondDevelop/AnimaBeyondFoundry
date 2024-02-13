@@ -12,7 +12,7 @@ export const DisadvantageItemConfig = ABFItemConfigFactory({
     containerSelector: '#disadvantages-context-menu-container',
     rowSelector: '.disadvantage-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
