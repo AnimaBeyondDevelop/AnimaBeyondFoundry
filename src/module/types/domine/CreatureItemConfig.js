@@ -12,33 +12,33 @@ export const CreatureItemConfig = ABFItemConfigFactory({
     containerSelector: '#creatures-context-menu-container',
     rowSelector: '.creature-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
       content: i18n.localize('dialogs.items.creature.content')
     });
 
-      await actor.createInnerItem({
-        name,
-        type: ABFItems.CREATURE,
-        system: {
-          earth: {
-            value: false
-          },
-          fire: {
-            value: false
-          },
-          metal: {
-            value: false
-          },
-          water: {
-            value: false
-          },
-          wood: {
-            value: false
-          }
+    await actor.createInnerItem({
+      name,
+      type: ABFItems.CREATURE,
+      system: {
+        earth: {
+          value: false
+        },
+        fire: {
+          value: false
+        },
+        metal: {
+          value: false
+        },
+        water: {
+          value: false
+        },
+        wood: {
+          value: false
         }
-      });
+      }
+    });
   }
 });

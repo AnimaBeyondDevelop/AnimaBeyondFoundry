@@ -12,7 +12,7 @@ export const CombatSpecialSkillItemConfig = ABFItemConfigFactory({
     containerSelector: '#combat-special-skills-context-menu-container',
     rowSelector: '.combat-special-skill-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

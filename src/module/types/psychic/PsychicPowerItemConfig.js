@@ -60,7 +60,7 @@ export const PsychicPowerItemConfig = ABFItemConfigFactory({
       system: INITIAL_PSYCHIC_POWER_DATA
     });
   },
-  prepareItem: async (psychicPower) => {
+  prepareItem: async psychicPower => {
     psychicPower.system.enrichedDescription = await TextEditor.enrichHTML(
       psychicPower.system.description?.value ?? '',
       { async: true }

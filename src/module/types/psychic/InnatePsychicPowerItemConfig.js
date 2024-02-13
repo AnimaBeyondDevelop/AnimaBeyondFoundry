@@ -12,7 +12,7 @@ export const InnatePsychicPowerItemConfig = ABFItemConfigFactory({
     containerSelector: '#innate-psychic-powers-context-menu-container',
     rowSelector: '.innate-psychic-power-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

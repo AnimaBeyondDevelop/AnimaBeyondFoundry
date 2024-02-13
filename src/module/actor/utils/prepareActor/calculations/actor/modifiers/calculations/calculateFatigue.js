@@ -1,6 +1,9 @@
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
+/**
+ * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const calculateFatigue = data => {
+  if (!data.automationOptions.calculateFatigueModifier.value) return 0;
 
-export const calculateFatigue = (data: ABFActorDataSourceData) => {
   const currentFatigue = data.characteristics.secondaries.fatigue.value;
   const maxFatigue = data.characteristics.secondaries.fatigue.max;
 

@@ -43,6 +43,7 @@ export const INITIAL_ARMOR_DATA = {
   wearArmorRequirement: derivedFieldInitialData,
   movementRestriction: derivedFieldInitialData,
   naturalPenalty: derivedFieldInitialData,
+  perceptionPenalty: derivedFieldInitialData,
   isEnchanted: { value: false },
   type: { value: ArmorType.SOFT },
   localization: { value: ArmorLocation.BREASTPLATE },
@@ -62,7 +63,7 @@ export const ArmorItemConfig = ABFItemConfigFactory({
     containerSelector: '#armors-context-menu-container',
     rowSelector: '.armor-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
