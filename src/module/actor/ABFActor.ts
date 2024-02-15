@@ -519,6 +519,85 @@ export class ABFActor extends Actor {
     } else return false;
   };
 
+  async mysticAct(act: number, spellID?: string, spellGrade?: string, preapredSpellId?: string) {
+    const { zeon, spells, preparedSpells } = this.system.mystic;
+    let spareAct = 0;
+    let accumulatedFullZeon = 0
+
+    if (spellID) {
+      const spell = spells.find(w => w._id === spellID);
+      const zeonCost = spell.system.grades[spellGrade || 'base'].zeon.value
+      spareAct = act - zeonCost
+      this.createInnerItem({
+        type: ABFItems.PREPARED_SPELL,
+        name: spell.name,
+        system: {
+          grade: { value: spellGrade },
+          zeonAcc: { value: act, max: zeonCost },
+          prepared: { value: spareAct >= 0 },
+          via: { value: spell.system.via.value }
+        }
+      })
+    } else if (preapredSpellId) {
+      const preapredSpell = preparedSpells.find(w => w._id === preapredSpellId);
+
+      spareAct = preapredSpell.system.zeonAcc.value + act - preapredSpell.system.zeonAcc.max;
+
+      this.updateInnerItem({
+        type: ABFItems.PREPARED_SPELL,
+        id: preapredSpellId,
+        system: {
+          zeonAcc: { value: preapredSpell.system.zeonAcc.value + act },
+          prepared: { value: spareAct >= 0 }
+        }
+      })
+    } else { accumulatedFullZeon = act }
+
+    const finalAct = spareAct >= 0 ? act - spareAct : act;
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: { value: (zeon.accumulated.value + accumulatedFullZeon) }, value: (zeon.value - finalAct) }
+        }
+      }
+    })
+    executeMacro('ACT', { thisActor: this });
+    return spareAct;
+  }
+
+  async releaseAct(all?: boolean) {
+    const { zeon, preparedSpells } = this.system.mystic;
+
+    let returnedZeon = zeon.accumulated.value
+    let ids:string[] = [];
+
+    for (const prepareSpell of preparedSpells) {
+      if (all) {
+        returnedZeon += prepareSpell.system.zeonAcc.value
+      } else if (!prepareSpell.system.prepared.value) {
+        returnedZeon += prepareSpell.system.zeonAcc.value;
+        ids.push(prepareSpell._id);
+      }
+    }
+
+    returnedZeon = Math.max(returnedZeon - 10, 0)
+
+    if (all) {
+      this.deleteInnerItem(ABFItems.PREPARED_SPELL, undefined, all)
+    } else {
+      this.deleteInnerItem(ABFItems.PREPARED_SPELL, ids)
+    }
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: { value: 0 }, value: (zeon.value + returnedZeon) }
+        }
+      }
+    })
+    executeMacro('ACT', { thisActor: this, releaseAct: true });
+  }
+
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
    * 
@@ -591,13 +670,13 @@ export class ABFActor extends Actor {
    * @param spellGrade - The grade of the spell to be deleted.
    * @returns None. The method updates the `mystic.preparedSpells` array of the actor.
    */
-  deletePreparedSpell(spellName: string, spellGrade: string) {
+  async deletePreparedSpell(spellName: string, spellGrade: string) {
     let preparedSpellId = this.system.mystic.preparedSpells.find(
       (ps: any) =>
         ps.name === spellName &&
         ps.system.grade.value === spellGrade &&
         ps.system.prepared.value === true
-    )._id;
+    )?._id;
     if (preparedSpellId !== undefined) {
       let items = this.getPreparedSpells();
       items = items.filter(item => item._id !== preparedSpellId);
@@ -683,6 +762,33 @@ export class ABFActor extends Actor {
     if (item) {
       await item.delete();
     }
+  }
+
+  async deleteInnerItem(type: string, ids?: string[], deleteAll?: boolean) {
+    if (!type) {
+      return
+    };
+    const configuration = ALL_ITEM_CONFIGURATIONS[type];
+    const items = this.getInnerItems(type);
+
+    if (deleteAll) {
+      const dataToUpdate = {
+        system: getUpdateObjectFromPath([], configuration.fieldPath)
+      };
+      await this.update(dataToUpdate);
+
+    } else if (ids !== undefined) {
+
+      await this.update({
+        system: getUpdateObjectFromPath(
+          [
+            ...items.filter(i => !ids.includes(i._id))
+          ],
+          configuration.fieldPath
+        )
+      });
+    }
+    return
   }
 
   public async updateItem({

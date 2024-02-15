@@ -75,7 +75,7 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
     for (let preparedSpell of mystic.preparedSpells) {
       let prepared = preparedSpell.system.prepared.value;
       if (prepared) {
-        preparedSpell.system.zeonAcc.value = 0;
+        preparedSpell.system.zeonAcc.value = preparedSpell.system.zeonAcc.max;
       }
     }
   }
