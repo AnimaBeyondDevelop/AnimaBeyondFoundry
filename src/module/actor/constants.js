@@ -1,4 +1,3 @@
-/** @type {import("../types/Actor").ABFActorDataSourceData} */
 export const INITIAL_ACTOR_DATA = {
   version: 1,
   ui: {
