@@ -24,6 +24,12 @@
         <img src='/systems/animabf/assets/icons/game-icons.net/ffffff/lorc/sword-clash.svg' />
         <p class='shortcut'>ctrl + 1</p>
       </div>
+      {{#if (is 'gt' this.maxZeon 0)}}
+        <div title='{{localize 'customHotbar.mysticAct'}}' id='custom-hotbar-mystic-act' class='custom-macro'>
+          <img src='/icons/svg/aura.svg' />
+          <p class='shortcut'>ctrl + 2</p>
+        </div>
+      {{/if}}
     </ol>
   {{/if}}
 </nav>
