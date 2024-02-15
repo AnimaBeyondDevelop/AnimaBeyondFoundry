@@ -1,5 +1,6 @@
 import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 import { SpellMaintenanceDataSource } from '../../../../../../types/Items';
+import { roundTo5Multiples } from '../../../../../../combat/utils/roundTo5Multiples';
 import { calculateInnateMagic } from './calculations/calculateInnateMagic';
 
 export const mutateMysticData = (data: ABFActorDataSourceData) => {
@@ -9,13 +10,13 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   const { mystic } = data;
 
   mystic.act.main.final.value = Math.max(
-    mystic.act.main.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
+    mystic.act.main.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
     0
   );
   if (mystic.act.via.length !== 0) {
     for (const actVia of mystic.act.via) {
       actVia.system.final.value = Math.max(
-        actVia.system.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
+        actVia.system.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
         0
       );
     }
