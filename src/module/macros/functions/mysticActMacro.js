@@ -107,6 +107,18 @@ export class MysticActDialog extends FormApplication {
             const { act } = this.modalData;
             await this.accumuateZeon(act.partial)
         });
+
+        html.find('.release-act').click(async () => {
+            const { actor } = this.modalData;
+            await actor.releaseAct(true);
+            this.close();
+        });
+
+        html.find('.withstand-pain').click(async () => {
+            const { actor } = this.modalData;
+            await actor.zeonWithstandPain();
+            this.close();
+        });
     }
     async accumuateZeon(usedAct) {
         const {

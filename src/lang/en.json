@@ -551,6 +551,7 @@
   "anima.ui.tabs.status": "Status",
   "anima.ui.tabs.zeon": "Pure Zeon",
   "anima.ui.tabs.preparedSpells": "Prepared Spell",
+  "anima.ui.tabs.releaseAct": "Release",
   "anima.ui.titleSection.title": "Titles",
   "anima.ui.weapons.different.title": "Different / Unarmed",
   "anima.ui.weapons.known.title": "Known",
@@ -858,9 +859,14 @@
   "macros.mysticAct.dialog.button.fullAct.title": "Full ACT",
   "macros.mysticAct.dialog.button.partialAct.title": "Partial ACT",
   "macros.mysticAct.dialog.button.spareAct.title": "Spare ACT",
+  "macros.mysticAct.dialog.button.releaseAct.title": "Release Zeon",
+  "macros.mysticAct.dialog.button.withstandPain.title": "Withstand Pain",
   "macros.mysticAct.dialog.spareActConfirm.body.title": "Do you want to make use of the Spare ACT?",
   "macros.mysticAct.dialog.spareActConfirm.title": "You still have {spareAct} ACT",
   "macros.mysticAct.dialog.message.title": "Accumulate <b>{act}</b> Zeon",
   "macros.dialog.error.multipleSelectedToken.title": "Only can select one token",
-  "macros.dialog.error.noSelectedToken.title": "You don't have selected a token"
+  "macros.dialog.error.noSelectedToken.title": "You don't have selected a token",
+  "macros.dialog.zeonWithstandPain.succeed.title": "Maintains concentration",
+  "macros.dialog.zeonWithstandPain.failed.title": "Lose concentration",
+  "macros.dialog.zeonWithstandPain.criticalFail.title": "Lose accumulated Zeon points"
 }

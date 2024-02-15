@@ -11,8 +11,9 @@
     }}
 
       <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="zeon">{{localize "anima.ui.tabs.zeon"}}</a>
-        <a class="item" data-tab="preparedSpells">{{localize "anima.ui.tabs.preparedSpells"}}</a>
+        <a class="item zeon" data-tab="zeon">{{localize "anima.ui.tabs.zeon"}}</a>
+        <a class="item preparedSpells" data-tab="preparedSpells">{{localize "anima.ui.tabs.preparedSpells"}}</a>
+       {{#unless (is 'gt' this.act.spareAct 0)}} <a class="item release" data-tab="release">{{localize "anima.ui.tabs.releaseAct"}}</a>{{/unless}}
       </nav>
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -95,8 +96,57 @@
           {{/if}}
 
         </div>
-      </section>
 
+        <div class="tab realease-act" data-group="primary" data-tab="release">
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
+            disabled=true
+            inputName="zeon.accumulated"
+            inputValue=this.zeon.accumulated
+          }}
+          {{#if (is 'gt' this.actor.system.mystic.preparedSpells.length 0)}}<hr class='hr'/>{{/if}}
+          
+          {{#each this.actor.system.mystic.preparedSpells as |preparedSpell|}}
+            <div data-item-id='{{this._id}}' class='prepared-spell-row'>
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="name"
+                title=(localize "anima.ui.mystic.preparedSpells.name.title")
+                hideTitle=(is "gt" @index 0)
+                disabled=true
+                inputType="text"
+                inputName=""
+                inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="zeonAcc"
+                title=(localize "anima.ui.mystic.preparedSpells.zeonAcc.title")
+                hideTitle=(is "gt" @index 0)
+                disabled=true
+                inputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.value")
+                inputValue=this.system.zeonAcc.value
+                hasSecondaryInput=true
+                disableSecondaryInput=true
+                secondaryInputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.max")
+                secondaryInputValue=this.system.zeonAcc.max
+              }}
+            </div>
+          {{/each}}
+  
+        <div class='act-buttons'>
+          <button class='abf-button release-act' data-type='act'>
+            {{localize 'macros.mysticAct.dialog.button.releaseAct.title'}}
+          </button>
+          <button class='abf-button withstand-pain' data-type='act'>
+            {{localize 'macros.mysticAct.dialog.button.withstandPain.title'}}
+          </button>
+        </div>
+
+        </div>
+      </section>
+{{#unless (is 'eq' this.ui.activeTab 'release')}}
   {{#unless (is 'gt' this.act.spareAct 0)}}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -135,6 +185,7 @@
       </button>
     </div>
   {{/unless}}
+{{/unless}}
 
     {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}

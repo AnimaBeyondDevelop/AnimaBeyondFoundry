@@ -21,6 +21,7 @@ import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../utils/dialogs/openComplexInputDialog';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -89,7 +90,7 @@ export class ABFActor extends Actor {
 
   async withstandPain(sendToChat = true) {
     const { pain } = this.system.general.modifiers;
-    const withstandPainRoll = await this.rollAbility('withstandPain', sendToChat)
+    const withstandPainRoll = await this.rollAbility('withstandPain', 0, sendToChat)
     const { inhuman, zen } = this.system.general.settings;
     const withstandPainTotal = difficultyAchieved(withstandPainRoll, 0, inhuman, zen)
     const withstandPain = withstandPainBonus(withstandPainTotal)
@@ -141,7 +142,7 @@ export class ABFActor extends Actor {
    * 
    * This code creates a new instance of the ABFActor class and calls the `rollAbility` method with the ability name 'agility' and the `sendToChat` parameter set to true. The method will calculate the ability value, prompt the user for a modifier, roll the dice, and display the result in the chat.
    */
-  async rollAbility(ability: string, sendToChat = true) {
+  async rollAbility(ability: string, bonus = 0, sendToChat = true) {
     const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
     const { secondaries } = this.system;
     let groupPath = '';
@@ -158,7 +159,7 @@ export class ABFActor extends Actor {
     const abilityValue = this.system.secondaries[groupPath][ability].final.value;
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog(name);
-    let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
+    let formula = `1d100xa + ${abilityValue} + ${mod + bonus ?? 0}`;
     if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
     const roll = new ABFFoundryRoll(formula, this.system);
     roll.roll();
@@ -565,22 +566,23 @@ export class ABFActor extends Actor {
     return spareAct;
   }
 
-  async releaseAct(all?: boolean) {
+  async releaseAct(all?: boolean, noReturnedZeon?: boolean) {
     const { zeon, preparedSpells } = this.system.mystic;
 
-    let returnedZeon = zeon.accumulated.value
-    let ids:string[] = [];
+    let returnedZeon = Math.max(zeon.accumulated.value - 10, 0)
+
+    let ids: string[] = [];
 
     for (const prepareSpell of preparedSpells) {
       if (all) {
-        returnedZeon += prepareSpell.system.zeonAcc.value
+        returnedZeon += Math.max(prepareSpell.system.zeonAcc.value - 10, 0);
       } else if (!prepareSpell.system.prepared.value) {
-        returnedZeon += prepareSpell.system.zeonAcc.value;
+        returnedZeon += Math.max(prepareSpell.system.zeonAcc.value - 10, 0);
         ids.push(prepareSpell._id);
       }
     }
 
-    returnedZeon = Math.max(returnedZeon - 10, 0)
+    returnedZeon = noReturnedZeon ? 0 : returnedZeon
 
     if (all) {
       this.deleteInnerItem(ABFItems.PREPARED_SPELL, undefined, all)
@@ -596,6 +598,35 @@ export class ABFActor extends Actor {
       }
     })
     executeMacro('ACT', { thisActor: this, releaseAct: true });
+  }
+
+  async zeonWithstandPain(sendToChat = true) {
+    const { i18n } = game;
+    const { preparedSpells } = this.system.mystic;
+    const bonus = preparedSpells.length > 0 ? 40 : 0;
+    const withstandPainRoll = await this.rollAbility('withstandPain', bonus, sendToChat)
+    const damage: any = this.getFlag('animabf', 'lastDamageApplied') ?? 0
+
+    let flavor = i18n.format('macros.dialog.zeonWithstandPain.succeed.title')
+
+    if (withstandPainRoll !== undefined) {
+      if (withstandPainRoll < damage) {
+        this.releaseAct(true, true)
+        flavor = i18n.format('macros.dialog.zeonWithstandPain.criticalFail.title');
+        executeMacro('ACT', { thisActor: this, loseZeon: true });
+      } else if (withstandPainRoll < damage * 2) {
+        this.releaseAct(true)
+        flavor = i18n.format('macros.dialog.zeonWithstandPain.failed.title');
+        executeMacro('ACT', { thisActor: this, releaseAct: true });
+      }
+    }
+    if (sendToChat) {
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor
+      });
+    }
+    return
   }
 
   /**
@@ -705,6 +736,7 @@ export class ABFActor extends Actor {
         }
       }
     });
+    this.setFlag('animabf', 'lastDamageApplied', damage);
   }
 
   public async createItem({
