@@ -15,7 +15,10 @@ export const INITIAL_ACTOR_DATA = {
     }
   },
   automationOptions: {
-    calculateFatigueModifier: { value: true }
+    calculateFatigueModifier: true,
+    calculatePresence: true,
+    calculateResistances: true,
+    calculateSecondaries: true
   },
   general: {
     settings: {
@@ -107,7 +110,15 @@ export const INITIAL_ACTOR_DATA = {
       }
     },
     presence: {
-      value: 0
+      base: {
+        value: 0
+      },
+      special: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     aspect: {
       hair: {
@@ -273,12 +284,18 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
         },
         disease: {
           base: {
+            value: 0
+          },
+          special: {
             value: 0
           },
           final: {
@@ -289,6 +306,9 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
@@ -297,12 +317,18 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
         },
         psychic: {
           base: {
+            value: 0
+          },
+          special: {
             value: 0
           },
           final: {

@@ -9,7 +9,10 @@
         "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false } }
       },
       "automationOptions": {
-        "calculateFatigueModifier": { "value": true}
+        "calculateFatigueModifier": true,
+        "calculatePresence":  true,
+        "calculateResistances":  true,
+        "calculateSecondaries": true
       },
       "general": {
         "settings": {
@@ -32,7 +35,7 @@
           "extraDamage": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "presence": { "value": 0 },
+        "presence": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
         "aspect": {
           "hair": { "value": "" },
           "eyes": { "value": "" },
@@ -82,11 +85,11 @@
           "movementType": { "mod": { "value": 0 }, "final": { "value": 0 } },
           "movement": { "maximum": { "value": 0 }, "running": { "value": 0 } },
           "resistances": {
-            "physical": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "disease": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "poison": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "magic": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "psychic": { "base": { "value": 0 }, "final": { "value": 0 } }
+            "physical": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+            "disease": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+            "poison": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+            "magic": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+            "psychic": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } }
           }
         }
       },
