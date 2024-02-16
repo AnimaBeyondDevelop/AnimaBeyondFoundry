@@ -6,7 +6,7 @@ import {
 } from '../../../actor/utils/prepareItems/constants';
 import { normalizeItem } from '../../../actor/utils/prepareActor/utils/normalizeItem';
 
-export const prepareItem = async (item) => {
+export const prepareItem = async item => {
   const configuration = ITEM_CONFIGURATIONS[item.type];
 
   if (configuration?.defaultValue) {

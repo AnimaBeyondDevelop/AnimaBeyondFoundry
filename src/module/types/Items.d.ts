@@ -5,6 +5,7 @@ import ABFItem from '../items/ABFItem';
 import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
+import { INITIAL_ARMOR_DATA } from './combat/ArmorItemConfig';
 import { INITIAL_SUPERNATURAL_SHIELD_DATA } from './combat/SupernaturalShieldItemConfig';
 import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
 import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
@@ -205,6 +206,12 @@ export type DerivedField = {
   final: { value: number };
 };
 
+export type SecondaryData = {
+  base: { value: number };
+  final: { value: number };
+  attribute: { value: Attribute };
+};
+
 export type SpecialField = {
   special: { value: number };
   final: { value: number };
@@ -225,25 +232,8 @@ export type AmmoDataSource = ABFItemBaseDataSource<AmmoItemData>;
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 export type AmmoItemConfig = ABFItemConfig<AmmoItemData>;
 
-export type ArmorItemData = {
-  cut: DerivedField;
-  impact: DerivedField;
-  thrust: DerivedField;
-  heat: DerivedField;
-  electricity: DerivedField;
-  cold: DerivedField;
-  energy: DerivedField;
-  integrity: DerivedField;
-  presence: DerivedField;
-  wearArmorRequirement: DerivedField;
-  movementRestriction: DerivedField;
-  naturalPenalty: DerivedField;
-  isEnchanted: { value: boolean };
-  type: { value: ArmorType };
-  localization: { value: ArmorLocation };
-  quality: { value: number };
-  equipped: { value: boolean };
-};
+export type ArmorItemData = typeof INITIAL_ARMOR_DATA;
+
 export type ArmorDataSource = ABFItemBaseDataSource<ArmorItemData>;
 export type ArmorChanges = ItemChanges<ArmorItemData>;
 export type ArmorItemConfig = ABFItemConfig<ArmorItemData>;
