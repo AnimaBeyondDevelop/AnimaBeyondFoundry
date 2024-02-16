@@ -219,6 +219,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         }
@@ -894,6 +897,9 @@ export const INITIAL_ACTOR_DATA = {
       base: {
         value: 0
       },
+      special: {
+        value: 0
+      },
       final: {
         value: 0
       }
@@ -902,12 +908,18 @@ export const INITIAL_ACTOR_DATA = {
       base: {
         value: 0
       },
+      special: {
+        value: 0
+      },
       final: {
         value: 0
       }
     },
     dodge: {
       base: {
+        value: 0
+      },
+      special: {
         value: 0
       },
       final: {
@@ -1001,12 +1013,18 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
         },
         defensive: {
           base: {
+            value: 0
+          },
+          special: {
             value: 0
           },
           final: {
@@ -1247,12 +1265,18 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
         },
         defensive: {
           base: {
+            value: 0
+          },
+          special: {
             value: 0
           },
           final: {

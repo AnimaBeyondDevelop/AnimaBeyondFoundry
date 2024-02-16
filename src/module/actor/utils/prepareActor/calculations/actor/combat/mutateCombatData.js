@@ -1,16 +1,24 @@
+/**
+ * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
 export const mutateCombatData = data => {
-  data.combat.attack.final.value =
-    data.combat.attack.base.value +
-    data.general.modifiers.allActions.final.value +
-    data.general.modifiers.physicalActions.final.value;
+  const { combat: { attack, block, dodge }, general: { modifiers } } = data;
 
-  data.combat.block.final.value =
-    data.combat.block.base.value +
-    data.general.modifiers.allActions.final.value +
-    data.general.modifiers.physicalActions.final.value;
+  attack.final.value =
+    attack.base.value +
+    attack.special.value +
+    modifiers.allActions.final.value +
+    modifiers.physicalActions.final.value;
 
-  data.combat.dodge.final.value =
-    data.combat.dodge.base.value +
-    data.general.modifiers.allActions.final.value +
-    data.general.modifiers.physicalActions.final.value;
+  block.final.value =
+    block.base.value +
+    block.special.value +
+    modifiers.allActions.final.value +
+    modifiers.physicalActions.final.value;
+
+  dodge.final.value =
+    dodge.base.value +
+    dodge.special.value +
+    modifiers.allActions.final.value +
+    modifiers.physicalActions.final.value;
 };
