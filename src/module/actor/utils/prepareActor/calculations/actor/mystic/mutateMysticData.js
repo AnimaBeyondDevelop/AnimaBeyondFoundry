@@ -1,21 +1,23 @@
-import { ABFActorDataSourceData } from '../../../../../../types/Actor';
-import { SpellMaintenanceDataSource } from '../../../../../../types/Items';
+import { roundTo5Multiples } from '../../../../../../combat/utils/roundTo5Multiples';
 import { calculateInnateMagic } from './calculations/calculateInnateMagic';
 
-export const mutateMysticData = (data: ABFActorDataSourceData) => {
+/**
+ * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const mutateMysticData = data => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
   const magicProjectionMod = data.general.modifiers.magicProjectionMod.value;
 
   const { mystic } = data;
 
   mystic.act.main.final.value = Math.max(
-    mystic.act.main.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
+    mystic.act.main.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
     0
   );
   if (mystic.act.via.length !== 0) {
     for (const actVia of mystic.act.via) {
       actVia.system.final.value = Math.max(
-        actVia.system.base.value + Math.min(0, Math.floor(allActionsPenalty / 2)),
+        actVia.system.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
         0
       );
     }
@@ -53,7 +55,7 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
   );
 
   const dailyZeon = mystic.spellMaintenances.reduce(
-    (acc: number, currentValue: SpellMaintenanceDataSource) =>
+    (acc, currentValue) =>
       acc + currentValue.system.cost.value,
     0
   );
@@ -75,7 +77,7 @@ export const mutateMysticData = (data: ABFActorDataSourceData) => {
     for (let preparedSpell of mystic.preparedSpells) {
       let prepared = preparedSpell.system.prepared.value;
       if (prepared) {
-        preparedSpell.system.zeonAcc.value = 0;
+        preparedSpell.system.zeonAcc.value = preparedSpell.system.zeonAcc.max;
       }
     }
   }
