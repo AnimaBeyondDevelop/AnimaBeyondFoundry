@@ -41,12 +41,14 @@ export const mutateMysticData = data => {
   );
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
     mystic.magicProjection.imbalance.offensive.base.value +
+    mystic.magicProjection.imbalance.offensive.special.value +
     allActionsPenalty,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
     mystic.magicProjection.imbalance.defensive.base.value +
+    mystic.magicProjection.imbalance.defensive.special.value +
     allActionsPenalty,
     0
   );
