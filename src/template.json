@@ -71,7 +71,7 @@
         },
         "secondaries": {
           "lifePoints": { "value": 0, "max": 0 },
-          "initiative": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "initiative": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
           "fatigue": { "value": 0, "max": 0 },
           "regenerationType": { "mod": { "value": 0 }, "final": { "value": 0 } },
           "regeneration": {
@@ -159,9 +159,9 @@
         "secondarySpecialSkills": []
       },
       "combat": {
-        "attack": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "block": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "dodge": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "attack": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+        "block": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+        "dodge": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
         "wearArmor": { "value": 0 },
         "totalArmor": {
           "at": {
@@ -197,8 +197,8 @@
           "base": { "value": 0 },
           "final": { "value": 0 },
           "imbalance": {
-            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+            "offensive": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+            "defensive": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } }
           }
         },
         "magicLevel": {
@@ -272,8 +272,8 @@
           "base": { "value": 0 },
           "final": { "value": 0 },
           "imbalance": {
-            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+            "offensive": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+            "defensive": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } }
           }
         },
         "psychicPoints": { "value": 0, "max": 0 },
