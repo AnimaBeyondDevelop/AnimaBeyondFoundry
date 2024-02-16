@@ -21,3 +21,4 @@ As we said before, we love community support, so if you have some system improve
 ## Develop instructions
 
 - [Spanish](docs/develop/es/es.md)
+- [French](docs/develop/fr/fr.md)

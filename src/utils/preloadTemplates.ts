@@ -138,6 +138,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/psychic/parts/psychic-powers.hbs',
     'systems/animabf/templates/actor/parts/settings/settings.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs',
+    'systems/animabf/templates/actor/parts/settings/parts/automationOptions.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/advancedSettings.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/advancedCharacteristics.hbs',
     'systems/animabf/templates/actor/parts/status/status.hbs',

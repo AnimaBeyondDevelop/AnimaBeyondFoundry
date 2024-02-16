@@ -19,9 +19,9 @@ git clone https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry.git
 > :warning: *Si estás usando WSL, para abrir la carpeta del repositorio en VSCode deberás seguir los pasos [aquí](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode#open-a-wsl-project-in-visual-studio-code). Lo más sencillo es navegar desde la terminal a la carpeta del repositorio y lanzar `code .`.*
 
 4) Duplica el fichero `foundryconfig.example.json` y renómbralo a `foundryconfig.json`, luego edítalo y el campo `destPath` rellénalo con la ruta donde tengas la carpeta de sistemas, por ejemplo:
-   4.1. Windows: `C:/Users/<nombredeUsuario>/AppData/Local/FoundryVTT/Data/systems`
-   4.2. Linux: `/home/<nombredeUsuario>/.local/share/FoundryVTT/Data/systems`
-   4.3. WSL (server installation): `/home/<nombredeUsuario>/foundrydata/Data/Systems`
+   - Windows: `C:/Users/<nombredeUsuario>/AppData/Local/FoundryVTT/Data/systems`
+   - Linux: `/home/<nombredeUsuario>/.local/share/FoundryVTT/Data/systems`
+   - WSL (server installation): `/home/<nombredeUsuario>/foundrydata/Data/Systems`
 
 4) Hasta ahora esta carpeta no tiene ningún efecto sobre Foundry. Para generar la carpeta real del sistema, ejecutamos el comando:
 
@@ -75,4 +75,5 @@ b) Para continuar tu trabajo o el trabajo de otro: Lo mismo que lo anterior pero
 
 - [Cómo publicar una nueva versión del sistema](publish-new-version.md)
 - [Cómo crear un nuevo tipo de item](add-new-item.md)
+- [Cómo crear una migración de datos](./migrations.md)
 - [Test en Cypress](cypress_integration_tests.md)

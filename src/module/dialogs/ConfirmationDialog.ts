@@ -17,7 +17,7 @@ export class ConfirmationDialog extends GenericDialog {
       class: 'confirmation-dialog',
       content: `
     <p class='title'>${title}</p>
-    <p class='body'>${body}</p>
+    <div class='body'>${body}</div>
 `,
       buttons: [
         { id: 'on-cancel-button', fn: onCancel, content: (game as Game).i18n.localize('dialogs.cancel') },

@@ -39,7 +39,7 @@ export const AmmoItemConfig = ABFItemConfigFactory({
     containerSelector: '#ammo-context-menu-container',
     rowSelector: '.ammo-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
