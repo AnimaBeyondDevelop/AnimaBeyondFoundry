@@ -20,7 +20,6 @@ import { mutateRegenerationType } from './calculations/actor/general/mutateRegen
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS = [
   mutatePrimaryModifiers,
-  mutateMovementType,
   mutateRegenerationType,
   mutateAllActionsModifier,
   mutateCombatData,
@@ -29,6 +28,7 @@ const DERIVED_DATA_FUNCTIONS = [
   mutateNaturalPenalty,
   mutatePhysicalModifier,
   mutatePerceptionPenalty,
+  mutateMovementType,
   mutateSecondariesData,
   mutateAmmoData,
   mutateWeaponsData,

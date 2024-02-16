@@ -37,7 +37,7 @@ export class ABFActor extends Actor {
         `Upgrading actor ${this.name} (${this._id}) from version ${this.system.version} to ${INITIAL_ACTOR_DATA.version}`
       );
 
-      this.updateSource({ version: INITIAL_ACTOR_DATA.version });
+      this.updateSource({ 'system.version': INITIAL_ACTOR_DATA.version });
     }
   }
 

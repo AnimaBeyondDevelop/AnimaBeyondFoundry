@@ -13,8 +13,8 @@
       },
       "general": {
         "settings": {
-          "openRolls": { "value": 0 },
-          "fumbles": { "value": 0 },
+          "openRolls": { "value": 90 },
+          "fumbles": { "value": 3 },
           "openOnDoubles": { "value": false },
           "perceiveMystic": { "value": false },
           "perceivePsychic": { "value": false },
