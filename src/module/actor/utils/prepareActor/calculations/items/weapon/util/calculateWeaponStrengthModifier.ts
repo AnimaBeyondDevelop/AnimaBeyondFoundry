@@ -10,7 +10,7 @@ export const calculateWeaponStrengthModifier = (weapon: WeaponDataSource, data: 
 
   const equippedHandMultiplier = hasOnlyOneEquippedHandMultiplier ? 1 : 2;
 
-  if (weapon.system.hasOwnStr.value) {
+  if (weapon.system.hasOwnStr?.value) {
     return calculateAttributeModifier(weapon.system.weaponStrength.final.value);
   }
 
