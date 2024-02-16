@@ -14,8 +14,7 @@ export class WSCombatManager {
   findTokenById(tokenId) {
     const token = this.game.scenes
       ?.find(scene => !!scene.tokens.find(u => u?.id === tokenId))
-      ?.tokens
-      .find(u => u?.id === tokenId);
+      ?.tokens.find(u => u?.id === tokenId);
 
     if (!token) {
       const message = this.game.i18n.format(

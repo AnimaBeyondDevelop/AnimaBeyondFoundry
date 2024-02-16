@@ -7,7 +7,8 @@ export enum ABFSettingsKeys {
   AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE',
   MACRO_PREFIX_ATTACK = 'MACRO_PREFIX_ATTACK',
   MACRO_PROJECTILE_DEFAULT = 'MACRO_PROJECTILE_DEFAULT',
-  MACRO_MISS_ATTACK_VALUE = 'MACRO_MISS_ATTACK_VALUE'
+  MACRO_MISS_ATTACK_VALUE = 'MACRO_MISS_ATTACK_VALUE',
+  SYSTEM_MIGRATION_VERSION = 'SYSTEM_MIGRATION_VERSION'
 }
 
 export const registerSettings = () => {
@@ -92,5 +93,13 @@ export const registerSettings = () => {
     config: true,
     default: false,
     type: Boolean
+  });
+
+  // This is for migration purposes, it stores the last migration version runned for the world.
+  typedGame.settings.register('animabf', ABFSettingsKeys.SYSTEM_MIGRATION_VERSION, {
+    config: false,
+    scope: 'world',
+    type: Number,
+    default: 0
   });
 };

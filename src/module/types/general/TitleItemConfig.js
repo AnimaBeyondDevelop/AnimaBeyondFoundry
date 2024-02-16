@@ -12,7 +12,7 @@ export const TitleItemConfig = ABFItemConfigFactory({
     containerSelector: '#titles-context-menu-container',
     rowSelector: '.title-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({

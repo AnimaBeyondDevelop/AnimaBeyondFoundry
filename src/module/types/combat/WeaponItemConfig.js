@@ -13,9 +13,9 @@ export const WeaponEquippedHandType = {
 };
 
 /**
-  * @readonly
-  * @enum {string}
-  */
+ * @readonly
+ * @enum {string}
+ */
 export const WeaponKnowledgeType = {
   KNOWN: 'known',
   SIMILAR: 'similar',
@@ -170,7 +170,7 @@ export const WeaponItemConfig = ABFItemConfigFactory({
     containerSelector: '#weapons-context-menu-container',
     rowSelector: '.weapon-row'
   },
-  onCreate: async (actor) => {
+  onCreate: async actor => {
     const { i18n } = game;
 
     const name = await openSimpleInputDialog({
@@ -191,7 +191,11 @@ export const WeaponItemConfig = ABFItemConfigFactory({
       typeof weapon.system.ammoId === 'string' &&
       !!weapon.system.ammoId
     ) {
-      const { system: { combat: { ammo } } } = actor;
+      const {
+        system: {
+          combat: { ammo }
+        }
+      } = actor;
 
       weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
     }
