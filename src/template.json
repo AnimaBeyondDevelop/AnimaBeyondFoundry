@@ -29,7 +29,8 @@
           "pain": { "fatigue": { "value": 0 }, "physical": { "value": 0 }, "incapacitation": { "value": 0 }, "withstandPain": { "value": 0 } },
           "naturalPenalty": { "unreduced": { "value": 0 }, "reduction": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 }  },
           "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
-          "extraDamage": { "value": 0 }
+          "extraDamage": { "value": 0 },
+          "criticLevel": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "value": 0 },

@@ -157,9 +157,9 @@ export class RollRequestDialog extends FormApplication {
         }
       }
       if (type === 'critic') {
-        const { targeted, generalLocation, location, defender } = critic
-
-        let formula = `1d100CriticRoll + ${value} + ${modifier}`;
+        const { targeted, generalLocation, location, criticLevel, defender } = critic;
+        
+        let formula = `1d100CriticRoll + ${value} + ${modifier + criticLevel}`;
         if (withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100CriticRoll', '0');

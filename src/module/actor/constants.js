@@ -96,6 +96,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       extraDamage: {
         value: 0
+      },
+      criticLevel: {
+        value: 0
       }
     },
     destinyPoints: {

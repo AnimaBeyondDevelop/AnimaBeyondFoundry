@@ -152,6 +152,7 @@ export class GMCombatDialog extends FormApplication {
         targeted,
         generalLocation,
         location,
+        criticLevel: this.attackerActor.system.general.modifiers.criticLevel.value,
         defender: this.defenderToken.name
       }
       this.hooks.onRollRequest(this.attackerToken, { type: 'critic', critic })
