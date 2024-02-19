@@ -1,0 +1,55 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="maintained-spells"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.maintainedSpells.title")
+    addRowButtonData="add-maintained-spell"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="maintained-spells"
+  }}
+    {{#each system.mystic.maintainedSpells as |maintainedSpell|}}
+      <div data-item-id='{{this._id}}' class='maintained-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
+        }}
+        {{#if (is 'eq' this.system.innate true)}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputValue=0
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.maintenanceCost.value")
+            inputValue=this.system.maintenanceCost.value
+          }}
+        {{/if }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.innate")
+          inputValue=(is 'eq' this.system.innate true)
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

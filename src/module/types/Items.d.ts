@@ -11,6 +11,7 @@ import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
 import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
 import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
 import { INITIAL_PREPARED_SPELL_DATA } from './mystic/PreparedSpellItemConfig';
+import { INITIAL_MAINTAINED_SPELL_DATA } from './mystic/MaintainedSpellItemConfig';
 import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './psychic/PsychicDisciplineItemConfig';
 import { INITIAL_MENTAL_PATTERN_DATA } from './psychic/MentalPatternItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
@@ -334,6 +335,11 @@ export type InnateMagicViaItemData = typeof INITIAL_INNATE_MAGIC_VIA_DATA;
 export type InnateMagicViaDataSource = ABFItemBaseDataSource<InnateMagicViaItemData>;
 export type InnateMagicViaChanges = ItemChanges<InnateMagicViaItemData>;
 export type InnateMagicViaItemConfig = ABFItemConfig<InnateMagicViaItemData>;
+
+export type MaintainedSpellItemData = typeof INITIAL_MAINTAINED_SPELL_DATA;
+export type MaintainedSpellDataSource = ABFItemBaseDataSource<MaintainedSpellItemData>;
+export type MaintainedSpellChanges = ItemChanges<MaintainedSpellItemData>;
+export type MaintainedpellItemConfig = ABFItemConfig<MaintainedSpellItemData>;
 
 export type PreparedSpellItemData = typeof INITIAL_PREPARED_SPELL_DATA;
 export type PreparedSpellDataSource = ABFItemBaseDataSource<PreparedSpellItemData>;

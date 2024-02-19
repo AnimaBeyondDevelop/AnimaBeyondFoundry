@@ -681,8 +681,8 @@ export class ABFActor extends Actor {
   async consumeMaintainedZeon(revert: boolean) {
     const { zeon, zeonMaintained } = this.system.mystic;
     const updatedZeon = revert
-      ? zeon.value + zeonMaintained.value
-      : zeon.value - zeonMaintained.value;
+      ? zeon.value + zeonMaintained.final.value
+      : zeon.value - zeonMaintained.final.value;
 
     return this.update({
       system: {
@@ -924,6 +924,9 @@ export class ABFActor extends Actor {
 
   public getPreparedSpells() {
     return this.getItemsOf(ABFItems.PREPARED_SPELL);
+  }
+  public getMaintainedSpells() {
+    return this.getItemsOf(ABFItems.MAINTAINED_SPELL);
   }
 
   public getSupernaturalShields() {

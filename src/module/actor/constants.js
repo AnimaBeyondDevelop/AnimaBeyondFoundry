@@ -1009,7 +1009,12 @@ export const INITIAL_ACTOR_DATA = {
       max: 0
     },
     zeonMaintained: {
+      base: {
         value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     zeonRegeneration: {
       base: {
@@ -1144,7 +1149,8 @@ export const INITIAL_ACTOR_DATA = {
     selectedSpells: [],
     summons: [],
     metamagics: [],
-    preparedSpells: []
+    preparedSpells: [],
+    maintainedSpells: []
   },
 
   domine: {
