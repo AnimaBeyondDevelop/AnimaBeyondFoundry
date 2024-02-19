@@ -16,6 +16,8 @@ import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicDat
 import { mutateDomineData } from './calculations/actor/domine/mutateDomineData';
 import { mutateInitiative } from './calculations/actor/mutateInitiative';
 import { mutateRegenerationType } from './calculations/actor/general/mutateRegenerationType';
+import { mutatePresence } from './calculations/actor/general/mutatePresence.js';
+import { mutateResistances } from './calculations/actor/general/mutateResistances.js';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS = [
@@ -35,7 +37,9 @@ const DERIVED_DATA_FUNCTIONS = [
   mutateInitiative,
   mutateMysticData,
   mutatePsychicData,
-  mutateDomineData
+  mutateDomineData,
+  mutatePresence,
+  mutateResistances,
 ];
 
 export const prepareActor = async actor => {

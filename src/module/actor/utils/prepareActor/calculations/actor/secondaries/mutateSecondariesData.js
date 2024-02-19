@@ -22,7 +22,7 @@ const SECONDARIES_AFFECTED_BY_PERCEPTION_PENALTIES = ['search', 'notice'];
  * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const mutateSecondariesData = data => {
-  const { secondaries } = data;
+  const { secondaries, automationOptions, characteristics } = data;
 
   for (const rawSecondaryKey of Object.keys(secondaries)) {
     /** @type {keyof import('../../../../../../types/Actor').ABFActorDataSourceData['secondaries']} */
@@ -51,10 +51,13 @@ export const mutateSecondariesData = data => {
         }
 
         if (
-          ATTRIBUTES_AFFECTED_BY_PHYSICAL_PENALTIES.includes(secondary.attribute.value)
+          ATTRIBUTES_AFFECTED_BY_PHYSICAL_PENALTIES.includes(secondary.attribute)
         ) {
           secondary.final.value += data.general.modifiers.physicalActions.final.value;
         }
+      }
+      if (automationOptions.calculateSecondaries) {
+        secondary.final.value += characteristics.primaries[secondary.attribute.value]?.mod - 30;
       }
     }
   }
