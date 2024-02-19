@@ -1,0 +1,192 @@
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="mystic-act"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.mysticAct.dialog.title'))
+    }}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="mystic-act"
+    }}
+
+      <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+        <a class="item zeon" data-tab="zeon">{{localize "anima.ui.tabs.zeon"}}</a>
+        <a class="item preparedSpells" data-tab="preparedSpells">{{localize "anima.ui.tabs.preparedSpells"}}</a>
+       {{#unless (is 'gt' this.act.spareAct 0)}} <a class="item release" data-tab="release">{{localize "anima.ui.tabs.releaseAct"}}</a>{{/unless}}
+      </nav>
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize "macros.mysticAct.dialog.zeon.title")
+      disabled=true
+      inputName="zeon.value"
+      inputValue=this.zeon.value
+    }}
+      <section class="sheet-body">
+        <div class="tab zeon" data-group="primary" data-tab="zeon">
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
+            disabled=true
+            inputName="zeon.accumulated"
+            inputValue=this.zeon.accumulated
+          }}
+        </div>
+
+        <div class="tab prepared-spells" data-group="primary" data-tab="preparedSpells">
+                   
+          {{#if (is 'eq' this.ui.noPreparingSpell false)}}
+              {{>
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize 'macros.mysticAct.dialog.newSpell.title')
+              inputType="checkbox"
+              inputName="ui.newSpell"
+              inputValue=(is 'eq' this.ui.newSpell true)
+              }}
+          {{/if}}
+
+          {{#if this.ui.newSpell}}
+            {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+              title=(localize 'macros.combat.dialog.spell.title')
+              inputName='selectedSpell.id'
+            }}
+              {{#each this.actor.system.mystic.spells}}
+                <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+              {{/each}}
+            {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+            {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+              title=(localize 'macros.combat.dialog.spellGrade.title')
+              inputName='selectedSpell.spellGrade'
+            }}
+              <option {{#if (is "eq" this.selectedSpell.spellGrade 'base')}}selected{{/if}} value='base'>{{localize 'macros.combat.dialog.spellGrade.base.title'}}</option>
+              <option {{#if (is "eq" this.selectedSpell.spellGrade 'intermediate')}}selected{{/if}} value='intermediate'>{{localize 'macros.combat.dialog.spellGrade.intermediate.title'}}</option>
+              <option {{#if (is "eq" this.selectedSpell.spellGrade 'advanced')}}selected{{/if}} value='advanced'>{{localize 'macros.combat.dialog.spellGrade.advanced.title'}}</option>
+              <option {{#if (is "eq" this.selectedSpell.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'macros.combat.dialog.spellGrade.arcane.title'}}</option>
+            {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize "macros.mysticAct.dialog.zeonCost.title")
+              disabled=true
+              inputName="selectedSpell.zeonCost"
+              inputValue=this.selectedSpell.zeonCost
+            }}
+            {{else}}
+              {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+                title=(localize 'macros.combat.dialog.spell.title')
+                inputName='preparedSpell.id'
+              }}
+                {{#each_when this.actor.system.mystic.preparedSpells "system" "prepared" "value" false}}
+                  <option {{#if (is "eq" this._id ../this.preparedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}} - {{this.system.grade.value}}</option>
+                {{/each_when}}
+              {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
+              disabled=true
+              inputName="preparedSpell.zeonAcc.value"
+              inputValue=this.preparedSpell.zeonAcc.value
+              hasSecondaryInput=true
+              disableSecondaryInput=true
+              secondaryInputName="preparedSpell.zeonAcc.max"
+              secondaryInputValue=this.preparedSpell.zeonAcc.max
+            }}
+          {{/if}}
+
+        </div>
+
+        <div class="tab realease-act" data-group="primary" data-tab="release">
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
+            disabled=true
+            inputName="zeon.accumulated"
+            inputValue=this.zeon.accumulated
+          }}
+          {{#if (is 'gt' this.actor.system.mystic.preparedSpells.length 0)}}<hr class='hr'/>{{/if}}
+          
+          {{#each this.actor.system.mystic.preparedSpells as |preparedSpell|}}
+            <div data-item-id='{{this._id}}' class='prepared-spell-row'>
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="name"
+                title=(localize "anima.ui.mystic.preparedSpells.name.title")
+                hideTitle=(is "gt" @index 0)
+                disabled=true
+                inputType="text"
+                inputName=""
+                inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
+              }}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="zeonAcc"
+                title=(localize "anima.ui.mystic.preparedSpells.zeonAcc.title")
+                hideTitle=(is "gt" @index 0)
+                disabled=true
+                inputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.value")
+                inputValue=this.system.zeonAcc.value
+                hasSecondaryInput=true
+                disableSecondaryInput=true
+                secondaryInputName=(concat "system.dynamic.preparedSpells." this._id ".system.zeonAcc.max")
+                secondaryInputValue=this.system.zeonAcc.max
+              }}
+            </div>
+          {{/each}}
+  
+        <div class='act-buttons'>
+          <button class='abf-button release-act' data-type='act'>
+            {{localize 'macros.mysticAct.dialog.button.releaseAct.title'}}
+          </button>
+          <button class='abf-button withstand-pain' data-type='act'>
+            {{localize 'macros.mysticAct.dialog.button.withstandPain.title'}}
+          </button>
+        </div>
+
+        </div>
+      </section>
+{{#unless (is 'eq' this.ui.activeTab 'release')}}
+  {{#unless (is 'gt' this.act.spareAct 0)}}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.modifier.title')
+      inputName="act.modifier"
+      inputValue=this.act.modifier
+    }}
+
+    {{#if this.ui.hasFatiguePoints}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'macros.combat.dialog.fatigue.title')
+        inputName="act.fatigueUsed"
+        inputValue=this.act.fatigueUsed
+      }}
+        <option {{#if (is "eq" 0 this.act.fatigueUsed)}}selected{{/if}} value='0'>0</option>
+
+      {{#iterateNumber this.actor.system.characteristics.secondaries.fatigue.value}}
+        <option {{#if (is "eq" (math this "+" 1) ../this.act.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+      {{/iterateNumber}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+      {{else}}
+      <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
+    {{/if}}
+    <div class='act-buttons'>
+      <button class='abf-button full-act' data-type='act'>
+        {{localize 'macros.mysticAct.dialog.button.fullAct.title'}} + {{this.act.final}}
+      </button>
+      <button class='abf-button partial-act' data-type='act'>
+        {{localize 'macros.mysticAct.dialog.button.partialAct.title'}} + {{this.act.partial}}
+      </button>
+    </div>
+    {{else}}
+    <div class='act-buttons'>
+      <button class='abf-button full-act' data-type='act'>
+        {{localize 'macros.mysticAct.dialog.button.spareAct.title'}} + {{this.act.final}}
+      </button>
+    </div>
+  {{/unless}}
+{{/unless}}
+
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>
