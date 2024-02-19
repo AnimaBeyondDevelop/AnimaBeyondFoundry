@@ -128,7 +128,7 @@ export class ABFActor extends Actor {
     }
   }
 
-  applyHealingFactor(resting: boolean) {
+  async applyHealingFactor(days: number = 1, resting?: boolean) {
     const { incapacitation } = this.system.general.modifiers.pain;
     const { regeneration, lifePoints } = this.system.characteristics.secondaries;
 
@@ -137,19 +137,43 @@ export class ABFActor extends Actor {
         general: {
           modifiers: {
             pain: {
-              incapacitation: { value: Math.min(incapacitation.value - regeneration.recovery.value, 0) }
+              incapacitation: { value: Math.min(incapacitation.value - regeneration.recovery.value * days, 0) }
             }
           }
         },
         characteristics: {
           secondaries: {
             lifePoints: {
-              value: Math.min(lifePoints.value + regeneration[resting ? 'resting' : 'normal'].value, lifePoints.max)
+              value: Math.min(lifePoints.value + regeneration[resting ? 'resting' : 'normal'].value * days, lifePoints.max)
             }
           }
         }
       }
     });
+  }
+
+  async restByDays(days: number = 1, resting?: boolean) {
+    const { zeon, act } = this.system.mystic;
+    const { fatigue } = this.system.characteristics.secondaries;
+
+    await this.update({
+      system: {
+        characteristics: {
+          secondaries: {
+            fatigue: {
+              value: fatigue.max
+            }
+          }
+        },
+        mystic: {
+          zeon: {
+            value: Math.min(zeon.value + act.main.final.value * days, zeon.max)
+          }
+        }
+      }
+    });
+
+    await this.applyHealingFactor(days, resting)
   }
 
   /**
