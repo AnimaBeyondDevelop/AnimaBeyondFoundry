@@ -128,6 +128,30 @@ export class ABFActor extends Actor {
     }
   }
 
+  applyHealingFactor(resting: boolean) {
+    const { incapacitation } = this.system.general.modifiers.pain;
+    const { regeneration, lifePoints } = this.system.characteristics.secondaries;
+
+    this.update({
+      system: {
+        general: {
+          modifiers: {
+            pain: {
+              incapacitation: { value: Math.min(incapacitation.value - regeneration.recovery.value, 0) }
+            }
+          }
+        },
+        characteristics: {
+          secondaries: {
+            lifePoints: {
+              value: Math.min(lifePoints.value + regeneration[resting ? 'resting' : 'normal'].value, lifePoints.max)
+            }
+          }
+        }
+      }
+    });
+  }
+
   /**
    * Rolls an ability check for the ABFActor class.
    * 
