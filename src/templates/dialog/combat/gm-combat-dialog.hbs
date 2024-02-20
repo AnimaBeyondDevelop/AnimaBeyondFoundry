@@ -517,7 +517,7 @@
                 </button>
               {{/unless}}
             {{/if}}
-            {{#if this.roll.criticRoll.request}}
+            {{#if (and this.roll.criticRoll.request (is 'eq' this.roll.resistanceRoll.request false))}}
               <button title='{{localize 'macros.combat.dialog.criticRollButtonTooltip.title'}}'
                       class='abf-button roll-critic'>
                 {{localize 'macros.combat.dialog.criticRollButton.title'}}
@@ -526,7 +526,11 @@
             {{#if this.roll.resistanceRoll.request}}
               <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
                       class='abf-button roll-resistance'>
-                {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
+                  {{#if this.roll.criticRoll.sent}}
+                    {{localize 'macros.combat.dialog.rollResistanceCriticButton.title'}}
+                  {{else}}
+                    {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
+                  {{/if}}
               </button>
             {{/if}}
             {{#if this.roll.oppousedCheckRoll.request}}
