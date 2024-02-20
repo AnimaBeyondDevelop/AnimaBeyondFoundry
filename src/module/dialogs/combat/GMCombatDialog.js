@@ -651,7 +651,7 @@ export class GMCombatDialog extends FormApplication {
     const macro = game.macros.getName(macroName);
     if (macro) {
       console.debug(args);
-      macro.execute(args);
+      setTimeout(() => { macro.execute(args) }, 250);
     } else {
       console.debug(`Macro '${macroName}' not found.`);
     }
