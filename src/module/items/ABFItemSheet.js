@@ -85,7 +85,7 @@ export default class ABFItemSheet extends ItemSheet {
       case 'create':
         return owner.createEmbeddedDocuments('ActiveEffect', [
           {
-            label: 'New Effect',
+            name: 'New Effect',
             icon: 'icons/svg/aura.svg',
             origin: owner.uuid,
             disable: true
