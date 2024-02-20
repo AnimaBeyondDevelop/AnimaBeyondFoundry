@@ -614,8 +614,9 @@ export class GMCombatDialog extends FormApplication {
       spellGrade: attacker.result.values.spellGrade,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-      hasCritic: roll.criticRoll.value - roll.criticRoll.resist < 0,
-      specificAttackResult
+      specificAttackResult,
+      hasCritic: roll.criticRoll.sent,
+      criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
     };
     if (args.totalAttack < missedAttackValue) {
       args.missedAttack = true;
