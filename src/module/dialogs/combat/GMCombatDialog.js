@@ -442,7 +442,7 @@ export class GMCombatDialog extends FormApplication {
         }
       }
     }
-console.log(this.modalData)
+
     return this.modalData;
   }
 
@@ -652,7 +652,7 @@ console.log(this.modalData)
     ) {
       macroName = attacker.result?.values.macro;
     }
-    console.log(this.modalData)
+
     const macro = game.macros.getName(macroName);
     if (macro) {
       console.debug(args);
