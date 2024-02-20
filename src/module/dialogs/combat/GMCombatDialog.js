@@ -16,6 +16,7 @@ const getInitialData = (attacker, defender, options = {}) => {
       token: attacker,
       actor: attacker.actor,
       customModifier: 0,
+      applyDamage: true,
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
@@ -92,7 +93,7 @@ export class GMCombatDialog extends FormApplication {
   }
 
   get canApplyDamage() {
-    const { calculations } = this.modalData;
+    const { calculations, attacker } = this.modalData;
 
     if (!calculations) return false;
     if (calculations.canCounter) return false;
@@ -101,7 +102,7 @@ export class GMCombatDialog extends FormApplication {
 
     const hasDamage = calculations.damage !== undefined && calculations?.damage > 0;
 
-    return this.isDamagingCombat && attackOverpassDefense && hasDamage;
+    return this.isDamagingCombat && attackOverpassDefense && hasDamage && attacker.applyDamage;
   }
 
   async close(options = { executeHook: true }) {
@@ -441,7 +442,7 @@ export class GMCombatDialog extends FormApplication {
         }
       }
     }
-
+console.log(this.modalData)
     return this.modalData;
   }
 

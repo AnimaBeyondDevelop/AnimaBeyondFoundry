@@ -185,6 +185,19 @@
                 {{/unless}}
               {{/each}}
             </div>
+            <div class='apply-damage'>
+              {{#if (is 'gt' this.calculations.damage 0)}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  class="apply-damage"
+                  title=(localize 'macros.combat.dialog.applyDamage.title')
+                  inputType="checkbox"
+                  disabled=false
+                  inputName="attacker.applyDamage"
+                  inputValue=(is 'eq' this.attacker.applyDamage true)
+                }}
+              {{/if}}
+            </div>
         {{else}}
           <div class='waiting-row'>
             {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
@@ -462,7 +475,7 @@
             disabled=true
             inputValue=this.calculations.difference
           }}
-          {{#if (is 'gt' this.calculations.damage 0)}}
+          {{#if (and (is 'gt' this.calculations.damage 0) this.attacker.applyDamage)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="damage-deal"

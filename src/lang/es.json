@@ -682,6 +682,7 @@
   "macros.combat.dialog.combatMod.knockOut.title": "Inconsciencia",
   "macros.combat.dialog.combatMod.targeted.title": "Ataque apuntado",
   "macros.combat.dialog.combatMod.surprised.title": "Sorprendido",
+  "macros.combat.dialog.applyDamage.title": "Aplicar daño",
   "macros.combat.dialog.counterAttackBonus.title": "Bono al contraataque",
   "macros.combat.dialog.counterAttackButton.title": "Contraatacar",
   "macros.combat.dialog.criticRollButton.title": "Tirada de Crítico",
