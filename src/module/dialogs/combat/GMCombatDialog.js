@@ -608,15 +608,19 @@ export class GMCombatDialog extends FormApplication {
       spellGrade: attacker.result.values.spellGrade,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-      specificAttackResult
+      specificAttackResult,
+      hasCritic: roll.criticRoll.sent,
+      criticImpact: Math.max(roll.criticRoll.value - roll.resistanceRoll.value, 0)
     };
-    if (args.totalAttack < missedAttackValue) {
+    if (winner === 'defender' && args.totalAttack < missedAttackValue) {
       args.missedAttack = true;
     }
 
     if (attacker.result?.type === 'combat') {
-      const { name } = attacker.result.weapon;
-      macroName = macroPrefixAttack + name;
+      if (attacker.result.weapon) {
+        const { name } = attacker.result.weapon;
+        macroName = macroPrefixAttack + name;
+      } else { macroName = macroPrefixAttack + 'Desarmado' }
       const { projectile } = attacker.result.values;
       if (projectile) {
         args = { ...args, projectile: projectile };
