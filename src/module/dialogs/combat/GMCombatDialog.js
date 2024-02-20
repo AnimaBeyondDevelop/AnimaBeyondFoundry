@@ -32,7 +32,7 @@ const getInitialData = (attacker, defender, options = {}) => {
     roll: {
       oppousedCheckRoll: { request: false, sent: false, attacker: { value: 0, characteristic: undefined }, defender: { value: 0, characteristic: undefined } },
       resistanceRoll: { request: false, sent: false, check: 0, value: 0 },
-      criticRoll: { request: false, sent: false, value: 0 }
+      criticRoll: { request: false, sent: false, resist: 0, value: 0 },
     }
   };
 };
@@ -266,9 +266,14 @@ export class GMCombatDialog extends FormApplication {
 
     if (result.token._id === defender.token._id) {
       if (type === 'resistance') {
-        roll.resistanceRoll.sent = true;
-        roll.resistanceRoll.value = total;
-        roll.resistanceRoll.check = check
+        if (roll.criticRoll.sent) {
+          roll.criticRoll.resist = total
+          roll.resistanceRoll.sent = true;
+        } else {
+          roll.resistanceRoll.sent = true;
+          roll.resistanceRoll.value = total;
+          roll.resistanceRoll.check = check
+        }
       }
       if (type === 'oppousedCheck') {
         roll.oppousedCheckRoll.sent = true;
@@ -293,7 +298,8 @@ export class GMCombatDialog extends FormApplication {
     else if (result.token._id === attacker.token._id) {
       if (type === 'critic') {
         roll.criticRoll.sent = true;
-        roll.criticRoll.value = total
+        roll.criticRoll.value = total;
+        roll.resistanceRoll.sent = false
       }
       if (type === 'oppousedCheck') {
         roll.oppousedCheckRoll.attacker.value = total
@@ -608,6 +614,7 @@ export class GMCombatDialog extends FormApplication {
       spellGrade: attacker.result.values.spellGrade,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+      hasCritic: roll.criticRoll.value - roll.criticRoll.resist < 0,
       specificAttackResult
     };
     if (args.totalAttack < missedAttackValue) {
@@ -643,7 +650,7 @@ export class GMCombatDialog extends FormApplication {
     ) {
       macroName = attacker.result?.values.macro;
     }
-
+    console.log(this.modalData)
     const macro = game.macros.getName(macroName);
     if (macro) {
       console.debug(args);

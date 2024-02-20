@@ -688,6 +688,7 @@
   "macros.combat.dialog.counterAttackButton.title": "Counterattack",
   "macros.combat.dialog.criticRollButton.title": "Roll Critic",
   "macros.combat.dialog.rollResistanceButton.title": "Roll Resistance",
+  "macros.combat.dialog.rollResistanceCriticButton.title": "Roll Critical Resist",
   "macros.combat.dialog.rollOppousedCheckButton.title": "Roll Characteristic",
   "macros.combat.dialog.counterAttackButtonTooltip.title": "This option will execute a new attack from the defender",
   "macros.combat.dialog.criticRollButtonTooltip.title": "This option will execute a critic roll from the attacker",
