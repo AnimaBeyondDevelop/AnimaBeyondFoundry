@@ -694,6 +694,7 @@
   "macros.combat.dialog.combatMod.knockOut.title": "KnockOut",
   "macros.combat.dialog.combatMod.targeted.title": "Targeted attack",
   "macros.combat.dialog.combatMod.surprised.title": "Surprised",
+  "macros.combat.dialog.applyDamage.title": "Apply damage",
   "macros.combat.dialog.counterAttackBonus.title": "Counterattack bonus",
   "macros.combat.dialog.counterAttackButton.title": "Counterattack",
   "macros.combat.dialog.criticRollButton.title": "Roll Critic",
