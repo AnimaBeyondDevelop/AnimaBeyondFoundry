@@ -220,6 +220,22 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
+  async rollABF(value: number, name = '', bonus = 0, sendToChat = true) {
+    const label = name ? `Rolling ${name}` : '';
+    const mod = await openModDialog(name);
+    let formula = `1d100xa + ${value} + ${mod + bonus ?? 0}`;
+    if (value >= 200) formula = formula.replace('xa', 'xamastery');
+    const roll = new ABFFoundryRoll(formula, this.system);
+    roll.roll();
+    if (sendToChat) {
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor: label
+      });
+    }
+    return roll.total;
+  }
+
   /**
    * Creates a new supernatural shield item for the ABFActor class and execute a macro using the shield's name.
    * 
@@ -541,22 +557,22 @@ export class ABFActor extends Actor {
     if (override) {
       return false;
     }
-    if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
+    if (canCast?.innate && casted?.innate && canCast?.prepared && casted?.prepared) {
       ui.notifications.warn(
         i18n.localize('dialogs.spellCasting.warning.mustChoose')
       );
       return true;
     }
-    if (canCast.innate && casted.innate) {
+    if (canCast?.innate && casted?.innate) {
       return;
-    } else if (!canCast.innate && casted.innate) {
+    } else if (!canCast?.innate && casted?.innate) {
       ui.notifications.warn(
         i18n.localize('dialogs.spellCasting.warning.innateMagic')
       );
       return true;
-    } else if (canCast.prepared && casted.prepared) {
+    } else if (canCast?.prepared && casted?.prepared) {
       return false;
-    } else if (!canCast.prepared && casted.prepared) {
+    } else if (!canCast?.prepared && casted?.prepared) {
       return ui.notifications.warn(
         i18n.localize('dialogs.spellCasting.warning.preparedSpell')
       );
