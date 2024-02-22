@@ -57,7 +57,10 @@ export const mutateSecondariesData = data => {
         }
       }
       if (automationOptions.calculateSecondaries) {
-        secondary.final.value += characteristics.primaries[secondary.attribute.value]?.mod - 30;
+        secondary.final.value += characteristics.primaries[secondary.attribute.value]?.mod
+        if (secondary.base.value < 5) {
+          secondary.final.value += -30
+        };
       }
     }
   }
