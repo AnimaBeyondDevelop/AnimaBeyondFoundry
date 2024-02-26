@@ -5,7 +5,6 @@ import { WeaponDataSource } from '../../../../../types/Items';
 export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };
   const { general } = data;
-  const initiativeMod = data.general.modifiers.initiativeMod.value;
 
   const allActionMod = general.modifiers.allActions.final.value;
   const penalty =
@@ -14,7 +13,7 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
     ) + general.modifiers.naturalPenalty.final.value;
   const { initiative } = data.characteristics.secondaries;
 
-  initiative.final.value = initiative.base.value + penalty + initiativeMod;
+  initiative.final.value = initiative.base.value + penalty;
 
   const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 
