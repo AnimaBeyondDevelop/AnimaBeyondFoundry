@@ -1,10 +1,10 @@
 //import { systemDataField } from '../../../types/foundry-vtt-types/src/foundry/common/data/fields.mjs';
-
+import { ABFItems } from '../../items/ABFItems';
 /** @typedef {import('./Migration').Migration} Migration
 
 /** @type Migration */
 export const Migration3AlternativeAct = {
-  version: 3,
+  version: 4,
   title: 'act alternativo',
   description: `Act alternativo`,
   async updateActor(actor) {

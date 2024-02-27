@@ -3,23 +3,21 @@
 /** @typedef {import('./Migration').Migration} Migration
 
 /** @type Migration */
+import { ABFItems } from '../../items/ABFItems';
+
 export const Migration4PsychicDisciplines = {
-  version: 4,
+  version: 1,
   title: 'disciplinas psiquicas',
   description: `Disciplinas psiquicas`,
-  updateActor(actor) {
+  async updateActor(actor) {
 
     //primero pasamos el lenguaje que tenemos y vemos que bloque ejecutamos
     //luego, vemos que hay escrito en esa disciplina, y lo relacionamos con una ya existente
     //pasamos lo escrito sin mayusculas ni accentos
     //y si algo no se reconoce, se pone como un "Desconocido"
 
-
     for (let i = 0; i < actor.system.psychic.psychicDisciplines.length; i++) {
       actor.system.psychic.psychicDisciplines[i].name = actor.system.psychic.psychicDisciplines[i].name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"");
-
-    
-
       /*
        actor.system.psychic.psychicDisciplines[i].name= actor.system.psychic.psychicDisciplines[i].name.toLowerCase();     
      actor.system.psychic.psychicDisciplines[i].name = actor.system.psychic.psychicDisciplines[i].name.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
@@ -36,11 +34,20 @@ export const Migration4PsychicDisciplines = {
       actor.system.psychic.psychicDisciplines[i].name.paragraph.replace("ù", 'u');*/
     }
     
+    for (let i = 0; i < actor.system.psychic.psychicDisciplines.length; i++) {
+      const id = actor.system.psychic.psychicDisciplines[i].id
+      const name = actor.system.psychic.psychicDisciplines[i].name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      const system = { imbalance: false }
+      const itemData = { id, name, system }
+      await actor.updateInnerItem({ type: ABFItems.PSYCHIC_DISCIPLINE, ...itemData });
+  }
+
+/*
     if (game.i18n.lang === "es") {
       for (let i = 0; i < actor.system.psychic.psychicDisciplines.length; i++) {
         switch (actor.system.psychic.psychicDisciplines[i].name) {
           case "telepatia":
-            actor.system.psychic.psychicDisciplines[i].name = "telepathy"
+            //actor.system.psychic.psychicDisciplines[i].name = "telepathy"
             break;
 
           case "telequinesis":
@@ -221,7 +228,7 @@ export const Migration4PsychicDisciplines = {
         } 
       }
     }
-
+*/
 
     /*
         "anima.ui.psychic.psychicPowers.discipline.telepathy.title": "Telepathy",
