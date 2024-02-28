@@ -5,11 +5,13 @@ import { ABFItems } from '../../items/ABFItems';
 /** @type Migration */
 export const Migration3AlternativeAct = {
   version: 4,
-  title: 'act alternativo',
-  description: `Act alternativo`,
+  title: 'Alternative ACT',
+  description:
+    'The alternative ACT is going to be an internal item so you dont lose the value.' +
+    'We recommend creating a new one with the corresponding magic route.',
   async updateActor(actor) {
     // si el act alternativo no es 0, lo migramos
-    if ( actor.system.mystic.act.alternative.base.value !== 0 ) {
+    if (actor.system.mystic.act?.alternative.base.value !== 0) {
 
       await actor.createInnerItem({
         name: "alternative",
@@ -23,7 +25,7 @@ export const Migration3AlternativeAct = {
         system: {
           base: { value: 0 },
           final: { value: 0 }
-        } 
+        }
       });
     }
 

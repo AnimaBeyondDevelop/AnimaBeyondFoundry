@@ -402,7 +402,6 @@
   "anima.ui.psychic.psychicPowers.discipline.hypersensitivity.title": "Hypersensitivity",
   "anima.ui.psychic.psychicPowers.discipline.matrixPowers.title": "-",
   "anima.ui.psychic.psychicPowers.discipline.unknown.title": "Unknown Discipline",
-
   "anima.ui.psychic.psychicPowers.mentalPattern.introversion.title": "Introversion",
   "anima.ui.psychic.psychicPowers.mentalPattern.extroversion.title": "Extroversion",
   "anima.ui.psychic.psychicPowers.mentalPattern.madness.title": "Madness",
@@ -410,6 +409,7 @@
   "anima.ui.psychic.psychicPowers.mentalPattern.compassion.title": "Compassion",
   "anima.ui.psychic.psychicPowers.mentalPattern.cowardice.title": "Cowardice",
   "anima.ui.psychic.psychicPowers.mentalPattern.courage.title": "Courage",
+  "anima.ui.psychic.psychicPowers.mentalPattern.unknown.title": "Unknown Pattern",
   "anima.ui.psychic.psychicPowers.power.footer.bonus.title": "Bonus",
   "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title": "Maint.",
   "anima.ui.psychic.psychicPowers.power.footer.visible.title": "Visible",

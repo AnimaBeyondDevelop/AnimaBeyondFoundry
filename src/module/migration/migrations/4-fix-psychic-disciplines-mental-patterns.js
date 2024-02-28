@@ -2,12 +2,12 @@
 
 /** @type Migration */
 
-export const Migration4PsychicDisciplines = {
+export const Migration4PsychicDisciplinesMentalPatterns = {
   version: 4,
-  title: 'Normalise Psychic Disciplines',
+  title: 'Normalise Psychic Disciplines and Mental Patterns',
   description:
-    'Psychic Disciplines are going to be normalised to standard strings. ' +
-    'Any unrecognised discipline will become "Unknown Discipline".',
+    'Psychic Disciplines and Mental Patterns are going to be normalised to standard strings. ' +
+    'Any unrecognised discipline or pattern will become "Unknown Discipline" or "Unknown Pattern".',
   async updateActor(actor) {
     const dictionary = {
       // es entries
@@ -24,6 +24,13 @@ export const Migration4PsychicDisciplines = {
       teletransporte: 'teleportation',
       luz: 'light',
       hipersensibilidad: 'hypersensitivity',
+      valentia: 'courage',
+      cobardia: 'cowardice',
+      compasion: 'compassion',
+      psicopatia: 'psychopath',
+      locura: 'madness',
+      extroversion: 'extroversion',
+      introversion: 'introversion',
       // en entries
       telepathy: 'telepathy',
       telekenisis: 'telekenisis',
@@ -38,6 +45,13 @@ export const Migration4PsychicDisciplines = {
       teleportation: 'teleportation',
       light: 'light',
       hypersensitivity: 'hypersensitivity',
+      courage: 'courage',
+      cowardice: 'cowardice',
+      compassion: 'compassion',
+      psychopath: 'psychopath',
+      madness: 'madness',
+      extroversion: 'extroversion',
+      introversion: 'introversion',
       // fr entries
       telepathie: 'telepathy',
       telekinesie: 'telekenisis',
@@ -51,17 +65,36 @@ export const Migration4PsychicDisciplines = {
       electromagnetisme: 'electromagnetism',
       teleportation: 'teleportation',
       lumiere: 'light',
-      hypersensibilite: 'hypersensitivity'
+      hypersensibilite: 'hypersensitivity',
+      courage: 'courage',
+      lachete: 'cowardice',
+      compassion: 'compassion',
+      psychopathe: 'psychopath',
+      folie: 'madness',
+      extraversion: 'extroversion',
+      introversion: 'introversion'
     };
 
     for (const discipline of actor.system.psychic.psychicDisciplines) {
       const { id, system, name } = discipline;
       const newName =
         dictionary[
-          name
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
+        name
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+        ] || 'unknown';
+      await actor.updateItem({ id, system, name: newName });
+    }
+
+    for (const pattern of actor.system.psychic.mentalPatterns) {
+      const { id, system, name } = pattern;
+      const newName =
+        dictionary[
+        name
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
         ] || 'unknown';
       await actor.updateItem({ id, system, name: newName });
     }
