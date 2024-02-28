@@ -485,13 +485,23 @@
             }}
           {{/if}}
           {{#if this.roll.resistanceRoll.sent}}
-            {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-              class="resistance-roll"
-              title=(localize 'macros.combat.dialog.resistanceRoll.title')
-              disabled=true
-              inputValue=this.roll.resistanceRoll.value
-            }}
+            {{#if (is 'gt' this.roll.resistanceRoll.value 0)}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="resistance-roll"
+                title=(localize 'macros.combat.dialog.resistanceRoll.title')
+                disabled=true
+                inputValue=this.roll.resistanceRoll.value
+              }}
+            {{else}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="resistance-roll"
+                title=(localize 'macros.combat.dialog.resistanceRoll.title')
+                disabled=true
+                inputValue=this.roll.criticRoll.resist
+              }}
+            {{/if}}
           {{/if}}
           {{#if (is 'gt' this.roll.oppousedCheckRoll.defender.value 0)}}
             {{>
