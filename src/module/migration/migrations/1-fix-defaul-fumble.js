@@ -2,7 +2,7 @@
 
 /** @type Migration */
 export const Migration1DefaultFumble = {
-  version: 3,
+  version: 1,
   title: 'Reseting default values for fumbles and open range in character sheets',
   description: `This Migration changes only actors, implementing the following changes:<br>
     1. If 'system.settings.fumbles.value' is equal to 0, then it is set to the right default value: 3.<br>
