@@ -20,6 +20,9 @@ import { PsychicDisciplineItemConfig } from '../../../types/psychic/PsychicDisci
 import { PsychicPowerItemConfig } from '../../../types/psychic/PsychicPowerItemConfig';
 import { SecondarySpecialSkillItemConfig } from '../../../types/secondaries/SecondarySpecialSkillItemConfig';
 import { SelectedSpellItemConfig } from '../../../types/mystic/SelectedSpellItemConfig';
+import { ActViaItemConfig } from '../../../types/mystic/ActViaItemConfig';
+import { InnateMagicViaItemConfig } from '../../../types/mystic/InnateMagicViaItemConfig';
+import { PreparedSpellItemConfig } from '../../../types/mystic/PreparedSpellItemConfig';
 import { SpecialSkillItemConfig } from '../../../types/domine/SpecialSkillItemConfig';
 import { SpellMaintenanceItemConfig } from '../../../types/mystic/SpellMaintenanceItemConfig';
 import { SummonItemConfig } from '../../../types/mystic/SummonItemConfig';
@@ -29,6 +32,7 @@ import { WeaponItemConfig } from '../../../types/combat/WeaponItemConfig';
 import { AmmoItemConfig } from '../../../types/combat/AmmoItemConfig';
 import { ElanPowerItemConfig } from '../../../types/general/ElanPowerItemConfig';
 import { ArmorItemConfig } from '../../../types/combat/ArmorItemConfig';
+import { SupernaturalShieldItemConfig } from '../../../types/combat/SupernaturalShieldItemConfig';
 import { InventoryItemItemConfig } from '../../../types/general/InventoryItemItemConfig';
 
 export const INTERNAL_ITEM_CONFIGURATIONS = {
@@ -50,6 +54,9 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [SelectedSpellItemConfig.type]: SelectedSpellItemConfig,
   [SpecialSkillItemConfig.type]: SpecialSkillItemConfig,
   [SpellMaintenanceItemConfig.type]: SpellMaintenanceItemConfig,
+  [PreparedSpellItemConfig.type]: PreparedSpellItemConfig,
+  [ActViaItemConfig.type]: ActViaItemConfig,
+  [InnateMagicViaItemConfig.type]: InnateMagicViaItemConfig,
   [SummonItemConfig.type]: SummonItemConfig,
   [TitleItemConfig.type]: TitleItemConfig,
   [InventoryItemItemConfig.type]: InventoryItemItemConfig
@@ -59,6 +66,7 @@ export const ITEM_CONFIGURATIONS = {
   [AmmoItemConfig.type]: AmmoItemConfig,
   [AdvantageItemConfig.type]: AdvantageItemConfig,
   [ArmorItemConfig.type]: ArmorItemConfig,
+  [SupernaturalShieldItemConfig.type]: SupernaturalShieldItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
   [SpellItemConfig.type]: SpellItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,

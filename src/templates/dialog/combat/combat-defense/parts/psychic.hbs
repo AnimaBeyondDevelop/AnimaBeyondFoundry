@@ -14,27 +14,91 @@
   inputValue=this.defender.psychic.psychicProjection
 }}
 
-{{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize 'macros.combat.dialog.psychicPotential.title')
-  disabled=this.defenseSent
-  inputName="defender.psychic.psychicPotential.special"
-  inputValue=this.defender.psychic.psychicPotential.special
-  hasSecondaryInput=true
-  disableSecondaryInput=true
-  secondaryInputName="defender.psychic.psychicPotential.final"
-  secondaryInputValue=this.defender.psychic.psychicPotential.final
-}}
+{{#if this.defender.psychic.supernaturalShield.newShield}}
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'macros.combat.dialog.psychicPotential.title')
+    disabled=this.defenseSent
+    inputName="defender.psychic.psychicPotential.special"
+    inputValue=this.defender.psychic.psychicPotential.special
+    hasSecondaryInput=true
+    disableSecondaryInput=true
+    secondaryInputName="defender.psychic.psychicPotential.final"
+    secondaryInputValue=this.defender.psychic.psychicPotential.final
+  }}
 
-{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.psychicPower.title')
-  disabled=this.defenseSent
-  inputName='defender.psychic.powerUsed'
-}}
-  {{#each this.defender.actor.system.psychic.psychicPowers}}
-    <option {{#if (is "eq" this._id ../this.defender.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-  {{/each}}
-{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.psychicPower.title')
+    disabled=this.defenseSent
+    inputName='defender.psychic.powerUsed'
+  }}
+    {{#each_when this.defender.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
+      <option {{#if (is "eq" this._id ../this.defender.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+    {{/each_when}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+  {{#if (and (is 'gt' this.defender.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.defender.actor.system.psychic.psychicSettings.fatigueResistance false))}}
+  <div class='columns'>
+    <div>
+      {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.eliminateFatigue.title')
+        inputType="checkbox"
+        inputName="defender.psychic.eliminateFatigue"
+        inputValue=(is 'eq' this.defender.psychic.eliminateFatigue true)
+      }}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#unless (isArrayEmpty this.defender.actor.system.psychic.mentalPatterns)}}
+  <div class='columns'>
+    <div>
+      {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
+        inputType="checkbox"
+        inputName="defender.psychic.mentalPatternImbalance"
+        inputValue=(is 'eq' this.defender.psychic.mentalPatternImbalance true)
+      }}
+    </div>
+  </div>
+  {{/unless}}
+
+  {{else}}
+
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.psychicShield.title')
+    disabled=this.defenseSent
+    inputName='defender.psychic.supernaturalShield.shieldUsed'
+  }}
+    {{#each_when this.defender.actor.system.combat.supernaturalShields "system" "type" "" "psychic"}}
+      {{#if (is "eq" this.system.origin ../this.defender.actor.uuid)}}
+        <option {{#if (is "eq" this._id ../this.defender.psychic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/if}}
+    {{/each_when}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "macros.combat.dialog.shieldValue.title")
+    disabled=this.defenseSent
+    inputName="defender.psychic.supernaturalShield.shieldValue"
+    inputValue=this.defender.psychic.supernaturalShield.shieldValue
+  }}
+{{/if}}
+
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.newShield.title')
+      inputType="checkbox"
+      inputName="defender.psychic.supernaturalShield.newShield"
+      inputValue=(is 'eq' defender.psychic.supernaturalShield.newShield true)
+    }}
+  </div>
+</div>
 
 {{#if this.defenseSent}}
   <div class='defense-sent'>

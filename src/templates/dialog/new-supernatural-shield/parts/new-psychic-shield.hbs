@@ -1,0 +1,42 @@
+     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'dialogs.psychicShield.power.title')
+      inputName='new.psychicShield.id'
+    }}
+      {{#each_when this.data.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
+        <option value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'dialogs.psychicShield.difficulty.title')
+      inputName='new.psychicShield.difficulty'
+    }}
+      <option value='roll'>{{localize 'dialogs.psychicShield.difficulty.special'}}</option>
+      <option value='20'>20</option>
+      <option value='40'>40</option>
+      <option value='80'>80</option>
+      <option value='120'>120</option>
+      <option value='140'>140</option>
+      <option value='180'>180</option>
+      <option value='240'>240</option>
+      <option value='280'>280</option>
+      <option value='320'>320</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+    {{#if (and (is 'gt' this.data.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.data.actor.system.psychic.psychicSettings.fatigueResistance false))}}
+      {{>
+        'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+        title=(localize 'macros.combat.dialog.eliminateFatigue.title')
+        inputType='checkbox'
+        inputName='new.psychicShield.eliminateFatigue'
+      }}
+    {{/if}}
+    
+    {{#unless (isArrayEmpty this.data.actor.system.psychic.mentalPatterns)}}
+      {{>
+        'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+        title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
+        inputType='checkbox'
+        inputName='new.psychicShield.mentalPatternImbalance'
+      }}
+    {{/unless}}

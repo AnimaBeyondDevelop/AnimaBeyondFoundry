@@ -27,7 +27,7 @@ export const INITIAL_AMMO_DATA = {
   special: { value: '' }
 };
 
-/** @type {import("../Items").AmmoItemConfig */
+/** @type {import("../Items").AmmoItemConfig} */
 export const AmmoItemConfig = ABFItemConfigFactory({
   type: ABFItems.AMMO,
   isInternal: false,

@@ -48,11 +48,18 @@
         .via {
           .input {
             height: 1.5rem;
+            padding: 0.15rem 0.5rem;
           }
         }
 
         .via .input-container {
           width: 8rem;
+        }
+
+        .visible {
+          .input-container {
+            width: 1rem;
+          }
         }
       }
     }
@@ -96,7 +103,6 @@
     .description {
       display: flex;
       justify-content: start;
-      padding-top: 0.5rem;
 
       .label {
         align-self: flex-start;
@@ -125,6 +131,12 @@
 
       .input {
         height: 1.5rem;
+        padding: 0.15rem 0.5rem;
+      }
+      .has-daily-maintenance {
+        .input-container {
+          width: 1rem;
+        }
       }
     }
   }

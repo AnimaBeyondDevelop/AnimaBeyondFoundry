@@ -28,7 +28,7 @@ export function ABFItemConfigFactory(minimal) {
       const lastKey = path.pop();
       const parentField = path.reduce((field, nextKey) => field[nextKey], actor);
       const index = parentField[lastKey].findIndex(i => i._id === item._id);
-      if (index === -1) { // If item not in parentField[lastKey]
+      if (index === -1) {
         parentField[lastKey].push(item);
       } else {
         parentField[lastKey][index] = item;

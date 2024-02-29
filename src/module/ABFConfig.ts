@@ -3,9 +3,15 @@ import {
   NoneWeaponCritic,
   WeaponShotType,
   WeaponCritic,
-  WeaponSizeProportion, WeaponSize
+  WeaponSizeProportion,
+  WeaponSize
 } from './types/combat/WeaponItemConfig';
-import { PsychicPowerActionTypes } from './types/psychic/PsychicPowerItemConfig.js';
+import {
+  PsychicPowerActionTypes,
+  PsychicPowerDisciplines,
+  PsychicPowerCombatTypes
+} from './types/psychic/PsychicPowerItemConfig.js';
+import { SpellGrades } from './types/mystic/SpellItemConfig';
 
 export const ABFConfig: Record<string, any> = {};
 
@@ -30,8 +36,10 @@ ABFConfig.iterables = {
         [WeaponSize.BIG]: 'anima.ui.combat.weapon.size.big.title'
       },
       sizeProportions: {
-        [WeaponSizeProportion.NORMAL]: 'anima.ui.combat.weapon.sizeProportion.normal.title',
-        [WeaponSizeProportion.ENORMOUS]: 'anima.ui.combat.weapon.sizeProportion.enormous.title',
+        [WeaponSizeProportion.NORMAL]:
+          'anima.ui.combat.weapon.sizeProportion.normal.title',
+        [WeaponSizeProportion.ENORMOUS]:
+          'anima.ui.combat.weapon.sizeProportion.enormous.title',
         [WeaponSizeProportion.GIANT]: 'anima.ui.combat.weapon.sizeProportion.giant.title'
       },
       criticTypes,
@@ -40,9 +48,12 @@ ABFConfig.iterables = {
         ...criticTypes
       },
       manageabilityTypes: {
-        [WeaponManageabilityType.ONE_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneHand.title',
-        [WeaponManageabilityType.TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.twoHand.title',
-        [WeaponManageabilityType.ONE_OR_TWO_HAND]: 'anima.ui.combat.weapon.manageabilityType.oneOrTwoHand.title'
+        [WeaponManageabilityType.ONE_HAND]:
+          'anima.ui.combat.weapon.manageabilityType.oneHand.title',
+        [WeaponManageabilityType.TWO_HAND]:
+          'anima.ui.combat.weapon.manageabilityType.twoHand.title',
+        [WeaponManageabilityType.ONE_OR_TWO_HAND]:
+          'anima.ui.combat.weapon.manageabilityType.oneOrTwoHand.title'
       },
       shotTypes: {
         [WeaponShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
@@ -83,6 +94,11 @@ ABFConfig.iterables = {
       active: 'anima.ui.mystic.spell.actionType.active.title',
       passive: 'anima.ui.mystic.spell.actionType.passive.title'
     },
+    combatTypes: {
+      attack: 'anima.ui.mystic.spell.combatType.attack.title',
+      defense: 'anima.ui.mystic.spell.combatType.defense.title',
+      none: 'anima.ui.mystic.spell.combatType.none.title'
+    },
     spellTypes: {
       attack: 'anima.ui.mystic.spell.spellType.attack.title',
       defense: 'anima.ui.mystic.spell.spellType.defense.title',
@@ -90,12 +106,58 @@ ABFConfig.iterables = {
       effect: 'anima.ui.mystic.spell.spellType.effect.title',
       automatic: 'anima.ui.mystic.spell.spellType.automatic.title',
       detection: 'anima.ui.mystic.spell.spellType.detection.title'
+    },
+    spellGrades: {
+      [SpellGrades.BASE]: 'anima.ui.mystic.spell.grade.base.title',
+      [SpellGrades.INTERMEDIATE]: 'anima.ui.mystic.spell.grade.intermediate.title',
+      [SpellGrades.ADVANCED]: 'anima.ui.mystic.spell.grade.advanced.title',
+      [SpellGrades.ARCANE]: 'anima.ui.mystic.spell.grade.arcane.title'
     }
   },
   psychic: {
     actionTypes: {
-      [PsychicPowerActionTypes.ACTIVE]: 'anima.ui.psychic.psychicPowers.actionType.active.title',
-      [PsychicPowerActionTypes.PASSIVE]: 'anima.ui.psychic.psychicPowers.actionType.passive.title'
+      [PsychicPowerActionTypes.ACTIVE]:
+        'anima.ui.psychic.psychicPowers.actionType.active.title',
+      [PsychicPowerActionTypes.PASSIVE]:
+        'anima.ui.psychic.psychicPowers.actionType.passive.title'
+    },
+    combatTypes: {
+      [PsychicPowerCombatTypes.ATTACK]:
+        'anima.ui.psychic.psychicPowers.combatType.attack.title',
+      [PsychicPowerCombatTypes.DEFENSE]:
+        'anima.ui.psychic.psychicPowers.combatType.defense.title',
+      [PsychicPowerCombatTypes.NONE]:
+        'anima.ui.psychic.psychicPowers.combatType.none.title'
+    },
+    disciplines: {
+      [PsychicPowerDisciplines.MATRIX_POWERS]:
+        'anima.ui.psychic.psychicPowers.discipline.matrixPowers.title',
+      [PsychicPowerDisciplines.TELEPATHY]:
+        'anima.ui.psychic.psychicPowers.discipline.telepathy.title',
+      [PsychicPowerDisciplines.TELEKINESIS]:
+        'anima.ui.psychic.psychicPowers.discipline.telekenisis.title',
+      [PsychicPowerDisciplines.PYROKINESIS]:
+        'anima.ui.psychic.psychicPowers.discipline.pyrokinesis.title',
+      [PsychicPowerDisciplines.CRYOKINESIS]:
+        'anima.ui.psychic.psychicPowers.discipline.cryokinesis.title',
+      [PsychicPowerDisciplines.PHYSICAL_INCREASE]:
+        'anima.ui.psychic.psychicPowers.discipline.physicalIncrease.title',
+      [PsychicPowerDisciplines.ENERGY]:
+        'anima.ui.psychic.psychicPowers.discipline.energy.title',
+      [PsychicPowerDisciplines.TELEMETRY]:
+        'anima.ui.psychic.psychicPowers.discipline.telemetry.title',
+      [PsychicPowerDisciplines.SENTIENT]:
+        'anima.ui.psychic.psychicPowers.discipline.sentient.title',
+      [PsychicPowerDisciplines.CAUSALITY]:
+        'anima.ui.psychic.psychicPowers.discipline.causality.title',
+      [PsychicPowerDisciplines.ELECTROMAGNETISM]:
+        'anima.ui.psychic.psychicPowers.discipline.electromagnetism.title',
+      [PsychicPowerDisciplines.TELEPORTATION]:
+        'anima.ui.psychic.psychicPowers.discipline.teleportation.title',
+      [PsychicPowerDisciplines.LIGHT]:
+        'anima.ui.psychic.psychicPowers.discipline.light.title',
+      [PsychicPowerDisciplines.HYPERSENSITIVITY]:
+        'anima.ui.psychic.psychicPowers.discipline.hypersensitivity.title'
     }
   }
 };

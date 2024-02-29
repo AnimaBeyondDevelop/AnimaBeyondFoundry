@@ -1,0 +1,20 @@
+<form>
+  <div class='form-group'>
+    <div>
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'dialogs.mentalPattern.title')
+      inputName='new.mentalPattern.name'
+    }}
+      <option value='introversion'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.introversion.title'}}</option>
+      <option value='extroversion'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.extroversion.title'}}</option>
+      <option value='madness'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.madness.title'}}</option>
+      <option value='psychopath'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.psychopath.title'}}</option>
+      <option value='compassion'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.compassion.title'}}</option>
+      <option value='cowardice'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.cowardice.title'}}</option>
+      <option value='courage'>{{localize 'anima.ui.psychic.psychicPowers.mentalPattern.courage.title'}}</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    </div>
+  </div>
+</form>
+
+

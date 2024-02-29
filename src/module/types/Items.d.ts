@@ -6,6 +6,13 @@ import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 import { INITIAL_ARMOR_DATA } from './combat/ArmorItemConfig';
+import { INITIAL_SUPERNATURAL_SHIELD_DATA } from './combat/SupernaturalShieldItemConfig';
+import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
+import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
+import { INITIAL_MYSTIC_SPELL_DATA } from './mystic/SpellItemConfig';
+import { INITIAL_PREPARED_SPELL_DATA } from './mystic/PreparedSpellItemConfig';
+import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './psychic/PsychicDisciplineItemConfig';
+import { INITIAL_MENTAL_PATTERN_DATA } from './psychic/MentalPatternItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
 
@@ -76,6 +83,11 @@ export type ABFItemConfigMinimal<
      */
     rowSelector: string;
   };
+
+  /**
+   * Hides DeleteRow from contextMenuConfig
+   */
+  hideDeleteRow?: boolean;
 
   /**
    * Method called to create a new item
@@ -256,6 +268,11 @@ export type ArsMagnusDataSource = ABFItemBaseDataSource<ArsMagnusItemData>;
 export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 export type ArsMagnusItemConfig = ABFItemConfig<ArsMagnusItemData>;
 
+export type SupernaturalShieldItemData = typeof INITIAL_SUPERNATURAL_SHIELD_DATA;
+export type SupernaturalShieldDataSource = ABFItemBaseDataSource<SupernaturalShieldItemData>;
+export type SupernaturalShieldChanges = ItemChanges<SupernaturalShieldItemData>;
+export type SupernaturalShieldItemConfig = ABFItemConfig<SupernaturalShieldItemData>;
+
 export type CreatureItemData = {
   fire: { value: unknown };
   water: { value: unknown };
@@ -308,27 +325,22 @@ export type SelectedSpellDataSource = ABFItemBaseDataSource<SelectedSpellItemDat
 export type SelectedSpellChanges = ItemChanges<SelectedSpellItemData>;
 export type SelectedSpellItemConfig = ABFItemConfig<SelectedSpellItemData>;
 
-export type SpellGrade = {
-  name: { value: SpellGradeNames };
-  intRequired: { value: number };
-  zeon: { value: number };
-  maintenanceCost: { value: number };
-  description: { value: string };
-};
-export type SpellItemData = {
-  description: { value: string };
-  level: { value: number };
-  via: { value: string };
-  spellType: { value: string };
-  actionType: { value: string };
-  hasDailyMaintenance: { value: boolean };
-  grades: {
-    base: SpellGrade;
-    intermediate: SpellGrade;
-    advanced: SpellGrade;
-    arcane: SpellGrade;
-  };
-};
+export type ActViaItemData = typeof INITIAL_ACT_VIA_DATA;
+export type ActViaDataSource = ABFItemBaseDataSource<ActViaItemData>;
+export type ActViaChanges = ItemChanges<ActViaItemData>;
+export type ActViaItemConfig = ABFItemConfig<ActViaItemData>;
+
+export type InnateMagicViaItemData = typeof INITIAL_INNATE_MAGIC_VIA_DATA;
+export type InnateMagicViaDataSource = ABFItemBaseDataSource<InnateMagicViaItemData>;
+export type InnateMagicViaChanges = ItemChanges<InnateMagicViaItemData>;
+export type InnateMagicViaItemConfig = ABFItemConfig<InnateMagicViaItemData>;
+
+export type PreparedSpellItemData = typeof INITIAL_PREPARED_SPELL_DATA;
+export type PreparedSpellDataSource = ABFItemBaseDataSource<PreparedSpellItemData>;
+export type PreparedSpellChanges = ItemChanges<PreparedSpellItemData>;
+export type PreparedSpellItemConfig = ABFItemConfig<PreparedSpellItemData>;
+
+export type SpellItemData = typeof INITIAL_MYSTIC_SPELL_DATA;
 export type SpellDataSource = ABFItemBaseDataSource<SpellItemData>;
 export type SpellChanges = ItemChanges<SpellItemData>;
 export type SpellItemConfig = ABFItemConfig<SpellItemData>;
@@ -360,15 +372,12 @@ export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<InnatePsychicPo
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerItemConfig = ABFItemConfig<InnatePsychicPowerItemData>;
 
-export type MentalPatternItemData = {
-  bonus: { value: number };
-  penalty: { value: number };
-};
+export type MentalPatternItemData = typeof INITIAL_MENTAL_PATTERN_DATA;
 export type MentalPatternDataSource = ABFItemBaseDataSource<MentalPatternItemData>;
 export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 export type MentalPatternItemConfig = ABFItemConfig<MentalPatternItemData>;
 
-export type PsychicDisciplineItemData = Record<string, never>;
+export type PsychicDisciplineItemData = typeof INITIAL_PSYCHIC_DISCIPLINE_DATA;
 export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;

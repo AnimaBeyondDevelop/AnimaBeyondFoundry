@@ -10,11 +10,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
   }
 
   .common-group {
-    width: 100%;
+    height: 100%;
   }
 
   .sheet-tabs {
@@ -96,6 +95,10 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .hr {
+      border-bottom: 1px solid $red;
     }
   }
 }

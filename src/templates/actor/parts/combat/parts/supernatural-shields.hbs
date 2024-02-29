@@ -1,0 +1,58 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="supernatural-shields"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.combat.supernaturalShields.title")
+    addRowButtonData="add-supernatural-shield"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="supernatural-shields"
+  }}
+    {{#each system.combat.supernaturalShields as |supernaturalShields|}}
+      <div data-item-id='{{this._id}}' class='supernatural-shield-row'>
+        {{#if (is 'eq' this.system.type 'mystic')}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="name"
+            title=(localize "anima.ui.combat.supernaturalShields.name.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputType="text"
+            inputName=(concat "system.dynamic.supernaturalShields." this._id ".name")
+            inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.spellGrade '.title')))
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="name"
+            title=(localize "anima.ui.combat.supernaturalShields.name.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputType="text"
+            inputName=(concat "system.dynamic.supernaturalShields." this._id ".name")
+            inputValue=this.name
+          }}
+        {{/if}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="shieldPoints"
+          title=(localize "anima.ui.combat.supernaturalShields.shieldPoints.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "system.dynamic.supernaturalShields." this._id ".system.shieldPoints")
+          inputValue=this.system.shieldPoints
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="origin"
+          title=(localize "anima.ui.combat.supernaturalShields.origin.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=''
+          inputValue=(getNameActorUuid this.system.origin ../this.actor)
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
