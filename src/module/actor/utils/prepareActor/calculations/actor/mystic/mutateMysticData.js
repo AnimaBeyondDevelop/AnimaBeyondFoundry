@@ -6,7 +6,6 @@ import { calculateInnateMagic } from './calculations/calculateInnateMagic';
  */
 export const mutateMysticData = data => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
-  const magicProjectionMod = data.general.modifiers.magicProjectionMod.value;
 
   const { mystic } = data;
 
@@ -37,20 +36,18 @@ export const mutateMysticData = data => {
     }
   }
   mystic.magicProjection.final.value = Math.max(
-    mystic.magicProjection.base.value + allActionsPenalty + magicProjectionMod,
+    mystic.magicProjection.base.value + allActionsPenalty,
     0
   );
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
     mystic.magicProjection.imbalance.offensive.base.value +
-    allActionsPenalty +
-    magicProjectionMod,
+    allActionsPenalty,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
     mystic.magicProjection.imbalance.defensive.base.value +
-    allActionsPenalty +
-    magicProjectionMod,
+    allActionsPenalty,
     0
   );
 
