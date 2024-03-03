@@ -983,7 +983,7 @@ export const INITIAL_ACTOR_DATA = {
       max: 0
     },
     zeonMaintained: {
-        value: 0
+      value: 0
     },
     zeonRegeneration: {
       base: {
@@ -1070,6 +1070,53 @@ export const INITIAL_ACTOR_DATA = {
         },
         illusion: {
           value: 0
+        }
+      },
+      metamagics: {
+        masteryOfArcaneWarfare: {
+          empoweredShields: { sphere: 0, cost: 5, max: 2 },
+          mysticAccuracy: { sphere: 0, cost: [5, 10], max: 2 },
+          increasedDestruction: { sphere: 0, cost: 10, max: 2 },
+          expandedArea: { sphere: 0, cost: 10, max: 2 },
+          removeProtection: { sphere: 0, cost: 5, max: 3 },
+          defensiveExpertise: { sphere: 0, cost: 10, max: 3 },
+          offensiveExpertise: { sphere: 0, cost: 10, max: 3 },
+          doubleDamage: { sphere: 0, cost: 20, max: 1 }
+        },
+        arcanePower: {
+          combinedMagic: { sphere: 0, cost: 5, max: 1 },
+          persistentEffects: { sphere: 0, cost: 5, max: 1 },
+          definedMagicProjection: { sphere: 0, cost: 5, max: 7 },
+          exploitationOfNaturalEnergy: { sphere: 0, cost: 5, max: 2 },
+          advancedZeonRegeneration: { sphere: 0, cost: 5, max: 3 },
+          elevation: { sphere: 0, cost: 5, max: 1 },
+          avatar: { sphere: 0, cost: 20, max: 1 },
+          unlimitedZeon: { sphere: 0, cost: 20, max: 1 }
+        },
+        arcaneEsoterica: {
+          secureDefense: { sphere: 0, cost: 5, max: 1 },
+          lifeMagic: { sphere: 0, cost: 5, max: 2 },
+          feelMagic: { sphere: 0, cost: 5, max: 1 },
+          hiddenMagic: { sphere: 0, cost: 5, max: 1 },
+          spiritualLoop: { sphere: 0, cost: [15, 25], max: 2 },
+          controlSpace: { sphere: 0, cost: 10, max: 1 },
+          energyControl: { sphere: 0, cost: 10, max: 1 },
+          endureSupernaturalDamage: { sphere: 0, cost: 10, max: 1 },
+          transferMagic: { sphere: 0, cost: 10, max: 1 },
+          forceSpeed: { sphere: 0, cost: 5, max: 3 },
+          doubleInnateSpells: { sphere: 0, cost: 20, max: 1 },
+          naturalMaintenance: { sphere: 0, cost: 20, max: 1 }
+        },
+        arcaneKnowledge: {
+          mysticConcentration: { sphere: 0, cost: 5, max: 1 },
+          spellSpecialist: { sphere: 0, cost: 5, max: 7 },
+          pierceResistances: { sphere: 0, cost: 5, max: 2 },
+          increasedRange: { sphere: 0, cost: 5, max: 2 },
+          bindSpells: { sphere: 0, cost: 25, max: 1 },
+          maximizeSpells: { sphere: 0, cost: 10, max: 1 },
+          doubleSpell: { sphere: 0, cost: 20, max: 1 },
+          superiorInnateSpell: { sphere: 0, cost: 20, max: 1 },
+          highMagic: { sphere: 0, cost: 20, max: 1 }
         }
       },
       total: {
