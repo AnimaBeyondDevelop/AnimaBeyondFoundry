@@ -55,7 +55,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         'knockOut',
         'targeted'
       ],
-      targetedAttacks: [],
+      targetedAttacks: defenderActor.system.general.body,
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -223,26 +223,6 @@ export class CombatAttackDialog extends FormApplication {
       combat.unarmed = true;
     }
 
-    this.modalData.attacker.targetedAttacks = [
-      { bodyPart: 'none', modifier: 0, weakspot: false },
-      { bodyPart: 'neck', modifier: -80, weakspot: true },
-      { bodyPart: 'head', modifier: -60, weakspot: true },
-      { bodyPart: 'elbow', modifier: -60, weakspot: false },
-      { bodyPart: 'heart', modifier: -60, weakspot: true },
-      { bodyPart: 'groin', modifier: -60, weakspot: false },
-      { bodyPart: 'foot', modifier: -50, weakspot: false },
-      { bodyPart: 'hand', modifier: -40, weakspot: false },
-      { bodyPart: 'knee', modifier: -40, weakspot: false },
-      { bodyPart: 'abdomen', modifier: -20, weakspot: false },
-      { bodyPart: 'arm', modifier: -20, weakspot: false },
-      { bodyPart: 'thigh', modifier: -20, weakspot: false },
-      { bodyPart: 'calf', modifier: -10, weakspot: false },
-      { bodyPart: 'torso', modifier: -10, weakspot: false },
-      { bodyPart: 'eye', modifier: -100, weakspot: false },
-      { bodyPart: 'wrist', modifier: -40, weakspot: false },
-      { bodyPart: 'shoulder', modifier: -30, weakspot: false }
-    ];
-
     this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
 
     this.hooks = hooks;
@@ -381,21 +361,22 @@ export class CombatAttackDialog extends FormApplication {
             }
           }
           if (specificAttack.targeted !== 'none') {
-            specificAttack.weakspot = targetedAttacks.find(
-              i => i.bodyPart === specificAttack.targeted
-            )?.weakspot;
+            specificAttack.weakspot = targetedAttacks[specificAttack.targeted]?.weakspot;
             if (specificAttack.value === 'disable') {
               specificAttack.weakspot = true;
             }
             attackerCombatMod.targeted = {
-              value: targetedAttacks.find(i => i.bodyPart === specificAttack.targeted)
-                ?.modifier ?? 0, apply: true
+              value: targetedAttacks[specificAttack.targeted]?.modifier ?? 0, apply: true
             }
-          } else if (specificAttack.value === 'disable') {
-            ui.notifications.warn(
-              i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
-            );
-            return
+          }
+          if (specificAttack.value === 'disable') {
+            const disableBodyParts = ['elbow', 'foot', 'hand', 'knee', 'arm', 'thigh', 'calf', 'wrist']
+            if (!disableBodyParts.find(i => i === specificAttack.targeted)) {
+              ui.notifications.warn(
+                i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
+              );
+              return
+            }
           }
           if (unarmed || weapon.name === 'Desarmado') {
             specificAttack.specialCharacteristic = undefined

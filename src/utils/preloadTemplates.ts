@@ -77,6 +77,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/general/parts/disadvantages.hbs',
     'systems/animabf/templates/actor/parts/general/parts/aspect.hbs',
     'systems/animabf/templates/actor/parts/general/parts/description.hbs',
+    'systems/animabf/templates/actor/parts/general/parts/body.hbs',
     'systems/animabf/templates/actor/parts/general/parts/regeneration.hbs',
     'systems/animabf/templates/actor/parts/general/parts/contacts.hbs',
     'systems/animabf/templates/actor/parts/general/parts/notes.hbs',

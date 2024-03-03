@@ -144,6 +144,24 @@ export const INITIAL_ACTOR_DATA = {
         value: 0
       }
     },
+    body: {
+      neck: { modifier: -80, weakspot: true, openArmor: false },
+      head: { modifier: -60, weakspot: true, openArmor: false },
+      elbow: { modifier: -60, weakspot: false, openArmor: false },
+      heart: { modifier: -60, weakspot: true, openArmor: false },
+      groin: { modifier: -60, weakspot: false, openArmor: false },
+      foot: { modifier: -50, weakspot: false, openArmor: false },
+      hand: { modifier: -40, weakspot: false, openArmor: false },
+      knee: { modifier: -40, weakspot: false, openArmor: false },
+      abdomen: { modifier: -20, weakspot: false, openArmor: false },
+      arm: { modifier: -20, weakspot: false, openArmor: false },
+      thigh: { modifier: -20, weakspot: false, openArmor: false },
+      calf: { modifier: -10, weakspot: false, openArmor: false },
+      torso: { modifier: -10, weakspot: false, openArmor: false },
+      eye: { modifier: -100, weakspot: false, openArmor: false },
+      wrist: { modifier: -40, weakspot: false, openArmor: false },
+      shoulder: { modifier: -30, weakspot: false, openArmor: false }
+    },
     advantages: [],
     contacts: [],
     inventory: [],
