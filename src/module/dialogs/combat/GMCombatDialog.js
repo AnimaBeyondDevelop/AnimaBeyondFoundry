@@ -444,11 +444,6 @@ export class GMCombatDialog extends FormApplication {
   }
 
   executeCombatMacro(resistanceRoll) {
-    let macroName;
-    const winner =
-      this.modalData.calculations.winner == this.modalData.defender.token
-        ? 'defender'
-        : 'attacker';
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
@@ -461,53 +456,59 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
+    const { attacker, defender, calculations } = this.modalData
+    const winner =
+      calculations.winner === this.defenderToken
+        ? 'defender'
+        : 'attacker';
+    let macroName;
     let args = {
       attacker: this.attackerToken,
       defender: this.defenderToken,
       winner,
-      defenseType: this.modalData.defender.result.values.type,
-      totalAttack: this.modalData.attacker.result.values.total,
-      appliedDamage: this.canApplyDamage,
+      defenseType: defender.result.values.type,
+      totalAttack: attacker.result.values.total,
+      appliedDamage: calculations.damage,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
       resistanceRoll,
-      spellGrade: this.modalData.attacker.result.values.spellGrade,
-      attackerPsychicFatigue: this.modalData.attacker.result.values?.psychicFatigue,
-      defenderPsychicFatigue: this.modalData.defender.result.values?.psychicFatigue
+      spellGrade: attacker.result.values.spellGrade,
+      attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
+      defenderPsychicFatigue: defender.result.values?.psychicFatigue
     };
     if (args.totalAttack < missedAttackValue) {
       args.missedAttack = true;
     }
 
-    if (this.modalData.attacker.result?.type === 'combat') {
-      const { name } = this.modalData.attacker.result.weapon;
+    if (attacker.result?.type === 'combat') {
+      const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
-      const { projectile } = this.modalData.attacker.result.values;
+      const { projectile } = attacker.result.values;
       if (projectile) {
         args = { ...args, projectile: projectile };
         if (projectile.type == 'shot') {
           macroName = macroPorjectileDefault;
         }
       }
-    } else if (this.modalData.attacker.result?.type === 'mystic') {
-      macroName = this.modalData.attacker.result.values.spellName;
-    } else if (this.modalData.attacker.result?.type === 'psychic') {
-      macroName = this.modalData.attacker.result.values.powerName;
+    } else if (attacker.result?.type === 'mystic') {
+      macroName = attacker.result.values.spellName;
+    } else if (attacker.result?.type === 'psychic') {
+      macroName = attacker.result.values.powerName;
     }
 
     if (
-      this.modalData.attacker.result.values.visible !== undefined &&
-      !this.modalData.attacker.result.values.visible
+      attacker.result.values.visible !== undefined &&
+      !attacker.result.values.visible
     ) {
       args.isVisibleAttack = false;
     }
 
     if (
-      this.modalData.attacker.result?.values.macro !== undefined &&
-      this.modalData.attacker.result?.values.macro !== ''
+      attacker.result?.values.macro !== undefined &&
+      attacker.result?.values.macro !== ''
     ) {
-      macroName = this.modalData.attacker.result?.values.macro;
+      macroName = attacker.result?.values.macro;
     }
 
     const macro = game.macros.getName(macroName);
