@@ -480,9 +480,9 @@ export class GMCombatDialog extends FormApplication {
   criticIfBeAble() {
     const { roll } = this.modalData
     if (roll.criticRoll.sent && roll.resistanceRoll.sent) {
-      const resistanceRollFinal = roll.resistanceRoll.value - roll.resistanceRoll.check
-      if (resistanceRollFinal < 0) {
-        this.defenderActor.applyCriticEffect(Math.abs(resistanceRollFinal));
+      const criticResist = roll.criticRoll.resist - roll.criticRoll.value
+      if (criticResist < 0) {
+        this.defenderActor.applyCriticEffect(Math.abs(criticResist));
       }
     }
   }
