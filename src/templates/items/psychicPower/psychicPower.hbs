@@ -28,19 +28,19 @@
             }}
             {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="combat-type"
+              choices=xRoot.config.iterables.psychic.combatTypes
+              title=(localize "anima.ui.psychic.psychicPowers.power.header.combatType.title")
+              inputName=(concat "system.combatType.value")
+              inputValue=system.combatType.value
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
               class="discipline"
               choices=xRoot.config.iterables.psychic.disciplines
               title=(localize "anima.ui.psychic.psychicPowers.power.header.discipline.title")
               inputName=(concat "system.discipline.value")
               inputValue=system.discipline.value
-            }}
-            {{>
-            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-              class="macro"
-              title=(localize "anima.ui.psychic.psychicPowers.power.header.macro.title")
-              inputType="text"
-              inputName=(concat "system.macro")
-              inputValue=system.macro
             }}
             {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
@@ -72,6 +72,14 @@
             />
           </div>
         {{/each}}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="macro"
+          title=(localize "anima.ui.psychic.psychicPowers.power.header.macro.title")
+          inputType="text"
+          inputName=(concat "system.macro")
+          inputValue=system.macro
+        }}
         <div class="description">
           <p class='label'>{{localize "anima.ui.descriptionSection.title"}}</p>
           {{editor system.enrichedDescription target="system.description.value" button=true owner=true editable=true}}

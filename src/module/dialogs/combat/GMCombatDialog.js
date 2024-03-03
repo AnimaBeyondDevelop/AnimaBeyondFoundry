@@ -591,11 +591,12 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
+
+    const { attacker, defender, roll, calculations } = this.modalData;
     const winner =
-      this.modalData.calculations.winner === this.defenderToken
+      calculations.winner === this.defenderToken
         ? 'defender'
         : 'attacker';
-    const { attacker, defender, roll } = this.modalData
     const specificAttackResult = {
       specificAttack: attacker.result.values?.specificAttack.value,
       result: roll.oppousedCheckRoll.attacker.value - roll.oppousedCheckRoll.defender.value
@@ -607,7 +608,7 @@ export class GMCombatDialog extends FormApplication {
       winner,
       defenseType: defender.result.values.type,
       totalAttack: attacker.result.values.total,
-      appliedDamage: this.canApplyDamage,
+      appliedDamage: calculations.damage,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
