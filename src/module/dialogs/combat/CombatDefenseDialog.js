@@ -170,8 +170,9 @@ export class CombatDefenseDialog extends FormApplication {
         this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
       } else {
         const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
+        const finalIntelligence = this.defenderActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
         for (const grade in spell?.system.grades) {
-          if (intelligence >= spell?.system.grades[grade].intRequired.value) {
+          if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
             mystic.attainableSpellGrades.push(grade)
           }
         }
@@ -719,8 +720,9 @@ export class CombatDefenseDialog extends FormApplication {
       this.modalData.defender.mystic.spellGrade = 'base'
       this.modalData.defender.mystic.attainableSpellGrades = []
       const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
+      const finalIntelligence = this.defenderActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
       for (const grade in spell?.system.grades) {
-        if (intelligence >= spell?.system.grades[grade].intRequired.value) {
+        if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
           this.modalData.defender.mystic.attainableSpellGrades.push(grade)
         }
       }
