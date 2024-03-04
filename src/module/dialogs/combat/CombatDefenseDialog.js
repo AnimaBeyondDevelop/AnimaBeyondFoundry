@@ -77,6 +77,7 @@ const getInitialData = (attacker, defender) => {
         },
         spellUsed: undefined,
         spellGrade: 'base',
+        attainableSpellGrades: [],
         spellCasting: {
           zeon: { accumulated: 0, cost: 0 },
           canCast: { prepared: false, innate: false },
@@ -164,6 +165,17 @@ export class CombatDefenseDialog extends FormApplication {
       );
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
+      const spell = spells.find(w => w._id === mystic.spellUsed);
+      if (this.modalData.defender.mystic.spellCasting.override) {
+        this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+      } else {
+        const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
+        for (const grade in spell?.system.grades) {
+          if (intelligence >= spell?.system.grades[grade].intRequired.value) {
+            mystic.attainableSpellGrades.push(grade)
+          }
+        }
+      }
     }
 
     if (supernaturalShields.length > 0) {
@@ -697,7 +709,25 @@ export class CombatDefenseDialog extends FormApplication {
   }
 
   async _updateObject(event, formData) {
+    const prevSpell = this.modalData.defender.mystic.spellUsed;
+
     this.modalData = mergeObject(this.modalData, formData);
+
+    if (prevSpell !== this.modalData.defender.mystic.spellUsed) {
+      const { spells } = this.defenderActor.system.mystic;
+      const spell = spells.find(w => w._id === this.modalData.defender.mystic.spellUsed);
+      this.modalData.defender.mystic.spellGrade = 'base'
+      this.modalData.defender.mystic.attainableSpellGrades = []
+      const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
+      for (const grade in spell?.system.grades) {
+        if (intelligence >= spell?.system.grades[grade].intRequired.value) {
+          this.modalData.defender.mystic.attainableSpellGrades.push(grade)
+        }
+      }
+    }
+    if (this.modalData.defender.mystic.spellCasting.override) {
+      this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+    }
 
     this.render();
   }
