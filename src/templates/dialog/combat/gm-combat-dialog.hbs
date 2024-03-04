@@ -471,7 +471,7 @@
               inputValue=this.roll.oppousedCheckRoll.attacker.value
             }}
           {{/if}}
-          {{#if this.roll.criticRoll.sent}}
+          {{#if (and this.roll.criticRoll.sent this.attacker.applyCritic)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="critic-roll"
@@ -506,7 +506,7 @@
               inputValue=this.roll.resistanceRoll.value
             }}
           {{/if}}
-          {{#if (is 'gt' this.roll.criticRoll.resist 0)}}
+          {{#if (and (is 'gt' this.roll.criticRoll.resist 0) this.attacker.applyCritic)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="resistance-roll"

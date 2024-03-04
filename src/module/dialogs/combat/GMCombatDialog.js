@@ -609,7 +609,7 @@ export class GMCombatDialog extends FormApplication {
       winner,
       defenseType: defender.result.values.type,
       totalAttack: attacker.result.values.total,
-      appliedDamage: calculations.damage,
+      appliedDamage: attacker.applyDamage ? calculations.damage : 0,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
@@ -618,7 +618,7 @@ export class GMCombatDialog extends FormApplication {
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
       specificAttackResult,
-      hasCritic: roll.criticRoll.sent,
+      hasCritic: roll.criticRoll.sent && attacker.applyCritic,
       criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
     };
     if (args.totalAttack < missedAttackValue) {
