@@ -107,6 +107,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/zeon-regeneration.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/innate-magic.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/zeon.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/mystic-settings.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/summoning.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spheres.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/spells/spells.hbs',
