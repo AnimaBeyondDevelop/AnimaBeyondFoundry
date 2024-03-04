@@ -712,6 +712,7 @@
   "macros.combat.dialog.damageDeal.title": "Damage deal",
   "macros.combat.dialog.criticRoll.title": "Critic Roll",
   "macros.combat.dialog.resistanceRoll.title": "Resistance Roll",
+  "macros.combat.dialog.resistCriticRoll.title": "Critic Resistance Roll",
   "macros.combat.dialog.oppousedCheckRoll.title": "Oppoused Check Roll",
   "macros.combat.dialog.oppousedCheck.characteristic.title": "Characteristic",
   "macros.combat.dialog.oppousedCheck.characteristic.special.title": "Special",

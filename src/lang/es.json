@@ -712,6 +712,7 @@
   "macros.combat.dialog.damageDeal.title": "Daño hecho",
   "macros.combat.dialog.criticRoll.title": "Tirada de Crítico",
   "macros.combat.dialog.resistanceRoll.title": "Tirada de Resistencia",
+  "macros.combat.dialog.resistCriticRoll.title": "Tirada de Resistencia al Crítico",
   "macros.combat.dialog.oppousedCheckRoll.title": "Tirada Enfrentada",
   "macros.combat.dialog.oppousedCheck.characteristic.title": "Característica",
   "macros.combat.dialog.oppousedCheck.characteristic.special.title": "Especial",
