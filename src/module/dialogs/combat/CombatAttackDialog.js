@@ -376,6 +376,7 @@ export class CombatAttackDialog extends FormApplication {
           }
           if (specificAttack.targeted !== 'none') {
             specificAttack.weakspot = targetedAttacks[specificAttack.targeted]?.weakspot;
+            specificAttack.openArmor = targetedAttacks[specificAttack.targeted]?.openArmor;
             if (specificAttack.value === 'disable') {
               specificAttack.weakspot = true;
             }

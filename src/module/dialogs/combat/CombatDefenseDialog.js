@@ -246,6 +246,9 @@ export class CombatDefenseDialog extends FormApplication {
     if (this.modalData.attacker.specificAttack.value !== 'none' && !this.modalData.attacker.specificAttack.causeDamage) {
       combat.at.final = 0;
     }
+    if (this.modalData.attacker.specificAttack.openArmor) {
+      combat.at.final = 0;
+    }
 
     this.hooks = hooks;
 
