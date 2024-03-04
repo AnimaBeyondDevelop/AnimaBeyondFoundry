@@ -17,6 +17,7 @@ const getInitialData = (attacker, defender, options = {}) => {
       actor: attacker.actor,
       customModifier: 0,
       applyDamage: true,
+      applyCritic: true,
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
@@ -406,10 +407,10 @@ export class GMCombatDialog extends FormApplication {
       }
 
       if (this.canApplyDamage) {
-        const canCritic = specificAttack.weakspot
+        this.modalData.calculations.canCritic = specificAttack.weakspot
           ? this.modalData.calculations.damage >= lifePoints / 10
           : this.modalData.calculations.damage >= lifePoints / 2;
-        if (canCritic) {
+        if (this.modalData.calculations.canCritic && attacker.applyCritic) {
           roll.criticRoll.request = true;
         } else { roll.criticRoll.request = false }
       } else {
@@ -478,8 +479,8 @@ export class GMCombatDialog extends FormApplication {
   }
 
   criticIfBeAble() {
-    const { roll } = this.modalData
-    if (roll.criticRoll.sent && roll.resistanceRoll.sent) {
+    const { roll, attacker } = this.modalData
+    if (roll.criticRoll.sent && roll.resistanceRoll.sent && attacker.applyCritic) {
       const criticResist = roll.criticRoll.resist - roll.criticRoll.value
       if (criticResist < 0) {
         this.defenderActor.applyCriticEffect(Math.abs(criticResist));

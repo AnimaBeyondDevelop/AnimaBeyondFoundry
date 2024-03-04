@@ -198,6 +198,19 @@
                 }}
               {{/if}}
             </div>
+            <div class='apply-critic'>
+              {{#if (is 'eq' this.calculations.canCritic true)}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  class="apply-critic"
+                  title=(localize 'macros.combat.dialog.applyCritic.title')
+                  inputType="checkbox"
+                  disabled=false
+                  inputName="attacker.applyCritic"
+                  inputValue=(is 'eq' this.attacker.applyCritic true)
+                }}
+              {{/if}}
+            </div>
         {{else}}
           <div class='waiting-row'>
             {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
