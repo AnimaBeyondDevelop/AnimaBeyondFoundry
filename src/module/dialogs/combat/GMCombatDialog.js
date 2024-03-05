@@ -584,6 +584,10 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
+    const macroAttackDefault = game.settings.get(
+      'animabf',
+      ABFSettingsKeys.MACRO_ATTACK_DEFAULT
+    );
     const macroPorjectileDefault = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
@@ -610,6 +614,7 @@ export class GMCombatDialog extends FormApplication {
       defenseType: defender.result.values.type,
       totalAttack: attacker.result.values.total,
       appliedDamage: attacker.applyDamage ? calculations.damage : 0,
+      damageType: attacker.result.values?.critic,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
@@ -621,7 +626,7 @@ export class GMCombatDialog extends FormApplication {
       hasCritic: roll.criticRoll.sent && attacker.applyCritic,
       criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
     };
-    if (args.totalAttack < missedAttackValue) {
+    if (args.totalAttack < missedAttackValue && winner === 'defener') {
       args.missedAttack = true;
     }
 
@@ -655,7 +660,7 @@ export class GMCombatDialog extends FormApplication {
       macroName = attacker.result?.values.macro;
     }
 
-    const macro = game.macros.getName(macroName);
+    let macro = game.macros.getName(macroName) ?? game.macros.getName(macroAttackDefault);
     if (macro) {
       console.debug(args);
       macro.execute(args);
