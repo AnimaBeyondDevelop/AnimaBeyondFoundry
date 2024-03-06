@@ -198,6 +198,19 @@
                 }}
               {{/if}}
             </div>
+            <div class='apply-critic'>
+              {{#if (is 'eq' this.calculations.canCritic true)}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  class="apply-critic"
+                  title=(localize 'macros.combat.dialog.applyCritic.title')
+                  inputType="checkbox"
+                  disabled=false
+                  inputName="attacker.applyCritic"
+                  inputValue=(is 'eq' this.attacker.applyCritic true)
+                }}
+              {{/if}}
+            </div>
         {{else}}
           <div class='waiting-row'>
             {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
@@ -458,7 +471,7 @@
               inputValue=this.roll.oppousedCheckRoll.attacker.value
             }}
           {{/if}}
-          {{#if this.roll.criticRoll.sent}}
+          {{#if (and this.roll.criticRoll.sent this.attacker.applyCritic)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="critic-roll"
@@ -484,24 +497,23 @@
               inputValue=this.calculations.damage
             }}
           {{/if}}
-          {{#if this.roll.resistanceRoll.sent}}
-            {{#if (is 'gt' this.roll.resistanceRoll.value 0)}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="resistance-roll"
-                title=(localize 'macros.combat.dialog.resistanceRoll.title')
-                disabled=true
-                inputValue=this.roll.resistanceRoll.value
-              }}
-            {{else}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="resistance-roll"
-                title=(localize 'macros.combat.dialog.resistanceRoll.title')
-                disabled=true
-                inputValue=this.roll.criticRoll.resist
-              }}
-            {{/if}}
+          {{#if (is 'gt' this.roll.resistanceRoll.value 0)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="resistance-roll"
+              title=(localize 'macros.combat.dialog.resistanceRoll.title')
+              disabled=true
+              inputValue=this.roll.resistanceRoll.value
+            }}
+          {{/if}}
+          {{#if (and (is 'gt' this.roll.criticRoll.resist 0) this.attacker.applyCritic)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="resistance-roll"
+              title=(localize 'macros.combat.dialog.resistCriticRoll.title')
+              disabled=true
+              inputValue=this.roll.criticRoll.resist
+            }}
           {{/if}}
           {{#if (is 'gt' this.roll.oppousedCheckRoll.defender.value 0)}}
             {{>

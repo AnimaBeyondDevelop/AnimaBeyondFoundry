@@ -1,0 +1,52 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="body"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.general.body.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="body"
+  }}
+    {{#each system.general.body as |bodyPart|}}
+      <div class='body-parts-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="body-part"
+          title=(localize "anima.ui.general.body.bodyParts.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=(localize (concat 'macros.combat.dialog.targetedAttack.' @key '.title'))
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="modifier"
+          title=(localize "anima.ui.general.body.modifier.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "system.general.body." @key ".modifier")
+          inputValue=bodyPart.modifier
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="weakspot"
+          title=(localize "anima.ui.general.body.weakspot.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "system.general.body." @key ".weakspot")
+          inputValue=(is 'eq' bodyPart.weakspot true)
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="open-armor"
+          title=(localize "anima.ui.general.body.openArmor.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "system.general.body." @key ".openArmor")
+          inputValue=(is 'eq' bodyPart.openArmor true)
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
