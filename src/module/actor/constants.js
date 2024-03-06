@@ -1091,7 +1091,7 @@ export const INITIAL_ACTOR_DATA = {
         }
       },
       metamagics: {
-        masteryOfArcaneWarfare: {
+        arcaneWarfare: {
           empoweredShields: { sphere: 0, cost: 5, max: 2 },
           mysticAccuracy: { sphere: 0, cost: [5, 10], max: 2 },
           increasedDestruction: { sphere: 0, cost: 10, max: 2 },
@@ -1183,7 +1183,6 @@ export const INITIAL_ACTOR_DATA = {
     spellMaintenances: [],
     selectedSpells: [],
     summons: [],
-    metamagics: [],
     preparedSpells: []
   },
 

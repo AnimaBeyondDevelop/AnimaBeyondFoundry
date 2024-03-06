@@ -792,10 +792,6 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.SUPERNATURAL_SHIELD);
   }
 
-  public getKnownMetamagics() {
-    return this.getItemsOf(ABFItems.METAMAGIC);
-  }
-
   public getKnownSummonings() {
     return this.getItemsOf(ABFItems.SUMMON);
   }
