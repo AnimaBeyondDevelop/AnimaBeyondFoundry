@@ -13,7 +13,6 @@ import { LanguageItemConfig } from '../../../types/general/LanguageItemConfig';
 import { LevelItemConfig } from '../../../types/general/LevelItemConfig';
 import { MartialArtItemConfig } from '../../../types/domine/MartialArtItemConfig';
 import { MentalPatternItemConfig } from '../../../types/psychic/MentalPatternItemConfig';
-import { MetamagicItemConfig } from '../../../types/mystic/MetamagicItemConfig';
 import { NemesisSkillItemConfig } from '../../../types/domine/NemesisSkillItemConfig';
 import { NoteItemConfig } from '../../../types/general/NoteItemConfig';
 import { PsychicDisciplineItemConfig } from '../../../types/psychic/PsychicDisciplineItemConfig';
@@ -49,7 +48,6 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [LanguageItemConfig.type]: LanguageItemConfig,
   [LevelItemConfig.type]: LevelItemConfig,
   [MartialArtItemConfig.type]: MartialArtItemConfig,
-  [MetamagicItemConfig.type]: MetamagicItemConfig,
   [NemesisSkillItemConfig.type]: NemesisSkillItemConfig,
   [SecondarySpecialSkillItemConfig.type]: SecondarySpecialSkillItemConfig,
   [SelectedSpellItemConfig.type]: SelectedSpellItemConfig,

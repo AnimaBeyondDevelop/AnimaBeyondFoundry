@@ -316,26 +316,6 @@
       }
     }
     // Summons
-
-    // Metamagics
-    .metamagics {
-      .metamagic-row:first-child {
-        margin-top: 0;
-      }
-
-      .metamagic-row {
-        margin-top: 0.75rem;
-
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-column-gap: 0.1rem;
-
-        .name .input-container {
-          width: 100%;
-        }
-      }
-    }
-    // Metamagics
   }
 
   .mystic-spells-tab {
@@ -460,5 +440,37 @@
       }
     }
     // Spells
+  }
+
+  .mystic-metamagics-tab {
+    // Metamagics
+    .metamagics {
+      & > .group-body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
+
+      .metamagic-row:first-child {
+        margin-top: 0;
+      }
+
+      .metamagic-row {
+        margin-top: 0.75rem;
+
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        grid-column-gap: 0.5rem;
+
+        .name .input-container {
+          width: 100%;
+        }
+      }
+    }
+    // Metamagics
   }
 }
