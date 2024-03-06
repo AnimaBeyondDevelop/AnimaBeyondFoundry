@@ -77,8 +77,10 @@
         .weapon-used {
           flex-basis: 55%;
         }
+
         .spell-used {
           flex-basis: 60%;
+
           .input-container {
             width: auto;
           }
@@ -86,6 +88,7 @@
 
         .power-used {
           flex-basis: 48%;
+
           .input-container {
             width: auto;
           }
@@ -122,6 +125,7 @@
           }
         }
       }
+
       .combat-mod {
         display: flex;
         flex-wrap: wrap;
@@ -133,14 +137,35 @@
           margin-left: 1rem;
           width: 80%;
         }
+
         .combatMod-apply {
           justify-content: flex-end;
+
           .input-container {
             width: 20%;
             margin-right: 1rem;
           }
         }
       }
+
+      .apply-critic,.apply-damage {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+
+        .apply-critic,.apply-damage {
+          .label {
+            margin-left: 1rem
+          }
+
+          .input-container {
+            justify-content: flex-end;
+            margin-right: 0.4rem;
+          }
+        }
+      }
+
       .supernatural-shield {
         display: flex;
         justify-content: center;
@@ -201,6 +226,7 @@
           }
         }
       }
+
       .roll-request-sent {
         display: flex;
         justify-content: center;

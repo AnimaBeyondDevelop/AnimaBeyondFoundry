@@ -15,7 +15,8 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
       mentalPatternImbalance
     } = this.foundryRoll.data;
     const powerDiscipline = power?.system.discipline.value;
-    let imbalance = psychicDisciplines.find(i => i.name === powerDiscipline)?.system.imbalance ? 1 : 0;
+    // @ts-ignore
+    let imbalance: any = psychicDisciplines.find((i: any) => i.name === powerDiscipline)?.system.imbalance ? 1 : 0;
     let newPotentialTotal = difficultyAchieved(
       this.foundryRoll.total ?? 0,
       imbalance,
@@ -32,7 +33,7 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
         );
       }
       else if (power?.system.combatType.value === 'attack' &&
-        mentalPatterns.find(i => i.name === 'courage')) {
+        mentalPatterns.find((i: any) => i.name === 'courage')) {
         newPotentialTotal = difficultyAchieved(
           newPotentialTotal,
           1,

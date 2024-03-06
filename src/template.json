@@ -29,7 +29,8 @@
           "pain": { "fatigue": { "value": 0 }, "physical": { "value": 0 }, "incapacitation": { "value": 0 }, "withstandPain": { "value": 0 } },
           "naturalPenalty": { "unreduced": { "value": 0 }, "reduction": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 }  },
           "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
-          "extraDamage": { "value": 0 }
+          "extraDamage": { "value": 0 },
+          "criticLevel": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "value": 0 },
@@ -44,6 +45,24 @@
           "ethnicity": { "value": "" },
           "appearance": { "value": "" },
           "size": { "value": 0 }
+        },
+        "body":{
+          "neck": { "modifier": -80, "weakspot": true, "openArmor": false },
+          "head": { "modifier": -60, "weakspot": true, "openArmor": false },
+          "elbow": { "modifier": -60, "weakspot": false, "openArmor": false },
+          "heart": { "modifier": -60, "weakspot": true, "openArmor": false },
+          "groin": { "modifier": -60, "weakspot": false, "openArmor": false },
+          "foot": { "modifier": -50, "weakspot": false, "openArmor": false },
+          "hand": { "modifier": -40, "weakspot": false, "openArmor": false },
+          "knee": { "modifier": -40, "weakspot": false, "openArmor": false },
+          "abdomen": { "modifier": -20, "weakspot": false, "openArmor": false },
+          "arm": { "modifier": -20, "weakspot": false, "openArmor": false },
+          "thigh": { "modifier": -20, "weakspot": false, "openArmor": false },
+          "calf": { "modifier": -10, "weakspot": false, "openArmor": false },
+          "torso": { "modifier": -10, "weakspot": false, "openArmor": false },
+          "eye": { "modifier": -100, "weakspot": false, "openArmor": false },
+          "wrist": { "modifier": -40, "weakspot": false, "openArmor": false },
+          "shoulder": { "modifier": -30, "weakspot": false, "openArmor": false }
         },
         "advantages": [],
         "contacts": [],
@@ -224,6 +243,7 @@
           "bind": { "base": { "value": 0 }, "final": { "value": 0 } },
           "control": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
+        "mysticSettings": { "aptitudeForMagicDevelopment": false },
         "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],
@@ -403,6 +423,8 @@
       "martialKnowledge": { "value": 0 }
     },
     "weapon": {
+      "equipped": { "value": false },
+      "isShield": { "value": false },
       "special": { "value": "" },
       "integrity": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
       "breaking": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
@@ -423,6 +445,7 @@
       "cadence": { "value": "" },
       "reload": { "base": { "value": 0 }, "final": { "value": 0 } },
       "sizeProportion": { "value": "" },
+      "hasOwnStr": { "value": false },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     },

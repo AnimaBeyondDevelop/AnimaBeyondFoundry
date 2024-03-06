@@ -49,7 +49,7 @@ export default class ABFItemSheet extends ItemSheet {
       case ABFItems.AMMO:
         return 144;
       case ABFItems.PSYCHIC_POWER:
-        return 500;
+        return 540;
       default:
         return 450;
     }
@@ -85,7 +85,7 @@ export default class ABFItemSheet extends ItemSheet {
       case 'create':
         return owner.createEmbeddedDocuments('ActiveEffect', [
           {
-            label: 'New Effect',
+            name: 'New Effect',
             icon: 'icons/svg/aura.svg',
             origin: owner.uuid,
             disable: true

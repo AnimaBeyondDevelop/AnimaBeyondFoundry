@@ -55,7 +55,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         'knockOut',
         'targeted'
       ],
-      targetedAttacks: [],
+      targetedAttacks: defenderActor.system.general.body,
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -94,6 +94,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         spellUsed: undefined,
         spellGrade: 'base',
+        attainableSpellGrades: [],
         spellCasting: {
           zeon: { accumulated: 0, cost: 0 },
           canCast: { prepared: false, innate: false },
@@ -160,17 +161,19 @@ export class CombatAttackDialog extends FormApplication {
     const { combat, psychic, mystic } = this.modalData.attacker;
 
     if (this.modalData.attacker.distance.enable) {
-      const calculateDistance = Math.floor(
+      const calculateDistance =
         canvas.grid.measureDistance(
           this.modalData.attacker.token,
-          this.modalData.defender.token
-        )
-      );
+          this.modalData.defender.token,
+          { gridSpaces: true }
+        ) /
+        canvas.grid.grid.options.dimensions.distance
+        ;
       this.modalData.attacker.distance.value = calculateDistance;
     }
 
     const { weapons } = this.attackerActor.system.combat;
-    const { spells } = this.attackerActor.system.mystic;
+    const { spells, mysticSettings } = this.attackerActor.system.mystic;
     const { psychicPowers } = this.attackerActor.system.psychic;
 
     if (psychicPowers.length > 0) {
@@ -186,9 +189,7 @@ export class CombatAttackDialog extends FormApplication {
         )?._id;
       }
       const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-      this.attackerActor.system.psychic.psychicPotential.special =
-        power?.system.bonus.value;
-      this.modalData.attacker.psychic.critic = power?.system.critic.value;
+      psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
     }
 
     if (spells.length > 0) {
@@ -207,6 +208,19 @@ export class CombatAttackDialog extends FormApplication {
       );
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
+      const spell = spells.find(w => w._id === mystic.spellUsed);
+      mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      if (this.modalData.attacker.mystic.spellCasting.override) {
+        this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+      } else {
+        const intelligence = this.attackerActor.system.characteristics.primaries.intelligence.value
+        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+        for (const grade in spell?.system.grades) {
+          if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+            mystic.attainableSpellGrades.push(grade)
+          }
+        }
+      }
     }
 
     if (weapons.length > 0) {
@@ -222,26 +236,6 @@ export class CombatAttackDialog extends FormApplication {
     } else {
       combat.unarmed = true;
     }
-
-    this.modalData.attacker.targetedAttacks = [
-      { bodyPart: 'none', modifier: 0, weakspot: false },
-      { bodyPart: 'neck', modifier: -80, weakspot: true },
-      { bodyPart: 'head', modifier: -60, weakspot: true },
-      { bodyPart: 'elbow', modifier: -60, weakspot: false },
-      { bodyPart: 'heart', modifier: -60, weakspot: true },
-      { bodyPart: 'groin', modifier: -60, weakspot: false },
-      { bodyPart: 'foot', modifier: -50, weakspot: false },
-      { bodyPart: 'hand', modifier: -40, weakspot: false },
-      { bodyPart: 'knee', modifier: -40, weakspot: false },
-      { bodyPart: 'abdomen', modifier: -20, weakspot: false },
-      { bodyPart: 'arm', modifier: -20, weakspot: false },
-      { bodyPart: 'thigh', modifier: -20, weakspot: false },
-      { bodyPart: 'calf', modifier: -10, weakspot: false },
-      { bodyPart: 'torso', modifier: -10, weakspot: false },
-      { bodyPart: 'eye', modifier: -100, weakspot: false },
-      { bodyPart: 'wrist', modifier: -40, weakspot: false },
-      { bodyPart: 'shoulder', modifier: -30, weakspot: false }
-    ];
 
     this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
 
@@ -381,21 +375,23 @@ export class CombatAttackDialog extends FormApplication {
             }
           }
           if (specificAttack.targeted !== 'none') {
-            specificAttack.weakspot = targetedAttacks.find(
-              i => i.bodyPart === specificAttack.targeted
-            )?.weakspot;
+            specificAttack.weakspot = targetedAttacks[specificAttack.targeted]?.weakspot;
+            specificAttack.openArmor = targetedAttacks[specificAttack.targeted]?.openArmor;
             if (specificAttack.value === 'disable') {
               specificAttack.weakspot = true;
             }
             attackerCombatMod.targeted = {
-              value: targetedAttacks.find(i => i.bodyPart === specificAttack.targeted)
-                ?.modifier ?? 0, apply: true
+              value: targetedAttacks[specificAttack.targeted]?.modifier ?? 0, apply: true
             }
-          } else if (specificAttack.value === 'disable') {
-            ui.notifications.warn(
-              i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
-            );
-            return
+          }
+          if (specificAttack.value === 'disable') {
+            const disableBodyParts = ['elbow', 'foot', 'hand', 'knee', 'arm', 'thigh', 'calf', 'wrist']
+            if (!disableBodyParts.find(i => i === specificAttack.targeted)) {
+              ui.notifications.warn(
+                i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
+              );
+              return
+            }
           }
           if (unarmed || weapon.name === 'Desarmado') {
             specificAttack.specialCharacteristic = undefined
@@ -707,7 +703,6 @@ export class CombatAttackDialog extends FormApplication {
       )?._id;
     }
     const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-    psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
     let psychicBonus = power?.system.bonus.value ?? 0;
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
@@ -719,7 +714,6 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
@@ -801,11 +795,35 @@ export class CombatAttackDialog extends FormApplication {
 
   async _updateObject(event, formData) {
     const prevWeapon = this.modalData.attacker.combat.weaponUsed;
+    const prevSpell = this.modalData.attacker.mystic.spellUsed;
+    const prevPower = this.modalData.attacker.psychic.powerUsed;
 
     this.modalData = mergeObject(this.modalData, formData);
 
     if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
       this.modalData.attacker.combat.criticSelected = undefined;
+    }
+    if (prevSpell !== this.modalData.attacker.mystic.spellUsed) {
+      const { spells } = this.attackerActor.system.mystic;
+      const spell = spells.find(w => w._id === this.modalData.attacker.mystic.spellUsed);
+      this.modalData.attacker.mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      this.modalData.attacker.mystic.spellGrade = 'base'
+      this.modalData.attacker.mystic.attainableSpellGrades = []
+      const intelligence = this.attackerActor.system.characteristics.primaries.intelligence.value
+      const finalIntelligence = this.attackerActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+      for (const grade in spell?.system.grades) {
+        if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+          this.modalData.attacker.mystic.attainableSpellGrades.push(grade)
+        }
+      }
+    }
+    if (this.modalData.attacker.mystic.spellCasting.override) {
+      this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+    }
+    if (prevPower !== this.modalData.attacker.psychic.powerUsed) {
+      const { psychicPowers } = this.attackerActor.system.psychic;
+      const power = psychicPowers.find(w => w._id === this.modalData.attacker.psychic.powerUsed);
+      this.modalData.attacker.psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
     }
 
     this.render();
