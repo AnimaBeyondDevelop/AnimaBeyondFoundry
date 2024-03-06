@@ -17,6 +17,7 @@ const getInitialData = (attacker, defender, options = {}) => {
       actor: attacker.actor,
       customModifier: 0,
       applyDamage: true,
+      applyCritic: true,
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
@@ -406,10 +407,10 @@ export class GMCombatDialog extends FormApplication {
       }
 
       if (this.canApplyDamage) {
-        const canCritic = specificAttack.weakspot
+        this.modalData.calculations.canCritic = specificAttack.weakspot
           ? this.modalData.calculations.damage >= lifePoints / 10
           : this.modalData.calculations.damage >= lifePoints / 2;
-        if (canCritic) {
+        if (this.modalData.calculations.canCritic && attacker.applyCritic) {
           roll.criticRoll.request = true;
         } else { roll.criticRoll.request = false }
       } else {
@@ -478,11 +479,11 @@ export class GMCombatDialog extends FormApplication {
   }
 
   criticIfBeAble() {
-    const { roll } = this.modalData
-    if (roll.criticRoll.sent && roll.resistanceRoll.sent) {
-      const resistanceRollFinal = roll.resistanceRoll.value - roll.resistanceRoll.check
-      if (resistanceRollFinal < 0) {
-        this.defenderActor.applyCriticEffect(Math.abs(resistanceRollFinal));
+    const { roll, attacker } = this.modalData
+    if (roll.criticRoll.sent && roll.resistanceRoll.sent && attacker.applyCritic) {
+      const criticResist = roll.criticRoll.resist - roll.criticRoll.value
+      if (criticResist < 0) {
+        this.defenderActor.applyCriticEffect(Math.abs(criticResist));
       }
     }
   }
@@ -583,6 +584,10 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
+    const macroAttackDefault = game.settings.get(
+      'animabf',
+      ABFSettingsKeys.MACRO_ATTACK_DEFAULT
+    );
     const macroPorjectileDefault = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
@@ -591,11 +596,12 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
+
+    const { attacker, defender, roll, calculations } = this.modalData;
     const winner =
-      this.modalData.calculations.winner === this.defenderToken
+      calculations.winner === this.defenderToken
         ? 'defender'
         : 'attacker';
-    const { attacker, defender, roll } = this.modalData
     const specificAttackResult = {
       specificAttack: attacker.result.values?.specificAttack.value,
       result: roll.oppousedCheckRoll.attacker.value - roll.oppousedCheckRoll.defender.value
@@ -607,7 +613,8 @@ export class GMCombatDialog extends FormApplication {
       winner,
       defenseType: defender.result.values.type,
       totalAttack: attacker.result.values.total,
-      appliedDamage: this.canApplyDamage,
+      appliedDamage: attacker.applyDamage ? calculations.damage : 0,
+      damageType: attacker.result.values?.critic,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
       isVisibleAttack: true,
@@ -616,10 +623,10 @@ export class GMCombatDialog extends FormApplication {
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
       specificAttackResult,
-      hasCritic: roll.criticRoll.sent,
+      hasCritic: roll.criticRoll.sent && attacker.applyCritic,
       criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
     };
-    if (args.totalAttack < missedAttackValue) {
+    if (args.totalAttack < missedAttackValue && winner === 'defener') {
       args.missedAttack = true;
     }
 
@@ -653,7 +660,7 @@ export class GMCombatDialog extends FormApplication {
       macroName = attacker.result?.values.macro;
     }
 
-    const macro = game.macros.getName(macroName);
+    let macro = game.macros.getName(macroName) ?? game.macros.getName(macroAttackDefault);
     if (macro) {
       console.debug(args);
       macro.execute(args);

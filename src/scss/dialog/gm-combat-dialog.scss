@@ -148,13 +148,13 @@
         }
       }
 
-      .apply-damage {
+      .apply-critic,.apply-damage {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         width: 100%;
 
-        .apply-damage {
+        .apply-critic,.apply-damage {
           .label {
             margin-left: 1rem
           }

@@ -5,7 +5,8 @@ export const supSpecificAttack = effect => {
     specialCharacteristic: undefined,
     check: false,
     targeted: 'none',
-    weakspot: false
+    weakspot: false,
+    openArmor: false
   };
   if (/Fuerza[^\d+]+\d+/i.test(effect)) {
     specificAttack.value = 'immobilize';

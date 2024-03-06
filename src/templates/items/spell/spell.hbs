@@ -26,20 +26,20 @@
               inputValue=system.level.value
             }}
             {{>
-            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-              class="macro"
-              title="Macro"
-              inputType="text"
-              inputName="system.macro"
-              inputValue=system.macro
-            }}
-            {{>
             'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
               class="visible"
               title=(localize "anima.ui.mystic.spell.visible.title")
               inputType="checkbox"
               inputName="system.visible"
               inputValue=(is 'eq' system.visible true)
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="combat-type"
+              choices=config.iterables.mystic.combatTypes
+              title=(localize "anima.ui.mystic.spell.combatType.title")
+              inputName="system.combatType.value"
+              inputValue=system.combatType.value
             }}
             {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
@@ -101,6 +101,14 @@
           descriptionInputName="system.grades.arcane.description.value"
           gradeName='arcane'
           grade=system.grades.arcane
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="macro"
+          title="Macro"
+          inputType="text"
+          inputName="system.macro"
+          inputValue=system.macro
         }}
         <div class="description">
           <p class='label'>{{localize "anima.ui.mystic.spell.grade.description.title"}}</p>
