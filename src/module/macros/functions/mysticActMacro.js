@@ -178,14 +178,16 @@ export class MysticActDialog extends FormApplication {
             act.value = act.spareAct || actor.system.mystic.act.main.final.value
         }
         else {
-            if (actor.system.mystic.act.via.length > 0 && spells.length > 0) {
+            if (spells.length > 0) {
                 if (newSpell) {
                     if (!selectedSpell.id) {
                         selectedSpell.id = spells[0]._id;
                     }
                     const spell = spells.find(w => w._id === selectedSpell.id);
-                    selectedSpell.zeonCost = spell.system.grades[selectedSpell.spellGrade || 'base'].zeon.value;
-                    act.value = actor.system.mystic.act.via.find(v => v.name === spell?.system.via.value)?.system.final.value || actor.system.mystic.act.main.final.value
+                    selectedSpell.zeonCost = spell.system.grades[selectedSpell.spellGrade ?? 'base'].zeon.value;
+                    if (actor.system.mystic.act.via.length > 0) {
+                        act.value = actor.system.mystic.act.via.find(v => v.name === spell?.system.via.value)?.system.final.value || actor.system.mystic.act.main.final.value
+                    }
 
                 } else if (preparedSpells.length > 0) {
                     if (!preparedSpell.id) {
@@ -193,7 +195,9 @@ export class MysticActDialog extends FormApplication {
                     }
                     const spell = preparedSpells.find(w => w._id === preparedSpell.id);
                     preparedSpell.zeonAcc = spell.system.zeonAcc;
-                    act.value = actor.system.mystic.act.via.find(v => v.name === spell?.system.via.value)?.system.final.value || actor.system.mystic.act.main.final.value
+                    if (actor.system.mystic.act.via.length > 0) {
+                        act.value = actor.system.mystic.act.via.find(v => v.name === spell?.system.via.value)?.system.final.value || actor.system.mystic.act.main.final.value
+                    }
                 }
             }
         }
