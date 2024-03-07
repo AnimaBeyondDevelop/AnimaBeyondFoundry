@@ -29,7 +29,7 @@ const getInitialData = (spareAct) => {
         token,
         actor,
         zeon: {
-            accumulated: actor.system.mystic.zeon.accumulated.value,
+            accumulated: actor.system.mystic.zeon.accumulated,
             value: actor.system.mystic.zeon.value
         },
         act: {
@@ -171,7 +171,7 @@ export class MysticActDialog extends FormApplication {
         const { actor, zeon, act, preparedSpell, selectedSpell, ui: { newSpell, activeTab } } = this.modalData;
         const { spells, preparedSpells } = actor.system.mystic;
 
-        zeon.accumulated = actor.system.mystic.zeon.accumulated.value;
+        zeon.accumulated = actor.system.mystic.zeon.accumulated;
         zeon.value = actor.system.mystic.zeon.value;
 
         if (activeTab === 'zeon') {

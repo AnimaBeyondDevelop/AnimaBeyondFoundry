@@ -639,7 +639,7 @@ export class ABFActor extends Actor {
     this.update({
       system: {
         mystic: {
-          zeon: { accumulated: { value: (zeon.accumulated.value + accumulatedFullZeon) }, value: (zeon.value - finalAct) }
+          zeon: { accumulated: { value: (zeon.accumulated + accumulatedFullZeon) }, value: (zeon.value - finalAct) }
         }
       }
     })
@@ -650,7 +650,7 @@ export class ABFActor extends Actor {
   async releaseAct(all?: boolean, noReturnedZeon?: boolean) {
     const { zeon, preparedSpells } = this.system.mystic;
 
-    let returnedZeon = Math.max(zeon.accumulated.value - 10, 0)
+    let returnedZeon = Math.max(zeon.accumulated - 10, 0)
 
     let ids: string[] = [];
 
