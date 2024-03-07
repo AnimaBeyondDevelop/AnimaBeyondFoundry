@@ -736,7 +736,7 @@
   "macros.combat.dialog.combatMod.knockDownSmallWeapon.title": "Derribo con arma pequeña",
   "macros.combat.dialog.combatMod.disarm.title": "Desarmar",
   "macros.combat.dialog.combatMod.immobilize.title": "Presa",
-  "macros.combat.dialog.combatMod.knockOut.title": "Inconsciencia",
+  "macros.combat.dialog.combatMod.knockOut.title": "Inconsciencia sin Contundente",
   "macros.combat.dialog.combatMod.targeted.title": "Ataque apuntado",
   "macros.combat.dialog.combatMod.surprised.title": "Sorprendido",
   "macros.combat.dialog.combatMod.offensiveExpertise.title": "Erudición Ofensiva",
