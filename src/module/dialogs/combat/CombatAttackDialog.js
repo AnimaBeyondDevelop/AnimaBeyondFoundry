@@ -82,7 +82,8 @@ const getInitialData = (attacker, defender, options = {}) => {
           check: false,
           targeted: 'none',
           weakspot: false
-        }
+        },
+        poison: undefined
       },
       mystic: {
         modifier: 0,
@@ -298,7 +299,8 @@ export class CombatAttackDialog extends FormApplication {
           unarmed,
           visible,
           distanceCheck,
-          specificAttack
+          specificAttack,
+          poison
         },
         distance,
         targetedAttacks,
@@ -459,7 +461,8 @@ export class CombatAttackDialog extends FormApplication {
             visible,
             distance,
             projectile,
-            attackerCombatMod
+            attackerCombatMod,
+            poison
           }
         });
 
@@ -722,6 +725,7 @@ export class CombatAttackDialog extends FormApplication {
     const { weapons } = this.attackerActor.system.combat;
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);
+    combat.poison = weapon?.system?.poisons?.system
     combat.specificAttack.specialCharacteristic = weaponSpecialCheck(weapon);
     if (
       combat.specificAttack.value !== 'knockDown' &&

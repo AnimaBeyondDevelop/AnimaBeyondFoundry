@@ -58,7 +58,7 @@ export const INITIAL_POISON_DATA = {
   activation: 'normal',
   duration: 'normal',
   transmission: '',
-  amount: ''
+  amount: 0
 };
 
 /** @type {import("../Items").PoisonItemConfig} */
