@@ -729,7 +729,7 @@ export class CombatAttackDialog extends FormApplication {
       const addedZeonCost = { value: +offensiveExpertise + removeProtection, pool: 0 }
       mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
       const spellDamage = this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade)
-      mystic.damage.final = mystic.damage.special + spellDamage;console.log(spellDamage)
+      mystic.damage.final = mystic.damage.special + spellDamage;
     }
     const { weapons } = this.attackerActor.system.combat;
 
