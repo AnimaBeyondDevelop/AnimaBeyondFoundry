@@ -114,6 +114,10 @@ const getInitialData = (attacker, defender, options = {}) => {
         damage: {
           special: 0,
           final: 0
+        },
+        metamagics: {
+          offensiveExpertise: 0,
+          removeProtection: 0
         }
       },
       psychic: {
@@ -372,7 +376,7 @@ export class CombatAttackDialog extends FormApplication {
             attackerCombatMod.immobilize = { value: -40, apply: true }
           } else if (specificAttack.value === 'knockOut') {
             specificAttack.targeted = 'head';
-            if (critic !== NoneWeaponCritic.IMPACT) {
+            if (critic !== WeaponCritic.IMPACT) {
               attackerCombatMod.knockOut = { value: -40, apply: true }
             }
           }
@@ -481,6 +485,7 @@ export class CombatAttackDialog extends FormApplication {
           modifier,
           critic,
           damage,
+          metamagics,
           projectile,
           distanceCheck
         }, distance, targetedAttacks } = this.modalData.attacker;
@@ -489,6 +494,9 @@ export class CombatAttackDialog extends FormApplication {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true }
         };
+        if (+metamagics.offensiveExpertise) {
+          attackerCombatMod.offensiveExpertise = { value: +metamagics.offensiveExpertise, apply: true }
+        }
         this.attackerActor.setFlag(
           'animabf',
           'spellCastingOverride',
@@ -716,12 +724,13 @@ export class CombatAttackDialog extends FormApplication {
     if (!mystic.spellUsed) {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
-    const spell = spells.find(w => w._id === mystic.spellUsed);
-    const spellUsedEffect =
-      spell?.system.grades[mystic.spellGrade].description.value ?? '';
-    mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
-    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
-
+    if (mystic.spellUsed) {
+      const { offensiveExpertise, removeProtection } = mystic.metamagics;
+      const addedZeonCost = { value: +offensiveExpertise + removeProtection, pool: 0 }
+      mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
+      const spellDamage = this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade)
+      mystic.damage.final = mystic.damage.special + spellDamage;
+    }
     const { weapons } = this.attackerActor.system.combat;
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);
@@ -821,7 +830,7 @@ export class CombatAttackDialog extends FormApplication {
         }
       }
     }
-    if (this.modalData.attacker.mystic.spellCasting.override) {
+    if (this.modalData.attacker.mystic.spellCasting?.override) {
       this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
     }
     if (prevPower !== this.modalData.attacker.psychic.powerUsed) {

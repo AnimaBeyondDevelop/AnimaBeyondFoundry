@@ -891,7 +891,7 @@
   "macros.combat.dialog.specificAttack.disable.title": "Inutilizar",
   "macros.combat.dialog.specificAttack.disarm.title": "Desarmar",
   "macros.combat.dialog.specificAttack.immobilize.title": "Presa",
-  "macros.combat.dialog.specificAttack.knockOut.title": "Inconsciencia",
+  "macros.combat.dialog.specificAttack.knockOut.title": "Inconsciencia sin Contundente",
   "macros.combat.dialog.specificAttack.targeted.title": "Apuntado",
   "macros.combat.dialog.weapon.critic.title": "Crítico",
   "macros.combat.dialog.weapon.title": "Arma",

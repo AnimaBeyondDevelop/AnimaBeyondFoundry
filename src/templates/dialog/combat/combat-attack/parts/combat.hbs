@@ -103,7 +103,7 @@
   disabled=this.attackSent
   inputName='attacker.combat.specificAttack.targeted'
 }}
-  <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted 'none')}}selected{{/if}} value='none'>{{localize (concat 'macros.combat.dialog.targetedAttack.none.title')}}</option>
+  <option {{#if (is "eq" this.attacker.combat.specificAttack.targeted 'none')}}selected{{/if}} value='none'>{{localize (concat 'macros.combat.dialog.targetedAttack.none.title')}}</option>
   {{#each this.attacker.targetedAttacks}}
     {{#if (or (is 'eq' @key 'elbow') (is 'eq' @key 'foot') (is 'eq' @key 'hand') (is 'eq' @key 'knee') (is 'eq' @key 'arm') (is 'eq' @key 'thigh') (is 'eq' @key 'calf') (is 'eq' @key 'wrist'))}}
       <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted @key)}}selected{{/if}} value='{{@key}}'>{{localize (concat 'macros.combat.dialog.targetedAttack.' @key '.title')}}</option>
