@@ -714,7 +714,7 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const addedZeonCost = { value: 0, pool: 0 }
-    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost,  mystic.spellCasting.casted, mystic.spellCasting.override);
+    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
     mystic.damage.final = mystic.damage.special + this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade);
 
     const { weapons } = this.attackerActor.system.combat;
