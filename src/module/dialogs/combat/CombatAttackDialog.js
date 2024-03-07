@@ -376,7 +376,7 @@ export class CombatAttackDialog extends FormApplication {
             attackerCombatMod.immobilize = { value: -40, apply: true }
           } else if (specificAttack.value === 'knockOut') {
             specificAttack.targeted = 'head';
-            if (critic !== NoneWeaponCritic.IMPACT) {
+            if (critic !== WeaponCritic.IMPACT) {
               attackerCombatMod.knockOut = { value: -40, apply: true }
             }
           }

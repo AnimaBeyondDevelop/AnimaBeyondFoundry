@@ -779,7 +779,7 @@
   "macros.combat.dialog.combatMod.knockDownSmallWeapon.title": "KnockDown with small weapon",
   "macros.combat.dialog.combatMod.disarm.title": "Disarm",
   "macros.combat.dialog.combatMod.immobilize.title": "Immobilize",
-  "macros.combat.dialog.combatMod.knockOut.title": "KnockOut",
+  "macros.combat.dialog.combatMod.knockOut.title": "KnockOut without Impact",
   "macros.combat.dialog.combatMod.targeted.title": "Targeted attack",
   "macros.combat.dialog.combatMod.surprised.title": "Surprised",
   "macros.combat.dialog.combatMod.offensiveExpertise.title": "Offensive Expertise",
