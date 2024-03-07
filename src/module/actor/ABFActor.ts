@@ -497,7 +497,7 @@ export class ABFActor extends Actor {
     this.update({
       system: {
         mystic: {
-          zeon: { accumulated: { value: newAccumulateZeon } }
+          zeon: { accumulated: newAccumulateZeon }
         }
       }
     });
