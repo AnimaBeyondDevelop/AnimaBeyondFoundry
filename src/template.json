@@ -196,6 +196,7 @@
         "combatSpecialSkills": [],
         "combatTables": [],
         "ammo": [],
+        "poisons": [],
         "weapons": [],
         "armors": [],
         "supernaturalShields": []
@@ -316,6 +317,7 @@
       "supernaturalShield",
       "mentalPattern",
       "note",
+      "poison",
       "psychicDiscipline",
       "psychicPower",
       "technique",
@@ -345,6 +347,13 @@
       "naturalPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
       "perceptionPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
       "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } }
+    },
+    "poison": {
+      "level": 0,
+      "effects": { "main": { "type": "none", "check": 0 }, "secondary": { "type": "none", "check": 0 } },
+      "activation": "normal",
+      "duration": "normal",
+      "transmission": ""
     },
     "spell": {
       "level": { "value": 0 },

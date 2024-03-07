@@ -978,6 +978,7 @@ export const INITIAL_ACTOR_DATA = {
     combatSpecialSkills: [],
     combatTables: [],
     ammo: [],
+    poisons: [],
     weapons: [],
     armors: [],
     supernaturalShields: []

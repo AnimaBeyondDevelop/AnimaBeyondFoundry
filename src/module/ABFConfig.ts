@@ -12,6 +12,7 @@ import {
   PsychicPowerCombatTypes
 } from './types/psychic/PsychicPowerItemConfig.js';
 import { SpellGrades } from './types/mystic/SpellItemConfig';
+import { Effects, Activation, Duration, Transmission } from './types/combat/PoisonItemConfig';
 
 export const ABFConfig: Record<string, any> = {};
 
@@ -59,6 +60,37 @@ ABFConfig.iterables = {
         [WeaponShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
         [WeaponShotType.THROW]: 'anima.ui.combat.weapon.shotType.throw.title'
       }
+    },
+    poison: {
+      effects: {
+        [Effects.NONE]: 'anima.ui.combat.poison.effects.none.title',
+        [Effects.BLINDNESS]: 'anima.ui.combat.poison.effects.blindness.title',
+        [Effects.DAMAGE]: 'anima.ui.combat.poison.effects.damage.title',
+        [Effects.DEATH]: 'anima.ui.combat.poison.effects.death.title',
+        [Effects.HALLUCINATIONS]: 'anima.ui.combat.poison.effects.hallucinations.title',
+        [Effects.PAIN]: 'anima.ui.combat.poison.effects.pain.title',
+        [Effects.PARALYSIS]: 'anima.ui.combat.poison.effects.paralysis.title',
+        [Effects.PENALTY]: 'anima.ui.combat.poison.effects.penalty.title',
+        [Effects.RAGE]: 'anima.ui.combat.poison.effects.rage.title',
+        [Effects.TERROR]: 'anima.ui.combat.poison.effects.terror.title',
+        [Effects.UNCONSCIOUSNESS]: 'anima.ui.combat.poison.effects.unconsciousness.title',
+        [Effects.WEAKNESS]: 'anima.ui.combat.poison.effects.weakness.title',
+      },
+      activation: {
+        [Activation.NORMAL]: 'anima.ui.combat.poison.activation.normal.title',
+        [Activation.QUICK]: 'anima.ui.combat.poison.activation.quick.title',
+        [Activation.INSTANTANEOUS]: 'anima.ui.combat.poison.activation.instantaneous.title'
+      },
+      duration: {
+        [Duration.NORMAL]: 'anima.ui.combat.poison.duration.normal.title',
+        [Duration.LONG]: 'anima.ui.combat.poison.duration.long.title'
+      },
+      transmission: {
+        [Transmission.BLOOD]: 'anima.ui.combat.poison.transmission.blood.title',
+        [Transmission.INGESTION]: 'anima.ui.combat.poison.transmission.ingestion.title',
+        [Transmission.CONTACT]: 'anima.ui.combat.poison.transmission.contact.title',
+        [Transmission.INHALING]: 'anima.ui.combat.poison.transmission.inhaling.title'
+      },
     }
   },
   mystic: {

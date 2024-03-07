@@ -1,0 +1,83 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="poison-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+      <div class='poison-header'>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="name"
+          hideTitle=true
+          inputType="text"
+          inputName=(concat "name")
+          inputValue=item.name
+        }}
+      </div>
+    {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="poison-item-dialog"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="level"
+        title=(localize "anima.ui.combat.poisons.level.title")
+        inputName="system.level"
+        inputValue=system.level
+      }}
+      {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="effects"
+        isVertical=true
+        choices=config.iterables.combat.poison.effects
+        title=(localize "anima.ui.combat.poisons.effects.main.title")
+        inputName="system.effects.main.type"
+        inputValue=system.effects.main.type
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="effects-check"
+        title=(localize "anima.ui.combat.poisons.effects.check.title")
+        inputName="system.effects.main.check"
+        inputValue=system.effects.main.check
+      }}
+      {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="effects"
+        isVertical=true
+        choices=config.iterables.combat.poison.effects
+        title=(localize "anima.ui.combat.poisons.effects.secondary.title")
+        inputName="system.effects.secondary.type"
+        inputValue=system.effects.secondary.type
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="effects-check"
+        title=(localize "anima.ui.combat.poisons.effects.check.title")
+        inputName="system.effects.secondary.check"
+        inputValue=system.effects.secondary.check
+      }}
+      {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="activation"
+        isVertical=true
+        choices=config.iterables.combat.poison.activation
+        title=(localize "anima.ui.combat.poisons.activation.title")
+        inputName="system.activation"
+        inputValue=system.activation
+      }}
+      {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="duration"
+        isVertical=true
+        choices=config.iterables.combat.poison.duration
+        title=(localize "anima.ui.combat.poisons.duration.title")
+        inputName="system.duration"
+        inputValue=system.duration
+      }}
+      {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        class="transmission"
+        isVertical=true
+        choices=config.iterables.combat.poison.transmission
+        title=(localize "anima.ui.combat.poisons.transmission.title")
+        inputName="system.transmission"
+        inputValue=system.transmission
+      }}
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

@@ -6,6 +6,7 @@ import { ABFItemBaseDataSource } from '../../animabf.types';
 import { ABFItemConfigFactory } from './ABFItemConfig';
 import { INITIAL_WEAPON_DATA } from './combat/WeaponItemConfig';
 import { INITIAL_ARMOR_DATA } from './combat/ArmorItemConfig';
+import { INITIAL_POISON_DATA } from './combat/PoisonItemConfig';
 import { INITIAL_SUPERNATURAL_SHIELD_DATA } from './combat/SupernaturalShieldItemConfig';
 import { INITIAL_ACT_VIA_DATA } from './mystic/ActViaItemConfig';
 import { INITIAL_INNATE_MAGIC_VIA_DATA } from './mystic/InnateMagicViaItemConfig';
@@ -231,6 +232,12 @@ export type AmmoItemData = {
 export type AmmoDataSource = ABFItemBaseDataSource<AmmoItemData>;
 export type AmmoChanges = ItemChanges<AmmoItemData>;
 export type AmmoItemConfig = ABFItemConfig<AmmoItemData>;
+
+export type PoisonItemData = typeof INITIAL_POISON_DATA;
+
+export type PoisonDataSource = ABFItemBaseDataSource<PoisonItemData>;
+export type PoisonChanges = ItemChanges<PoisonItemData>;
+export type PoisonItemConfig = ABFItemConfig<PoisonItemData>;
 
 export type ArmorItemData = typeof INITIAL_ARMOR_DATA;
 

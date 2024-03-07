@@ -106,6 +106,15 @@
                 }}
               {{/if}}
             {{/if}}
+            {{>
+            'systems/animabf/templates/common/domain/weapon/select-poison.hbs'
+              class="poisons"
+              isVertical=true
+              title=(localize "anima.ui.combat.weapons.poisons.title")
+              poisons=xRoot.system.combat.poisons
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.poisonId")
+              inputValue=weapon.system.poisonId
+            }}
             {{> 'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs'
               class="knowledge-type"
               title=(localize "anima.ui.combat.weapons.knowledgeType.title")
