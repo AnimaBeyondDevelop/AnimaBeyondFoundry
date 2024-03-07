@@ -517,15 +517,18 @@ export class ABFActor extends Actor {
    * @param override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting. Default is false.
    * @returns {SpellCasting} - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
    */
-  mysticCanCastEvaluate(spell: any, spellGrade: string, casted = { prepared: false, innate: false }, override = false) {
+  mysticCanCastEvaluate(spellId: string, spellGrade: string, addedZeonCost = { value: 0, pool: 0 }, casted = { prepared: false, innate: false }, override = false) {
     const spellCasting = SpellCasting;
     spellCasting.casted = casted
     spellCasting.override = override
-    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated.value ?? 0;
+    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
+    spellCasting.zeon.value = this.system.mystic.zeon.value ?? 0;
 
-    if (override) { return spellCasting };
-
-    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+    if (override) return spellCasting;
+    const spell = this.getItem(spellId)
+    if (spell === undefined) return;
+    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value + addedZeonCost.value;
+    spellCasting.zeon.poolCost = addedZeonCost.pool;
     spellCasting.canCast.prepared =
       this.system.mystic.preparedSpells.find(
         ps => ps.name === spell.name && ps.system.grade.value === spellGrade
@@ -560,31 +563,42 @@ export class ABFActor extends Actor {
     if (override) {
       return false;
     }
-    if (canCast?.innate && casted?.innate && canCast?.prepared && casted?.prepared) {
+    if (zeon.value < zeon.poolCost) {
       ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.mustChoose')
+        i18n.localize('dialogs.spellCasting.warning.zeonPool')
       );
       return true;
     }
-    if (canCast?.innate && casted?.innate) {
-      return;
-    } else if (!canCast?.innate && casted?.innate) {
-      ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.innateMagic')
-      );
-      return true;
-    } else if (canCast?.prepared && casted?.prepared) {
-      return false;
-    } else if (!canCast?.prepared && casted?.prepared) {
-      return ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.preparedSpell')
-      );
-    } else if (zeon.accumulated < zeon.cost) {
+    if (canCast) {
+      if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
+        ui.notifications.warn(
+          i18n.localize('dialogs.spellCasting.warning.mustChoose')
+        );
+        return true;
+      }
+      if (canCast.innate && casted.innate) {
+        return false;
+      } else if (!canCast.innate && casted.innate) {
+        ui.notifications.warn(
+          i18n.localize('dialogs.spellCasting.warning.innateMagic')
+        );
+        return true;
+      } else if (canCast.prepared && casted.prepared) {
+        return false;
+      } else if (!canCast.prepared && casted.prepared) {
+        ui.notifications.warn(
+          i18n.localize('dialogs.spellCasting.warning.preparedSpell')
+        );
+        return true
+      }
+    }
+    if (zeon.accumulated < zeon.cost) {
       ui.notifications.warn(
         i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
       );
       return true;
-    } else return false;
+    }
+    return false;
   };
 
   async mysticAct(act: number, spellID?: string, spellGrade?: string, preapredSpellId?: string) {
@@ -710,16 +724,30 @@ export class ABFActor extends Actor {
     if (override) {
       return;
     }
+    if (zeon.poolCost) {
+      this.consumeZeon(zeon.poolCost)
+    }
     if (casted.innate) {
       return;
     }
     if (casted.prepared) {
       this.deletePreparedSpell(spellName, spellGrade);
-    } else {
+    } else if (zeon.cost) {
       this.consumeAccumulatedZeon(zeon.cost);
     }
   }
 
+  consumeZeon(zeonCost: number) {
+    const newZeon = this.system.mystic.zeon.value - zeonCost;
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { value: newZeon }
+        }
+      }
+    });
+  }
   /**
    * Updates the accumulated zeon value of a mystic character by subtracting the zeon cost of a spell.
    * 
@@ -727,12 +755,12 @@ export class ABFActor extends Actor {
    * @returns {void}
    */
   consumeAccumulatedZeon(zeonCost: number) {
-    const newAccumulateZeon = this.system.mystic.zeon.accumulated.value - zeonCost;
+    const newAccumulateZeon = this.system.mystic.zeon.accumulated - zeonCost;
 
     this.update({
       system: {
         mystic: {
-          zeon: { accumulated: { value: newAccumulateZeon } }
+          zeon: { accumulated: newAccumulateZeon }
         }
       }
     });
