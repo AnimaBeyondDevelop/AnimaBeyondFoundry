@@ -558,7 +558,7 @@ export class ABFActor extends Actor {
     this.update({
       system: {
         mystic: {
-          zeon: { accumulated: { value: (zeon.accumulated + accumulatedFullZeon) }, value: (zeon.value - finalAct) }
+          zeon: { accumulated: (zeon.accumulated + accumulatedFullZeon), value: (zeon.value - finalAct) }
         }
       }
     })
@@ -593,7 +593,7 @@ export class ABFActor extends Actor {
     this.update({
       system: {
         mystic: {
-          zeon: { accumulated: { value: 0 }, value: (zeon.value + returnedZeon) }
+          zeon: { accumulated: 0, value: (zeon.value + returnedZeon) }
         }
       }
     })
