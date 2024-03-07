@@ -487,6 +487,9 @@ export class GMCombatDialog extends FormApplication {
     }
 
     if (attacker.result?.type === 'combat') {
+      if (!attacker.result.weapon) {
+        attacker.result.weapon = { name: 'Unarmed' }
+      }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
       const { projectile } = attacker.result.values;
