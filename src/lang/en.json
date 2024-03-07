@@ -54,6 +54,7 @@
   "anima.ui.combat.poison.transmission.ingestion.title": "Ingestion",
   "anima.ui.combat.poison.transmission.contact.title": "Contact",
   "anima.ui.combat.poison.transmission.inhaling.title": "Through smell",
+  "anima.ui.combat.poisons.amount.title": "Amount",
   "anima.ui.combat.poisons.activation.title": "Activation",
   "anima.ui.combat.poisons.duration.title": "Duration",
   "anima.ui.combat.poisons.effects.main.title": "Effect",

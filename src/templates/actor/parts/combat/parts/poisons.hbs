@@ -50,6 +50,14 @@
           inputName=(concat "system.dynamic.poisons." poison._id ".system.transmission")
           inputValue=poison.system.transmission
         }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="amount"
+          title=(localize "anima.ui.combat.poisons.amount.title")
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "system.dynamic.poisons." poison._id ".system.amount")
+          inputValue=poison.system.amount
+        }}
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

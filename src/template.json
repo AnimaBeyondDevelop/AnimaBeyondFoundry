@@ -353,7 +353,8 @@
       "effects": { "main": { "type": "none", "check": 0 }, "secondary": { "type": "none", "check": 0 } },
       "activation": "normal",
       "duration": "normal",
-      "transmission": ""
+      "transmission": "",
+      "amount": 0
     },
     "spell": {
       "level": { "value": 0 },

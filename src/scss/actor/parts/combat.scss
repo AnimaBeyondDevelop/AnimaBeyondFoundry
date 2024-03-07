@@ -123,6 +123,12 @@
         }
       }
 
+      .amount {
+        .input-container {
+          width: 3.5rem;
+        }
+      }
+
       display: flex;
       justify-content: space-between;
     }

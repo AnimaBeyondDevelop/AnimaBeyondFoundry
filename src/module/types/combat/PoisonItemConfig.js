@@ -57,7 +57,8 @@ export const INITIAL_POISON_DATA = {
   effects: { main: { type: 'none', check: 0 }, secondary: { type: 'none', check: 0 } },
   activation: 'normal',
   duration: 'normal',
-  transmission: ''
+  transmission: '',
+  amount: ''
 };
 
 /** @type {import("../Items").PoisonItemConfig} */
