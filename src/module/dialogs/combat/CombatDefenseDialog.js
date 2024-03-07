@@ -702,10 +702,11 @@ export class CombatDefenseDialog extends FormApplication {
     if (!mystic.spellUsed) {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
-    const {defensiveExpertise} = mystic.metamagics;
-    const addedZeonCost = { value: +defensiveExpertise, pool: 0 }
-    mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
-
+    if (mystic.spellUsed) {
+      const { defensiveExpertise } = mystic.metamagics;
+      const addedZeonCost = { value: +defensiveExpertise, pool: 0 }
+      mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
+    }
     const { supernaturalShields } = this.defenderActor.system.combat;
     if (!mystic.supernaturalShield.shieldUsed) {
       mystic.supernaturalShield.shieldUsed = supernaturalShields.find(
