@@ -395,7 +395,7 @@ export class ABFActor extends Actor {
     const spellCasting = SpellCasting;
     spellCasting.casted = casted
     spellCasting.override = override
-    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated.value ?? 0;
+    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
 
     if (override) { return spellCasting };
 
@@ -492,7 +492,7 @@ export class ABFActor extends Actor {
    * @returns {void}
    */
   consumeAccumulatedZeon(zeonCost: number) {
-    const newAccumulateZeon = this.system.mystic.zeon.accumulated.value - zeonCost;
+    const newAccumulateZeon = this.system.mystic.zeon.accumulated - zeonCost;
 
     this.update({
       system: {
