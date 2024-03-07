@@ -739,6 +739,8 @@
   "macros.combat.dialog.combatMod.knockOut.title": "Inconsciencia",
   "macros.combat.dialog.combatMod.targeted.title": "Ataque apuntado",
   "macros.combat.dialog.combatMod.surprised.title": "Sorprendido",
+  "macros.combat.dialog.combatMod.offensiveExpertise.title": "Erudición Ofensiva",
+  "macros.combat.dialog.combatMod.defensiveExpertise.title": "Erudición Defensiva",
   "macros.combat.dialog.applyDamage.title": "Aplicar daño",
   "macros.combat.dialog.applyCritic.title": "Aplicar crítico",
   "macros.combat.dialog.counterAttackBonus.title": "Bono al contraataque",

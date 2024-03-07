@@ -91,6 +91,9 @@ const getInitialData = (attacker, defender) => {
           shieldUsed: undefined,
           shieldValue: 0,
           newShield: true
+        },
+        metamagics: {
+          defensiveExpertise: 0
         }
       },
       psychic: {
@@ -460,6 +463,7 @@ export class CombatDefenseDialog extends FormApplication {
           spellUsed,
           spellGrade,
           spellCasting,
+          metamagics,
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
@@ -473,6 +477,9 @@ export class CombatDefenseDialog extends FormApplication {
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true }
       };
+      if (+metamagics.defensiveExpertise) {
+        defenderCombatMod.defensiveExpertise = { value: +metamagics.defensiveExpertise, apply: true }
+      }
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
       if (!newShield) {
@@ -695,7 +702,8 @@ export class CombatDefenseDialog extends FormApplication {
     if (!mystic.spellUsed) {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
-    const addedZeonCost = { value: 0, pool: 0 }
+    const {defensiveExpertise} = mystic.metamagics;
+    const addedZeonCost = { value: +defensiveExpertise, pool: 0 }
     mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
 
     const { supernaturalShields } = this.defenderActor.system.combat;
