@@ -12,7 +12,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @property {boolean} override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting.
  */
 export const SpellCasting = {
-  zeon: { accumulated: 0, cost: 0 },
+  zeon: { accumulated: 0, cost: 0, poolCost: 0 },
   canCast: { prepared: false, innate: false },
   casted: { prepared: false, innate: false },
   override: false

@@ -452,15 +452,17 @@ export class ABFActor extends Actor {
    * @param override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting. Default is false.
    * @returns {SpellCasting} - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
    */
-  mysticCanCastEvaluate(spell: any, spellGrade: string, casted = { prepared: false, innate: false }, override = false) {
+  mysticCanCastEvaluate(spellId: string, spellGrade: string, addedZeonCost = { value: 0, pool: 0 }, casted = { prepared: false, innate: false }, override = false) {
     const spellCasting = SpellCasting;
     spellCasting.casted = casted
     spellCasting.override = override
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated.value ?? 0;
 
-    if (override) { return spellCasting };
-
-    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+    if (override) return spellCasting;
+    const spell = this.getItem(spellId)
+    if (spell === undefined) return;
+    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value + addedZeonCost.value;
+    spellCasting.zeon.poolCost = addedZeonCost.pool;
     spellCasting.canCast.prepared =
       this.system.mystic.preparedSpells.find(
         ps => ps.name === spell.name && ps.system.grade.value === spellGrade

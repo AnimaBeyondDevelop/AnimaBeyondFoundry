@@ -693,10 +693,10 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
+      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
-    const spell = spells.find(w => w._id === mystic.spellUsed);
-    mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
+    const addedZeonCost = { value: 0, pool: 0 }
+    mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
 
     const { supernaturalShields } = this.defenderActor.system.combat;
     if (!mystic.supernaturalShield.shieldUsed) {
@@ -743,7 +743,7 @@ export class CombatDefenseDialog extends FormApplication {
         }
       }
     }
-    if (this.modalData.defender.mystic.spellCasting.override) {
+    if (this.modalData.defender.mystic.spellCasting?.override) {
       this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
     }
 
