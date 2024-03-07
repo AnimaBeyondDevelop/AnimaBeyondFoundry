@@ -199,6 +199,18 @@ export const WeaponItemConfig = ABFItemConfigFactory({
 
       weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
     }
+    if (
+      typeof weapon.system.poisonId === 'string' &&
+      !!weapon.system.poisonId
+    ) {
+      const {
+        system: {
+          combat: { poisons }
+        }
+      } = actor;
+
+      weapon.system.poisons = poisons.find(i => i._id === weapon.system.poisonId);
+    }
   },
   prepareItem(data) {
     mutateWeapon(data);

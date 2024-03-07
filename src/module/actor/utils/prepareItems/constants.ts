@@ -30,6 +30,7 @@ import { TechniqueItemConfig } from '../../../types/domine/TechniqueItemConfig';
 import { TitleItemConfig } from '../../../types/general/TitleItemConfig';
 import { WeaponItemConfig } from '../../../types/combat/WeaponItemConfig';
 import { AmmoItemConfig } from '../../../types/combat/AmmoItemConfig';
+import { PoisonItemConfig } from '../../../types/combat/PoisonItemConfig';
 import { ElanPowerItemConfig } from '../../../types/general/ElanPowerItemConfig';
 import { ArmorItemConfig } from '../../../types/combat/ArmorItemConfig';
 import { SupernaturalShieldItemConfig } from '../../../types/combat/SupernaturalShieldItemConfig';
@@ -71,6 +72,7 @@ export const ITEM_CONFIGURATIONS = {
   [SpellItemConfig.type]: SpellItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,
   [NoteItemConfig.type]: NoteItemConfig,
+  [PoisonItemConfig.type]: PoisonItemConfig,
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,
   [PsychicPowerItemConfig.type]: PsychicPowerItemConfig,
   [TechniqueItemConfig.type]: TechniqueItemConfig,

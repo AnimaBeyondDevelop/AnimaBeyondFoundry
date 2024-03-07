@@ -31,6 +31,7 @@ export enum ABFItems {
   COMBAT_SPECIAL_SKILL = 'combatSpecialSkill',
   COMBAT_TABLE = 'combatTable',
   AMMO = 'ammo',
+  POISON = 'poison',
   WEAPON = 'weapon',
   ARMOR = 'armor',
   SUPERNATURAL_SHIELD = 'supernaturalShield',
