@@ -170,6 +170,10 @@ export class CombatDefenseDialog extends FormApplication {
       } else {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
+      mystic.metamagics.definedMagicProjection = this.attackerActor.getFlag(
+        'animabf',
+        'lastDefinedMagicProjection'
+      ) ?? 0;
       const spellCastingOverride = this.defenderActor.getFlag(
         'animabf',
         'spellCastingOverride'
@@ -485,6 +489,7 @@ export class CombatDefenseDialog extends FormApplication {
       if (+metamagics.definedMagicProjection) {
         magicProjection.final = this.defenderActor.definedMagicProjection(metamagics.definedMagicProjection, 'defensive')
         this.modalData.defender.withoutRoll = true
+        this.attackerActor.setFlag('animabf', 'lastDefinedMagicProjection', metamagics.definedMagicProjection);
       }
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
