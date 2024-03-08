@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { getSelectedToken } from '../../utils/functions/getSelectedToken';
+import { roundTo5Multiples } from '../../combat/utils/roundTo5Multiples';
 import { ABFDialogs } from '../../dialogs/ABFDialogs';
 
 const getInitialData = (spareAct) => {
@@ -169,7 +170,7 @@ export class MysticActDialog extends FormApplication {
     }
     getData() {
         const { actor, zeon, act, preparedSpell, selectedSpell, ui: { newSpell, activeTab } } = this.modalData;
-        const { spells, preparedSpells } = actor.system.mystic;
+        const { spells, preparedSpells, magicLevel: { metamagics } } = actor.system.mystic;
 
         zeon.accumulated = actor.system.mystic.zeon.accumulated;
         zeon.value = actor.system.mystic.zeon.value;
@@ -205,9 +206,11 @@ export class MysticActDialog extends FormApplication {
         if (act.spareAct) {
             act.final = act.spareAct
         } else {
-            act.final = act.value + act.modifier + act.fatigueUsed * 15
+            act.final = act.value + act.modifier + act.fatigueUsed *
+                (metamagics.arcanePower.exploitationOfNaturalEnergy.sphere == 2 ? 40 :
+                    metamagics.arcanePower.exploitationOfNaturalEnergy.sphere == 1 ? 25 : 15)
         }
-        act.partial = Math.floor(act.final / 2)
+        act.partial = roundTo5Multiples(act.final / 2)
 
         if (actor.system.mystic.zeon.value < act.final) {
             act.partial = Math.min(act.partial, actor.system.mystic.zeon.value);
