@@ -18,7 +18,7 @@
 {{#if (is "gt" this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'anima.ui.mystic.metamagics.definedMagicProjection.title')
-    disabled=(or this.defenseSent (is "eq" this.defender.mystic.supernaturalShield.newShield false))
+    disabled=this.defenseSent
     inputName='defender.mystic.metamagics.definedMagicProjection'
   }}
     <option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 0)}}selected{{/if}} value='0'>0</option>
@@ -42,7 +42,7 @@
 {{#if (and (is "gt" this.defender.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 0) (is "eq" this.defender.mystic.metamagics.definedMagicProjection 0))}}
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'anima.ui.mystic.metamagics.defensiveExpertise.title')
-    disabled=(or this.defenseSent (is "eq" this.defender.mystic.supernaturalShield.newShield false))
+    disabled=this.defenseSent
     inputName='defender.mystic.metamagics.defensiveExpertise'
   }}
     <option {{#if (is "eq" ../this.defender.mystic.metamagics.defensiveExpertise 0)}}selected{{/if}} value='0'>0</option>

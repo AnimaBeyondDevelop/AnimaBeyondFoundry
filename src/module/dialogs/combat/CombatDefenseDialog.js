@@ -713,6 +713,10 @@ export class CombatDefenseDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
     if (mystic.spellUsed) {
+      if (mystic.spellCasting.casted.prepared) {
+        const preparedSpell = this.defenderActor.getPreparedSpell(mystic.spellUsed, mystic.spellGrade);
+        mystic.metamagics = mergeObject(mystic.metamagics, preparedSpell?.system?.metamagics)
+      }
       if (mystic.metamagics.definedMagicProjection > 0) {
         mystic.metamagics.defensiveExpertise = 0;
       }
@@ -731,7 +735,7 @@ export class CombatDefenseDialog extends FormApplication {
     );
     mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
     if (!mystic.supernaturalShield.newShield) {
-      mystic.metamagics = mysticShield.system.metamagics
+      mystic.metamagics = mergeObject(mystic.metamagics, mysticShield.system.metamagics);
     }
 
     if (!psychic.supernaturalShield.shieldUsed) {

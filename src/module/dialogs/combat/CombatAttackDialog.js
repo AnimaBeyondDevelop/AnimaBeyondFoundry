@@ -736,6 +736,10 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     if (mystic.spellUsed) {
+      if (mystic.spellCasting.casted.prepared) {
+        const preparedSpell = this.attackerActor.getPreparedSpell(mystic.spellUsed, mystic.spellGrade);
+        mystic.metamagics = mergeObject(mystic.metamagics, preparedSpell?.system?.metamagics)
+      }
       if (mystic.metamagics.definedMagicProjection > 0) {
         mystic.metamagics.offensiveExpertise = 0;
       }
