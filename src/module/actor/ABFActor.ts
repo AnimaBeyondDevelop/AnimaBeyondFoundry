@@ -22,6 +22,7 @@ import { damageCheck } from '../combat/utils/damageCheck.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../utils/dialogs/openComplexInputDialog';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -90,7 +91,7 @@ export class ABFActor extends Actor {
 
   async withstandPain(sendToChat = true) {
     const { pain } = this.system.general.modifiers;
-    const withstandPainRoll = await this.rollAbility('withstandPain', sendToChat)
+    const withstandPainRoll = await this.rollAbility('withstandPain', 0, sendToChat)
     const { inhuman, zen } = this.system.general.settings;
     const withstandPainTotal = difficultyAchieved(withstandPainRoll, 0, inhuman, zen)
     const withstandPain = withstandPainBonus(withstandPainTotal)
@@ -142,7 +143,7 @@ export class ABFActor extends Actor {
    * 
    * This code creates a new instance of the ABFActor class and calls the `rollAbility` method with the ability name 'agility' and the `sendToChat` parameter set to true. The method will calculate the ability value, prompt the user for a modifier, roll the dice, and display the result in the chat.
    */
-  async rollAbility(ability: string, sendToChat = true) {
+  async rollAbility(ability: string, bonus = 0, sendToChat = true) {
     const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
     const { secondaries } = this.system;
     let groupPath = '';
@@ -159,7 +160,7 @@ export class ABFActor extends Actor {
     const abilityValue = this.system.secondaries[groupPath][ability].final.value;
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog(name);
-    let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
+    let formula = `1d100xa + ${abilityValue} + ${mod + bonus ?? 0}`;
     if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
     const roll = new ABFFoundryRoll(formula, this.system);
     roll.roll();
@@ -536,6 +537,115 @@ export class ABFActor extends Actor {
     return false;
   };
 
+  async mysticAct(act: number, spellID?: string, spellGrade?: string, preapredSpellId?: string) {
+    const { zeon, spells, preparedSpells } = this.system.mystic;
+    let spareAct = 0;
+    let accumulatedFullZeon = 0
+
+    if (spellID) {
+      const spell = spells.find(w => w._id === spellID);
+      const zeonCost = spell.system.grades[spellGrade || 'base'].zeon.value
+      spareAct = act - zeonCost
+      this.createInnerItem({
+        type: ABFItems.PREPARED_SPELL,
+        name: spell.name,
+        system: {
+          grade: { value: spellGrade },
+          zeonAcc: { value: act, max: zeonCost },
+          prepared: { value: spareAct >= 0 },
+          via: { value: spell.system.via.value }
+        }
+      })
+    } else if (preapredSpellId) {
+      const preapredSpell = preparedSpells.find(w => w._id === preapredSpellId);
+
+      spareAct = preapredSpell.system.zeonAcc.value + act - preapredSpell.system.zeonAcc.max;
+
+      this.updateInnerItem({
+        type: ABFItems.PREPARED_SPELL,
+        id: preapredSpellId,
+        system: {
+          zeonAcc: { value: preapredSpell.system.zeonAcc.value + act },
+          prepared: { value: spareAct >= 0 }
+        }
+      })
+    } else { accumulatedFullZeon = act }
+
+    const finalAct = spareAct >= 0 ? act - spareAct : act;
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: (zeon.accumulated + accumulatedFullZeon), value: (zeon.value - finalAct) }
+        }
+      }
+    })
+    executeMacro('ACT', { thisActor: this });
+    return spareAct;
+  }
+
+  async releaseAct(all?: boolean, noReturnedZeon?: boolean) {
+    const { zeon, preparedSpells } = this.system.mystic;
+
+    let returnedZeon = Math.max(zeon.accumulated - 10, 0)
+
+    let ids: string[] = [];
+
+    for (const prepareSpell of preparedSpells) {
+      if (all) {
+        returnedZeon += Math.max(prepareSpell.system.zeonAcc.value - 10, 0);
+      } else if (!prepareSpell.system.prepared.value) {
+        returnedZeon += Math.max(prepareSpell.system.zeonAcc.value - 10, 0);
+        ids.push(prepareSpell._id);
+      }
+    }
+
+    returnedZeon = noReturnedZeon ? 0 : returnedZeon
+
+    if (all) {
+      this.deleteInnerItem(ABFItems.PREPARED_SPELL, undefined, all)
+    } else {
+      this.deleteInnerItem(ABFItems.PREPARED_SPELL, ids)
+    }
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: 0, value: (zeon.value + returnedZeon) }
+        }
+      }
+    })
+    executeMacro('ACT', { thisActor: this, releaseAct: true });
+  }
+
+  async zeonWithstandPain(sendToChat = true) {
+    const { i18n } = game;
+    const { preparedSpells } = this.system.mystic;
+    const bonus = preparedSpells.length > 0 ? 40 : 0;
+    const withstandPainRoll = await this.rollAbility('withstandPain', bonus, sendToChat)
+    const damage: any = this.getFlag('animabf', 'lastDamageApplied') ?? 0
+
+    let flavor = i18n.format('macros.dialog.zeonWithstandPain.succeed.title')
+
+    if (withstandPainRoll !== undefined) {
+      if (withstandPainRoll < damage) {
+        this.releaseAct(true, true)
+        flavor = i18n.format('macros.dialog.zeonWithstandPain.criticalFail.title');
+        executeMacro('ACT', { thisActor: this, loseZeon: true });
+      } else if (withstandPainRoll < damage * 2) {
+        this.releaseAct(true)
+        flavor = i18n.format('macros.dialog.zeonWithstandPain.failed.title');
+        executeMacro('ACT', { thisActor: this, releaseAct: true });
+      }
+    }
+    if (sendToChat) {
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor
+      });
+    }
+    return
+  }
+
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
    * 
@@ -622,13 +732,13 @@ export class ABFActor extends Actor {
    * @param spellGrade - The grade of the spell to be deleted.
    * @returns None. The method updates the `mystic.preparedSpells` array of the actor.
    */
-  deletePreparedSpell(spellName: string, spellGrade: string) {
+  async deletePreparedSpell(spellName: string, spellGrade: string) {
     let preparedSpellId = this.system.mystic.preparedSpells.find(
       (ps: any) =>
         ps.name === spellName &&
         ps.system.grade.value === spellGrade &&
         ps.system.prepared.value === true
-    )._id;
+    )?._id;
     if (preparedSpellId !== undefined) {
       let items = this.getPreparedSpells();
       items = items.filter(item => item._id !== preparedSpellId);
@@ -668,6 +778,7 @@ export class ABFActor extends Actor {
         }
       }
     });
+    this.setFlag('animabf', 'lastDamageApplied', damage);
   }
 
   public async createItem({
@@ -725,6 +836,33 @@ export class ABFActor extends Actor {
     if (item) {
       await item.delete();
     }
+  }
+
+  async deleteInnerItem(type: string, ids?: string[], deleteAll?: boolean) {
+    if (!type) {
+      return
+    };
+    const configuration = ALL_ITEM_CONFIGURATIONS[type];
+    const items = this.getInnerItems(type);
+
+    if (deleteAll) {
+      const dataToUpdate = {
+        system: getUpdateObjectFromPath([], configuration.fieldPath)
+      };
+      await this.update(dataToUpdate);
+
+    } else if (ids !== undefined) {
+
+      await this.update({
+        system: getUpdateObjectFromPath(
+          [
+            ...items.filter(i => !ids.includes(i._id))
+          ],
+          configuration.fieldPath
+        )
+      });
+    }
+    return
   }
 
   public async updateItem({

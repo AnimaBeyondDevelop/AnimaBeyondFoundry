@@ -4,6 +4,7 @@ export const preloadTemplates = () => {
   const templatePaths: string[] = [
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
+    Templates.Dialog.MysticAct,
     Templates.Dialog.newSupernaturalShield.main,
     Templates.Dialog.newSupernaturalShield.parts.mystic,
     Templates.Dialog.newSupernaturalShield.parts.psychic,

@@ -66,7 +66,7 @@ export default class ABFActorSheet extends ActorSheet {
 
   getWidthDependingFromContent() {
     if (this.actor.items.filter(i => i.type === ABFItems.SPELL).length > 0) {
-      return 1300;
+      return 1000;
     }
 
     return 1000;

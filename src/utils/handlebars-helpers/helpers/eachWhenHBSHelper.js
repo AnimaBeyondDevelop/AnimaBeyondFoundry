@@ -3,7 +3,7 @@ export const eachWhenHBSHelper = {
   fn: (list, k, n, m, v, opts) => {
     var i,
       result = '';
-    v = v.split('|');
+    v = typeof v === 'string' ? v.split('|') : [v]
     if (m === '') {
       if (n === '') {
         for (i = 0; i < list.length; ++i)
