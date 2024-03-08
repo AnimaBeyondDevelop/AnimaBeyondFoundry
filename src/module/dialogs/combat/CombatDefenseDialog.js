@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
+import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
@@ -93,7 +94,8 @@ const getInitialData = (attacker, defender) => {
           newShield: true
         },
         metamagics: {
-          defensiveExpertise: 0
+          defensiveExpertise: 0,
+          definedMagicProjection: 0
         }
       },
       psychic: {
@@ -480,6 +482,10 @@ export class CombatDefenseDialog extends FormApplication {
       if (+metamagics.defensiveExpertise) {
         defenderCombatMod.defensiveExpertise = { value: +metamagics.defensiveExpertise, apply: true }
       }
+      if (+metamagics.definedMagicProjection) {
+        magicProjection.final = this.defenderActor.definedMagicProjection(metamagics.definedMagicProjection, 'defensive')
+        this.modalData.defender.withoutRoll = true
+      }
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
       if (!newShield) {
@@ -703,8 +709,11 @@ export class CombatDefenseDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
     if (mystic.spellUsed) {
-      const { defensiveExpertise } = mystic.metamagics;
-      const addedZeonCost = { value: +defensiveExpertise, pool: 0 }
+      if (mystic.metamagics.definedMagicProjection > 0) {
+        mystic.metamagics.defensiveExpertise = 0;
+      }
+      const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
+      const addedZeonCost = { value: +mystic.metamagics.defensiveExpertise, pool: zeonPoolCost }
       mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
     }
     const { supernaturalShields } = this.defenderActor.system.combat;

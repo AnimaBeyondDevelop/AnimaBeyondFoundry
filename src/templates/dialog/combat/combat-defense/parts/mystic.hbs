@@ -15,16 +15,32 @@
   inputName="defender.mystic.modifier"
   inputValue=this.defender.mystic.modifier
 }}
-
+{{#if (is "gt" this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'anima.ui.mystic.metamagics.definedMagicProjection.title')
+    disabled=this.defenseSent
+    inputName='defender.mystic.metamagics.definedMagicProjection'
+  }}
+    <option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 0)}}selected{{/if}} value='0'>0</option>
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 1)}}selected{{/if}} value='1'>120</option>{{/if}}
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 1)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 2)}}selected{{/if}} value='2'>140</option>{{/if}}
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 2)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 3)}}selected{{/if}} value='3'>180</option>{{/if}}
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 3)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 4)}}selected{{/if}} value='4'>240</option>{{/if}}
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 4)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 5)}}selected{{/if}} value='5'>280</option>{{/if}}
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 5)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 6)}}selected{{/if}} value='6'>320</option>{{/if}}
+    {{#if (is "gt" ../this.defender.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 6)}}<option {{#if (is "eq" ../this.defender.mystic.metamagics.definedMagicProjection 7)}}selected{{/if}} value='7'>440</option>{{/if}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+{{#if (is "eq" this.defender.mystic.metamagics.definedMagicProjection 0)}}
 {{> 'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
   title=(localize 'macros.combat.dialog.magicProjection.title')
   disabled=this.defenseSent
   inputName='defender.mystic.magicProjection.final'
   inputValue=this.defender.mystic.magicProjection.final
 }}
-
+{{/if}}
 {{#if this.defender.mystic.supernaturalShield.newShield}}
-  {{#if (is "gt" this.defender.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 0)}}
+  {{#if (and (is "gt" this.defender.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 0) (is "eq" this.defender.mystic.metamagics.definedMagicProjection 0))}}
     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
       title=(localize 'anima.ui.mystic.metamagics.defensiveExpertise.title')
       disabled=this.defenseSent

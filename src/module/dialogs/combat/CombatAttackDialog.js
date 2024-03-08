@@ -3,6 +3,7 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { weaponSpecialCheck } from '../../combat/utils/weaponSpecialCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
+import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { supSpecificAttack } from '../../combat/utils/supSpecificAttack.js';
 import { roundTo5Multiples } from '../../combat/utils/roundTo5Multiples';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
@@ -117,7 +118,8 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         metamagics: {
           offensiveExpertise: 0,
-          removeProtection: 0
+          removeProtection: 0,
+          definedMagicProjection: 0
         }
       },
       psychic: {
@@ -497,6 +499,10 @@ export class CombatAttackDialog extends FormApplication {
         if (+metamagics.offensiveExpertise) {
           attackerCombatMod.offensiveExpertise = { value: +metamagics.offensiveExpertise, apply: true }
         }
+        if (+metamagics.definedMagicProjection) {
+          magicProjection.final = this.attackerActor.definedMagicProjection(metamagics.definedMagicProjection, 'offensive')
+          this.modalData.attacker.withoutRoll = true
+        }
         this.attackerActor.setFlag(
           'animabf',
           'spellCastingOverride',
@@ -725,8 +731,11 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     if (mystic.spellUsed) {
-      const { offensiveExpertise, removeProtection } = mystic.metamagics;
-      const addedZeonCost = { value: +offensiveExpertise + removeProtection, pool: 0 }
+      if (mystic.metamagics.definedMagicProjection > 0) {
+        mystic.metamagics.offensiveExpertise = 0;
+      }
+      const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
+      const addedZeonCost = { value: +mystic.metamagics.offensiveExpertise + mystic.metamagics.removeProtection, pool: zeonPoolCost }
       mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
       const spellDamage = this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade)
       mystic.damage.final = mystic.damage.special + spellDamage;

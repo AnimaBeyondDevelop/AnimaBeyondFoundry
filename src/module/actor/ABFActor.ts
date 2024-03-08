@@ -444,6 +444,19 @@ export class ABFActor extends Actor {
     }
   }
 
+  definedMagicProjection(sphere: string | number, type: string) {
+    const definedMagicDifficulty = [0, 120, 140, 180, 240, 280, 320, 440]
+    if (sphere === undefined) return 0;
+    const { general: { modifiers: { allActions } }, mystic: { magicProjection: { imbalance: { offensive, defensive } } } } = this.system;
+    const definedMagicProjection = Math.max(
+      definedMagicDifficulty[sphere] +
+      Math.min(type === 'offensive' ? offensive.special.value : defensive.special.value, 0) +
+      Math.min(allActions.final.value, 0),
+      0
+    );
+    return definedMagicProjection
+  }
+
   /**
    * Determines if a mystic character can cast a specific spell at a specific grade.
    * 
