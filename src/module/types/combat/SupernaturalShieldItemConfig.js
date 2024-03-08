@@ -13,6 +13,7 @@ export const INITIAL_SUPERNATURAL_SHIELD_DATA = {
   spellGrade: SpellGrades.BASE,
   damageBarrier: 0,
   shieldPoints: 0,
+  metamagics: { definedMagicProjection: 0, defensiveExpertise: 0 },
   origin: ''
 };
 

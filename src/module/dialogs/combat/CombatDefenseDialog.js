@@ -509,12 +509,11 @@ export class CombatDefenseDialog extends FormApplication {
         );
         this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
-        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         if (this.defenderActor.evaluateCast(spellCasting)) {
           this.modalData.defender.mystic.overrideMysticCast = true;
           return;
         }
-        supShield = { create: true };
+        supShield = { create: true, metamagics };
       }
 
       let combatModifier = 0;
@@ -731,6 +730,9 @@ export class CombatDefenseDialog extends FormApplication {
       w => w._id === mystic.supernaturalShield.shieldUsed
     );
     mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
+    if (!mystic.supernaturalShield.newShield) {
+      mystic.metamagics = mysticShield.system.metamagics
+    }
 
     if (!psychic.supernaturalShield.shieldUsed) {
       psychic.supernaturalShield.shieldUsed = supernaturalShields.find(

@@ -181,6 +181,7 @@ export class ABFActor extends Actor {
    * @param {number} psychicDifficulty - The difficulty level of the psychic power. Only needed if type = 'psychic'.
    * @param {any} spell - The spell object containing information about the mystic spell. Only needed if type = 'mystic'.
    * @param {string} spellGrade - The grade of the mystic spell. Only needed if type = 'mystic'.
+   * @param {any} metamagics - 
    * @returns {Promise<string>} - The ID of the newly created supernatural shield item.
    */
   async newSupernaturalShield(
@@ -188,7 +189,8 @@ export class ABFActor extends Actor {
     power: any,
     psychicDifficulty: number,
     spell: any,
-    spellGrade: string
+    spellGrade: string,
+    metamagics?: any
   ) {
     const supernaturalShieldData = {
       name: '',
@@ -238,6 +240,7 @@ export class ABFActor extends Actor {
         spellGrade,
         damageBarrier: 0,
         shieldPoints,
+        metamagics,
         origin: this.uuid
       };
     }

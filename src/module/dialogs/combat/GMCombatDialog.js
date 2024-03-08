@@ -525,7 +525,8 @@ export class GMCombatDialog extends FormApplication {
         defender.result?.power ?? {},
         defender.result.values?.psychicPotential ?? 0,
         defender.result?.spell ?? {},
-        defender.result.values?.spellGrade
+        defender.result.values?.spellGrade,
+        supShield.metamagics
       );
       return supShieldId;
     }
