@@ -245,6 +245,7 @@ export class ABFActor extends Actor {
    * @param {number} psychicDifficulty - The difficulty level of the psychic power. Only needed if type = 'psychic'.
    * @param {any} spell - The spell object containing information about the mystic spell. Only needed if type = 'mystic'.
    * @param {string} spellGrade - The grade of the mystic spell. Only needed if type = 'mystic'.
+   * @param {any} metamagics - 
    * @returns {Promise<string>} - The ID of the newly created supernatural shield item.
    */
   async newSupernaturalShield(
@@ -252,7 +253,8 @@ export class ABFActor extends Actor {
     power: any,
     psychicDifficulty: number,
     spell: any,
-    spellGrade: string
+    spellGrade: string,
+    metamagics?: any
   ) {
     const supernaturalShieldData = {
       name: '',
@@ -302,6 +304,7 @@ export class ABFActor extends Actor {
         spellGrade,
         damageBarrier: 0,
         shieldPoints,
+        metamagics,
         origin: this.uuid
       };
     }
@@ -508,6 +511,19 @@ export class ABFActor extends Actor {
     }
   }
 
+  definedMagicProjection(sphere: string | number, type: string) {
+    const definedMagicDifficulty = [0, 120, 140, 180, 240, 280, 320, 440]
+    if (sphere === undefined) return 0;
+    const { general: { modifiers: { allActions } }, mystic: { magicProjection: { imbalance: { offensive, defensive } } } } = this.system;
+    const definedMagicProjection = Math.max(
+      definedMagicDifficulty[sphere] +
+      Math.min(type === 'offensive' ? offensive.special.value : defensive.special.value, 0) +
+      Math.min(allActions.final.value, 0),
+      0
+    );
+    return definedMagicProjection
+  }
+
   /**
    * Determines if a mystic character can cast a specific spell at a specific grade.
    * 
@@ -601,14 +617,15 @@ export class ABFActor extends Actor {
     return false;
   };
 
-  async mysticAct(act: number, spellID?: string, spellGrade?: string, preapredSpellId?: string) {
+  async mysticAct(act: number, spellId?: string, spellGrade?: string, preapredSpellId?: string, metamagics?: any) {
     const { zeon, spells, preparedSpells } = this.system.mystic;
     let spareAct = 0;
     let accumulatedFullZeon = 0
 
-    if (spellID) {
-      const spell = spells.find(w => w._id === spellID);
-      const zeonCost = spell.system.grades[spellGrade || 'base'].zeon.value
+    if (spellId) {
+      const spell = spells.find(w => w._id === spellId);
+      const metamagicsCost = Object.values(metamagics).reduce((t: any, n: any) => +t + +n)
+      const zeonCost = spell.system.grades[spellGrade || 'base'].zeon.value + metamagicsCost;
       spareAct = act - zeonCost
       this.createInnerItem({
         type: ABFItems.PREPARED_SPELL,
@@ -617,7 +634,8 @@ export class ABFActor extends Actor {
           grade: { value: spellGrade },
           zeonAcc: { value: act, max: zeonCost },
           prepared: { value: spareAct >= 0 },
-          via: { value: spell.system.via.value }
+          via: { value: spell.system.via.value },
+          metamagics
         }
       })
     } else if (preapredSpellId) {
@@ -714,12 +732,12 @@ export class ABFActor extends Actor {
    * Handles the casting of mystic spells by an actor in the ABFActor class.
    * 
    * @param {SpellCasting} spellCasting - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
-   * @param spellName - The name of the spell being casted.
+   * @param spellId - The ID of the spell being casted.
    * @param spellGrade - The grade of the spell being casted.
    * 
    * @returns {void}
    */
-  mysticCast(spellCasting: SpellCasting, spellName: string, spellGrade: string) {
+  mysticCast(spellCasting: SpellCasting, spellId: string, spellGrade: string) {
     const { zeon, casted, override } = spellCasting;
     if (override) {
       return;
@@ -731,7 +749,7 @@ export class ABFActor extends Actor {
       return;
     }
     if (casted.prepared) {
-      this.deletePreparedSpell(spellName, spellGrade);
+      this.deletePreparedSpell(spellId, spellGrade);
     } else if (zeon.cost) {
       this.consumeAccumulatedZeon(zeon.cost);
     }
@@ -788,6 +806,17 @@ export class ABFActor extends Actor {
     });
   }
 
+  getPreparedSpell(spellId: string, spellGrade: string) {
+    const spell = this.getItem(spellId)
+    if (spell === undefined) return
+    const preparedSpell = this.system.mystic.preparedSpells.find(
+      (ps: any) =>
+        ps.name === spell.name &&
+        ps.system.grade.value === spellGrade &&
+        ps.system.prepared.value === true
+    );
+    return preparedSpell
+  }
 
   /**
    * Deletes a prepared spell from the `mystic.preparedSpells` array of the `ABFActor` class.
@@ -796,13 +825,8 @@ export class ABFActor extends Actor {
    * @param spellGrade - The grade of the spell to be deleted.
    * @returns None. The method updates the `mystic.preparedSpells` array of the actor.
    */
-  async deletePreparedSpell(spellName: string, spellGrade: string) {
-    let preparedSpellId = this.system.mystic.preparedSpells.find(
-      (ps: any) =>
-        ps.name === spellName &&
-        ps.system.grade.value === spellGrade &&
-        ps.system.prepared.value === true
-    )?._id;
+  async deletePreparedSpell(spellId: string, spellGrade: string) {
+    let preparedSpellId = this.getPreparedSpell(spellId, spellGrade)?._id;
     if (preparedSpellId !== undefined) {
       let items = this.getPreparedSpells();
       items = items.filter(item => item._id !== preparedSpellId);
@@ -814,8 +838,8 @@ export class ABFActor extends Actor {
     }
   }
 
-  spellDamage(spellID: string, spellGrade: string) {
-    const spell = this.getItem(spellID)
+  spellDamage(spellId: string, spellGrade: string) {
+    const spell = this.getItem(spellId)
     const spellGrades = ['none', 'base', 'intermediate', 'advanced', 'arcane']
     if (spell === undefined || spellGrades.indexOf(spellGrade) <= 0) { return }
     const baseDamage = damageCheck(spell.system.grades[spellGrade].description.value ?? '')

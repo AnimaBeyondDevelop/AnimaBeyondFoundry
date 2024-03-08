@@ -2,6 +2,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { openModDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { SpellGrades } from '../mystic/SpellItemConfig';
+import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
@@ -13,6 +14,7 @@ export const INITIAL_SUPERNATURAL_SHIELD_DATA = {
   spellGrade: SpellGrades.BASE,
   damageBarrier: 0,
   shieldPoints: 0,
+  metamagics: { definedMagicProjection: 0, defensiveExpertise: 0 },
   origin: ''
 };
 
@@ -48,27 +50,40 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
     if (tab === 'mystic') {
       const spellID = results['new.mysticShield.id'];
       const spellGrade = results['new.mysticShield.grade'];
-      const castSpell = results['new.mysticShield.castSpell'];
+      const castSpell = results['data.mystic.castSpell'];
       const innate = castSpell === 'innate';
       const prepared = castSpell === 'prepared';
       const override = castSpell === 'override';
+      const definedMagicProjection = results['data.mystic.metamagics.definedMagicProjection'];
+      const defensiveExpertise = +definedMagicProjection ? 0 : results['data.mystic.metamagics.defensiveExpertise'];
       const spell = actor.system.mystic.spells.find(i => i._id === spellID);
       if (!spell) {
         return;
       }
       actor.setFlag('animabf', 'spellCastingOverride', override);
-      const addedZeonCost = { value: 0, pool: 0 }
+      const zeonPoolCost = definedMagicProjectionCost(definedMagicProjection)
+      const addedZeonCost = { value: +defensiveExpertise, pool: zeonPoolCost }
       const spellCasting = actor.mysticCanCastEvaluate(spellID, spellGrade, addedZeonCost, { innate, prepared }, override);
+      spellCasting.casted = { innate, prepared };
       if (actor.evaluateCast(spellCasting)) {
         return;
       }
-      actor.mysticCast(spellCasting, spell.name, spellGrade);
+      let metamagics = {
+        defensiveExpertise,
+        definedMagicProjection
+      };
+      if (prepared) {
+        const preparedSpell = actor.getPreparedSpell(spellID, spellGrade)
+        metamagics = mergeObject(metamagics, preparedSpell.system?.metamagics)
+      }
+      actor.mysticCast(spellCasting, spellID, spellGrade);
       actor.newSupernaturalShield(
         'mystic',
         {},
         0,
         spell,
-        spellGrade
+        spellGrade,
+        metamagics
       );
     } else if (tab === 'psychic') {
       const powerID = results['new.psychicShield.id'];

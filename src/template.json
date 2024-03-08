@@ -514,6 +514,7 @@
       "spellGrade": { "value": "" },
       "damageBarrier": { "value": 0 },
       "shieldPoints": { "value": 0 },
+      "metamagics": { "definedMagicProjection": 0, "defensiveExpertise": 0 },
       "origin": { "value": "" }
     }
   }

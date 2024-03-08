@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
+import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
@@ -93,7 +94,8 @@ const getInitialData = (attacker, defender) => {
           newShield: true
         },
         metamagics: {
-          defensiveExpertise: 0
+          defensiveExpertise: 0,
+          definedMagicProjection: 0
         }
       },
       psychic: {
@@ -168,6 +170,10 @@ export class CombatDefenseDialog extends FormApplication {
       } else {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
+      mystic.metamagics.definedMagicProjection = this.defenderActor.getFlag(
+        'animabf',
+        'lastDefinedMagicProjection'
+      ) ?? 0;
       const spellCastingOverride = this.defenderActor.getFlag(
         'animabf',
         'spellCastingOverride'
@@ -480,6 +486,11 @@ export class CombatDefenseDialog extends FormApplication {
       if (+metamagics.defensiveExpertise) {
         defenderCombatMod.defensiveExpertise = { value: +metamagics.defensiveExpertise, apply: true }
       }
+      if (+metamagics.definedMagicProjection) {
+        magicProjection.final = this.defenderActor.definedMagicProjection(metamagics.definedMagicProjection, 'defensive')
+        this.modalData.defender.withoutRoll = true
+        this.defenderActor.setFlag('animabf', 'lastDefinedMagicProjection', metamagics.definedMagicProjection);
+      }
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
       if (!newShield) {
@@ -498,12 +509,11 @@ export class CombatDefenseDialog extends FormApplication {
         );
         this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
-        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         if (this.defenderActor.evaluateCast(spellCasting)) {
           this.modalData.defender.mystic.overrideMysticCast = true;
           return;
         }
-        supShield = { create: true };
+        supShield = { create: true, metamagics };
       }
 
       let combatModifier = 0;
@@ -703,8 +713,15 @@ export class CombatDefenseDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
     if (mystic.spellUsed) {
-      const { defensiveExpertise } = mystic.metamagics;
-      const addedZeonCost = { value: +defensiveExpertise, pool: 0 }
+      if (mystic.spellCasting.casted.prepared) {
+        const preparedSpell = this.defenderActor.getPreparedSpell(mystic.spellUsed, mystic.spellGrade);
+        mystic.metamagics = mergeObject(mystic.metamagics, preparedSpell?.system?.metamagics)
+      }
+      if (mystic.metamagics.definedMagicProjection > 0) {
+        mystic.metamagics.defensiveExpertise = 0;
+      }
+      const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
+      const addedZeonCost = { value: +mystic.metamagics.defensiveExpertise, pool: zeonPoolCost }
       mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
     }
     const { supernaturalShields } = this.defenderActor.system.combat;
@@ -717,6 +734,9 @@ export class CombatDefenseDialog extends FormApplication {
       w => w._id === mystic.supernaturalShield.shieldUsed
     );
     mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
+    if (!mystic.supernaturalShield.newShield) {
+      mystic.metamagics = mergeObject(mystic.metamagics, mysticShield.system.metamagics);
+    }
 
     if (!psychic.supernaturalShield.shieldUsed) {
       psychic.supernaturalShield.shieldUsed = supernaturalShields.find(
