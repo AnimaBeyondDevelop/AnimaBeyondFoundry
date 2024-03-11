@@ -58,6 +58,7 @@ const getInitialData = (attacker, defender) => {
         weapon: undefined,
         unarmed: false,
         at: {
+          base: defenderActor.system.combat.totalArmor.at[attacker.critic]?.value ?? 0,
           special: 0,
           final: 0
         },
@@ -229,13 +230,6 @@ export class CombatDefenseDialog extends FormApplication {
       } else if (attackType === 'psychic' && !perceivePsychic) {
         this.modalData.defender.blindness = true;
       }
-    }
-
-    let critic = this.modalData.attacker.critic;
-    let at = this.defenderActor.system.combat.totalArmor.at[critic]?.value;
-
-    if (at !== undefined) {
-      combat.at.final = combat.at.special + at;
     }
 
     this.hooks = hooks;
@@ -706,6 +700,8 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
+
+    combat.at.final = combat.at.base + combat.at.special;
 
     return this.modalData;
   }
