@@ -427,6 +427,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.hooks.onDefense({
         type: 'resistance',
         values: {
+          modifier: 0,
           at: at.final,
           surprised,
           total: 0
