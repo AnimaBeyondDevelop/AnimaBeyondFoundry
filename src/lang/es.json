@@ -667,7 +667,7 @@
   "macros.combat.dialog.combatMod.fatigueUsed.title": "Fatiga usada",
   "macros.combat.dialog.counterAttackBonus.title": "Bono al contraataque",
   "macros.combat.dialog.counterAttackButton.title": "Contraatacar",
-  "macros.combat.dialog.rollResistanceButton.title": "Tirada de Resistancia",
+  "macros.combat.dialog.rollResistanceButton.title": "Tirada de Resistencia",
   "macros.combat.dialog.counterAttackButtonTooltip.title": "Esta opción permitirá al defensor realizar un contraataque directamente",
   "macros.combat.dialog.rollResistanceButtonTooltip.title": "Esta opción enviara una tirada de resistencia",
   "macros.combat.dialog.zeonAccumulated.title": "Zeon acumulado",
