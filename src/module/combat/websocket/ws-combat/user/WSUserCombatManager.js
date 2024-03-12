@@ -43,9 +43,11 @@ export class WSUserCombatManager extends WSCombatManager {
     }
 
     if (this.defenseDialog) {
-      this.defenseDialog.close({ force: true });
+      for (const defenderId in this.defenseDialog) {
+        this.defenseDialog[defenderId].close({ force: true });
 
-      this.defenseDialog = undefined;
+        this.defenseDialog[defenderId] = undefined;
+      }
     }
 
     if (this.rollRequestDialog) {
@@ -175,29 +177,31 @@ export class WSUserCombatManager extends WSCombatManager {
     const defender = this.findTokenById(defenderTokenId);
 
     try {
-      this.defenseDialog = new CombatDefenseDialog(
-        {
-          token: attacker,
-          attackType: result.type,
-          critic: result.values.critic,
-          visible: result.values.visible,
-          projectile: result.values.projectile,
-          damage: result.values.damage,
-          distance: result.values.distance,
-          specificAttack: result.values.specificAttack
-        },
-        defender,
-        {
-          onDefense: res => {
-            const newMsg = {
-              type: UserMessageTypes.Defend,
-              payload: res
-            };
+      this.defenseDialog = {
+        [defenderTokenId]: new CombatDefenseDialog(
+          {
+            token: attacker,
+            attackType: result.type,
+            critic: result.values.critic,
+            visible: result.values.visible,
+            projectile: result.values.projectile,
+            damage: result.values.damage,
+            distance: result.values.distance,
+            specificAttack: result.values.specificAttack
+          },
+          defender,
+          {
+            onDefense: res => {
+              const newMsg = {
+                type: UserMessageTypes.Defend,
+                payload: res
+              };
 
-            this.emit(newMsg);
+              this.emit(newMsg);
+            }
           }
-        }
-      );
+        )
+      };
     } catch (err) {
       if (err) {
         Log.error(err);

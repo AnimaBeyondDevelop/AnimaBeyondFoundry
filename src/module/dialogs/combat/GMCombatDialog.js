@@ -5,12 +5,27 @@ import { calculateATReductionByQuality } from '../../combat/utils/calculateATRed
 import { getGeneralLocation } from '../../combat/utils/getGeneralLocation';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
-const getInitialData = (attacker, defender, options = {}) => {
+const getInitialData = (attacker, defenders, options = {}) => {
+
+  const defend = defenders.map(defender => {
+    return {
+      token: defender,
+      actor: defender.actor,
+      customModifier: 0,
+      supernaturalShield: {
+        dobleDamage: false,
+        immuneToDamage: false
+      },
+      isReady: false
+    };
+  })
 
   return {
     ui: {
       isCounter: options.isCounter ?? false,
       waitingRollRequest: false,
+      multipleTargets: defenders.lenght > 0,
+      index: 1
     },
     attacker: {
       token: attacker,
@@ -21,16 +36,8 @@ const getInitialData = (attacker, defender, options = {}) => {
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
-    defender: {
-      token: defender,
-      actor: defender.actor,
-      customModifier: 0,
-      supernaturalShield: {
-        dobleDamage: false,
-        immuneToDamage: false
-      },
-      isReady: false
-    },
+    defender: defend[0],
+    listDefenders: defend,
     roll: {
       oppousedCheckRoll: { request: false, sent: false, attacker: { value: 0, characteristic: undefined }, defender: { value: 0, characteristic: undefined } },
       resistanceRoll: { request: false, sent: false, check: 0, value: 0 },
@@ -40,10 +47,10 @@ const getInitialData = (attacker, defender, options = {}) => {
 };
 
 export class GMCombatDialog extends FormApplication {
-  constructor(attacker, defender, hooks, options = {}) {
-    super(getInitialData(attacker, defender, options));
+  constructor(attacker, defenders, hooks, options = {}) {
+    super(getInitialData(attacker, defenders, options));
 
-    this.modalData = getInitialData(attacker, defender, options);
+    this.modalData = getInitialData(attacker, defenders, options);
 
     this.hooks = hooks;
 
@@ -235,8 +242,9 @@ export class GMCombatDialog extends FormApplication {
     this.render();
   }
 
-  updateDefenderData(result) {
-    const { defender } = this.modalData;
+  updateDefenderData(result, defenerId) {
+    const defender = this.modalData.listDefenders.find(w => w.token._id === defenerId)
+
     result.values.initialTotal ||= result.values.total;
     result.values.total = Math.max(0, result.values.total);
     defender.result = result;
@@ -443,7 +451,7 @@ export class GMCombatDialog extends FormApplication {
         }
       }
     }
-
+    console.log(this)
     return this.modalData;
   }
 

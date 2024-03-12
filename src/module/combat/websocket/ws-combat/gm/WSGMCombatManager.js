@@ -112,10 +112,12 @@ export class WSGMCombatManager extends WSCombatManager {
       this.combat = undefined;
     }
 
-    if (this.defendDialog) {
-      this.defendDialog.close({ force: true });
+    if (this.defenseDialog) {
+      for (const defenderId in this.defenseDialog) {
+        this.defenseDialog[defenderId].close({ force: true });
 
-      this.defendDialog = undefined;
+        this.defenseDialog[defenderId] = undefined;
+      }
     }
 
     if (this.attackDialog) {
@@ -373,7 +375,10 @@ export class WSGMCombatManager extends WSCombatManager {
     damage,
     distance,
     specificAttack) {
-    this.defendDialog = new CombatDefenseDialog(
+    if (!this.defendDialog) {
+      this.defendDialog = { [defender._id]: undefined }
+    }
+    this.defendDialog[defender._id] = new CombatDefenseDialog(
       {
         token: attacker,
         attackType,
@@ -387,13 +392,13 @@ export class WSGMCombatManager extends WSCombatManager {
       defender,
       {
         onDefense: result => {
-          if (this.defendDialog) {
-            this.defendDialog.close({ force: true });
+          if (this.defendDialog[defender._id]) {
+            this.defendDialog[defender._id].close({ force: true });
 
-            this.defendDialog = undefined;
+            this.defendDialog[defender._id] = undefined;
 
             if (this.combat) {
-              this.combat.updateDefenderData(result);
+              this.combat.updateDefenderData(result, defender._id);
             }
           }
         }

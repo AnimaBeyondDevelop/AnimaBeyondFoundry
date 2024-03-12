@@ -28,7 +28,8 @@ const getInitialData = (attacker, defender, options = {}) => {
       isGM,
       hasFatiguePoints:
         attackerActor.system.characteristics.secondaries.fatigue.value > 0,
-      weaponHasSecondaryCritic: undefined
+      weaponHasSecondaryCritic: undefined,
+      multipleTargets: false
     },
     attacker: {
       token: attacker,
@@ -158,10 +159,12 @@ const getInitialData = (attacker, defender, options = {}) => {
 };
 
 export class CombatAttackDialog extends FormApplication {
-  constructor(attacker, defender, hooks, options = {}) {
-    super(getInitialData(attacker, defender, options));
+  constructor(attacker, defenders, hooks, options = {}) {
+    super(getInitialData(attacker, defenders[0], options));
 
-    this.modalData = getInitialData(attacker, defender, options);
+    this.modalData = getInitialData(attacker, defenders[0], options);
+
+    this.modalData.ui.multipleTargets = defenders.length > 1;
 
     const { combat, psychic, mystic } = this.modalData.attacker;
 
