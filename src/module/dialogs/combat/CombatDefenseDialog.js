@@ -300,7 +300,7 @@ export class CombatDefenseDialog extends FormApplication {
         modifier: { value: modifier, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
         multipleDefensesPenalty: {
-          value: multipleDefensesPenalty * 1,
+          value: +multipleDefensesPenalty,
           apply: true
         }
       };
@@ -675,7 +675,9 @@ export class CombatDefenseDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
+    if (spell) {
+      mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
+    }
 
     const { supernaturalShields } = this.defenderActor.system.combat;
     if (!mystic.supernaturalShield.shieldUsed) {
