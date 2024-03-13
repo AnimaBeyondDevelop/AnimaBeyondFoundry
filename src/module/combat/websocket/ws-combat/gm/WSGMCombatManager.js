@@ -244,11 +244,11 @@ export class WSGMCombatManager extends WSCombatManager {
       onClose: () => {
         this.endCombat();
       },
-      onCounterAttack: bonus => {
+      onCounterAttack: (bonus, index) => {
         this.endCombat();
 
         this.combat = new GMCombatDialog(
-          defenders,
+          defenders[index],
           [attacker],
           {
             onClose: () => {
@@ -264,11 +264,11 @@ export class WSGMCombatManager extends WSCombatManager {
           }
         );
 
-        if (canOwnerReceiveMessage(defenders.actor)) {
+        if (canOwnerReceiveMessage(defenders[index].actor)) {
           const newMsg = {
             type: GMMessageTypes.CounterAttack,
             payload: {
-              attackerTokenId: defenders.id,
+              attackerTokenId: defenders[index].id,
               defenderTokenId: attacker.id,
               counterAttackBonus: bonus
             }
@@ -276,7 +276,7 @@ export class WSGMCombatManager extends WSCombatManager {
 
           this.emit(newMsg);
         } else {
-          this.manageAttack(defenders, [attacker], bonus);
+          this.manageAttack(defenders[index], [attacker], bonus);
         }
       },
       onRollRequest: (token, roll) => {

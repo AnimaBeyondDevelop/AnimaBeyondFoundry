@@ -130,9 +130,9 @@ export class GMCombatDialog extends FormApplication {
     });
 
     html.find('.make-counter').click(async () => {
-      this.applyValuesIfBeAble();
+      this.applyValuesIfBeAble(true);
       if (this.modalData.calculations?.canCounter) {
-        this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
+        this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus, this.modalData.ui.index -1);
       }
     });
 
