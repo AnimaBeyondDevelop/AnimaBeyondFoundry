@@ -699,7 +699,7 @@
   "macros.combat.dialog.counterAttackBonus.title": "Bono al contraataque",
   "macros.combat.dialog.counterAttackButton.title": "Contraatacar",
   "macros.combat.dialog.criticRollButton.title": "Tirada de Crítico",
-  "macros.combat.dialog.rollResistanceButton.title": "Tirada de Resistancia",
+  "macros.combat.dialog.rollResistanceButton.title": "Tirada de Resistencia",
   "macros.combat.dialog.rollResistanceCriticButton.title": "Tirada de Resistir Crítico",
   "macros.combat.dialog.rollOppousedCheckButton.title": "Tirada de Característica",
   "macros.combat.dialog.counterAttackButtonTooltip.title": "Esta opción permitirá al defensor realizar un contraataque directamente",
