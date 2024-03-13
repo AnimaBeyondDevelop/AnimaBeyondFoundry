@@ -59,7 +59,9 @@ export const mutateMysticData = data => {
     0
   );
   mystic.zeonRegeneration.final.value = Math.max(
-    mystic.zeonRegeneration.base.value - dailyZeon,
+    mystic.zeonRegeneration.base.value +
+    mystic.magicLevel.metamagics.arcanePower.advancedZeonRegeneration.sphere * 10 -
+    dailyZeon,
     0
   );
 

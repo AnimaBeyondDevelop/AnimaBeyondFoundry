@@ -509,16 +509,16 @@ export class GMCombatDialog extends FormApplication {
 
   mysticCastEvaluateIfAble(firstDefender) {
     if (this.modalData.attacker.result?.type === 'mystic' && firstDefender) {
-      const { spellCasting, spellName, spellGrade } =
+      const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
-      this.attackerActor.mysticCast(spellCasting, spellName, spellGrade);
+      this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
-      const { spellCasting, spellName, spellGrade, supShield } =
+      const { spellCasting, spellUsed, spellGrade, supShield } =
         this.modalData.defender.result.values;
       if (supShield.create) {
-        this.defenderActor.mysticCast(spellCasting, spellName, spellGrade);
+        this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade);
       }
     }
   }
@@ -544,13 +544,14 @@ export class GMCombatDialog extends FormApplication {
         defender.result?.power ?? {},
         defender.result.values?.psychicPotential ?? 0,
         defender.result?.spell ?? {},
-        defender.result.values?.spellGrade
+        defender.result.values?.spellGrade,
+        supShield.metamagics
       );
       return supShieldId;
     }
   }
 
-  applyDamageSupernaturalShieldIfBeAble(supShieldId) {
+  async applyDamageSupernaturalShieldIfBeAble(supShieldId) {
     const { attacker, defender } = this.modalData;
     const { dobleDamage, immuneToDamage } = defender.supernaturalShield;
     const defenderIsWinner =
