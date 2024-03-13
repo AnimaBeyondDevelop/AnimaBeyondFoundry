@@ -10,7 +10,8 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
 export const INITIAL_PREPARED_SPELL_DATA = {
   grade: { value: SpellGrades.BASE },
   zeonAcc: { value: 0, max: 0 },
-  prepared: { value: false }
+  prepared: { value: false },
+  via: { value: '' }
 };
 
 /** @type {import("../Items").PreparedSpellItemConfig} */
@@ -33,6 +34,7 @@ export const PreparedSpellItemConfig = ABFItemConfigFactory({
     }
     const name = spell.name;
     const zeonCost = spell.system.grades[spellGrade].zeon.value;
+    const via = spell.system.via.value
 
     await actor.createInnerItem({
       name,
@@ -40,7 +42,8 @@ export const PreparedSpellItemConfig = ABFItemConfigFactory({
       system: {
         grade: { value: spellGrade },
         zeonAcc: { value: 0, max: zeonCost },
-        prepared: { value: false }
+        prepared: { value: false },
+        via: { value: via }
       }
     });
   }
