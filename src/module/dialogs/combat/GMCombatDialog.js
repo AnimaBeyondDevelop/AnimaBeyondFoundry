@@ -144,14 +144,14 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-critic').click(async () => {
       this.modalData.ui.waitingRollRequest = true;
-      const { specificAttack } = this.modalData.attacker.result.values;
+      const { specialPorpuseAttack } = this.modalData.attacker.result.values;
       const { damage } = this.modalData.calculations;
-      const targeted = specificAttack.targeted !== 'none';
+      const directed = specialPorpuseAttack.directed !== 'none';
       const generalLocation = getGeneralLocation();
-      const location = targeted ? specificAttack.targeted : generalLocation.specific;
+      const location = directed ? specialPorpuseAttack.directed : generalLocation.specific;
       const critic = {
         damage,
-        targeted,
+        directed,
         generalLocation,
         location,
         criticLevel: this.attackerActor.system.general.modifiers.criticLevel.value,
@@ -162,11 +162,11 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-oppoused-check').click(async () => {
       this.modalData.ui.waitingRollRequest = true;
-      const { specialCharacteristic, value } = this.modalData.attacker.result.values.specificAttack;
+      const { specialCharacteristic, value } = this.modalData.attacker.result.values.specialPorpuseAttack;
       const { roll, calculations: { difference, atResistance } } = this.modalData;
       const modifier = difference - atResistance < 100 ? -3 : difference - atResistance > 200 ? 3 : 0;
 
-      const oppousedCheck = { specificAttack: value }
+      const oppousedCheck = { specialPorpuseAttack: value }
       if (!roll.oppousedCheckRoll.attacker.characteristic) {
         if (specialCharacteristic) {
           oppousedCheck.characteristic = 'special'
@@ -355,11 +355,11 @@ export class GMCombatDialog extends FormApplication {
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       const atResistance = defender.result.values?.at * 10 + 20;
-      const { specificAttack } = attacker.result.values;
+      const { specialPorpuseAttack } = attacker.result.values;
       const { lifePoints } = defender.result.values;
 
       const isNonLethalDamage =
-        specificAttack.value === 'disable' || specificAttack.value === 'knockOut';
+        specialPorpuseAttack.value === 'disable' || specialPorpuseAttack.value === 'knockOut';
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -407,7 +407,7 @@ export class GMCombatDialog extends FormApplication {
       }
 
       if (this.canApplyDamage) {
-        this.modalData.calculations.canCritic = specificAttack.weakspot
+        this.modalData.calculations.canCritic = specialPorpuseAttack.weakspot
           ? this.modalData.calculations.damage >= lifePoints / 10
           : this.modalData.calculations.damage >= lifePoints / 2;
         if (this.modalData.calculations.canCritic && attacker.applyCritic) {
@@ -423,7 +423,7 @@ export class GMCombatDialog extends FormApplication {
           if (attacker.result.values?.resistanceEffect.check) {
             roll.resistanceRoll.request = true;
           }
-          if (specificAttack.check) {
+          if (specialPorpuseAttack.check) {
             roll.oppousedCheckRoll.request = true;
           }
         } else { roll.oppousedCheckRoll.request = false }
@@ -603,8 +603,8 @@ export class GMCombatDialog extends FormApplication {
       calculations.winner === this.defenderToken
         ? 'defender'
         : 'attacker';
-    const specificAttackResult = {
-      specificAttack: attacker.result.values?.specificAttack.value,
+    const specialPorpuseAttackResult = {
+      specialPorpuseAttack: attacker.result.values?.specialPorpuseAttack.value,
       result: roll.oppousedCheckRoll.attacker.value - roll.oppousedCheckRoll.defender.value
     };
     let macroName;
@@ -623,7 +623,7 @@ export class GMCombatDialog extends FormApplication {
       spellGrade: attacker.result.values.spellGrade,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-      specificAttackResult,
+      specialPorpuseAttackResult,
       hasCritic: roll.criticRoll.sent && attacker.applyCritic,
       criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
     };

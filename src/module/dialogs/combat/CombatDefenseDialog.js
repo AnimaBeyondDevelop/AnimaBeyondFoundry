@@ -39,7 +39,7 @@ const getInitialData = (attacker, defender) => {
       visible: attacker.visible,
       projectile: attacker.projectile,
       damage: attacker.damage,
-      specificAttack: attacker.specificAttack
+      specialPorpuseAttack: attacker.specialPorpuseAttack
     },
     defender: {
       token: defender,
@@ -742,10 +742,10 @@ export class CombatDefenseDialog extends FormApplication {
 
     combat.at.final = combat.at.base + combat.at.special;
 
-    if (this.modalData.attacker.specificAttack.value !== 'none' && !this.modalData.attacker.specificAttack.causeDamage) {
+    if (this.modalData.attacker.specialPorpuseAttack.value !== 'none' && !this.modalData.attacker.specialPorpuseAttack.causeDamage) {
       combat.at.final = 0;
     }
-    if (this.modalData.attacker.specificAttack.openArmor) {
+    if (this.modalData.attacker.specialPorpuseAttack.openArmor) {
       combat.at.final = 0;
     }
 
