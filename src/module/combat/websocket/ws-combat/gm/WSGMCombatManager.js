@@ -159,7 +159,7 @@ export class WSGMCombatManager extends WSCombatManager {
       await ABFDialogs.confirm(
         this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
         this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', {
-          target: targetTokens[0]?.name
+          target: targetTokens.map(t => t.name).join(" - ")
         }),
         {
           onConfirm: () => {
