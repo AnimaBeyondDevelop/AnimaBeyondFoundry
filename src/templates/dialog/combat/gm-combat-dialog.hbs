@@ -462,22 +462,22 @@
         <p class='label title'>{{concat this.calculations.winner.name
                                         (localize 'macros.combat.dialog.winner.title')}}</p>
         <div class='assault-values'>
-          {{#if (is 'gt' this.roll.oppousedCheckRoll.attacker.value 0)}}
+          {{#if (is 'gt' this.defender.roll.oppousedCheckRoll.attacker.value 0)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="oppoused-check-roll"
               title=(localize 'macros.combat.dialog.oppousedCheckRoll.title')
               disabled=true
-              inputValue=this.roll.oppousedCheckRoll.attacker.value
+              inputValue=this.defender.roll.oppousedCheckRoll.attacker.value
             }}
           {{/if}}
-          {{#if (and this.roll.criticRoll.sent this.attacker.applyCritic)}}
+          {{#if (and this.defender.roll.criticRoll.sent this.attacker.applyCritic)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="critic-roll"
               title=(localize 'macros.combat.dialog.criticRoll.title')
               disabled=true
-              inputValue=this.roll.criticRoll.value
+              inputValue=this.defender.roll.criticRoll.value
             }}
           {{/if}}
           {{>
@@ -497,31 +497,31 @@
               inputValue=this.calculations.damage
             }}
           {{/if}}
-          {{#if (is 'gt' this.roll.resistanceRoll.value 0)}}
+          {{#if (is 'gt' this.defender.roll.resistanceRoll.value 0)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="resistance-roll"
               title=(localize 'macros.combat.dialog.resistanceRoll.title')
               disabled=true
-              inputValue=this.roll.resistanceRoll.value
+              inputValue=this.defender.roll.resistanceRoll.value
             }}
           {{/if}}
-          {{#if (and (is 'gt' this.roll.criticRoll.resist 0) this.attacker.applyCritic)}}
+          {{#if (and (is 'gt' this.defender.roll.criticRoll.resist 0) this.attacker.applyCritic)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="resistance-roll"
               title=(localize 'macros.combat.dialog.resistCriticRoll.title')
               disabled=true
-              inputValue=this.roll.criticRoll.resist
+              inputValue=this.defender.roll.criticRoll.resist
             }}
           {{/if}}
-          {{#if (is 'gt' this.roll.oppousedCheckRoll.defender.value 0)}}
+          {{#if (is 'gt' this.defender.roll.oppousedCheckRoll.defender.value 0)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="oppoused-check-roll"
               title=(localize 'macros.combat.dialog.oppousedCheckRoll.title')
               disabled=true
-              inputValue=this.roll.oppousedCheckRoll.defender.value
+              inputValue=this.defender.roll.oppousedCheckRoll.defender.value
             }}
           {{/if}}
           {{#if this.calculations.canCounter}}
@@ -552,33 +552,40 @@
                 </button>
               {{/unless}}
             {{/if}}
-            {{#if (and this.roll.criticRoll.request (is 'eq' this.roll.resistanceRoll.request false))}}
+            {{#if (and this.defender.roll.criticRoll.request (is 'eq' this.defender.roll.resistanceRoll.request false))}}
               <button title='{{localize 'macros.combat.dialog.criticRollButtonTooltip.title'}}'
                       class='abf-button roll-critic'>
                 {{localize 'macros.combat.dialog.criticRollButton.title'}}
               </button>
             {{/if}}
-            {{#if this.roll.resistanceRoll.request}}
+            {{#if this.defender.roll.resistanceRoll.request}}
               <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
                       class='abf-button roll-resistance'>
-                  {{#if this.roll.criticRoll.sent}}
+                  {{#if this.defender.roll.criticRoll.sent}}
                     {{localize 'macros.combat.dialog.rollResistanceCriticButton.title'}}
                   {{else}}
                     {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
                   {{/if}}
               </button>
             {{/if}}
-            {{#if this.roll.oppousedCheckRoll.request}}
+            {{#if this.defender.roll.oppousedCheckRoll.request}}
                 <button title='{{localize 'macros.combat.dialog.rollOppousedCheckButtonTooltip.title'}}'
                         class='abf-button roll-oppoused-check'>
                   {{localize 'macros.combat.dialog.rollOppousedCheckButton.title'}}
                 </button>
             {{/if}}
-            {{#unless (or this.roll.resistanceRoll.request this.roll.oppousedCheckRoll.request this.roll.criticRoll.request)}}
-              <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
-                      class='abf-button apply-values'>
-                {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
-              </button>
+            {{#unless (or this.defender.roll.resistanceRoll.request this.defender.roll.oppousedCheckRoll.request this.defender.roll.criticRoll.request)}}
+                {{#if (is 'eq' this.ui.index this.ui.targets)}}
+                  <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
+                    class='abf-button apply-values'>
+                    {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
+                  </button>
+                {{else}}
+                  <button title='{{localize 'macros.combat.dialog.applyAndNextButtonTooltip.title'}}'
+                    class='abf-button apply-values'>
+                    {{localize 'macros.combat.dialog.applyAndNextButton.title'}}
+                  </button>
+                {{/if}}
             {{/unless}}
             <button class='abf-button cancel-button'>
               {{localize 'macros.combat.dialog.cancelButton.title'}}
