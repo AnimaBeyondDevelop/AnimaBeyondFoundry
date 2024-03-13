@@ -18,6 +18,7 @@ import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
+import { damageCheck } from '../combat/utils/damageCheck.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
@@ -607,6 +608,15 @@ export class ABFActor extends Actor {
       };
       return this.update(dataToUpdate);
     }
+  }
+
+  spellDamage(spellId: string, spellGrade: string) {
+    const spell = this.getItem(spellId)
+    const spellGrades = ['none', 'base', 'intermediate', 'advanced', 'arcane']
+    if (spell === undefined || spellGrades.indexOf(spellGrade) <= 0) { return }
+    const baseDamage = damageCheck(spell.system.grades[spellGrade].description.value ?? '')
+
+    return baseDamage
   }
 
   /**
