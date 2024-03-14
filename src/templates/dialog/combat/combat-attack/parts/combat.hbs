@@ -126,6 +126,20 @@
 </div>
 {{/if}}
 
+{{#if this.ui.multipleTargets}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.specialPorpuseAttack.areaAttack.title')
+      inputType="checkbox"
+      inputName="attacker.combat.specialPorpuseAttack.areaAttack"
+      inputValue=(is 'eq' this.attacker.combat.specialPorpuseAttack.areaAttack true)
+    }}
+  </div>
+</div>
+{{/if}}
+
 {{#if this.attacker.combat.projectile.value}}
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>

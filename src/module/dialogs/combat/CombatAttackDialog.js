@@ -83,7 +83,8 @@ const getInitialData = (attacker, defender, options = {}) => {
           specialCharacteristic: undefined,
           check: false,
           directed: 'none',
-          weakspot: false
+          weakspot: false,
+          areaAttack: false
         },
         poison: undefined
       },
@@ -167,6 +168,7 @@ export class CombatAttackDialog extends FormApplication {
     this.modalData = getInitialData(attacker, defenders[0], options);
 
     this.modalData.ui.multipleTargets = defenders.length > 1;
+    this.modalData.attacker.combat.specialPorpuseAttack.areaAttack = defenders.length > 1;
 
     const { combat, psychic, mystic } = this.modalData.attacker;
 
@@ -365,6 +367,9 @@ export class CombatAttackDialog extends FormApplication {
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
+        if (specialPorpuseAttack.areaAttack) {
+          attackerCombatMod.areaAttack = { value: -50, apply: true }
+        }
         if (specialPorpuseAttack.value !== 'none') {
           if (specialPorpuseAttack.value === 'takeDown') {
             specialPorpuseAttack.check = true;
@@ -475,7 +480,8 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             attackerCombatMod,
-            poison
+            poison,
+            areaAttack: this.modalData.ui.multipleTargets && !specialPorpuseAttack.areaAttack
           }
         });
 
@@ -582,7 +588,8 @@ export class CombatAttackDialog extends FormApplication {
             specialPorpuseAttack,
             directedAttacks,
             macro: spell.macro,
-            attackerCombatMod
+            attackerCombatMod,
+            areaAttack: this.modalData.ui.multipleTargets
           }
         });
 
@@ -701,7 +708,8 @@ export class CombatAttackDialog extends FormApplication {
             specialPorpuseAttack,
             directedAttacks,
             macro: power.macro,
-            attackerCombatMod
+            attackerCombatMod,
+            areaAttack: this.modalData.ui.multipleTargets
           }
         });
 

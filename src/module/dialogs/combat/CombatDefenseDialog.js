@@ -39,7 +39,8 @@ const getInitialData = (attacker, defender) => {
       visible: attacker.visible,
       projectile: attacker.projectile,
       damage: attacker.damage,
-      specialPorpuseAttack: attacker.specialPorpuseAttack
+      specialPorpuseAttack: attacker.specialPorpuseAttack,
+      areaAttack: attacker.areaAttack
     },
     defender: {
       token: defender,
@@ -69,7 +70,9 @@ const getInitialData = (attacker, defender) => {
           shieldUsed: undefined,
           shieldValue: 0,
           newShield: true
-        }
+        },
+        blockEnergy: false,
+        moveOutOfArea: false
       },
       mystic: {
         modifier: 0,
@@ -336,6 +339,9 @@ export class CombatDefenseDialog extends FormApplication {
             value: -30,
             apply: true
           };
+        }
+        if(this.modalData.attacker.areaAttack){
+
         }
       } else {
         value = weapon
