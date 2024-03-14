@@ -201,13 +201,13 @@ export class MysticActDialog extends FormApplication {
                 }
             }
         }
-
+        const fatigueUsedBonus = act.fatigueUsed * 15
         if (act.spareAct) {
             act.final = act.spareAct
         } else {
-            act.final = act.value + act.modifier + act.fatigueUsed * 15
+            act.final = act.value + act.modifier + fatigueUsedBonus
         }
-        act.partial = Math.floor(act.final / 2)
+        act.partial = Math.floor(((act.final - fatigueUsedBonus) / 2) + fatigueUsedBonus)
 
         if (actor.system.mystic.zeon.value < act.final) {
             act.partial = Math.min(act.partial, actor.system.mystic.zeon.value);
