@@ -1,18 +1,18 @@
 export const supSpecificAttack = effect => {
-  const specificAttack = {
+  const specialPorpuseAttack = {
     value: 'none',
     causeDamage: false,
     specialCharacteristic: undefined,
     check: false,
-    targeted: 'none',
+    directed: 'none',
     weakspot: false,
     openArmor: false
   };
   if (/Fuerza[^\d+]+\d+/i.test(effect)) {
-    specificAttack.value = 'immobilize';
-    specificAttack.specialCharacteristic =
+    specialPorpuseAttack.value = 'trapping';
+    specialPorpuseAttack.specialCharacteristic =
       parseInt(effect.match(/Fuerza[^\d+]+\d+/i)[0].match(/\d+/)[0], 10) ?? 0;
-    specificAttack.check = true;
+    specialPorpuseAttack.check = true;
   }
-  return specificAttack;
+  return specialPorpuseAttack;
 };
