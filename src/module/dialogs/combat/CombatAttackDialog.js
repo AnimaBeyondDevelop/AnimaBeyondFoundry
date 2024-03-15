@@ -29,7 +29,8 @@ const getInitialData = (attacker, defender, options = {}) => {
       isGM,
       hasFatiguePoints:
         attackerActor.system.characteristics.secondaries.fatigue.value > 0,
-      weaponHasSecondaryCritic: undefined
+      weaponHasSecondaryCritic: undefined,
+      multipleTargets: false
     },
     attacker: {
       token: attacker,
@@ -47,16 +48,16 @@ const getInitialData = (attacker, defender, options = {}) => {
         enable: combatDistance,
         check: false
       },
-      specificAttacks: [
+      specialPorpuseAttacks: [
         'none',
-        'knockDown',
+        'takeDown',
         'disable',
         'disarm',
-        'immobilize',
+        'trapping',
         'knockOut',
-        'targeted'
+        'directed'
       ],
-      targetedAttacks: defenderActor.system.general.body,
+      directedAttacks: defenderActor.system.general.body,
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -76,13 +77,14 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        specificAttack: {
+        specialPorpuseAttack: {
           value: 'none',
           causeDamage: true,
           specialCharacteristic: undefined,
           check: false,
-          targeted: 'none',
-          weakspot: false
+          directed: 'none',
+          weakspot: false,
+          areaAttack: false
         },
         poison: undefined
       },
@@ -160,10 +162,13 @@ const getInitialData = (attacker, defender, options = {}) => {
 };
 
 export class CombatAttackDialog extends FormApplication {
-  constructor(attacker, defender, hooks, options = {}) {
-    super(getInitialData(attacker, defender, options));
+  constructor(attacker, defenders, hooks, options = {}) {
+    super(getInitialData(attacker, defenders[0], options));
 
-    this.modalData = getInitialData(attacker, defender, options);
+    this.modalData = getInitialData(attacker, defenders[0], options);
+
+    this.modalData.ui.multipleTargets = defenders.length > 1;
+    this.modalData.attacker.combat.specialPorpuseAttack.areaAttack = defenders.length > 1;
 
     const { combat, psychic, mystic } = this.modalData.attacker;
 
@@ -309,11 +314,11 @@ export class CombatAttackDialog extends FormApplication {
           unarmed,
           visible,
           distanceCheck,
-          specificAttack,
+          specialPorpuseAttack,
           poison
         },
         distance,
-        targetedAttacks,
+        directedAttacks,
         highGround,
         poorVisibility,
         targetInCover
@@ -362,51 +367,54 @@ export class CombatAttackDialog extends FormApplication {
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
-        if (specificAttack.value !== 'none') {
-          if (specificAttack.value === 'knockDown') {
-            specificAttack.check = true;
+        if (specialPorpuseAttack.areaAttack) {
+          attackerCombatMod.areaAttack = { value: -50, apply: true }
+        }
+        if (specialPorpuseAttack.value !== 'none') {
+          if (specialPorpuseAttack.value === 'takeDown') {
+            specialPorpuseAttack.check = true;
             if (
               unarmed ||
               weapon.name === 'Desarmado' ||
               weapon.system.size.value !== 'small'
             ) {
-              attackerCombatMod.knockDown = { value: -30, apply: true }
+              attackerCombatMod.takeDown = { value: -30, apply: true }
             } else {
-              attackerCombatMod.knockDownSmallWeapon = { value: -60, apply: true }
+              attackerCombatMod.takeDownSmallWeapon = { value: -60, apply: true }
             }
-          } else if (specificAttack.value === 'disarm') {
-            specificAttack.check = true;
+          } else if (specialPorpuseAttack.value === 'disarm') {
+            specialPorpuseAttack.check = true;
             attackerCombatMod.disarm = { value: -40, apply: true }
-          } else if (specificAttack.value === 'immobilize') {
-            specificAttack.check = true;
-            attackerCombatMod.immobilize = { value: -40, apply: true }
-          } else if (specificAttack.value === 'knockOut') {
-            specificAttack.targeted = 'head';
+          } else if (specialPorpuseAttack.value === 'trapping') {
+            specialPorpuseAttack.check = true;
+            attackerCombatMod.trapping = { value: -40, apply: true }
+          } else if (specialPorpuseAttack.value === 'knockOut') {
+            specialPorpuseAttack.directed = 'head';
             if (critic !== WeaponCritic.IMPACT) {
               attackerCombatMod.knockOut = { value: -40, apply: true }
             }
           }
-          if (specificAttack.targeted !== 'none') {
-            specificAttack.weakspot = targetedAttacks[specificAttack.targeted]?.weakspot;
-            specificAttack.openArmor = targetedAttacks[specificAttack.targeted]?.openArmor;
-            if (specificAttack.value === 'disable') {
-              specificAttack.weakspot = true;
+          if (specialPorpuseAttack.directed !== 'none') {
+            specialPorpuseAttack.weakspot = directedAttacks[specialPorpuseAttack.directed]?.weakspot;
+            specialPorpuseAttack.openArmor = directedAttacks[specialPorpuseAttack.directed]?.openArmor;
+            if (specialPorpuseAttack.value === 'disable') {
+              specialPorpuseAttack.weakspot = true;
             }
-            attackerCombatMod.targeted = {
-              value: targetedAttacks[specificAttack.targeted]?.modifier ?? 0, apply: true
+            attackerCombatMod.directed = {
+              value: directedAttacks[specialPorpuseAttack.directed]?.modifier ?? 0, apply: true
             }
           }
-          if (specificAttack.value === 'disable') {
+          if (specialPorpuseAttack.value === 'disable') {
             const disableBodyParts = ['elbow', 'foot', 'hand', 'knee', 'arm', 'thigh', 'calf', 'wrist']
-            if (!disableBodyParts.find(i => i === specificAttack.targeted)) {
+            if (!disableBodyParts.find(i => i === specialPorpuseAttack.directed)) {
               ui.notifications.warn(
-                i18n.localize('dialogs.specificAttack.warning.disableMustChoose')
+                i18n.localize('dialogs.specialPorpuseAttack.warning.disableMustChoose')
               );
               return
             }
           }
           if (unarmed || weapon.name === 'Desarmado') {
-            specificAttack.specialCharacteristic = undefined
+            specialPorpuseAttack.specialCharacteristic = undefined
           }
         }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
@@ -455,8 +463,8 @@ export class CombatAttackDialog extends FormApplication {
         this.hooks.onAttack({
           type: 'combat',
           values: {
-            specificAttack,
-            targetedAttacks,
+            specialPorpuseAttack,
+            directedAttacks,
             unarmed,
             damage: damage.final,
             attack,
@@ -472,7 +480,8 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             attackerCombatMod,
-            poison
+            poison,
+            areaAttack: this.modalData.ui.multipleTargets && !specialPorpuseAttack.areaAttack
           }
         });
 
@@ -494,7 +503,7 @@ export class CombatAttackDialog extends FormApplication {
           metamagics,
           projectile,
           distanceCheck
-        }, distance, targetedAttacks } = this.modalData.attacker;
+        }, distance, directedAttacks } = this.modalData.attacker;
       distance.check = distanceCheck
       if (spellUsed) {
         const attackerCombatMod = {
@@ -524,7 +533,7 @@ export class CombatAttackDialog extends FormApplication {
         let visibleCheck = spell?.system.visible;
 
         let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
-        const specificAttack = supSpecificAttack(spellUsedEffect);
+        const specialPorpuseAttack = supSpecificAttack(spellUsedEffect);
         let combatModifier = 0;
         for (const key in attackerCombatMod) {
           combatModifier += attackerCombatMod[key]?.value ?? 0;
@@ -576,10 +585,11 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             spellCasting,
-            specificAttack,
-            targetedAttacks,
+            specialPorpuseAttack,
+            directedAttacks,
             macro: spell.macro,
-            attackerCombatMod
+            attackerCombatMod,
+            areaAttack: this.modalData.ui.multipleTargets
           }
         });
 
@@ -602,7 +612,7 @@ export class CombatAttackDialog extends FormApplication {
         projectile,
         distanceCheck },
         distance,
-        targetedAttacks
+        directedAttacks
       } = this.modalData.attacker;
       distance.check = distanceCheck
       const { i18n } = game;
@@ -670,7 +680,7 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const powerUsedEffect = power?.system.effects[psychicPotentialRoll.total].value;
-        const specificAttack = supSpecificAttack(powerUsedEffect);
+        const specialPorpuseAttack = supSpecificAttack(powerUsedEffect);
         let damage = damageCheck(powerUsedEffect) + damageModifier;
         let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let visibleCheck = power?.system.visible;
@@ -695,10 +705,11 @@ export class CombatAttackDialog extends FormApplication {
             visible: visibleCheck,
             distance,
             projectile,
-            specificAttack,
-            targetedAttacks,
+            specialPorpuseAttack,
+            directedAttacks,
             macro: power.macro,
-            attackerCombatMod
+            attackerCombatMod,
+            areaAttack: this.modalData.ui.multipleTargets
           }
         });
 
@@ -753,25 +764,25 @@ export class CombatAttackDialog extends FormApplication {
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);
     combat.poison = weapon?.system?.poisons?.system
-    combat.specificAttack.specialCharacteristic = weaponSpecialCheck(weapon);
+    combat.specialPorpuseAttack.specialCharacteristic = weaponSpecialCheck(weapon);
     if (
-      combat.specificAttack.value !== 'knockDown' &&
-      combat.specificAttack.value !== 'immobilize'
+      combat.specialPorpuseAttack.value !== 'takeDown' &&
+      combat.specialPorpuseAttack.value !== 'trapping'
     ) {
-      combat.specificAttack.causeDamage = true;
+      combat.specialPorpuseAttack.causeDamage = true;
     }
-    if (combat.specificAttack.value === 'disarm') {
-      combat.specificAttack.causeDamage = false;
+    if (combat.specialPorpuseAttack.value === 'disarm') {
+      combat.specialPorpuseAttack.causeDamage = false;
     }
     if (
-      combat.specificAttack.value !== 'disable' &&
-      combat.specificAttack.value !== 'targeted'
+      combat.specialPorpuseAttack.value !== 'disable' &&
+      combat.specialPorpuseAttack.value !== 'directed'
     ) {
-      combat.specificAttack.targeted = 'none';
+      combat.specialPorpuseAttack.directed = 'none';
     }
     combat.unarmed =
       weapons.length === 0 ||
-      (combat.specificAttack.value === 'immobilize' && !combat.specificAttack.specialCharacteristic);
+      (combat.specialPorpuseAttack.value === 'trapping' && !combat.specialPorpuseAttack.specialCharacteristic);
 
     if (combat.unarmed) {
       const unarmedDamage =
@@ -779,11 +790,11 @@ export class CombatAttackDialog extends FormApplication {
         10 +
         this.attackerActor.system.characteristics.primaries.strength.mod;
       combat.damage.final = unarmedDamage;
-      if (!combat.specificAttack.causeDamage) {
+      if (!combat.specialPorpuseAttack.causeDamage) {
         combat.damage.final = 0;
       } else if (
-        combat.specificAttack.value === 'knockDown' ||
-        combat.specificAttack.value === 'immobilize'
+        combat.specialPorpuseAttack.value === 'takeDown' ||
+        combat.specialPorpuseAttack.value === 'trapping'
       ) {
         combat.damage.final = roundTo5Multiples(unarmedDamage / 2);
       }
@@ -809,11 +820,11 @@ export class CombatAttackDialog extends FormApplication {
         weapon.system.critic.secondary.value !== NoneWeaponCritic.NONE;
       const armedDamage = combat.damage.special + weapon.system.damage.final.value;
       combat.damage.final = armedDamage;
-      if (!combat.specificAttack.causeDamage) {
+      if (!combat.specialPorpuseAttack.causeDamage) {
         combat.damage.final = 0;
       } else if (
-        combat.specificAttack.value === 'knockDown' ||
-        combat.specificAttack.value === 'immobilize'
+        combat.specialPorpuseAttack.value === 'takeDown' ||
+        combat.specialPorpuseAttack.value === 'trapping'
       ) {
         combat.damage.final = roundTo5Multiples(armedDamage / 2);
       }

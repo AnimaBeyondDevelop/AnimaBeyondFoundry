@@ -2,6 +2,7 @@
   {{#> "systems/animabf/templates/common/ui/group.hbs"
     class="defense-values"
   }}
+  <h3 class="main-title group-header-title">{{this.defender.token.name}}</h3>
     {{>
     "systems/animabf/templates/common/ui/group-header.hbs"
       title=(concat (localize 'macros.combat.dialog.defending.title') this.attacker.token.name)

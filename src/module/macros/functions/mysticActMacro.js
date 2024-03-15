@@ -218,15 +218,15 @@ export class MysticActDialog extends FormApplication {
                 }
             }
         }
-
+        const fatigueUsedBonus = act.fatigueUsed *
+            (metamagics.arcanePower.exploitationOfNaturalEnergy.sphere == 2 ? 40 :
+                metamagics.arcanePower.exploitationOfNaturalEnergy.sphere == 1 ? 25 : 15)
         if (act.spareAct) {
             act.final = act.spareAct
         } else {
-            act.final = act.value + act.modifier + act.fatigueUsed *
-                (metamagics.arcanePower.exploitationOfNaturalEnergy.sphere == 2 ? 40 :
-                    metamagics.arcanePower.exploitationOfNaturalEnergy.sphere == 1 ? 25 : 15)
+            act.final = act.value + act.modifier + fatigueUsedBonus
         }
-        act.partial = roundTo5Multiples(act.final / 2)
+        act.partial = roundTo5Multiples((act.final - fatigueUsedBonus) / 2) + fatigueUsedBonus
 
         if (actor.system.mystic.zeon.value < act.final) {
             act.partial = Math.min(act.partial, actor.system.mystic.zeon.value);

@@ -5,12 +5,32 @@ import { calculateATReductionByQuality } from '../../combat/utils/calculateATRed
 import { getGeneralLocation } from '../../combat/utils/getGeneralLocation';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
-const getInitialData = (attacker, defender, options = {}) => {
+const getInitialData = (attacker, defenders, options = {}) => {
+
+  const defend = defenders.map(defender => {
+    return {
+      token: defender,
+      actor: defender.actor,
+      customModifier: 0,
+      supernaturalShield: {
+        dobleDamage: false,
+        immuneToDamage: false
+      },
+      roll: {
+        oppousedCheckRoll: { request: false, sent: false, attacker: { value: 0, characteristic: undefined }, defender: { value: 0, characteristic: undefined } },
+        resistanceRoll: { request: false, sent: false, check: 0, value: 0 },
+        criticRoll: { request: false, sent: false, resist: 0, value: 0 },
+      },
+      isReady: false
+    };
+  })
 
   return {
     ui: {
       isCounter: options.isCounter ?? false,
       waitingRollRequest: false,
+      targets: defenders.length,
+      index: 1
     },
     attacker: {
       token: attacker,
@@ -21,29 +41,17 @@ const getInitialData = (attacker, defender, options = {}) => {
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
-    defender: {
-      token: defender,
-      actor: defender.actor,
-      customModifier: 0,
-      supernaturalShield: {
-        dobleDamage: false,
-        immuneToDamage: false
-      },
-      isReady: false
-    },
-    roll: {
-      oppousedCheckRoll: { request: false, sent: false, attacker: { value: 0, characteristic: undefined }, defender: { value: 0, characteristic: undefined } },
-      resistanceRoll: { request: false, sent: false, check: 0, value: 0 },
-      criticRoll: { request: false, sent: false, resist: 0, value: 0 },
-    }
+    defender: defend[0],
+    listDefenders: defend,
+    combatMacroArgs: { attacker, defenders: [] }
   };
 };
 
 export class GMCombatDialog extends FormApplication {
-  constructor(attacker, defender, hooks, options = {}) {
-    super(getInitialData(attacker, defender, options));
+  constructor(attacker, defenders, hooks, options = {}) {
+    super(getInitialData(attacker, defenders, options));
 
-    this.modalData = getInitialData(attacker, defender, options);
+    this.modalData = getInitialData(attacker, defenders, options);
 
     this.hooks = hooks;
 
@@ -122,20 +130,28 @@ export class GMCombatDialog extends FormApplication {
     });
 
     html.find('.make-counter').click(async () => {
-      this.applyValuesIfBeAble();
+      this.applyValuesIfBeAble(true);
       if (this.modalData.calculations?.canCounter) {
-        this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus);
+        this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus, this.modalData.ui.index -1);
       }
     });
 
     html.find('.apply-values').click(async () => {
-      this.applyValuesIfBeAble();
-      this.close();
+      const { ui } = this.modalData
+      if (ui.index === ui.targets) {
+        this.applyValuesIfBeAble(true);
+        this.close();
+      } else {
+        await this.applyValuesIfBeAble();
+        this.modalData.defender = this.modalData.listDefenders[ui.index];
+        ui.index += 1;
+        this.render();
+      }
     });
 
     html.find('.roll-resistance').click(async () => {
       this.modalData.ui.waitingRollRequest = true;
-      const { roll } = this.modalData
+      const { roll } = this.modalData.defender
       const { resistanceEffect: { type, value }, poison } = this.modalData.attacker.result.values;
       const check = roll.criticRoll.sent ? roll.criticRoll.value : poison?.check ? poison.effects.main.check : value;
       const resistance = roll.criticRoll.sent ? { main: 'physical', secondary: 'none' } : poison?.check ? { main: 'poison', secondary: 'none' } : { main: type, secondary: 'none' }
@@ -144,14 +160,14 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-critic').click(async () => {
       this.modalData.ui.waitingRollRequest = true;
-      const { specificAttack } = this.modalData.attacker.result.values;
+      const { specialPorpuseAttack } = this.modalData.attacker.result.values;
       const { damage } = this.modalData.calculations;
-      const targeted = specificAttack.targeted !== 'none';
+      const directed = specialPorpuseAttack.directed !== 'none';
       const generalLocation = getGeneralLocation();
-      const location = targeted ? specificAttack.targeted : generalLocation.specific;
+      const location = directed ? specialPorpuseAttack.directed : generalLocation.specific;
       const critic = {
         damage,
-        targeted,
+        directed,
         generalLocation,
         location,
         criticLevel: this.attackerActor.system.general.modifiers.criticLevel.value,
@@ -162,11 +178,11 @@ export class GMCombatDialog extends FormApplication {
 
     html.find('.roll-oppoused-check').click(async () => {
       this.modalData.ui.waitingRollRequest = true;
-      const { specialCharacteristic, value } = this.modalData.attacker.result.values.specificAttack;
-      const { roll, calculations: { difference, atResistance } } = this.modalData;
+      const { specialCharacteristic, value } = this.modalData.attacker.result.values.specialPorpuseAttack;
+      const { defender: { roll }, calculations: { difference, atResistance } } = this.modalData;
       const modifier = difference - atResistance < 100 ? -3 : difference - atResistance > 200 ? 3 : 0;
 
-      const oppousedCheck = { specificAttack: value }
+      const oppousedCheck = { specialPorpuseAttack: value }
       if (!roll.oppousedCheckRoll.attacker.characteristic) {
         if (specialCharacteristic) {
           oppousedCheck.characteristic = 'special'
@@ -235,8 +251,9 @@ export class GMCombatDialog extends FormApplication {
     this.render();
   }
 
-  updateDefenderData(result) {
-    const { defender } = this.modalData;
+  updateDefenderData(result, defenerId) {
+    const defender = this.modalData.listDefenders.find(w => w.token._id === defenerId)
+
     result.values.initialTotal ||= result.values.total;
     result.values.total = Math.max(0, result.values.total);
     defender.result = result;
@@ -262,7 +279,8 @@ export class GMCombatDialog extends FormApplication {
     this.render();
   }
   updateRollData(result) {
-    const { attacker, defender, ui, roll } = this.modalData;
+    const { attacker, defender, ui } = this.modalData;
+    const { roll } = this.modalData.defender;
     const { type, values: { total, check, characteristic, fatigueUsed } } = result;
     ui.waitingRollRequest = false;
 
@@ -315,7 +333,8 @@ export class GMCombatDialog extends FormApplication {
   }
 
   getData() {
-    const { attacker, defender, roll } = this.modalData;
+    const { attacker, defender } = this.modalData;
+    const { roll } = this.modalData.defender;
 
     attacker.isReady = !!attacker.result;
 
@@ -355,11 +374,11 @@ export class GMCombatDialog extends FormApplication {
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       const atResistance = defender.result.values?.at * 10 + 20;
-      const { specificAttack } = attacker.result.values;
+      const { specialPorpuseAttack } = attacker.result.values;
       const { lifePoints } = defender.result.values;
 
       const isNonLethalDamage =
-        specificAttack.value === 'disable' || specificAttack.value === 'knockOut';
+        specialPorpuseAttack.value === 'disable' || specialPorpuseAttack.value === 'knockOut';
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
@@ -407,7 +426,7 @@ export class GMCombatDialog extends FormApplication {
       }
 
       if (this.canApplyDamage) {
-        this.modalData.calculations.canCritic = specificAttack.weakspot
+        this.modalData.calculations.canCritic = specialPorpuseAttack.weakspot
           ? this.modalData.calculations.damage >= lifePoints / 10
           : this.modalData.calculations.damage >= lifePoints / 2;
         if (this.modalData.calculations.canCritic && attacker.applyCritic) {
@@ -424,7 +443,7 @@ export class GMCombatDialog extends FormApplication {
           if (attacker.result.values?.resistanceEffect.check) {
             roll.resistanceRoll.request = true;
           }
-          if (specificAttack.check) {
+          if (specialPorpuseAttack.check) {
             roll.oppousedCheckRoll.request = true;
           }
         } else { roll.oppousedCheckRoll.request = false }
@@ -454,7 +473,6 @@ export class GMCombatDialog extends FormApplication {
         }
       }
     }
-
     return this.modalData;
   }
 
@@ -463,15 +481,16 @@ export class GMCombatDialog extends FormApplication {
 
     this.render();
   }
-  async applyValuesIfBeAble() {
-    if (this.modalData.attacker.result?.type === 'combat') {
+  async applyValuesIfBeAble(execute) {
+    const firstDefender = this.modalData.ui.index === 1
+    if (this.modalData.attacker.result?.type === 'combat' && firstDefender) {
       this.attackerActor.applyFatigue(this.modalData.attacker.result.values.fatigueUsed);
     }
 
     if (this.modalData.defender.result?.type === 'combat') {
       this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigueUsed);
     }
-    this.mysticCastEvaluateIfAble();
+    this.mysticCastEvaluateIfAble(firstDefender);
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
 
@@ -486,11 +505,11 @@ export class GMCombatDialog extends FormApplication {
     }
     this.criticIfBeAble();
 
-    this.executeCombatMacro();
+    this.executeCombatMacro(execute);
   }
 
   criticIfBeAble() {
-    const { roll, attacker } = this.modalData
+    const { defender: { roll }, attacker } = this.modalData
     if (roll.criticRoll.sent && roll.resistanceRoll.sent && attacker.applyCritic) {
       const criticResist = roll.criticRoll.resist - roll.criticRoll.value
       if (criticResist < 0) {
@@ -499,8 +518,8 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  mysticCastEvaluateIfAble() {
-    if (this.modalData.attacker.result?.type === 'mystic') {
+  mysticCastEvaluateIfAble(firstDefender) {
+    if (this.modalData.attacker.result?.type === 'mystic' && firstDefender) {
       const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
       this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
@@ -591,7 +610,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeCombatMacro() {
+  executeCombatMacro(execute) {
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
@@ -609,18 +628,18 @@ export class GMCombatDialog extends FormApplication {
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
 
-    const { attacker, defender, roll, calculations } = this.modalData;
+    const { attacker, defender, calculations } = this.modalData;
+    const { roll } = this.modalData.defender;
     const winner =
       calculations.winner === this.defenderToken
         ? 'defender'
         : 'attacker';
-    const specificAttackResult = {
-      specificAttack: attacker.result.values?.specificAttack.value,
+    const specialPorpuseAttackResult = {
+      specialPorpuseAttack: attacker.result.values?.specialPorpuseAttack.value,
       result: roll.oppousedCheckRoll.attacker.value - roll.oppousedCheckRoll.defender.value
     };
     let macroName;
-    let args = {
-      attacker: this.attackerToken,
+    let defenderArgs = {
       defender: this.defenderToken,
       winner,
       defenseType: defender.result.values.type,
@@ -634,13 +653,13 @@ export class GMCombatDialog extends FormApplication {
       spellGrade: attacker.result.values.spellGrade,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-      specificAttackResult,
+      specialPorpuseAttackResult,
       hasCritic: roll.criticRoll.sent && attacker.applyCritic,
       criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0),
       poison: attacker.result.values.poison
     };
-    if (args.totalAttack < missedAttackValue && winner === 'defener') {
-      args.missedAttack = true;
+    if (defenderArgs.totalAttack < missedAttackValue && winner === 'defener') {
+      defenderArgs.missedAttack = true;
     }
 
     if (attacker.result?.type === 'combat') {
@@ -650,7 +669,7 @@ export class GMCombatDialog extends FormApplication {
       } else { macroName = macroPrefixAttack + 'Unarmed' }
       const { projectile } = attacker.result.values;
       if (projectile) {
-        args = { ...args, projectile: projectile };
+        defenderArgs = { ...defenderArgs, projectile: projectile };
         if (projectile.type === 'shot') {
           macroName = macroPorjectileDefault;
         }
@@ -665,7 +684,7 @@ export class GMCombatDialog extends FormApplication {
       attacker.result.values.visible !== undefined &&
       !attacker.result.values.visible
     ) {
-      args.isVisibleAttack = false;
+      defenderArgs.isVisibleAttack = false;
     }
 
     if (
@@ -674,13 +693,16 @@ export class GMCombatDialog extends FormApplication {
     ) {
       macroName = attacker.result?.values.macro;
     }
-
-    let macro = game.macros.getName(macroName) ?? game.macros.getName(macroAttackDefault);
-    if (macro) {
-      console.debug(args);
-      setTimeout(() => { macro.execute(args) }, 250);
-    } else {
-      console.debug(`Macro '${macroName}' not found.`);
+    this.modalData.combatMacroArgs.defenders.push(defenderArgs)
+    if (execute) {
+      let macro = game.macros.getName(macroName) ?? game.macros.getName(macroAttackDefault);
+      const args = this.modalData.combatMacroArgs
+      if (macro) {
+        console.debug(args);
+        setTimeout(() => { macro.execute(args) }, 250);
+      } else {
+        console.debug(`Macro '${macroName}' not found.`);
+      }
     }
   }
 }

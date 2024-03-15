@@ -69,6 +69,36 @@
   </div>
 </div>
 
+
+{{#if (or this.attacker.energyAttack this.attacker.areaAttack)}}
+  <div class='columns'>
+    <div>
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.combat.blockEnergy.title')
+      disabled=this.defenseSent
+      inputType="checkbox"
+      inputName="defender.combat.blockEnergy"
+      inputValue=(is 'eq' this.defender.combat.blockEnergy true)
+      }}
+    </div>
+  </div>
+{{/if}}
+{{#if this.attacker.areaAttack}}
+  <div class='columns'>
+    <div>
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.combat.moveOutOfArea.title')
+      disabled=this.defenseSent
+      inputType="checkbox"
+      inputName="defender.combat.moveOutOfArea"
+      inputValue=(is 'eq' this.defender.combat.moveOutOfArea true)
+      }}
+    </div>
+  </div>
+{{/if}}
+
 {{#if this.defenseSent}}
   <div class='defense-sent'>
     {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}

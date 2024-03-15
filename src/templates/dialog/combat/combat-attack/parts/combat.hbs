@@ -75,52 +75,66 @@
 }}
 
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.specificAttack.title')
+  title=(localize 'macros.combat.dialog.specialPorpuseAttack.title')
   disabled=this.attackSent
-  inputName='attacker.combat.specificAttack.value'
+  inputName='attacker.combat.specialPorpuseAttack.value'
 }}
-  {{#each this.attacker.specificAttacks}}
-    <option {{#if (is "eq" ../this.attacker.combat.specificAttack.value this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.specificAttack.' this '.title')}}</option>
+  {{#each this.attacker.specialPorpuseAttacks}}
+    <option {{#if (is "eq" ../this.attacker.combat.specialPorpuseAttack.value this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.specialPorpuseAttack.' this '.title')}}</option>
   {{/each}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-{{#if (is 'eq' this.attacker.combat.specificAttack.value 'targeted')}}
+{{#if (is 'eq' this.attacker.combat.specialPorpuseAttack.value 'directed')}}
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.targetedAttack.title')
+  title=(localize 'macros.combat.dialog.directedAttack.title')
   disabled=this.attackSent
-  inputName='attacker.combat.specificAttack.targeted'
+  inputName='attacker.combat.specialPorpuseAttack.directed'
 }}
-  <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted 'none')}}selected{{/if}} value='none'>{{localize (concat 'macros.combat.dialog.targetedAttack.none.title')}}</option>
-  {{#each this.attacker.targetedAttacks}}
-    <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted @key)}}selected{{/if}} value='{{@key}}'>{{localize (concat 'macros.combat.dialog.targetedAttack.' @key '.title')}}</option>
+  <option {{#if (is "eq" ../this.attacker.combat.specialPorpuseAttack.directed 'none')}}selected{{/if}} value='none'>{{localize (concat 'macros.combat.dialog.directedAttack.none.title')}}</option>
+  {{#each this.attacker.directedAttacks}}
+    <option {{#if (is "eq" ../this.attacker.combat.specialPorpuseAttack.directed @key)}}selected{{/if}} value='{{@key}}'>{{localize (concat 'macros.combat.dialog.directedAttack.' @key '.title')}}</option>
   {{/each}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{/if}}
 
-{{#if (is 'eq' this.attacker.combat.specificAttack.value 'disable')}}
+{{#if (is 'eq' this.attacker.combat.specialPorpuseAttack.value 'disable')}}
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.targetedAttack.title')
+  title=(localize 'macros.combat.dialog.directedAttack.title')
   disabled=this.attackSent
-  inputName='attacker.combat.specificAttack.targeted'
+  inputName='attacker.combat.specialPorpuseAttack.directed'
 }}
-  <option {{#if (is "eq" this.attacker.combat.specificAttack.targeted 'none')}}selected{{/if}} value='none'>{{localize (concat 'macros.combat.dialog.targetedAttack.none.title')}}</option>
-  {{#each this.attacker.targetedAttacks}}
+  <option {{#if (is "eq" this.attacker.combat.specialPorpuseAttack.directed 'none')}}selected{{/if}} value='none'>{{localize (concat 'macros.combat.dialog.directedAttack.none.title')}}</option>
+  {{#each this.attacker.directedAttacks}}
     {{#if (or (is 'eq' @key 'elbow') (is 'eq' @key 'foot') (is 'eq' @key 'hand') (is 'eq' @key 'knee') (is 'eq' @key 'arm') (is 'eq' @key 'thigh') (is 'eq' @key 'calf') (is 'eq' @key 'wrist'))}}
-      <option {{#if (is "eq" ../this.attacker.combat.specificAttack.targeted @key)}}selected{{/if}} value='{{@key}}'>{{localize (concat 'macros.combat.dialog.targetedAttack.' @key '.title')}}</option>
+      <option {{#if (is "eq" ../this.attacker.combat.specialPorpuseAttack.directed @key)}}selected{{/if}} value='{{@key}}'>{{localize (concat 'macros.combat.dialog.directedAttack.' @key '.title')}}</option>
     {{/if}}
   {{/each}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{/if}}
 
-{{#if (or (is 'eq' this.attacker.combat.specificAttack.value 'knockDown') (is 'eq' this.attacker.combat.specificAttack.value 'immobilize'))}}
+{{#if (or (is 'eq' this.attacker.combat.specialPorpuseAttack.value 'takeDown') (is 'eq' this.attacker.combat.specialPorpuseAttack.value 'trapping'))}}
 <div class='columns'>
   <div>
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      title=(localize 'macros.combat.dialog.specificAttack.causeDamage.title')
+      title=(localize 'macros.combat.dialog.specialPorpuseAttack.causeDamage.title')
       inputType="checkbox"
-      inputName="attacker.combat.specificAttack.causeDamage"
-      inputValue=(is 'eq' this.attacker.combat.specificAttack.causeDamage true)
+      inputName="attacker.combat.specialPorpuseAttack.causeDamage"
+      inputValue=(is 'eq' this.attacker.combat.specialPorpuseAttack.causeDamage true)
+    }}
+  </div>
+</div>
+{{/if}}
+
+{{#if this.ui.multipleTargets}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.specialPorpuseAttack.areaAttack.title')
+      inputType="checkbox"
+      inputName="attacker.combat.specialPorpuseAttack.areaAttack"
+      inputValue=(is 'eq' this.attacker.combat.specialPorpuseAttack.areaAttack true)
     }}
   </div>
 </div>

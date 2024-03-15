@@ -23,6 +23,7 @@ const getInitialData = (attacker, defender) => {
     accumulated: 0,
     keepAccumulating: true
   };
+  const energyAttack = attacker.areaAttack || attacker.attackType != 'combat';
 
   return {
     ui: {
@@ -39,7 +40,9 @@ const getInitialData = (attacker, defender) => {
       visible: attacker.visible,
       projectile: attacker.projectile,
       damage: attacker.damage,
-      specificAttack: attacker.specificAttack
+      specialPorpuseAttack: attacker.specialPorpuseAttack,
+      areaAttack: attacker.areaAttack,
+      energyAttack
     },
     defender: {
       token: defender,
@@ -61,6 +64,7 @@ const getInitialData = (attacker, defender) => {
         weapon: undefined,
         unarmed: false,
         at: {
+          base: defenderActor.system.combat.totalArmor.at[attacker.critic]?.value ?? 0,
           special: 0,
           final: 0
         },
@@ -68,7 +72,9 @@ const getInitialData = (attacker, defender) => {
           shieldUsed: undefined,
           shieldValue: 0,
           newShield: true
-        }
+        },
+        blockEnergy: false,
+        moveOutOfArea: false
       },
       mystic: {
         modifier: 0,
@@ -246,19 +252,6 @@ export class CombatDefenseDialog extends FormApplication {
       }
     }
 
-    let critic = this.modalData.attacker.critic;
-    let at = this.defenderActor.system.combat.totalArmor.at[critic]?.value;
-
-    if (at !== undefined) {
-      combat.at.final = combat.at.special + at;
-    }
-    if (this.modalData.attacker.specificAttack.value !== 'none' && !this.modalData.attacker.specificAttack.causeDamage) {
-      combat.at.final = 0;
-    }
-    if (this.modalData.attacker.specificAttack.openArmor) {
-      combat.at.final = 0;
-    }
-
     this.hooks = hooks;
 
     this.render(true);
@@ -313,7 +306,9 @@ export class CombatDefenseDialog extends FormApplication {
           multipleDefensesPenalty,
           at,
           accumulateDefenses,
-          weaponUsed
+          weaponUsed,
+          moveOutOfArea,
+          blockEnergy
         },
         lifePoints,
         blindness,
@@ -321,20 +316,20 @@ export class CombatDefenseDialog extends FormApplication {
       } = this.modalData.defender;
       this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
 
-      const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
+      const type = e.currentTarget.dataset.type;
       let value;
       let baseDefense;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
         multipleDefensesPenalty: {
-          value: multipleDefensesPenalty * 1,
+          value: +multipleDefensesPenalty,
           apply: true
         }
       };
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
       const projectileType = this.modalData.attacker.projectile?.type;
-      if (e.currentTarget.dataset.type === 'dodge') {
+      if (type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
         baseDefense = this.defenderActor.system.combat.dodge.base.value;
         const maestry = baseDefense >= 200;
@@ -346,6 +341,12 @@ export class CombatDefenseDialog extends FormApplication {
         ) {
           defenderCombatMod.dodgeProjectile = {
             value: -30,
+            apply: true
+          };
+        }
+        if (this.modalData.attacker.areaAttack && !moveOutOfArea) {
+          defenderCombatMod.cantMoveOutOfArea = {
+            value: -80,
             apply: true
           };
         }
@@ -387,6 +388,12 @@ export class CombatDefenseDialog extends FormApplication {
               }
             }
           }
+        };
+        if ((this.modalData.attacker.areaAttack || this.modalData.attacker.energyAttack) && !blockEnergy) {
+          defenderCombatMod.blockEnergy = {
+            value: -120,
+            apply: true
+          };
         }
       }
 
@@ -450,6 +457,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.hooks.onDefense({
         type: 'resistance',
         values: {
+          modifier: 0,
           at: at.final,
           surprised,
           total: 0
@@ -750,6 +758,15 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
+
+    combat.at.final = combat.at.base + combat.at.special;
+
+    if (this.modalData.attacker.specialPorpuseAttack.value !== 'none' && !this.modalData.attacker.specialPorpuseAttack.causeDamage) {
+      combat.at.final = 0;
+    }
+    if (this.modalData.attacker.specialPorpuseAttack.openArmor) {
+      combat.at.final = 0;
+    }
 
     return this.modalData;
   }

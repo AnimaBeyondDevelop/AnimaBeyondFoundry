@@ -44,7 +44,8 @@ export class WSGMCombatManager extends WSCombatManager {
       const { projectile } = msg.payload.values;
       const { damage } = msg.payload.values;
       const { distance } = msg.payload.values;
-      const { specificAttack } = msg.payload.values;
+      const { specialPorpuseAttack } = msg.payload.values;
+      const { areaAttack } = msg.payload.values;
 
       if (canOwnerReceiveMessage(defenderActor)) {
         const newMsg = {
@@ -67,8 +68,9 @@ export class WSGMCombatManager extends WSCombatManager {
             visible,
             projectile,
             damage,
-            distance
-            , specificAttack);
+            distance,
+            specialPorpuseAttack,
+            areaAttack);
         } catch (err) {
           if (err) {
             Log.error(err);
@@ -112,10 +114,12 @@ export class WSGMCombatManager extends WSCombatManager {
       this.combat = undefined;
     }
 
-    if (this.defendDialog) {
-      this.defendDialog.close({ force: true });
+    if (this.defenseDialog) {
+      for (const defenderId in this.defenseDialog) {
+        this.defenseDialog[defenderId].close({ force: true });
 
-      this.defendDialog = undefined;
+        this.defenseDialog[defenderId] = undefined;
+      }
     }
 
     if (this.attackDialog) {
@@ -151,20 +155,20 @@ export class WSGMCombatManager extends WSCombatManager {
       return;
     }
 
-    const targetToken = getTargetToken(selectedToken, targets);
+    const targetTokens = getTargetToken(selectedToken, targets);
 
     if (selectedToken?.id) {
       await ABFDialogs.confirm(
         this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
         this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', {
-          target: targetToken.name
+          target: targetTokens.map(t => t.name).join(" - ")
         }),
         {
           onConfirm: () => {
-            if (selectedToken?.id && targetToken?.id) {
-              this.combat = this.createNewCombat(selectedToken, targetToken);
+            if (selectedToken?.id && targetTokens?.every(t => { return t?.id })) {
+              this.combat = this.createNewCombat(selectedToken, targetTokens);
 
-              this.manageAttack(selectedToken, targetToken);
+              this.manageAttack(selectedToken, targetTokens);
             }
           }
         }
@@ -194,9 +198,9 @@ export class WSGMCombatManager extends WSCombatManager {
     const { attackerTokenId, defenderTokenId } = msg.payload;
 
     const attacker = this.findTokenById(attackerTokenId);
-    const defender = this.findTokenById(defenderTokenId);
+    const defenders = defenderTokenId.map(id => { return this.findTokenById(id) });
 
-    if (!attacker || !defender) {
+    if (!attacker || !defenders) {
       Log.warn(
         'Can not handle user attack request due attacker or defender actor do not exist'
       );
@@ -209,11 +213,11 @@ export class WSGMCombatManager extends WSCombatManager {
       ) {
         await CombatDialogs.openCombatRequestDialog({
           attacker: attacker.actor,
-          defender: defender.actor
+          defender: defenders[0].actor
         });
       }
 
-      this.combat = this.createNewCombat(attacker, defender);
+      this.combat = this.createNewCombat(attacker, defenders);
 
       const newMsg = {
         type: GMMessageTypes.RequestToAttackResponse,
@@ -237,17 +241,17 @@ export class WSGMCombatManager extends WSCombatManager {
     }
   }
 
-  createNewCombat(attacker, defender) {
-    return new GMCombatDialog(attacker, defender, {
+  createNewCombat(attacker, defenders) {
+    return new GMCombatDialog(attacker, defenders, {
       onClose: () => {
         this.endCombat();
       },
-      onCounterAttack: bonus => {
+      onCounterAttack: (bonus, index) => {
         this.endCombat();
 
         this.combat = new GMCombatDialog(
-          defender,
-          attacker,
+          defenders[index],
+          [attacker],
           {
             onClose: () => {
               this.endCombat();
@@ -262,11 +266,11 @@ export class WSGMCombatManager extends WSCombatManager {
           }
         );
 
-        if (canOwnerReceiveMessage(defender.actor)) {
+        if (canOwnerReceiveMessage(defenders[index].actor)) {
           const newMsg = {
             type: GMMessageTypes.CounterAttack,
             payload: {
-              attackerTokenId: defender.id,
+              attackerTokenId: defenders[index].id,
               defenderTokenId: attacker.id,
               counterAttackBonus: bonus
             }
@@ -274,7 +278,7 @@ export class WSGMCombatManager extends WSCombatManager {
 
           this.emit(newMsg);
         } else {
-          this.manageAttack(defender, attacker, bonus);
+          this.manageAttack(defenders[index], [attacker], bonus);
         }
       },
       onRollRequest: (token, roll) => {
@@ -301,60 +305,64 @@ export class WSGMCombatManager extends WSCombatManager {
     });
   }
 
-  manageAttack(attacker, defender, bonus) {
+  manageAttack(attacker, defenders, bonus) {
     this.attackDialog = new CombatAttackDialog(
       attacker,
-      defender,
+      defenders,
       {
         onAttack: result => {
-          this.attackDialog?.close({ force: true });
+          defenders.forEach(defender => {
+            this.attackDialog?.close({ force: true });
 
-          this.attackDialog = undefined;
+            this.attackDialog = undefined;
 
-          if (this.combat) {
-            this.combat.updateAttackerData(result);
-            if (result.values.psychicFatigue) {
-              return
-            }
-            if (canOwnerReceiveMessage(defender.actor)) {
-              const newMsg = {
-                type: GMMessageTypes.Attack,
-                payload: {
-                  attackerTokenId: attacker.id,
-                  defenderTokenId: defender.id,
-                  result
+            if (this.combat) {
+              this.combat.updateAttackerData(result);
+              if (result.values.psychicFatigue) {
+                return
+              }
+              if (canOwnerReceiveMessage(defender.actor)) {
+                const newMsg = {
+                  type: GMMessageTypes.Attack,
+                  payload: {
+                    attackerTokenId: attacker.id,
+                    defenderTokenId: defender.id,
+                    result
+                  }
+                };
+
+                this.emit(newMsg);
+              } else {
+                const { critic } = result.values;
+                const { visible } = result.values;
+                const { projectile } = result.values;
+                const { damage } = result.values;
+                const { distance } = result.values;
+                const { specialPorpuseAttack } = result.values;
+                const { areaAttack } = result.values;
+
+                try {
+                  this.manageDefense(
+                    attacker,
+                    defender,
+                    result.type,
+                    critic,
+                    visible,
+                    projectile,
+                    damage,
+                    distance,
+                    specialPorpuseAttack,
+                    areaAttack);
+                } catch (err) {
+                  if (err) {
+                    Log.error(err);
+                  }
+
+                  this.endCombat();
                 }
-              };
-
-              this.emit(newMsg);
-            } else {
-              const { critic } = result.values;
-              const { visible } = result.values;
-              const { projectile } = result.values;
-              const { damage } = result.values;
-              const { distance } = result.values;
-              const { specificAttack } = result.values;
-
-              try {
-                this.manageDefense(
-                  attacker,
-                  defender,
-                  result.type,
-                  critic,
-                  visible,
-                  projectile,
-                  damage,
-                  distance,
-                  specificAttack);
-              } catch (err) {
-                if (err) {
-                  Log.error(err);
-                }
-
-                this.endCombat();
               }
             }
-          }
+          });
         }
       },
       { counterAttackBonus: bonus }
@@ -370,8 +378,12 @@ export class WSGMCombatManager extends WSCombatManager {
     projectile,
     damage,
     distance,
-    specificAttack) {
-    this.defendDialog = new CombatDefenseDialog(
+    specialPorpuseAttack,
+    areaAttack) {
+    if (!this.defendDialog) {
+      this.defendDialog = { [defender._id]: undefined }
+    }
+    this.defendDialog[defender._id] = new CombatDefenseDialog(
       {
         token: attacker,
         attackType,
@@ -380,18 +392,19 @@ export class WSGMCombatManager extends WSCombatManager {
         projectile,
         damage,
         distance,
-        specificAttack
+        specialPorpuseAttack,
+        areaAttack
       },
       defender,
       {
         onDefense: result => {
-          if (this.defendDialog) {
-            this.defendDialog.close({ force: true });
+          if (this.defendDialog[defender._id]) {
+            this.defendDialog[defender._id].close({ force: true });
 
-            this.defendDialog = undefined;
+            this.defendDialog[defender._id] = undefined;
 
             if (this.combat) {
-              this.combat.updateDefenderData(result);
+              this.combat.updateDefenderData(result, defender._id);
             }
           }
         }
