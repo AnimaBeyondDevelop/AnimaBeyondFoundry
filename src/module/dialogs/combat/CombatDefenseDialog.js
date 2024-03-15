@@ -23,6 +23,7 @@ const getInitialData = (attacker, defender) => {
     accumulated: 0,
     keepAccumulating: true
   };
+  const energyAttack = attacker.areaAttack || attacker.attackType != 'combat';
 
   return {
     ui: {
@@ -40,7 +41,8 @@ const getInitialData = (attacker, defender) => {
       projectile: attacker.projectile,
       damage: attacker.damage,
       specialPorpuseAttack: attacker.specialPorpuseAttack,
-      areaAttack: attacker.areaAttack
+      areaAttack: attacker.areaAttack,
+      energyAttack
     },
     defender: {
       token: defender,
@@ -304,7 +306,9 @@ export class CombatDefenseDialog extends FormApplication {
           multipleDefensesPenalty,
           at,
           accumulateDefenses,
-          weaponUsed
+          weaponUsed,
+          moveOutOfArea,
+          blockEnergy
         },
         lifePoints,
         blindness,
@@ -312,7 +316,7 @@ export class CombatDefenseDialog extends FormApplication {
       } = this.modalData.defender;
       this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
 
-      const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
+      const type = e.currentTarget.dataset.type;
       let value;
       let baseDefense;
       const defenderCombatMod = {
@@ -325,7 +329,7 @@ export class CombatDefenseDialog extends FormApplication {
       };
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
       const projectileType = this.modalData.attacker.projectile?.type;
-      if (e.currentTarget.dataset.type === 'dodge') {
+      if (type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
         baseDefense = this.defenderActor.system.combat.dodge.base.value;
         const maestry = baseDefense >= 200;
@@ -340,8 +344,11 @@ export class CombatDefenseDialog extends FormApplication {
             apply: true
           };
         }
-        if(this.modalData.attacker.areaAttack){
-
+        if (this.modalData.attacker.areaAttack && !moveOutOfArea) {
+          defenderCombatMod.cantMoveOutOfArea = {
+            value: -80,
+            apply: true
+          };
         }
       } else {
         value = weapon
@@ -381,6 +388,12 @@ export class CombatDefenseDialog extends FormApplication {
               }
             }
           }
+        };
+        if ((this.modalData.attacker.areaAttack || this.modalData.attacker.energyAttack) && !blockEnergy) {
+          defenderCombatMod.blockEnergy = {
+            value: -120,
+            apply: true
+          };
         }
       }
 
