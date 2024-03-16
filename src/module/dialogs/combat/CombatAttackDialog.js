@@ -10,7 +10,7 @@ import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
 
-const getInitialData = (attacker, defender, options = {}) => {
+const getInitialData = (attacker, defender, multipleTargets, options = {}) => {
   const combatDistance = !!game.settings.get(
     'animabf',
     ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE
@@ -30,7 +30,7 @@ const getInitialData = (attacker, defender, options = {}) => {
       hasFatiguePoints:
         attackerActor.system.characteristics.secondaries.fatigue.value > 0,
       weaponHasSecondaryCritic: undefined,
-      multipleTargets: false
+      multipleTargets
     },
     attacker: {
       token: attacker,
@@ -84,7 +84,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           check: false,
           directed: 'none',
           weakspot: false,
-          areaAttack: false
+          areaAttack: multipleTargets
         },
         poison: undefined
       },
@@ -122,7 +122,8 @@ const getInitialData = (attacker, defender, options = {}) => {
           offensiveExpertise: 0,
           removeProtection: 0,
           definedMagicProjection: 0
-        }
+        },
+        areaAttack: multipleTargets
       },
       psychic: {
         modifier: 0,
@@ -148,6 +149,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           type: 'shot'
         },
         damageModifier: 0,
+        areaAttack: multipleTargets
       }
     },
     defender: {
@@ -163,12 +165,10 @@ const getInitialData = (attacker, defender, options = {}) => {
 
 export class CombatAttackDialog extends FormApplication {
   constructor(attacker, defenders, hooks, options = {}) {
-    super(getInitialData(attacker, defenders[0], options));
+    const multipleTargets = defenders.length > 1;
+    super(getInitialData(attacker, defenders[0], multipleTargets, options));
 
-    this.modalData = getInitialData(attacker, defenders[0], options);
-
-    this.modalData.ui.multipleTargets = defenders.length > 1;
-    this.modalData.attacker.combat.specialPorpuseAttack.areaAttack = defenders.length > 1;
+    this.modalData = getInitialData(attacker, defenders[0], multipleTargets, options);
 
     const { combat, psychic, mystic } = this.modalData.attacker;
 
@@ -502,7 +502,8 @@ export class CombatAttackDialog extends FormApplication {
           damage,
           metamagics,
           projectile,
-          distanceCheck
+          distanceCheck,
+          areaAttack
         }, distance, directedAttacks } = this.modalData.attacker;
       distance.check = distanceCheck
       if (spellUsed) {
@@ -589,7 +590,7 @@ export class CombatAttackDialog extends FormApplication {
             directedAttacks,
             macro: spell.macro,
             attackerCombatMod,
-            areaAttack: this.modalData.ui.multipleTargets
+            areaAttack
           }
         });
 
@@ -610,7 +611,8 @@ export class CombatAttackDialog extends FormApplication {
         damageModifier,
         mentalPatternImbalance,
         projectile,
-        distanceCheck },
+        distanceCheck,
+        areaAttack },
         distance,
         directedAttacks
       } = this.modalData.attacker;
@@ -709,7 +711,7 @@ export class CombatAttackDialog extends FormApplication {
             directedAttacks,
             macro: power.macro,
             attackerCombatMod,
-            areaAttack: this.modalData.ui.multipleTargets
+            areaAttack
           }
         });
 
