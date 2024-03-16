@@ -572,7 +572,7 @@ export class GMCombatDialog extends FormApplication {
   async applyDamageSupernaturalShieldIfBeAble(supShieldId) {
     const { attacker, defender } = this.modalData;
     const { dobleDamage, immuneToDamage } = defender.supernaturalShield;
-    const {  modifiers: { damageBarrier }, settings: { damageReduction } } = this.defenderActor.system.general.modifiers;
+    const {  modifiers: { damageBarrier }, settings: { damageReduction } } = this.defenderActor.system.general;
     const { damageEnergy } = attacker.result.values
     const defenderIsWinner =
       this.modalData.calculations.winner === this.defenderToken;
