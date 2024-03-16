@@ -92,6 +92,17 @@
   secondaryInputValue=attacker.mystic.damage.final
 }}
 
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.areaAttack.title')
+      inputType="checkbox"
+      inputName="attacker.mystic.areaAttack"
+      inputValue=(is 'eq' this.attacker.mystic.areaAttack true)
+    }}
+  </div>
+</div>
 
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>
