@@ -143,6 +143,14 @@
           }}
           {{>
           'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+            class="damage-energy"
+            title=(localize "anima.ui.mystic.spell.damageEnergy.title")
+            inputType="checkbox"
+            inputName="system.damageEnergy"
+            inputValue=(is 'eq' system.damageEnergy true)
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
             class="has-daily-maintenance"
             title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")
             inputType="checkbox"

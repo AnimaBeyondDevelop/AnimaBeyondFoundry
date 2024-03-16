@@ -1,5 +1,6 @@
 import { roundTo5Multiples } from '../../../../../../combat/utils/roundTo5Multiples';
 import { calculateInnateMagic } from './calculations/calculateInnateMagic';
+import { WeaponCritic } from '../../../../../../types/combat/WeaponItemConfig';
 
 /**
  * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
@@ -79,6 +80,14 @@ export const mutateMysticData = data => {
       let prepared = preparedSpell.system.prepared.value;
       if (prepared) {
         preparedSpell.system.zeonAcc.value = preparedSpell.system.zeonAcc.max;
+      }
+    }
+  }
+
+  if (mystic.spells.length !== 0) {
+    for (let spell of mystic.spells) {
+      if (spell.system.critic.value === WeaponCritic.ENERGY) {
+        spell.system.damageEnergy = true
       }
     }
   }

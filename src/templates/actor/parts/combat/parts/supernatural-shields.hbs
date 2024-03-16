@@ -36,11 +36,19 @@
         {{/if}}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-          class="shieldPoints"
+          class="shield-points"
           title=(localize "anima.ui.combat.supernaturalShields.shieldPoints.title")
           hideTitle=(is "gt" @index 0)
           inputName=(concat "system.dynamic.supernaturalShields." this._id ".system.shieldPoints")
           inputValue=this.system.shieldPoints
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="damage-barrier"
+          title=(localize "anima.ui.combat.supernaturalShields.damageBarrier.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "system.dynamic.supernaturalShields." this._id ".system.damageBarrier")
+          inputValue=this.system.damageBarrier
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"

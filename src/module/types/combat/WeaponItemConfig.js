@@ -155,7 +155,8 @@ export const INITIAL_WEAPON_DATA = {
   critic: {
     primary: { value: WeaponCritic.CUT },
     secondary: { value: NoneWeaponCritic.NONE }
-  }
+  },
+  damageEnergy: false
 };
 
 /** @type {import("../Items").WeaponItemConfig} */

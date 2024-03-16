@@ -41,5 +41,14 @@
           <option {{#if (is "eq" this.inputValue 'mass')}} selected{{/if}} value='mass'>{{localize 'anima.ui.settings.advancedSettings.defenseType.mass.title'}}</option>
       {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
     </div>
+
+    {{#if (is "eq" system.general.settings.defenseType.value 'resistance')}}
+    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="damage-resistance-multiple"
+      title=(localize "anima.ui.settings.advancedSettings.damageResistanceMultiple.title")
+      inputName="system.general.settings.damageResistanceMultiple.value"
+      inputValue= system.general.settings.damageResistanceMultiple.value
+    }}
+    {{/if}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}
