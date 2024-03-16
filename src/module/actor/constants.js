@@ -30,7 +30,9 @@ export const INITIAL_ACTOR_DATA = {
       inhuman: { value: false },
       zen: { value: false },
       perceivePsychic: { value: false },
-      defenseType: { value: '' }
+      defenseType: { value: '' },
+      damageResistanceMultiple: { value: 0 },
+      damageReduction: { value: 0 }
     },
     modifiers: {
       physicalActions: {
@@ -101,6 +103,9 @@ export const INITIAL_ACTOR_DATA = {
         value: 0
       },
       criticLevel: {
+        value: 0
+      },
+      damageBarrier: {
         value: 0
       }
     },

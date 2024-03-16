@@ -11,7 +11,7 @@
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="zen"
-        title= (localize "anima.ui.settings.advancedCharacteristics.zen")
+        title= (localize "anima.ui.settings.advancedCharacteristics.zen.title")
         inputType="checkbox"
         inputName="system.general.settings.zen.value"
         inputValue=system.general.settings.zen.value
@@ -19,7 +19,7 @@
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="inhuman"
-        title= (localize "anima.ui.settings.advancedCharacteristics.inhuman")
+        title= (localize "anima.ui.settings.advancedCharacteristics.inhuman.title")
         inputType="checkbox"
         inputName="system.general.settings.inhuman.value"
         inputValue=system.general.settings.inhuman.value
@@ -27,7 +27,7 @@
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="inmaterial"
-        title= (localize "anima.ui.settings.advancedCharacteristics.inmaterial")
+        title= (localize "anima.ui.settings.advancedCharacteristics.inmaterial.title")
         inputType="checkbox"
         inputName="system.general.settings.inmaterial.value"
         inputValue=system.general.settings.inmaterial.value
@@ -35,7 +35,7 @@
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="perceiveMystic"
-        title= (localize "anima.ui.settings.advancedCharacteristics.perceiveMystic")
+        title= (localize "anima.ui.settings.advancedCharacteristics.perceiveMystic.title")
         inputType="checkbox"
         inputName="system.general.settings.perceiveMystic.value"
         inputValue=system.general.settings.perceiveMystic.value
@@ -43,10 +43,17 @@
     {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="perceivePsychic"
-        title= (localize "anima.ui.settings.advancedCharacteristics.perceivePsychic")
+        title= (localize "anima.ui.settings.advancedCharacteristics.perceivePsychic.title")
         inputType="checkbox"
         inputName="system.general.settings.perceivePsychic.value"
         inputValue=system.general.settings.perceivePsychic.value
       }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="damage-reduction"
+      title=(localize "anima.ui.settings.advancedCharacteristics.damageReduction.title")
+      inputName="system.general.settings.damageReduction.value"
+      inputValue=system.general.settings.damageReduction.value
+    }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

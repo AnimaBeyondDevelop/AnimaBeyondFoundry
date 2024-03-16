@@ -67,7 +67,8 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   hasMaintenance: { value: false },
   visible: false,
   macro: '',
-  bonus: { value: 0 }
+  bonus: { value: 0 },
+  damageEnergy: { value: '-' }
 };
 
 /** @type {import("../Items").PsychicPowerItemConfig} */

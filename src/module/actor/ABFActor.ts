@@ -17,6 +17,7 @@ import { difficultyAchieved } from '../combat/utils/difficultyAchieved.js';
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
+import { shieldBarrierCheck } from '../combat/utils/shieldBarrierCheck.js';
 import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
 import { damageCheck } from '../combat/utils/damageCheck.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
@@ -281,10 +282,13 @@ export class ABFActor extends Actor {
       const finalEffect = shieldValueCheck(
         power?.system.effects[psychicDifficulty].value ?? ''
       );
+      const damageBarrier = shieldBarrierCheck(
+        power?.system.effects[psychicDifficulty].value ?? ''
+      )
       supernaturalShieldData.name = power.name;
       supernaturalShieldData.system = {
         type: 'psychic',
-        damageBarrier: 0,
+        damageBarrier,
         shieldPoints: finalEffect,
         origin: this.uuid
       };
@@ -296,13 +300,16 @@ export class ABFActor extends Actor {
       const finalEffect = shieldValueCheck(
         spell?.system.grades[spellGrade].description.value ?? ''
       );
+      const damageBarrier = shieldBarrierCheck(
+        spell?.system.grades[spellGrade].description.value ?? ''
+      )
       const { empoweredShields } = this.system.mystic.magicLevel.metamagics.arcaneWarfare
       const shieldPoints = empoweredShields.sphere == 1 ? finalEffect * 2 : empoweredShields.sphere == 2 ? finalEffect * 3 : finalEffect;
       supernaturalShieldData.name = spell.name;
       supernaturalShieldData.system = {
         type: 'mystic',
         spellGrade,
-        damageBarrier: 0,
+        damageBarrier,
         shieldPoints,
         metamagics,
         origin: this.uuid
@@ -359,6 +366,9 @@ export class ABFActor extends Actor {
     newCombatResult?: any
   ) {
     const supShield = this.getItem(supShieldId);
+    if (supShield?.system.damageBarrier && !newCombatResult?.damageEnergy) {
+      if (supShield?.system.damageBarrier > damage && !dobleDamage) { return }
+    }
     const shieldValue = supShield?.system.shieldPoints;
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
     if (newShieldPoints > 0) {
@@ -379,7 +389,9 @@ export class ABFActor extends Actor {
           0,
           newCombatResult.at,
           Math.abs(newShieldPoints),
-          newCombatResult.halvedAbsorption
+          newCombatResult.halvedAbsorption,
+          newCombatResult.damageBarrier,
+          newCombatResult.damageReduction
         );
         const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
         this.applyDamage(breakingDamage);

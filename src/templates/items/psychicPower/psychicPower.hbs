@@ -77,7 +77,7 @@
           class="macro"
           title=(localize "anima.ui.psychic.psychicPowers.power.header.macro.title")
           inputType="text"
-          inputName=(concat "system.macro")
+          inputName="system.macro"
           inputValue=system.macro
         }}
         <div class="description">
@@ -92,7 +92,7 @@
             class="has-maintenance"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.hasMaintenance.title")
             inputType="checkbox"
-            inputName=(concat "system.hasMaintenance.value")
+            inputName="system.hasMaintenance.value"
             inputValue=(is 'eq' system.hasMaintenance.value true)
           }}
           {{>
@@ -100,7 +100,7 @@
             class="visible"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.visible.title")
             inputType="checkbox"
-            inputName=(concat "system.visible")
+            inputName="system.visible"
             inputValue=(is 'eq' system.visible true)
           }}
           {{>
@@ -108,14 +108,25 @@
             class="critic"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.critic.title")
             choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
-            inputName=(concat "system.critic.value")
+            inputName="system.critic.value"
             inputValue=system.critic.value
           }}
+          {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+            class="damage-energy"
+            title=(localize "anima.ui.psychic.psychicPowers.power.footer.damageEnergy.title")
+            inputName="system.damageEnergy.value"
+            inputValue=system.damageEnergy.value
+          }}
+            <option {{#if (is "eq" system.damageEnergy.value "-")}}selected{{/if}} value='-'>No</option>
+          {{#each system.effects as |effect key|}}
+            <option {{#if (is "eq" ../this.system.damageEnergy.value key)}}selected{{/if}} value='{{key}}'>{{concat (localize 'anima.ui.psychic.psychicPowers.power.footer.damageEnergy.select.title') " " key}}</option>
+          {{/each}}
+          {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
           {{>
           "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
             class="bonus"
             title=(localize "anima.ui.psychic.psychicPowers.power.footer.bonus.title")
-            inputName=(concat "system.bonus.value")
+            inputName="system.bonus.value"
             inputValue=system.bonus.value
           }}
         </div>
