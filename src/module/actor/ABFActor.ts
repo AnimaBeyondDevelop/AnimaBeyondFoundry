@@ -222,11 +222,12 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
-  async rollABF(value: number, name = '', bonus = 0, sendToChat = true) {
+  async rollABF(value: number, name = '', bonus = 0, sendToChat = true, openRoll = true) {
     const label = name ? `Rolling ${name}` : '';
     const mod: number = await openModDialog(name);
     let formula = `1d100xa + ${value} + ${bonus} + ${mod ?? 0}`;
     if (value >= 200) formula = formula.replace('xa', 'xamastery');
+    if(!openRoll) formula = formula.replace('xa', '').replace('mastery', '')
     const roll = new ABFFoundryRoll(formula, this.system);
     roll.roll();
     if (sendToChat) {
