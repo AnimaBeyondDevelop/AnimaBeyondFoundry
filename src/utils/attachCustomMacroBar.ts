@@ -26,6 +26,11 @@ const DEFAULT_GM_MACROS: DefaultMacroConfig[] = [
     macroSelectorId: '#custom-hotbar-mystic-act',
     hotkey: e => e.ctrlKey && e.key === '3',
     fn: () => ABFMacros.mysticAct()
+  },
+  {
+    macroSelectorId: '#custom-hotbar-mystic-cast',
+    hotkey: e => e.ctrlKey && e.key === '4',
+    fn: () => ABFMacros.mysticCast()
   }
 ];
 
@@ -39,6 +44,11 @@ const DEFAULT_USER_MACROS: DefaultMacroConfig[] = [
     macroSelectorId: '#custom-hotbar-mystic-act',
     hotkey: e => e.ctrlKey && e.key === '2',
     fn: () => ABFMacros.mysticAct()
+  },
+  {
+    macroSelectorId: '#custom-hotbar-mystic-cast',
+    hotkey: e => e.ctrlKey && e.key === '3',
+    fn: () => ABFMacros.mysticCast()
   }
 ];
 
@@ -47,11 +57,12 @@ export const attachCustomMacroBar = async () => {
 
   const isGM = tgame.user?.isGM;
   const maxZeon = tgame.user?.character?.system.mystic.zeon.max
+  const spells = tgame.user?.character?.system.mystic.spells.length > 0
 
   const [customHotbarHTML] = await renderTemplates({
     name: Templates.CustomHotBar,
     context: {
-      isGM, maxZeon
+      isGM, maxZeon, spells
     }
   });
 

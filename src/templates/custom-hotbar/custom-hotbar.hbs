@@ -17,6 +17,10 @@
         <img src='/icons/svg/aura.svg' />
         <p class='shortcut'>ctrl + 3</p>
       </div>
+      <div title='{{localize 'customHotbar.mysticCast'}}' id='custom-hotbar-mystic-cast' class='custom-macro'>
+        <img src='/icons/svg/daze.svg' />
+        <p class='shortcut'>ctrl + 4</p>
+      </div>
     </ol>
   {{else}}
     <ol class='macros'>
@@ -28,6 +32,12 @@
         <div title='{{localize 'customHotbar.mysticAct'}}' id='custom-hotbar-mystic-act' class='custom-macro'>
           <img src='/icons/svg/aura.svg' />
           <p class='shortcut'>ctrl + 2</p>
+        </div>
+      {{/if}}
+      {{#if this.spells}}
+        <div title='{{localize 'customHotbar.mysticCast'}}' id='custom-hotbar-mystic-cast' class='custom-macro'>
+          <img src='/icons/svg/daze.svg' />
+          <p class='shortcut'>ctrl + 3</p>
         </div>
       {{/if}}
     </ol>

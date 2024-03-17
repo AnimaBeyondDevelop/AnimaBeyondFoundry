@@ -921,6 +921,8 @@
   "macros.damageCalculator.dialog.defense.title": "Defense",
   "macros.damageCalculator.dialog.ta.title": "AT",
   "macros.damageCalculator.dialog.title": "Damage calculator",
+  "macros.mysticCast.dialog.button.title": "Cast Spell",
+  "macros.mysticCast.dialog.title": "Spell Cast",
   "macros.mysticAct.dialog.title": "ACT",
   "macros.mysticAct.dialog.zeon.title": "Zeon",
   "macros.mysticAct.dialog.zeonAccumulated.title": "Accumulated Zeon",
