@@ -939,6 +939,7 @@
   "macros.mysticAct.dialog.spareActConfirm.body.title": "Quieres hacer uso del ACT Excedente",
   "macros.mysticAct.dialog.spareActConfirm.title": "Aún te quedan {spareAct} de ACT",
   "macros.mysticAct.dialog.message.title": "Acumula <b>{act}</b> de Zeon",
+  "macros.mysticCast.dialog.message.title": "Lanzó <b>{spell}</b> - {grade}",
   "macros.dialog.error.multipleSelectedToken.title": "Sólo puedes seleccionar un token",
   "macros.dialog.error.noSelectedToken.title": "No tienes seleccionado a ningún token",
   "macros.dialog.zeonWithstandPain.succeed.title": "Mantiene la concentración",

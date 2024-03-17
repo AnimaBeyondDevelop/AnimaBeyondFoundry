@@ -116,16 +116,17 @@ export class MysticCastDialog extends FormApplication {
 
             actor.mysticCast(spellCasting, selectedSpell.id, selectedSpell.spellGrade)
 
+            const { name } = actor.getItem(selectedSpell.id)
+
             if (!ui.isGM) {
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({ token }),
                     flavor: i18n.format('macros.mysticCast.dialog.message.title', {
-                        act: spareAct <= 0 ? usedAct : usedAct - spareAct
+                        spell: name, grade: selectedSpell.spellGrade
                     })
                 });
             }
 
-            const { name } = actor.getItem(selectedSpell.id)
             const args = {
                 thisActor: actor,
                 spellGrade: selectedSpell.spellGrade
