@@ -482,7 +482,8 @@ export class GMCombatDialog extends FormApplication {
         spellGrade: attacker.result.values.spellGrade,
         psychicPotential: attacker.result.values?.psychicPotential,
         attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
-        defenderPsychicFatigue: defender.result.values?.psychicFatigue
+        defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+        criticImpact: 0
       }]
     };
     if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
