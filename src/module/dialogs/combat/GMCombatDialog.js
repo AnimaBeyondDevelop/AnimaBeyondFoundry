@@ -468,22 +468,25 @@ export class GMCombatDialog extends FormApplication {
     let macroName;
     let args = {
       attacker: this.attackerToken,
-      defender: this.defenderToken,
-      winner,
-      defenseType: defender.result.values.type,
-      totalAttack: attacker.result.values.total,
-      appliedDamage: calculations.damage,
-      damageType: attacker.result.values?.critic,
-      bloodColor: 'red', // add bloodColor to actor template
-      missedAttack: false,
-      isVisibleAttack: true,
-      resistanceRoll,
-      spellGrade: attacker.result.values.spellGrade,
-      attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
-      defenderPsychicFatigue: defender.result.values?.psychicFatigue
+      defenders: [{
+        defender: this.defenderToken,
+        winner,
+        defenseType: defender.result.values.type,
+        totalAttack: attacker.result.values.total,
+        appliedDamage: calculations.damage,
+        damageType: attacker.result.values?.critic,
+        bloodColor: 'red', // add bloodColor to actor template
+        missedAttack: false,
+        isVisibleAttack: true,
+        resistanceRoll,
+        spellGrade: attacker.result.values.spellGrade,
+        psychicPotential: attacker.result.values?.psychicPotential,
+        attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
+        defenderPsychicFatigue: defender.result.values?.psychicFatigue
+      }]
     };
-    if (args.totalAttack < missedAttackValue && winner === 'defener') {
-      args.missedAttack = true;
+    if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
+      args.defenders[0].missedAttack = true;
     }
 
     if (attacker.result?.type === 'combat') {
@@ -509,7 +512,7 @@ export class GMCombatDialog extends FormApplication {
       attacker.result.values.visible !== undefined &&
       !attacker.result.values.visible
     ) {
-      args.isVisibleAttack = false;
+      args.defenders[0].isVisibleAttack = false;
     }
 
     if (
@@ -522,6 +525,7 @@ export class GMCombatDialog extends FormApplication {
     let macro = game.macros.getName(macroName) ?? game.macros.getName(macroAttackDefault);
     if (macro) {
       macro.execute(args);
+      console.debug(args)
     } else {
       console.debug(`Macro '${macroName}' not found.`);
     }
