@@ -153,6 +153,29 @@ export default class ABFActorSheet extends ActorSheet {
         item.onCreate(this.actor);
       });
     }
+
+    html.find('.search-secondaries').on("input", e => {
+      const value = e.target.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+
+      html.find('.secondaries div .common-group .group-body .name .label').each((_, hability) => {
+        const isHighlight = hability.dataset.label
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(value) &&
+          value.trim().length != 0
+        hability.classList.toggle('searched', isHighlight)
+      })
+
+      html.find('.secondary-special-skill-row .level .label').each((_, hability) => {
+        const isHighlight = hability.dataset.label
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(value) &&
+          value.trim().length != 0
+        hability.classList.toggle('searched', isHighlight)
+      })
+    })
+
   }
 
   _onEffectControl(event) {
