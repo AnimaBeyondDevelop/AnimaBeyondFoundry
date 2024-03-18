@@ -663,6 +663,7 @@ export class GMCombatDialog extends FormApplication {
       isVisibleAttack: true,
       resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
       spellGrade: attacker.result.values.spellGrade,
+      psychicPotential: attacker.result.values?.psychicPotential,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
       specialPorpuseAttackResult,
