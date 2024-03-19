@@ -3,6 +3,7 @@ export const Templates = {
     ModDialog: 'systems/animabf/templates/dialog/mod-dialog.html',
     DamageCalculator: 'systems/animabf/templates/dialog/damage-calculator.hbs',
     MysticAct: 'systems/animabf/templates/dialog/mystic-act.hbs',
+    MysticCast: 'systems/animabf/templates/dialog/mystic-cast.hbs',
     newPreparedSpell: 'systems/animabf/templates/dialog/new-prepared-spell.hbs',
     newMaintainedSpell: 'systems/animabf/templates/dialog/new-maintained-spell.hbs',
     newSupernaturalShield: {

@@ -42,6 +42,16 @@
       inputValue=this.roll.modifier
     }}
 
+    {{#if (is "eq" this.roll.type "critic")}}
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'anima.ui.combat.baseValues.criticLevel.title')
+        disabled=true
+        inputName="critic.criticLevel"
+        inputValue=this.critic.criticLevel
+      }}
+    {{/if}}
+
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize "macros.combat.dialog.rollValue.title")

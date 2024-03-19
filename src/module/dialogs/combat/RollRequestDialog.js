@@ -56,7 +56,7 @@ export class RollRequestDialog extends FormApplication {
     const { ui: { characteristics, resistances }, roll: { type }, resistance, oppousedCheck } = this.modalData;
 
     if (oppousedCheck) {
-      if (oppousedCheck?.specificAttack === 'disarm') {
+      if (oppousedCheck?.specialPorpuseAttack === 'disarm') {
 
         characteristics.dexterity = true
 
@@ -157,9 +157,9 @@ export class RollRequestDialog extends FormApplication {
         }
       }
       if (type === 'critic') {
-        const { targeted, generalLocation, location, defender } = critic
-
-        let formula = `1d100CriticRoll + ${value} + ${modifier}`;
+        const { directed, generalLocation, location, criticLevel, defender } = critic;
+        
+        let formula = `1d100CriticRoll + ${value} + ${modifier + criticLevel}`;
         if (withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100CriticRoll', '0');
@@ -172,17 +172,17 @@ export class RollRequestDialog extends FormApplication {
         if (showRoll) {
           let flavor;
 
-          if (targeted || generalLocation?.side === undefined || generalLocation?.side === 'none') {
+          if (directed || generalLocation?.side === undefined || generalLocation?.side === 'none') {
             flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
               target: defender
-            })} ( ${i18n.format(`macros.combat.dialog.targetedAttack.${location}.title`)} )`;
+            })} ( ${i18n.format(`macros.combat.dialog.directedAttack.${location}.title`)} )`;
           } else {
             flavor = `${i18n.format(`macros.combat.dialog.hasCritic.title`, {
               target: defender
             })} ( ${i18n.format(
-              `macros.combat.dialog.targetedAttack.${location}.title`
+              `macros.combat.dialog.directedAttack.${location}.title`
             )} ) ${i18n.format(
-              `macros.combat.dialog.targetedAttack.side.${generalLocation.side}.title`
+              `macros.combat.dialog.directedAttack.side.${generalLocation.side}.title`
             )}`;
           }
 

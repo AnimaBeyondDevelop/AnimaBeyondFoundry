@@ -312,13 +312,6 @@ export type SpecialSkillDataSource = ABFItemBaseDataSource<SpecialSkillItemData>
 export type SpecialSkillChanges = ItemChanges<SpecialSkillItemData>;
 export type SpecialSkillItemConfig = ABFItemConfig<SpecialSkillItemData>;
 
-export type MetamagicItemData = {
-  grade: { value: number };
-};
-export type MetamagicDataSource = ABFItemBaseDataSource<MetamagicItemData>;
-export type MetamagicChanges = ItemChanges<MetamagicItemData>;
-export type MetamagicItemConfig = ABFItemConfig<MetamagicItemData>;
-
 export type SelectedSpellItemData = {
   cost: { value: number };
 };

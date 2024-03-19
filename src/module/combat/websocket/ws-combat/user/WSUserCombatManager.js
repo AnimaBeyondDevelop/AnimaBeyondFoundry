@@ -184,7 +184,7 @@ export class WSUserCombatManager extends WSCombatManager {
           projectile: result.values.projectile,
           damage: result.values.damage,
           distance: result.values.distance,
-          specificAttack: result.values.specificAttack
+          specialPorpuseAttack: result.values.specialPorpuseAttack
         },
         defender,
         {

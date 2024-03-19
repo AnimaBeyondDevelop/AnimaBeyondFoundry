@@ -1,6 +1,7 @@
 import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
+import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
@@ -38,7 +39,7 @@ const getInitialData = (attacker, defender) => {
       visible: attacker.visible,
       projectile: attacker.projectile,
       damage: attacker.damage,
-      specificAttack: attacker.specificAttack
+      specialPorpuseAttack: attacker.specialPorpuseAttack
     },
     defender: {
       token: defender,
@@ -60,6 +61,7 @@ const getInitialData = (attacker, defender) => {
         weapon: undefined,
         unarmed: false,
         at: {
+          base: defenderActor.system.combat.totalArmor.at[attacker.critic]?.value ?? 0,
           special: 0,
           final: 0
         },
@@ -79,6 +81,7 @@ const getInitialData = (attacker, defender) => {
         },
         spellUsed: undefined,
         spellGrade: 'base',
+        attainableSpellGrades: [],
         spellCasting: {
           zeon: { accumulated: 0, cost: 0 },
           canCast: { prepared: false, innate: false },
@@ -90,6 +93,10 @@ const getInitialData = (attacker, defender) => {
           shieldUsed: undefined,
           shieldValue: 0,
           newShield: true
+        },
+        metamagics: {
+          defensiveExpertise: 0,
+          definedMagicProjection: 0
         }
       },
       psychic: {
@@ -134,7 +141,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { psychic, mystic, combat } = this.modalData.defender;
     const { weapons, supernaturalShields } = this.defenderActor.system.combat;
-    const { spells } = this.defenderActor.system.mystic;
+    const { spells, mysticSettings } = this.defenderActor.system.mystic;
     const { psychicPowers } = this.defenderActor.system.psychic;
 
     if (psychicPowers.length > 0) {
@@ -164,12 +171,28 @@ export class CombatDefenseDialog extends FormApplication {
       } else {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
+      mystic.metamagics.definedMagicProjection = this.defenderActor.getFlag(
+        'animabf',
+        'lastDefinedMagicProjection'
+      ) ?? 0;
       const spellCastingOverride = this.defenderActor.getFlag(
         'animabf',
         'spellCastingOverride'
       );
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
+      const spell = spells.find(w => w._id === mystic.spellUsed);
+      if (this.modalData.defender.mystic.spellCasting.override) {
+        this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+      } else {
+        const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
+        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+        for (const grade in spell?.system.grades) {
+          if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+            mystic.attainableSpellGrades.push(grade)
+          }
+        }
+      }
     }
 
     if (supernaturalShields.length > 0) {
@@ -222,16 +245,6 @@ export class CombatDefenseDialog extends FormApplication {
       } else if (attackType === 'psychic' && !perceivePsychic) {
         this.modalData.defender.blindness = true;
       }
-    }
-
-    let critic = this.modalData.attacker.critic;
-    let at = this.defenderActor.system.combat.totalArmor.at[critic]?.value;
-
-    if (at !== undefined) {
-      combat.at.final = combat.at.special + at;
-    }
-    if (this.modalData.attacker.specificAttack.value !== 'none' && !this.modalData.attacker.specificAttack.causeDamage) {
-      combat.at.final = 0;
     }
 
     this.hooks = hooks;
@@ -303,7 +316,7 @@ export class CombatDefenseDialog extends FormApplication {
         modifier: { value: modifier, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
         multipleDefensesPenalty: {
-          value: multipleDefensesPenalty * 1,
+          value: +multipleDefensesPenalty,
           apply: true
         }
       };
@@ -425,6 +438,7 @@ export class CombatDefenseDialog extends FormApplication {
       this.hooks.onDefense({
         type: 'resistance',
         values: {
+          modifier: 0,
           at: at.final,
           surprised,
           total: 0
@@ -444,6 +458,7 @@ export class CombatDefenseDialog extends FormApplication {
           spellUsed,
           spellGrade,
           spellCasting,
+          metamagics,
           supernaturalShield: { shieldUsed, newShield }
         },
         combat: { at },
@@ -457,6 +472,14 @@ export class CombatDefenseDialog extends FormApplication {
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true }
       };
+      if (+metamagics.defensiveExpertise) {
+        defenderCombatMod.defensiveExpertise = { value: +metamagics.defensiveExpertise, apply: true }
+      }
+      if (+metamagics.definedMagicProjection) {
+        magicProjection.final = this.defenderActor.definedMagicProjection(metamagics.definedMagicProjection, 'defensive')
+        this.modalData.defender.withoutRoll = true
+        this.defenderActor.setFlag('animabf', 'lastDefinedMagicProjection', metamagics.definedMagicProjection);
+      }
       if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
 
       if (!newShield) {
@@ -475,12 +498,11 @@ export class CombatDefenseDialog extends FormApplication {
         );
         this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
-        spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         if (this.defenderActor.evaluateCast(spellCasting)) {
           this.modalData.defender.mystic.overrideMysticCast = true;
           return;
         }
-        supShield = { create: true };
+        supShield = { create: true, metamagics };
       }
 
       let combatModifier = 0;
@@ -677,11 +699,20 @@ export class CombatDefenseDialog extends FormApplication {
 
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
+      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
-    const spell = spells.find(w => w._id === mystic.spellUsed);
-    mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
-
+    if (mystic.spellUsed) {
+      if (mystic.spellCasting.casted.prepared) {
+        const preparedSpell = this.defenderActor.getPreparedSpell(mystic.spellUsed, mystic.spellGrade);
+        mystic.metamagics = mergeObject(mystic.metamagics, preparedSpell?.system?.metamagics)
+      }
+      if (mystic.metamagics.definedMagicProjection > 0) {
+        mystic.metamagics.defensiveExpertise = 0;
+      }
+      const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
+      const addedZeonCost = { value: +mystic.metamagics.defensiveExpertise, pool: zeonPoolCost }
+      mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
+    }
     const { supernaturalShields } = this.defenderActor.system.combat;
     if (!mystic.supernaturalShield.shieldUsed) {
       mystic.supernaturalShield.shieldUsed = supernaturalShields.find(
@@ -692,6 +723,9 @@ export class CombatDefenseDialog extends FormApplication {
       w => w._id === mystic.supernaturalShield.shieldUsed
     );
     mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
+    if (!mystic.supernaturalShield.newShield) {
+      mystic.metamagics = mergeObject(mystic.metamagics, mysticShield.system.metamagics);
+    }
 
     if (!psychic.supernaturalShield.shieldUsed) {
       psychic.supernaturalShield.shieldUsed = supernaturalShields.find(
@@ -706,11 +740,39 @@ export class CombatDefenseDialog extends FormApplication {
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
 
+    combat.at.final = combat.at.base + combat.at.special;
+
+    if (this.modalData.attacker.specialPorpuseAttack.value !== 'none' && !this.modalData.attacker.specialPorpuseAttack.causeDamage) {
+      combat.at.final = 0;
+    }
+    if (this.modalData.attacker.specialPorpuseAttack.openArmor) {
+      combat.at.final = 0;
+    }
+
     return this.modalData;
   }
 
   async _updateObject(event, formData) {
+    const prevSpell = this.modalData.defender.mystic.spellUsed;
+
     this.modalData = mergeObject(this.modalData, formData);
+
+    if (prevSpell !== this.modalData.defender.mystic.spellUsed) {
+      const { spells } = this.defenderActor.system.mystic;
+      const spell = spells.find(w => w._id === this.modalData.defender.mystic.spellUsed);
+      this.modalData.defender.mystic.spellGrade = 'base'
+      this.modalData.defender.mystic.attainableSpellGrades = []
+      const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
+      const finalIntelligence = this.defenderActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+      for (const grade in spell?.system.grades) {
+        if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+          this.modalData.defender.mystic.attainableSpellGrades.push(grade)
+        }
+      }
+    }
+    if (this.modalData.defender.mystic.spellCasting?.override) {
+      this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+    }
 
     this.render();
   }

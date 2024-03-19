@@ -96,6 +96,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       extraDamage: {
         value: 0
+      },
+      criticLevel: {
+        value: 0
       }
     },
     destinyPoints: {
@@ -140,6 +143,24 @@ export const INITIAL_ACTOR_DATA = {
       size: {
         value: 0
       }
+    },
+    body: {
+      neck: { modifier: -80, weakspot: true, openArmor: false },
+      head: { modifier: -60, weakspot: true, openArmor: false },
+      elbow: { modifier: -60, weakspot: false, openArmor: false },
+      heart: { modifier: -60, weakspot: true, openArmor: false },
+      groin: { modifier: -60, weakspot: false, openArmor: false },
+      foot: { modifier: -50, weakspot: false, openArmor: false },
+      hand: { modifier: -40, weakspot: false, openArmor: false },
+      knee: { modifier: -40, weakspot: false, openArmor: false },
+      abdomen: { modifier: -20, weakspot: false, openArmor: false },
+      arm: { modifier: -20, weakspot: false, openArmor: false },
+      thigh: { modifier: -20, weakspot: false, openArmor: false },
+      calf: { modifier: -10, weakspot: false, openArmor: false },
+      torso: { modifier: -10, weakspot: false, openArmor: false },
+      eye: { modifier: -100, weakspot: false, openArmor: false },
+      wrist: { modifier: -40, weakspot: false, openArmor: false },
+      shoulder: { modifier: -30, weakspot: false, openArmor: false }
     },
     advantages: [],
     contacts: [],
@@ -981,7 +1002,7 @@ export const INITIAL_ACTOR_DATA = {
     },
     zeonMaintained: {
       base: {
-        value: 0
+      value: 0
       },
       final: {
         value: 0
@@ -1074,6 +1095,53 @@ export const INITIAL_ACTOR_DATA = {
           value: 0
         }
       },
+      metamagics: {
+        arcaneWarfare: {
+          empoweredShields: { sphere: 0, cost: 5, max: 2 },
+          mysticAccuracy: { sphere: 0, cost: [5, 10], max: 2 },
+          increasedDestruction: { sphere: 0, cost: 10, max: 2 },
+          expandedArea: { sphere: 0, cost: 10, max: 2 },
+          removeProtection: { sphere: 0, cost: 5, max: 3 },
+          defensiveExpertise: { sphere: 0, cost: 10, max: 3 },
+          offensiveExpertise: { sphere: 0, cost: 10, max: 3 },
+          doubleDamage: { sphere: 0, cost: 20, max: 1 }
+        },
+        arcanePower: {
+          combinedMagic: { sphere: 0, cost: 5, max: 1 },
+          persistentEffects: { sphere: 0, cost: 5, max: 1 },
+          definedMagicProjection: { sphere: 0, cost: 5, max: 7 },
+          exploitationOfNaturalEnergy: { sphere: 0, cost: 5, max: 2 },
+          advancedZeonRegeneration: { sphere: 0, cost: 5, max: 3 },
+          elevation: { sphere: 0, cost: 5, max: 1 },
+          avatar: { sphere: 0, cost: 20, max: 1 },
+          unlimitedZeon: { sphere: 0, cost: 20, max: 1 }
+        },
+        arcaneEsoterica: {
+          secureDefense: { sphere: 0, cost: 5, max: 1 },
+          lifeMagic: { sphere: 0, cost: 5, max: 2 },
+          feelMagic: { sphere: 0, cost: 5, max: 1 },
+          hiddenMagic: { sphere: 0, cost: 5, max: 1 },
+          spiritualLoop: { sphere: 0, cost: [15, 25], max: 2 },
+          controlSpace: { sphere: 0, cost: 10, max: 1 },
+          energyControl: { sphere: 0, cost: 10, max: 1 },
+          endureSupernaturalDamage: { sphere: 0, cost: 10, max: 1 },
+          transferMagic: { sphere: 0, cost: 10, max: 1 },
+          forceSpeed: { sphere: 0, cost: 5, max: 3 },
+          doubleInnateSpells: { sphere: 0, cost: 20, max: 1 },
+          naturalMaintenance: { sphere: 0, cost: 20, max: 1 }
+        },
+        arcaneKnowledge: {
+          mysticConcentration: { sphere: 0, cost: 5, max: 1 },
+          spellSpecialist: { sphere: 0, cost: 5, max: 7 },
+          pierceResistances: { sphere: 0, cost: 5, max: 2 },
+          increasedRange: { sphere: 0, cost: 5, max: 2 },
+          bindSpells: { sphere: 0, cost: 25, max: 1 },
+          maximizeSpells: { sphere: 0, cost: 10, max: 1 },
+          doubleSpell: { sphere: 0, cost: 20, max: 1 },
+          superiorInnateSpell: { sphere: 0, cost: 20, max: 1 },
+          highMagic: { sphere: 0, cost: 20, max: 1 }
+        }
+      },
       total: {
         value: 0
       },
@@ -1115,11 +1183,11 @@ export const INITIAL_ACTOR_DATA = {
         }
       }
     },
+    mysticSettings: { aptitudeForMagicDevelopment: false },
     spells: [],
     spellMaintenances: [],
     selectedSpells: [],
     summons: [],
-    metamagics: [],
     preparedSpells: [],
     maintainedSpells: []
   },
