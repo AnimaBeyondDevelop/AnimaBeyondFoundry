@@ -29,7 +29,10 @@ const getInitialData = () => {
         selectedSpell: {
             id: undefined,
             spellGrade: 'base',
+            combatType: 'none',
             metamagics: {
+                offensiveExpertise: 0,
+                defensiveExpertise: 0
             }
         },
         attainableSpellGrades: [],
@@ -152,8 +155,14 @@ export class MysticCastDialog extends FormApplication {
                 const preparedSpell = actor.getPreparedSpell(selectedSpell.id, selectedSpell.spellGrade);
                 selectedSpell.metamagics = mergeObject(selectedSpell.metamagics, preparedSpell?.system?.metamagics)
             }
+            if (selectedSpell.metamagics.definedMagicProjection > 0) {
+                selectedSpell.metamagics.offensiveExpertise = 0;
+            }
+            const spell = spells.find(w => w._id === selectedSpell.id);
+            selectedSpell.combatType = spell.system.combatType.value;
+            const zeonCost = +selectedSpell.metamagics[selectedSpell.combatType === 'attack' ? 'offensiveExpertise' : 'defensiveExpertise'];
             const zeonPoolCost = definedMagicProjectionCost(selectedSpell.metamagics.definedMagicProjection);
-            const addedZeonCost = { value: 0, pool: zeonPoolCost }
+            const addedZeonCost = { value: zeonCost, pool: zeonPoolCost }
             this.modalData.spellCasting = actor.mysticCanCastEvaluate(selectedSpell.id, selectedSpell.spellGrade, addedZeonCost, spellCasting.casted, spellCasting.override);
         }
 
