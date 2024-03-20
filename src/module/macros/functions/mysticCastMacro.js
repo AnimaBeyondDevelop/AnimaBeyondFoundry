@@ -28,7 +28,8 @@ const getInitialData = () => {
             combatType: 'none',
             metamagics: {
                 offensiveExpertise: 0,
-                defensiveExpertise: 0
+                defensiveExpertise: 0,
+                definedMagicProjection: 0
             }
         },
         attainableSpellGrades: [],
@@ -198,21 +199,35 @@ export class MysticCastDialog extends FormApplication {
             if (!selectedSpell.id) {
                 selectedSpell.id = spells[0]._id;
             }
+            const spell = spells.find(w => w._id === selectedSpell.id);
+            selectedSpell.combatType = spell.system.combatType.value;
+
+            if (spell.system.spellType.value === 'automatic') {
+                selectedSpell.metamagics.definedMagicProjection = undefined;
+                selectedSpell.metamagics.offensiveExpertise = 0;
+                selectedSpell.metamagics.defensiveExpertise = 0;
+                selectedSpell.combatType = 'none'
+            } else if (selectedSpell.metamagics.definedMagicProjection === undefined) {
+                selectedSpell.metamagics.definedMagicProjection = actor.getFlag(
+                    'animabf',
+                    'lastDefinedMagicProjection'
+                ) ?? 0
+            }
+
             if (spellCasting.casted.prepared) {
                 const preparedSpell = actor.getPreparedSpell(selectedSpell.id, selectedSpell.spellGrade);
                 selectedSpell.metamagics = mergeObject(selectedSpell.metamagics, preparedSpell?.system?.metamagics)
             }
             if (selectedSpell.metamagics.definedMagicProjection > 0) {
                 selectedSpell.metamagics.offensiveExpertise = 0;
+                selectedSpell.metamagics.defensiveExpertise = 0;
             }
-            const spell = spells.find(w => w._id === selectedSpell.id);
-            selectedSpell.combatType = spell.system.combatType.value;
+
             const zeonCost = +selectedSpell.metamagics[selectedSpell.combatType === 'attack' ? 'offensiveExpertise' : 'defensiveExpertise'];
             const zeonPoolCost = definedMagicProjectionCost(selectedSpell.metamagics.definedMagicProjection);
             const addedZeonCost = { value: zeonCost, pool: zeonPoolCost }
             this.modalData.spellCasting = actor.mysticCanCastEvaluate(selectedSpell.id, selectedSpell.spellGrade, addedZeonCost, spellCasting.casted, spellCasting.override);
         }
-
 
         this.modalData.zeonMaintained = actor.system.mystic.zeonMaintained.base.value;
 
