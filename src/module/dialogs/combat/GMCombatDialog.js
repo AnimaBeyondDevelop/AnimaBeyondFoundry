@@ -671,7 +671,6 @@ export class GMCombatDialog extends FormApplication {
     if (macro) {
       console.debug(args);
       macro.execute(args);
-      console.debug(args)
     } else {
       console.debug(`Macro '${macroName}' not found.`);
     }
