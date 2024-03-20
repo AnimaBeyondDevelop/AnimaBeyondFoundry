@@ -69,7 +69,6 @@
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         title=(localize 'macros.combat.dialog.castInnate.title')
-        disabled=this.attackSent
         inputType="checkbox"
         inputName="spellCasting.casted.innate"
         inputValue=(is 'eq' this.spellCasting.casted.innate true)
@@ -84,7 +83,6 @@
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         title=(localize 'macros.combat.dialog.castPrepared.title')
-        disabled=this.attackSent
         inputType="checkbox"
         inputName="spellCasting.casted.prepared"
         inputValue=(is 'eq' this.spellCasting.casted.prepared true)
@@ -100,7 +98,6 @@
         {{>
         "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         title=(localize 'macros.combat.dialog.castOverride.title')
-        disabled=this.attackSent
         inputType="checkbox"
         inputName="spellCasting.override"
         inputValue=(is 'eq' this.spellCasting.override true)
