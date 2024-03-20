@@ -8,6 +8,7 @@ export enum ABFSettingsKeys {
   MACRO_PREFIX_ATTACK = 'MACRO_PREFIX_ATTACK',
   MACRO_ATTACK_DEFAULT = 'MACRO_ATTACK_DEFAULT',
   MACRO_PROJECTILE_DEFAULT = 'MACRO_PROJECTILE_DEFAULT',
+  MACRO_SHIELD_DEFAULT = 'MACRO_SHIELD_DEFAULT',
   MACRO_MISS_ATTACK_VALUE = 'MACRO_MISS_ATTACK_VALUE',
   SYSTEM_MIGRATION_VERSION = 'SYSTEM_MIGRATION_VERSION'
 }
@@ -84,6 +85,15 @@ export const registerSettings = () => {
     scope: 'world',
     config: true,
     default: 'Atk Projectil Flecha',
+    type: String
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_SHIELD_DEFAULT, {
+    name: 'anima.ui.systemSettings.defaultShieldMacro.title',
+    hint: 'anima.ui.systemSettings.defaultShieldMacro.hint.title',
+    scope: 'world',
+    config: true,
+    default: 'Default Shield Macro',
     type: String
   });
 

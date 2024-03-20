@@ -591,6 +591,8 @@
   "anima.ui.systemSettings.defaultAttackMacro.hint.title": "En caso de no encontrar un Macro para el ataque tomará el nombre del Macro que se ingrese aquí para el Combate",
   "anima.ui.systemSettings.defaultProjectileMacro.title": "Macro por defecto para Proyectiles",
   "anima.ui.systemSettings.defaultProjectileMacro.hint.title": "En caso de que el arma sea un projectil de disparo tomará el nombre del Macro que se ingrese aquí para el Combate",
+  "anima.ui.systemSettings.defaultShieldMacro.title": "Macro por defecto para Escudos Sobrenaturales",
+  "anima.ui.systemSettings.defaultShieldMacro.hint.title": "En caso de no encontrar un Macro para el escudo sobrenatural tomará el nombre del Macro que se ingrese aquí",
   "anima.ui.systemSettings.missValueAttackMacro.title": "Valor de Fallo al Atacar para la Animación",
   "anima.ui.systemSettings.missValueAttackMacro.hint.title": "Al momento de ejecutar un macro en el combate se envía un argumento de fallo, si el valor de la HA es menor que el valor de Fallo y el defensor ganó el combate se considera que falló el ataque (se usa en animaciones)",
   "anima.ui.status.effectsList.title": "Efectos",
