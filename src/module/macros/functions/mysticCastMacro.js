@@ -1,14 +1,9 @@
 import { Templates } from '../../utils/constants';
-import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { getSelectedToken } from '../../utils/functions/getSelectedToken';
 import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { executeMacro } from '../../utils/functions/executeMacro';
 
 const getInitialData = () => {
-    const showRollByDefault = !!game.settings.get(
-        'animabf',
-        ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
-    );
     const isGM = !!game.user?.isGM;
     const token = getSelectedToken(game)
     const actor = token.actor;
@@ -17,6 +12,7 @@ const getInitialData = () => {
         ui: {
             isGM,
             overrideMysticCast: false,
+            activeTab: 'mysticCast'
         },
         token,
         actor,
@@ -33,6 +29,9 @@ const getInitialData = () => {
             }
         },
         attainableSpellGrades: [],
+        zeonMaintained: actor.system.mystic.zeonMaintained.final.value,
+        maintainedSpells: {},
+        castedSpells: {}
     };
 };
 
@@ -41,8 +40,12 @@ export class MysticCastDialog extends FormApplication {
         super(getInitialData());
 
         this.modalData = getInitialData();
+        this._tabs[0].callback = (event, tabs, tabName) => {
+            this.modalData.ui.activeTab = tabName;
+            this.render(true);
+        };
 
-        const { actor: { system: { mystic: { spells, mysticSettings } } }, selectedSpell, spellCasting, ui } = this.modalData;
+        const { actor: { system: { mystic: { spells, mysticSettings, maintainedSpells } } }, selectedSpell, spellCasting, ui } = this.modalData;
 
         if (spells.length > 0) {
             selectedSpell.id = spells[0]._id;
@@ -66,6 +69,14 @@ export class MysticCastDialog extends FormApplication {
             }
         }
 
+        if (maintainedSpells.length > 0) {
+            for (let maintainedSpell of maintainedSpells) {
+                this.modalData.maintainedSpells[maintainedSpell._id] = maintainedSpell
+            }
+        }
+
+        this.modalData.castedSpells = this.modalData.actor.getFlag('animabf', 'castedSpells')
+
         this.render(true);
     }
 
@@ -74,11 +85,18 @@ export class MysticCastDialog extends FormApplication {
             classes: ['abf-dialog mystic-cast-dialog'],
             submitOnChange: true,
             closeOnSubmit: false,
-            width: 360,
+            width: 400,
             height: 240,
             resizable: true,
             template: Templates.Dialog.MysticCast,
-            title: game.i18n.localize('macros.mysticCast.dialog.title')
+            title: game.i18n.localize('macros.mysticCast.dialog.title'),
+            tabs: [
+                {
+                    navSelector: '.sheet-tabs',
+                    contentSelector: '.sheet-body',
+                    initial: 'mysticCast'
+                }
+            ]
         });
     }
 
@@ -137,11 +155,40 @@ export class MysticCastDialog extends FormApplication {
             return this.close();
 
         });
+
+        html.find('.maintain-spell-button').click(async () => {
+            const {
+                actor,
+                maintainedSpells,
+                castedSpells,
+            } = this.modalData;
+
+            for (let key in maintainedSpells) {
+                let maintainedSpell = maintainedSpells[key]
+                if (!maintainedSpell.system.active) {
+                    await actor.deleteInnerItem(maintainedSpell.type, [maintainedSpell._id])
+                } else {
+                    maintainedSpell.id = maintainedSpell._id
+                    await actor.updateInnerItem(maintainedSpell, true)
+                }
+            }
+
+            for (let key in castedSpells) {
+                let castedSpell = castedSpells[key];
+                if (castedSpell.system.active) {
+                    await actor.createInnerItem(castedSpell)
+                }
+            }
+            actor.unsetFlag('animabf', 'castedSpells')
+
+            return this.close();
+
+        });
     }
 
 
     getData() {
-        const { actor, selectedSpell, spellCasting } = this.modalData;
+        const { actor, selectedSpell, spellCasting, maintainedSpells, castedSpells } = this.modalData;
         const { spells, magicLevel: { metamagics } } = actor.system.mystic;
 
         if (spells.length > 0) {
@@ -155,6 +202,23 @@ export class MysticCastDialog extends FormApplication {
             const zeonPoolCost = definedMagicProjectionCost(selectedSpell.metamagics.definedMagicProjection);
             const addedZeonCost = { value: 0, pool: zeonPoolCost }
             this.modalData.spellCasting = actor.mysticCanCastEvaluate(selectedSpell.id, selectedSpell.spellGrade, addedZeonCost, spellCasting.casted, spellCasting.override);
+        }
+
+
+        this.modalData.zeonMaintained = actor.system.mystic.zeonMaintained.base.value;
+
+        for (let key in maintainedSpells) {
+            let maintainedSpell = maintainedSpells[key]
+            if (maintainedSpell.system.active && !maintainedSpell.system.innate) {
+                this.modalData.zeonMaintained += maintainedSpell.system.maintenanceCost.value
+            }
+        }
+
+        for (let key in castedSpells) {
+            let castedSpell = castedSpells[key];
+            if (castedSpell.system.active && !castedSpell.system.innate) {
+                this.modalData.zeonMaintained += castedSpell.system.maintenanceCost.value
+            }
         }
 
         return this.modalData;

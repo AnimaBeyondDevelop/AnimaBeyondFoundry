@@ -9,9 +9,10 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  */
 export const INITIAL_MAINTAINED_SPELL_DATA = {
   grade: { value: SpellGrades.BASE },
-  maintenanceCost: { value: 0, max: 0 },
+  maintenanceCost: { value: 0 },
   via: { value: '' },
-  innate: { value: false }
+  innate: false,
+  active: true
 };
 
 /** @type {import("../Items").MaintainedSpellItemConfig} */
@@ -44,7 +45,8 @@ export const MaintainedSpellItemConfig = ABFItemConfigFactory({
         grade: { value: spellGrade },
         maintenanceCost: { value: maintenanceCost },
         via: { value: via },
-        innate
+        innate,
+        active: true
       }
     });
   }

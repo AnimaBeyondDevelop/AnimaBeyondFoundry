@@ -1034,7 +1034,7 @@ export const INITIAL_ACTOR_DATA = {
     },
     zeonMaintained: {
       base: {
-        value: 0
+      value: 0
       },
       final: {
         value: 0

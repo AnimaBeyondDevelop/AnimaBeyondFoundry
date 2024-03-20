@@ -755,6 +755,7 @@ export class ABFActor extends Actor {
     if (override) {
       return;
     }
+    this.castedSpell(spellId, spellGrade, casted.innate)
     if (zeon.poolCost) {
       this.consumeZeon(zeon.poolCost)
     }
@@ -766,6 +767,27 @@ export class ABFActor extends Actor {
     } else if (zeon.cost) {
       this.consumeAccumulatedZeon(zeon.cost);
     }
+  }
+
+  castedSpell(spellId: string, spellGrade: string, innate?: boolean) {
+    const spell = this.getItem(spellId)
+    if (!spell) return;
+    const maintenanceCost = parseInt(spell.system.grades[spellGrade].maintenanceCost.value)
+    if (Number.isNaN(maintenanceCost)) return;
+    if (spell.system.hasDailyMaintenance.value) return;
+    const id = nanoid();
+    const maintainedSpell = {
+      name: spell.name,
+      type: ABFItems.MAINTAINED_SPELL,
+      system: {
+        grade: { value: spellGrade },
+        maintenanceCost: { value: maintenanceCost },
+        via: { value: spell.system.via.value },
+        innate,
+        active: false
+      },
+    }
+    this.setFlag('animabf', `castedSpells.${id}`, maintainedSpell);
   }
 
   consumeZeon(zeonCost: number) {
