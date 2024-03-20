@@ -610,25 +610,28 @@ export class GMCombatDialog extends FormApplication {
     let macroName;
     let args = {
       attacker: this.attackerToken,
-      defender: this.defenderToken,
-      winner,
-      defenseType: defender.result.values.type,
-      totalAttack: attacker.result.values.total,
-      appliedDamage: attacker.applyDamage ? calculations.damage : 0,
-      damageType: attacker.result.values?.critic,
-      bloodColor: 'red', // add bloodColor to actor template
-      missedAttack: false,
-      isVisibleAttack: true,
-      resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
-      spellGrade: attacker.result.values.spellGrade,
-      attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
-      defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-      specialPorpuseAttackResult,
-      hasCritic: roll.criticRoll.sent && attacker.applyCritic,
-      criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
+      defenders: [{
+        defender: this.defenderToken,
+        winner,
+        defenseType: defender.result.values.type,
+        totalAttack: attacker.result.values.total,
+        appliedDamage: attacker.applyDamage ? calculations.damage : 0,
+        damageType: attacker.result.values?.critic,
+        bloodColor: 'red', // add bloodColor to actor template
+        missedAttack: false,
+        isVisibleAttack: true,
+        resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
+        spellGrade: attacker.result.values.spellGrade,
+        psychicPotential: attacker.result.values?.psychicPotential,
+        attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
+        defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+        specialPorpuseAttackResult,
+        hasCritic: roll.criticRoll.sent && attacker.applyCritic,
+        criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
+      }]
     };
-    if (args.totalAttack < missedAttackValue && winner === 'defener') {
-      args.missedAttack = true;
+    if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
+      args.defenders[0].missedAttack = true;
     }
 
     if (attacker.result?.type === 'combat') {
@@ -654,7 +657,7 @@ export class GMCombatDialog extends FormApplication {
       attacker.result.values.visible !== undefined &&
       !attacker.result.values.visible
     ) {
-      args.isVisibleAttack = false;
+      args.defenders[0].isVisibleAttack = false;
     }
 
     if (

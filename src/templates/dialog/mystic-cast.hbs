@@ -55,13 +55,48 @@
     {{/each}}
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-    {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-    title=(localize "macros.mysticAct.dialog.zeonCost.title")
-    disabled=true
-    inputName="spellCasting.zeon.cost"
-    inputValue=this.spellCasting.zeon.cost
+  {{#unless (or this.spellCasting.casted.innate this.spellCasting.casted.prepared this.spellCasting.override)}}
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.mysticAct.dialog.zeonCost.title")
+  disabled=true
+  inputName="spellCasting.zeon.cost"
+  inputValue=this.spellCasting.zeon.cost
+  }}
+  {{/unless}}
+
+  {{#if (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'anima.ui.mystic.metamagics.definedMagicProjection.title')
+      inputName='selectedSpell.metamagics.definedMagicProjection'
     }}
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 0)}}selected{{/if}} value='0'>0</option>
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 1)}}selected{{/if}} value='1'>120</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 2)}}selected{{/if}} value='2'>140</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 3)}}selected{{/if}} value='3'>180</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 3)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 4)}}selected{{/if}} value='4'>240</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 4)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 5)}}selected{{/if}} value='5'>280</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 5)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 6)}}selected{{/if}} value='6'>320</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 6)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 7)}}selected{{/if}} value='7'>440</option>{{/if}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{/if}}
+
+  {{#if (and (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 0) (is "eq" this.selectedSpell.combatType "defense"))}}
+    {{#unless (is "gt" this.selectedSpell.metamagics.definedMagicProjection 0)}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'anima.ui.mystic.metamagics.defensiveExpertise.title')
+      inputName='selectedSpell.metamagics.defensiveExpertise'
+    }}
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 0)}}selected{{/if}} value='0'>0</option>
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 10)}}selected{{/if}} value='10'>10</option>
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 20)}}selected{{/if}} value='20'>20</option>
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 30)}}selected{{/if}} value='30'>30</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 40)}}selected{{/if}} value='40'>40</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 50)}}selected{{/if}} value='50'>50</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 60)}}selected{{/if}} value='60'>60</option>{{/if}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/unless}}
+  {{/if}}
 
     {{#if (and this.spellCasting.canCast.innate (is 'eq' this.spellCasting.override false))}}
     <div class='columns'>
