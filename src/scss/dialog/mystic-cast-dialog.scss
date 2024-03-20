@@ -45,14 +45,6 @@
       color: $white;
       font-weight: 600;
     }
-
-    .zeon {
-      flex: 1 1 0;
-    }
-
-    .release {
-      flex: 1 1 0;
-    }
   }
 
   .group-body {
@@ -60,43 +52,38 @@
 
     height: 100%;
 
+    .maintained-spells {
+      .group-header {
+        min-height: 1.3rem;
 
-    .prepared-spell-row:first-child {
+        .group-header-title {
+          font-size: 0.95rem;
+          line-height: 0.5rem;
+
+        }
+      }
+    }
+
+    .maintained-spell:first-child {
       margin-top: 0;
     }
 
-    .prepared-spell-row {
+    .maintained-spell-row {
       margin-top: 0.75rem;
-
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 4fr 1fr 1fr 1fr;
       grid-column-gap: 0.1rem;
 
       .name .input-container {
         width: 100%;
+        align-items: start;
       }
     }
 
-    .act-buttons {
-      display: flex;
+    .mystic-cast-button,
+    .maintain-spell-button {
+      margin-top: 0.75rem;
 
-      .full-act,
-      .partial-act,
-      .release-act,
-      .withstand-pain {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 2rem;
-
-        .label {
-          font-size: 1.5rem;
-          font-weight: bold;
-          text-align: center;
-        }
-      }
     }
 
     .columns {

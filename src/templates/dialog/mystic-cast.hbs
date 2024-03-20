@@ -1,14 +1,19 @@
 <form class='{{cssClass}}' autocomplete='off'>
   {{#> "systems/animabf/templates/common/ui/group.hbs"
-  class="mystic-act"
+  class="mystic-cast"
   }}
   {{>
   "systems/animabf/templates/common/ui/group-header.hbs"
   title=(localize (concat 'macros.mysticCast.dialog.title'))
   }}
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
-  class="mystic-act"
+  class="mystic-cast"
   }}
+
+  <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+    <a class="item mysticCast" data-tab="mysticCast">{{localize "anima.ui.tabs.mysticCast"}}</a>
+    <a class="item spellMaintenances" data-tab="spellMaintenances">{{localize "anima.ui.tabs.spellMaintenances"}}</a>
+  </nav>
 
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -18,93 +23,239 @@
   inputValue=this.spellCasting.zeon.value
   }}
 
-  {{>
-  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
-  disabled=true
-  inputName="spellCasting.zeon.accumulated"
-  inputValue=this.spellCasting.zeon.accumulated
-  }}
+  
+  <section class="sheet-body">
+    <div class="tab mystic-cast" data-group="primary" data-tab="mysticCast">
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
+    disabled=true
+    inputName="spellCasting.zeon.accumulated"
+    inputValue=this.spellCasting.zeon.accumulated
+    }}
 
 
-  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.spell.title')
-  inputName='selectedSpell.id'
-  }}
-  {{#each this.actor.system.mystic.spells}}
-  <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-  {{/each}}
-  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.spell.title')
+    inputName='selectedSpell.id'
+    }}
+    {{#each this.actor.system.mystic.spells}}
+    <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+    {{/each}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.spellGrade.title')
-  inputName='selectedSpell.spellGrade'
-  }}
-  {{#each this.attainableSpellGrades}}
-  <option {{#if (is "eq" ../this.selectedSpell.spellGrade this)}}selected{{/if}} value='{{this}}'>{{localize (concat
-    'macros.combat.dialog.spellGrade.' this '.title')}}</option>
-  {{/each}}
-  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.spellGrade.title')
+    inputName='selectedSpell.spellGrade'
+    }}
+    {{#each this.attainableSpellGrades}}
+    <option {{#if (is "eq" ../this.selectedSpell.spellGrade this)}}selected{{/if}} value='{{this}}'>{{localize (concat
+      'macros.combat.dialog.spellGrade.' this '.title')}}</option>
+    {{/each}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-  {{>
-  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize "macros.mysticAct.dialog.zeonCost.title")
-  disabled=true
-  inputName="spellCasting.zeon.cost"
-  inputValue=this.spellCasting.zeon.cost
-  }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "macros.mysticAct.dialog.zeonCost.title")
+    disabled=true
+    inputName="spellCasting.zeon.cost"
+    inputValue=this.spellCasting.zeon.cost
+    }}
 
-  {{#if (and this.spellCasting.canCast.innate (is 'eq' this.spellCasting.override false))}}
-  <div class='columns'>
-    <div>
-      {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      title=(localize 'macros.combat.dialog.castInnate.title')
-      disabled=this.attackSent
-      inputType="checkbox"
-      inputName="spellCasting.casted.innate"
-      inputValue=(is 'eq' this.spellCasting.casted.innate true)
-      }}
+    {{#if (and this.spellCasting.canCast.innate (is 'eq' this.spellCasting.override false))}}
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.castInnate.title')
+        disabled=this.attackSent
+        inputType="checkbox"
+        inputName="spellCasting.casted.innate"
+        inputValue=(is 'eq' this.spellCasting.casted.innate true)
+        }}
+      </div>
     </div>
-  </div>
-  {{/if}}
+    {{/if}}
 
-  {{#if (and this.spellCasting.canCast.prepared (is 'eq' this.spellCasting.override false))}}
-  <div class='columns'>
-    <div>
-      {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      title=(localize 'macros.combat.dialog.castPrepared.title')
-      disabled=this.attackSent
-      inputType="checkbox"
-      inputName="spellCasting.casted.prepared"
-      inputValue=(is 'eq' this.spellCasting.casted.prepared true)
-      }}
+    {{#if (and this.spellCasting.canCast.prepared (is 'eq' this.spellCasting.override false))}}
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.castPrepared.title')
+        disabled=this.attackSent
+        inputType="checkbox"
+        inputName="spellCasting.casted.prepared"
+        inputValue=(is 'eq' this.spellCasting.casted.prepared true)
+        }}
+      </div>
     </div>
-  </div>
-  {{/if}}
+    {{/if}}
 
-  {{#if this.ui.overrideMysticCast}}
-  <hr class='hr' />
-  <div class='columns'>
-    <div>
-      {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      title=(localize 'macros.combat.dialog.castOverride.title')
-      disabled=this.attackSent
-      inputType="checkbox"
-      inputName="spellCasting.override"
-      inputValue=(is 'eq' this.spellCasting.override true)
-      }}
+    {{#if this.ui.overrideMysticCast}}
+    <hr class='hr' />
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.castOverride.title')
+        disabled=this.attackSent
+        inputType="checkbox"
+        inputName="spellCasting.override"
+        inputValue=(is 'eq' this.spellCasting.override true)
+        }}
+      </div>
     </div>
-  </div>
-  {{/if}}
+    {{/if}}
 
-  <div>
-    <button class='abf-button mystic-cast-button' data-type='cast'>
-      {{localize 'macros.mysticCast.dialog.button.title'}}
-    </button>
+    <div>
+      <button class='abf-button mystic-cast-button' data-type='cast'>
+        {{localize 'macros.mysticCast.dialog.button.title'}}
+      </button>
+    </div>
+
   </div>
+
+  <div class="tab spell-maintenances" data-group="primary" data-tab="spellMaintenances">
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "anima.ui.mystic.zeonMaintained.title")
+    disabled=true
+    inputName="zeonMaintained"
+    inputValue=this.zeonMaintained
+    }}
+    {{#if (is 'gt' this.actor.system.mystic.maintainedSpells.length 0)}}
+    <div class="maintained-spells">
+      <hr class='hr' />
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.mysticCast.dialog.maintain.title'))
+      }}
+      {{#each this.maintainedSpells as |maintainedSpell|}}
+        <div class='maintained-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=maintainedSpell.name
+        }}
+        {{#if (is 'eq' maintainedSpell.system.innate true)}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputValue=0
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputName=(concat "maintainedSpells." @key ".system.maintenanceCost.value")
+            inputValue=maintainedSpell.system.maintenanceCost.value
+          }}
+        {{/if }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "maintainedSpells." @key ".system.innate")
+          inputValue=(is 'eq' maintainedSpell.system.innate true)
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "maintainedSpells." @key ".system.active")
+          inputValue=(is 'eq' maintainedSpell.system.active true)
+        }}
+        </div>
+      {{/each}}
+    </div>
+    {{/if }}
+    {{#if (is 'neq' this.castedSpells undefined)}}
+    <div class="maintained-spells">
+      <hr class='hr' />
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.mysticCast.dialog.casted.title'))
+      }}
+      {{#each this.castedSpells as |castedSpell|}}
+        <div class='maintained-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=castedSpell.name
+        }}
+        {{#if (is 'eq' castedSpell.system.innate true)}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputValue=0
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputName=(concat "castedSpells." @key ".system.maintenanceCost.value")
+            inputValue=castedSpell.system.maintenanceCost.value
+          }}
+        {{/if }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "castedSpells." @key ".system.innate")
+          inputValue=(is 'eq' castedSpell.system.innate true)
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "castedSpells." @key ".system.active")
+          inputValue=(is 'eq' castedSpell.system.active true)
+        }}
+        </div>
+      {{/each}}
+    </div>
+    {{/if }}
+    
+    <div>
+      <button class='abf-button maintain-spell-button' data-type='cast'>
+        {{localize 'macros.mysticCast.dialog.button.maintain.title'}}
+      </button>
+    </div>
+
+  </div>
+</section>
 
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}
