@@ -149,12 +149,24 @@ export class MysticCastDialog extends FormApplication {
                 });
             }
 
-            const args = {
-                thisActor: actor,
-                spellGrade: selectedSpell.spellGrade
-            }
+            const spell = actor.system.mystic.spells.find(w => w._id === selectedSpell.id);
+            if (spell && spell?.system?.spellType?.value === 'defense') {
+                actor.newSupernaturalShield(
+                    'mystic',
+                    {},
+                    0,
+                    spell,
+                    selectedSpell.spellGrade,
+                    spellCasting.metamagics
+                );
+            } else {
+                const args = {
+                    thisActor: actor,
+                    spellGrade: selectedSpell.spellGrade
+                }
 
-            executeMacro(name, args)
+                executeMacro(name, args)
+            }
 
             return this.close();
 
