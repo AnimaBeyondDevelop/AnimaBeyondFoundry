@@ -78,12 +78,20 @@ export class GMCombatDialog extends FormApplication {
     return this.modalData.defender.token.actor;
   }
 
+  get defendersActor() {
+    return this.modalData.listDefenders.map(ld => ld.actor);
+  }
+
   get attackerToken() {
     return this.modalData.attacker.token;
   }
 
   get defenderToken() {
     return this.modalData.defender.token;
+  }
+
+  get defendersToken() {
+    return this.modalData.listDefenders.map(ld => ld.token);
   }
 
   get isDamagingCombat() {
