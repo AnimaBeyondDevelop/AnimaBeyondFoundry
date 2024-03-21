@@ -97,4 +97,10 @@
       border-bottom: 1px solid $red;
     }
   }
+
+  .mystic-cast .input {
+    optgroup:not(:has(:first-child)) {
+      display: none;
+    }
+  }
 }
