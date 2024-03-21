@@ -571,6 +571,12 @@ export class ABFActor extends Actor {
         : innateMagic.main.final.value;
     spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
 
+    if (spellCasting.casted.prepared) {
+      spellCasting.canCast.innate = false
+    }
+    if (spellCasting.casted.innate) {
+      spellCasting.canCast.prepared = false
+    }
     if (!spellCasting.canCast.innate) {
       spellCasting.casted.innate = false;
     }

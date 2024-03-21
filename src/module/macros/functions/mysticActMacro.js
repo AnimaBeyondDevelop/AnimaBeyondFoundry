@@ -199,6 +199,12 @@ export class MysticActDialog extends FormApplication {
                     }
                     const spell = spells.find(w => w._id === selectedSpell.id);
                     selectedSpell.combatType = spell.system.combatType.value;
+
+                    if (spell.system.spellType.value === 'automatic') {
+                        selectedSpell.metamagics.offensiveExpertise = 0;
+                        selectedSpell.metamagics.defensiveExpertise = 0;
+                        selectedSpell.combatType = 'none'
+                    } 
                     const addedZeonCost = +selectedSpell.metamagics[selectedSpell.combatType === 'attack' ? 'offensiveExpertise' : 'defensiveExpertise'];
                     selectedSpell.zeonCost = spell.system.grades[selectedSpell.spellGrade ?? 'base'].zeon.value + addedZeonCost;
                     if (actor.system.mystic.act.via.length > 0) {
