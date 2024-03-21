@@ -40,9 +40,21 @@
     title=(localize 'macros.combat.dialog.spell.title')
     inputName='selectedSpell.id'
     }}
-    {{#each this.actor.system.mystic.spells}}
-    <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-    {{/each}}
+    <optgroup label="Spell">
+      {{#each_when this.actor.system.mystic.spells "system" "combatType" "value" "none"}}
+      <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    <optgroup label="Defense">
+      {{#each_when this.actor.system.mystic.spells "system" "combatType" "value" "defense"}}
+      <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    <optgroup label="Attack">
+      {{#each_when this.actor.system.mystic.spells "system" "combatType" "value" "attack"}}
+      <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
