@@ -115,4 +115,10 @@
       border-bottom: 1px solid $red;
     }
   }
+
+  .mystic-act .input {
+    optgroup:not(:has(:first-child)) {
+      display: none;
+    }
+  }
 }
