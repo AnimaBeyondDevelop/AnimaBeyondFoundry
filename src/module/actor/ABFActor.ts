@@ -808,7 +808,7 @@ export class ABFActor extends Actor {
     if (spell === undefined || spellGrades.indexOf(spellGrade) <= 0) { return }
     const baseDamage = damageCheck(spell.system.grades[spellGrade].description.value ?? '')
     const { arcaneWarfare: { increasedDestruction, doubleDamage } } = this.system.mystic.magicLevel.metamagics
-    const finalDamage = baseDamage * (+doubleDamage.sphere + 1) + 10 * increasedDestruction.sphere * spellGrades.indexOf(spellGrade);
+    const finalDamage = baseDamage != 0 ? baseDamage * (+doubleDamage.sphere + 1) + 10 * increasedDestruction.sphere * spellGrades.indexOf(spellGrade) : 0;
 
     return finalDamage
   }
