@@ -36,8 +36,8 @@ export class WSGMCombatManager extends WSCombatManager {
   async manageUserAttack(msg) {
     if (this.combat) {
       this.combat.updateAttackerData(msg.payload);
-
-      const { attackerToken, defenderToken, defenderActor } = this.combat;
+      console.log(this.combat)
+      const { attackerToken, defendersToken, defendersActor } = this.combat;
 
       const { critic } = msg.payload.values;
       const { visible } = msg.payload.values;
@@ -47,36 +47,39 @@ export class WSGMCombatManager extends WSCombatManager {
       const { specialPorpuseAttack } = msg.payload.values;
       const { areaAttack } = msg.payload.values;
 
-      if (canOwnerReceiveMessage(defenderActor)) {
-        const newMsg = {
-          type: GMMessageTypes.Attack,
-          payload: {
-            attackerTokenId: attackerToken.id,
-            defenderTokenId: defenderToken.id,
-            result: msg.payload
-          }
-        };
+      for (let i = 0; i < defendersToken.length; i++) {
 
-        this.emit(newMsg);
-      } else {
-        try {
-          this.manageDefense(
-            attackerToken,
-            defenderToken,
-            msg.payload.type,
-            critic,
-            visible,
-            projectile,
-            damage,
-            distance,
-            specialPorpuseAttack,
-            areaAttack);
-        } catch (err) {
-          if (err) {
-            Log.error(err);
-          }
+        if (canOwnerReceiveMessage(defendersActor[i])) {
+          const newMsg = {
+            type: GMMessageTypes.Attack,
+            payload: {
+              attackerTokenId: attackerToken.id,
+              defenderTokenId: defendersToken[i].id,
+              result: msg.payload
+            }
+          };
 
-          this.endCombat();
+          this.emit(newMsg);
+        } else {
+          try {
+            this.manageDefense(
+              attackerToken,
+              defendersToken[i],
+              msg.payload.type,
+              critic,
+              visible,
+              projectile,
+              damage,
+              distance,
+              specialPorpuseAttack,
+              areaAttack);
+          } catch (err) {
+            if (err) {
+              Log.error(err);
+            }
+
+            this.endCombat();
+          }
         }
       }
     } else {
@@ -86,7 +89,7 @@ export class WSGMCombatManager extends WSCombatManager {
 
   manageUserDefense(msg) {
     if (this.combat) {
-      this.combat.updateDefenderData(msg.payload);
+      this.combat.updateDefenderData(msg.payload, msg.defenderTokenId);
     } else {
       Log.warn('User defend received but none combat is running');
     }
@@ -116,7 +119,7 @@ export class WSGMCombatManager extends WSCombatManager {
 
     if (this.defenseDialog) {
       for (const defenderId in this.defenseDialog) {
-        this.defenseDialog[defenderId].close({ force: true });
+        this.defenseDialog[defenderId]?.close({ force: true });
 
         this.defenseDialog[defenderId] = undefined;
       }
@@ -195,10 +198,10 @@ export class WSGMCombatManager extends WSCombatManager {
       return;
     }
 
-    const { attackerTokenId, defenderTokenId } = msg.payload;
+    const { attackerTokenId, defendersTokenId } = msg.payload;
 
     const attacker = this.findTokenById(attackerTokenId);
-    const defenders = defenderTokenId.map(id => { return this.findTokenById(id) });
+    const defenders = defendersTokenId.map(id => { return this.findTokenById(id) });
 
     if (!attacker || !defenders) {
       Log.warn(
@@ -380,10 +383,10 @@ export class WSGMCombatManager extends WSCombatManager {
     distance,
     specialPorpuseAttack,
     areaAttack) {
-    if (!this.defendDialog) {
-      this.defendDialog = { [defender._id]: undefined }
+    if (!this.defenseDialog) {
+      this.defenseDialog = { [defender._id]: undefined }
     }
-    this.defendDialog[defender._id] = new CombatDefenseDialog(
+    this.defenseDialog[defender._id] = new CombatDefenseDialog(
       {
         token: attacker,
         attackType,
@@ -398,10 +401,10 @@ export class WSGMCombatManager extends WSCombatManager {
       defender,
       {
         onDefense: result => {
-          if (this.defendDialog[defender._id]) {
-            this.defendDialog[defender._id].close({ force: true });
+          if (this.defenseDialog[defender._id]) {
+            this.defenseDialog[defender._id].close({ force: true });
 
-            this.defendDialog[defender._id] = undefined;
+            this.defenseDialog[defender._id] = undefined;
 
             if (this.combat) {
               this.combat.updateDefenderData(result, defender._id);

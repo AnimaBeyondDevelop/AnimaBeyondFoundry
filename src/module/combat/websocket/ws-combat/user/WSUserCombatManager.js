@@ -80,26 +80,26 @@ export class WSUserCombatManager extends WSCombatManager {
     const attackerToken = getSelectedToken(this.game);
     const { targets } = this.user;
 
-    const targetToken = getTargetToken(attackerToken, targets);
+    const targetTokens = getTargetToken(attackerToken, targets);;
 
     await ABFDialogs.confirm(
       this.game.i18n.format('macros.combat.dialog.attackConfirm.title'),
       this.game.i18n.format('macros.combat.dialog.attackConfirm.body.title', {
-        target: targetToken.name
+        target: targetTokens.map(t => t.name).join(" - ")
       }),
       {
         onConfirm: () => {
-          if (attackerToken?.id && targetToken.id) {
+          if (attackerToken?.id && targetTokens?.every(t => { return t?.id })) {
             const msg = {
               type: UserMessageTypes.RequestToAttack,
               senderId: this.user.id,
               payload: {
                 attackerTokenId: attackerToken.id,
-                defenderTokenId: targetToken.id
+                defendersTokenId: targetTokens.map(t => t.id)
               }
             };
             this.emit(msg);
-            this.attackDialog = new CombatAttackDialog(attackerToken, targetToken, {
+            this.attackDialog = new CombatAttackDialog(attackerToken, targetTokens, {
               onAttack: result => {
                 const newMsg = {
                   type: UserMessageTypes.Attack,
@@ -126,7 +126,7 @@ export class WSUserCombatManager extends WSCombatManager {
 
     this.attackDialog = new CombatAttackDialog(
       attacker,
-      defender,
+      [defender],
       {
         onAttack: result => {
           const newMsg = {
@@ -177,32 +177,34 @@ export class WSUserCombatManager extends WSCombatManager {
     const defender = this.findTokenById(defenderTokenId);
 
     try {
-      this.defenseDialog = {
-        [defenderTokenId]: new CombatDefenseDialog(
-          {
-            token: attacker,
-            attackType: result.type,
-            critic: result.values.critic,
-            visible: result.values.visible,
-            projectile: result.values.projectile,
-            damage: result.values.damage,
-            distance: result.values.distance,
-            specialPorpuseAttack: result.values.specialPorpuseAttack,
-            areaAttack: result.values.areaAttack
-          },
-          defender,
-          {
-            onDefense: res => {
-              const newMsg = {
-                type: UserMessageTypes.Defend,
-                payload: res
-              };
+      if (!this.defenseDialog) {
+        this.defenseDialog = { [defenderTokenId]: undefined }
+      }
+      this.defenseDialog[defenderTokenId] = new CombatDefenseDialog(
+        {
+          token: attacker,
+          attackType: result.type,
+          critic: result.values.critic,
+          visible: result.values.visible,
+          projectile: result.values.projectile,
+          damage: result.values.damage,
+          distance: result.values.distance,
+          specialPorpuseAttack: result.values.specialPorpuseAttack,
+          areaAttack: result.values.areaAttack
+        },
+        defender,
+        {
+          onDefense: res => {
+            const newMsg = {
+              type: UserMessageTypes.Defend,
+              payload: res,
+              defenderTokenId
+            };
 
-              this.emit(newMsg);
-            }
+            this.emit(newMsg);
           }
-        )
-      };
+        }
+      );
     } catch (err) {
       if (err) {
         Log.error(err);
