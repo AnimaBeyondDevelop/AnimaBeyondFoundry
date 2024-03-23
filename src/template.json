@@ -38,6 +38,9 @@
           "criticLevel": { "value": 0 },
           "damageBarrier": { "value": 0 }
         },
+        "conditions":{
+          "damagePerTurn": { "value": 0 }
+        },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
         "aspect": {

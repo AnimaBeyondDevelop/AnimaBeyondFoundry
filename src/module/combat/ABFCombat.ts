@@ -43,6 +43,7 @@ export default class ABFCombat extends Combat {
       token?.actor?.consumeMaintainedZeon();
       token?.actor?.psychicShieldsMaintenance();
       token?.actor?.physicalPainDisappearing();
+      token?.actor?.applyDamagePerTurn();
     }
 
     return super.nextRound();
@@ -56,6 +57,7 @@ export default class ABFCombat extends Combat {
     for (let token of combatants) {
       token?.actor?.consumeMaintainedZeon(true);
       token?.actor?.psychicShieldsMaintenance(true);
+      token?.actor?.applyDamagePerTurn(true);
     }
 
     return super.previousRound();
