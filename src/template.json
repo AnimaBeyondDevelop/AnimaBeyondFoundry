@@ -32,6 +32,9 @@
           "extraDamage": { "value": 0 },
           "criticLevel": { "value": 0 }
         },
+        "conditions":{
+          "damagePerTurn": { "value": 0 }
+        },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": { "value": 0 },
         "aspect": {
