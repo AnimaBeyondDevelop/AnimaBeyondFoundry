@@ -40,7 +40,7 @@ export const mutateSecondariesData = data => {
         secondary.final.value = calculateSecondarySwim(data);
       } else {
         secondary.final.value =
-          secondary.base.value + data.general.modifiers.allActions.final.value;
+          secondary.base.value + secondary.special.value + data.general.modifiers.allActions.final.value;
 
         if (SECONDARIES_AFFECTED_BY_NATURAL_PENALTIES.includes(key)) {
           secondary.final.value += data.general.modifiers.naturalPenalty.final.value;
