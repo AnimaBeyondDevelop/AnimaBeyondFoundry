@@ -345,6 +345,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -354,6 +357,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       athleticism: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -367,6 +373,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -376,6 +385,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       swim: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -389,6 +401,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -400,6 +415,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -409,6 +427,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       piloting: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -424,6 +445,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -435,6 +459,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -444,6 +471,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       withstandPain: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -459,6 +489,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -470,6 +503,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -479,6 +515,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       track: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -494,6 +533,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -503,6 +545,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       science: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -516,6 +561,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -525,6 +573,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       herbalLore: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -538,6 +589,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -547,6 +601,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       tactics: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -560,6 +617,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -569,6 +629,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       memorize: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -582,6 +645,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -591,6 +657,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       occult: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -604,6 +673,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -613,6 +685,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       magicAppraisal: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -628,6 +703,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -637,6 +715,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       intimidate: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -650,6 +731,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -659,6 +743,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       persuasion: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -672,6 +759,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -683,6 +773,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -692,6 +785,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       etiquette: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -707,6 +803,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -716,6 +815,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       disguise: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -729,6 +831,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -738,6 +843,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       theft: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -751,6 +859,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -762,6 +873,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -771,6 +885,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       poisons: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -786,6 +903,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -795,6 +915,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       dance: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -808,6 +931,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -817,6 +943,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       runes: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -830,6 +959,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -839,6 +971,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       animism: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -852,6 +987,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -861,6 +999,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       sleightOfHand: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -874,6 +1015,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -883,6 +1027,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       jewelry: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -896,6 +1043,9 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
+        special: {
+          value: 0
+        },
         final: {
           value: 0
         },
@@ -905,6 +1055,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       puppetMaking: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {

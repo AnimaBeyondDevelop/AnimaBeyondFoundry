@@ -15,6 +15,7 @@ export const calculateSecondaryStealth = data => {
 
   return (
     data.secondaries.subterfuge.stealth.base.value +
+    data.secondaries.subterfuge.stealth.special.value +
     modifiers.allActions.final.value +
     modifiers.physicalActions.final.value +
     stealthNaturalPenalty
