@@ -227,7 +227,7 @@ export class ABFActor extends Actor {
     let psychicBonus = power?.system.bonus.value ?? 0;
     const mod: number = await openModDialog('Psychic Potential');
     let formula = `1d100PsychicRoll + ${psychicPotential.final.value + psychicBonus} + ${mod ?? 0}`;
-    const psychicPotentialRoll = new ABFFoundryRoll(formula, this.system, power);
+    const psychicPotentialRoll = new ABFFoundryRoll(formula, { ...this.system, power });
     psychicPotentialRoll.roll();
     if (sendToChat) {
       const { i18n } = game;
