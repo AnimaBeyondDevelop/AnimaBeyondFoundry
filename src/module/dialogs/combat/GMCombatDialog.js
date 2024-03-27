@@ -610,24 +610,23 @@ export class GMCombatDialog extends FormApplication {
     let macroName;
     let args = {
       attacker: this.attackerToken,
+      spellGrade: attacker.result.values.spellGrade,
+      psychicPotential: attacker.result.values?.psychicPotential,
+      projectile: attacker.result.values?.projectile,
       defenders: [{
         defender: this.defenderToken,
         winner,
-        defenseType: defender.result.values.type,
+        defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
         totalAttack: attacker.result.values.total,
         appliedDamage: attacker.applyDamage ? calculations.damage : 0,
         damageType: attacker.result.values?.critic,
         bloodColor: 'red', // add bloodColor to actor template
         missedAttack: false,
-        isVisibleAttack: true,
         resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
-        spellGrade: attacker.result.values.spellGrade,
-        psychicPotential: attacker.result.values?.psychicPotential,
-        attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
         defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-      specialPorpuseAttackResult,
-      hasCritic: roll.criticRoll.sent && attacker.applyCritic,
-      criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
+        specialPorpuseAttackResult,
+        hasCritic: roll.criticRoll.sent && attacker.applyCritic,
+        criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
       }]
     };
     if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
@@ -640,12 +639,8 @@ export class GMCombatDialog extends FormApplication {
       }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
-      const { projectile } = attacker.result.values;
-      if (projectile) {
-        args = { ...args, projectile: projectile };
-        if (projectile.type === 'shot') {
-          macroName = macroPorjectileDefault;
-        }
+      if (attacker.result.values?.projectile?.type == 'shot') {
+        macroName = macroPorjectileDefault;
       }
     } else if (attacker.result?.type === 'mystic') {
       macroName = attacker.result.values.spellName;
