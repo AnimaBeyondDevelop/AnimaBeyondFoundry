@@ -679,12 +679,12 @@ export class ABFActor extends Actor {
    * 
    * @returns {void}
    */
-  mysticCast(spellCasting: SpellCasting, spellId: string, spellGrade: string) {
+  mysticCast(spellCasting: SpellCasting, spellId: string, spellGrade: string, supShieldId?: string) {
     const { zeon, casted, override } = spellCasting;
     if (override) {
       return;
     }
-    this.castedSpell(spellId, spellGrade, casted.innate)
+    this.castedSpell(spellId, spellGrade, casted.innate, supShieldId)
     if (zeon.poolCost) {
       this.consumeZeon(zeon.poolCost)
     }
@@ -698,7 +698,7 @@ export class ABFActor extends Actor {
     }
   }
 
-  castedSpell(spellId: string, spellGrade: string, innate?: boolean) {
+  castedSpell(spellId: string, spellGrade: string, innate?: boolean, supShieldId?: string) {
     const spell = this.getItem(spellId)
     if (!spell) return;
     const maintenanceCost = parseInt(spell.system.grades[spellGrade].maintenanceCost.value)
@@ -713,6 +713,7 @@ export class ABFActor extends Actor {
         maintenanceCost: { value: maintenanceCost },
         via: { value: spell.system.via.value },
         innate,
+        supShieldId,
         active: false
       },
     }

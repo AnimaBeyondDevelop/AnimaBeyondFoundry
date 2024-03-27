@@ -460,9 +460,9 @@ export class GMCombatDialog extends FormApplication {
     if (this.modalData.defender.result?.type === 'combat') {
       this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigueUsed);
     }
-    this.mysticCastEvaluateIfAble();
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
+    this.mysticCastEvaluateIfAble(supShieldId);
 
     if (this.canApplyDamage) {
       const { calculations } = this.modalData;
@@ -488,7 +488,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  mysticCastEvaluateIfAble() {
+  mysticCastEvaluateIfAble(supShieldId) {
     if (this.modalData.attacker.result?.type === 'mystic') {
       const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
@@ -499,7 +499,7 @@ export class GMCombatDialog extends FormApplication {
       const { spellCasting, spellUsed, spellGrade, supShield } =
         this.modalData.defender.result.values;
       if (supShield.create) {
-        this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade);
+        this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade, supShieldId);
       }
     }
   }

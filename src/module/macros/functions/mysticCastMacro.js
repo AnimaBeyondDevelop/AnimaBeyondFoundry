@@ -136,8 +136,6 @@ export class MysticCastDialog extends FormApplication {
                 return;
             }
 
-            actor.mysticCast(spellCasting, selectedSpell.id, selectedSpell.spellGrade)
-
             const { name } = actor.getItem(selectedSpell.id)
 
             if (!ui.isGM) {
@@ -149,9 +147,11 @@ export class MysticCastDialog extends FormApplication {
                 });
             }
 
+            let supShieldId;
+
             const spell = actor.system.mystic.spells.find(w => w._id === selectedSpell.id);
             if (spell && spell?.system?.spellType?.value === 'defense') {
-                actor.newSupernaturalShield(
+                supShieldId = await actor.newSupernaturalShield(
                     'mystic',
                     {},
                     0,
@@ -168,6 +168,8 @@ export class MysticCastDialog extends FormApplication {
                 executeMacro(name, args)
             }
 
+            actor.mysticCast(spellCasting, selectedSpell.id, selectedSpell.spellGrade, supShieldId)
+
             return this.close();
 
         });
@@ -183,6 +185,16 @@ export class MysticCastDialog extends FormApplication {
                 let maintainedSpell = maintainedSpells[key]
                 if (!maintainedSpell.system.active) {
                     await actor.deleteInnerItem(maintainedSpell.type, [maintainedSpell._id])
+                    if (maintainedSpell.system.supShieldId) {
+                        actor.deleteSupernaturalShield(maintainedSpell.system.supShieldId)
+                    } else {
+                        const args = {
+                            thisActor: actor,
+                            spellGrade: maintainedSpell.system.spellGrade,
+                            release: true
+                        }
+                        executeMacro(maintainedSpell.name, args)
+                    }
                 } else {
                     maintainedSpell.id = maintainedSpell._id
                     await actor.updateInnerItem(maintainedSpell, true)
@@ -193,6 +205,17 @@ export class MysticCastDialog extends FormApplication {
                 let castedSpell = castedSpells[key];
                 if (castedSpell.system.active) {
                     await actor.createInnerItem(castedSpell)
+                } else {
+                    if (castedSpell.system.supShieldId) {
+                        actor.deleteSupernaturalShield(castedSpell.system.supShieldId)
+                    } else {
+                        const args = {
+                            thisActor: actor,
+                            spellGrade: castedSpell.system.spellGrade,
+                            release: true
+                        }
+                        executeMacro(castedSpell.name, args)
+                    }
                 }
             }
             actor.unsetFlag('animabf', 'castedSpells')
