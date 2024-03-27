@@ -16,6 +16,7 @@ export const executeMacro = (name, args) => {
   setTimeout(() => {
     const macro = game.macros.getName(name);
     if (macro) {
+      console.debug(args);
       macro.execute(args);
     } else {
       console.debug(`Macro '${name}' not found.`);

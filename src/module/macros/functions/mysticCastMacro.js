@@ -147,11 +147,9 @@ export class MysticCastDialog extends FormApplication {
                 });
             }
 
-            let supShieldId;
-
             const spell = actor.system.mystic.spells.find(w => w._id === selectedSpell.id);
             if (spell && spell?.system?.spellType?.value === 'defense') {
-                supShieldId = await actor.newSupernaturalShield(
+                const supShieldId = await actor.newSupernaturalShield(
                     'mystic',
                     {},
                     0,
@@ -159,16 +157,17 @@ export class MysticCastDialog extends FormApplication {
                     selectedSpell.spellGrade,
                     spellCasting.metamagics
                 );
+                actor.mysticCast(spellCasting, selectedSpell.id, selectedSpell.spellGrade, supShieldId)
             } else {
+                const castedSpellId = actor.mysticCast(spellCasting, selectedSpell.id, selectedSpell.spellGrade)
                 const args = {
                     thisActor: actor,
-                    spellGrade: selectedSpell.spellGrade
+                    spellGrade: selectedSpell.spellGrade,
+                    castedSpellId
                 }
 
                 executeMacro(name, args)
             }
-
-            actor.mysticCast(spellCasting, selectedSpell.id, selectedSpell.spellGrade, supShieldId)
 
             return this.close();
 
@@ -190,7 +189,8 @@ export class MysticCastDialog extends FormApplication {
                     } else {
                         const args = {
                             thisActor: actor,
-                            spellGrade: maintainedSpell.system.spellGrade,
+                            spellGrade: maintainedSpell.system.grade.value,
+                            castedSpellId: maintainedSpell.system.castedSpellId,
                             release: true
                         }
                         executeMacro(maintainedSpell.name, args)
@@ -211,7 +211,8 @@ export class MysticCastDialog extends FormApplication {
                     } else {
                         const args = {
                             thisActor: actor,
-                            spellGrade: castedSpell.system.spellGrade,
+                            spellGrade: castedSpell.system.grade.value,
+                            castedSpellId: castedSpell.system.castedSpellId,
                             release: true
                         }
                         executeMacro(castedSpell.name, args)

@@ -462,7 +462,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
-    this.mysticCastEvaluateIfAble(supShieldId);
+    const castedSpellId = this.mysticCastEvaluateIfAble(supShieldId);
 
     if (this.canApplyDamage) {
       const { calculations } = this.modalData;
@@ -475,7 +475,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.criticIfBeAble();
 
-    this.executeCombatMacro();
+    this.executeCombatMacro(castedSpellId);
   }
 
   criticIfBeAble() {
@@ -489,10 +489,11 @@ export class GMCombatDialog extends FormApplication {
   }
 
   mysticCastEvaluateIfAble(supShieldId) {
+    let castedSpellId;
     if (this.modalData.attacker.result?.type === 'mystic') {
       const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
-      this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
+      castedSpellId = this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
@@ -502,6 +503,7 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade, supShieldId);
       }
     }
+    return castedSpellId
   }
 
   accumulateDefensesIfAble() {
@@ -580,7 +582,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeCombatMacro() {
+  executeCombatMacro(castedSpellId) {
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
@@ -621,6 +623,7 @@ export class GMCombatDialog extends FormApplication {
         missedAttack: false,
         isVisibleAttack: true,
         resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
+        castedSpellId,
         spellGrade: attacker.result.values.spellGrade,
         psychicPotential: attacker.result.values?.psychicPotential,
         attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
