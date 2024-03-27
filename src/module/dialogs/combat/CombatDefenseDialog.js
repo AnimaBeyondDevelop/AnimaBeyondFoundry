@@ -676,7 +676,7 @@ export class CombatDefenseDialog extends FormApplication {
     });
   }
 
-  getData() {
+  async getData() {
     const {
       defender: { combat, psychic, mystic },
       ui
@@ -711,7 +711,7 @@ export class CombatDefenseDialog extends FormApplication {
       }
       const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
       const addedZeonCost = { value: +mystic.metamagics.defensiveExpertise, pool: zeonPoolCost }
-      mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
+      mystic.spellCasting = await this.defenderActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
     }
     const { supernaturalShields } = this.defenderActor.system.combat;
     if (!mystic.supernaturalShield.shieldUsed) {
