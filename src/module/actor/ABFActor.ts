@@ -469,7 +469,7 @@ export class ABFActor extends Actor {
    * @param override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting. Default is false.
    * @returns {SpellCasting} - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
    */
-  mysticCanCastEvaluate(spellId: string, spellGrade: string, addedZeonCost = { value: 0, pool: 0 }, casted = { prepared: false, innate: false }, override = false) {
+  async mysticCanCastEvaluate(spellId: string, spellGrade: string, addedZeonCost = { value: 0, pool: 0 }, casted = { prepared: false, innate: false }, override = false) {
     const spellCasting = SpellCasting;
     spellCasting.casted = casted
     spellCasting.override = override
@@ -780,7 +780,7 @@ export class ABFActor extends Actor {
     if (spell === undefined || spellGrades.indexOf(spellGrade) <= 0) { return }
     const baseDamage = damageCheck(spell.system.grades[spellGrade].description.value ?? '')
     const { arcaneWarfare: { increasedDestruction, doubleDamage } } = this.system.mystic.magicLevel.metamagics
-    const finalDamage = baseDamage * (+doubleDamage.sphere + 1) + 10 * increasedDestruction.sphere * spellGrades.indexOf(spellGrade);
+    const finalDamage = baseDamage != 0 ? baseDamage * (+doubleDamage.sphere + 1) + 10 * increasedDestruction.sphere * spellGrades.indexOf(spellGrade) : 0;
 
     return finalDamage
   }

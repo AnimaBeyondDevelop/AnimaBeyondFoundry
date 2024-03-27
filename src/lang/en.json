@@ -588,6 +588,8 @@
   "anima.ui.systemSettings.defaultAttackMacro.hint.title": "If no Macros are found, it will take the name of the Macro that is entered here for the Combat",
   "anima.ui.systemSettings.defaultProjectileMacro.title": "Default Macro for Projectiles",
   "anima.ui.systemSettings.defaultProjectileMacro.hint.title": "If the weapon is a shooting projectile, it will take the name of the Macro that is entered here for the Combat",
+  "anima.ui.systemSettings.defaultShieldMacro.title": "Default Macro for Supernatural Shields",
+  "anima.ui.systemSettings.defaultShieldMacro.hint.title": "If no Macros are found, it will take the name of the Macro that is entered here for supernatural shields",
   "anima.ui.systemSettings.missValueAttackMacro.title": "Attack Failure Value for Animations",
   "anima.ui.systemSettings.missValueAttackMacro.hint.title": "When executing a macro in combat, a failure argument is sent; if the HA value is less than the Failure value and the defender won the combat, it is considered that the attack failed (used in animations)",
   "anima.ui.status.effectsList.title": "Effects",
