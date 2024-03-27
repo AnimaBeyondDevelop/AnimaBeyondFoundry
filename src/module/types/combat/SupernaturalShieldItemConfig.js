@@ -63,7 +63,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       actor.setFlag('animabf', 'spellCastingOverride', override);
       const zeonPoolCost = definedMagicProjectionCost(definedMagicProjection)
       const addedZeonCost = { value: +defensiveExpertise, pool: zeonPoolCost }
-      const spellCasting = actor.mysticCanCastEvaluate(spellID, spellGrade, addedZeonCost, { innate, prepared }, override);
+      const spellCasting = await actor.mysticCanCastEvaluate(spellID, spellGrade, addedZeonCost, { innate, prepared }, override);
       spellCasting.casted = { innate, prepared };
       if (actor.evaluateCast(spellCasting)) {
         return;

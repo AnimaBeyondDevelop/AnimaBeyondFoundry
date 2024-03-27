@@ -709,7 +709,7 @@ export class CombatAttackDialog extends FormApplication {
     });
   }
 
-  getData() {
+  async getData() {
     const {
       attacker: { combat, psychic, mystic },
       ui
@@ -745,7 +745,7 @@ export class CombatAttackDialog extends FormApplication {
       }
       const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
       const addedZeonCost = { value: +mystic.metamagics.offensiveExpertise + mystic.metamagics.removeProtection, pool: zeonPoolCost }
-      mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
+      mystic.spellCasting = await this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
       const spellDamage = this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade)
       mystic.damage.final = mystic.damage.special + spellDamage;
     }
