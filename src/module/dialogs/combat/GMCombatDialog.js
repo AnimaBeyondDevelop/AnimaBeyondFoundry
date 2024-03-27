@@ -243,18 +243,21 @@ export class GMCombatDialog extends FormApplication {
       const { weapons } = this.attackerActor.system.combat;
 
       attacker.result.weapon = weapons.find(w => w._id === result.values.weaponUsed);
+      this.modalData.combatMacroArgs.projectile = attacker.result.values.projectile;
     }
 
     if (result.type === 'mystic') {
       const { spells } = this.attackerActor.system.mystic;
 
       attacker.result.spell = spells.find(w => w._id === result.values.spellUsed);
+      this.modalData.combatMacroArgs.spellGrade = attacker.result.values.spellGrade;
     }
 
     if (result.type === 'psychic') {
       const { psychicPowers } = this.attackerActor.system.psychic;
 
       attacker.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
+      this.modalData.combatMacroArgs.psychicPotential = attacker.result.values.psychicPotential;
     }
 
     this.render();
@@ -507,7 +510,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
-    const castedSpellId = this.mysticCastEvaluateIfAble(firstDefender, supShieldId);
+    this.mysticCastEvaluateIfAble(firstDefender, supShieldId);
 
     if (this.canApplyDamage) {
       const { calculations } = this.modalData;
@@ -520,7 +523,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.criticIfBeAble();
 
-    this.executeCombatMacro(execute, castedSpellId);
+    this.executeCombatMacro(execute);
   }
 
   criticIfBeAble() {
@@ -534,11 +537,11 @@ export class GMCombatDialog extends FormApplication {
   }
 
   mysticCastEvaluateIfAble(firstDefender, supShieldId) {
-    let castedSpellId;
     if (this.modalData.attacker.result?.type === 'mystic' && firstDefender) {
       const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
-      castedSpellId = this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
+
+      this.modalData.combatMacroArgs.castedSpellId = this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
@@ -548,7 +551,6 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade, supShieldId);
       }
     }
-    return castedSpellId
   }
 
   accumulateDefensesIfAble() {
@@ -664,18 +666,13 @@ export class GMCombatDialog extends FormApplication {
     let defenderArgs = {
       defender: this.defenderToken,
       winner,
-      defenseType: defender.result.values.type,
+      defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
       totalAttack: attacker.result.values.total,
       appliedDamage: attacker.applyDamage ? calculations.damage : 0,
       damageType: attacker.result.values?.critic,
       bloodColor: 'red', // add bloodColor to actor template
       missedAttack: false,
-      isVisibleAttack: true,
       resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
-      castedSpellId,
-      spellGrade: attacker.result.values.spellGrade,
-      psychicPotential: attacker.result.values?.psychicPotential,
-      attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
       specialPorpuseAttackResult,
       hasCritic: roll.criticRoll.sent && attacker.applyCritic,
@@ -691,24 +688,14 @@ export class GMCombatDialog extends FormApplication {
         const { name } = attacker.result.weapon;
         macroName = macroPrefixAttack + name;
       } else { macroName = macroPrefixAttack + 'Unarmed' }
-      const { projectile } = attacker.result.values;
-      if (projectile) {
-        defenderArgs = { ...defenderArgs, projectile: projectile };
-        if (projectile.type === 'shot') {
-          macroName = macroPorjectileDefault;
-        }
+      if (attacker.result.values.projectile.type === 'shot') {
+        macroName = macroPorjectileDefault;
+
       }
     } else if (attacker.result?.type === 'mystic') {
       macroName = attacker.result.values.spellName;
     } else if (attacker.result?.type === 'psychic') {
       macroName = attacker.result.values.powerName;
-    }
-
-    if (
-      attacker.result.values.visible !== undefined &&
-      !attacker.result.values.visible
-    ) {
-      defenderArgs.isVisibleAttack = false;
     }
 
     if (
