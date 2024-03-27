@@ -612,6 +612,9 @@ export class GMCombatDialog extends FormApplication {
     let macroName;
     let args = {
       attacker: this.attackerToken,
+      spellGrade: attacker.result.values.spellGrade,
+      castedSpellId,
+      psychicPotential: attacker.result.values?.psychicPotential,
       defenders: [{
         defender: this.defenderToken,
         winner,
@@ -623,10 +626,6 @@ export class GMCombatDialog extends FormApplication {
         missedAttack: false,
         isVisibleAttack: true,
         resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
-        castedSpellId,
-        spellGrade: attacker.result.values.spellGrade,
-        psychicPotential: attacker.result.values?.psychicPotential,
-        attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
         defenderPsychicFatigue: defender.result.values?.psychicFatigue,
         specialPorpuseAttackResult,
         hasCritic: roll.criticRoll.sent && attacker.applyCritic,
