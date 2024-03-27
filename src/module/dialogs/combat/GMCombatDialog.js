@@ -468,20 +468,19 @@ export class GMCombatDialog extends FormApplication {
     let macroName;
     let args = {
       attacker: this.attackerToken,
+      spellGrade: attacker.result.values.spellGrade,
+      psychicPotential: attacker.result.values?.psychicPotential,
+      projectile: attacker.result.values?.projectile,
       defenders: [{
         defender: this.defenderToken,
         winner,
-        defenseType: defender.result.values.type,
+        defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
         totalAttack: attacker.result.values.total,
         appliedDamage: calculations.damage,
         damageType: attacker.result.values?.critic,
         bloodColor: 'red', // add bloodColor to actor template
         missedAttack: false,
-        isVisibleAttack: true,
         resistanceRoll,
-        spellGrade: attacker.result.values.spellGrade,
-        psychicPotential: attacker.result.values?.psychicPotential,
-        attackerPsychicFatigue: attacker.result.values?.psychicFatigue,
         defenderPsychicFatigue: defender.result.values?.psychicFatigue,
         criticImpact: 0
       }]
@@ -496,12 +495,8 @@ export class GMCombatDialog extends FormApplication {
       }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
-      const { projectile } = attacker.result.values;
-      if (projectile) {
-        args = { ...args, projectile: projectile };
-        if (projectile.type == 'shot') {
-          macroName = macroPorjectileDefault;
-        }
+      if (attacker.result.values?.projectile?.type == 'shot') {
+        macroName = macroPorjectileDefault;
       }
     } else if (attacker.result?.type === 'mystic') {
       macroName = attacker.result.values.spellName;
