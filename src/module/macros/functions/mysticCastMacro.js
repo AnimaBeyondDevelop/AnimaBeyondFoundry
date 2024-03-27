@@ -226,7 +226,7 @@ export class MysticCastDialog extends FormApplication {
     }
 
 
-    getData() {
+    async getData() {
         const { actor, selectedSpell, spellCasting, maintainedSpells, castedSpells } = this.modalData;
         const { spells, magicLevel: { metamagics } } = actor.system.mystic;
 
@@ -261,7 +261,7 @@ export class MysticCastDialog extends FormApplication {
             const zeonCost = +selectedSpell.metamagics[selectedSpell.combatType === 'attack' ? 'offensiveExpertise' : 'defensiveExpertise'];
             const zeonPoolCost = definedMagicProjectionCost(selectedSpell.metamagics.definedMagicProjection);
             const addedZeonCost = { value: zeonCost, pool: zeonPoolCost }
-            this.modalData.spellCasting = actor.mysticCanCastEvaluate(selectedSpell.id, selectedSpell.spellGrade, addedZeonCost, spellCasting.casted, spellCasting.override);
+            this.modalData.spellCasting = await actor.mysticCanCastEvaluate(selectedSpell.id, selectedSpell.spellGrade, addedZeonCost, spellCasting.casted, spellCasting.override);
         }
 
         this.modalData.zeonMaintained = actor.system.mystic.zeonMaintained.base.value;
