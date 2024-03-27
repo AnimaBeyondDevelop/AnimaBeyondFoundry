@@ -141,7 +141,7 @@ export class GMCombatDialog extends FormApplication {
     html.find('.make-counter').click(async () => {
       this.applyValuesIfBeAble(true);
       if (this.modalData.calculations?.canCounter) {
-        this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus, this.modalData.ui.index -1);
+        this.hooks.onCounterAttack(this.modalData.calculations.counterAttackBonus, this.modalData.ui.index - 1);
       }
     });
 
@@ -507,7 +507,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
-    this.mysticCastEvaluateIfAble(firstDefender, supShieldId);
+    const castedSpellId = this.mysticCastEvaluateIfAble(firstDefender, supShieldId);
 
     if (this.canApplyDamage) {
       const { calculations } = this.modalData;
@@ -520,7 +520,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.criticIfBeAble();
 
-    this.executeCombatMacro(execute);
+    this.executeCombatMacro(execute, castedSpellId);
   }
 
   criticIfBeAble() {
@@ -534,10 +534,11 @@ export class GMCombatDialog extends FormApplication {
   }
 
   mysticCastEvaluateIfAble(firstDefender, supShieldId) {
+    let castedSpellId;
     if (this.modalData.attacker.result?.type === 'mystic' && firstDefender) {
       const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
-      this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
+      castedSpellId = this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
@@ -547,6 +548,7 @@ export class GMCombatDialog extends FormApplication {
         this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade, supShieldId);
       }
     }
+    return castedSpellId
   }
 
   accumulateDefensesIfAble() {
@@ -580,7 +582,7 @@ export class GMCombatDialog extends FormApplication {
   async applyDamageSupernaturalShieldIfBeAble(supShieldId) {
     const { attacker, defender } = this.modalData;
     const { dobleDamage, immuneToDamage } = defender.supernaturalShield;
-    const {  modifiers: { damageBarrier }, settings: { damageReduction } } = this.defenderActor.system.general;
+    const { modifiers: { damageBarrier }, settings: { damageReduction } } = this.defenderActor.system.general;
     const { damageEnergy } = attacker.result.values
     const defenderIsWinner =
       this.modalData.calculations.winner === this.defenderToken;
@@ -630,7 +632,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeCombatMacro(execute) {
+  executeCombatMacro(execute, castedSpellId) {
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
@@ -670,6 +672,7 @@ export class GMCombatDialog extends FormApplication {
       missedAttack: false,
       isVisibleAttack: true,
       resistanceRoll: roll.resistanceRoll.sent ? roll.resistanceRoll.value - roll.resistanceRoll.check : undefined,
+      castedSpellId,
       spellGrade: attacker.result.values.spellGrade,
       psychicPotential: attacker.result.values?.psychicPotential,
       attackerPsychicFatigue: attacker.result.values?.psychicFatigue,

@@ -787,21 +787,23 @@ export class ABFActor extends Actor {
     if (override) {
       return;
     }
-    this.castedSpell(spellId, spellGrade, casted.innate, supShieldId)
+    const castedSpellId = nanoid()
+    this.castedSpell(castedSpellId, spellId, spellGrade, casted.innate, supShieldId)
     if (zeon.poolCost) {
       this.consumeZeon(zeon.poolCost)
     }
     if (casted.innate) {
-      return;
+      return castedSpellId;
     }
     if (casted.prepared) {
       this.deletePreparedSpell(spellId, spellGrade);
     } else if (zeon.cost) {
       this.consumeAccumulatedZeon(zeon.cost);
     }
+    return castedSpellId
   }
 
-  castedSpell(spellId: string, spellGrade: string, innate?: boolean, supShieldId?: string) {
+  castedSpell(castedSpellId: string, spellId: string, spellGrade: string, innate?: boolean, supShieldId?: string) {
     const spell = this.getItem(spellId)
     if (!spell) return;
     const maintenanceCost = parseInt(spell.system.grades[spellGrade].maintenanceCost.value)
@@ -817,8 +819,9 @@ export class ABFActor extends Actor {
         via: { value: spell.system.via.value },
         innate,
         supShieldId,
+        castedSpellId,
         active: false
-      },
+      }
     }
     this.setFlag('animabf', `castedSpells.${id}`, maintainedSpell);
   }
