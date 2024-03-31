@@ -554,8 +554,8 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  psychicCastIfAble(supShieldId) {
-    if (this.modalData.attacker.result?.type === 'psychic') {
+  psychicCastIfAble(firstDefender, supShieldId) {
+    if (this.modalData.attacker.result?.type === 'psychic' && firstDefender) {
       this.modalData.combatMacroArgs.castedPsychicPowerId = this.attackerActor.castedPsychicPower(this.modalData.attacker.result.values.powerUsed);
     }
 
