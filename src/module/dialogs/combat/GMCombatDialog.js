@@ -463,6 +463,7 @@ export class GMCombatDialog extends FormApplication {
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
     const castedSpellId = this.mysticCastEvaluateIfAble(supShieldId);
+    const castedPsychicPowerId = this.psychicCastIfAble(supShieldId);
 
     if (this.canApplyDamage) {
       const { calculations } = this.modalData;
@@ -475,7 +476,7 @@ export class GMCombatDialog extends FormApplication {
     }
     this.criticIfBeAble();
 
-    this.executeCombatMacro(castedSpellId);
+    this.executeCombatMacro(castedSpellId, castedPsychicPowerId);
   }
 
   criticIfBeAble() {
@@ -504,6 +505,18 @@ export class GMCombatDialog extends FormApplication {
       }
     }
     return castedSpellId
+  }
+
+  psychicCastIfAble(supShieldId) {
+    let castedPsychicPowerId;
+    if (this.modalData.attacker.result?.type === 'psychic') {
+      castedPsychicPowerId = this.attackerActor.castedPsychicPower(this.modalData.attacker.result.values.powerUsed);
+    }
+
+    if (this.modalData.defender.result?.type === 'psychic') {
+      this.defenderActor.castedPsychicPower(this.modalData.defender.result.values.powerUsed, supShieldId);
+    }
+    return castedPsychicPowerId
   }
 
   accumulateDefensesIfAble() {
@@ -582,7 +595,7 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  executeCombatMacro(castedSpellId) {
+  executeCombatMacro(castedSpellId, castedPsychicPowerId) {
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
@@ -614,6 +627,7 @@ export class GMCombatDialog extends FormApplication {
       attacker: this.attackerToken,
       spellGrade: attacker.result.values.spellGrade,
       castedSpellId,
+      castedPsychicPowerId,
       psychicPotential: attacker.result.values?.psychicPotential,
       defenders: [{
         defender: this.defenderToken,

@@ -1,0 +1,184 @@
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="psychic-cast"
+  }}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+  title=(localize (concat 'macros.psychicCast.dialog.title'))
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  class="psychic-cast"
+  }}
+
+  <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+    <a class="item psychicCast" data-tab="psychicCast">{{localize "anima.ui.tabs.cast"}}</a>
+    <a class="item innatePsychicPowers" data-tab="innatePsychicPowers">{{localize "anima.ui.tabs.innatePsychicPowers"}}</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab psychic-cast" data-group="primary" data-tab="psychicCast">
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'anima.ui.psychic.psychicPoints.title')
+      inputName="psychicPoints.value"
+      inputValue=this.psychicPoints.value
+      hasSecondaryInput=true
+      disableSecondaryInput=true
+      secondaryInputName="psychicPoints.max"
+      secondaryInputValue=this.psychicPoints.max
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.psychicPotential.title')
+      inputName="psychicPotential.special"
+      inputValue=this.psychicPotential.special
+      hasSecondaryInput=true
+      disableSecondaryInput=true
+      secondaryInputName="psychicPotential.final"
+      secondaryInputValue=this.psychicPotential.final
+    }}
+
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.psychicPower.title')
+    inputName='selectedPower.id'
+    }}
+    <optgroup label="Power">
+      {{#each_when this.actor.system.psychic.psychicPowers "system" "combatType" "value" "none"}}
+      <option {{#if (is "eq" this._id ../this.selectedPower.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    <optgroup label="Defense">
+      {{#each_when this.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
+      <option {{#if (is "eq" this._id ../this.selectedPower.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    <optgroup label="Attack">
+      {{#each_when this.actor.system.psychic.psychicPowers "system" "combatType" "value" "attack"}}
+      <option {{#if (is "eq" this._id ../this.selectedPower.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+    {{#if (and (is 'gt' this.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.actor.system.psychic.psychicSettings.fatigueResistance false))}}
+    <div class='columns'>
+      <div>
+        {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          title=(localize 'macros.combat.dialog.eliminateFatigue.title')
+          inputType="checkbox"
+          inputName="eliminateFatigue"
+          inputValue=(is 'eq' this.eliminateFatigue true)
+        }}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#unless (isArrayEmpty this.actor.system.psychic.mentalPatterns)}}
+    <div class='columns'>
+      <div>
+        {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
+          inputType="checkbox"
+          inputName="mentalPatternImbalance"
+          inputValue=(is 'eq' this.mentalPatternImbalance true)
+        }}
+      </div>
+    </div>
+    {{/unless}}
+
+    <div>
+      <button class='abf-button psychic-cast-button' data-type='cast'>
+        {{localize 'macros.psychicCast.dialog.button.title'}}
+      </button>
+    </div>
+
+  </div>
+
+  <div class="tab innate-psychic-powers" data-group="primary" data-tab="innatePsychicPowers">
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "anima.ui.psychic.innatePsychicPower.amount.title")
+    disabled=true
+    inputName="innatePsychicPower"
+    inputValue=this.innatePsychicPower
+    }}
+    {{#if (is 'gt' this.actor.system.psychic.innatePsychicPowers.length 0)}}
+    <div class="innate-psychic-powers">
+      <hr class='hr' />
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.psychicCast.dialog.maintain.title'))
+      }}
+      {{#each this.innatePsychicPowers as |innatePsychicPower|}}
+        <div class='innate-power-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.psychic.innatePsychicPower.power.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=innatePsychicPower.name
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="active"
+          title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "innatePsychicPowers." @key ".system.active")
+          inputValue=(is 'eq' innatePsychicPower.system.active true)
+        }}
+        </div>
+      {{/each}}
+    </div>
+    {{/if }}
+    {{#if (is 'neq' this.castedPsychicPowers undefined)}}
+    <div class="innate-psychic-powers">
+      <hr class='hr' />
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.psychicCast.dialog.casted.title'))
+      }}
+      {{#each this.castedPsychicPowers as |castedPsychicPower|}}
+        <div class='innate-power-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.psychic.innatePsychicPower.power.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=castedPsychicPower.name
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="active"
+          title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "castedPsychicPowers." @key ".system.active")
+          inputValue=(is 'eq' castedPsychicPower.system.active true)
+        }}
+        </div>
+      {{/each}}
+    </div>
+    {{/if }}
+    
+    <div>
+      <button class='abf-button innate-power-button' data-type='cast'>
+        {{localize 'macros.psychicCast.dialog.button.maintain.title'}}
+      </button>
+    </div>
+
+  </div>
+</section>
+
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>
