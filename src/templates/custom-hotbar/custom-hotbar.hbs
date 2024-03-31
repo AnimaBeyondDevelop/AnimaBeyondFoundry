@@ -21,6 +21,10 @@
         <img src='/icons/svg/daze.svg' />
         <p class='shortcut'>ctrl + 4</p>
       </div>
+      <div title='{{localize 'customHotbar.psychicCast'}}' id='custom-hotbar-psychic-cast' class='custom-macro'>
+        <img src='/icons/svg/eye.svg' />
+        <p class='shortcut'>ctrl + 5</p>
+      </div>
     </ol>
   {{else}}
     <ol class='macros'>
@@ -38,6 +42,12 @@
         <div title='{{localize 'customHotbar.mysticCast'}}' id='custom-hotbar-mystic-cast' class='custom-macro'>
           <img src='/icons/svg/daze.svg' />
           <p class='shortcut'>ctrl + 3</p>
+        </div>
+      {{/if}}
+      {{#if this.psychicPowers}}
+        <div title='{{localize 'customHotbar.psychicCast'}}' id='custom-hotbar-psychic-cast' class='custom-macro'>
+          <img src='/icons/svg/eye.svg' />
+          <p class='shortcut'>ctrl + 4</p>
         </div>
       {{/if}}
     </ol>

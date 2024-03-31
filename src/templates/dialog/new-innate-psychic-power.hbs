@@ -1,0 +1,16 @@
+<form>
+  <div class='form-group'>
+    <div>
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'dialogs.psychicShield.power.title')
+      inputName='new.innatePsychicPower.id'
+    }}
+      {{#each data.actor.system.psychic.psychicPowers}}
+        {{#if this.system.hasMaintenance.value}}
+          <option value='{{this._id}}'>{{this.name}}</option>
+        {{/if }}
+      {{/each}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    </div>
+  </div>
+</form>

@@ -1,9 +1,14 @@
 import { Templates } from '../../utils/constants';
 import { getSelectedToken } from '../../utils/functions/getSelectedToken';
 import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { executeMacro } from '../../utils/functions/executeMacro';
 
 const getInitialData = () => {
+    const showRollByDefault = !!game.settings.get(
+        'animabf',
+        ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
+    );
     const isGM = !!game.user?.isGM;
     const token = getSelectedToken(game)
     const actor = token.actor;
@@ -14,6 +19,7 @@ const getInitialData = () => {
             overrideMysticCast: false,
             activeTab: 'mysticCast'
         },
+        showRoll: !isGM || showRollByDefault,
         token,
         actor,
         spellCasting: {
@@ -121,6 +127,7 @@ export class MysticCastDialog extends FormApplication {
                 actor,
                 selectedSpell,
                 spellCasting,
+                showRoll,
                 ui
             } = this.modalData;
             const { i18n } = game;
@@ -138,7 +145,7 @@ export class MysticCastDialog extends FormApplication {
 
             const { name } = actor.getItem(selectedSpell.id)
 
-            if (!ui.isGM) {
+            if (showRoll) {
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({ token }),
                     flavor: i18n.format('macros.mysticCast.dialog.message.title', {
