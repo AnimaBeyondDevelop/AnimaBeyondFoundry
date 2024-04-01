@@ -17,17 +17,18 @@
 
   <section class="sheet-body">
     <div class="tab psychic-cast" data-group="primary" data-tab="psychicCast">
-
-    {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      title=(localize 'anima.ui.psychic.psychicPoints.title')
-      inputName="psychicPoints.value"
-      inputValue=this.psychicPoints.value
-      hasSecondaryInput=true
-      disableSecondaryInput=true
-      secondaryInputName="psychicPoints.max"
-      secondaryInputValue=this.psychicPoints.max
-    }}
+    {{#if (is 'gt' this.actor.system.psychic.psychicPoints.max 0)}}
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'anima.ui.psychic.psychicPoints.title')
+        inputName="psychicPoints.value"
+        inputValue=this.psychicPoints.value
+        hasSecondaryInput=true
+        disableSecondaryInput=true
+        secondaryInputName="psychicPoints.max"
+        secondaryInputValue=this.psychicPoints.max
+      }}
+    {{/if}}
 
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"

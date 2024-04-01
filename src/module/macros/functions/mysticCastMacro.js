@@ -58,8 +58,8 @@ export class MysticCastDialog extends FormApplication {
         const { actor: { system: { mystic: { spells, mysticSettings, maintainedSpells } } }, selectedSpell, spellCasting, ui } = this.modalData;
 
         if (spells.length > 0) {
-            selectedSpell.id = spells[0]._id;
-            const spell = spells.find(w => w._id === selectedSpell.id);
+            const spell = spells.find(w => w.system.combatType.value === 'none') ?? spells[0]
+            selectedSpell.id = spell._id
             const spellCastingOverride = this.modalData.actor.getFlag(
                 'animabf',
                 'spellCastingOverride'
@@ -239,9 +239,6 @@ export class MysticCastDialog extends FormApplication {
         const { spells, magicLevel: { metamagics } } = actor.system.mystic;
 
         if (spells.length > 0) {
-            if (!selectedSpell.id) {
-                selectedSpell.id = spells[0]._id;
-            }
             const spell = spells.find(w => w._id === selectedSpell.id);
             selectedSpell.combatType = spell.system.combatType.value;
 

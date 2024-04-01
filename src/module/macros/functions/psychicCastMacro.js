@@ -7,7 +7,7 @@ const getInitialData = () => {
     const showRollByDefault = !!game.settings.get(
         'animabf',
         ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
-      );
+    );
     const isGM = !!game.user?.isGM;
     const token = getSelectedToken(game)
     const actor = token.actor;
@@ -49,7 +49,8 @@ export class PsychicCastDialog extends FormApplication {
         const { actor: { system: { psychic: { psychicPowers, innatePsychicPowers } } }, selectedPower } = this.modalData;
 
         if (psychicPowers.length > 0) {
-            selectedPower.id = psychicPowers[0]._id;
+            const power = psychicPowers.find(w => w.system.combatType.value === 'none')
+            selectedPower.id = power ? power._id : psychicPowers[0]._id;
         }
 
         if (innatePsychicPowers.length > 0) {
@@ -216,9 +217,6 @@ export class PsychicCastDialog extends FormApplication {
         const { actor, selectedPower, psychicPotential } = this.modalData;
         const { psychicPowers } = actor.system.psychic;
 
-        if (!selectedPower.id) {
-            selectedPower.id = psychicPowers[0]._id;
-        }
         const power = psychicPowers.find(w => w._id === selectedPower.id);
         let psychicBonus = power?.system.bonus.value ?? 0;
         psychicPotential.final =
