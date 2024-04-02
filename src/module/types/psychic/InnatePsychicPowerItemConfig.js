@@ -7,7 +7,8 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @readonly
  */
 export const INITIAL_INNATE_PSYCHIC_POWER_DATA = {
-  effect: ''
+  effect: '',
+  improveInnatePower: 0
 };
 
 /** @type {import("../Items").InnatePsychicPowerItemConfig} */
@@ -23,20 +24,24 @@ export const InnatePsychicPowerItemConfig = ABFItemConfigFactory({
   onCreate: async actor => {
     const results = await openComplexInputDialog(actor, 'newInnatePsychicPower');
     const powerId = results['new.innatePsychicPower.id'];
+    const improveInnatePower = results['new.innatePsychicPower.improveInnatePower']
     const power = actor.system.psychic.psychicPowers.find(i => i._id === powerId);
     if (!power) {
       return;
     }
     const name = power.name;
-    const innatePsychicDifficulty = actor.innatePsychicDifficulty(power);
+    const innatePsychicDifficulty = actor.innatePsychicDifficulty(power, improveInnatePower);
     const effect = power.system.effects[innatePsychicDifficulty]?.value ?? '';
 
     await actor.createInnerItem({
       name,
       type: ABFItems.INNATE_PSYCHIC_POWER,
       system: {
-        effect
+        effect,
+        improveInnatePower,
+        power
       }
     });
+    actor.consumePsychicPoints(improveInnatePower)
   }
 });

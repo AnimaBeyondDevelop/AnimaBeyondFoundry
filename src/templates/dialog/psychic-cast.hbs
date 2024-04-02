@@ -15,20 +15,22 @@
     <a class="item innatePsychicPowers" data-tab="innatePsychicPowers">{{localize "anima.ui.tabs.innatePsychicPowers"}}</a>
   </nav>
 
+  {{#if (is 'gt' this.psychicPoints.max 0)}}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'anima.ui.psychic.psychicPoints.title')
+      inputName="psychicPoints.value"
+      inputValue=this.psychicPoints.value
+      disabled=true
+      hasSecondaryInput=true
+      disableSecondaryInput=true
+      secondaryInputName="psychicPoints.max"
+      secondaryInputValue=this.psychicPoints.max
+    }}
+  {{/if}}
+
   <section class="sheet-body">
     <div class="tab psychic-cast" data-group="primary" data-tab="psychicCast">
-    {{#if (is 'gt' this.actor.system.psychic.psychicPoints.max 0)}}
-      {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-        title=(localize 'anima.ui.psychic.psychicPoints.title')
-        inputName="psychicPoints.value"
-        inputValue=this.psychicPoints.value
-        hasSecondaryInput=true
-        disableSecondaryInput=true
-        secondaryInputName="psychicPoints.max"
-        secondaryInputValue=this.psychicPoints.max
-      }}
-    {{/if}}
 
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -62,7 +64,7 @@
     </optgroup>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-    {{#if (and (is 'gt' this.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.actor.system.psychic.psychicSettings.fatigueResistance false))}}
+    {{#if (and (is 'gt' this.psychicPoints.value 0) (is 'eq' this.actor.system.psychic.psychicSettings.fatigueResistance false))}}
     <div class='columns'>
       <div>
         {{>
@@ -126,6 +128,14 @@
           inputValue=innatePsychicPower.name
         }}
         {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        title=(localize "anima.ui.psychic.psychicPoints.title")
+        hideTitle=(is "gt" @index 0)
+        disabled=true
+        inputName=(concat "innatePsychicPowers." @key ".system.improveInnatePower")
+        inputValue=innatePsychicPower.system.improveInnatePower
+        }}
+        {{>
         'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
           class="active"
           title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
@@ -133,6 +143,15 @@
           inputType="checkbox"
           inputName=(concat "innatePsychicPowers." @key ".system.active")
           inputValue=(is 'eq' innatePsychicPower.system.active true)
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="effect"
+          hideTitle=true
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=innatePsychicPower.system.effect
         }}
         </div>
       {{/each}}
@@ -157,6 +176,24 @@
           inputName=""
           inputValue=castedPsychicPower.name
         }}
+        {{#if (is "gt" ../this.psychicPoints.max 0 )}}
+        {{#>
+        'systems/animabf/templates/common/ui/custom-select.hbs'
+          class="improve-innate-power"
+          isVertical=true
+          title=(localize "anima.ui.psychic.innatePsychicPower.improveInnatePower.title")
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "castedPsychicPowers." @key ".system.improveInnatePower")
+          inputValue=castedPsychicPower.system.improveInnatePower
+        }}
+        <option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 0)}}selected{{/if}} value="0">0</option>
+        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 0 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 1)}}selected{{/if}} value="1">1</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 1 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 2)}}selected{{/if}} value="2">2</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 2 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 3)}}selected{{/if}} value="3">3</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 3 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 4)}}selected{{/if}} value="4">4</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 4 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 5)}}selected{{/if}} value="5">5</option>{{/if}}
+        {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+        {{/if}}
         {{>
         'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
           class="active"
@@ -165,6 +202,15 @@
           inputType="checkbox"
           inputName=(concat "castedPsychicPowers." @key ".system.active")
           inputValue=(is 'eq' castedPsychicPower.system.active true)
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="effect"
+          hideTitle=true
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=castedPsychicPower.system.effect
         }}
         </div>
       {{/each}}

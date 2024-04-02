@@ -172,7 +172,7 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
-  innatePsychicDifficulty(power: any) {
+  innatePsychicDifficulty(power: any, improveInnatePower = 0) {
     if (!power) { return };
     const {
       general: {
@@ -182,14 +182,18 @@ export class ABFActor extends Actor {
     } = this.system;
 
     const potentialBaseDifficulty = difficultyAchieved(
-      psychic.psychicPotential.base.value,
+      psychic.psychicPotential.base.value + improveInnatePower * 20,
       0,
       inhuman.value,
       zen.value
     );
     const effectsList = power.system.effects
-    let index = difficultyRange.findIndex(e => e === potentialBaseDifficulty);
-
+    let index = difficultyRange.findIndex(e => e === (potentialBaseDifficulty));
+    if (
+      //!improveInnatePower &&
+      psychic.psychicSettings.amplifySustainedPower) {
+      index++
+    }
     let effect = effectsList[difficultyRange[index]].value;
 
     for (let i = 0; i < 10; i++) {
@@ -372,28 +376,30 @@ export class ABFActor extends Actor {
           })
         });
       }
-      if (!psychicFatigue.inmune && !eliminateFatigue) {
+      if (!psychicFatigue.inmune) {
         this.applyFatigue(psychicFatigue.value - psychicPoints.value);
-        this.update({
-          system: {
-            psychic: {
-              psychicPoints: { value: Math.max(psychicPoints.value - psychicFatigue.value, 0) }
-            }
-          }
-        })
+        this.consumePsychicPoints(psychicFatigue.value)
       }
+      executeMacro('Psychic Fatigue Macro', { thisActor: this, psychicFatigue: psychicFatigue.value })
     }
     if (eliminateFatigue) {
+      this.consumePsychicPoints(1)
+    }
+
+    return psychicFatigue.value;
+  }
+
+  consumePsychicPoints(psychicPointsUsed: number) {
+    const { psychicPoints } = this.system.psychic
+    if (psychicPointsUsed) {
       this.update({
         system: {
           psychic: {
-            psychicPoints: { value: psychicPoints.value - 1 }
+            psychicPoints: { value: Math.max(psychicPoints.value - psychicPointsUsed, 0) }
           }
         }
       })
     }
-
-    return psychicFatigue.value;
   }
 
   /**
@@ -844,7 +850,7 @@ export class ABFActor extends Actor {
    * @example
    */
 
-  castedPsychicPower(powerId: string, supShieldId?: string) {
+  castedPsychicPower(powerId: string, psychicPotential: number, supShieldId?: string) {
     const power = this.getItem(powerId)
     if (!power) return;
     if (!power.system.hasMaintenance.value) return;
@@ -858,8 +864,11 @@ export class ABFActor extends Actor {
       type: ABFItems.INNATE_PSYCHIC_POWER,
       system: {
         effect,
+        improveInnatePower: 0,
+        power,
         castedPsychicPowerId,
         supShieldId,
+        psychicPotential,
         active: false
       }
     }
