@@ -154,6 +154,23 @@ export class ABFActor extends Actor {
 
   async restByDays(days: number = 1, resting?: boolean) {
     const { zeon, act } = this.system.mystic;
+
+    await this.update({
+      system: {
+        mystic: {
+          zeon: {
+            value: Math.min(zeon.value + act.main.final.value * days, zeon.max)
+          }
+        }
+      }
+    });
+
+    await this.applyHealingFactor(days, resting)
+    await this.recoverByHour(days * 24)
+  }
+
+  async recoverByHour(hours: number = 1) {
+    const { psychicPoints } = this.system.psychic;
     const { fatigue } = this.system.characteristics.secondaries;
 
     await this.update({
@@ -165,15 +182,15 @@ export class ABFActor extends Actor {
             }
           }
         },
-        mystic: {
-          zeon: {
-            value: Math.min(zeon.value + act.main.final.value * days, zeon.max)
+        psychic: {
+          psychicPoints: {
+            value: {
+              value: Math.min(psychicPoints.value + hours, psychicPoints.max)
+            }
           }
-        }
+        },
       }
     });
-
-    await this.applyHealingFactor(days, resting)
   }
 
   /**
