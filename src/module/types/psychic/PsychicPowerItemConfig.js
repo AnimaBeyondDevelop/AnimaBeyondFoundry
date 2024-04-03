@@ -68,6 +68,7 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   visible: false,
   macro: '',
   bonus: { value: 0 },
+  improvePsychicProjection: 0,
   damageEnergy: { value: '-' }
 };
 

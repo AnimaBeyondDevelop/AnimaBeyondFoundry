@@ -32,6 +32,16 @@
           inputName=(concat "system.dynamic.innatePsychicPowers." innatePsychicPower._id ".system.effect")
           inputValue=innatePsychicPower.system.effect
         }}
+
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="psychic-points"
+          title=(localize "anima.ui.psychic.psychicPoints.title")
+          disabled=true
+          hideTitle=(is "gt" @index 0)
+          inputName=(concat "system.dynamic.innatePsychicPowers." innatePsychicPower._id ".system.improveInnatePower")
+          inputValue=innatePsychicPower.system.improveInnatePower
+        }}
       </div>
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

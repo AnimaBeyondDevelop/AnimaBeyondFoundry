@@ -1554,7 +1554,8 @@ export const INITIAL_ACTOR_DATA = {
       max: 0
     },
     psychicSettings: {
-      fatigueResistance: false
+      fatigueResistance: false,
+      amplifySustainedPower: false
     },
     psychicPowers: [],
     psychicDisciplines: [],
