@@ -135,6 +135,9 @@ const getInitialData = (attacker, defender, options = {}) => {
           final: attackerActor.system.psychic.psychicPotential.final.value
         },
         powerUsed: undefined,
+        psychicPoints: attackerActor.system.psychic.psychicPoints.value,
+        increasePsychicPotential: 0,
+        improvePsychicProjection: 0,
         critic: NoneWeaponCritic.NONE,
         eliminateFatigue: false,
         mentalPatternImbalance: false,
@@ -596,6 +599,8 @@ export class CombatAttackDialog extends FormApplication {
         psychicPotential,
         psychicProjection,
         critic,
+        increasePsychicPotential,
+        improvePsychicProjection,
         eliminateFatigue,
         damageModifier,
         mentalPatternImbalance,
@@ -651,6 +656,12 @@ export class CombatAttackDialog extends FormApplication {
           eliminateFatigue,
           this.modalData.attacker.showRoll
         );
+
+        this.attackerActor.consumePsychicPoints(+increasePsychicPotential + +improvePsychicProjection);
+        this.attackerActor.updateItem({
+          id: powerUsed,
+          system: { improvePsychicProjection }
+        })
 
         if (this.modalData.attacker.showRoll) {
           if (!psychicFatigue) {
@@ -718,7 +729,7 @@ export class CombatAttackDialog extends FormApplication {
     ui.hasFatiguePoints =
       this.attackerActor.system.characteristics.secondaries.fatigue.value > 0;
 
-    const { psychicPowers } = this.attackerActor.system.psychic;
+    const { psychicPowers, psychicProjection, psychicSettings, psychicPoints } = this.attackerActor.system.psychic;
     if (!psychic.powerUsed) {
       psychic.powerUsed = psychicPowers.find(
         w => w.system.combatType.value === 'attack'
@@ -729,7 +740,15 @@ export class CombatAttackDialog extends FormApplication {
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
       this.attackerActor.system.psychic.psychicPotential.final.value +
-      psychicBonus;
+      psychicBonus + psychic.increasePsychicPotential * 20;
+
+    if (power) {
+      psychic.psychicProjection.final = psychicProjection.imbalance.offensive.final.value +
+        Math.min((+power.system.improvePsychicProjection + +psychic.improvePsychicProjection), 5) * (psychicSettings.focus ? 20 : 10)
+    }
+    psychic.psychicPoints = psychicPoints.value
+    psychic.psychicPoints -= psychic.increasePsychicPotential;
+    psychic.psychicPoints -= psychic.improvePsychicProjection;
 
     const { spells } = this.attackerActor.system.mystic;
     if (!mystic.spellUsed) {

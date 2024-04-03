@@ -457,7 +457,8 @@
       "macro": "",
       "hasMaintenance": { "value": false },
       "visible": false,
-      "bonus": { "value": 0 }
+      "bonus": { "value": 0 },
+      "improvePsychicProjection": 0
     },
     "technique": {
       "description": { "value": "" },

@@ -113,6 +113,9 @@ const getInitialData = (attacker, defender) => {
             defenderActor.system.psychic.psychicProjection.imbalance.defensive.final.value
         },
         powerUsed: undefined,
+        psychicPoints: defenderActor.system.psychic.psychicPoints.value,
+        increasePsychicPotential: 0,
+        improvePsychicProjection: 0,
         supernaturalShield: {
           shieldUsed: undefined,
           shieldValue: 0,
@@ -565,6 +568,8 @@ export class CombatDefenseDialog extends FormApplication {
           psychicProjection,
           powerUsed,
           modifier,
+          increasePsychicPotential,
+          improvePsychicProjection,
           eliminateFatigue,
           mentalPatternImbalance,
           supernaturalShield: { shieldUsed, newShield }
@@ -639,6 +644,12 @@ export class CombatDefenseDialog extends FormApplication {
         }
       }
 
+      this.defenderActor.consumePsychicPoints(+increasePsychicPotential + +improvePsychicProjection);
+      this.defenderActor.updateItem({
+        id: newShield ? powerUsed : power.system.powerId,
+        system: { improvePsychicProjection }
+      })
+
       if (!psychicFatigue) {
         if (this.modalData.defender.showRoll) {
           const flavor = i18n.format('macros.combat.dialog.psychicDefense.title', {
@@ -684,7 +695,7 @@ export class CombatDefenseDialog extends FormApplication {
     ui.hasFatiguePoints =
       this.defenderActor.system.characteristics.secondaries.fatigue.value > 0;
 
-    const { psychicPowers } = this.defenderActor.system.psychic;
+    const { psychicPowers, psychicSettings, psychicProjection, psychicPoints } = this.defenderActor.system.psychic;
     if (!psychic.powerUsed) {
       psychic.powerUsed = psychicPowers.find(
         w => w.system.combatType.value === 'defense'
@@ -695,7 +706,11 @@ export class CombatDefenseDialog extends FormApplication {
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
       this.defenderActor.system.psychic.psychicPotential.final.value +
-      psychicBonus;
+      psychicBonus + psychic.increasePsychicPotential * 20;
+
+    psychic.psychicPoints = psychicPoints.value
+    psychic.psychicPoints -= psychic.increasePsychicPotential;
+    psychic.psychicPoints -= psychic.improvePsychicProjection;
 
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
@@ -736,6 +751,16 @@ export class CombatDefenseDialog extends FormApplication {
       w => w._id === psychic.supernaturalShield.shieldUsed
     );
     psychic.supernaturalShield.shieldValue = psychicShield?.system.shieldPoints ?? 0;
+
+    let powerImprovePsychicProjection = 0
+    if (psychic.supernaturalShield.newShield) {
+      powerImprovePsychicProjection = power.system.improvePsychicProjection ?? 0
+    } else {
+      const shieldPower = psychicPowers.find(w => w._id === psychicShield?.system.powerId);
+      powerImprovePsychicProjection = shieldPower?.system.improvePsychicProjection ?? 0
+    }
+    psychic.psychicProjection.final = psychicProjection.imbalance.defensive.final.value +
+      Math.min((+powerImprovePsychicProjection + +psychic.improvePsychicProjection), 5) * (psychicSettings.focus ? 20 : 10);
 
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);

@@ -246,6 +246,7 @@ export class ABFActor extends Actor {
         type: 'psychic',
         damageBarrier: 0,
         shieldPoints: finalEffect,
+        powerId: power._id,
         origin: this.uuid
       };
       supernaturalShieldData.psychic = {
@@ -399,6 +400,19 @@ export class ABFActor extends Actor {
           }
         }
       })
+    }
+  }
+
+  async resetImprovePsychicProjection() {
+    const { psychicPowers } = this.system.psychic;
+
+    for (const power of psychicPowers) {
+      if (power.system.improvePsychicProjection) {
+        await this.updateItem({
+          id: power._id,
+          system: { improvePsychicProjection: 0 }
+        })
+      }
     }
   }
 

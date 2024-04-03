@@ -15,17 +15,17 @@
     <a class="item innatePsychicPowers" data-tab="innatePsychicPowers">{{localize "anima.ui.tabs.innatePsychicPowers"}}</a>
   </nav>
 
-  {{#if (is 'gt' this.psychicPoints.max 0)}}
+  {{#if (is 'gt' this.actor.system.psychic.psychicPoints.max 0)}}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'anima.ui.psychic.psychicPoints.title')
-      inputName="psychicPoints.value"
-      inputValue=this.psychicPoints.value
+      inputName="psychicPoints"
+      inputValue=this.psychicPoints
       disabled=true
       hasSecondaryInput=true
       disableSecondaryInput=true
-      secondaryInputName="psychicPoints.max"
-      secondaryInputValue=this.psychicPoints.max
+      secondaryInputName=""
+      secondaryInputValue=this.actor.system.psychic.psychicPoints.max
     }}
   {{/if}}
 
@@ -64,7 +64,25 @@
     </optgroup>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-    {{#if (and (is 'gt' this.psychicPoints.value 0) (is 'eq' this.actor.system.psychic.psychicSettings.fatigueResistance false))}}
+    
+    {{#if (is "gt" this.actor.system.psychic.psychicPoints.max 0 )}}
+      {{#>
+      'systems/animabf/templates/common/ui/custom-select.hbs'
+        class="increase-psychic-potential"
+        title=(localize "macros.combat.dialog.increasePsychicPotential.title")
+        inputName="selectedPower.increasePsychicPotential"
+        inputValue=this.selectedPower.increasePsychicPotential
+      }}
+      <option {{#if (is "eq" ../this.selectedPower.increasePsychicPotential 0)}}selected{{/if}} value="0">0</option>
+      {{#if (is "gt" (math ../this.psychicPoints "+" ../this.selectedPower.increasePsychicPotential) 0 )}}<option {{#if (is "eq" ../this.selectedPower.increasePsychicPotential 1)}}selected{{/if}} value="1">1</option>{{/if}}
+      {{#if (is "gt" (math ../this.psychicPoints "+" ../this.selectedPower.increasePsychicPotential) 1 )}}<option {{#if (is "eq" ../this.selectedPower.increasePsychicPotential 2)}}selected{{/if}} value="2">2</option>{{/if}}
+      {{#if (is "gt" (math ../this.psychicPoints "+" ../this.selectedPower.increasePsychicPotential) 2 )}}<option {{#if (is "eq" ../this.selectedPower.increasePsychicPotential 3)}}selected{{/if}} value="3">3</option>{{/if}}
+      {{#if (is "gt" (math ../this.psychicPoints "+" ../this.selectedPower.increasePsychicPotential) 3 )}}<option {{#if (is "eq" ../this.selectedPower.increasePsychicPotential 4)}}selected{{/if}} value="4">4</option>{{/if}}
+      {{#if (is "gt" (math ../this.psychicPoints "+" ../this.selectedPower.increasePsychicPotential) 4 )}}<option {{#if (is "eq" ../this.selectedPower.increasePsychicPotential 5)}}selected{{/if}} value="5">5</option>{{/if}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/if}}
+
+    {{#if (and (is 'gt' this.psychicPoints 0) (is 'eq' this.actor.system.psychic.psychicSettings.fatigueResistance false))}}
     <div class='columns'>
       <div>
         {{>
@@ -176,7 +194,7 @@
           inputName=""
           inputValue=castedPsychicPower.name
         }}
-        {{#if (is "gt" ../this.psychicPoints.max 0 )}}
+        {{#if (is "gt" ../this.actor.system.psychic.psychicPoints.max 0 )}}
         {{#>
         'systems/animabf/templates/common/ui/custom-select.hbs'
           class="improve-innate-power"
@@ -187,11 +205,11 @@
           inputValue=castedPsychicPower.system.improveInnatePower
         }}
         <option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 0)}}selected{{/if}} value="0">0</option>
-        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 0 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 1)}}selected{{/if}} value="1">1</option>{{/if}}
-        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 1 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 2)}}selected{{/if}} value="2">2</option>{{/if}}
-        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 2 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 3)}}selected{{/if}} value="3">3</option>{{/if}}
-        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 3 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 4)}}selected{{/if}} value="4">4</option>{{/if}}
-        {{#if (is "gt" (math ../../this.psychicPoints.value "+" castedPsychicPower.system.improveInnatePower) 4 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 5)}}selected{{/if}} value="5">5</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints "+" castedPsychicPower.system.improveInnatePower) 0 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 1)}}selected{{/if}} value="1">1</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints "+" castedPsychicPower.system.improveInnatePower) 1 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 2)}}selected{{/if}} value="2">2</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints "+" castedPsychicPower.system.improveInnatePower) 2 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 3)}}selected{{/if}} value="3">3</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints "+" castedPsychicPower.system.improveInnatePower) 3 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 4)}}selected{{/if}} value="4">4</option>{{/if}}
+        {{#if (is "gt" (math ../../this.psychicPoints "+" castedPsychicPower.system.improveInnatePower) 4 )}}<option {{#if (is "eq" castedPsychicPower.system.improveInnatePower 5)}}selected{{/if}} value="5">5</option>{{/if}}
         {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
         {{/if}}
         {{>

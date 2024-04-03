@@ -514,7 +514,7 @@ export class GMCombatDialog extends FormApplication {
       castedPsychicPowerId = this.attackerActor.castedPsychicPower(attacker.result.values.powerUsed, attacker.result.values.psychicPotential, attacker.result.values.psychicPotential);
     }
 
-    if (defender.result?.type === 'psychic') {
+    if (defender.result?.type === 'psychic' && defender.result.values?.supShield.create) {
       this.defenderActor.castedPsychicPower(defender.result.values.powerUsed, defender.result.values.psychicPotential, supShieldId);
     }
     return castedPsychicPowerId

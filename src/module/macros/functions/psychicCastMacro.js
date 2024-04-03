@@ -20,17 +20,15 @@ const getInitialData = () => {
         token,
         actor,
         selectedPower: {
-            id: undefined
+            id: undefined,
+            increasePsychicPotential: 0
         },
         psychicPotential: {
             base: actor.system.psychic.psychicPotential.base.value,
             special: 0,
             final: 0
         },
-        psychicPoints: {
-            value: actor.system.psychic.psychicPoints.value,
-            max: actor.system.psychic.psychicPoints.max
-        },
+        psychicPoints: actor.system.psychic.psychicPoints.value,
         innatePsychicPower: actor.system.psychic.innatePsychicPower.amount.value,
         mentalPatternImbalance: false,
         eliminateFatigue: false,
@@ -131,6 +129,8 @@ export class PsychicCastDialog extends FormApplication {
                 showRoll
             );
 
+            actor.consumePsychicPoints(selectedPower.increasePsychicPotential)
+
             if (psychicFatigue) { return this.close() }
 
             if (showRoll) {
@@ -226,17 +226,17 @@ export class PsychicCastDialog extends FormApplication {
         psychicPotential.final =
             psychicPotential.special +
             actor.system.psychic.psychicPotential.final.value +
-            psychicBonus;
+            psychicBonus +
+            selectedPower.increasePsychicPotential * 20;
 
-        this.modalData.psychicPoints.value = actor.system.psychic.psychicPoints.value
+        this.modalData.psychicPoints = actor.system.psychic.psychicPoints.value
         for (let key in castedPsychicPowers) {
             let castedPsychicPower = castedPsychicPowers[key];
-            this.modalData.psychicPoints.value -= castedPsychicPower.system.improveInnatePower;
+            this.modalData.psychicPoints -= castedPsychicPower.system.improveInnatePower;
             const innatePsychicDifficulty = actor.innatePsychicDifficulty(castedPsychicPower.system.power, castedPsychicPower.system.improveInnatePower)
             castedPsychicPower.system.effect = castedPsychicPower.system.power?.system?.effects[castedPsychicPower.system.psychicPotential < innatePsychicDifficulty ? castedPsychicPower.system.psychicPotential : innatePsychicDifficulty]?.value ?? ''
-            console.log(innatePsychicDifficulty)
-            console.log(castedPsychicPower)
         }
+        this.modalData.psychicPoints -= selectedPower.increasePsychicPotential;
 
         return this.modalData;
     }

@@ -1,3 +1,17 @@
+{{#if (is 'gt' this.defender.actor.system.psychic.psychicPoints.max 0)}}
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize 'anima.ui.psychic.psychicPoints.title')
+    inputName="defender.psychic.psychicPoints"
+    inputValue=this.defender.psychic.psychicPoints
+    disabled=true
+    hasSecondaryInput=true
+    disableSecondaryInput=true
+    secondaryInputName=""
+    secondaryInputValue=this.defender.actor.system.psychic.psychicPoints.max
+  }}
+{{/if}}
+
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.modifier.title')
@@ -14,6 +28,23 @@
   inputValue=this.defender.psychic.psychicProjection.final
 }}
 
+{{#if (is 'gt' this.defender.actor.system.psychic.psychicPoints.value 0)}}
+  {{#>
+  'systems/animabf/templates/common/ui/custom-select.hbs'
+    class="increase-psychic-potential"
+    title=(localize "macros.combat.dialog.improvePsychicProjection.title")
+    inputName="defender.psychic.improvePsychicProjection"
+    inputValue=this.defender.psychic.improvePsychicProjection
+  }}
+  <option {{#if (is "eq" ../this.defender.psychic.improvePsychicProjection 0)}}selected{{/if}} value="0">0</option>
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.improvePsychicProjection) 0 )}}<option {{#if (is "eq" ../this.defender.psychic.improvePsychicProjection 1)}}selected{{/if}} value="1">1</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.improvePsychicProjection) 1 )}}<option {{#if (is "eq" ../this.defender.psychic.improvePsychicProjection 2)}}selected{{/if}} value="2">2</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.improvePsychicProjection) 2 )}}<option {{#if (is "eq" ../this.defender.psychic.improvePsychicProjection 3)}}selected{{/if}} value="3">3</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.improvePsychicProjection) 3 )}}<option {{#if (is "eq" ../this.defender.psychic.improvePsychicProjection 4)}}selected{{/if}} value="4">4</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.improvePsychicProjection) 4 )}}<option {{#if (is "eq" ../this.defender.psychic.improvePsychicProjection 5)}}selected{{/if}} value="5">5</option>{{/if}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
+
 {{#if this.defender.psychic.supernaturalShield.newShield}}
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -26,6 +57,23 @@
     secondaryInputName="defender.psychic.psychicPotential.final"
     secondaryInputValue=this.defender.psychic.psychicPotential.final
   }}
+
+  {{#if (is 'gt' this.defender.actor.system.psychic.psychicPoints.value 0)}}
+  {{#>
+  'systems/animabf/templates/common/ui/custom-select.hbs'
+    class="increase-psychic-potential"
+    title=(localize "macros.combat.dialog.increasePsychicPotential.title")
+    inputName="defender.psychic.increasePsychicPotential"
+    inputValue=this.defender.psychic.increasePsychicPotential
+  }}
+  <option {{#if (is "eq" ../this.defender.psychic.increasePsychicPotential 0)}}selected{{/if}} value="0">0</option>
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.increasePsychicPotential) 0 )}}<option {{#if (is "eq" ../this.defender.psychic.increasePsychicPotential 1)}}selected{{/if}} value="1">1</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.increasePsychicPotential) 1 )}}<option {{#if (is "eq" ../this.defender.psychic.increasePsychicPotential 2)}}selected{{/if}} value="2">2</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.increasePsychicPotential) 2 )}}<option {{#if (is "eq" ../this.defender.psychic.increasePsychicPotential 3)}}selected{{/if}} value="3">3</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.increasePsychicPotential) 3 )}}<option {{#if (is "eq" ../this.defender.psychic.increasePsychicPotential 4)}}selected{{/if}} value="4">4</option>{{/if}}
+  {{#if (is "gt" (math ../this.defender.psychic.psychicPoints "+" ../this.defender.psychic.increasePsychicPotential) 4 )}}<option {{#if (is "eq" ../this.defender.psychic.increasePsychicPotential 5)}}selected{{/if}} value="5">5</option>{{/if}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
 
   {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.psychicPower.title')
