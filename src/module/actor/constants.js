@@ -1513,6 +1513,9 @@ export const INITIAL_ACTOR_DATA = {
       base: {
         value: 0
       },
+      special: {
+        value: 0
+      },
       final: {
         value: 0
       }

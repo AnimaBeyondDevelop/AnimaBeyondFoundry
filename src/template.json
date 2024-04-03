@@ -344,7 +344,7 @@
         }
       },
       "psychic": {
-        "psychicPotential": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "psychicPotential": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
         "psychicProjection": {
           "base": { "value": 0 },
           "final": { "value": 0 },
