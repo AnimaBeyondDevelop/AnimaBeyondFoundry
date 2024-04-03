@@ -24,7 +24,9 @@ export const mutatePsychicData = data => {
   );
 
   psychicPotential.final.value = Math.max(
-    psychicPotential.base.value + Math.min(allActionsPenalty, 0),
+    psychicPotential.base.value +
+    psychicPotential.special.value +
+    Math.min(allActionsPenalty, 0),
     0
   );
 };
