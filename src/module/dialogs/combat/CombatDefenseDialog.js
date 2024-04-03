@@ -773,7 +773,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     let powerImprovePsychicProjection = 0
     if (psychic.supernaturalShield.newShield) {
-      powerImprovePsychicProjection = power.system.improvePsychicProjection ?? 0
+      powerImprovePsychicProjection = power?.system.improvePsychicProjection ?? 0
     } else {
       const shieldPower = psychicPowers.find(w => w._id === psychicShield?.system.powerId);
       powerImprovePsychicProjection = shieldPower?.system.improvePsychicProjection ?? 0
