@@ -184,9 +184,7 @@ export class ABFActor extends Actor {
         },
         psychic: {
           psychicPoints: {
-            value: {
-              value: Math.min(psychicPoints.value + hours, psychicPoints.max)
-            }
+            value: Math.min(psychicPoints.value + hours, psychicPoints.max)
           }
         },
       }
