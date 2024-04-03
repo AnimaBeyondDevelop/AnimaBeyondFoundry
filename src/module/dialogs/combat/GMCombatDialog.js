@@ -511,7 +511,7 @@ export class GMCombatDialog extends FormApplication {
     const { attacker, defender } = this.modalData
     let castedPsychicPowerId;
     if (attacker.result?.type === 'psychic') {
-      castedPsychicPowerId = this.attackerActor.castedPsychicPower(attacker.result.values.powerUsed, attacker.result.values.psychicPotential, attacker.result.values.psychicPotential);
+      castedPsychicPowerId = this.attackerActor.castedPsychicPower(attacker.result.values.powerUsed, attacker.result.values.psychicPotential);
     }
 
     if (defender.result?.type === 'psychic' && defender.result.values?.supShield.create) {
