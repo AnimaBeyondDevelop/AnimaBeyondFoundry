@@ -172,8 +172,13 @@ export class ABFActor extends Actor {
   }
 
   async recoverByHour(hours: number = 1) {
-    const { psychicPoints } = this.system.psychic;
+    const { psychicPoints, innatePsychicPowers } = this.system.psychic;
     const { fatigue } = this.system.characteristics.secondaries;
+
+    let maxPsychicPoints = psychicPoints.max
+    for (const innatePsychicPower of innatePsychicPowers) {
+      maxPsychicPoints -= innatePsychicPower.system.improveInnatePower ?? 0;
+    }
 
     await this.update({
       system: {
@@ -186,9 +191,7 @@ export class ABFActor extends Actor {
         },
         psychic: {
           psychicPoints: {
-            value: {
-              value: Math.min(psychicPoints.value + hours, psychicPoints.max)
-            }
+            value: Math.min(psychicPoints.value + hours, maxPsychicPoints)
           }
         },
       }
