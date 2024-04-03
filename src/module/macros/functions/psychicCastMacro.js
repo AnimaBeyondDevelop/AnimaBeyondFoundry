@@ -242,7 +242,6 @@ export class PsychicCastDialog extends FormApplication {
         }
         this.modalData.psychicPoints -= selectedPower.increasePsychicPotential;
 
-        console.log(this.modalData)
         return this.modalData;
     }
     async _updateObject(event, formData) {
