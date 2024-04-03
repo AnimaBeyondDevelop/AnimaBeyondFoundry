@@ -193,18 +193,21 @@ export class PsychicCastDialog extends FormApplication {
 
             for (let key in castedPsychicPowers) {
                 const castedPsychicPower = castedPsychicPowers[key];
+                const args = {
+                    thisActor: actor,
+                    castedPsychicPowerId: castedPsychicPower.system.castedPsychicPowerId
+                }
                 if (castedPsychicPower.system.active) {
                     await actor.createInnerItem(castedPsychicPower);
                     actor.consumePsychicPoints(castedPsychicPower.system.improveInnatePower);
+                    args.psychicPotential = castedPsychicPower.system.innatePsychicDifficulty
+                    args.update = true
+                    executeMacro(castedPsychicPower.name, args)
                 } else {
                     if (castedPsychicPower.system.supShieldId) {
                         actor.deleteSupernaturalShield(castedPsychicPower.system.supShieldId)
                     } else {
-                        const args = {
-                            thisActor: actor,
-                            castedPsychicPowerId: castedPsychicPower.system.castedPsychicPowerId,
-                            release: true
-                        }
+                        args.release = true
                         executeMacro(castedPsychicPower.name, args)
                     }
                 }
@@ -233,11 +236,13 @@ export class PsychicCastDialog extends FormApplication {
         for (let key in castedPsychicPowers) {
             let castedPsychicPower = castedPsychicPowers[key];
             this.modalData.psychicPoints -= castedPsychicPower.system.improveInnatePower;
-            const innatePsychicDifficulty = actor.innatePsychicDifficulty(castedPsychicPower.system.power, castedPsychicPower.system.improveInnatePower)
-            castedPsychicPower.system.effect = castedPsychicPower.system.power?.system?.effects[castedPsychicPower.system.psychicPotential < innatePsychicDifficulty ? castedPsychicPower.system.psychicPotential : innatePsychicDifficulty]?.value ?? ''
+            const innatePsychicDifficulty = actor.innatePsychicDifficulty(castedPsychicPower.system.power, castedPsychicPower.system.improveInnatePower);
+            castedPsychicPower.system.innatePsychicDifficulty = castedPsychicPower.system.psychicPotential < innatePsychicDifficulty ? castedPsychicPower.system.psychicPotential : innatePsychicDifficulty;
+            castedPsychicPower.system.effect = castedPsychicPower.system.power?.system?.effects[castedPsychicPower.system.innatePsychicDifficulty]?.value ?? ''
         }
         this.modalData.psychicPoints -= selectedPower.increasePsychicPotential;
 
+        console.log(this.modalData)
         return this.modalData;
     }
     async _updateObject(event, formData) {
