@@ -1001,7 +1001,12 @@ export const INITIAL_ACTOR_DATA = {
       max: 0
     },
     zeonMaintained: {
+      base: {
       value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     zeonRegeneration: {
       base: {
@@ -1183,7 +1188,8 @@ export const INITIAL_ACTOR_DATA = {
     spellMaintenances: [],
     selectedSpells: [],
     summons: [],
-    preparedSpells: []
+    preparedSpells: [],
+    maintainedSpells: []
   },
 
   domine: {
@@ -1317,6 +1323,9 @@ export const INITIAL_ACTOR_DATA = {
       base: {
         value: 0
       },
+      special: {
+        value: 0
+      },
       final: {
         value: 0
       }
@@ -1358,7 +1367,8 @@ export const INITIAL_ACTOR_DATA = {
       max: 0
     },
     psychicSettings: {
-      fatigueResistance: false
+      fatigueResistance: false,
+      amplifySustainedPower: false
     },
     psychicPowers: [],
     psychicDisciplines: [],

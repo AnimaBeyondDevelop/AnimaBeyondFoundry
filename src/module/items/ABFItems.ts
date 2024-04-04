@@ -6,6 +6,7 @@ export enum ABFItems {
   ACT_VIA = 'actVia',
   INNATE_MAGIC_VIA = 'innateMagicVia',
   PREPARED_SPELL = 'preparedSpell',
+  MAINTAINED_SPELL = 'maintainedSpell',
   SUMMON = 'summon',
   LEVEL = 'level',
   LANGUAGE = 'language',

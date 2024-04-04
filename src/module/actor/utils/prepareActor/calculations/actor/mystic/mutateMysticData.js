@@ -82,4 +82,13 @@ export const mutateMysticData = data => {
       }
     }
   }
+
+  mystic.zeonMaintained.final.value = mystic.zeonMaintained.base.value
+  if (mystic.maintainedSpells.length !== 0) {
+    mystic.zeonMaintained.final.value += mystic.maintainedSpells.filter(ms => !ms.system.innate)?.reduce(
+      (acc, currentValue) =>
+        acc + currentValue.system.maintenanceCost.value,
+      0
+    )
+  }
 };

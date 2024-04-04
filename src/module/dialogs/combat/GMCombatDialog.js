@@ -490,9 +490,10 @@ export class GMCombatDialog extends FormApplication {
     if (this.modalData.defender.result?.type === 'combat') {
       this.defenderActor.applyFatigue(this.modalData.defender.result.values.fatigueUsed);
     }
-    this.mysticCastEvaluateIfAble(firstDefender);
     this.accumulateDefensesIfAble();
     const supShieldId = await this.newSupernaturalShieldIfBeAble();
+    this.mysticCastEvaluateIfAble(firstDefender, supShieldId);
+    this.psychicCastIfAble(firstDefender, supShieldId);
 
     if (this.canApplyDamage) {
       const { calculations } = this.modalData;
@@ -518,19 +519,30 @@ export class GMCombatDialog extends FormApplication {
     }
   }
 
-  mysticCastEvaluateIfAble(firstDefender) {
+  mysticCastEvaluateIfAble(firstDefender, supShieldId) {
     if (this.modalData.attacker.result?.type === 'mystic' && firstDefender) {
       const { spellCasting, spellUsed, spellGrade } =
         this.modalData.attacker.result.values;
-      this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
+      this.modalData.combatMacroArgs.castedSpellId = this.attackerActor.mysticCast(spellCasting, spellUsed, spellGrade);
     }
 
     if (this.modalData.defender.result?.type === 'mystic') {
       const { spellCasting, spellUsed, spellGrade, supShield } =
         this.modalData.defender.result.values;
       if (supShield.create) {
-        this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade);
+        this.defenderActor.mysticCast(spellCasting, spellUsed, spellGrade, supShieldId);
       }
+    }
+  }
+
+  psychicCastIfAble(firstDefender, supShieldId) {
+    const { attacker, defender } = this.modalData
+    if (attacker.result?.type === 'psychic' && firstDefender) {
+      this.modalData.combatMacroArgs.castedPsychicPowerId = this.attackerActor.castedPsychicPower(attacker.result.values.powerUsed, attacker.result.values.psychicPotential);
+    }
+
+    if (defender.result?.type === 'psychic' && defender.result.values?.supShield.create) {
+      this.defenderActor.castedPsychicPower(defender.result.values.powerUsed, defender.result.values.psychicPotential, supShieldId);
     }
   }
 

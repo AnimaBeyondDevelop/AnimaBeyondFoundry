@@ -13,9 +13,8 @@ import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
-import { difficultyAchieved } from '../combat/utils/difficultyAchieved.js';
+import { difficultyAchieved, difficultyRange } from '../combat/utils/difficultyAchieved.js';
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
-import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
 import { damageCheck } from '../combat/utils/damageCheck.js';
@@ -173,6 +172,42 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
+  innatePsychicDifficulty(power: any, improveInnatePower = 0) {
+    if (!power) { return };
+    const {
+      general: {
+        settings: { inhuman, zen }
+      },
+      psychic
+    } = this.system;
+
+    const potentialBaseDifficulty = difficultyAchieved(
+      psychic.psychicPotential.base.value + improveInnatePower * 20,
+      0,
+      inhuman.value,
+      zen.value
+    );
+    const effectsList = power.system.effects
+    let index = difficultyRange.findIndex(e => e === (potentialBaseDifficulty));
+    if (
+      //!improveInnatePower &&
+      psychic.psychicSettings.amplifySustainedPower) {
+      index++
+    }
+    let effect = effectsList[difficultyRange[index]].value;
+
+    for (let i = 0; i < 10; i++) {
+      if (/fatiga/i.test(effect)) {
+        index++;
+        effect = effectsList[difficultyRange[index]].value;
+      }
+      else {
+        return difficultyRange[index]
+      }
+    }
+    return 0
+  }
+
   /**
    * Creates a new supernatural shield item for the ABFActor class and execute a macro using the shield's name.
    * 
@@ -199,29 +234,19 @@ export class ABFActor extends Actor {
       psychic: { overmantained: false, maintainMax: 0 }
     };
     if (type === 'psychic') {
-      const {
-        general: {
-          settings: { inhuman, zen }
-        },
-        psychic
-      } = this.system;
-
-      const potentialBaseDifficulty = difficultyAchieved(
-        psychic.psychicPotential.base.value,
-        0,
-        inhuman.value,
-        zen.value
+      const innatePsychicDifficulty = this.innatePsychicDifficulty(power) ?? 0
+      const baseEffect = shieldValueCheck(
+        power?.system.effects[innatePsychicDifficulty]?.value ?? ''
       );
-      const baseEffect =
-        shieldBaseValueCheck(potentialBaseDifficulty, power?.system.effects) ?? 0;
       const finalEffect = shieldValueCheck(
-        power?.system.effects[psychicDifficulty].value ?? ''
+        power?.system.effects[psychicDifficulty]?.value ?? ''
       );
       supernaturalShieldData.name = power.name;
       supernaturalShieldData.system = {
         type: 'psychic',
         damageBarrier: 0,
         shieldPoints: finalEffect,
+        powerId: power._id,
         origin: this.uuid
       };
       supernaturalShieldData.psychic = {
@@ -352,28 +377,43 @@ export class ABFActor extends Actor {
           })
         });
       }
-      if (!psychicFatigue.inmune && !eliminateFatigue) {
+      if (!psychicFatigue.inmune) {
         this.applyFatigue(psychicFatigue.value - psychicPoints.value);
-        this.update({
-          system: {
-            psychic: {
-              psychicPoints: { value: Math.max(psychicPoints.value - psychicFatigue.value, 0) }
-            }
-          }
-        })
+        this.consumePsychicPoints(psychicFatigue.value)
       }
+      executeMacro('Psychic Fatigue Macro', { thisActor: this, psychicFatigue: psychicFatigue.value })
     }
     if (eliminateFatigue) {
+      this.consumePsychicPoints(1)
+    }
+
+    return psychicFatigue.value;
+  }
+
+  consumePsychicPoints(psychicPointsUsed: number) {
+    const { psychicPoints } = this.system.psychic
+    if (psychicPointsUsed) {
       this.update({
         system: {
           psychic: {
-            psychicPoints: { value: psychicPoints.value - 1 }
+            psychicPoints: { value: Math.max(psychicPoints.value - psychicPointsUsed, 0) }
           }
         }
       })
     }
+  }
 
-    return psychicFatigue.value;
+  async resetImprovePsychicProjection() {
+    const { psychicPowers } = this.system.psychic;
+
+    for (const power of psychicPowers) {
+      if (power.system.improvePsychicProjection) {
+        await this.updateItem({
+          id: power._id,
+          system: { improvePsychicProjection: 0 }
+        })
+      }
+    }
   }
 
   /**
@@ -494,6 +534,12 @@ export class ABFActor extends Actor {
         : innateMagic.main.final.value;
     spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
 
+    if (spellCasting.casted.prepared) {
+      spellCasting.canCast.innate = false
+    }
+    if (spellCasting.casted.innate) {
+      spellCasting.canCast.prepared = false
+    }
     if (!spellCasting.canCast.innate) {
       spellCasting.casted.innate = false;
     }
@@ -673,22 +719,48 @@ export class ABFActor extends Actor {
    * 
    * @returns {void}
    */
-  mysticCast(spellCasting: SpellCasting, spellId: string, spellGrade: string) {
+  mysticCast(spellCasting: SpellCasting, spellId: string, spellGrade: string, supShieldId?: string) {
     const { zeon, casted, override } = spellCasting;
     if (override) {
       return;
     }
+    const castedSpellId = nanoid()
+    this.castedSpell(castedSpellId, spellId, spellGrade, casted.innate, supShieldId)
     if (zeon.poolCost) {
       this.consumeZeon(zeon.poolCost)
     }
     if (casted.innate) {
-      return;
+      return castedSpellId;
     }
     if (casted.prepared) {
       this.deletePreparedSpell(spellId, spellGrade);
     } else if (zeon.cost) {
       this.consumeAccumulatedZeon(zeon.cost);
     }
+    return castedSpellId
+  }
+
+  castedSpell(castedSpellId: string, spellId: string, spellGrade: string, innate?: boolean, supShieldId?: string) {
+    const spell = this.getItem(spellId)
+    if (!spell) return;
+    const maintenanceCost = parseInt(spell.system.grades[spellGrade].maintenanceCost.value)
+    if (Number.isNaN(maintenanceCost)) return;
+    if (spell.system.hasDailyMaintenance.value) return;
+
+    const maintainedSpell = {
+      name: spell.name,
+      type: ABFItems.MAINTAINED_SPELL,
+      system: {
+        grade: { value: spellGrade },
+        maintenanceCost: { value: maintenanceCost },
+        via: { value: spell.system.via.value },
+        innate,
+        supShieldId,
+        castedSpellId,
+        active: false
+      }
+    }
+    this.setFlag('animabf', `castedSpells.${castedSpellId}`, maintainedSpell);
   }
 
   consumeZeon(zeonCost: number) {
@@ -730,8 +802,8 @@ export class ABFActor extends Actor {
   async consumeMaintainedZeon(revert: boolean) {
     const { zeon, zeonMaintained } = this.system.mystic;
     const updatedZeon = revert
-      ? zeon.value + zeonMaintained.value
-      : zeon.value - zeonMaintained.value;
+      ? zeon.value + zeonMaintained.final.value
+      : zeon.value - zeonMaintained.final.value;
 
     return this.update({
       system: {
@@ -791,6 +863,33 @@ export class ABFActor extends Actor {
    * @returns {void}
    * @example
    */
+
+  castedPsychicPower(powerId: string, psychicPotential: number, supShieldId?: string) {
+    const power = this.getItem(powerId)
+    if (!power) return;
+    if (!power.system.hasMaintenance.value) return;
+
+    const innatePsychicDifficulty = this.innatePsychicDifficulty(power);
+    const effect = power.system.effects[innatePsychicDifficulty ?? 0]?.value ?? '';
+    const castedPsychicPowerId = nanoid();
+
+    const innatePsychicPower = {
+      name: power.name,
+      type: ABFItems.INNATE_PSYCHIC_POWER,
+      system: {
+        effect,
+        improveInnatePower: 0,
+        power,
+        castedPsychicPowerId,
+        supShieldId,
+        psychicPotential,
+        active: false
+      }
+    }
+    this.setFlag('animabf', `castedPsychicPowers.${castedPsychicPowerId}`, innatePsychicPower);
+    return castedPsychicPowerId
+  }
+
   applyDamage(damage: number) {
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
@@ -990,6 +1089,9 @@ export class ABFActor extends Actor {
 
   public getPreparedSpells() {
     return this.getItemsOf(ABFItems.PREPARED_SPELL);
+  }
+  public getMaintainedSpells() {
+    return this.getItemsOf(ABFItems.MAINTAINED_SPELL);
   }
 
   public getSupernaturalShields() {

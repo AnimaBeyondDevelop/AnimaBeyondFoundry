@@ -1,0 +1,308 @@
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="mystic-cast"
+  }}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+  title=(localize (concat 'macros.mysticCast.dialog.title'))
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  class="mystic-cast"
+  }}
+
+  <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+    <a class="item mysticCast" data-tab="mysticCast">{{localize "anima.ui.tabs.cast"}}</a>
+    <a class="item spellMaintenances" data-tab="spellMaintenances">{{localize "anima.ui.tabs.spellMaintenances"}}</a>
+  </nav>
+
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.mysticAct.dialog.zeon.title")
+  disabled=true
+  inputName="spellCasting.zeon.value"
+  inputValue=this.spellCasting.zeon.value
+  }}
+
+  
+  <section class="sheet-body">
+    <div class="tab mystic-cast" data-group="primary" data-tab="mysticCast">
+
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "macros.mysticAct.dialog.zeonAccumulated.title")
+    disabled=true
+    inputName="spellCasting.zeon.accumulated"
+    inputValue=this.spellCasting.zeon.accumulated
+    }}
+
+
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.spell.title')
+    inputName='selectedSpell.id'
+    }}
+    <optgroup label="Spell">
+      {{#each_when this.actor.system.mystic.spells "system" "combatType" "value" "none"}}
+      <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    <optgroup label="Defense">
+      {{#each_when this.actor.system.mystic.spells "system" "combatType" "value" "defense"}}
+      <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    <optgroup label="Attack">
+      {{#each_when this.actor.system.mystic.spells "system" "combatType" "value" "attack"}}
+      <option {{#if (is "eq" this._id ../this.selectedSpell.id)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+      {{/each_when}}
+    </optgroup>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'macros.combat.dialog.spellGrade.title')
+    inputName='selectedSpell.spellGrade'
+    }}
+    {{#each this.attainableSpellGrades}}
+    <option {{#if (is "eq" ../this.selectedSpell.spellGrade this)}}selected{{/if}} value='{{this}}'>{{localize (concat
+      'macros.combat.dialog.spellGrade.' this '.title')}}</option>
+    {{/each}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+  {{#unless (or this.spellCasting.casted.innate this.spellCasting.casted.prepared this.spellCasting.override)}}
+  {{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize "macros.mysticAct.dialog.zeonCost.title")
+  disabled=true
+  inputName="spellCasting.zeon.cost"
+  inputValue=this.spellCasting.zeon.cost
+  }}
+  {{/unless}}
+
+  {{#if (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}
+    {{#unless (is "eq" this.selectedSpell.metamagics.definedMagicProjection undefined)}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'anima.ui.mystic.metamagics.definedMagicProjection.title')
+        inputName='selectedSpell.metamagics.definedMagicProjection'
+      }}
+        <option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 0)}}selected{{/if}} value='0'>0</option>
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 0)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 1)}}selected{{/if}} value='1'>120</option>{{/if}}
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 2)}}selected{{/if}} value='2'>140</option>{{/if}}
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 3)}}selected{{/if}} value='3'>180</option>{{/if}}
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 3)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 4)}}selected{{/if}} value='4'>240</option>{{/if}}
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 4)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 5)}}selected{{/if}} value='5'>280</option>{{/if}}
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 5)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 6)}}selected{{/if}} value='6'>320</option>{{/if}}
+        {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcanePower.definedMagicProjection.sphere 6)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.definedMagicProjection 7)}}selected{{/if}} value='7'>440</option>{{/if}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/unless}}
+  {{/if}}
+
+  {{#if (and (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 0) (is "eq" this.selectedSpell.combatType "defense"))}}
+    {{#unless (is "gt" this.selectedSpell.metamagics.definedMagicProjection 0)}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'anima.ui.mystic.metamagics.defensiveExpertise.title')
+      inputName='selectedSpell.metamagics.defensiveExpertise'
+    }}
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 0)}}selected{{/if}} value='0'>0</option>
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 10)}}selected{{/if}} value='10'>10</option>
+      <option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 20)}}selected{{/if}} value='20'>20</option>
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 30)}}selected{{/if}} value='30'>30</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 40)}}selected{{/if}} value='40'>40</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 50)}}selected{{/if}} value='50'>50</option>{{/if}}
+      {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.defensiveExpertise 60)}}selected{{/if}} value='60'>60</option>{{/if}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/unless}}
+  {{/if}}
+
+    {{#if (and this.spellCasting.canCast.innate (is 'eq' this.spellCasting.override false))}}
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.castInnate.title')
+        inputType="checkbox"
+        inputName="spellCasting.casted.innate"
+        inputValue=(is 'eq' this.spellCasting.casted.innate true)
+        }}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if (and this.spellCasting.canCast.prepared (is 'eq' this.spellCasting.override false))}}
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.castPrepared.title')
+        inputType="checkbox"
+        inputName="spellCasting.casted.prepared"
+        inputValue=(is 'eq' this.spellCasting.casted.prepared true)
+        }}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if this.ui.overrideMysticCast}}
+    <hr class='hr' />
+    <div class='columns'>
+      <div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.castOverride.title')
+        inputType="checkbox"
+        inputName="spellCasting.override"
+        inputValue=(is 'eq' this.spellCasting.override true)
+        }}
+      </div>
+    </div>
+    {{/if}}
+
+    <div>
+      <button class='abf-button mystic-cast-button' data-type='cast'>
+        {{localize 'macros.mysticCast.dialog.button.title'}}
+      </button>
+    </div>
+
+  </div>
+
+  <div class="tab spell-maintenances" data-group="primary" data-tab="spellMaintenances">
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    title=(localize "anima.ui.mystic.zeonMaintained.title")
+    disabled=true
+    inputName="zeonMaintained"
+    inputValue=this.zeonMaintained
+    }}
+    {{#if (is 'gt' this.actor.system.mystic.maintainedSpells.length 0)}}
+    <div class="maintained-spells">
+      <hr class='hr' />
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.mysticCast.dialog.maintain.title'))
+      }}
+      {{#each this.maintainedSpells as |maintainedSpell|}}
+        <div class='maintained-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=maintainedSpell.name
+        }}
+        {{#if (is 'eq' maintainedSpell.system.innate true)}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputValue=0
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputName=(concat "maintainedSpells." @key ".system.maintenanceCost.value")
+            inputValue=maintainedSpell.system.maintenanceCost.value
+          }}
+        {{/if }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "maintainedSpells." @key ".system.innate")
+          inputValue=(is 'eq' maintainedSpell.system.innate true)
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "maintainedSpells." @key ".system.active")
+          inputValue=(is 'eq' maintainedSpell.system.active true)
+        }}
+        </div>
+      {{/each}}
+    </div>
+    {{/if }}
+    {{#if (is 'neq' this.castedSpells undefined)}}
+    <div class="maintained-spells">
+      <hr class='hr' />
+      {{>
+      "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize (concat 'macros.mysticCast.dialog.casted.title'))
+      }}
+      {{#each this.castedSpells as |castedSpell|}}
+        <div class='maintained-spell-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=""
+          inputValue=castedSpell.name
+        }}
+        {{#if (is 'eq' castedSpell.system.innate true)}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputValue=0
+          }}
+        {{else}}
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="maintenanceCost"
+            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+            hideTitle=(is "gt" @index 0)
+            disabled=true
+            inputName=(concat "castedSpells." @key ".system.maintenanceCost.value")
+            inputValue=castedSpell.system.maintenanceCost.value
+          }}
+        {{/if }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "castedSpells." @key ".system.innate")
+          inputValue=(is 'eq' castedSpell.system.innate true)
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+          class="innate"
+          title=(localize "anima.ui.mystic.maintainedSpells.maintain.title")
+          hideTitle=(is "gt" @index 0)
+          inputType="checkbox"
+          inputName=(concat "castedSpells." @key ".system.active")
+          inputValue=(is 'eq' castedSpell.system.active true)
+        }}
+        </div>
+      {{/each}}
+    </div>
+    {{/if }}
+    
+    <div>
+      <button class='abf-button maintain-spell-button' data-type='cast'>
+        {{localize 'macros.mysticCast.dialog.button.maintain.title'}}
+      </button>
+    </div>
+
+  </div>
+</section>
+
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>

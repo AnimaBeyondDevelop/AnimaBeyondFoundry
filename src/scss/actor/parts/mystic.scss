@@ -228,6 +228,30 @@
     }
     // Spell Maintenances
 
+    // Maintained Spells
+    .maintained-spells {
+      .maintained-spell-row:first-child {
+        margin-top: 0;
+      }
+
+      .maintained-spell-row {
+        margin-top: 0.75rem;
+
+        display: grid;
+        grid-template-columns: 2fr 0.5fr 3rem;
+        grid-column-gap: 0.1rem;
+
+        .name .input-container {
+          width: 100%;
+        }
+        .innate {
+          margin-top: 0;
+          width: 100%;
+        }
+      }
+    }
+    // Maintained Spells
+
     // Selected Spells
     .selected-spells {
       .selected-spell-row:first-child {

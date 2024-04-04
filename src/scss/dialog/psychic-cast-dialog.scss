@@ -1,6 +1,6 @@
 @import '../variable';
 
-.mystic-act-dialog {
+.psychic-cast-dialog {
   height: auto !important;
 
   width: 360px;
@@ -45,19 +45,6 @@
       color: $white;
       font-weight: 600;
     }
-
-    .zeon {
-      flex: 1 1 0;
-    }
-
-
-    .preparedSpells {
-      flex: 1.5 1 0;
-    }
-
-    .release {
-      flex: 1 1 0;
-    }
   }
 
   .group-body {
@@ -65,43 +52,47 @@
 
     height: 100%;
 
+    .innate-psychic-powers {
+      .group-header {
+        min-height: 1.3rem;
 
-    .prepared-spell-row:first-child {
+        .group-header-title {
+          font-size: 0.95rem;
+          line-height: 0.5rem;
+
+        }
+      }
+    }
+
+    .innate-power:first-child {
       margin-top: 0;
     }
 
-    .prepared-spell-row {
+    .innate-power-row {
       margin-top: 0.75rem;
-
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 3fr 1fr 1fr;
       grid-column-gap: 0.1rem;
 
       .name .input-container {
         width: 100%;
+        align-items: start;
+      }
+
+      .effect {
+        grid-column: span 2;
+        margin-top: 0.4rem;
+
+        .input-container {
+          width: 100%;
+        }
       }
     }
 
-    .act-buttons {
-      display: flex;
+    .psychic-cast-button,
+    .innate-power-button {
+      margin-top: 0.75rem;
 
-      .full-act,
-      .partial-act,
-      .release-act,
-      .withstand-pain {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 1rem;
-
-        .label {
-          font-size: 1.5rem;
-          font-weight: bold;
-          text-align: center;
-        }
-      }
     }
 
     .columns {
@@ -116,7 +107,7 @@
     }
   }
 
-  .mystic-act .input {
+  .psychic-cast .input {
     optgroup:not(:has(:first-child)) {
       display: none;
     }

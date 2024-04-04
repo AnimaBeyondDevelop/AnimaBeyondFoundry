@@ -1,6 +1,15 @@
 import { ABFItems } from '../../items/ABFItems';
-import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+
+/**
+ * Initial data for a new innate psychic power. Used to infer the type of the data inside `innatePsychicPower.system`
+ * @readonly
+ */
+export const INITIAL_INNATE_PSYCHIC_POWER_DATA = {
+  effect: '',
+  improveInnatePower: 0
+};
 
 /** @type {import("../Items").InnatePsychicPowerItemConfig} */
 export const InnatePsychicPowerItemConfig = ABFItemConfigFactory({
@@ -13,19 +22,26 @@ export const InnatePsychicPowerItemConfig = ABFItemConfigFactory({
     rowSelector: '.innate-psychic-power-row'
   },
   onCreate: async actor => {
-    const { i18n } = game;
-
-    const name = await openSimpleInputDialog({
-      content: i18n.localize('dialogs.items.innatePsychicPower.content')
-    });
+    const results = await openComplexInputDialog(actor, 'newInnatePsychicPower');
+    const powerId = results['new.innatePsychicPower.id'];
+    const improveInnatePower = results['new.innatePsychicPower.improveInnatePower']
+    const power = actor.system.psychic.psychicPowers.find(i => i._id === powerId);
+    if (!power) {
+      return;
+    }
+    const name = power.name;
+    const innatePsychicDifficulty = actor.innatePsychicDifficulty(power, improveInnatePower);
+    const effect = power.system.effects[innatePsychicDifficulty]?.value ?? '';
 
     await actor.createInnerItem({
       name,
       type: ABFItems.INNATE_PSYCHIC_POWER,
       system: {
-        effect: { value: '' },
-        value: { value: 0 }
+        effect,
+        improveInnatePower,
+        power
       }
     });
+    actor.consumePsychicPoints(improveInnatePower)
   }
 });

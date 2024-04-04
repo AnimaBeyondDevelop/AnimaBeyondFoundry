@@ -1,0 +1,32 @@
+<form>
+  <div class='form-group'>
+    <div>
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'dialogs.psychicShield.power.title')
+        inputName='new.innatePsychicPower.id'
+      }}
+        {{#each data.actor.system.psychic.psychicPowers}}
+          {{#if this.system.hasMaintenance.value}}
+            <option value='{{this._id}}'>{{this.name}}</option>
+          {{/if }}
+        {{/each}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+      {{#if (is "gt" data.actor.system.psychic.psychicPoints.max 0 )}}
+          {{#>
+          'systems/animabf/templates/common/ui/custom-select.hbs'
+            class="improve-innate-power"
+            title=(localize "anima.ui.psychic.innatePsychicPower.improveInnatePower.title")
+            inputName='new.innatePsychicPower.improveInnatePower'
+          }}
+          <option value="0">0</option>
+          {{#if (is "gt" ../data.actor.system.psychic.psychicPoints.value 0 )}}<option value="1">1</option>{{/if}}
+          {{#if (is "gt" ../data.actor.system.psychic.psychicPoints.value 1 )}}<option value="2">2</option>{{/if}}
+          {{#if (is "gt" ../data.actor.system.psychic.psychicPoints.value 2 )}}<option value="3">3</option>{{/if}}
+          {{#if (is "gt" ../data.actor.system.psychic.psychicPoints.value 3 )}}<option value="4">4</option>{{/if}}
+          {{#if (is "gt" ../data.actor.system.psychic.psychicPoints.value 4 )}}<option value="5">5</option>{{/if}}
+          {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+      {{/if}}
+    </div>
+  </div>
+</form>

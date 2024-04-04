@@ -16,5 +16,21 @@
       inputName="system.psychic.psychicSettings.fatigueResistance"
       inputValue=(is 'eq' system.psychic.psychicSettings.fatigueResistance true)
     }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="amplify-sustained-power"
+      title=(localize "anima.ui.psychic.psychicSettings.amplifySustainedPower.title")
+      inputType="checkbox"
+      inputName="system.psychic.psychicSettings.amplifySustainedPower"
+      inputValue=(is 'eq' system.psychic.psychicSettings.amplifySustainedPower true)
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="focus"
+      title=(localize "anima.ui.psychic.psychicSettings.focus.title")
+      inputType="checkbox"
+      inputName="system.psychic.psychicSettings.focus"
+      inputValue=(is 'eq' system.psychic.psychicSettings.focus true)
+    }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}
