@@ -22,7 +22,6 @@ import { damageCheck } from '../combat/utils/damageCheck.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
-import { openComplexInputDialog } from '../utils/dialogs/openComplexInputDialog';
 
 export class ABFActor extends Actor {
   i18n: Localization;
