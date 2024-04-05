@@ -904,6 +904,23 @@ export class ABFActor extends Actor {
     this.setFlag('animabf', 'lastDamageApplied', damage);
   }
 
+  applyDamagePerTurn(revert?: boolean) {
+    const { damagePerTurn } = this.system.general.conditions
+    if (typeof damagePerTurn.value != 'number') { return };
+
+    const newLifePoints = revert ?
+      this.system.characteristics.secondaries.lifePoints.value + damagePerTurn.value
+      : this.system.characteristics.secondaries.lifePoints.value - damagePerTurn.value;
+
+    this.update({
+      system: {
+        characteristics: {
+          secondaries: { lifePoints: { value: newLifePoints } }
+        }
+      }
+    });
+  }
+
   public async createItem({
     type,
     name,

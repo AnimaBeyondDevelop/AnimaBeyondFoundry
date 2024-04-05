@@ -101,6 +101,11 @@ export const INITIAL_ACTOR_DATA = {
         value: 0
       }
     },
+    conditions: {
+      damagePerTurn:{
+        value: 0
+      }
+    },
     destinyPoints: {
       base: {
         value: 0
