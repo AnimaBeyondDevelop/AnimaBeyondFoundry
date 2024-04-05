@@ -2,6 +2,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { SpellGrades } from './SpellItemConfig';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { executeMacro } from '../../utils/functions/executeMacro';
 
 /**
  * Initial data for a new maintained spell. Used to infer the type of the data inside `maintainedSpell.system`
@@ -49,5 +50,28 @@ export const MaintainedSpellItemConfig = ABFItemConfigFactory({
         active: true
       }
     });
+  },
+  onDelete: async (actor, target) => {
+    const { itemId } = target[0].dataset;
+
+    if (!itemId) {
+      throw new Error('Data id missing. Are you sure to set data-item-id to rows?');
+    }
+
+    const maintainedSpell = actor.getInnerItem(ABFItems.MAINTAINED_SPELL, itemId);
+
+    await actor.deleteInnerItem(maintainedSpell.type, [maintainedSpell._id])
+
+    if (maintainedSpell.system.supShieldId) {
+      actor.deleteSupernaturalShield(maintainedSpell.system.supShieldId)
+    } else {
+      const args = {
+        thisActor: actor,
+        spellGrade: maintainedSpell.system.grade.value,
+        castedSpellId: maintainedSpell.system.castedSpellId,
+        release: true
+      }
+      executeMacro(maintainedSpell.name, args)
+    }
   }
 });
