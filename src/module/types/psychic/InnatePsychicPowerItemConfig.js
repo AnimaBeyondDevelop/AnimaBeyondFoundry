@@ -1,6 +1,7 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { executeMacro } from '../../utils/functions/executeMacro';
 
 /**
  * Initial data for a new innate psychic power. Used to infer the type of the data inside `innatePsychicPower.system`
@@ -43,5 +44,27 @@ export const InnatePsychicPowerItemConfig = ABFItemConfigFactory({
       }
     });
     actor.consumePsychicPoints(improveInnatePower)
+  },
+  onDelete: async (actor, target) => {
+    const { itemId } = target[0].dataset;
+
+    if (!itemId) {
+      throw new Error('Data id missing. Are you sure to set data-item-id to rows?');
+    }
+
+    const innatePsychicPower = actor.getInnerItem(ABFItems.INNATE_PSYCHIC_POWER, itemId);
+
+    await actor.deleteInnerItem(innatePsychicPower.type, [innatePsychicPower._id])
+
+    if (innatePsychicPower.system.supShieldId) {
+      actor.deleteSupernaturalShield(innatePsychicPower.system.supShieldId)
+    } else {
+      const args = {
+          thisActor: actor,
+          castedPsychicPowerId: innatePsychicPower.system.castedPsychicPowerId,
+          release: true
+      }
+      executeMacro(innatePsychicPower.name, args)
+    }
   }
 });
