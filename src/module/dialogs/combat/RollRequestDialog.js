@@ -243,7 +243,7 @@ export class RollRequestDialog extends FormApplication {
     } = this.modalData;
 
     if (type === 'resistance') {
-      this.modalData.roll.value = actor.system.characteristics.secondaries.resistances[resistance].base.value
+      this.modalData.roll.value = actor.system.characteristics.secondaries.resistances[resistance].final.value
     };
 
     if (type === 'critic') {

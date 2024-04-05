@@ -13,8 +13,32 @@
         class="calculateFatigue"
         title= (localize "anima.ui.settings.automationOptions.calculateFatigueModifier.title")
         inputType="checkbox"
-        inputName="system.automationOptions.calculateFatigueModifier.value"
-        inputValue=system.automationOptions.calculateFatigueModifier.value
+        inputName="system.automationOptions.calculateFatigueModifier"
+        inputValue=system.automationOptions.calculateFatigueModifier
+    }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="calculatePresence"
+        title= (localize "anima.ui.settings.automationOptions.calculatePresence.title")
+        inputType="checkbox"
+        inputName="system.automationOptions.calculatePresence"
+        inputValue=system.automationOptions.calculatePresence
+    }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="calculateResistances"
+        title= (localize "anima.ui.settings.automationOptions.calculateResistances.title")
+        inputType="checkbox"
+        inputName="system.automationOptions.calculateResistances"
+        inputValue=system.automationOptions.calculateResistances
+    }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="calculateSecondaries"
+        title= (localize "anima.ui.settings.automationOptions.calculateSecondaries.title")
+        inputType="checkbox"
+        inputName="system.automationOptions.calculateSecondaries"
+        inputValue=system.automationOptions.calculateSecondaries
     }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

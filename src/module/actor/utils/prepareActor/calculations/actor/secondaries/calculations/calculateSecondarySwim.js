@@ -4,6 +4,7 @@
  */
 export const calculateSecondarySwim = data =>
   data.secondaries.athletics.swim.base.value +
+  data.secondaries.athletics.swim.special.value +
   data.general.modifiers.allActions.final.value +
   data.general.modifiers.physicalActions.final.value +
   data.general.modifiers.naturalPenalty.final.value -
