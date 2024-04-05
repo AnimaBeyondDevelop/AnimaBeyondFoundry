@@ -1223,6 +1223,10 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.AMMO);
   }
 
+  public getPoisons() {
+    return this.getItemsOf(ABFItems.POISON);
+  }
+
   public getWeapons() {
     return this.getItemsOf(ABFItems.WEAPON);
   }

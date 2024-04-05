@@ -1,0 +1,64 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="poisons"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.combat.poisons.title")
+    addRowButtonData="add-poison"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="poisons"
+  }}
+    {{#each system.combat.poisons as |poison index|}}
+      <div data-item-id='{{poison._id}}' class='poison-row'>
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.combat.poisons.name.title")
+          hideTitle=(is "gt" index 0)
+          inputType="text"
+          inputName=(concat "system.dynamic.poisons." poison._id ".name")
+          inputValue=poison.name
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+          class="effects"
+          isVertical=true
+          choices=xRoot.config.iterables.combat.poison.effects
+          title=(localize "anima.ui.combat.poisons.effects.main.title")
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "system.dynamic.poisons." poison._id ".system.effects.main.type")
+          inputValue=poison.system.effects.main.type
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+          class="effects"
+          isVertical=true
+          choices=xRoot.config.iterables.combat.poison.effects
+          title=(localize "anima.ui.combat.poisons.effects.secondary.title")
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "system.dynamic.poisons." poison._id ".system.effects.secondary.type")
+          inputValue=poison.system.effects.secondary.type
+        }}
+        {{>
+        'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+          class="transmission"
+          isVertical=true
+          choices=xRoot.config.iterables.combat.poison.transmission
+          title=(localize "anima.ui.combat.poisons.transmission.title")
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "system.dynamic.poisons." poison._id ".system.transmission")
+          inputValue=poison.system.transmission
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="amount"
+          title=(localize "anima.ui.combat.poisons.amount.title")
+          hideTitle=(is "gt" index 0)
+          inputName=(concat "system.dynamic.poisons." poison._id ".system.amount")
+          inputValue=poison.system.amount
+        }}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

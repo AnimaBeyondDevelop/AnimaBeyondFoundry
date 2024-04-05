@@ -161,9 +161,9 @@ export class GMCombatDialog extends FormApplication {
     html.find('.roll-resistance').click(async () => {
       this.modalData.ui.waitingRollRequest = true;
       const { roll } = this.modalData.defender
-      const { type, value } = this.modalData.attacker.result.values?.resistanceEffect;
-      const check = roll.criticRoll.sent ? roll.criticRoll.value : value
-      const resistance = roll.criticRoll.sent ? { main: 'physical', secondary: 'none' } : { main: type, secondary: 'none' }
+      const { resistanceEffect: { type, value }, poison } = this.modalData.attacker.result.values;
+      const check = roll.criticRoll.sent ? roll.criticRoll.value : poison?.check ? poison.effects.main.check : value;
+      const resistance = roll.criticRoll.sent ? { main: 'physical', secondary: 'none' } : poison?.check ? { main: 'poison', secondary: 'none' } : { main: type, secondary: 'none' }
       this.hooks.onRollRequest(this.defenderToken, { type: 'resistance', resistance, check })
     });
 
@@ -455,6 +455,7 @@ export class GMCombatDialog extends FormApplication {
       }
 
       const minimumDamage10 = this.modalData.calculations.difference - atResistance >= 10;
+      const { poison } = attacker.result?.values;
       if (winner === attacker.token) {
         if (minimumDamage10) {
           if (attacker.result.values?.resistanceEffect.check) {
@@ -469,6 +470,16 @@ export class GMCombatDialog extends FormApplication {
       if (winner === defender.token || !minimumDamage10) {
         roll.resistanceRoll.request = false;
       }
+
+      if (poison) {
+        if (poison.transmission === 'contact' && winner === attacker.token) {
+          roll.resistanceRoll.request = true;
+          poison.check = true
+        } else if (poison.transmission === 'blood' && this.modalData.calculations.damage > 0) {
+          roll.resistanceRoll.request = true;
+          poison.check = true
+        } else { roll.resistanceRoll.request = false; poison.check = true; }
+      };
 
       if (roll.criticRoll.sent) {
         roll.resistanceRoll.request = true
@@ -676,7 +687,8 @@ export class GMCombatDialog extends FormApplication {
       defenderPsychicFatigue: defender.result.values?.psychicFatigue,
       specialPorpuseAttackResult,
       hasCritic: roll.criticRoll.sent && attacker.applyCritic,
-      criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0)
+      criticImpact: Math.max(roll.criticRoll.value - roll.criticRoll.resist, 0),
+      poison: attacker.result.values.poison
     };
     if (defenderArgs.totalAttack < missedAttackValue && winner === 'defener') {
       defenderArgs.missedAttack = true;
