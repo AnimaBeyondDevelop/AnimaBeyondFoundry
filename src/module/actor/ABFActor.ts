@@ -306,6 +306,15 @@ export class ABFActor extends Actor {
         shieldId: supShieldId
       };
       executeMacro(supShield.name ?? undefined, args);
+      const { castedSpellId, castedPsychicPowerId } = supShield.system
+      if (castedSpellId) {
+        const maintainedSpellId = this.getMaintainedSpells().find(ms => ms.system.castedSpellId === castedSpellId)._id
+        this.deleteInnerItem(ABFItems.MAINTAINED_SPELL, [maintainedSpellId])
+      }
+      if (castedPsychicPowerId) {
+        const innatePsychicPowerId = this.getInnatePsychicPowers().find(ms => ms.system.castedPsychicPowerId === castedPsychicPowerId)._id
+        this.deleteInnerItem(ABFItems.INNATE_PSYCHIC_POWER, [innatePsychicPowerId])
+      }
     }
   }
 
@@ -738,6 +747,12 @@ export class ABFActor extends Actor {
     }
     const castedSpellId = nanoid()
     this.castedSpell(castedSpellId, spellId, spellGrade, casted.innate, supShieldId)
+    if (supShieldId) {
+      this.updateItem({
+        id: supShieldId,
+        system: { castedSpellId }
+      })
+    }
     if (zeon.poolCost) {
       this.consumeZeon(zeon.poolCost)
     }
@@ -899,6 +914,12 @@ export class ABFActor extends Actor {
       }
     }
     this.setFlag('animabf', `castedPsychicPowers.${castedPsychicPowerId}`, innatePsychicPower);
+    if (supShieldId) {
+      this.updateItem({
+        id: supShieldId,
+        system: { castedPsychicPowerId }
+      })
+    }
     return castedPsychicPowerId
   }
 
