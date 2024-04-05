@@ -205,6 +205,14 @@
         inputName="system.special.value"
         inputValue=system.special.value
       }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="damage-energy"
+        title=(localize "anima.ui.combat.weapons.damageEnergy.title")
+        inputType="checkbox"
+        inputName="system.damageEnergy"
+        inputValue=system.damageEnergy
+      }}
     {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}
 {{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

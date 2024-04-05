@@ -21,7 +21,9 @@
           "inmaterial": { "value": false },
           "inhuman": { "value": false },
           "zen": { "value": false },
-          "defenseType": { "value": "" }
+          "defenseType": { "value": "" },
+          "damageResistanceMultiple": { "value": 0 },
+          "damageReduction": { "value": 0 }
         },
         "modifiers": {
           "physicalActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
@@ -30,7 +32,8 @@
           "naturalPenalty": { "unreduced": { "value": 0 }, "reduction": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 }  },
           "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
           "extraDamage": { "value": 0 },
-          "criticLevel": { "value": 0 }
+          "criticLevel": { "value": 0 },
+          "damageBarrier": { "value": 0 }
         },
         "conditions":{
           "damagePerTurn": { "value": 0 }
@@ -406,6 +409,7 @@
       "critic": { "value": "-" },
       "visible": false,
       "macro": "",
+      "damageEnergy": false,
       "grades": {
         "base": {
           "name": { "value": "" },
@@ -498,7 +502,8 @@
       "sizeProportion": { "value": "" },
       "hasOwnStr": { "value": false },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
+      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } },
+      "damageEnergy": false
     },
     "supernaturalShield": {
       "type": { "value": "none" },

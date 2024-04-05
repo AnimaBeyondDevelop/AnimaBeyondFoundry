@@ -3,6 +3,7 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { weaponSpecialCheck } from '../../combat/utils/weaponSpecialCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
+import { damageEnergyCheck } from '../../combat/utils/damageEnergyCheck.js';
 import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { supSpecificAttack } from '../../combat/utils/supSpecificAttack.js';
 import { roundTo5Multiples } from '../../combat/utils/roundTo5Multiples';
@@ -484,7 +485,8 @@ export class CombatAttackDialog extends FormApplication {
             projectile,
             attackerCombatMod,
             poison,
-            areaAttack: this.modalData.ui.multipleTargets && !specialPorpuseAttack.areaAttack
+            areaAttack: this.modalData.ui.multipleTargets && !specialPorpuseAttack.areaAttack,
+            damageEnergy: damageEnergyCheck(weapon)
           }
         });
 
@@ -593,7 +595,8 @@ export class CombatAttackDialog extends FormApplication {
             directedAttacks,
             macro: spell.macro,
             attackerCombatMod,
-            areaAttack
+            areaAttack,
+            damageEnergy: damageEnergyCheck(spell)
           }
         });
 
@@ -722,7 +725,8 @@ export class CombatAttackDialog extends FormApplication {
             directedAttacks,
             macro: power.macro,
             attackerCombatMod,
-            areaAttack
+            areaAttack,
+            damageEnergy: damageEnergyCheck(power, psychicPotentialRoll.total)
           }
         });
 
