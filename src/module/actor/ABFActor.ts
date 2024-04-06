@@ -341,7 +341,8 @@ export class ABFActor extends Actor {
       if (supShield?.system.damageBarrier > damage && !dobleDamage) { return }
     }
     const shieldValue = supShield?.system.shieldPoints;
-    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
+    const reducedArmorDamage = newCombatResult?.reducedArmor.ignoreArmor ? 200 : newCombatResult?.reducedArmor.value * 10
+    const newShieldPoints = dobleDamage ? shieldValue - reducedArmorDamage - damage * 2 : shieldValue - reducedArmorDamage - damage;
     if (newShieldPoints > 0) {
       this.updateItem({
         id: supShieldId,
@@ -359,7 +360,7 @@ export class ABFActor extends Actor {
           newCombatResult.attack,
           0,
           newCombatResult.at,
-          Math.abs(newShieldPoints),
+          Math.min(Math.abs(newShieldPoints), damage),
           newCombatResult.halvedAbsorption,
           newCombatResult.damageBarrier,
           newCombatResult.damageReduction

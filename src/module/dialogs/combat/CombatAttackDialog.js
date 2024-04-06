@@ -574,6 +574,7 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         let damageEnergy = this.attackerActor.getDamageEnergy(spell)
+        let reducedArmor = { ignoreArmor: false, value: metamagics.removeProtection / 10 }
 
         const rolled = roll.total - magicProjection.final - (combatModifier ?? 0);
 
@@ -600,7 +601,8 @@ export class CombatAttackDialog extends FormApplication {
             macro: spell.macro,
             attackerCombatMod,
             areaAttack,
-            damageEnergy
+            damageEnergy,
+            reducedArmor
           }
         });
 
@@ -785,7 +787,7 @@ export class CombatAttackDialog extends FormApplication {
         mystic.metamagics.offensiveExpertise = 0;
       }
       const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
-      const addedZeonCost = { value: +mystic.metamagics.offensiveExpertise + mystic.metamagics.removeProtection, pool: zeonPoolCost }
+      const addedZeonCost = { value: +mystic.metamagics.offensiveExpertise + +mystic.metamagics.removeProtection, pool: zeonPoolCost }
       mystic.spellCasting = await this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
       const spellDamage = this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade)
       mystic.damage.final = mystic.damage.special + spellDamage;

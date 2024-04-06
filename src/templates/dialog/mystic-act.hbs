@@ -71,26 +71,42 @@
               title=(localize 'macros.combat.dialog.spellGrade.title')
               inputName='selectedSpell.spellGrade'
             }}
-              <option {{#if (is "eq" this.selectedSpell.spellGrade 'base')}}selected{{/if}} value='base'>{{localize 'macros.combat.dialog.spellGrade.base.title'}}</option>
-              <option {{#if (is "eq" this.selectedSpell.spellGrade 'intermediate')}}selected{{/if}} value='intermediate'>{{localize 'macros.combat.dialog.spellGrade.intermediate.title'}}</option>
-              <option {{#if (is "eq" this.selectedSpell.spellGrade 'advanced')}}selected{{/if}} value='advanced'>{{localize 'macros.combat.dialog.spellGrade.advanced.title'}}</option>
-              <option {{#if (is "eq" this.selectedSpell.spellGrade 'arcane')}}selected{{/if}} value='arcane'>{{localize 'macros.combat.dialog.spellGrade.arcane.title'}}</option>
+            {{#each this.attainableSpellGrades}}
+              <option {{#if (is "eq" ../this.selectedSpell.spellGrade this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.spellGrade.' this '.title')}}</option>
+            {{/each}}
             {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-            {{#if (and (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 0) (is "eq" this.selectedSpell.combatType 'attack'))}}
-              {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-                title=(localize 'anima.ui.mystic.metamagics.offensiveExpertise.title')
-                inputName='selectedSpell.metamagics.offensiveExpertise'
-              }}
-                <option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 0)}}selected{{/if}} value='0'>0</option>
-                <option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 10)}}selected{{/if}} value='10'>10</option>
-                <option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 20)}}selected{{/if}} value='20'>20</option>
-                {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 30)}}selected{{/if}} value='30'>30</option>{{/if}}
-                {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 40)}}selected{{/if}} value='40'>40</option>{{/if}}
-                {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 50)}}selected{{/if}} value='50'>50</option>{{/if}}
-                {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 60)}}selected{{/if}} value='60'>60</option>{{/if}}
-              {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+            {{#if (is "eq" this.selectedSpell.combatType 'attack')}}
+              {{#if (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 0)}}
+                {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+                  title=(localize 'anima.ui.mystic.metamagics.offensiveExpertise.title')
+                  inputName='selectedSpell.metamagics.offensiveExpertise'
+                }}
+                  <option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 0)}}selected{{/if}} value='0'>0</option>
+                  <option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 10)}}selected{{/if}} value='10'>10</option>
+                  <option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 20)}}selected{{/if}} value='20'>20</option>
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 30)}}selected{{/if}} value='30'>30</option>{{/if}}
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 40)}}selected{{/if}} value='40'>40</option>{{/if}}
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 50)}}selected{{/if}} value='50'>50</option>{{/if}}
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.offensiveExpertise 60)}}selected{{/if}} value='60'>60</option>{{/if}}
+                {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+              {{/if}}
+              {{#if (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 0)}}
+                {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+                  title=(localize 'anima.ui.mystic.metamagics.removeProtection.title')
+                  inputName='selectedSpell.metamagics.removeProtection'
+                }}
+                  <option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 0)}}selected{{/if}} value='0'>0</option>
+                  <option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 10)}}selected{{/if}} value='10'>1</option>
+                  <option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 20)}}selected{{/if}} value='20'>2</option>
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 30)}}selected{{/if}} value='30'>3</option>{{/if}}
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 1)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 40)}}selected{{/if}} value='40'>4</option>{{/if}}
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 50)}}selected{{/if}} value='50'>5</option>{{/if}}
+                  {{#if (is "gt" ../this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 2)}}<option {{#if (is "eq" ../this.selectedSpell.metamagics.removeProtection 60)}}selected{{/if}} value='60'>6</option>{{/if}}
+                {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+              {{/if}}
             {{/if}}
+
             {{#if (and (is "gt" this.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.defensiveExpertise.sphere 0) (is "eq" this.selectedSpell.combatType 'defense'))}}
               {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
                 title=(localize 'anima.ui.mystic.metamagics.defensiveExpertise.title')

@@ -592,7 +592,7 @@ export class GMCombatDialog extends FormApplication {
     const { attacker, defender } = this.modalData;
     const { dobleDamage, immuneToDamage } = defender.supernaturalShield;
     const { damageBarrier, damageReduction } = this.defenderActor.system.combat;
-    const { damageEnergy } = attacker.result.values
+    const { damageEnergy, reducedArmor } = attacker.result.values
     const defenderIsWinner =
       this.modalData.calculations.winner === this.defenderToken;
     const damage = this.modalData.attacker.result?.values.damage;
@@ -622,7 +622,8 @@ export class GMCombatDialog extends FormApplication {
             : false;
         newCombatResult.damageBarrier = damageEnergy ? 0 : damageBarrier.value;
         newCombatResult.damageReduction = damageReduction.value;
-        newCombatResult.damageEnergy = damageEnergy
+        newCombatResult.damageEnergy = damageEnergy;
+        newCombatResult.reducedArmor = reducedArmor
       }
 
       if (supShieldId) {

@@ -53,9 +53,11 @@ const getInitialData = (spareAct) => {
             zeonCost: 0,
             metamagics: {
                 offensiveExpertise: 0,
-                defensiveExpertise: 0
+                defensiveExpertise: 0,
+                removeProtection: 0
             }
-        }
+        },
+        attainableSpellGrades: [],
     };
 };
 
@@ -71,12 +73,20 @@ export class MysticActDialog extends FormApplication {
 
         this._tabs[0].active = this.modalData.ui.activeTab
 
-        const { actor: { system: { mystic: { spells } } }, selectedSpell } = this.modalData;
+        const { actor: { system: { mystic: { spells, mysticSettings } } }, selectedSpell } = this.modalData;
 
         if (spells.length > 0) {
             selectedSpell.id = spells[0]._id;
             const spell = spells.find(w => w._id === selectedSpell.id);
             selectedSpell.combatType = spell.system.combatType.value;
+
+            const intelligence = this.modalData.actor.system.characteristics.primaries.intelligence.value
+            const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+            for (const grade in spell?.system.grades) {
+                if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+                    this.modalData.attainableSpellGrades.push(grade)
+                }
+            }
         }
 
         this.render(true);
@@ -206,8 +216,8 @@ export class MysticActDialog extends FormApplication {
                         selectedSpell.metamagics.offensiveExpertise = 0;
                         selectedSpell.metamagics.defensiveExpertise = 0;
                         selectedSpell.combatType = 'none'
-                    } 
-                    const addedZeonCost = +selectedSpell.metamagics[selectedSpell.combatType === 'attack' ? 'offensiveExpertise' : 'defensiveExpertise'];
+                    }
+                    const addedZeonCost = +selectedSpell.metamagics[selectedSpell.combatType === 'attack' ? 'offensiveExpertise' : 'defensiveExpertise'] + +selectedSpell.metamagics.removeProtection;
                     selectedSpell.zeonCost = spell.system.grades[selectedSpell.spellGrade ?? 'base'].zeon.value + addedZeonCost;
                     if (actor.system.mystic.act.via.length > 0) {
                         act.value = actor.system.mystic.act.via.find(v => v.name === spell?.system.via.value)?.system.final.value || actor.system.mystic.act.main.final.value
@@ -253,7 +263,19 @@ export class MysticActDialog extends FormApplication {
 
             this.modalData.selectedSpell.metamagics = {
                 offensiveExpertise: 0,
-                defensiveExpertise: 0
+                defensiveExpertise: 0,
+                removeProtection: 0
+            }
+            const { spells } = this.modalData.actor.system.mystic;
+            const spell = spells.find(w => w._id === this.modalData.selectedSpell.id);
+            this.modalData.selectedSpell.spellGrade = 'base'
+            this.modalData.attainableSpellGrades = []
+            const intelligence = this.modalData.actor.system.characteristics.primaries.intelligence.value
+            const finalIntelligence = this.modalData.actor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+            for (const grade in spell?.system.grades) {
+                if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+                    this.modalData.attainableSpellGrades.push(grade)
+                }
             }
         }
 

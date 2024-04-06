@@ -52,6 +52,21 @@
     {{#if (is "gt" ../this.attacker.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.offensiveExpertise.sphere 2)}}<option {{#if (is "eq" ../this.attacker.mystic.metamagics.offensiveExpertise 60)}}selected{{/if}} value='60'>60</option>{{/if}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{/if}}
+{{#if (is "gt" this.attacker.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 0)}}
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    title=(localize 'anima.ui.mystic.metamagics.removeProtection.title')
+    disabled=this.attackSent
+    inputName='attacker.mystic.metamagics.removeProtection'
+  }}
+    <option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 0)}}selected{{/if}} value='0'>0</option>
+    <option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 10)}}selected{{/if}} value='10'>1</option>
+    <option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 20)}}selected{{/if}} value='20'>2</option>
+    {{#if (is "gt" ../this.attacker.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 1)}}<option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 30)}}selected{{/if}} value='30'>3</option>{{/if}}
+    {{#if (is "gt" ../this.attacker.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 1)}}<option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 40)}}selected{{/if}} value='40'>4</option>{{/if}}
+    {{#if (is "gt" ../this.attacker.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 2)}}<option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 50)}}selected{{/if}} value='50'>5</option>{{/if}}
+    {{#if (is "gt" ../this.attacker.actor.system.mystic.magicLevel.metamagics.arcaneWarfare.removeProtection.sphere 2)}}<option {{#if (is "eq" ../this.attacker.mystic.metamagics.removeProtection 60)}}selected{{/if}} value='60'>6</option>{{/if}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/if}}
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spell.title')
   disabled=this.attackSent

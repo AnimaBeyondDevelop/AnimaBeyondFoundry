@@ -288,7 +288,30 @@ export class MysticCastDialog extends FormApplication {
         return this.modalData;
     }
     async _updateObject(event, formData) {
+        const prevselectedSpell = this.modalData.selectedSpell.id;
+
         this.modalData = mergeObject(this.modalData, formData);
+
+        if (prevselectedSpell !== this.modalData.selectedSpell.id) {
+
+            this.modalData.selectedSpell.metamagics = {
+                offensiveExpertise: 0,
+                defensiveExpertise: 0,
+                removeProtection: 0
+            }
+            const { spells } = this.modalData.actor.system.mystic;
+            const spell = spells.find(w => w._id === this.modalData.selectedSpell.id);
+            this.modalData.selectedSpell.spellGrade = 'base'
+            this.modalData.attainableSpellGrades = []
+            const intelligence = this.modalData.actor.system.characteristics.primaries.intelligence.value
+            const finalIntelligence = this.modalData.actor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+            for (const grade in spell?.system.grades) {
+                if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+                    this.modalData.attainableSpellGrades.push(grade)
+                }
+            }
+        }
+
         this.render();
     }
 }
