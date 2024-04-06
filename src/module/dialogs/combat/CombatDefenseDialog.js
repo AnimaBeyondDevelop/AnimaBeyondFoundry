@@ -759,7 +759,7 @@ export class CombatDefenseDialog extends FormApplication {
     );
     mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
     if (!mystic.supernaturalShield.newShield) {
-      mystic.metamagics = mergeObject(mystic.metamagics, mysticShield.system.metamagics);
+      mystic.metamagics = mergeObject(mystic.metamagics, mysticShield?.system.metamagics);
     }
 
     if (!psychic.supernaturalShield.shieldUsed) {
@@ -795,7 +795,7 @@ export class CombatDefenseDialog extends FormApplication {
     if (this.modalData.attacker.specialPorpuseAttack.openArmor) {
       combat.at.final = 0;
     }
-
+    console.log(this.modalData)
     return this.modalData;
   }
 

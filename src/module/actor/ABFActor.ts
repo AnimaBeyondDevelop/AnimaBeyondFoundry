@@ -309,12 +309,16 @@ export class ABFActor extends Actor {
       executeMacro(supShield.name ?? undefined, args);
       const { castedSpellId, castedPsychicPowerId } = supShield.system
       if (castedSpellId) {
-        const maintainedSpellId = this.getMaintainedSpells().find(ms => ms.system.castedSpellId === castedSpellId)._id
-        this.deleteInnerItem(ABFItems.MAINTAINED_SPELL, [maintainedSpellId])
+        const maintainedSpellId = this.getMaintainedSpells().find(ms => ms.system.castedSpellId === castedSpellId)?._id
+        if (maintainedSpellId) {
+          this.deleteInnerItem(ABFItems.MAINTAINED_SPELL, [maintainedSpellId])
+        }
       }
       if (castedPsychicPowerId) {
-        const innatePsychicPowerId = this.getInnatePsychicPowers().find(ms => ms.system.castedPsychicPowerId === castedPsychicPowerId)._id
-        this.deleteInnerItem(ABFItems.INNATE_PSYCHIC_POWER, [innatePsychicPowerId])
+        const innatePsychicPowerId = this.getInnatePsychicPowers().find(ms => ms.system.castedPsychicPowerId === castedPsychicPowerId)?._id
+        if (innatePsychicPowerId) {
+          this.deleteInnerItem(ABFItems.INNATE_PSYCHIC_POWER, [innatePsychicPowerId])
+        }
       }
     }
   }
@@ -341,7 +345,7 @@ export class ABFActor extends Actor {
       if (supShield?.system.damageBarrier > damage && !dobleDamage) { return }
     }
     const shieldValue = supShield?.system.shieldPoints;
-    const reducedArmorDamage = newCombatResult?.reducedArmor.ignoreArmor ? 200 : newCombatResult?.reducedArmor.value * 10
+    const reducedArmorDamage = newCombatResult?.reducedArmor?.ignoreArmor ? 200 : newCombatResult?.reducedArmor?.value * 10 ?? 0
     const newShieldPoints = dobleDamage ? shieldValue - reducedArmorDamage - damage * 2 : shieldValue - reducedArmorDamage - damage;
     if (newShieldPoints > 0) {
       this.updateItem({
