@@ -132,6 +132,14 @@
         inputName="system.localization.value"
         inputValue=system.localization.value
       }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="is-enchanted"
+        title=(localize "anima.ui.combat.armors.isImmutable.title")
+        inputType="checkbox"
+        inputName="system.isImmutable"
+        inputValue=system.isImmutable
+      }}
     {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
   {{/"systems/animabf/templates/common/ui/group.hbs"}}
 {{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

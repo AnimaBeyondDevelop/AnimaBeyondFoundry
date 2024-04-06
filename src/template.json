@@ -25,18 +25,14 @@
           "inhuman": { "value": false },
           "zen": { "value": false },
           "defenseType": { "value": "" },
-          "damageResistanceMultiple": { "value": 0 },
-          "damageReduction": { "value": 0 }
+          "damageResistanceMultiple": { "value": 0 }
         },
         "modifiers": {
           "physicalActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
           "allActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
           "pain": { "fatigue": { "value": 0 }, "physical": { "value": 0 }, "incapacitation": { "value": 0 }, "withstandPain": { "value": 0 } },
           "naturalPenalty": { "unreduced": { "value": 0 }, "reduction": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 }  },
-          "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
-          "extraDamage": { "value": 0 },
-          "criticLevel": { "value": 0 },
-          "damageBarrier": { "value": 0 }
+          "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } }
         },
         "conditions":{
           "damagePerTurn": { "value": 0 }
@@ -193,15 +189,23 @@
         "wearArmor": { "value": 0 },
         "totalArmor": {
           "at": {
-            "cut": { "value": 0 },
-            "impact": { "value": 0 },
-            "thrust": { "value": 0 },
-            "heat": { "value": 0 },
-            "electricity": { "value": 0 },
-            "cold": { "value": 0 },
-            "energy": { "value": 0 }
+            "cut": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "impact": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "thrust": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "heat": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "electricity": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "cold": { "special": { "value": 0 }, "final": { "value": 0 } },
+            "energy": { "special": { "value": 0 }, "final": { "value": 0 } }
           }
         },
+        "extraDamage": { "value": 0 },
+        "criticLevel": { "value": 0 },
+        "damageBarrier": { "value": 0 },
+        "damageReduction": { "value": 0 },
+        "extraReducedArmor": { "value": 0 },
+        "ignoreArmor": false ,
+        "immutableArmor": false,
+        "damageEnergy": false,
         "combatSpecialSkills": [],
         "combatTables": [],
         "ammo": [],
@@ -390,7 +394,6 @@
     },
     "armor": {
       "cut": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "pierce": { "base": { "value": 0 }, "final": { "value": 0 } },
       "impact": { "base": { "value": 0 }, "final": { "value": 0 } },
       "thrust": { "base": { "value": 0 }, "final": { "value": 0 } },
       "heat": { "base": { "value": 0 }, "final": { "value": 0 } },
@@ -402,7 +405,13 @@
       "movementRestriction":  { "base": { "value": 0 }, "final": { "value": 0 } },
       "naturalPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
       "perceptionPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } }
+      "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } },
+      "isEnchanted": { "value": false },
+      "type": { "value": "soft" },
+      "localization": { "value": "breastplate" },
+      "quality": { "value": 0 },
+      "equipped": { "value": false },
+      "isImmutable" : false
     },
     "poison": {
       "level": 0,
@@ -516,7 +525,11 @@
       "hasOwnStr": { "value": false },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } },
-      "damageEnergy": false
+      "damageEnergy": false,
+      "ignoreArmor": false,
+      "extraReducedArmor": { "value": 0 },
+      "damageAttribute": { "value": "strength" },
+      "baseDamageCalculation": { "value": "default" }
     },
     "supernaturalShield": {
       "type": { "value": "none" },

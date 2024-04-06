@@ -190,7 +190,8 @@ export class WSUserCombatManager extends WSCombatManager {
           damage: result.values.damage,
           distance: result.values.distance,
           specialPorpuseAttack: result.values.specialPorpuseAttack,
-          areaAttack: result.values.areaAttack
+          areaAttack: result.values.areaAttack,
+          reducedArmor: result.values.reducedArmor
         },
         defender,
         {

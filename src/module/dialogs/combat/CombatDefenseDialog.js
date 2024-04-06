@@ -42,6 +42,7 @@ const getInitialData = (attacker, defender) => {
       damage: attacker.damage,
       specialPorpuseAttack: attacker.specialPorpuseAttack,
       areaAttack: attacker.areaAttack,
+      reducedArmor: attacker.reducedArmor,
       energyAttack
     },
     defender: {
@@ -64,7 +65,7 @@ const getInitialData = (attacker, defender) => {
         weapon: undefined,
         unarmed: false,
         at: {
-          base: defenderActor.system.combat.totalArmor.at[attacker.critic]?.value ?? 0,
+          base: defenderActor.system.combat.totalArmor.at[attacker.critic]?.final.value ?? 0,
           special: 0,
           final: 0
         },
@@ -785,6 +786,8 @@ export class CombatDefenseDialog extends FormApplication {
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
 
     combat.at.final = combat.at.base + combat.at.special;
+
+    combat.at.final = this.defenderActor.getFinalArmor(combat.at.final, this.modalData.attacker.reducedArmor)
 
     if (this.modalData.attacker.specialPorpuseAttack.value !== 'none' && !this.modalData.attacker.specialPorpuseAttack.causeDamage) {
       combat.at.final = 0;

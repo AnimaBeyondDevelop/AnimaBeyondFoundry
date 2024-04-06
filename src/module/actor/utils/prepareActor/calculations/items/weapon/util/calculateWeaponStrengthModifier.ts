@@ -5,14 +5,15 @@ import { calculateAttributeModifier } from '../../../util/calculateAttributeModi
 import { WeaponDataSource } from '../../../../../../../types/Items';
 
 export const calculateWeaponStrengthModifier = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
-  const hasOnlyOneEquippedHandMultiplier =
-    getCurrentEquippedHand(weapon) === WeaponEquippedHandType.ONE_HANDED;
-
+  const hasOnlyOneEquippedHandMultiplier = getCurrentEquippedHand(weapon) === WeaponEquippedHandType.ONE_HANDED;
   const equippedHandMultiplier = hasOnlyOneEquippedHandMultiplier ? 1 : 2;
 
   if (weapon.system.hasOwnStr?.value) {
     return calculateAttributeModifier(weapon.system.weaponStrength.final.value);
   }
 
-  return data.characteristics.primaries.strength.mod * equippedHandMultiplier;
+  const damageAttribute = weapon.system.damageAttribute?.value;
+  const attributeModifier = data.characteristics.primaries[damageAttribute]?.mod ?? 0;
+
+  return attributeModifier * equippedHandMultiplier;
 };

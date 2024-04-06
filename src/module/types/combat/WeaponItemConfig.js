@@ -24,6 +24,16 @@ export const WeaponKnowledgeType = {
 };
 
 /**
+  * @readonly
+  * @enum {string}
+  */
+export const BaseDamageCalculationType = {
+  DEFAULT: 'default',
+  PRESENCE: 'presence',
+  DOUBLE_PRESENCE: 'doublePresence'
+};
+
+/**
  * @readonly
  * @enum {string}
  */
@@ -42,6 +52,29 @@ export const WeaponCritic = {
  * @enum {string}
  */
 export const NoneWeaponCritic = {
+  NONE: '-'
+};
+
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const Attribute = {
+  AGI: 'agility',
+  CON: 'constitution',
+  DEX: 'dexterity',
+  STR: 'strength',
+  INT: 'intelligence',
+  PER: 'perception',
+  POW: 'power',
+  WP: 'willPower'
+};
+
+/**
+ * @readonly
+ * @enum {string}
+ */
+export const NoneAttribute = {
   NONE: '-'
 };
 
@@ -156,7 +189,11 @@ export const INITIAL_WEAPON_DATA = {
     primary: { value: WeaponCritic.CUT },
     secondary: { value: NoneWeaponCritic.NONE }
   },
-  damageEnergy: false
+  damageEnergy: false,
+  ignoreArmor: false,
+  extraReducedArmor: { value: 0 },
+  damageAttribute: { value: Attribute.STR },
+  baseDamageCalculation: { value: BaseDamageCalculationType.DEFAULT }
 };
 
 /** @type {import("../Items").WeaponItemConfig} */

@@ -32,13 +32,13 @@ const DERIVED_DATA_FUNCTIONS = [
   mutateCombatData,
   mutateMovementType,
   mutateSecondariesData,
+  mutatePresence,
   mutateAmmoData,
   mutateWeaponsData,
   mutateInitiative,
   mutateMysticData,
   mutatePsychicData,
   mutateDomineData,
-  mutatePresence,
   mutateResistances,
 ];
 

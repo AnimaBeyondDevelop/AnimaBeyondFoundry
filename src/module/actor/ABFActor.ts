@@ -19,6 +19,8 @@ import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 import { shieldBarrierCheck } from '../combat/utils/shieldBarrierCheck.js';
 import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
 import { damageCheck } from '../combat/utils/damageCheck.js';
+import { ArmorLocation } from '../types/combat/ArmorItemConfig';
+import { WeaponShotType } from '../types/combat/WeaponItemConfig';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
@@ -920,6 +922,97 @@ export class ABFActor extends Actor {
       })
     }
     return castedPsychicPowerId
+  }
+
+  getDamageEnergy(item: any, psychicPotential?: number) {
+    if (item?.type === ABFItems.WEAPON || item === undefined) {
+      return item.system.damageEnergy || this.system.combat.damageEnergy
+    };
+    if (item?.type === ABFItems.SPELL) {
+      return item.system.damageEnergy
+    };
+    if (item?.type === ABFItems.PSYCHIC_POWER && psychicPotential) {
+      return item.system.damageEnergy.value >= psychicPotential
+    };
+    return false
+  }
+
+  getFinalArmor(at: number, reducedArmor?: any) {
+    const equippedArmors = this.getArmors().filter(
+      (armor: any) => armor.system.equipped.value && armor.system.localization.value !== ArmorLocation.HEAD
+    );
+
+    const isImmutable = equippedArmors.find((i: any) => i.system.isImmutable == true) !== undefined || this.system.combat.immutableArmor;
+    let finalAt = 0;
+    if (isImmutable && reducedArmor?.ignoreArmor) {
+      finalAt = Math.ceil(at / 2);
+    }
+    else if (isImmutable) {
+      finalAt = at;
+    }
+    else if (reducedArmor?.ignoreArmor) {
+      finalAt = 0;
+    }
+    else {
+      finalAt = at - (reducedArmor?.value ?? 0);
+    }
+
+    return Math.clamped(finalAt, 0, 10);
+  }
+
+  getReducedArmor(weapon: any) {
+    const reducedArmor = { ignoreArmor: false, value: 0 };
+    let quality = 0
+    if (weapon) {
+      quality = weapon.system.quality.value;
+      if (
+        weapon.system.isRanged.value &&
+        weapon.system.shotType.value === WeaponShotType.SHOT
+      ) {
+        quality = weapon.system.ammo?.system.quality.value ?? 0;
+      }
+    }
+
+    const weaponReducedArmor = weapon === undefined ? 0 : (Math.max(quality, 0) / 5) + weapon.system.extraReducedArmor.value;
+    const actorReducedArmor = this.system.combat.extraReducedArmor.value;
+
+    const weaponIgnoreArmor = weapon === undefined ? false : weapon.system.ignoreArmor;
+    const actorIgnoreArmor = this.system.combat.ignoreArmor;
+
+    reducedArmor.value = weaponReducedArmor + actorReducedArmor;
+    reducedArmor.ignoreArmor = weaponIgnoreArmor || actorIgnoreArmor;
+
+    return reducedArmor;
+  }
+
+  applyDestroyArmor(destroyArmor: number, type?: string, totalArmor?: boolean) {
+    if (totalArmor) {
+      const newTotalArmor = this.system.combat.totalArmor.at;
+      for (const at in newTotalArmor) {
+        newTotalArmor[at].special.value -= destroyArmor
+      }
+      this.update({
+        system: {
+          combat: {
+            totalArmor: { at: newTotalArmor }
+          }
+        }
+      });
+    } else {
+      const specialAt =
+        this.system.combat.totalArmor.at[type ?? '']?.special.value - destroyArmor;
+      this.update({
+        system: {
+          combat: {
+            totalArmor: {
+              at: {
+                [type ?? '']: { special: { value: specialAt } }
+              }
+            }
+          }
+        }
+      });
+    }
   }
 
   applyDamage(damage: number) {

@@ -3,7 +3,6 @@ import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemCon
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { weaponSpecialCheck } from '../../combat/utils/weaponSpecialCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
-import { damageEnergyCheck } from '../../combat/utils/damageEnergyCheck.js';
 import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
 import { supSpecificAttack } from '../../combat/utils/supSpecificAttack.js';
 import { roundTo5Multiples } from '../../combat/utils/roundTo5Multiples';
@@ -461,6 +460,8 @@ export class CombatAttackDialog extends FormApplication {
         if (weapon !== undefined) {
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
         }
+        let damageEnergy = this.attackerActor.getDamageEnergy(weapon)
+        let reducedArmor = this.attackerActor.getReducedArmor(weapon)
 
         const rolled = roll.total - counterAttackBonus - attack - (combatModifier ?? 0);
 
@@ -486,7 +487,8 @@ export class CombatAttackDialog extends FormApplication {
             attackerCombatMod,
             poison,
             areaAttack: this.modalData.ui.multipleTargets && !specialPorpuseAttack.areaAttack,
-            damageEnergy: damageEnergyCheck(weapon)
+            damageEnergy,
+            reducedArmor
           }
         });
 
@@ -571,6 +573,8 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
+        let damageEnergy = this.attackerActor.getDamageEnergy(spell)
+
         const rolled = roll.total - magicProjection.final - (combatModifier ?? 0);
 
         this.hooks.onAttack({
@@ -596,7 +600,7 @@ export class CombatAttackDialog extends FormApplication {
             macro: spell.macro,
             attackerCombatMod,
             areaAttack,
-            damageEnergy: damageEnergyCheck(spell)
+            damageEnergy
           }
         });
 
@@ -700,6 +704,7 @@ export class CombatAttackDialog extends FormApplication {
         let damage = damageCheck(powerUsedEffect) + damageModifier;
         let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let visibleCheck = power?.system.visible;
+        let damageEnergy = this.attackerActor.getDamageEnergy(power, psychicPotentialRoll.total)
 
         const rolled =
           psychicProjectionRoll.total - psychicProjection.final - (combatModifier ?? 0);
@@ -726,7 +731,7 @@ export class CombatAttackDialog extends FormApplication {
             macro: power.macro,
             attackerCombatMod,
             areaAttack,
-            damageEnergy: damageEnergyCheck(power, psychicPotentialRoll.total)
+            damageEnergy
           }
         });
 

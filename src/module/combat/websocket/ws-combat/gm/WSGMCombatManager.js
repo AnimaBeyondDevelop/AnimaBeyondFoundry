@@ -46,6 +46,7 @@ export class WSGMCombatManager extends WSCombatManager {
       const { distance } = msg.payload.values;
       const { specialPorpuseAttack } = msg.payload.values;
       const { areaAttack } = msg.payload.values;
+      const { reducedArmor } = msg.payload.values;
 
       for (let i = 0; i < defendersToken.length; i++) {
 
@@ -72,7 +73,8 @@ export class WSGMCombatManager extends WSCombatManager {
               damage,
               distance,
               specialPorpuseAttack,
-              areaAttack);
+              areaAttack,
+              reducedArmor);
           } catch (err) {
             if (err) {
               Log.error(err);
@@ -343,6 +345,7 @@ export class WSGMCombatManager extends WSCombatManager {
                 const { distance } = result.values;
                 const { specialPorpuseAttack } = result.values;
                 const { areaAttack } = result.values;
+                const { reducedArmor } = result.values;
 
                 try {
                   this.manageDefense(
@@ -355,7 +358,8 @@ export class WSGMCombatManager extends WSCombatManager {
                     damage,
                     distance,
                     specialPorpuseAttack,
-                    areaAttack);
+                    areaAttack,
+                    reducedArmor);
                 } catch (err) {
                   if (err) {
                     Log.error(err);
@@ -382,7 +386,8 @@ export class WSGMCombatManager extends WSCombatManager {
     damage,
     distance,
     specialPorpuseAttack,
-    areaAttack) {
+    areaAttack,
+    reducedArmor) {
     if (!this.defenseDialog) {
       this.defenseDialog = { [defender._id]: undefined }
     }
@@ -396,7 +401,8 @@ export class WSGMCombatManager extends WSCombatManager {
         damage,
         distance,
         specialPorpuseAttack,
-        areaAttack
+        areaAttack,
+        reducedArmor
       },
       defender,
       {

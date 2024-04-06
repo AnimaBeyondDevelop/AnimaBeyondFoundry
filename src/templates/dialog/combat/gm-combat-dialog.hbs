@@ -425,12 +425,12 @@
                 </div>
               {{/if}}
             {{else}}
-              {{#if (and (is "gt" this.defender.actor.system.general.modifiers.damageBarrier.value 0) (is "neq" this.attacker.result.values.damageEnergy true))}}
+              {{#if (and (is "gt" this.defender.actor.system.combat.damageBarrier.value 0) (is "neq" this.attacker.result.values.damageEnergy true))}}
               <div class="supernatural-shield">
                   {{>
                   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                     class="damage-barrier"
-                    title=(concat (localize 'macros.combat.dialog.damageBarrier.title') " " this.defender.actor.system.general.modifiers.damageBarrier.value)
+                    title=(concat (localize 'macros.combat.dialog.damageBarrier.title') " " this.defender.actor.system.combat.damageBarrier.value)
                     inputType="checkbox"
                     disabled=false
                     inputName="defender.damageBarrier"

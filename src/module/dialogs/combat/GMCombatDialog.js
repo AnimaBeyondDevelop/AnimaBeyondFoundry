@@ -1,7 +1,6 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateCharacteristicImbalance } from '../../combat/utils/calculateCharacteristicImbalance';
-import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import { getGeneralLocation } from '../../combat/utils/getGeneralLocation';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
@@ -179,7 +178,7 @@ export class GMCombatDialog extends FormApplication {
         directed,
         generalLocation,
         location,
-        criticLevel: this.attackerActor.system.general.modifiers.criticLevel.value,
+        criticLevel: this.attackerActor.system.combat.criticLevel.value,
         defender: this.defenderToken.name
       }
       this.hooks.onRollRequest(this.attackerToken, { type: 'critic', critic })
@@ -269,7 +268,7 @@ export class GMCombatDialog extends FormApplication {
     result.values.initialTotal ||= result.values.total;
     result.values.total = Math.max(0, result.values.total);
     defender.result = result;
-    defender.damageBarrier = this.defenderActor.system.general.modifiers.damageBarrier.value > 0
+    defender.damageBarrier = this.defenderActor.system.combat.damageBarrier.value > 0
 
     if (result.type === 'mystic') {
       const { spells } = this.defenderActor.system.mystic;
@@ -393,17 +392,14 @@ export class GMCombatDialog extends FormApplication {
       const isNonLethalDamage =
         specialPorpuseAttack.value === 'disable' || specialPorpuseAttack.value === 'knockOut';
 
-      const { modifiers: { damageBarrier }, settings: { damageReduction } } = this.defenderActor.system.general;
+      const { damageBarrier, damageReduction } = this.defenderActor.system.combat;
       if (attacker.result.values.damageEnergy) { defender.damageBarrier = false };
 
       if (this.isDamagingCombat) {
         const combatResult = calculateCombatResult(
           attackerTotal,
           defenderTotal,
-          Math.max(
-            defender.result.values.at - calculateATReductionByQuality(attacker.result),
-            0
-          ),
+          Math.max(defender.result.values.at, 0),
           attacker.result.values.damage,
           defender.result.type === 'resistance' ? defender.result.values.surprised : false,
           defender.damageBarrier ? damageBarrier.value : 0,
@@ -595,7 +591,7 @@ export class GMCombatDialog extends FormApplication {
   async applyDamageSupernaturalShieldIfBeAble(supShieldId) {
     const { attacker, defender } = this.modalData;
     const { dobleDamage, immuneToDamage } = defender.supernaturalShield;
-    const {  modifiers: { damageBarrier }, settings: { damageReduction } } = this.defenderActor.system.general;
+    const { damageBarrier, damageReduction } = this.defenderActor.system.combat;
     const { damageEnergy } = attacker.result.values
     const defenderIsWinner =
       this.modalData.calculations.winner === this.defenderToken;
@@ -619,10 +615,7 @@ export class GMCombatDialog extends FormApplication {
           attacker.result.values.total + attacker.customModifier,
           0
         );
-        newCombatResult.at = Math.max(
-          defender.result.values.at - calculateATReductionByQuality(attacker.result),
-          0
-        );
+        newCombatResult.at = Math.max(defender.result.values.at, 0);
         newCombatResult.halvedAbsorption =
           defender.result.type === 'resistance'
             ? defender.result.values.surprised

@@ -1,6 +1,7 @@
 import {
   WeaponShotType,
-  WeaponSizeProportion
+  WeaponSizeProportion,
+  BaseDamageCalculationType
 } from '../../../../../../../types/combat/WeaponItemConfig';
 import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
@@ -20,10 +21,29 @@ const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
   return damage;
 };
 
+const getBaseDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
+  let baseDamage = 0;
+
+  switch (weapon.system.baseDamageCalculation?.value) {
+    case BaseDamageCalculationType.DEFAULT:
+      baseDamage = weapon.system.damage.base.value;
+      break;
+    case BaseDamageCalculationType.PRESENCE:
+      baseDamage = data.general.presence.final.value;
+      break;
+    case BaseDamageCalculationType.DOUBLE_PRESENCE:
+      baseDamage = data.general.presence.final.value * 2;
+      break;
+    default:
+      baseDamage = 0;
+  }
+  return baseDamage;
+};
+
 export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
   const getDamage = () => {
     const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
-    const extraDamage = data.general.modifiers.extraDamage.value;
+    const extraDamage = data.combat.extraDamage.value;
 
     if (weapon.system.isRanged.value && weapon.system.shotType.value === WeaponShotType.SHOT) {
       const { ammo } = weapon.system;
@@ -41,7 +61,7 @@ export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDa
       return 0;
     }
 
-    return addSizeModifier(weapon, weapon.system.damage.base.value) + weaponStrengthModifier + extraDamage + weapon.system.quality.value * 2;
+    return addSizeModifier(weapon, getBaseDamage(weapon, data)) + weaponStrengthModifier + extraDamage + weapon.system.quality.value * 2;
   };
 
   return Math.max(getDamage(), 0);

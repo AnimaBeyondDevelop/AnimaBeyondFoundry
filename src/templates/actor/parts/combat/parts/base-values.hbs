@@ -61,22 +61,53 @@
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="extra-damage"
       title=(localize "anima.ui.combat.baseValues.extraDamage.title")
-      inputName="system.general.modifiers.extraDamage.value"
-      inputValue=system.general.modifiers.extraDamage.value
+      inputName="system.combat.extraDamage.value"
+      inputValue=system.combat.extraDamage.value
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="critic-level"
       title=(localize "anima.ui.combat.baseValues.criticLevel.title")
-      inputName="system.general.modifiers.criticLevel.value"
-      inputValue=system.general.modifiers.criticLevel.value
+      inputName="system.combat.criticLevel.value"
+      inputValue=system.combat.criticLevel.value
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="damage-barrier"
       title=(localize "anima.ui.combat.baseValues.damageBarrier.title")
-      inputName="system.general.modifiers.damageBarrier.value"
-      inputValue=system.general.modifiers.damageBarrier.value
+      inputName="system.combat.damageBarrier.value"
+      inputValue=system.combat.damageBarrier.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="extra-reduced-armor"
+      title=(localize "anima.ui.combat.baseValues.extraReducedArmor.title")
+      inputName="system.combat.extraReducedArmor.value"
+      inputValue=system.combat.extraReducedArmor.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="ignore-armor"
+      title=(localize "anima.ui.combat.baseValues.ignoreArmor.title")
+      inputType="checkbox"
+      inputName="system.combat.ignoreArmor"
+      inputValue=system.combat.ignoreArmor
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="immutable-armor"
+      title=(localize "anima.ui.combat.baseValues.immutableArmor.title")
+      inputType="checkbox"
+      inputName="system.combat.immutableArmor"
+      inputValue=system.combat.immutableArmor
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="damage-energy"
+      title=(localize "anima.ui.combat.baseValues.damageEnergy.title")
+      inputType="checkbox"
+      inputName="system.combat.damageEnergy"
+      inputValue=system.combat.damageEnergy
     }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

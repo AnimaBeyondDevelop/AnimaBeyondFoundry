@@ -31,8 +31,7 @@ export const INITIAL_ACTOR_DATA = {
       zen: { value: false },
       perceivePsychic: { value: false },
       defenseType: { value: '' },
-      damageResistanceMultiple: { value: 0 },
-      damageReduction: { value: 0 }
+      damageResistanceMultiple: { value: 0 }
     },
     modifiers: {
       physicalActions: {
@@ -98,19 +97,10 @@ export const INITIAL_ACTOR_DATA = {
         withstandPain: {
           value: 0
         }
-      },
-      extraDamage: {
-        value: 0
-      },
-      criticLevel: {
-        value: 0
-      },
-      damageBarrier: {
-        value: 0
       }
     },
     conditions: {
-      damagePerTurn:{
+      damagePerTurn: {
         value: 0
       }
     },
@@ -1142,28 +1132,81 @@ export const INITIAL_ACTOR_DATA = {
     totalArmor: {
       at: {
         cut: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         impact: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         thrust: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         heat: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         electricity: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         cold: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         energy: {
-          value: 0
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         }
       }
     },
+    extraDamage: {
+      value: 0
+    },
+    criticLevel: {
+      value: 0
+    },
+    damageBarrier: {
+      value: 0
+    },
+    damageReduction: {
+      value: 0
+    },
+    extraReducedArmor: {
+      value: 0
+    },
+    ignoreArmor: false,
+    immutableArmor: false,
+    damageEnergy: false,
     combatSpecialSkills: [],
     combatTables: [],
     ammo: [],
@@ -1192,7 +1235,7 @@ export const INITIAL_ACTOR_DATA = {
     },
     zeonMaintained: {
       base: {
-      value: 0
+        value: 0
       },
       final: {
         value: 0
