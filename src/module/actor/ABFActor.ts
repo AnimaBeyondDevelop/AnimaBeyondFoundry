@@ -131,6 +131,44 @@ export class ABFActor extends Actor {
     }
   }
 
+  async rollCharacteristic(characteristic: string, bonus = 0, sendToChat = true) {
+    const name = game.i18n.localize(`anima.ui.characteristics.${characteristic}.title`);
+    const { primaries } = this.system.characteristics;
+
+    const characteristicValue = primaries[characteristic].value;
+    const label = name ? `Rolling ${name}` : '';
+    const mod = await openModDialog(name);
+    let formula = `1d10ControlRoll + ${characteristicValue} + ${mod + bonus ?? 0}`;
+    const roll = new ABFFoundryRoll(formula, this.system);
+    roll.roll();
+    if (sendToChat) {
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor: label
+      });
+    }
+    return roll.total;
+  }
+
+  async rollResistance(resistance: string, bonus = 0, sendToChat = true) {
+    const name = game.i18n.localize(`anima.ui.resistances.${resistance}`);
+    const { resistances } = this.system.characteristics.secondaries;
+
+    const resistancesValue = resistances[resistance].final.value;
+    const label = name ? `Rolling ${name}` : '';
+    const mod = await openModDialog(name);
+    let formula = `1d100 + ${resistancesValue} + ${mod + bonus ?? 0}`;
+    const roll = new ABFFoundryRoll(formula, this.system);
+    roll.roll();
+    if (sendToChat) {
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor: label
+      });
+    }
+    return roll.total;
+  }
+
   /**
    * Rolls an ability check for the ABFActor class.
    * 
