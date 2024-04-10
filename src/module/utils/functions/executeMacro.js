@@ -11,17 +11,29 @@ export const executeMacro = (name, args) => {
   if (!name) { return }
   setTimeout(() => {
     const macro = game.macros.getName(name);
+    console.debug(args)
     if (macro) {
       macro.execute(args);
     } else {
       console.debug(`Macro '${name}' not found.`);
+      let defaultMacroName = ''
       if (args.shieldId) {
-        const macroShieldDefault = game.settings.get(
+        defaultMacroName = game.settings.get(
           'animabf',
           ABFSettingsKeys.MACRO_SHIELD_DEFAULT
         );
-        game.macros.getName(macroShieldDefault)?.execute(args);
+      } else if (args.projectile?.name) {
+        defaultMacroName = game.settings.get(
+          'animabf',
+          ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
+        );
+      } else {
+        defaultMacroName = game.settings.get(
+          'animabf',
+          ABFSettingsKeys.MACRO_ATTACK_DEFAULT
+        );
       }
+      game.macros.getName(defaultMacroName)?.execute(args);
     }
   }, 250);
 };
