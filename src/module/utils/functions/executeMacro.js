@@ -1,7 +1,7 @@
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 /**
  * Executes a macro with a given name and arguments after a delay of 0.250 seconds.
- * It is delay so the animation does not start at the same time that the combat dialog closes.
+ * It is delayed so the animation does not start at the same time that the combat dialog closes.
  * 
  * @param {string} [name] - The name of the macro to execute.
  * @param {object} [args] - The arguments to pass to the macro.
@@ -9,20 +9,31 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
  */
 export const executeMacro = (name, args) => {
   if (!name) { return }
-  const macroShieldDefault = game.settings.get(
-    'animabf',
-    ABFSettingsKeys.MACRO_SHIELD_DEFAULT
-  );
   setTimeout(() => {
     const macro = game.macros.getName(name);
+    console.debug(args)
     if (macro) {
-      console.debug(args);
       macro.execute(args);
     } else {
       console.debug(`Macro '${name}' not found.`);
+      let defaultMacroName = ''
       if (args.shieldId) {
-        game.macros.getName(macroShieldDefault)?.execute(args);
+        defaultMacroName = game.settings.get(
+          'animabf',
+          ABFSettingsKeys.MACRO_SHIELD_DEFAULT
+        );
+      } else if (args.projectile?.name) {
+        defaultMacroName = game.settings.get(
+          'animabf',
+          ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
+        );
+      } else {
+        defaultMacroName = game.settings.get(
+          'animabf',
+          ABFSettingsKeys.MACRO_ATTACK_DEFAULT
+        );
       }
+      game.macros.getName(defaultMacroName)?.execute(args);
     }
   }, 250);
 };

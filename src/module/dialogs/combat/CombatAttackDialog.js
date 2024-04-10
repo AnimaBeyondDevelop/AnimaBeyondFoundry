@@ -340,6 +340,9 @@ export class CombatAttackDialog extends FormApplication {
             value: true,
             type: weapon.system.shotType.value
           };
+          if (weapon.system.shotType.value === 'shot') {
+            projectile.name = weapon.system.ammo?.name
+          }
           if (
             (!distance.enable && distance.check) ||
             (distance.enable && distance.value <= 1)

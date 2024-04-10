@@ -3,6 +3,7 @@ import { calculateCombatResult } from '../../combat/utils/calculateCombatResult'
 import { calculateCharacteristicImbalance } from '../../combat/utils/calculateCharacteristicImbalance';
 import { getGeneralLocation } from '../../combat/utils/getGeneralLocation';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
+import { executeMacro } from '../../utils/functions/executeMacro';
 
 const getInitialData = (attacker, defenders, options = {}) => {
 
@@ -644,14 +645,6 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
-    const macroAttackDefault = game.settings.get(
-      'animabf',
-      ABFSettingsKeys.MACRO_ATTACK_DEFAULT
-    );
-    const macroPorjectileDefault = game.settings.get(
-      'animabf',
-      ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
-    );
     const macroPrefixAttack = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
@@ -694,33 +687,19 @@ export class GMCombatDialog extends FormApplication {
       }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
-      if (attacker.result.values.projectile.type === 'shot') {
-        macroName = macroPorjectileDefault;
-
-      }
     } else if (attacker.result?.type === 'mystic') {
       macroName = attacker.result.values.spellName;
     } else if (attacker.result?.type === 'psychic') {
       macroName = attacker.result.values.powerName;
     }
 
-    if (
-      attacker.result?.values.macro !== undefined &&
-      attacker.result?.values.macro !== ''
-    ) {
+    if (attacker.result?.values.macro) {
       macroName = attacker.result?.values.macro;
     }
     this.modalData.combatMacroArgs.defenders.push(defenderArgs)
     if (execute) {
-
-      let macro = game.macros.getName(macroName) ?? game.macros.getName(macroAttackDefault);
       const args = this.modalData.combatMacroArgs
-      if (macro) {
-        console.debug(args);
-        macro.execute(args);
-      } else {
-        console.debug(`Macro '${macroName}' not found.`);
-      }
+      executeMacro(macroName, args)
     }
   }
 }
