@@ -21,17 +21,18 @@ export const calculateDamage = (attack: number, defense: number, at: number, dam
     if (halvedAbs) abs = abs / 2;
     percent = Math.floor((diference - abs) / 10) * 10;
   }
+  if (damageBarrier && damage < damageBarrier) {
+    damage = 0
+  }
+
+  if (damageReduction && damage) {
+    damage = Math.max(damage + damageReduction, 0)
+  }
 
   let damageRoundedToCeil10Multiplier = Math.ceil(damage / 10) * 10;
 
   let dealDamage = (damageRoundedToCeil10Multiplier * percent) / 100;
 
-  if (damageBarrier && dealDamage < damageBarrier) {
-    dealDamage = 0
-  } else if (damageReduction) {
-    damageRoundedToCeil10Multiplier = Math.ceil((damage + damageReduction) / 10) * 10;
-    dealDamage = (damageRoundedToCeil10Multiplier * percent) / 100;
-  }
 
   return Math.max(dealDamage, 0);
 };

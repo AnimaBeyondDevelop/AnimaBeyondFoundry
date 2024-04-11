@@ -382,6 +382,7 @@ export class ABFActor extends Actor {
     if (supShield?.system.damageBarrier && !newCombatResult?.damageEnergy) {
       if (supShield?.system.damageBarrier > damage && !dobleDamage) { return }
     }
+    damage = Math.max(damage + newCombatResult.damageReduction, 0)
     const shieldValue = supShield?.system.shieldPoints;
     const reducedArmorDamage = newCombatResult?.reducedArmor?.ignoreArmor ? 200 : newCombatResult?.reducedArmor?.value * 10 ?? 0
     const newShieldPoints = dobleDamage ? shieldValue - reducedArmorDamage - damage * 2 : shieldValue - reducedArmorDamage - damage;
