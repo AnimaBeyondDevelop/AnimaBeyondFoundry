@@ -21,7 +21,8 @@
           "inmaterial": { "value": false },
           "inhuman": { "value": false },
           "zen": { "value": false },
-          "defenseType": { "value": "" }
+          "defenseType": { "value": "" },
+          "immuneToCritic": false
         },
         "modifiers": {
           "physicalActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },

@@ -569,6 +569,7 @@
   "anima.ui.settings.advancedSettings.title": "Opciones avanzadas",
   "anima.ui.settings.automationOptions.title": "Opciones de automatización",
   "anima.ui.settings.automationOptions.calculateFatigueModifier.title": "Calcular penalizador por cansancio",
+  "anima.ui.settings.advancedCharacteristics.immuneToCritic": "Inmune al crítico",
   "anima.ui.settings.advancedCharacteristics.zen": "Zen",
   "anima.ui.settings.advancedCharacteristics.inhuman": "Inhumano",
   "anima.ui.settings.advancedCharacteristics.inmaterial": "Inmaterial",

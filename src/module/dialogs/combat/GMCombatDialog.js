@@ -406,7 +406,7 @@ export class GMCombatDialog extends FormApplication {
         };
       }
 
-      if (this.canApplyDamage) {
+      if (this.canApplyDamage && !this.defenderActor.system.general.settings.immuneToCritic) {
         this.modalData.calculations.canCritic = specialPorpuseAttack.weakspot
           ? this.modalData.calculations.damage >= lifePoints / 10
           : this.modalData.calculations.damage >= lifePoints / 2;

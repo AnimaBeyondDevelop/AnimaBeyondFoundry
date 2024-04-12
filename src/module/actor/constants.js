@@ -27,7 +27,8 @@ export const INITIAL_ACTOR_DATA = {
       inhuman: { value: false },
       zen: { value: false },
       perceivePsychic: { value: false },
-      defenseType: { value: '' }
+      defenseType: { value: '' },
+      immuneToCritic: false
     },
     modifiers: {
       physicalActions: {

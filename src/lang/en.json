@@ -568,6 +568,7 @@
   "anima.ui.settings.advancedSettings.title": "Advanced Settings",
   "anima.ui.settings.automationOptions.title": "Automation options",
   "anima.ui.settings.automationOptions.calculateFatigueModifier.title": "Calculate fatigue modifier",
+  "anima.ui.settings.advancedCharacteristics.immuneToCritic": "Immune to Critic",
   "anima.ui.settings.advancedCharacteristics.zen": "Zen",
   "anima.ui.settings.advancedCharacteristics.inhuman": "Inhuman",
   "anima.ui.settings.advancedCharacteristics.inmaterial": "Inmaterial",
