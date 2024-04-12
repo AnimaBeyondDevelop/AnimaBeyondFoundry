@@ -944,6 +944,7 @@
   "macros.combat.dialog.total.title": "Total",
   "macros.combat.dialog.dobleDamage.title": "Escudo recibe el doble de daño",
   "macros.combat.dialog.immuneToDamage.title": "Escudo inmune al tipo de daño",
+  "macros.combat.dialog.damageBarrier.title": "Barrera de daño",
   "macros.combat.dialog.waitRequest.title": "Petición de ataque enviada. Esperando respuesta del GM...",
   "macros.combat.dialog.waitingAttack.title": "Esperando por el atacante...",
   "macros.combat.dialog.waitingDefense.title": "Esperando por el defensor...",
