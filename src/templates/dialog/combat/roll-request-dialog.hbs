@@ -45,13 +45,21 @@
     {{#if (is "eq" this.roll.type "critic")}}
       {{>
       "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-        title=(localize 'anima.ui.combat.baseValues.criticLevel.title')
+        title=(localize 'macros.combat.dialog.criticLevel.title')
         disabled=true
         inputName="critic.criticLevel"
         inputValue=this.critic.criticLevel
       }}
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize "anima.ui.combat.baseValues.criticLevel.title")
+        disabled=true
+        inputName="roll.value"
+        inputValue=this.roll.value
+      }}
     {{/if}}
 
+    {{#if (is "neq" this.roll.type "critic")}}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize "macros.combat.dialog.rollValue.title")
@@ -59,6 +67,7 @@
       inputName="roll.value"
       inputValue=this.roll.value
     }}
+    {{/if}}
 
     {{#if (is "eq" this.roll.type "resistance")}}
       {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'

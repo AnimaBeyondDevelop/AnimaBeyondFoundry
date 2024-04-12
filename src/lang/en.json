@@ -791,6 +791,7 @@
   "macros.combat.dialog.difference.title": "Difference",
   "macros.combat.dialog.dodgeButton.title": "Try to dodge",
   "macros.combat.dialog.dodgeValue.title": "Dodge value",
+  "macros.combat.dialog.criticLevel.title": "Critic Bonus",
   "macros.combat.dialog.rolling.title": "Roll Check",
   "macros.combat.dialog.rolling.oppousedCheck.title": "Oppoused Check",
   "macros.combat.dialog.rolling.critic.title": "Critic",

@@ -795,6 +795,7 @@
   "macros.combat.dialog.rolling.oppousedCheck.title": "Control Enfrentado de Característica",
   "macros.combat.dialog.rolling.critic.title": "Crítico",
   "macros.combat.dialog.rolling.resistance.title": "Resistencia",
+  "macros.combat.dialog.criticLevel.title": "Bono al Crítico",
   "macros.combat.dialog.rollValue.title": "Valor base",
   "macros.combat.dialog.rollSent.title": "Tirada enviada. Esperando a los resultados del combate...",
   "macros.combat.dialog.rollButton.title": "Tirar Dado",
