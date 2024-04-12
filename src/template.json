@@ -26,7 +26,7 @@
         "modifiers": {
           "physicalActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
           "allActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
-          "pain": { "fatigue": { "value": 0 }, "physical": { "value": 0 }, "incapacitation": { "value": 0 }, "withstandPain": { "value": 0 } },
+          "penalties": { "fatigue": { "value": 0 }, "pain": { "value": 0 }, "physicalDeficiency": { "value": 0 }, "withstandPain": { "value": 0 } },
           "naturalPenalty": { "unreduced": { "value": 0 }, "reduction": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 }  },
           "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
           "extraDamage": { "value": 0 },

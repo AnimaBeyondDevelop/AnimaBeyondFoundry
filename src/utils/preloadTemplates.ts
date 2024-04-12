@@ -150,7 +150,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/settings/parts/advancedCharacteristics.hbs',
     'systems/animabf/templates/actor/parts/status/status.hbs',
     'systems/animabf/templates/actor/parts/status/parts/effects-list.hbs',
-    'systems/animabf/templates/actor/parts/status/parts/pain-modifiers.hbs'
+    'systems/animabf/templates/actor/parts/status/parts/penalties.hbs'
   ];
 
   return loadTemplates(templatePaths);

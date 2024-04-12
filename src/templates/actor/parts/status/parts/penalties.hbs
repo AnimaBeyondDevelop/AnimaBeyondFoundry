@@ -1,0 +1,43 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="penalties"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.status.penalties.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="penalties"
+  }}
+    {{>
+    "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      class="fatigue"
+      title=(localize "anima.ui.status.penalties.fatigue.title")
+      inputName="system.general.modifiers.penalties.fatigue.value"
+      inputValue=system.general.modifiers.penalties.fatigue.value
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      class="pain"
+      title=(localize "anima.ui.status.penalties.pain.title")
+      inputName="system.general.modifiers.penalties.pain.value"
+      inputValue=system.general.modifiers.penalties.pain.value
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      class="physical-deficiency"
+      title=(localize "anima.ui.status.penalties.physicalDeficiency.title")
+      inputName="system.general.modifiers.penalties.physicalDeficiency.value"
+      inputValue=system.general.modifiers.penalties.physicalDeficiency.value
+    }}
+
+    {{>
+    "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      class="withstandPain"
+      title=(localize "anima.ui.status.penalties.withstandPain.title")
+      inputName="system.general.modifiers.penalties.withstandPain.value"
+      inputValue=system.general.modifiers.penalties.withstandPain.value
+    }}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

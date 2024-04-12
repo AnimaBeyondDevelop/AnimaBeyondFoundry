@@ -80,14 +80,14 @@ export const INITIAL_ACTOR_DATA = {
           value: 0
         }
       },
-      pain: {
+      penalties: {
         fatigue: {
           value: 0
         },
-        physical: {
+        pain: {
           value: 0
         },
-        incapacitation: {
+        physicalDeficiency: {
           value: 0
         },
         withstandPain: {

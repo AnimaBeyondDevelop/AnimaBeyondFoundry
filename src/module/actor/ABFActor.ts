@@ -74,48 +74,48 @@ export class ABFActor extends Actor {
   }
 
   applyCriticEffect(criticLevel: number) {
-    const { pain } = this.system.general.modifiers;
-    const newPhysicalPain =
-      pain.physical.value - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
-    const newIncapacitationPain =
-      pain.incapacitation.value - (criticLevel > 50 ? Math.round(criticLevel / 2) : 0);
+    const { penalties } = this.system.general.modifiers;
+    const newPain =
+    penalties.pain.value - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
+    const newPhysicalDeficiency =
+    penalties.physicalDeficiency.value - (criticLevel > 50 ? Math.round(criticLevel / 2) : 0);
 
     this.update({
       system: {
         general: {
-          modifiers: { pain: { physical: { value: newPhysicalPain }, incapacitation: { value: newIncapacitationPain } } }
+          modifiers: { penalties: { pain: { value: newPain }, physicalDeficiency: { value: newPhysicalDeficiency } } }
         }
       }
     });
   }
 
   async withstandPain(sendToChat = true) {
-    const { pain } = this.system.general.modifiers;
+    const { penalties } = this.system.general.modifiers;
     const withstandPainRoll = await this.rollAbility('withstandPain', 0, sendToChat)
     const { inhuman, zen } = this.system.general.settings;
     const withstandPainTotal = difficultyAchieved(withstandPainRoll, 0, inhuman, zen)
     const withstandPain = withstandPainBonus(withstandPainTotal)
     const newWithstandPain =
-      pain.withstandPain.value > withstandPain ? pain.withstandPain.value : withstandPain;
+    penalties.withstandPain.value > withstandPain ? penalties.withstandPain.value : withstandPain;
 
     this.update({
       system: {
         general: {
-          modifiers: { pain: { withstandPain: { value: newWithstandPain } } }
+          modifiers: { penalties: { withstandPain: { value: newWithstandPain } } }
         }
       }
     });
     return newWithstandPain
   }
 
-  physicalPainDisappearing(reset: boolean) {
-    const { pain } = this.system.general.modifiers;
-    const newPhysicalPain = pain.physical.value + 5;
+  painDisappearing(reset: boolean) {
+    const { penalties } = this.system.general.modifiers;
+    const newPain = penalties.pain.value + 5;
     if (reset) {
       this.update({
         system: {
           general: {
-            modifiers: { pain: { physical: { value: 0 } } }
+            modifiers: { penalties: { pain: { value: 0 } } }
           }
         }
       });
@@ -123,7 +123,7 @@ export class ABFActor extends Actor {
       this.update({
         system: {
           general: {
-            modifiers: { pain: { physical: { value: Math.min(newPhysicalPain, 0) } } }
+            modifiers: { penalties: { pain: { value: Math.min(newPain, 0) } } }
           }
         }
       });
