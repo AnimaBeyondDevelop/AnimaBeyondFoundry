@@ -86,7 +86,9 @@ export class MysticCastDialog extends FormApplication {
 
         if (maintainedSpells.length > 0) {
             for (let maintainedSpell of maintainedSpells) {
-                this.modalData.maintainedSpells[maintainedSpell._id] = maintainedSpell
+                if (!maintainedSpell.system.daily){
+                    this.modalData.maintainedSpells[maintainedSpell._id] = maintainedSpell
+                }
             }
         }
 

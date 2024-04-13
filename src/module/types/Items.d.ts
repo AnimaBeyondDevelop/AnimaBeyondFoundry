@@ -352,13 +352,6 @@ export type SpellDataSource = ABFItemBaseDataSource<SpellItemData>;
 export type SpellChanges = ItemChanges<SpellItemData>;
 export type SpellItemConfig = ABFItemConfig<SpellItemData>;
 
-export type SpellMaintenanceItemData = {
-  cost: { value: number };
-};
-export type SpellMaintenanceDataSource = ABFItemBaseDataSource<SpellMaintenanceItemData>;
-export type SpellMaintenanceChanges = ItemChanges<SpellMaintenanceItemData>;
-export type SpellMaintenanceItemConfig = ABFItemConfig<SpellMaintenanceItemData>;
-
 export type SummonItemData = Record<string, never>;
 export type SummonDataSource = ABFItemBaseDataSource<SummonItemData>;
 export type SummonChanges = ItemChanges<SummonItemData>;

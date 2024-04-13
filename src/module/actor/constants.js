@@ -1418,7 +1418,6 @@ export const INITIAL_ACTOR_DATA = {
     },
     mysticSettings: { aptitudeForMagicDevelopment: false },
     spells: [],
-    spellMaintenances: [],
     selectedSpells: [],
     summons: [],
     preparedSpells: [],

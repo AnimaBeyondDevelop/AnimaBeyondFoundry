@@ -9,47 +9,121 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="maintained-spells"
   }}
-    {{#each system.mystic.maintainedSpells as |maintainedSpell|}}
-      <div data-item-id='{{this._id}}' class='maintained-spell-row'>
-        {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-          class="name"
-          title=(localize "anima.ui.mystic.maintainedSpells.name.title")
-          hideTitle=(is "gt" @index 0)
-          disabled=true
-          inputType="text"
-          inputName=""
-          inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
-        }}
-        {{#if (is 'eq' this.system.innate true)}}
-          {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-            class="maintenanceCost"
-            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
-            hideTitle=(is "gt" @index 0)
-            disabled=true
-            inputValue=0
-          }}
-        {{else}}
-          {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-            class="maintenanceCost"
-            title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
-            hideTitle=(is "gt" @index 0)
-            inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.maintenanceCost.value")
-            inputValue=this.system.maintenanceCost.value
-          }}
-        {{/if }}
-        {{>
-        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
-          class="innate"
-          title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
-          hideTitle=(is "gt" @index 0)
-          inputType="checkbox"
-          inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.innate")
-          inputValue=(is 'eq' this.system.innate true)
-        }}
+    {{#if (is 'gt' system.mystic.maintainedSpells.length 0)}}
+      <div class="maintained-spell-title">
+        <div class="common-titled-input name">
+          <p class="label">
+          {{localize "anima.ui.mystic.maintainedSpells.name.title"}}
+          </p>
+        </div>
+        <div class="common-titled-input">
+          <p class="label">
+          {{localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title"}}
+          </p>
+        </div>
+        <div class="common-titled-input">
+          <p class="label">
+          {{localize "anima.ui.mystic.maintainedSpells.innate.title"}}
+          </p>
+        </div>
       </div>
-    {{/each}}
+    {{/if }}
+
+    {{#each_when system.mystic.maintainedSpells "system" "daily" "" false}}
+        <div data-item-id='{{this._id}}' class='maintained-spell-row'>
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="name"
+            title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+            hideTitle=true
+            disabled=true
+            inputType="text"
+            inputName=""
+            inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
+          }}
+          {{#if (is 'eq' this.system.innate true)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="maintenanceCost"
+              title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+              hideTitle=true
+              disabled=true
+              inputValue=0
+            }}
+          {{else}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="maintenanceCost"
+              title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+              hideTitle=true
+              inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.maintenanceCost.value")
+              inputValue=this.system.maintenanceCost.value
+            }}
+          {{/if }}
+          {{>
+          'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+            class="innate"
+            title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+            hideTitle=true
+            inputType="checkbox"
+            inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.innate")
+            inputValue=(is 'eq' this.system.innate true)
+          }}
+        </div>
+    {{/each_when}}
+
+    {{#if (findInArray system.mystic.maintainedSpells "system" "daily" "" true)}}
+    <hr class='hr' />
+    <div class="maintained-spell-daily-title">
+      <div class="common-titled-input name">
+        <p class="label">
+        {{localize "anima.ui.mystic.spellMaintenance.title"}}
+        </p>
+      </div>
+    </div>
+    {{/if }}
+
+    {{#each_when system.mystic.maintainedSpells "system" "daily" "" true}}
+        <div data-item-id='{{this._id}}' class='maintained-spell-row'>
+          {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="name"
+            title=(localize "anima.ui.mystic.maintainedSpells.name.title")
+            hideTitle=true
+            disabled=true
+            inputType="text"
+            inputName=""
+            inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
+          }}
+          {{#if (is 'eq' this.system.innate true)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="maintenanceCost"
+              title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+              hideTitle=true
+              disabled=true
+              inputValue=0
+            }}
+          {{else}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="maintenanceCost"
+              title=(localize "anima.ui.mystic.maintainedSpells.maintenanceCost.title")
+              hideTitle=true
+              inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.maintenanceCost.value")
+              inputValue=this.system.maintenanceCost.value
+            }}
+          {{/if }}
+          {{>
+          'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
+            class="innate"
+            title=(localize "anima.ui.mystic.maintainedSpells.innate.title")
+            hideTitle=true
+            inputType="checkbox"
+            inputName=(concat "system.dynamic.maintainedSpells." this._id ".system.innate")
+            inputValue=(is 'eq' this.system.innate true)
+          }}
+        </div>
+    {{/each_when}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

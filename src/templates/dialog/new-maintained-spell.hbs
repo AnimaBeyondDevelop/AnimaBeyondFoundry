@@ -5,11 +5,18 @@
       title=(localize 'dialogs.spell.title')
       inputName='new.maintainedSpell.id'
     }}
+      <optgroup label="Spell">
       {{#each data.actor.system.mystic.spells}}
         {{#if (and (is 'eq' this.system.hasDailyMaintenance.value false) (is 'neq' this.system.grades.advanced.maintenanceCost.value 'No') )}}
           <option value='{{this._id}}'>{{this.name}}</option>
         {{/if }}
       {{/each}}
+      </optgroup>
+      <optgroup label="Daily">
+        {{#each_when data.actor.system.mystic.spells "system" "hasDailyMaintenance" "value" true}}
+        <option value='{{this._id}}'>{{this.name}}</option>
+        {{/each_when}}
+      </optgroup>
     {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
