@@ -8,6 +8,10 @@ const getInitialData = () => {
         'animabf',
         ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
     );
+    const showChatMessageByDefault = !!game.settings.get(
+        'animabf',
+        ABFSettingsKeys.SEND_CHAT_MESSAGES_BY_DEFAULT
+    );
     const isGM = !!game.user?.isGM;
     const token = getSelectedToken(game)
     const actor = token.actor;
@@ -17,6 +21,7 @@ const getInitialData = () => {
             activeTab: 'psychicCast'
         },
         showRoll: !isGM || showRollByDefault,
+        showChatMessage: !isGM || showChatMessageByDefault,
         token,
         actor,
         selectedPower: {
@@ -104,7 +109,8 @@ export class PsychicCastDialog extends FormApplication {
                 psychicPotential,
                 mentalPatternImbalance,
                 eliminateFatigue,
-                showRoll
+                showRoll,
+                showChatMessage
             } = this.modalData;
             const { i18n } = game;
 
@@ -133,7 +139,7 @@ export class PsychicCastDialog extends FormApplication {
 
             if (psychicFatigue) { return this.close() }
 
-            if (showRoll) {
+            if (showChatMessage) {
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({ token }),
                     flavor: i18n.format('macros.psychicCast.dialog.message.title', {
@@ -167,8 +173,10 @@ export class PsychicCastDialog extends FormApplication {
         html.find('.innate-power-button').click(async () => {
             const {
                 actor,
+                token,
                 innatePsychicPowers,
-                castedPsychicPowers
+                castedPsychicPowers,
+                showChatMessage
             } = this.modalData;
 
             for (let key in innatePsychicPowers) {
@@ -213,6 +221,14 @@ export class PsychicCastDialog extends FormApplication {
                 }
             }
             actor.unsetFlag('animabf', 'castedPsychicPowers')
+
+            if (showChatMessage) {
+                const { i18n } = game;
+                ChatMessage.create({
+                    speaker: ChatMessage.getSpeaker({ token }),
+                    flavor: i18n.format('macros.psychicCast.dialog.message.maintain.title')
+                });
+            }
 
             return this.close();
 

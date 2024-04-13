@@ -665,8 +665,10 @@ export class ABFActor extends Actor {
     return false;
   };
 
-  async mysticAct(act: number, spellId?: string, spellGrade?: string, preapredSpellId?: string, metamagics?: any) {
+  async mysticAct(act: number, spellId?: string, spellGrade?: string, preapredSpellId?: string, metamagics?: any, sendToChat?: boolean) {
     const { zeon, spells, preparedSpells } = this.system.mystic;
+    const { i18n } = game;
+    const flavor = { format: '', data: {} };
     let spareAct = 0;
     let accumulatedFullZeon = 0
 
@@ -685,7 +687,13 @@ export class ABFActor extends Actor {
           via: { value: spell.system.via.value },
           metamagics
         }
-      })
+      });
+
+      flavor.data = { spell: spell.name, grade: spellGrade }
+      flavor.format = spareAct >= 0 ?
+        "macros.mysticAct.dialog.message.preparedSpell.title" :
+        "macros.mysticAct.dialog.message.preparingSpell.title"
+
     } else if (preapredSpellId) {
       const preapredSpell = preparedSpells.find(w => w._id === preapredSpellId);
 
@@ -698,8 +706,19 @@ export class ABFActor extends Actor {
           zeonAcc: { value: preapredSpell.system.zeonAcc.value + act },
           prepared: { value: spareAct >= 0 }
         }
-      })
-    } else { accumulatedFullZeon = act }
+      });
+
+      flavor.data = { spell: preapredSpell.name, grade: preapredSpell.system.grade.value }
+      flavor.format = spareAct >= 0 ?
+        "macros.mysticAct.dialog.message.preparedSpell.title" :
+        "macros.mysticAct.dialog.message.preparingSpell.title"
+
+    } else {
+      accumulatedFullZeon = act
+      flavor.data = { act: spareAct <= 0 ? act : act - spareAct }
+      flavor.format = "macros.mysticAct.dialog.message.title"
+
+    }
 
     const finalAct = spareAct >= 0 ? act - spareAct : act;
     this.update({
@@ -709,6 +728,14 @@ export class ABFActor extends Actor {
         }
       }
     })
+
+    if (sendToChat) {
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor: i18n.format(flavor.format, flavor.data)
+      });
+    };
+
     executeMacro('ACT', { thisActor: this });
     return spareAct;
   }

@@ -9,6 +9,10 @@ const getInitialData = (spareAct) => {
         'animabf',
         ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
     );
+    const showChatMessageByDefault = !!game.settings.get(
+        'animabf',
+        ABFSettingsKeys.SEND_CHAT_MESSAGES_BY_DEFAULT
+    );
     const isGM = !!game.user?.isGM;
     const token = getSelectedToken(game)
     const actor = token.actor;
@@ -28,6 +32,7 @@ const getInitialData = (spareAct) => {
             noPreparingSpell: newSpell
         },
         showRoll: !isGM || showRollByDefault,
+        showChatMessage: !isGM || showChatMessageByDefault,
         token,
         actor,
         zeon: {
@@ -152,18 +157,18 @@ export class MysticActDialog extends FormApplication {
             act,
             preparedSpell,
             selectedSpell,
-            showRoll,
+            showChatMessage,
             ui: { activeTab, newSpell }
         } = this.modalData;
         const { i18n } = game;
         let spareAct;
 
         if (activeTab === 'zeon') {
-            spareAct = await actor.mysticAct(usedAct)
+            spareAct = await actor.mysticAct(usedAct, undefined, undefined, undefined, undefined, showChatMessage)
         } else if (newSpell) {
-            spareAct = await actor.mysticAct(usedAct, selectedSpell.id, selectedSpell.spellGrade, undefined, selectedSpell.metamagics)
+            spareAct = await actor.mysticAct(usedAct, selectedSpell.id, selectedSpell.spellGrade, undefined, selectedSpell.metamagics, showChatMessage)
         } else {
-            spareAct = await actor.mysticAct(usedAct, undefined, undefined, preparedSpell.id)
+            spareAct = await actor.mysticAct(usedAct, undefined, undefined, preparedSpell.id, undefined, showChatMessage)
         }
 
         if (act.fatigueUsed > 0) {
@@ -182,14 +187,6 @@ export class MysticActDialog extends FormApplication {
                     }
                 }
             )
-        }
-        if (showRoll) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({ token }),
-                flavor: i18n.format('macros.mysticAct.dialog.message.title', {
-                    act: spareAct <= 0 ? usedAct : usedAct - spareAct
-                })
-            });
         }
         return this.close();
     }

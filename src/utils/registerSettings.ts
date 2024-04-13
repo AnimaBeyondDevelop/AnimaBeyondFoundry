@@ -2,6 +2,7 @@ export enum ABFSettingsKeys {
   AUTO_ACCEPT_COMBAT_REQUESTS = 'AUTO_ACCEPT_COMBAT_REQUESTS',
   ROUND_DAMAGE_IN_MULTIPLES_OF_5 = 'ROUND_DAMAGE_IN_MULTIPLES_OF_5',
   SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT = 'SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT',
+  SEND_CHAT_MESSAGES_BY_DEFAULT = 'SEND_CHAT_MESSAGES_BY_DEFAULT',
   USE_DAMAGE_TABLE = 'USE_DAMAGE_TABLE',
   DEVELOP_MODE = 'DEVELOP_MODE',
   AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE',
@@ -37,6 +38,15 @@ export const registerSettings = () => {
   typedGame.settings.register('animabf', ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT, {
     name: 'anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title',
     hint: 'anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.SEND_CHAT_MESSAGES_BY_DEFAULT, {
+    name: 'anima.ui.systemSettings.sendChatMessagesByDefault.title',
+    hint: 'anima.ui.systemSettings.sendChatMessagesByDefault.hint.title',
     scope: 'world',
     config: true,
     default: true,
