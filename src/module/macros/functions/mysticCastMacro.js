@@ -9,6 +9,10 @@ const getInitialData = () => {
         'animabf',
         ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
     );
+    const showChatMessageByDefault = !!game.settings.get(
+        'animabf',
+        ABFSettingsKeys.SEND_CHAT_MESSAGES_BY_DEFAULT
+    );
     const isGM = !!game.user?.isGM;
     const token = getSelectedToken(game)
     const actor = token.actor;
@@ -20,6 +24,7 @@ const getInitialData = () => {
             activeTab: 'mysticCast'
         },
         showRoll: !isGM || showRollByDefault,
+        showChatMessage: !isGM || showChatMessageByDefault,
         token,
         actor,
         spellCasting: {
@@ -127,7 +132,7 @@ export class MysticCastDialog extends FormApplication {
                 actor,
                 selectedSpell,
                 spellCasting,
-                showRoll,
+                showChatMessage,
                 ui
             } = this.modalData;
             const { i18n } = game;
@@ -145,7 +150,7 @@ export class MysticCastDialog extends FormApplication {
 
             const { name } = actor.getItem(selectedSpell.id)
 
-            if (showRoll) {
+            if (showChatMessage) {
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({ token }),
                     flavor: i18n.format('macros.mysticCast.dialog.message.title', {
@@ -183,8 +188,10 @@ export class MysticCastDialog extends FormApplication {
         html.find('.maintain-spell-button').click(async () => {
             const {
                 actor,
+                token,
                 maintainedSpells,
                 castedSpells,
+                showChatMessage
             } = this.modalData;
 
             for (let key in maintainedSpells) {
@@ -227,6 +234,14 @@ export class MysticCastDialog extends FormApplication {
                 }
             }
             actor.unsetFlag('animabf', 'castedSpells')
+
+            if (showChatMessage) {
+                const { i18n } = game;
+                ChatMessage.create({
+                    speaker: ChatMessage.getSpeaker({ token }),
+                    flavor: i18n.format('macros.mysticCast.dialog.message.maintain.title')
+                });
+            }
 
             return this.close();
 
