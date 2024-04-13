@@ -1119,10 +1119,6 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.SPELL);
   }
 
-  public getSpellMaintenances() {
-    return this.getItemsOf(ABFItems.SPELL_MAINTENANCE);
-  }
-
   public getSelectedSpells() {
     return this.getItemsOf(ABFItems.SELECTED_SPELL);
   }

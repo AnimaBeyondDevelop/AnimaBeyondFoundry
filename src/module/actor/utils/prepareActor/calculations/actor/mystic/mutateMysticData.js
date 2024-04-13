@@ -53,9 +53,9 @@ export const mutateMysticData = data => {
     0
   );
 
-  const dailyZeon = mystic.spellMaintenances.reduce(
+  const dailyZeon = mystic.maintainedSpells.filter(ms => ms.system.daily && !ms.system.innate).reduce(
     (acc, currentValue) =>
-      acc + currentValue.system.cost.value,
+      acc + currentValue.system.maintenanceCost.value,
     0
   );
   mystic.zeonRegeneration.final.value = Math.max(
@@ -85,7 +85,7 @@ export const mutateMysticData = data => {
 
   mystic.zeonMaintained.final.value = mystic.zeonMaintained.base.value
   if (mystic.maintainedSpells.length !== 0) {
-    mystic.zeonMaintained.final.value += mystic.maintainedSpells.filter(ms => !ms.system.innate)?.reduce(
+    mystic.zeonMaintained.final.value += mystic.maintainedSpells.filter(ms => !ms.system.innate && !ms.system.daily)?.reduce(
       (acc, currentValue) =>
         acc + currentValue.system.maintenanceCost.value,
       0

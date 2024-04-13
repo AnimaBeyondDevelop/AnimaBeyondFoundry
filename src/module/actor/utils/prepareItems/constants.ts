@@ -24,7 +24,6 @@ import { InnateMagicViaItemConfig } from '../../../types/mystic/InnateMagicViaIt
 import { PreparedSpellItemConfig } from '../../../types/mystic/PreparedSpellItemConfig';
 import { MaintainedSpellItemConfig } from '../../../types/mystic/MaintainedSpellItemConfig';
 import { SpecialSkillItemConfig } from '../../../types/domine/SpecialSkillItemConfig';
-import { SpellMaintenanceItemConfig } from '../../../types/mystic/SpellMaintenanceItemConfig';
 import { SummonItemConfig } from '../../../types/mystic/SummonItemConfig';
 import { TechniqueItemConfig } from '../../../types/domine/TechniqueItemConfig';
 import { TitleItemConfig } from '../../../types/general/TitleItemConfig';
@@ -52,7 +51,6 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [SecondarySpecialSkillItemConfig.type]: SecondarySpecialSkillItemConfig,
   [SelectedSpellItemConfig.type]: SelectedSpellItemConfig,
   [SpecialSkillItemConfig.type]: SpecialSkillItemConfig,
-  [SpellMaintenanceItemConfig.type]: SpellMaintenanceItemConfig,
   [PreparedSpellItemConfig.type]: PreparedSpellItemConfig,
   [MaintainedSpellItemConfig.type]: MaintainedSpellItemConfig,
   [ActViaItemConfig.type]: ActViaItemConfig,

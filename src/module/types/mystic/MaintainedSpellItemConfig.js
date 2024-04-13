@@ -12,6 +12,7 @@ export const INITIAL_MAINTAINED_SPELL_DATA = {
   grade: { value: SpellGrades.BASE },
   maintenanceCost: { value: 0 },
   via: { value: '' },
+  daily: false,
   innate: false,
   active: true
 };
@@ -38,6 +39,7 @@ export const MaintainedSpellItemConfig = ABFItemConfigFactory({
     const name = spell.name;
     const maintenanceCost = parseInt(spell.system.grades[spellGrade].maintenanceCost.value);
     const via = spell.system.via.value
+    const daily = spell.system.hasDailyMaintenance.value
 
     await actor.createInnerItem({
       name,
@@ -46,6 +48,7 @@ export const MaintainedSpellItemConfig = ABFItemConfigFactory({
         grade: { value: spellGrade },
         maintenanceCost: { value: maintenanceCost },
         via: { value: via },
+        daily,
         innate,
         active: true
       }
