@@ -16,9 +16,11 @@ export const openComplexInputDialog = async (actor, dialogType) => {
           mystic: {
             spellUsed: undefined,
             spellGrade: 'base',
-            castInnate: false,
-            castPrepared: false,
-            castOverride
+            castSpell: castOverride ? 'override' : 'accumulated',
+            metamagics: {
+              defensiveExpertise: 0,
+              definedMagicProjection: 0
+            }
           }
         }
       }

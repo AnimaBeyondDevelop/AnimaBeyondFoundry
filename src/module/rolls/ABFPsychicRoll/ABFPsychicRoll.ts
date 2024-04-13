@@ -1,6 +1,6 @@
 import ABFFoundryRoll from '../ABFFoundryRoll';
 import ABFExploderRoll from '../ABFExploderRoll/ABFExploderRoll';
-import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffect.js';
+import { difficultyAchieved } from '../../combat/utils/difficultyAchieved.js';
 import { psychicFatigueCheck } from '../../combat/utils/psychicFatigueCheck.js';
 
 export default class ABFPsychicRoll extends ABFExploderRoll {
@@ -17,7 +17,7 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
     const powerDiscipline = power?.system.discipline.value;
     // @ts-ignore
     let imbalance: any = psychicDisciplines.find((i: any) => i.name === powerDiscipline)?.system.imbalance ? 1 : 0;
-    let newPotentialTotal = psychicPotentialEffect(
+    let newPotentialTotal = difficultyAchieved(
       this.foundryRoll.total ?? 0,
       imbalance,
       inhuman.value,
@@ -25,7 +25,7 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
     );
     if (!psychicFatigueCheck(power?.system.effects[newPotentialTotal].value)) {
       if (mentalPatternImbalance) {
-        newPotentialTotal = psychicPotentialEffect(
+        newPotentialTotal = difficultyAchieved(
           newPotentialTotal,
           1,
           inhuman.value,
@@ -33,8 +33,8 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
         );
       }
       else if (power?.system.combatType.value === 'attack' &&
-        mentalPatterns.find((i: any) => i.name == 'courage')) {
-        newPotentialTotal = psychicPotentialEffect(
+        mentalPatterns.find((i: any) => i.name === 'courage')) {
+        newPotentialTotal = difficultyAchieved(
           newPotentialTotal,
           1,
           inhuman.value,

@@ -59,10 +59,17 @@
     }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="wear-armor"
+      class="extra-damage"
       title=(localize "anima.ui.combat.baseValues.extraDamage.title")
       inputName="system.general.modifiers.extraDamage.value"
       inputValue=system.general.modifiers.extraDamage.value
+    }}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="critic-level"
+      title=(localize "anima.ui.combat.baseValues.criticLevel.title")
+      inputName="system.general.modifiers.criticLevel.value"
+      inputValue=system.general.modifiers.criticLevel.value
     }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

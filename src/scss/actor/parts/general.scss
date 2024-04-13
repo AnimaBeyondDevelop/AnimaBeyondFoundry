@@ -141,6 +141,30 @@
       }
     }
     // Description
+
+    // Body
+    .body {
+      .body-parts-row:first-child {
+        margin-top: 0;
+      }
+
+      .body-parts-row {
+        margin-top: 0.75rem;
+
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
+        grid-column-gap: 0.1rem;
+
+        .body-part .input-container {
+          width: 100%;
+        }
+        .open-armor,.weakspot {
+          margin-top: 0;
+          width: 100%;
+        }
+      }
+    }
+    // Body
   }
 
   .second-tab {

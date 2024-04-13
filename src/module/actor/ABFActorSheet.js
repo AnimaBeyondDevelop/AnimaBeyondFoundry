@@ -66,7 +66,7 @@ export default class ABFActorSheet extends ActorSheet {
 
   getWidthDependingFromContent() {
     if (this.actor.items.filter(i => i.type === ABFItems.SPELL).length > 0) {
-      return 1300;
+      return 1000;
     }
 
     return 1000;
@@ -82,6 +82,8 @@ export default class ABFActorSheet extends ActorSheet {
     }
 
     sheet.config = CONFIG.config;
+
+    sheet.effects = sheet.actor.getEmbeddedCollection('ActiveEffect').contents;
 
     return sheet;
   }
@@ -116,6 +118,28 @@ export default class ABFActorSheet extends ActorSheet {
       }
     });
 
+    html.find('.effect-control').click(this._onEffectControl.bind(this));
+
+    html.find('.toggle-effects-button').click(async e => {
+      const { effectsItemId } = e.currentTarget.dataset;
+      const item = this.actor.items.get(effectsItemId);
+      const effects = this.actor.getEmbeddedCollection('ActiveEffect').contents;
+      const relevantEffects = effects.filter(effect =>
+        effect.origin.endsWith(effectsItemId)
+      );
+
+      if (relevantEffects.length === 0) {
+        return;
+      }
+
+      const newStatus = !item.system.activeEffect.enabled;
+
+      for (const effect of relevantEffects) {
+        await effect.update({ disabled: !newStatus });
+      }
+      return item.update({ 'system.activeEffect.enabled': newStatus });
+    });
+
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
       this.buildCommonContextualMenu(item);
 
@@ -128,6 +152,32 @@ export default class ABFActorSheet extends ActorSheet {
       html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
         item.onCreate(this.actor);
       });
+    }
+  }
+
+  _onEffectControl(event) {
+    event.preventDefault();
+    const owner = this.actor;
+    const a = event.currentTarget;
+    const tr = a.closest('tr');
+    const effect = tr.dataset.effectId ? owner.effects.get(tr.dataset.effectId) : null;
+    const status = effect?.disabled
+    switch (a.dataset.action) {
+      case 'create':
+        return owner.createEmbeddedDocuments('ActiveEffect', [
+          {
+            name: 'New Effect',
+            icon: 'icons/svg/aura.svg',
+            origin: owner.uuid,
+            disable: true
+          }
+        ]);
+      case 'toggle':
+        return effect.update({ disabled: !status });
+      case 'edit':
+        return effect.sheet.render(true);
+      case 'delete':
+        return effect.delete();
     }
   }
 

@@ -35,25 +35,22 @@
           <div class='values'>
             {{#if (is "eq" this.attacker.result.type 'combat')}}
               {{#unless this.attacker.result.values.unarmed}}
-                {{#unless (is "eq" this.attacker.result.weapon.system.quality.value 0)}}
-                  {{>
-                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                    class="weapon-used"
-                    title=(localize 'macros.combat.dialog.weaponUsed.title')
-                    inputType="text"
-                    disabled=true
-                    inputValue=(concat this.attacker.result.weapon.name " + " this.attacker.result.weapon.system.quality.value)
-                  }}
-                {{else}}
-                  {{>
-                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                    class="weapon-used"
-                    title=(localize 'macros.combat.dialog.weaponUsed.title')
-                    inputType="text"
-                    disabled=true
-                    inputValue=this.attacker.result.weapon.name
-                  }}
-                {{/unless}}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-used"
+                  title=(localize 'macros.combat.dialog.weaponUsed.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.weapon.name
+                }}
+                {{>
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                  class="weapon-quality"
+                  title=(localize 'macros.combat.dialog.weaponQuality.title')
+                  inputType="text"
+                  disabled=true
+                  inputValue=this.attacker.result.weapon.system.quality.value
+                }}
                 {{>
                 "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                   class="weapon-attack"
@@ -187,6 +184,32 @@
                   }}
                 {{/unless}}
               {{/each}}
+            </div>
+            <div class='apply-damage'>
+              {{#if (is 'gt' this.calculations.damage 0)}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  class="apply-damage"
+                  title=(localize 'macros.combat.dialog.applyDamage.title')
+                  inputType="checkbox"
+                  disabled=false
+                  inputName="attacker.applyDamage"
+                  inputValue=(is 'eq' this.attacker.applyDamage true)
+                }}
+              {{/if}}
+            </div>
+            <div class='apply-critic'>
+              {{#if (is 'eq' this.calculations.canCritic true)}}
+                {{>
+                "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                  class="apply-critic"
+                  title=(localize 'macros.combat.dialog.applyCritic.title')
+                  inputType="checkbox"
+                  disabled=false
+                  inputName="attacker.applyCritic"
+                  inputValue=(is 'eq' this.attacker.applyCritic true)
+                }}
+              {{/if}}
             </div>
         {{else}}
           <div class='waiting-row'>
@@ -404,10 +427,16 @@
             {{/if}}
 
           {{else}}
-            <div class='waiting-row'>
-              {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
-              <p class='label'>{{localize 'macros.combat.dialog.waitingDefense.title'}}</p>
-            </div>
+            {{#if (is 'gt' this.attacker.result.values.psychicFatigue 0)}}
+              <div class='waiting-row'>
+                <p class='label'>{{localize 'macros.combat.dialog.psychicFatigue.title'}}</p>
+              </div>
+              {{else}}
+              <div class='waiting-row'>
+                {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+                <p class='label'>{{localize 'macros.combat.dialog.waitingDefense.title'}}</p>
+              </div>
+            {{/if}}
           {{/if}}
         {{else}}
           <div class='waiting-row'>
@@ -433,6 +462,24 @@
         <p class='label title'>{{concat this.calculations.winner.name
                                         (localize 'macros.combat.dialog.winner.title')}}</p>
         <div class='assault-values'>
+          {{#if (is 'gt' this.roll.oppousedCheckRoll.attacker.value 0)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="oppoused-check-roll"
+              title=(localize 'macros.combat.dialog.oppousedCheckRoll.title')
+              disabled=true
+              inputValue=this.roll.oppousedCheckRoll.attacker.value
+            }}
+          {{/if}}
+          {{#if (and this.roll.criticRoll.sent this.attacker.applyCritic)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="critic-roll"
+              title=(localize 'macros.combat.dialog.criticRoll.title')
+              disabled=true
+              inputValue=this.roll.criticRoll.value
+            }}
+          {{/if}}
           {{>
           "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
             class="difference"
@@ -441,13 +488,40 @@
             disabled=true
             inputValue=this.calculations.difference
           }}
-          {{#if (is 'gt' this.calculations.damage 0)}}
+          {{#if (and (is 'gt' this.calculations.damage 0) this.attacker.applyDamage)}}
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="damage-deal"
               title=(localize 'macros.combat.dialog.damageDeal.title')
               disabled=true
               inputValue=this.calculations.damage
+            }}
+          {{/if}}
+          {{#if (is 'gt' this.roll.resistanceRoll.value 0)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="resistance-roll"
+              title=(localize 'macros.combat.dialog.resistanceRoll.title')
+              disabled=true
+              inputValue=this.roll.resistanceRoll.value
+            }}
+          {{/if}}
+          {{#if (and (is 'gt' this.roll.criticRoll.resist 0) this.attacker.applyCritic)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="resistance-roll"
+              title=(localize 'macros.combat.dialog.resistCriticRoll.title')
+              disabled=true
+              inputValue=this.roll.criticRoll.resist
+            }}
+          {{/if}}
+          {{#if (is 'gt' this.roll.oppousedCheckRoll.defender.value 0)}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="oppoused-check-roll"
+              title=(localize 'macros.combat.dialog.oppousedCheckRoll.title')
+              disabled=true
+              inputValue=this.roll.oppousedCheckRoll.defender.value
             }}
           {{/if}}
           {{#if this.calculations.canCounter}}
@@ -463,36 +537,61 @@
             {{/unless}}
           {{/if}}
         </div>
-        <div class='ready-buttons'>
-          {{#if (or this.calculations.canCounter (is 'gt' this.calculations.damage 0))}}
-            <button class='abf-button show-results'>
-              {{localize 'macros.combat.dialog.showResultsButton.title'}}
-            </button>
-          {{/if}}
-          {{#if this.calculations.canCounter}}
-            {{#unless this.ui.isCounter}}
-              <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}'
-                      class='abf-button make-counter'>
-                {{localize 'macros.combat.dialog.counterAttackButton.title'}}
+        {{#if (is 'eq' this.ui.waitingRollRequest false)}}
+          <div class='ready-buttons'>
+            {{#if (or this.calculations.canCounter (is 'gt' this.calculations.damage 0))}}
+              <button class='abf-button show-results'>
+                {{localize 'macros.combat.dialog.showResultsButton.title'}}
+              </button>
+            {{/if}}
+            {{#if this.calculations.canCounter}}
+              {{#unless this.ui.isCounter}}
+                <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}'
+                        class='abf-button make-counter'>
+                  {{localize 'macros.combat.dialog.counterAttackButton.title'}}
+                </button>
+              {{/unless}}
+            {{/if}}
+            {{#if (and this.roll.criticRoll.request (is 'eq' this.roll.resistanceRoll.request false))}}
+              <button title='{{localize 'macros.combat.dialog.criticRollButtonTooltip.title'}}'
+                      class='abf-button roll-critic'>
+                {{localize 'macros.combat.dialog.criticRollButton.title'}}
+              </button>
+            {{/if}}
+            {{#if this.roll.resistanceRoll.request}}
+              <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
+                      class='abf-button roll-resistance'>
+                  {{#if this.roll.criticRoll.sent}}
+                    {{localize 'macros.combat.dialog.rollResistanceCriticButton.title'}}
+                  {{else}}
+                    {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
+                  {{/if}}
+              </button>
+            {{/if}}
+            {{#if this.roll.oppousedCheckRoll.request}}
+                <button title='{{localize 'macros.combat.dialog.rollOppousedCheckButtonTooltip.title'}}'
+                        class='abf-button roll-oppoused-check'>
+                  {{localize 'macros.combat.dialog.rollOppousedCheckButton.title'}}
+                </button>
+            {{/if}}
+            {{#unless (or this.roll.resistanceRoll.request this.roll.oppousedCheckRoll.request this.roll.criticRoll.request)}}
+              <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
+                      class='abf-button apply-values'>
+                {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
               </button>
             {{/unless}}
-          {{/if}}
-          {{#if this.ui.resistanceRoll}}
-            <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
-                    class='abf-button roll-resistance'>
-              {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
+            <button class='abf-button cancel-button'>
+              {{localize 'macros.combat.dialog.cancelButton.title'}}
             </button>
-          {{/if}}
-          {{#unless this.ui.resistanceRoll}}
-            <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
-                    class='abf-button apply-values'>
-              {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
-            </button>
-          {{/unless}}
-          <button class='abf-button cancel-button'>
-            {{localize 'macros.combat.dialog.cancelButton.title'}}
-          </button>
-        </div>
+          </div>
+          {{else}}
+          <div class='roll-request-sent'>
+            {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+            <p class='label'>
+              {{localize 'macros.combat.dialog.waitingRollRequest.title'}}
+            </p>
+          </div>
+        {{/if}}
       {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
     {{/"systems/animabf/templates/common/ui/group.hbs"}}
   {{/if}}

@@ -13,13 +13,16 @@ import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
 import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
-import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.js';
+import { difficultyAchieved } from '../combat/utils/difficultyAchieved.js';
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
+import { withstandPainBonus } from '../combat/utils/withstandPainBonus.js';
+import { damageCheck } from '../combat/utils/damageCheck.js';
 import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../utils/dialogs/openComplexInputDialog';
 
 export class ABFActor extends Actor {
   i18n: Localization;
@@ -70,6 +73,63 @@ export class ABFActor extends Actor {
     });
   }
 
+  applyCriticEffect(criticLevel: number) {
+    const { penalties } = this.system.general.modifiers;
+    const newPain =
+    penalties.pain.value - (criticLevel <= 50 ? criticLevel : Math.round(criticLevel / 2));
+    const newPhysicalDeficiency =
+    penalties.physicalDeficiency.value - (criticLevel > 50 ? Math.round(criticLevel / 2) : 0);
+
+    this.update({
+      system: {
+        general: {
+          modifiers: { penalties: { pain: { value: newPain }, physicalDeficiency: { value: newPhysicalDeficiency } } }
+        }
+      }
+    });
+  }
+
+  async withstandPain(sendToChat = true) {
+    const { penalties } = this.system.general.modifiers;
+    const withstandPainRoll = await this.rollAbility('withstandPain', 0, sendToChat)
+    const { inhuman, zen } = this.system.general.settings;
+    const withstandPainTotal = difficultyAchieved(withstandPainRoll, 0, inhuman, zen)
+    const withstandPain = withstandPainBonus(withstandPainTotal)
+    const newWithstandPain =
+    penalties.withstandPain.value > withstandPain ? penalties.withstandPain.value : withstandPain;
+
+    this.update({
+      system: {
+        general: {
+          modifiers: { penalties: { withstandPain: { value: newWithstandPain } } }
+        }
+      }
+    });
+    return newWithstandPain
+  }
+
+  painDisappearing(reset: boolean) {
+    const { penalties } = this.system.general.modifiers;
+    const newPain = penalties.pain.value + 5;
+    if (reset) {
+      this.update({
+        system: {
+          general: {
+            modifiers: { penalties: { pain: { value: 0 } } }
+          }
+        }
+      });
+    } else {
+      this.update({
+        system: {
+          general: {
+            modifiers: { penalties: { pain: { value: Math.min(newPain, 0) } } }
+          }
+        }
+      });
+    }
+  }
+
   /**
    * Rolls an ability check for the ABFActor class.
    * 
@@ -83,7 +143,7 @@ export class ABFActor extends Actor {
    * 
    * This code creates a new instance of the ABFActor class and calls the `rollAbility` method with the ability name 'agility' and the `sendToChat` parameter set to true. The method will calculate the ability value, prompt the user for a modifier, roll the dice, and display the result in the chat.
    */
-  async rollAbility(ability: string, sendToChat = true) {
+  async rollAbility(ability: string, bonus = 0, sendToChat = true) {
     const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
     const { secondaries } = this.system;
     let groupPath = '';
@@ -99,8 +159,8 @@ export class ABFActor extends Actor {
     }
     const abilityValue = this.system.secondaries[groupPath][ability].final.value;
     const label = name ? `Rolling ${name}` : '';
-    const mod = await openModDialog();
-    let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
+    const mod = await openModDialog(name);
+    let formula = `1d100xa + ${abilityValue} + ${mod + bonus ?? 0}`;
     if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
     const roll = new ABFFoundryRoll(formula, this.system);
     roll.roll();
@@ -121,6 +181,7 @@ export class ABFActor extends Actor {
    * @param {number} psychicDifficulty - The difficulty level of the psychic power. Only needed if type = 'psychic'.
    * @param {any} spell - The spell object containing information about the mystic spell. Only needed if type = 'mystic'.
    * @param {string} spellGrade - The grade of the mystic spell. Only needed if type = 'mystic'.
+   * @param {any} metamagics - 
    * @returns {Promise<string>} - The ID of the newly created supernatural shield item.
    */
   async newSupernaturalShield(
@@ -128,7 +189,8 @@ export class ABFActor extends Actor {
     power: any,
     psychicDifficulty: number,
     spell: any,
-    spellGrade: string
+    spellGrade: string,
+    metamagics?: any
   ) {
     const supernaturalShieldData = {
       name: '',
@@ -144,7 +206,7 @@ export class ABFActor extends Actor {
         psychic
       } = this.system;
 
-      const potentialBaseDifficulty = psychicPotentialEffect(
+      const potentialBaseDifficulty = difficultyAchieved(
         psychic.psychicPotential.base.value,
         0,
         inhuman.value,
@@ -170,12 +232,15 @@ export class ABFActor extends Actor {
       const finalEffect = shieldValueCheck(
         spell?.system.grades[spellGrade].description.value ?? ''
       );
+      const { empoweredShields } = this.system.mystic.magicLevel.metamagics.arcaneWarfare
+      const shieldPoints = empoweredShields.sphere == 1 ? finalEffect * 2 : empoweredShields.sphere == 2 ? finalEffect * 3 : finalEffect;
       supernaturalShieldData.name = spell.name;
       supernaturalShieldData.system = {
         type: 'mystic',
         spellGrade,
         damageBarrier: 0,
-        shieldPoints: finalEffect,
+        shieldPoints,
+        metamagics,
         origin: this.uuid
       };
     }
@@ -382,6 +447,19 @@ export class ABFActor extends Actor {
     }
   }
 
+  definedMagicProjection(sphere: string | number, type: string) {
+    const definedMagicDifficulty = [0, 120, 140, 180, 240, 280, 320, 440]
+    if (sphere === undefined) return 0;
+    const { general: { modifiers: { allActions } }, mystic: { magicProjection: { imbalance: { offensive, defensive } } } } = this.system;
+    const definedMagicProjection = Math.max(
+      definedMagicDifficulty[sphere] +
+      Math.min(type === 'offensive' ? offensive.special.value : defensive.special.value, 0) +
+      Math.min(allActions.final.value, 0),
+      0
+    );
+    return definedMagicProjection
+  }
+
   /**
    * Determines if a mystic character can cast a specific spell at a specific grade.
    * 
@@ -391,22 +469,25 @@ export class ABFActor extends Actor {
    * @param override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting. Default is false.
    * @returns {SpellCasting} - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
    */
-  mysticCanCastEvaluate(spell: any, spellGrade: string, casted = { prepared: false, innate: false }, override = false) {
+  async mysticCanCastEvaluate(spellId: string, spellGrade: string, addedZeonCost = { value: 0, pool: 0 }, casted = { prepared: false, innate: false }, override = false) {
     const spellCasting = SpellCasting;
     spellCasting.casted = casted
     spellCasting.override = override
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
+    spellCasting.zeon.value = this.system.mystic.zeon.value ?? 0;
 
-    if (override) { return spellCasting };
-
-    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+    if (override) return spellCasting;
+    const spell = this.getItem(spellId)
+    if (spell === undefined) return;
+    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value + addedZeonCost.value;
+    spellCasting.zeon.poolCost = addedZeonCost.pool;
     spellCasting.canCast.prepared =
       this.system.mystic.preparedSpells.find(
-        ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+        ps => ps.name === spell.name && ps.system.grade.value === spellGrade
       )?.system.prepared.value ?? false;
     const spellVia = spell?.system.via.value;
     const innateMagic = this.system.mystic.innateMagic;
-    const innateVia = innateMagic.via.find(i => i.name == spellVia);
+    const innateVia = innateMagic.via.find(i => i.name === spellVia);
     const innateMagicValue =
       innateMagic.via.length !== 0 && innateVia
         ? innateVia.system.final.value
@@ -434,57 +515,193 @@ export class ABFActor extends Actor {
     if (override) {
       return false;
     }
-    if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
+    if (zeon.value < zeon.poolCost) {
       ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.mustChoose')
+        i18n.localize('dialogs.spellCasting.warning.zeonPool')
       );
       return true;
     }
-    if (canCast.innate && casted.innate) {
-      return;
-    } else if (!canCast.innate && casted.innate) {
-      ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.innateMagic')
-      );
-      return true;
-    } else if (canCast.prepared && casted.prepared) {
-      return false;
-    } else if (!canCast.prepared && casted.prepared) {
-      return ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.preparedSpell')
-      );
-    } else if (zeon.accumulated < zeon.cost) {
+    if (canCast) {
+      if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
+        ui.notifications.warn(
+          i18n.localize('dialogs.spellCasting.warning.mustChoose')
+        );
+        return true;
+      }
+      if (canCast.innate && casted.innate) {
+        return false;
+      } else if (!canCast.innate && casted.innate) {
+        ui.notifications.warn(
+          i18n.localize('dialogs.spellCasting.warning.innateMagic')
+        );
+        return true;
+      } else if (canCast.prepared && casted.prepared) {
+        return false;
+      } else if (!canCast.prepared && casted.prepared) {
+        ui.notifications.warn(
+          i18n.localize('dialogs.spellCasting.warning.preparedSpell')
+        );
+        return true
+      }
+    }
+    if (zeon.accumulated < zeon.cost) {
       ui.notifications.warn(
         i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
       );
       return true;
-    } else return false;
+    }
+    return false;
   };
+
+  async mysticAct(act: number, spellId?: string, spellGrade?: string, preapredSpellId?: string, metamagics?: any) {
+    const { zeon, spells, preparedSpells } = this.system.mystic;
+    let spareAct = 0;
+    let accumulatedFullZeon = 0
+
+    if (spellId) {
+      const spell = spells.find(w => w._id === spellId);
+      const metamagicsCost = Object.values(metamagics).reduce((t: any, n: any) => +t + +n)
+      const zeonCost = spell.system.grades[spellGrade || 'base'].zeon.value + metamagicsCost;
+      spareAct = act - zeonCost
+      this.createInnerItem({
+        type: ABFItems.PREPARED_SPELL,
+        name: spell.name,
+        system: {
+          grade: { value: spellGrade },
+          zeonAcc: { value: act, max: zeonCost },
+          prepared: { value: spareAct >= 0 },
+          via: { value: spell.system.via.value },
+          metamagics
+        }
+      })
+    } else if (preapredSpellId) {
+      const preapredSpell = preparedSpells.find(w => w._id === preapredSpellId);
+
+      spareAct = preapredSpell.system.zeonAcc.value + act - preapredSpell.system.zeonAcc.max;
+
+      this.updateInnerItem({
+        type: ABFItems.PREPARED_SPELL,
+        id: preapredSpellId,
+        system: {
+          zeonAcc: { value: preapredSpell.system.zeonAcc.value + act },
+          prepared: { value: spareAct >= 0 }
+        }
+      })
+    } else { accumulatedFullZeon = act }
+
+    const finalAct = spareAct >= 0 ? act - spareAct : act;
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: (zeon.accumulated + accumulatedFullZeon), value: (zeon.value - finalAct) }
+        }
+      }
+    })
+    executeMacro('ACT', { thisActor: this });
+    return spareAct;
+  }
+
+  async releaseAct(all?: boolean, noReturnedZeon?: boolean) {
+    const { zeon, preparedSpells } = this.system.mystic;
+
+    let returnedZeon = Math.max(zeon.accumulated - 10, 0)
+
+    let ids: string[] = [];
+
+    for (const prepareSpell of preparedSpells) {
+      if (all) {
+        returnedZeon += Math.max(prepareSpell.system.zeonAcc.value - 10, 0);
+      } else if (!prepareSpell.system.prepared.value) {
+        returnedZeon += Math.max(prepareSpell.system.zeonAcc.value - 10, 0);
+        ids.push(prepareSpell._id);
+      }
+    }
+
+    returnedZeon = noReturnedZeon ? 0 : returnedZeon
+
+    if (all) {
+      this.deleteInnerItem(ABFItems.PREPARED_SPELL, undefined, all)
+    } else {
+      this.deleteInnerItem(ABFItems.PREPARED_SPELL, ids)
+    }
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { accumulated: 0, value: (zeon.value + returnedZeon) }
+        }
+      }
+    })
+    executeMacro('ACT', { thisActor: this, releaseAct: true });
+  }
+
+  async zeonWithstandPain(sendToChat = true) {
+    const { i18n } = game;
+    const { preparedSpells } = this.system.mystic;
+    const bonus = preparedSpells.length > 0 ? 40 : 0;
+    const withstandPainRoll = await this.rollAbility('withstandPain', bonus, sendToChat)
+    const damage: any = this.getFlag('animabf', 'lastDamageApplied') ?? 0
+
+    let flavor = i18n.format('macros.dialog.zeonWithstandPain.succeed.title')
+
+    if (withstandPainRoll !== undefined) {
+      if (withstandPainRoll < damage) {
+        this.releaseAct(true, true)
+        flavor = i18n.format('macros.dialog.zeonWithstandPain.criticalFail.title');
+        executeMacro('ACT', { thisActor: this, loseZeon: true });
+      } else if (withstandPainRoll < damage * 2) {
+        this.releaseAct(true)
+        flavor = i18n.format('macros.dialog.zeonWithstandPain.failed.title');
+        executeMacro('ACT', { thisActor: this, releaseAct: true });
+      }
+    }
+    if (sendToChat) {
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        flavor
+      });
+    }
+    return
+  }
 
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
    * 
    * @param {SpellCasting} spellCasting - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
-   * @param spellName - The name of the spell being casted.
+   * @param spellId - The ID of the spell being casted.
    * @param spellGrade - The grade of the spell being casted.
    * 
    * @returns {void}
    */
-  mysticCast(spellCasting: SpellCasting, spellName: string, spellGrade: string) {
+  mysticCast(spellCasting: SpellCasting, spellId: string, spellGrade: string) {
     const { zeon, casted, override } = spellCasting;
     if (override) {
       return;
+    }
+    if (zeon.poolCost) {
+      this.consumeZeon(zeon.poolCost)
     }
     if (casted.innate) {
       return;
     }
     if (casted.prepared) {
-      this.deletePreparedSpell(spellName, spellGrade);
-    } else {
+      this.deletePreparedSpell(spellId, spellGrade);
+    } else if (zeon.cost) {
       this.consumeAccumulatedZeon(zeon.cost);
     }
   }
 
+  consumeZeon(zeonCost: number) {
+    const newZeon = this.system.mystic.zeon.value - zeonCost;
+
+    this.update({
+      system: {
+        mystic: {
+          zeon: { value: newZeon }
+        }
+      }
+    });
+  }
   /**
    * Updates the accumulated zeon value of a mystic character by subtracting the zeon cost of a spell.
    * 
@@ -525,6 +742,17 @@ export class ABFActor extends Actor {
     });
   }
 
+  getPreparedSpell(spellId: string, spellGrade: string) {
+    const spell = this.getItem(spellId)
+    if (spell === undefined) return
+    const preparedSpell = this.system.mystic.preparedSpells.find(
+      (ps: any) =>
+        ps.name === spell.name &&
+        ps.system.grade.value === spellGrade &&
+        ps.system.prepared.value === true
+    );
+    return preparedSpell
+  }
 
   /**
    * Deletes a prepared spell from the `mystic.preparedSpells` array of the `ABFActor` class.
@@ -533,13 +761,8 @@ export class ABFActor extends Actor {
    * @param spellGrade - The grade of the spell to be deleted.
    * @returns None. The method updates the `mystic.preparedSpells` array of the actor.
    */
-  deletePreparedSpell(spellName: string, spellGrade: string) {
-    let preparedSpellId = this.system.mystic.preparedSpells.find(
-      (ps: any) =>
-        ps.name == spellName &&
-        ps.system.grade.value == spellGrade &&
-        ps.system.prepared.value == true
-    )._id;
+  async deletePreparedSpell(spellId: string, spellGrade: string) {
+    let preparedSpellId = this.getPreparedSpell(spellId, spellGrade)?._id;
     if (preparedSpellId !== undefined) {
       let items = this.getPreparedSpells();
       items = items.filter(item => item._id !== preparedSpellId);
@@ -549,6 +772,17 @@ export class ABFActor extends Actor {
       };
       return this.update(dataToUpdate);
     }
+  }
+
+  spellDamage(spellId: string, spellGrade: string) {
+    const spell = this.getItem(spellId)
+    const spellGrades = ['none', 'base', 'intermediate', 'advanced', 'arcane']
+    if (spell === undefined || spellGrades.indexOf(spellGrade) <= 0) { return }
+    const baseDamage = damageCheck(spell.system.grades[spellGrade].description.value ?? '')
+    const { arcaneWarfare: { increasedDestruction, doubleDamage } } = this.system.mystic.magicLevel.metamagics
+    const finalDamage = baseDamage != 0 ? baseDamage * (+doubleDamage.sphere + 1) + 10 * increasedDestruction.sphere * spellGrades.indexOf(spellGrade) : 0;
+
+    return finalDamage
   }
 
   /**
@@ -568,6 +802,7 @@ export class ABFActor extends Actor {
         }
       }
     });
+    this.setFlag('animabf', 'lastDamageApplied', damage);
   }
 
   public async createItem({
@@ -625,6 +860,33 @@ export class ABFActor extends Actor {
     if (item) {
       await item.delete();
     }
+  }
+
+  async deleteInnerItem(type: string, ids?: string[], deleteAll?: boolean) {
+    if (!type) {
+      return
+    };
+    const configuration = ALL_ITEM_CONFIGURATIONS[type];
+    const items = this.getInnerItems(type);
+
+    if (deleteAll) {
+      const dataToUpdate = {
+        system: getUpdateObjectFromPath([], configuration.fieldPath)
+      };
+      await this.update(dataToUpdate);
+
+    } else if (ids !== undefined) {
+
+      await this.update({
+        system: getUpdateObjectFromPath(
+          [
+            ...items.filter(i => !ids.includes(i._id))
+          ],
+          configuration.fieldPath
+        )
+      });
+    }
+    return
   }
 
   public async updateItem({
@@ -732,10 +994,6 @@ export class ABFActor extends Actor {
 
   public getSupernaturalShields() {
     return this.getItemsOf(ABFItems.SUPERNATURAL_SHIELD);
-  }
-
-  public getKnownMetamagics() {
-    return this.getItemsOf(ABFItems.METAMAGIC);
   }
 
   public getKnownSummonings() {

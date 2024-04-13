@@ -1,0 +1,118 @@
+@import '../variable';
+
+.mystic-act-dialog {
+  height: auto !important;
+
+  width: 360px;
+
+  .window-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .common-group {
+    height: 100%;
+  }
+
+  .sheet-tabs {
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: inherit;
+
+    margin-bottom: 0.75rem;
+
+    border-top: 1px solid $red;
+    border-bottom: 1px solid $red;
+
+    .item {
+      background: transparent;
+      border-radius: $border-radius;
+      color: $black;
+      font-weight: 600;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .active {
+      text-shadow: none;
+      background-color: $red;
+      color: $white;
+      font-weight: 600;
+    }
+
+    .zeon {
+      flex: 1 1 0;
+    }
+
+
+    .preparedSpells {
+      flex: 1.5 1 0;
+    }
+
+    .release {
+      flex: 1 1 0;
+    }
+  }
+
+  .group-body {
+    overflow-y: scroll;
+
+    height: 100%;
+
+
+    .prepared-spell-row:first-child {
+      margin-top: 0;
+    }
+
+    .prepared-spell-row {
+      margin-top: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: 0.1rem;
+
+      .name .input-container {
+        width: 100%;
+      }
+    }
+
+    .act-buttons {
+      display: flex;
+
+      .full-act,
+      .partial-act,
+      .release-act,
+      .withstand-pain {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 2rem;
+
+        .label {
+          font-size: 1.5rem;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+    }
+
+    .columns {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hr {
+      border-bottom: 1px solid $red;
+    }
+  }
+}

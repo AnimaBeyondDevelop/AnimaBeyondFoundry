@@ -9,7 +9,7 @@ export const calculateDamage = (attack: number, defense: number, at: number, dam
     if (halvedAbs) finalAt = Math.floor(at/2);
     if (diference < 30) percent = 0;
     else if (diference < 50 && finalAt <= 1) {
-      if (diference < 40 && finalAt == 0) percent = 10;
+      if (diference < 40 && finalAt === 0) percent = 10;
       else percent = Math.floor((diference - (finalAt * 10 + 10)) / 10) * 10;
     }
     else percent = Math.floor((diference - (finalAt * 10)) / 10) * 10;

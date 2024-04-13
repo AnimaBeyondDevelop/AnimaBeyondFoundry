@@ -1,0 +1,43 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class=this.metamagicTreeName
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize (concat "anima.ui.mystic.metamagics." this.metamagicTree ".title"))
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class=this.metamagicTreeName
+  }}
+    {{#each this.metamagicTreeSpheres as |metamagic key|}}
+    <div class="metamagic-row">
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="name"
+        title=(localize "anima.ui.mystic.metamagics.name.title")
+        hideTitle=(is "gt" @index 0)
+        disabled=true
+        inputType="text"
+        inputName=""
+        inputValue=(localize (concat "anima.ui.mystic.metamagics." key ".title"))
+      }}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        class="spheres"
+        title=(localize "anima.ui.mystic.metamagics.spheres.title")
+        isVertical=true
+        hideTitle=(is "gt" @index 0)
+        inputName=(concat "system.mystic.magicLevel.metamagics." ../this.metamagicTree "." key ".sphere")
+        inputValue= metamagic.sphere
+      }}
+          <option {{#if (is "eq" metamagic.sphere 0)}}selected{{/if}} value="0">0</option>
+          <option {{#if (is "eq" metamagic.sphere 1)}}selected{{/if}} value="1">1</option>
+          {{#if (is "gt" metamagic.max 1)}}<option {{#if (is "eq" metamagic.sphere 2)}}selected{{/if}} value="2">2</option>{{/if}}
+          {{#if (is "gt" metamagic.max 2)}}<option {{#if (is "eq" metamagic.sphere 3)}}selected{{/if}} value="3">3</option>{{/if}}
+          {{#if (is "gt" metamagic.max 3)}}<option {{#if (is "eq" metamagic.sphere 4)}}selected{{/if}} value="4">4</option>{{/if}}
+          {{#if (is "gt" metamagic.max 4)}}<option {{#if (is "eq" metamagic.sphere 5)}}selected{{/if}} value="5">5</option>{{/if}}
+          {{#if (is "gt" metamagic.max 5)}}<option {{#if (is "eq" metamagic.sphere 6)}}selected{{/if}} value="6">6</option>{{/if}}
+          {{#if (is "gt" metamagic.max 6)}}<option {{#if (is "eq" metamagic.sphere 7)}}selected{{/if}} value="7">7</option>{{/if}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

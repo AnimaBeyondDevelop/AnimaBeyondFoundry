@@ -2,5 +2,7 @@ export const GMMessageTypes = {
   Attack: 'GMAttack',
   CounterAttack: 'GMCounterAttack',
   RequestToAttackResponse: 'GMRequestToAttackResponse',
-  CancelCombat: 'GMCancelCombat'
+  CancelCombat: 'GMCancelCombat',
+  Roll: 'GMRoll',
+  RollRequest: 'GMRollRequest'
 };

@@ -2,6 +2,7 @@ export const Templates = {
   Dialog: {
     ModDialog: 'systems/animabf/templates/dialog/mod-dialog.html',
     DamageCalculator: 'systems/animabf/templates/dialog/damage-calculator.hbs',
+    MysticAct: 'systems/animabf/templates/dialog/mystic-act.hbs',
     newPreparedSpell: 'systems/animabf/templates/dialog/new-prepared-spell.hbs',
     newSupernaturalShield: {
       main: 'systems/animabf/templates/dialog/new-supernatural-shield/new-supernatural-shield.hbs',
@@ -42,7 +43,8 @@ export const Templates = {
       },
       CombatRequestDialog:
         'systems/animabf/templates/dialog/combat/combat-request-dialog.hbs',
-      GMCombatDialog: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs'
+      GMCombatDialog: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs',
+      RollRequestDialog: 'systems/animabf/templates/dialog/combat/roll-request-dialog.hbs'
     },
     GenericDialog: 'systems/animabf/templates/dialog/generic-dialog/generic-dialog.hbs',
     Icons: {
@@ -52,6 +54,7 @@ export const Templates = {
   },
   CustomHotBar: 'systems/animabf/templates/custom-hotbar/custom-hotbar.hbs',
   Chat: {
-    CombatResult: 'systems/animabf/templates/chat/combat-result.hbs'
+    CombatResult: 'systems/animabf/templates/chat/combat-result.hbs',
+    CheckResult: 'systems/animabf/templates/chat/check-result.hbs'
   }
 };

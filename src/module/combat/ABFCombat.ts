@@ -17,6 +17,14 @@ export default class ABFCombat extends Combat {
     return super.startCombat();
   }
 
+  async endCombat() {
+    const combatants = this.combatants.map(c => c.token)
+    for (let token of combatants) {
+      token?.actor?.painDisappearing(true);
+    }
+    return super.endCombat();
+  }
+
   async nextTurn() {
     if (this.getFlag('world', 'newRound')) {
       this.setFlag('world', 'newRound', false);
@@ -34,6 +42,7 @@ export default class ABFCombat extends Combat {
       token?.actor?.resetDefensesCounter();
       token?.actor?.consumeMaintainedZeon();
       token?.actor?.psychicShieldsMaintenance();
+      token?.actor?.painDisappearing();
     }
 
     return super.nextRound();

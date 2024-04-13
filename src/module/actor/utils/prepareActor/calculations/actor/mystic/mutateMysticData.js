@@ -26,7 +26,7 @@ export const mutateMysticData = data => {
     calculateInnateMagic(mystic.act.main.final.value);
   if (mystic.innateMagic.via.length !== 0) {
     for (const innateMagicVia of mystic.innateMagic.via) {
-      const actVia = mystic.act.via.find(i => i.name == innateMagicVia.name);
+      const actVia = mystic.act.via.find(i => i.name === innateMagicVia.name);
       const actViaValue =
         mystic.act.via.length !== 0 && actVia
           ? actVia.system.final.value
@@ -41,12 +41,14 @@ export const mutateMysticData = data => {
   );
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
     mystic.magicProjection.imbalance.offensive.base.value +
+    mystic.magicProjection.imbalance.offensive.special.value +
     allActionsPenalty,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
     mystic.magicProjection.imbalance.defensive.base.value +
+    mystic.magicProjection.imbalance.defensive.special.value +
     allActionsPenalty,
     0
   );
@@ -57,7 +59,9 @@ export const mutateMysticData = data => {
     0
   );
   mystic.zeonRegeneration.final.value = Math.max(
-    mystic.zeonRegeneration.base.value - dailyZeon,
+    mystic.zeonRegeneration.base.value +
+    mystic.magicLevel.metamagics.arcanePower.advancedZeonRegeneration.sphere * 10 -
+    dailyZeon,
     0
   );
 

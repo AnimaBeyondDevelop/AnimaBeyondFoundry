@@ -13,7 +13,7 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
     ) + general.modifiers.naturalPenalty.final.value;
   const { initiative } = data.characteristics.secondaries;
 
-  initiative.final.value = initiative.base.value + penalty;
+  initiative.final.value = initiative.base.value + initiative.special.value + penalty;
 
   const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 

@@ -1,7 +1,11 @@
 import { Templates } from '../../utils/constants';
 import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
+import { weaponSpecialCheck } from '../../combat/utils/weaponSpecialCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
+import { definedMagicProjectionCost } from '../../combat/utils/definedMagicProjectionCost.js';
+import { supSpecificAttack } from '../../combat/utils/supSpecificAttack.js';
+import { roundTo5Multiples } from '../../combat/utils/roundTo5Multiples';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
@@ -43,6 +47,16 @@ const getInitialData = (attacker, defender, options = {}) => {
         enable: combatDistance,
         check: false
       },
+      specialPorpuseAttacks: [
+        'none',
+        'takeDown',
+        'disable',
+        'disarm',
+        'trapping',
+        'knockOut',
+        'directed'
+      ],
+      directedAttacks: defenderActor.system.general.body,
       combat: {
         fatigueUsed: 0,
         modifier: 0,
@@ -61,7 +75,16 @@ const getInitialData = (attacker, defender, options = {}) => {
         damage: {
           special: 0,
           final: 0
-        }
+        },
+        specialPorpuseAttack: {
+          value: 'none',
+          causeDamage: true,
+          specialCharacteristic: undefined,
+          check: false,
+          directed: 'none',
+          weakspot: false
+        },
+        poison: undefined
       },
       mystic: {
         modifier: 0,
@@ -92,12 +115,21 @@ const getInitialData = (attacker, defender, options = {}) => {
         damage: {
           special: 0,
           final: 0
+        },
+        metamagics: {
+          offensiveExpertise: 0,
+          removeProtection: 0,
+          definedMagicProjection: 0
         }
       },
       psychic: {
         modifier: 0,
-        psychicProjection:
-          attackerActor.system.psychic.psychicProjection.imbalance.offensive.final.value,
+        psychicProjection: {
+          base: attackerActor.system.psychic.psychicProjection.imbalance.offensive.base
+            .value,
+          final:
+            attackerActor.system.psychic.psychicProjection.imbalance.offensive.final.value
+        },
         psychicPotential: {
           special: 0,
           final: attackerActor.system.psychic.psychicPotential.final.value
@@ -177,6 +209,10 @@ export class CombatAttackDialog extends FormApplication {
       } else {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
       }
+      mystic.metamagics.definedMagicProjection = this.attackerActor.getFlag(
+        'animabf',
+        'lastDefinedMagicProjection'
+      ) ?? 0;
       const spellCastingOverride = this.attackerActor.getFlag(
         'animabf',
         'spellCastingOverride'
@@ -203,7 +239,7 @@ export class CombatAttackDialog extends FormApplication {
         'animabf',
         'lastOffensiveWeaponUsed'
       );
-      if (weapons.find(weapon => weapon._id == lastOffensiveWeaponUsed)) {
+      if (weapons.find(weapon => weapon._id === lastOffensiveWeaponUsed)) {
         combat.weaponUsed = lastOffensiveWeaponUsed;
       } else {
         combat.weaponUsed = weapons[0]._id;
@@ -272,13 +308,17 @@ export class CombatAttackDialog extends FormApplication {
           weaponUsed,
           unarmed,
           visible,
-          distanceCheck
+          distanceCheck,
+          specialPorpuseAttack,
+          poison
         },
         distance,
+        directedAttacks,
         highGround,
         poorVisibility,
         targetInCover
       } = this.modalData.attacker;
+      const { i18n } = game;
       distance.check = distanceCheck
       this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
@@ -317,14 +357,61 @@ export class CombatAttackDialog extends FormApplication {
         if (
           weapon !== undefined &&
           criticSelected !== NoneWeaponCritic.NONE &&
-          criticSelected == weapon?.system.critic.secondary.value
+          criticSelected === weapon?.system.critic.secondary.value
         ) {
           attackerCombatMod.secondaryCritic = { value: -10, apply: true };
         }
+        const critic = criticSelected ?? WeaponCritic.IMPACT;
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
-
+        if (specialPorpuseAttack.value !== 'none') {
+          if (specialPorpuseAttack.value === 'takeDown') {
+            specialPorpuseAttack.check = true;
+            if (
+              unarmed ||
+              weapon.name === 'Desarmado' ||
+              weapon.system.size.value !== 'small'
+            ) {
+              attackerCombatMod.takeDown = { value: -30, apply: true }
+            } else {
+              attackerCombatMod.takeDownSmallWeapon = { value: -60, apply: true }
+            }
+          } else if (specialPorpuseAttack.value === 'disarm') {
+            specialPorpuseAttack.check = true;
+            attackerCombatMod.disarm = { value: -40, apply: true }
+          } else if (specialPorpuseAttack.value === 'trapping') {
+            specialPorpuseAttack.check = true;
+            attackerCombatMod.trapping = { value: -40, apply: true }
+          } else if (specialPorpuseAttack.value === 'knockOut') {
+            specialPorpuseAttack.directed = 'head';
+            if (critic !== WeaponCritic.IMPACT) {
+              attackerCombatMod.knockOut = { value: -40, apply: true }
+            }
+          }
+          if (specialPorpuseAttack.directed !== 'none') {
+            specialPorpuseAttack.weakspot = directedAttacks[specialPorpuseAttack.directed]?.weakspot;
+            specialPorpuseAttack.openArmor = directedAttacks[specialPorpuseAttack.directed]?.openArmor;
+            if (specialPorpuseAttack.value === 'disable') {
+              specialPorpuseAttack.weakspot = true;
+            }
+            attackerCombatMod.directed = {
+              value: directedAttacks[specialPorpuseAttack.directed]?.modifier ?? 0, apply: true
+            }
+          }
+          if (specialPorpuseAttack.value === 'disable') {
+            const disableBodyParts = ['elbow', 'foot', 'hand', 'knee', 'arm', 'thigh', 'calf', 'wrist']
+            if (!disableBodyParts.find(i => i === specialPorpuseAttack.directed)) {
+              ui.notifications.warn(
+                i18n.localize('dialogs.specialPorpuseAttack.warning.disableMustChoose')
+              );
+              return
+            }
+          }
+          if (unarmed || weapon.name === 'Desarmado') {
+            specialPorpuseAttack.specialCharacteristic = undefined
+          }
+        }
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
         let combatModifier = 0;
         for (const key in attackerCombatMod) {
@@ -345,7 +432,6 @@ export class CombatAttackDialog extends FormApplication {
         roll.roll();
 
         if (this.modalData.attacker.showRoll) {
-          const { i18n } = game;
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
@@ -362,7 +448,6 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const critic = criticSelected ?? WeaponCritic.IMPACT;
         let resistanceEffect = { value: 0, type: undefined, check: false };
         if (weapon !== undefined) {
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
@@ -373,6 +458,8 @@ export class CombatAttackDialog extends FormApplication {
         this.hooks.onAttack({
           type: 'combat',
           values: {
+            specialPorpuseAttack,
+            directedAttacks,
             unarmed,
             damage: damage.final,
             attack,
@@ -387,7 +474,8 @@ export class CombatAttackDialog extends FormApplication {
             visible,
             distance,
             projectile,
-            attackerCombatMod
+            attackerCombatMod,
+            poison
           }
         });
 
@@ -406,14 +494,23 @@ export class CombatAttackDialog extends FormApplication {
           modifier,
           critic,
           damage,
+          metamagics,
           projectile,
           distanceCheck
-        }, distance } = this.modalData.attacker;
+        }, distance, directedAttacks } = this.modalData.attacker;
       distance.check = distanceCheck
       if (spellUsed) {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true }
         };
+        if (+metamagics.offensiveExpertise) {
+          attackerCombatMod.offensiveExpertise = { value: +metamagics.offensiveExpertise, apply: true }
+        }
+        if (+metamagics.definedMagicProjection) {
+          magicProjection.final = this.attackerActor.definedMagicProjection(metamagics.definedMagicProjection, 'offensive')
+          this.modalData.attacker.withoutRoll = true
+          this.attackerActor.setFlag('animabf', 'lastDefinedMagicProjection', metamagics.definedMagicProjection);
+        }
         this.attackerActor.setFlag(
           'animabf',
           'spellCastingOverride',
@@ -430,7 +527,7 @@ export class CombatAttackDialog extends FormApplication {
         let visibleCheck = spell?.system.visible;
 
         let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
-
+        const specialPorpuseAttack = supSpecificAttack(spellUsedEffect);
         let combatModifier = 0;
         for (const key in attackerCombatMod) {
           combatModifier += attackerCombatMod[key]?.value ?? 0;
@@ -482,6 +579,8 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             spellCasting,
+            specialPorpuseAttack,
+            directedAttacks,
             macro: spell.macro,
             attackerCombatMod
           }
@@ -504,7 +603,9 @@ export class CombatAttackDialog extends FormApplication {
         damageModifier,
         mentalPatternImbalance,
         projectile,
-        distanceCheck }, distance
+        distanceCheck },
+        distance,
+        directedAttacks
       } = this.modalData.attacker;
       distance.check = distanceCheck
       const { i18n } = game;
@@ -519,12 +620,12 @@ export class CombatAttackDialog extends FormApplication {
         for (const key in attackerCombatMod) {
           combatModifier += attackerCombatMod[key]?.value ?? 0;
         }
-        let formula = `1d100xa + ${psychicProjection} + ${combatModifier ?? 0}`;
+        let formula = `1d100xa + ${psychicProjection.final} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
           // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
-        if (this.attackerActor.system.psychic.psychicProjection.base.value >= 200) {
+        if (psychicProjection.base >= 200) {
           // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
@@ -572,12 +673,13 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const powerUsedEffect = power?.system.effects[psychicPotentialRoll.total].value;
+        const specialPorpuseAttack = supSpecificAttack(powerUsedEffect);
         let damage = damageCheck(powerUsedEffect) + damageModifier;
         let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let visibleCheck = power?.system.visible;
 
         const rolled =
-          psychicProjectionRoll.total - psychicProjection - (combatModifier ?? 0);
+          psychicProjectionRoll.total - psychicProjection.final - (combatModifier ?? 0);
         this.hooks.onAttack({
           type: 'psychic',
           values: {
@@ -585,7 +687,7 @@ export class CombatAttackDialog extends FormApplication {
             powerUsed,
             powerName: power.name,
             psychicPotential: psychicPotentialRoll.total,
-            psychicProjection,
+            psychicProjection: psychicProjection.final,
             critic,
             damage,
             psychicFatigue,
@@ -596,6 +698,8 @@ export class CombatAttackDialog extends FormApplication {
             visible: visibleCheck,
             distance,
             projectile,
+            specialPorpuseAttack,
+            directedAttacks,
             macro: power.macro,
             attackerCombatMod
           }
@@ -608,7 +712,7 @@ export class CombatAttackDialog extends FormApplication {
     });
   }
 
-  getData() {
+  async getData() {
     const {
       attacker: { combat, psychic, mystic },
       ui
@@ -634,23 +738,58 @@ export class CombatAttackDialog extends FormApplication {
     if (!mystic.spellUsed) {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
-    const spell = spells.find(w => w._id === mystic.spellUsed);
-    const spellUsedEffect =
-      spell?.system.grades[mystic.spellGrade].description.value ?? '';
-    mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
-    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
-
+    if (mystic.spellUsed) {
+      if (mystic.spellCasting.casted.prepared) {
+        const preparedSpell = this.attackerActor.getPreparedSpell(mystic.spellUsed, mystic.spellGrade);
+        mystic.metamagics = mergeObject(mystic.metamagics, preparedSpell?.system?.metamagics)
+      }
+      if (mystic.metamagics.definedMagicProjection > 0) {
+        mystic.metamagics.offensiveExpertise = 0;
+      }
+      const zeonPoolCost = definedMagicProjectionCost(mystic.metamagics.definedMagicProjection);
+      const addedZeonCost = { value: +mystic.metamagics.offensiveExpertise + mystic.metamagics.removeProtection, pool: zeonPoolCost }
+      mystic.spellCasting = await this.attackerActor.mysticCanCastEvaluate(mystic.spellUsed, mystic.spellGrade, addedZeonCost, mystic.spellCasting.casted, mystic.spellCasting.override);
+      const spellDamage = this.attackerActor.spellDamage(mystic.spellUsed, mystic.spellGrade)
+      mystic.damage.final = mystic.damage.special + spellDamage;
+    }
     const { weapons } = this.attackerActor.system.combat;
 
     const weapon = weapons.find(w => w._id === combat.weaponUsed);
-
-    combat.unarmed = weapons.length === 0;
+    combat.poison = weapon?.system?.poisons?.system
+    combat.specialPorpuseAttack.specialCharacteristic = weaponSpecialCheck(weapon);
+    if (
+      combat.specialPorpuseAttack.value !== 'takeDown' &&
+      combat.specialPorpuseAttack.value !== 'trapping'
+    ) {
+      combat.specialPorpuseAttack.causeDamage = true;
+    }
+    if (combat.specialPorpuseAttack.value === 'disarm') {
+      combat.specialPorpuseAttack.causeDamage = false;
+    }
+    if (
+      combat.specialPorpuseAttack.value !== 'disable' &&
+      combat.specialPorpuseAttack.value !== 'directed'
+    ) {
+      combat.specialPorpuseAttack.directed = 'none';
+    }
+    combat.unarmed =
+      weapons.length === 0 ||
+      (combat.specialPorpuseAttack.value === 'trapping' && !combat.specialPorpuseAttack.specialCharacteristic);
 
     if (combat.unarmed) {
-      combat.damage.final =
+      const unarmedDamage =
         combat.damage.special +
         10 +
         this.attackerActor.system.characteristics.primaries.strength.mod;
+      combat.damage.final = unarmedDamage;
+      if (!combat.specialPorpuseAttack.causeDamage) {
+        combat.damage.final = 0;
+      } else if (
+        combat.specialPorpuseAttack.value === 'takeDown' ||
+        combat.specialPorpuseAttack.value === 'trapping'
+      ) {
+        combat.damage.final = roundTo5Multiples(unarmedDamage / 2);
+      }
     } else {
       combat.weapon = weapon;
       if (weapon?.system.isRanged.value) {
@@ -671,8 +810,16 @@ export class CombatAttackDialog extends FormApplication {
 
       ui.weaponHasSecondaryCritic =
         weapon.system.critic.secondary.value !== NoneWeaponCritic.NONE;
-
-      combat.damage.final = combat.damage.special + weapon.system.damage.final.value;
+      const armedDamage = combat.damage.special + weapon.system.damage.final.value;
+      combat.damage.final = armedDamage;
+      if (!combat.specialPorpuseAttack.causeDamage) {
+        combat.damage.final = 0;
+      } else if (
+        combat.specialPorpuseAttack.value === 'takeDown' ||
+        combat.specialPorpuseAttack.value === 'trapping'
+      ) {
+        combat.damage.final = roundTo5Multiples(armedDamage / 2);
+      }
     }
 
     this.modalData.config = ABFConfig;
@@ -704,7 +851,7 @@ export class CombatAttackDialog extends FormApplication {
         }
       }
     }
-    if (this.modalData.attacker.mystic.spellCasting.override) {
+    if (this.modalData.attacker.mystic.spellCasting?.override) {
       this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
     }
     if (prevPower !== this.modalData.attacker.psychic.powerUsed) {

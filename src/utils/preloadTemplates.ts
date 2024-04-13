@@ -4,6 +4,7 @@ export const preloadTemplates = () => {
   const templatePaths: string[] = [
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
+    Templates.Dialog.MysticAct,
     Templates.Dialog.newSupernaturalShield.main,
     Templates.Dialog.newSupernaturalShield.parts.mystic,
     Templates.Dialog.newSupernaturalShield.parts.psychic,
@@ -18,6 +19,7 @@ export const preloadTemplates = () => {
     Templates.Dialog.Combat.CombatDefenseDialog.parts.psychic,
     Templates.Dialog.Combat.CombatRequestDialog,
     Templates.Dialog.Combat.GMCombatDialog,
+    Templates.Dialog.Combat.RollRequestDialog,
     Templates.Dialog.Icons.Accept,
     Templates.Dialog.Icons.Cancel,
     Templates.CustomHotBar,
@@ -53,6 +55,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/items/armor/armor.hbs',
     'systems/animabf/templates/items/spell/spell.hbs',
     'systems/animabf/templates/items/psychicPower/psychicPower.hbs',
+    'systems/animabf/templates/items/technique/technique.hbs',
 
     // Actor sheet parts
     'systems/animabf/templates/actor/parts/header/header.hbs',
@@ -75,6 +78,7 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/general/parts/disadvantages.hbs',
     'systems/animabf/templates/actor/parts/general/parts/aspect.hbs',
     'systems/animabf/templates/actor/parts/general/parts/description.hbs',
+    'systems/animabf/templates/actor/parts/general/parts/body.hbs',
     'systems/animabf/templates/actor/parts/general/parts/regeneration.hbs',
     'systems/animabf/templates/actor/parts/general/parts/contacts.hbs',
     'systems/animabf/templates/actor/parts/general/parts/notes.hbs',
@@ -113,7 +117,12 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/mystic/parts/selected-spells.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/prepared-spells.hbs',
     'systems/animabf/templates/actor/parts/mystic/parts/summons.hbs',
-    'systems/animabf/templates/actor/parts/mystic/parts/metamagics.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/metamagics/metamagics.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/metamagics/common/metamagic-tree.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/metamagics/parts/arcane-warfare.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/metamagics/parts/arcane-power.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/metamagics/parts/arcane-esoterica.hbs',
+    'systems/animabf/templates/actor/parts/mystic/parts/metamagics/parts/arcane-knowledge.hbs',
     'systems/animabf/templates/actor/parts/domine/domine.hbs',
     'systems/animabf/templates/actor/parts/domine/parts/ki-skills.hbs',
     'systems/animabf/templates/actor/parts/domine/parts/nemesis-skills.hbs',
@@ -138,7 +147,10 @@ export const preloadTemplates = () => {
     'systems/animabf/templates/actor/parts/settings/parts/tabVisibility.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/automationOptions.hbs',
     'systems/animabf/templates/actor/parts/settings/parts/advancedSettings.hbs',
-    'systems/animabf/templates/actor/parts/settings/parts/advancedCharacteristics.hbs'
+    'systems/animabf/templates/actor/parts/settings/parts/advancedCharacteristics.hbs',
+    'systems/animabf/templates/actor/parts/status/status.hbs',
+    'systems/animabf/templates/actor/parts/status/parts/effects-list.hbs',
+    'systems/animabf/templates/actor/parts/status/parts/penalties.hbs'
   ];
 
   return loadTemplates(templatePaths);
