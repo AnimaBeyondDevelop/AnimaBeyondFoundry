@@ -1,45 +1,25 @@
 export const resistanceEffectCheck = effect => {
   const resistanceEffect = { value: 0, type: undefined, check: false };
-  if (/\d+ RF/.test(effect)) {
+  const resistances = { physical: 'RF', disease: 'RE', poison: 'RV', magic: 'RM', psychic: 'RP' }
+
+  function updateResistanceEffect(type, regExp) {
     resistanceEffect.check = true;
-    resistanceEffect.type = 'physical';
-    resistanceEffect.value = parseInt(effect.match(/\d+ RF/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/\d+ RE/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'disease';
-    resistanceEffect.value = parseInt(effect.match(/\d+ RE/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/\d+ RV/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'poison';
-    resistanceEffect.value = parseInt(effect.match(/\d+ RV/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/\d+ RM/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'magic';
-    resistanceEffect.value = parseInt(effect.match(/\d+ RM/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/\d+ RP/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'psychic';
-    resistanceEffect.value = parseInt(effect.match(/\d+ RP/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/RF \d+/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'physical';
-    resistanceEffect.value = parseInt(effect.match(/RF \d+/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/RE \d+/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'disease';
-    resistanceEffect.value = parseInt(effect.match(/RE \d+/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/RV \d+/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'poison';
-    resistanceEffect.value = parseInt(effect.match(/RV \d+/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/RM \d+/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'magic';
-    resistanceEffect.value = parseInt(effect.match(/RM \d+/)[0].match(/\d+/)[0], 10) ?? 0;
-  } else if (/RP \d+/.test(effect)) {
-    resistanceEffect.check = true;
-    resistanceEffect.type = 'psychic';
-    resistanceEffect.value = parseInt(effect.match(/RP \d+/)[0].match(/\d+/)[0], 10) ?? 0;
+    resistanceEffect.type = type;
+    resistanceEffect.value = parseInt(effect.match(regExp)[0].match(/\d+/)[0]) ?? 0;
   }
+
+  for (const key in resistances) {
+    if (!resistanceEffect.check) {
+      let beforeResistance = new RegExp(`\\d+ *[RFEVMP]{0,2} *o* *${resistances[key]}`, 'i')
+      let afterResistance = new RegExp(`${resistances[key]} *o* *[RFEVMP]{0,2} *\\d+`, 'i')
+
+      if (beforeResistance.test(effect)) {
+        updateResistanceEffect(key, beforeResistance)
+      } else if (afterResistance.test(effect)) {
+        updateResistanceEffect(key, afterResistance)
+      }
+    }
+  }
+
   return resistanceEffect;
 };
