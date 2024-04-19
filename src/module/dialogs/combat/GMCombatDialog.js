@@ -3,7 +3,7 @@ import { calculateCombatResult } from '../../combat/utils/calculateCombatResult'
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { executeMacro } from '../../utils/functions/executeMacro';
-import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
+import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const attackerActor = attacker.actor;
@@ -261,8 +261,14 @@ export class GMCombatDialog extends FormApplication {
         defenderModifier;
       defender.result.values.total = Math.max(0, defender.result.values.total);
 
-      const attackerTotal = Math.max(0, attacker.result.values.total + attacker.customModifier);
-      const defenderTotal = Math.max(0, defender.result.values.total + defender.customModifier);
+      const attackerTotal = Math.max(
+        0,
+        attacker.result.values.total + attacker.customModifier
+      );
+      const defenderTotal = Math.max(
+        0,
+        defender.result.values.total + defender.customModifier
+      );
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
@@ -453,30 +459,32 @@ export class GMCombatDialog extends FormApplication {
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
-    const { attacker, defender, calculations } = this.modalData
-    const winner =
-      calculations.winner === this.defenderToken
-        ? 'defender'
-        : 'attacker';
+    const { attacker, defender, calculations } = this.modalData;
+    const winner = calculations.winner === this.defenderToken ? 'defender' : 'attacker';
     let macroName;
     let args = {
       attacker: this.attackerToken,
       spellGrade: attacker.result.values.spellGrade,
       psychicPotential: attacker.result.values?.psychicPotential,
       projectile: attacker.result.values?.projectile,
-      defenders: [{
-        defender: this.defenderToken,
-        winner,
-        defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
-        totalAttack: attacker.result.values.total,
-        appliedDamage: calculations.damage,
-        damageType: attacker.result.values?.critic,
-        bloodColor: 'red', // add bloodColor to actor template
-        missedAttack: false,
-        resistanceRoll,
-        defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-        criticImpact: 0
-      }]
+      defenders: [
+        {
+          defender: this.defenderToken,
+          winner,
+          defenseType:
+            defender.result.type === 'combat'
+              ? defender.result.values.type
+              : defender.result.type,
+          totalAttack: attacker.result.values.total,
+          appliedDamage: calculations.damage,
+          damageType: attacker.result.values?.critic,
+          bloodColor: 'red', // add bloodColor to actor template
+          missedAttack: false,
+          resistanceRoll,
+          defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+          criticImpact: 0
+        }
+      ]
     };
     if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
       args.defenders[0].missedAttack = true;
@@ -484,7 +492,7 @@ export class GMCombatDialog extends FormApplication {
 
     if (attacker.result?.type === 'combat') {
       if (!attacker.result.weapon) {
-        attacker.result.weapon = { name: 'Unarmed' }
+        attacker.result.weapon = { name: 'Unarmed' };
       }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
@@ -498,6 +506,6 @@ export class GMCombatDialog extends FormApplication {
       macroName = attacker.result?.values.macro;
     }
 
-    executeMacro(macroName, args)
+    executeMacro(macroName, args);
   }
 }
