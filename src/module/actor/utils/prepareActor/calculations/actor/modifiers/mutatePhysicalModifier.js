@@ -6,9 +6,7 @@ import { calculateArmorPhysicalPenalty } from './calculations/calculateArmorPhys
 export const mutatePhysicalModifier = data => {
   let armorPhysicalModifier = calculateArmorPhysicalPenalty(data);
 
-  let basePhysicalActionsModifier = armorPhysicalModifier;
-  data.general.modifiers.physicalActions.base.value = basePhysicalActionsModifier;
   data.general.modifiers.physicalActions.final.value =
-    basePhysicalActionsModifier + data.general.modifiers.physicalActions.special.value;
+    data.general.modifiers.physicalActions.base.value + data.general.modifiers.physicalActions.special.value + armorPhysicalModifier;
 };
 

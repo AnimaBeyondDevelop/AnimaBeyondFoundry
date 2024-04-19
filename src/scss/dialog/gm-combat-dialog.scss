@@ -72,30 +72,44 @@
         }
 
         .common-titled-input {
-          flex-basis: calc(33% - 1rem);
           margin: 0.5rem;
         }
 
-        .weapon-used,
-        .spell-used,
+        .weapon-used {
+          flex-basis: 55%;
+        }
+        .spell-used {
+          flex-basis: 60%;
+          .input-container {
+            width: auto;
+          }
+        }
+
         .power-used {
-          flex-basis: 33%;
+          flex-basis: 48%;
+          .input-container {
+            width: auto;
+          }
+        }
+
+        .weapon-attack,
+        .dodge-value,
+        .block-value {
+          .input-container {
+            width: 3rem;
+          }
         }
 
         .fatigue,
         .at-value,
         .defense-count,
         .weapon-quality {
-          flex-basis: 20%;
-
           .input-container {
             width: 2.25rem;
           }
         }
 
         .modifier,
-        .dodge-value,
-        .block-value,
         .critic,
         .psychic-projection,
         .magic-projection,
@@ -103,14 +117,36 @@
         .damage,
         .roll,
         .total,
-        .spell-grade,
-        .weapon-attack {
-          flex-basis: 2%;
-
+        .spell-grade {
           .input-container {
             width: 3rem;
           }
         }
+      }
+      .combat-mod {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 1rem;
+        width: 100%;
+
+        .combatMod-value {
+          margin-left: 1rem;
+          width: 80%;
+        }
+        .combatMod-apply {
+          justify-content: flex-end;
+          .input-container {
+            width: 20%;
+            margin-right: 1rem;
+          }
+        }
+      }
+      .supernatural-shield {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+        margin-left: 1rem;
       }
 
       .waiting-row {

@@ -9,6 +9,14 @@ export default class ABFCombat extends Combat {
     this.setFlag('world', 'newRound', true);
   }
 
+  async startCombat() {
+    const combatants = this.combatants.map(c => c.token)
+    for (let token of combatants) {
+      token?.actor?.resetDefensesCounter();
+    }
+    return super.startCombat();
+  }
+
   async nextTurn() {
     if (this.getFlag('world', 'newRound')) {
       this.setFlag('world', 'newRound', false);
@@ -21,7 +29,27 @@ export default class ABFCombat extends Combat {
     await this.resetAll();
     this.setFlag('world', 'newRound', true);
 
+    const combatants = this.combatants.map(c => c.token)
+    for (let token of combatants) {
+      token?.actor?.resetDefensesCounter();
+      token?.actor?.consumeMaintainedZeon();
+      token?.actor?.psychicShieldsMaintenance();
+    }
+
     return super.nextRound();
+  }
+
+  async previousRound() {
+    // Reset initiative for everyone when going to the next round
+    await this.resetAll();
+
+    const combatants = this.combatants.map(c => c.token)
+    for (let token of combatants) {
+      token?.actor?.consumeMaintainedZeon(true);
+      token?.actor?.psychicShieldsMaintenance(true);
+    }
+
+    return super.previousRound();
   }
 
   prepareDerivedData() {

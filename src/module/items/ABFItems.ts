@@ -3,6 +3,9 @@ export enum ABFItems {
   SPELL = 'spell',
   SPELL_MAINTENANCE = 'spellMaintenance',
   SELECTED_SPELL = 'selectedSpell',
+  ACT_VIA = 'actVia',
+  INNATE_MAGIC_VIA = 'innateMagicVia',
+  PREPARED_SPELL = 'preparedSpell',
   METAMAGIC = 'metamagic',
   SUMMON = 'summon',
   LEVEL = 'level',
@@ -30,5 +33,6 @@ export enum ABFItems {
   AMMO = 'ammo',
   WEAPON = 'weapon',
   ARMOR = 'armor',
+  SUPERNATURAL_SHIELD = 'supernaturalShield',
   INVENTORY_ITEM = 'inventoryItem',
 }

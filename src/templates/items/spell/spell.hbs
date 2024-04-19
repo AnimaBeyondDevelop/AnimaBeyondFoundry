@@ -1,3 +1,157 @@
 {{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
   <div id="svelte-spell"></div>
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="spell-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="spell"
+    }}
+      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+        <div class='spell-header'>
+          <div class='first-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="name"
+              hideTitle=true
+              inputType="text"
+              inputName="name"
+              inputValue=item.name
+            }}
+          </div>
+          <div class='second-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="level"
+              title=(localize "anima.ui.mystic.spell.level.title")
+              inputName="system.level.value"
+              inputValue=system.level.value
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+              class="visible"
+              title=(localize "anima.ui.mystic.spell.visible.title")
+              inputType="checkbox"
+              inputName="system.visible"
+              inputValue=(is 'eq' system.visible true)
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="combat-type"
+              choices=config.iterables.mystic.combatTypes
+              title=(localize "anima.ui.mystic.spell.combatType.title")
+              inputName="system.combatType.value"
+              inputValue=system.combatType.value
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="via"
+              choices=config.iterables.mystic.vias
+              title=(localize "anima.ui.mystic.spell.via.title")
+              inputName="system.via.value"
+              inputValue=system.via.value
+            }}
+          </div>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="spell"
+      }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="base-grade"
+          spellId=data._id
+          intRequiredInputName="system.grades.base.intRequired.value"
+          zeonInputName="system.grades.base.zeon.value"
+          maintenanceCostInputName="system.grades.base.maintenanceCost.value"
+          descriptionInputName="system.grades.base.description.value"
+          gradeName='base'
+          grade=system.grades.base
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="intermediate-grade"
+          spellId=data._id
+          hideTitle=true
+          intRequiredInputName="system.grades.intermediate.intRequired.value"
+          zeonInputName="system.grades.intermediate.zeon.value"
+          maintenanceCostInputName="system.grades.intermediate.maintenanceCost.value"
+          descriptionInputName="system.grades.intermediate.description.value"
+          gradeName='intermediate'
+          grade=system.grades.intermediate
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="advanced-grade"
+          spellId=data._id
+          hideTitle=true
+          intRequiredInputName="system.grades.advanced.intRequired.value"
+          zeonInputName="system.grades.advanced.zeon.value"
+          maintenanceCostInputName="system.grades.advanced.maintenanceCost.value"
+          descriptionInputName="system.grades.advanced.description.value"
+          gradeName='advanced'
+          grade=system.grades.advanced
+        }}
+        {{>
+        "systems/animabf/templates/actor/parts/mystic/parts/spells/grade/grade.hbs"
+          class="arcane-grade"
+          spellId=data._id
+          hideTitle=true
+          intRequiredInputName="system.grades.arcane.intRequired.value"
+          zeonInputName="system.grades.arcane.zeon.value"
+          maintenanceCostInputName="system.grades.arcane.maintenanceCost.value"
+          descriptionInputName="system.grades.arcane.description.value"
+          gradeName='arcane'
+          grade=system.grades.arcane
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="macro"
+          title="Macro"
+          inputType="text"
+          inputName="system.macro"
+          inputValue=system.macro
+        }}
+        <div class="description">
+          <p class='label'>{{localize "anima.ui.mystic.spell.grade.description.title"}}</p>
+          {{editor system.enrichedDescription target="system.description.value" button=true owner=true editable=true}}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+        <div class='spell-footer'>
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="spell-type"
+            choices=config.iterables.mystic.spellTypes
+            title=(localize "anima.ui.mystic.spell.spellType.title")
+            inputName="system.spellType.value"
+            inputValue=system.spellType.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="action-type"
+            choices=config.iterables.mystic.actionTypes
+            title=(localize "anima.ui.mystic.spell.actionType.title")
+            inputName="system.actionType.value"
+            inputValue=system.actionType.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="critic"
+            title=(localize "anima.ui.mystic.spell.critic.title")
+            choices=config.iterables.combat.weapon.criticTypesWithNone
+            inputName=(concat "system.critic.value")
+            inputValue=system.critic.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+            class="has-daily-maintenance"
+            title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")
+            inputType="checkbox"
+            inputName="system.hasDailyMaintenance.value"
+            inputValue=(is 'eq' system.hasDailyMaintenance.value true)
+          }}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
 {{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

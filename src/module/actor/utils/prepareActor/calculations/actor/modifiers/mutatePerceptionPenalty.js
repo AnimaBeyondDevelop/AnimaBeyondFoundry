@@ -6,9 +6,7 @@ import { calculateArmorsPerceptionPenalty } from './calculations/calculateArmors
 export const mutatePerceptionPenalty = data => {
   let armorsPerceptionPenalty = calculateArmorsPerceptionPenalty(data);
 
-  let basePerceptionPenalty = Math.min(0, armorsPerceptionPenalty);
-  data.general.modifiers.perceptionPenalty.base.value = basePerceptionPenalty;
   data.general.modifiers.perceptionPenalty.final.value =
-    basePerceptionPenalty + data.general.modifiers.perceptionPenalty.special.value;
+    data.general.modifiers.perceptionPenalty.base.value + data.general.modifiers.perceptionPenalty.special.value + Math.min(0, armorsPerceptionPenalty);
 };
 

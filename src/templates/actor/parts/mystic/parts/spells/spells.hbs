@@ -38,6 +38,14 @@
                 }}
                 {{>
                 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                  class="combat-type"
+                  choices=xRoot.config.iterables.mystic.combatTypes
+                  title=(localize "anima.ui.mystic.spell.combatType.title")
+                  inputName=(concat "system.dynamic.spells." spell._id ".system.combatType.value")
+                  inputValue=spell.system.combatType.value
+                }}
+                {{>
+                'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                   class="via"
                   choices=xRoot.config.iterables.mystic.vias
                   title=(localize "anima.ui.mystic.spell.via.title")

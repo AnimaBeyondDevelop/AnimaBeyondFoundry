@@ -1,6 +1,14 @@
 import { ABFItems } from '../../items/ABFItems';
-import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+
+/**
+ * Initial data, used to infer the type of the data inside an item's `system`
+ * @readonly
+ */
+export const INITIAL_PSYCHIC_DISCIPLINE_DATA = {
+  imbalance: false
+};
 
 /** @type {import("../Items").PsychicDisciplineItemConfig} */
 export const PsychicDisciplineItemConfig = ABFItemConfigFactory({
@@ -13,15 +21,14 @@ export const PsychicDisciplineItemConfig = ABFItemConfigFactory({
     rowSelector: '.psychic-discipline-row'
   },
   onCreate: async actor => {
-    const { i18n } = game;
-
-    const name = await openSimpleInputDialog({
-      content: i18n.localize('dialogs.items.psychicDiscipline.content')
-    });
+    const results = await openComplexInputDialog(actor, 'newPsychicDiscipline');
+    const name = results['new.psychicDiscipline.name'];
+    const imbalance = results['new.psychicDiscipline.imbalance'];
 
     await actor.createItem({
       name,
-      type: ABFItems.PSYCHIC_DISCIPLINE
+      type: ABFItems.PSYCHIC_DISCIPLINE,
+      system: { imbalance }
     });
   }
 });
