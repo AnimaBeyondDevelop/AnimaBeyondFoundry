@@ -1,4 +1,8 @@
-export const INITIAL_ACTOR_DATA = {
+import { ABFActorDataSourceData } from '../types/Actor';
+
+export type TActorData = typeof INITIAL_ACTOR_DATA;
+
+export const INITIAL_ACTOR_DATA: ABFActorDataSourceData = {
   version: 1,
   ui: {
     contractibleItems: {},

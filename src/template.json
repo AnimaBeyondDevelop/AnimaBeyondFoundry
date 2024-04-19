@@ -318,6 +318,7 @@
       "spellType": { "value": "" },
       "actionType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
+      "description": "",
       "grades": {
         "base": {
           "name": { "value": "" },

@@ -19,8 +19,8 @@ export const preloadTemplates = () => {
     Templates.Dialog.Icons.Cancel,
     Templates.CustomHotBar,
     Templates.Chat.CombatResult,
+    Templates.Svelte.SvelteApp,
 
-    // TODO Add paths to "systems/AnimaBeyondFoundry/templates"
     // Common parts
     'systems/animabf/templates/common/ui/horizontal-titled-input.hbs',
     'systems/animabf/templates/common/ui/vertical-titled-input.hbs',

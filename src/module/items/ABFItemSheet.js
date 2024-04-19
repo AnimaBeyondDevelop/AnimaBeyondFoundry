@@ -1,12 +1,20 @@
 import { ABFItems } from './ABFItems';
 import { ITEM_CONFIGURATIONS } from '../actor/utils/prepareItems/constants';
+import { sveltify } from '@svelte/sveltify';
+import SpellContainer from '@svelte/components/spellContainer.svelte';
 
-export default class ABFItemSheet extends ItemSheet {
+export default class ABFItemSheet extends sveltify(ItemSheet) {
   constructor(object, options) {
     super(object, options);
 
     this.position.width = this.getWidthFromType();
     this.position.height = this.getHeightFromType();
+  }
+
+  static get svelteDescriptors() {
+    return [
+      { componentConstructor: SpellContainer, selector: '#svelte-spell' },
+    ]
   }
 
   static get defaultOptions() {

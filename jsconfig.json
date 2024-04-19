@@ -7,8 +7,20 @@
       "esnext"
     ],
     "types": [
+      "svelte",
       "@types/jest"
     ],
+    "paths": {
+      "@svelte/*": [
+        "./src/svelte/*"
+      ],
+      "@module/*": [
+        "./src/module/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
+    },
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
