@@ -5,8 +5,6 @@ import { damageCheck } from '../../combat/utils/damageCheck.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
-import CombatSvelte from '../../../svelte/components/combat.svelte';
-import { sveltify } from '../../../svelte';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const combatDistance = !!game.settings.get(
@@ -129,22 +127,7 @@ const getInitialData = (attacker, defender, options = {}) => {
   };
 };
 
-const svelteDescriptor = {
-  combat: {
-    componentConstructor: CombatSvelte,
-  }
-};
-
-/** @typedef {ReturnType<getInitialData>} TData */
-/** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-
-export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */(FormApplication)) {
-  static get svelteDescriptors() {
-    return [
-      { componentConstructor: CombatSvelte, selector: '#svelte-combat' }
-    ]
-  }
-
+export class CombatAttackDialog extends FormApplication {
   constructor(attacker, defender, hooks, options = {}) {
     super(getInitialData(attacker, defender, options));
 
@@ -229,7 +212,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
       combat.unarmed = true;
     }
 
-    this.object.allowed = game.user?.isGM || (options.allowed ?? false);
+    this.modalData.allowed = game.user?.isGM || (options.allowed ?? false);
 
     this.hooks = hooks;
 
@@ -257,11 +240,11 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
   }
 
   get attackerActor() {
-    return this.object.attacker.token.actor;
+    return this.modalData.attacker.token.actor;
   }
 
   updatePermissions(allowed) {
-    this.object.allowed = allowed;
+    this.modalData.allowed = allowed;
 
     this.render();
   }
@@ -361,7 +344,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
 
         roll.roll();
 
-        if (this.object.attacker.showRoll) {
+        if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
 
           const flavor = weapon
@@ -374,7 +357,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
             });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
             flavor
           });
         }
@@ -408,7 +391,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
           }
         });
 
-        this.object.attackSent = true;
+        this.modalData.attackSent = true;
 
         this.render();
       }
@@ -465,16 +448,16 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
         roll.roll();
 
-        if (this.object.attacker.showRoll) {
+        if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
 
           const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
             spell: spell.name,
-            target: this.object.defender.token.name
+            target: this.modalData.defender.token.name
           });
 
           roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
             flavor
           });
         }
@@ -504,7 +487,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
           }
         });
 
-        this.object.attackSent = true;
+        this.modalData.attackSent = true;
 
         this.render();
       }
@@ -559,7 +542,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
         psychicPotentialRoll.roll();
         if (this.modalData.attacker.showRoll) {
           psychicPotentialRoll.toMessage({
-            speaker: ChatMessage.getSpeaker({ token: this.object.attacker.token }),
+            speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
             flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
           });
         }
@@ -618,7 +601,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
           }
         });
 
-        this.object.attackSent = true;
+        this.modalData.attackSent = true;
 
         this.render();
       }
@@ -629,7 +612,7 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
     const {
       attacker: { combat, psychic, mystic },
       ui
-    } = this.object;
+    } = this.modalData;
 
     ui.hasFatiguePoints =
       this.attackerActor.system.characteristics.secondaries.fatigue.value > 0;
@@ -692,9 +675,9 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
       combat.damage.final = combat.damage.special + weapon.system.damage.final.value;
     }
 
-    this.object.config = ABFConfig;
+    this.modalData.config = ABFConfig;
 
-    return this.object;
+    return this.modalData;
   }
 
   async _updateObject(event, formData) {
@@ -702,10 +685,10 @@ export class CombatAttackDialog extends sveltify(/** @type {TFormApplication} */
     const prevSpell = this.modalData.attacker.mystic.spellUsed;
     const prevPower = this.modalData.attacker.psychic.powerUsed;
 
-    this.object = mergeObject(this.object, formData);
+    this.modalData = mergeObject(this.modalData, formData);
 
-    if (prevWeapon !== this.object.attacker.combat.weaponUsed) {
-      this.object.attacker.combat.criticSelected = undefined;
+    if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
+      this.modalData.attacker.combat.criticSelected = undefined;
     }
     if (prevSpell !== this.modalData.attacker.mystic.spellUsed) {
       const { spells } = this.attackerActor.system.mystic;
