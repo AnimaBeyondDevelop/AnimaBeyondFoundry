@@ -13,7 +13,6 @@ import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
 
 import './scss/animabf.scss';
-import { TestApp } from '@svelte/TestSvelteApp';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -84,7 +83,7 @@ Hooks.once('ready', () => {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line func-names
-Handlebars.JavaScriptCompiler.prototype.nameLookup = function(parent, name) {
+Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
   if (name.indexOf('xRoot') === 0) {
     return 'data.root';
   }
@@ -101,3 +100,4 @@ Handlebars.JavaScriptCompiler.prototype.nameLookup = function(parent, name) {
 
   return `${parent}['${name}']`;
 };
+
