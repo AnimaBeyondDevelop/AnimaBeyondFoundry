@@ -27,12 +27,12 @@
    * @param {import('../../module/items/ABFItem').default} item
    */
   function onItemChange(item) {
+    if (!item.parent) return;
+
     const { _id, name, img, system } = item;
-    if (item.parent) {
-      item.parent.updateEmbeddedDocuments('Item', [{ _id, name, img, system }], {
-        render: false
-      });
-    }
+    item.parent.updateEmbeddedDocuments('Item', [{ _id, name, img, system }], {
+      render: true
+    });
   }
 </script>
 

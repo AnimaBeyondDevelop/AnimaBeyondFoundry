@@ -4,6 +4,7 @@
   import CustomSelect from '@svelte/ui/customSelect.svelte';
   import Editor from '@svelte/ui/editor.svelte';
   import { ABFConfig } from '@module/ABFConfig';
+  import {} from 'jquery';
 
   /** Whether it allows the spell's body to contract. Defaults to false. */
   export let contractible = false;
@@ -27,6 +28,18 @@
         cssClass="level"
         title={i18n.localize('anima.ui.mystic.spell.level.title')}
         bind:value={spell.system.level.value}
+      />
+      <TitledInput
+        type="checkbox"
+        cssClass="visible"
+        title={i18n.localize('anima.ui.mystic.spell.visible.title')}
+        bind:value={spell.system.visible}
+      />
+      <CustomSelect
+        cssClass="combat-type"
+        title={i18n.localize('anima.ui.mystic.spell.combatType.title')}
+        bind:value={spell.system.combatType.value}
+        choices={iterables.mystic.combatTypes}
       />
       <CustomSelect
         cssClass="via"
@@ -78,11 +91,17 @@
         />
       </div>
     {/each}
+    <TitledInput
+      cssClass="macro"
+      title="Macro"
+      type="text"
+      bind:value={spell.system.macro}
+    />
     <div class="description">
       <p class="label">
         {i18n.localize('anima.ui.mystic.spell.grade.description.title')}
       </p>
-      <Editor bind:value={spell.system.description} owner={true} />
+      <Editor bind:value={spell.system.description.value} owner={true} />
     </div>
   </div>
   <div class="spell-footer" slot="footer">
@@ -97,6 +116,12 @@
       title={i18n.localize('anima.ui.mystic.spell.actionType.title')}
       bind:value={spell.system.actionType.value}
       choices={iterables.mystic.actionTypes}
+    />
+    <CustomSelect
+      cssClass="critic"
+      title={i18n.localize('anima.ui.mystic.spell.critic.title')}
+      choices={iterables.combat.weapon.criticTypesWithNone}
+      bind:value={spell.system.critic.value}
     />
     <TitledInput
       cssClass="has-daily-maintenance"
