@@ -11,6 +11,7 @@ import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
+import { TestApp } from '@svelte/TestApp';
 
 import './scss/animabf.scss';
 
@@ -72,6 +73,9 @@ Hooks.once('ready', () => {
   attachCustomMacroBar();
 
   applyMigrations();
+
+  
+  let app = new TestApp("aloja").render(true);
 });
 
 // Add any additional hooks if necessary
