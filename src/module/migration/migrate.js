@@ -94,17 +94,15 @@ async function migrateUnlinkedActors(scenes, migration, context) {
   const length = items.length || items.size; // takes care of the case of a DocumentCollection
   if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
 
-  await Promise.all(
-    scenes.map(s =>
-      migrateActorCollection(
-        s.tokens
-          .filter(token => !token.actorLink && token.actor)
-          .map(token => token.actor),
-        migration,
-        context
-      )
-    )
-  );
+  // This has to be performed individually instead of using directly migrateItemCollection() and
+  // migrateActorCollection() since unlinked (syntetic) actors won't get updated on batch
+  // Actors.updateDocuments() updates. {parent: TOKEN} has to be specified for the update to be
+  // completed.
+  for (const scene of scenes) {
+    for (const token of scene.tokens.filter(token => !token.actorLink && token.actor)) {
+      await migrateActorCollection([token.actor], migration, { parent: token });
+    }
+  }
 }
 
 /**
