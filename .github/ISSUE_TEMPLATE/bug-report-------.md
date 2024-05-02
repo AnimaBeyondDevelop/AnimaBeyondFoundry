@@ -1,10 +1,9 @@
 ---
 name: "Bug report (\U0001F1EC\U0001F1E7)"
 about: Create a report to help us improve
-title: "[\U0001F1EC\U0001F1E7 - Bug] Here goes the title"
+title: '[EN - Bug] Here goes the title'
 labels: bug
 assignees: ''
-
 ---
 
 ### Information
@@ -23,7 +22,7 @@ assignees: ''
 
 1. Go to '...'
 2. Click in '....'
-...
+   ...
 
 #### Screenshots
 
