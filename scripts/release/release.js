@@ -37,11 +37,22 @@ const { dry } = argv;
     throwError('Repository URLs not configured in distributionconfig.json');
   }
 
-  readlineSync.question(
+  const newVersion = readlineSync.question(
     chalk.magenta(
-      `Do you want to publish a new version? New version will be ${packageJson.version}, so make sure that this version is not already published :`
+      `Version number in package.json is ${packageJson.version}.` +
+        'Leave this blank or specify a new one and press enter: '
     )
   );
+
+  if (newVersion) {
+    log.info('Updating package.json file...');
+    packageJson.version = newVersion;
+    const prettiedPackageJson = prettier.format(JSON.stringify(packageJson), {
+      parser: 'json'
+    });
+
+    fs.writeFileSync('package.json', prettiedPackageJson, 'utf8');
+  }
 
   log.info('Updating system.json file...');
 
@@ -51,7 +62,9 @@ const { dry } = argv;
   systemFile.changelog = `${repoURL}/releases/tag/v${systemFile.version}`;
   systemFile.download = `${repoURL}/releases/download/v${systemFile.version}/${systemFile.id}.zip`;
 
-  const prettiedSystemFile = prettier.format(JSON.stringify(systemFile), { parser: 'json' });
+  const prettiedSystemFile = prettier.format(JSON.stringify(systemFile), {
+    parser: 'json'
+  });
 
   fs.writeFileSync('src/system.json', prettiedSystemFile, 'utf8');
 
@@ -77,6 +90,7 @@ const { dry } = argv;
   fs.mkdirSync('package');
 
   await zip('dist', `package/${systemFile.id}.zip`);
+  await fs.copyFile('./dist/system.json', './package/system.json');
 
   log.success('Package created...');
 
@@ -90,11 +104,30 @@ const { dry } = argv;
     log.warning('Dry mode activated, no tags will be pushed');
   }
 
-  readlineSync.question(
-    chalk.blue(
-      `Wait until create new release, click here to access directly: https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${systemFile.version}&tag=v${systemFile.version}\n\nRemember to upload de package ${systemFile.id}.zip allocated in package folder`
-    )
-  );
+  try {
+    if (!dry) {
+      execSync(
+        `gh release create v${systemFile.version} ./package/* --verify-tag --generate-notes --draft`
+      );
+    } else {
+      log.warning('Dry mode activated, no release will be created');
+    }
+  } catch (error) {
+    readlineSync.question(
+      chalk.blue(
+        'Create the release now using the link: ' +
+          `https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${systemFile.version}&tag=v${systemFile.version}` +
+          '\nPress any key to continue...'
+      )
+    );
+
+    readlineSync.question(
+      chalk.blue(
+        'Upload the contents of directory ./package (${systemFile.id}.zip and system.json) ' +
+          'and press any key when finished...'
+      )
+    );
+  }
 
   log.info('Cleaning files...');
 
