@@ -1,10 +1,9 @@
 ---
 name: "Nueva sugerencia (\U0001F1EA\U0001F1F8)"
 about: Sugiere un nuevo elemento para el sistema
-title: "[\U0001F1EA\U0001F1F8 - Feature request] Aquí el título de la sugerencia"
+title: '[ES - Feature request] Aquí el título de la sugerencia'
 labels: improvement
 assignees: ''
-
 ---
 
 ### Información
