@@ -22,6 +22,11 @@ export const INITIAL_ACTOR_DATA = {
       openRolls: { value: 90 },
       fumbles: { value: 3 },
       openOnDoubles: { value: false },
+      perceiveMystic: { value: false },
+      inmaterial: { value: false },
+      inhuman: { value: false },
+      zen: { value: false },
+      perceivePsychic: { value: false },
       defenseType: { value: '' }
     },
     modifiers: {
@@ -48,6 +53,9 @@ export const INITIAL_ACTOR_DATA = {
         }
       },
       naturalPenalty: {
+        base: {
+          value: 0
+        },
         unreduced: {
           value: 0
         },
@@ -924,7 +932,8 @@ export const INITIAL_ACTOR_DATA = {
     combatTables: [],
     ammo: [],
     weapons: [],
-    armors: []
+    armors: [],
+    supernaturalShields: []
   },
 
   mystic: {
@@ -937,19 +946,15 @@ export const INITIAL_ACTOR_DATA = {
           value: 0
         }
       },
-      alternative: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        }
-      }
+      via: []
     },
     zeon: {
       accumulated: 0,
       value: 0,
       max: 0
+    },
+    zeonMaintained: {
+      value: 0
     },
     zeonRegeneration: {
       base: {
@@ -961,11 +966,14 @@ export const INITIAL_ACTOR_DATA = {
     },
     innateMagic: {
       main: {
-        value: 0
+        base: {
+          value: 0
+        },
+        final: {
+          value: 0
+        }
       },
-      alternative: {
-        value: 0
-      }
+      via: []
     },
     magicProjection: {
       base: {
@@ -1070,11 +1078,13 @@ export const INITIAL_ACTOR_DATA = {
         }
       }
     },
+    mysticSettings: { aptitudeForMagicDevelopment: false },
     spells: [],
     spellMaintenances: [],
     selectedSpells: [],
     summons: [],
-    metamagics: []
+    metamagics: [],
+    preparedSpells: []
   },
 
   domine: {
@@ -1241,6 +1251,9 @@ export const INITIAL_ACTOR_DATA = {
     psychicPoints: {
       value: 0,
       max: 0
+    },
+    psychicSettings: {
+      fatigueResistance: false
     },
     psychicPowers: [],
     psychicDisciplines: [],

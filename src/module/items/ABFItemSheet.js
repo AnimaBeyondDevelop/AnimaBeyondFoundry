@@ -49,7 +49,7 @@ export default class ABFItemSheet extends ItemSheet {
       case ABFItems.AMMO:
         return 144;
       case ABFItems.PSYCHIC_POWER:
-        return 500;
+        return 540;
       default:
         return 450;
     }

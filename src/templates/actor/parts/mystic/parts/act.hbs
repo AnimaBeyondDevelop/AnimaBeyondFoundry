@@ -1,12 +1,13 @@
 {{#> "systems/animabf/templates/common/ui/group.hbs"
-  class="act"
+  class="act-vias"
 }}
   {{>
   "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.act.title")
+    addRowButtonData="add-act-via"
   }}
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
-    class="act"
+    class="act-vias"
   }}
     {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
@@ -20,17 +21,21 @@
       secondaryInputName="system.mystic.act.main.final.value"
       secondaryInputValue=system.mystic.act.main.final.value
     }}
-    {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="alternative"
-      title=(localize "anima.ui.mystic.act.alternative.title")
-      inputName="system.mystic.act.alternative.base.value"
-      inputValue=system.mystic.act.alternative.base.value
-      hasSecondaryInput=true
-      addTooltips=true
-      disableSecondaryInput=true
-      secondaryInputName="system.mystic.act.alternative.final.value"
-      secondaryInputValue=system.mystic.act.alternative.final.value
-    }}
+    {{#each system.mystic.act.via as |actVia|}}
+      <div data-item-id='{{this._id}}' class='act-via-row'>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="via"
+          title=(localize (concat 'anima.ui.mystic.spell.via.' this.name '.title'))
+          inputName=(concat "system.dynamic.via." this._id ".system.base.value")
+          inputValue=this.system.base.value
+          hasSecondaryInput=true
+          addTooltips=true
+          disableSecondaryInput=true
+          secondaryInputName=(concat "system.dynamic.via." this._id ".system.final.value")
+          secondaryInputValue=this.system.final.value
+        }}
+      </div>
+    {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

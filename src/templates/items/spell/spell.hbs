@@ -26,6 +26,22 @@
               inputValue=system.level.value
             }}
             {{>
+            'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+              class="visible"
+              title=(localize "anima.ui.mystic.spell.visible.title")
+              inputType="checkbox"
+              inputName="system.visible"
+              inputValue=(is 'eq' system.visible true)
+            }}
+            {{>
+            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              class="combat-type"
+              choices=config.iterables.mystic.combatTypes
+              title=(localize "anima.ui.mystic.spell.combatType.title")
+              inputName="system.combatType.value"
+              inputValue=system.combatType.value
+            }}
+            {{>
             'systems/animabf/templates/common/ui/custom-select-choices.hbs'
               class="via"
               choices=config.iterables.mystic.vias
@@ -86,6 +102,14 @@
           gradeName='arcane'
           grade=system.grades.arcane
         }}
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="macro"
+          title="Macro"
+          inputType="text"
+          inputName="system.macro"
+          inputValue=system.macro
+        }}
         <div class="description">
           <p class='label'>{{localize "anima.ui.mystic.spell.grade.description.title"}}</p>
           {{editor system.enrichedDescription target="system.description.value" button=true owner=true editable=true}}
@@ -108,6 +132,14 @@
             title=(localize "anima.ui.mystic.spell.actionType.title")
             inputName="system.actionType.value"
             inputValue=system.actionType.value
+          }}
+          {{>
+          'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+            class="critic"
+            title=(localize "anima.ui.mystic.spell.critic.title")
+            choices=config.iterables.combat.weapon.criticTypesWithNone
+            inputName=(concat "system.critic.value")
+            inputValue=system.critic.value
           }}
           {{>
           'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'

@@ -16,6 +16,11 @@
           "openRolls": { "value": 90 },
           "fumbles": { "value": 3 },
           "openOnDoubles": { "value": false },
+          "perceiveMystic": { "value": false },
+          "perceivePsychic": { "value": false },
+          "inmaterial": { "value": false },
+          "inhuman": { "value": false },
+          "zen": { "value": false },
           "defenseType": { "value": "" }
         },
         "modifiers": {
@@ -172,16 +177,21 @@
         "combatTables": [],
         "ammo": [],
         "weapons": [],
-        "armors": []
+        "armors": [],
+        "supernaturalShields": []
       },
       "mystic": {
         "act": {
           "main": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "alternative": { "base": { "value": 0 }, "final": { "value": 0 } }
+          "via": []
         },
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
+        "zeonMaintained": { "value": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "innateMagic": { "main": { "value": 0 }, "alternative": { "value": 0 } },
+        "innateMagic": { 
+          "main": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "via": []
+        },
         "magicProjection": {
           "base": { "value": 0 },
           "final": { "value": 0 },
@@ -213,11 +223,13 @@
           "bind": { "base": { "value": 0 }, "final": { "value": 0 } },
           "control": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
+        "mysticSettings": { "aptitudeForMagicDevelopment": false },
         "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],
         "summons": [],
-        "metamagics": []
+        "metamagics": [],
+        "preparedSpells": []
       },
       "domine": {
         "kiSkills": [],
@@ -265,6 +277,7 @@
           }
         },
         "psychicPoints": { "value": 0, "max": 0 },
+        "psychicSettings": { "fatigueResistance": false },
         "psychicPowers": [],
         "psychicDisciplines": [],
         "mentalPatterns": [],
@@ -280,6 +293,7 @@
       "armor",
       "disadvantage",
       "spell",
+      "supernaturalShield",
       "mentalPattern",
       "note",
       "psychicDiscipline",
@@ -317,7 +331,11 @@
       "via": { "value": "" },
       "spellType": { "value": "" },
       "actionType": { "value": "" },
+      "combatType": { "value": "" },
       "hasDailyMaintenance": { "value": false },
+      "critic": { "value": "-" },
+      "visible": false,
+      "macro": "",
       "grades": {
         "base": {
           "name": { "value": "" },
@@ -349,7 +367,8 @@
         }
       }
     },
-    "mentalPattern": { "bonus": { "value": 0 }, "penalty": { "value": 0 } },
+    "psychicDiscipline": { "imbalance": false },
+    "mentalPattern": { "bonus": { "value": "" }, "penalty": { "value": "" } },
     "psychicPower": {
       "level": { "value": 0 },
       "effects": {
@@ -365,7 +384,12 @@
         "440": { "value": "" }
       },
       "actionType": { "value": "active" },
+      "combatType": { "value": "attack" },
+      "discipline": { "value": "matrixPowers" },
+      "critic": { "value": "-" },
+      "macro": "",
       "hasMaintenance": { "value": false },
+      "visible": false,
       "bonus": { "value": 0 }
     },
     "technique": {
@@ -401,6 +425,13 @@
       "sizeProportion": { "value": "" },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
+    },
+    "supernaturalShield": {
+      "type": { "value": "none" },
+      "spellGrade": { "value": "" },
+      "damageBarrier": { "value": 0 },
+      "shieldPoints": { "value": 0 },
+      "origin": { "value": "" }
     }
   }
 }

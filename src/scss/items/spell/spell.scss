@@ -44,10 +44,33 @@
         display: flex;
         justify-content: space-between;
 
-        .level,
+        .level {
+          .input {
+            height: 1.5rem;
+          }
+
+          .input-container {
+            width: 2.5rem;
+          }
+        }
+
+        .visible {
+          .input-container {
+            width: 1rem;
+          }
+        }
+
+        .combat-type {
+          .input {
+            height: 1.5rem;
+            padding: 0.15rem 0.5rem;
+          }
+        }
+
         .via {
           .input {
             height: 1.5rem;
+            padding: 0.15rem 0.5rem;
           }
         }
 
@@ -93,15 +116,25 @@
       }
     }
 
+    .macro {
+      .label {
+        min-width: 4.5rem;
+      }
+
+      .input-container {
+        width: 100%;
+      }
+    }
+
     .description {
       display: flex;
       justify-content: start;
-      padding-top: 0.5rem;
 
       .label {
         align-self: flex-start;
         padding-right: 0.5rem;
       }
+
       .editor {
         @include input;
 
@@ -125,6 +158,13 @@
 
       .input {
         height: 1.5rem;
+        padding: 0.15rem 0.5rem;
+      }
+
+      .has-daily-maintenance {
+        .input-container {
+          width: 1rem;
+        }
       }
     }
   }
