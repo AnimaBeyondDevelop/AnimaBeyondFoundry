@@ -39,7 +39,7 @@ const { dry } = argv;
 
   const newVersion = readlineSync.question(
     chalk.magenta(
-      `Version number in package.json is ${packageJson.version}.` +
+      `Version number in package.json is ${packageJson.version}. ` +
         'Leave this blank or specify a new one and press enter: '
     )
   );
