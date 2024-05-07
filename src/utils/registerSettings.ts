@@ -6,7 +6,9 @@ export enum ABFSettingsKeys {
   DEVELOP_MODE = 'DEVELOP_MODE',
   AUTOMATE_COMBAT_DISTANCE = 'AUTOMATE_COMBAT_DISTANCE',
   MACRO_PREFIX_ATTACK = 'MACRO_PREFIX_ATTACK',
+  MACRO_ATTACK_DEFAULT = 'MACRO_ATTACK_DEFAULT',
   MACRO_PROJECTILE_DEFAULT = 'MACRO_PROJECTILE_DEFAULT',
+  MACRO_SHIELD_DEFAULT = 'MACRO_SHIELD_DEFAULT',
   MACRO_MISS_ATTACK_VALUE = 'MACRO_MISS_ATTACK_VALUE',
   SYSTEM_MIGRATION_VERSION = 'SYSTEM_MIGRATION_VERSION'
 }
@@ -68,12 +70,30 @@ export const registerSettings = () => {
     type: String
   });
 
+  typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_ATTACK_DEFAULT, {
+    name: 'anima.ui.systemSettings.defaultAttackMacro.title',
+    hint: 'anima.ui.systemSettings.defaultAttackMacro.hint.title',
+    scope: 'world',
+    config: true,
+    default: 'Default Attack Macro',
+    type: String
+  });
+
   typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT, {
     name: 'anima.ui.systemSettings.defaultProjectileMacro.title',
     hint: 'anima.ui.systemSettings.defaultProjectileMacro.hint.title',
     scope: 'world',
     config: true,
     default: 'Atk Projectil Flecha',
+    type: String
+  });
+
+  typedGame.settings.register('animabf', ABFSettingsKeys.MACRO_SHIELD_DEFAULT, {
+    name: 'anima.ui.systemSettings.defaultShieldMacro.title',
+    hint: 'anima.ui.systemSettings.defaultShieldMacro.hint.title',
+    scope: 'world',
+    config: true,
+    default: 'Default Shield Macro',
     type: String
   });
 

@@ -954,7 +954,7 @@ export const INITIAL_ACTOR_DATA = {
       max: 0
     },
     zeonMaintained: {
-        value: 0
+      value: 0
     },
     zeonRegeneration: {
       base: {
@@ -1078,6 +1078,7 @@ export const INITIAL_ACTOR_DATA = {
         }
       }
     },
+    mysticSettings: { aptitudeForMagicDevelopment: false },
     spells: [],
     spellMaintenances: [],
     selectedSpells: [],

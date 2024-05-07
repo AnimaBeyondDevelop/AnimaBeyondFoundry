@@ -73,6 +73,7 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         spellUsed: undefined,
         spellGrade: 'base',
+        attainableSpellGrades: [],
         spellCasting: {
           zeon: { accumulated: 0, cost: 0 },
           canCast: { prepared: false, innate: false },
@@ -135,17 +136,19 @@ export class CombatAttackDialog extends FormApplication {
     const { combat, psychic, mystic } = this.modalData.attacker;
 
     if (this.modalData.attacker.distance.enable) {
-      const calculateDistance = Math.floor(
+      const calculateDistance =
         canvas.grid.measureDistance(
           this.modalData.attacker.token,
-          this.modalData.defender.token
-        )
-      );
+          this.modalData.defender.token,
+          { gridSpaces: true }
+        ) /
+        canvas.grid.grid.options.dimensions.distance
+        ;
       this.modalData.attacker.distance.value = calculateDistance;
     }
 
     const { weapons } = this.attackerActor.system.combat;
-    const { spells } = this.attackerActor.system.mystic;
+    const { spells, mysticSettings } = this.attackerActor.system.mystic;
     const { psychicPowers } = this.attackerActor.system.psychic;
 
     if (psychicPowers.length > 0) {
@@ -161,9 +164,7 @@ export class CombatAttackDialog extends FormApplication {
         )?._id;
       }
       const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-      this.attackerActor.system.psychic.psychicPotential.special =
-        power?.system.bonus.value;
-      this.modalData.attacker.psychic.critic = power?.system.critic.value;
+      psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
     }
 
     if (spells.length > 0) {
@@ -182,6 +183,19 @@ export class CombatAttackDialog extends FormApplication {
       );
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
+      const spell = spells.find(w => w._id === mystic.spellUsed);
+      mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      if (this.modalData.attacker.mystic.spellCasting.override) {
+        this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+      } else {
+        const intelligence = this.attackerActor.system.characteristics.primaries.intelligence.value
+        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+        for (const grade in spell?.system.grades) {
+          if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+            mystic.attainableSpellGrades.push(grade)
+          }
+        }
+      }
     }
 
     if (weapons.length > 0) {
@@ -278,6 +292,9 @@ export class CombatAttackDialog extends FormApplication {
             value: true,
             type: weapon.system.shotType.value
           };
+          if (weapon.system.shotType.value === 'shot') {
+            projectile.name = weapon.system.ammo?.name
+          }
           if (
             (!distance.enable && distance.check) ||
             (distance.enable && distance.value <= 1)
@@ -607,7 +624,6 @@ export class CombatAttackDialog extends FormApplication {
       )?._id;
     }
     const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-    psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
     let psychicBonus = power?.system.bonus.value ?? 0;
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
@@ -619,7 +635,6 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
@@ -667,11 +682,35 @@ export class CombatAttackDialog extends FormApplication {
 
   async _updateObject(event, formData) {
     const prevWeapon = this.modalData.attacker.combat.weaponUsed;
+    const prevSpell = this.modalData.attacker.mystic.spellUsed;
+    const prevPower = this.modalData.attacker.psychic.powerUsed;
 
     this.modalData = mergeObject(this.modalData, formData);
 
     if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
       this.modalData.attacker.combat.criticSelected = undefined;
+    }
+    if (prevSpell !== this.modalData.attacker.mystic.spellUsed) {
+      const { spells } = this.attackerActor.system.mystic;
+      const spell = spells.find(w => w._id === this.modalData.attacker.mystic.spellUsed);
+      this.modalData.attacker.mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      this.modalData.attacker.mystic.spellGrade = 'base'
+      this.modalData.attacker.mystic.attainableSpellGrades = []
+      const intelligence = this.attackerActor.system.characteristics.primaries.intelligence.value
+      const finalIntelligence = this.attackerActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+      for (const grade in spell?.system.grades) {
+        if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
+          this.modalData.attacker.mystic.attainableSpellGrades.push(grade)
+        }
+      }
+    }
+    if (this.modalData.attacker.mystic.spellCasting.override) {
+      this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+    }
+    if (prevPower !== this.modalData.attacker.psychic.powerUsed) {
+      const { psychicPowers } = this.attackerActor.system.psychic;
+      const power = psychicPowers.find(w => w._id === this.modalData.attacker.psychic.powerUsed);
+      this.modalData.attacker.psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
     }
 
     this.render();

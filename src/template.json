@@ -223,6 +223,7 @@
           "bind": { "base": { "value": 0 }, "final": { "value": 0 } },
           "control": { "base": { "value": 0 }, "final": { "value": 0 } }
         },
+        "mysticSettings": { "aptitudeForMagicDevelopment": false },
         "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],

@@ -58,6 +58,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       }
       actor.setFlag('animabf', 'spellCastingOverride', override);
       const spellCasting = actor.mysticCanCastEvaluate(spell, spellGrade, { innate, prepared }, override);
+      spellCasting.casted = { innate, prepared };
       if (actor.evaluateCast(spellCasting)) {
         return;
       }

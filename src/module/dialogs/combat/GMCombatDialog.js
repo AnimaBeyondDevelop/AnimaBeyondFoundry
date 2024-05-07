@@ -2,6 +2,7 @@ import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
+import { executeMacro } from '../../utils/functions/executeMacro';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
@@ -444,77 +445,59 @@ export class GMCombatDialog extends FormApplication {
   }
 
   executeCombatMacro(resistanceRoll) {
-    let macroName;
-    const winner =
-      this.modalData.calculations.winner == this.modalData.defender.token
-        ? 'defender'
-        : 'attacker';
     const missedAttackValue = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
-    );
-    const macroPorjectileDefault = game.settings.get(
-      'animabf',
-      ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
     );
     const macroPrefixAttack = game.settings.get(
       'animabf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
+    const { attacker, defender, calculations } = this.modalData
+    const winner =
+      calculations.winner === this.defenderToken
+        ? 'defender'
+        : 'attacker';
+    let macroName;
     let args = {
       attacker: this.attackerToken,
-      defender: this.defenderToken,
-      winner,
-      defenseType: this.modalData.defender.result.values.type,
-      totalAttack: this.modalData.attacker.result.values.total,
-      appliedDamage: this.canApplyDamage,
-      bloodColor: 'red', // add bloodColor to actor template
-      missedAttack: false,
-      isVisibleAttack: true,
-      resistanceRoll,
-      spellGrade: this.modalData.attacker.result.values.spellGrade,
-      attackerPsychicFatigue: this.modalData.attacker.result.values?.psychicFatigue,
-      defenderPsychicFatigue: this.modalData.defender.result.values?.psychicFatigue
+      spellGrade: attacker.result.values.spellGrade,
+      psychicPotential: attacker.result.values?.psychicPotential,
+      projectile: attacker.result.values?.projectile,
+      defenders: [{
+        defender: this.defenderToken,
+        winner,
+        defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
+        totalAttack: attacker.result.values.total,
+        appliedDamage: calculations.damage,
+        damageType: attacker.result.values?.critic,
+        bloodColor: 'red', // add bloodColor to actor template
+        missedAttack: false,
+        resistanceRoll,
+        defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+        criticImpact: 0
+      }]
     };
-    if (args.totalAttack < missedAttackValue) {
-      args.missedAttack = true;
+    if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
+      args.defenders[0].missedAttack = true;
     }
 
-    if (this.modalData.attacker.result?.type === 'combat') {
-      const { name } = this.modalData.attacker.result.weapon;
-      macroName = macroPrefixAttack + name;
-      const { projectile } = this.modalData.attacker.result.values;
-      if (projectile) {
-        args = { ...args, projectile: projectile };
-        if (projectile.type == 'shot') {
-          macroName = macroPorjectileDefault;
-        }
+    if (attacker.result?.type === 'combat') {
+      if (!attacker.result.weapon) {
+        attacker.result.weapon = { name: 'Unarmed' }
       }
-    } else if (this.modalData.attacker.result?.type === 'mystic') {
-      macroName = this.modalData.attacker.result.values.spellName;
-    } else if (this.modalData.attacker.result?.type === 'psychic') {
-      macroName = this.modalData.attacker.result.values.powerName;
+      const { name } = attacker.result.weapon;
+      macroName = macroPrefixAttack + name;
+    } else if (attacker.result?.type === 'mystic') {
+      macroName = attacker.result.values.spellName;
+    } else if (attacker.result?.type === 'psychic') {
+      macroName = attacker.result.values.powerName;
     }
 
-    if (
-      this.modalData.attacker.result.values.visible !== undefined &&
-      !this.modalData.attacker.result.values.visible
-    ) {
-      args.isVisibleAttack = false;
+    if (attacker.result?.values.macro) {
+      macroName = attacker.result?.values.macro;
     }
 
-    if (
-      this.modalData.attacker.result?.values.macro !== undefined &&
-      this.modalData.attacker.result?.values.macro !== ''
-    ) {
-      macroName = this.modalData.attacker.result?.values.macro;
-    }
-
-    const macro = game.macros.getName(macroName);
-    if (macro) {
-      macro.execute(args);
-    } else {
-      console.debug(`Macro '${macroName}' not found.`);
-    }
+    executeMacro(macroName, args)
   }
 }

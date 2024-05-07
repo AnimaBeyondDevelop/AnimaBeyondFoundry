@@ -23,13 +23,13 @@ export interface Migration {
    * This is a short title describing the purpose of the migration.
    * The title is displayed on the warning dialog before applying the migration.
    */
-  readonly title: string,
+  readonly title: string;
 
   /**
    * This is a longer description of the changes in the migration, supposed to be detailed but concise.
    * To be displayed on the warning dialog before applying the migration.
    */
-  readonly description: string,
+  readonly description: string;
 
   /**
    * Update the actor to the latest schema version.
@@ -39,21 +39,11 @@ export interface Migration {
   updateActor?(actor: ABFActor): ABFActor | Promise<ABFActor>;
 
   /**
-   * Update the item to the latest schema version, handling changes that must happen before any other migration in a
-   * given list.
-   * @param item - Item to update.
-   * @param actor - If the item is part of an actor, this is set to the actor itself
-   * @returns The item after the changes in the migration
-   */
-  preUpdateItem?(item: ABFItem, actor?: ABFActor): ABFItem | Promise<ABFItem>;
-
-  /**
    * Update the item to the latest schema version.
    * @param item - Item to update.
-   * @param actor - If the item is part of an actor, this is set to the actor itself
    * @returns The item after the changes in the migration
    */
-  updateItem?(item: ABFItem, actor?: ABFActor): ABFItem | Promise<ABFItem>;
+  updateItem?(item: ABFItem): ABFItem | Promise<ABFItem>;
 
   /**
    * Update the token to the latest schema version.
@@ -72,4 +62,14 @@ export interface Migration {
    * isn't actor or item related. This function will be called during the migration.
    */
   migrate?(): void;
+
+  /**
+   * Filter determining which items should be migrated. The filter is used inside Array.filter(...)
+   */
+  filterItems?(item: ABFItem): boolean;
+
+  /**
+   * Filter determining which actors should be migrated. The filter is used inside Array.filter(...)
+   */
+  filterActors?(actor: ABFActor): boolean;
 }

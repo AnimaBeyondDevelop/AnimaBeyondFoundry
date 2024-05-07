@@ -1,6 +1,7 @@
 export const damageCheck = effect => {
-  if (/Daño[^\d]*\d+/i.test(effect)) {
-    return parseInt(effect.match(/Daño[^\d]*\d+/i)[0].match(/\d+/)[0], 10) ?? 0;
+  effect = effect.replace('.', '');
+  if (/Daño *(base)* *\d+/i.test(effect)) {
+    return parseInt(effect.match(/Daño *(base)* *\d+/i)[0].match(/\d+/)[0]) ?? 0;
   } else {
     return 0;
   }
