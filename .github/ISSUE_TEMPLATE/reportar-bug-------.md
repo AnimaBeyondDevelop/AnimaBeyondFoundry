@@ -1,10 +1,9 @@
 ---
 name: "Reportar bug (\U0001F1EA\U0001F1F8)"
 about: Crear un reporte para ayudarnos a mejorar
-title: "[\U0001F1EA\U0001F1F8 - Bug] Aquí va el título"
+title: '[ES - Bug] Aquí va el título'
 labels: bug
 assignees: ''
-
 ---
 
 ### Información
@@ -23,7 +22,7 @@ assignees: ''
 
 1. Ir a '...'
 2. Click en '....'
-...
+   ...
 
 #### Screenshots
 
