@@ -6,10 +6,14 @@
       "version": 0,
       "ui": {
         "contractibleItems": {},
-        "tabVisibility": { "mystic": { "value": false }, "domine": { "value": false }, "psychic": { "value": false } }
+        "tabVisibility": {
+          "mystic": { "value": false },
+          "domine": { "value": false },
+          "psychic": { "value": false }
+        }
       },
       "automationOptions": {
-        "calculateFatigueModifier": { "value": true}
+        "calculateFatigueModifier": { "value": true }
       },
       "general": {
         "settings": {
@@ -24,10 +28,27 @@
           "defenseType": { "value": "" }
         },
         "modifiers": {
-          "physicalActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
-          "allActions": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
-          "naturalPenalty": { "unreduced": { "value": 0 }, "reduction": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 }  },
-          "perceptionPenalty": { "base": { "value": 0 }, "special": { "value": 0 }, "final": { "value": 0 } },
+          "physicalActions": {
+            "base": { "value": 0 },
+            "special": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "allActions": {
+            "base": { "value": 0 },
+            "special": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "naturalPenalty": {
+            "unreduced": { "value": 0 },
+            "reduction": { "value": 0 },
+            "special": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "perceptionPenalty": {
+            "base": { "value": 0 },
+            "special": { "value": 0 },
+            "final": { "value": 0 }
+          },
           "extraDamage": { "value": 0 }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
@@ -47,7 +68,11 @@
         "advantages": [],
         "contacts": [],
         "inventory": [],
-        "money": { "cooper": { "value": 0 }, "silver": { "value": 0 }, "gold": { "value": 0 } },
+        "money": {
+          "cooper": { "value": 0 },
+          "silver": { "value": 0 },
+          "gold": { "value": 0 }
+        },
         "description": { "value": "" },
         "disadvantages": [],
         "elan": [],
@@ -91,69 +116,273 @@
       },
       "secondaries": {
         "athletics": {
-          "acrobatics": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"} },
-          "athleticism": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"}  },
-          "ride": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"}  },
-          "swim": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"}  },
-          "climb": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"}  },
-          "jump": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "strength"}  },
-          "piloting": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  }
+          "acrobatics": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "athleticism": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "ride": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "swim": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "climb": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "jump": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "strength" }
+          },
+          "piloting": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          }
         },
         "vigor": {
-          "composure": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "willPower"}  },
-          "featsOfStrength": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "strength"}  },
-          "withstandPain": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "willPower"}  }
+          "composure": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "willPower" }
+          },
+          "featsOfStrength": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "strength" }
+          },
+          "withstandPain": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "willPower" }
+          }
         },
         "perception": {
-          "notice": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "perception"}  },
-          "search": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "perception"}  },
-          "track": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "perception"}  }
+          "notice": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "perception" }
+          },
+          "search": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "perception" }
+          },
+          "track": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "perception" }
+          }
         },
         "intellectual": {
-          "animals": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "science": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "law": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "herbalLore": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "history": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "tactics": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "medicine": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "memorize": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "navigation": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "occult": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "appraisal": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "magicAppraisal": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  }
+          "animals": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "science": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "law": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "herbalLore": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "history": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "tactics": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "medicine": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "memorize": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "navigation": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "occult": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "appraisal": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "magicAppraisal": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          }
         },
         "social": {
-          "style": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  },
-          "intimidate": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "willPower"}  },
-          "leadership": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  },
-          "persuasion": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"} },
-          "trading": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "streetwise": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "etiquette": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  }
+          "style": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          },
+          "intimidate": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "willPower" }
+          },
+          "leadership": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          },
+          "persuasion": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "trading": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "streetwise": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "etiquette": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          }
         },
         "subterfuge": {
-          "lockPicking": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "disguise": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "hide": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "perception"}  },
-          "theft": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "stealth": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"}  },
-          "trapLore": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "poisons": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  }
+          "lockPicking": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "disguise": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "hide": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "perception" }
+          },
+          "theft": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "stealth": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "trapLore": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "poisons": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          }
         },
         "creative": {
-          "art": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  },
-          "dance": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "agility"}  },
-          "forging": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "runes": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "alchemy": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "intelligence"}  },
-          "animism": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  },
-          "music": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  },
-          "sleightOfHand": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "ritualCalligraphy": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "jewelry": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"}  },
-          "tailoring": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "dexterity"} },
-          "puppetMaking": { "base": { "value": 0 }, "final": { "value": 0 }, "attribute": {"value": "power"}  }
+          "art": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          },
+          "dance": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "agility" }
+          },
+          "forging": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "runes": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "alchemy": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "intelligence" }
+          },
+          "animism": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          },
+          "music": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          },
+          "sleightOfHand": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "ritualCalligraphy": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "jewelry": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "tailoring": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "dexterity" }
+          },
+          "puppetMaking": {
+            "base": { "value": 0 },
+            "final": { "value": 0 },
+            "attribute": { "value": "power" }
+          }
         },
         "secondarySpecialSkills": []
       },
@@ -188,7 +417,7 @@
         "zeon": { "accumulated": 0, "value": 0, "max": 0 },
         "zeonMaintained": { "value": 0 },
         "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "innateMagic": { 
+        "innateMagic": {
           "main": { "base": { "value": 0 }, "final": { "value": 0 } },
           "via": []
         },
@@ -257,12 +486,36 @@
         },
         "martialKnowledge": { "used": { "value": 0 }, "max": { "value": 0 } },
         "kiAccumulation": {
-          "strength": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
-          "agility": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
-          "dexterity": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
-          "constitution": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
-          "willPower": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
-          "power": { "accumulated": { "value": 0 }, "base": { "value": 0 }, "final": { "value": 0 } },
+          "strength": {
+            "accumulated": { "value": 0 },
+            "base": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "agility": {
+            "accumulated": { "value": 0 },
+            "base": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "dexterity": {
+            "accumulated": { "value": 0 },
+            "base": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "constitution": {
+            "accumulated": { "value": 0 },
+            "base": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "willPower": {
+            "accumulated": { "value": 0 },
+            "base": { "value": 0 },
+            "final": { "value": 0 }
+          },
+          "power": {
+            "accumulated": { "value": 0 },
+            "base": { "value": 0 },
+            "final": { "value": 0 }
+          },
           "generic": { "value": 0, "max": 0 }
         }
       },
@@ -321,10 +574,10 @@
       "energy": { "base": { "value": 0 }, "final": { "value": 0 } },
       "integrity": { "base": { "value": 0 }, "final": { "value": 0 } },
       "presence": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "movementRestriction":  { "base": { "value": 0 }, "final": { "value": 0 } },
+      "movementRestriction": { "base": { "value": 0 }, "final": { "value": 0 } },
       "naturalPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
       "perceptionPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "wearArmorRequirement":  { "base": { "value": 0 }, "final": { "value": 0 } }
+      "wearArmorRequirement": { "base": { "value": 0 }, "final": { "value": 0 } }
     },
     "spell": {
       "level": { "value": 0 },
@@ -404,15 +657,46 @@
     },
     "weapon": {
       "special": { "value": "" },
-      "integrity": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
-      "breaking": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
-      "attack": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
-      "block": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
-      "damage": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
-      "initiative": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
-      "presence": { "base": { "value": 0 }, "final": { "value": 0 }, "special": { "value": 0 } },
+      "integrity": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
+      "breaking": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
+      "attack": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
+      "block": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
+      "damage": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
+      "initiative": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
+      "presence": {
+        "base": { "value": 0 },
+        "final": { "value": 0 },
+        "special": { "value": 0 }
+      },
       "size": { "value": 0 },
-      "strRequired": { "oneHand": { "base": { "value": 0 }, "final": { "value": 0 } }, "twoHands": { "base": { "value": 0 }, "final": { "value": 0 } } },
+      "strRequired": {
+        "oneHand": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "twoHands": { "base": { "value": 0 }, "final": { "value": 0 } }
+      },
       "quality": { "value": 0 },
       "oneOrTwoHanded": { "value": "one-handed" },
       "knowledgeType": { "value": "known" },
