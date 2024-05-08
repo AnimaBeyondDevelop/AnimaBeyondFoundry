@@ -106,9 +106,11 @@ const { dry } = argv;
 
   try {
     if (!dry) {
+      log.info('Creating release and uploading attachments...');
       execSync(
         `gh release create v${systemFile.version} ./package/* --verify-tag --generate-notes --draft`
       );
+      log.info(`Release created! Check it and publish here: ${repoURL}/releases`);
     } else {
       log.warning('Dry mode activated, no release will be created');
     }
