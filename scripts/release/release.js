@@ -71,7 +71,7 @@ const { dry } = argv;
   log.info('Commiting changes...');
 
   if (!dry) {
-    execSync('git add src/system.json');
+    execSync('git add src/system.json package.json');
 
     execSync(`git commit -m "update: v${systemFile.version}" -n`);
   } else {
