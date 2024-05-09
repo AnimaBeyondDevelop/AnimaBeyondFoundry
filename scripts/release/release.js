@@ -48,7 +48,7 @@ const { dry } = argv;
     log.info('Updating package.json file...');
     packageJson.version = newVersion;
     const prettiedPackageJson = prettier.format(JSON.stringify(packageJson), {
-      parser: 'json'
+      filepath: 'package.json'
     });
 
     fs.writeFileSync('package.json', prettiedPackageJson, 'utf8');
@@ -63,7 +63,7 @@ const { dry } = argv;
   systemFile.download = `${repoURL}/releases/download/v${systemFile.version}/${systemFile.id}.zip`;
 
   const prettiedSystemFile = prettier.format(JSON.stringify(systemFile), {
-    parser: 'json'
+    filepath: 'src/system.json'
   });
 
   fs.writeFileSync('src/system.json', prettiedSystemFile, 'utf8');
