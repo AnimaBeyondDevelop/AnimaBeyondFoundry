@@ -1,5 +1,5 @@
 ---
-name: "Reportar bug (\U0001F1EA\U0001F1F8)"
+name: 'Reportar bug'
 about: Crear un reporte para ayudarnos a mejorar
 title: '[ES - Bug] Aquí va el título'
 labels: bug

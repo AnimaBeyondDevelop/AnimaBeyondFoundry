@@ -1,5 +1,5 @@
 ---
-name: "New suggestion (\U0001F1EC\U0001F1E7)"
+name: 'New suggestion'
 about: Suggest an idea for this project
 title: '[EN - Feature request] Aquí el título de la sugerencia'
 labels: improvement
