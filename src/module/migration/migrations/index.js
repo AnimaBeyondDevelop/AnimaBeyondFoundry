@@ -5,3 +5,4 @@ export { Migration4PsychicDisciplinesMentalPatterns } from './4-fix-psychic-disc
 export { Migration5UpdateSpellsPowers } from './5-update-spells-powers';
 export { Migration6OldModifiers } from './6-fix-old-modifiers';
 export { Migration7WeaponsOwnStrength } from './7-fix-weapons-ownStrength';
+export { Migration8RemoveWeaponFue } from './8-remove-unused-weaponFue';
