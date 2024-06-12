@@ -656,6 +656,8 @@
       "martialKnowledge": { "value": 0 }
     },
     "weapon": {
+      "equipped": { "value": false },
+      "isShield": { "value": false },
       "special": { "value": "" },
       "integrity": {
         "base": { "value": 0 },
@@ -707,6 +709,7 @@
       "cadence": { "value": "" },
       "reload": { "base": { "value": 0 }, "final": { "value": 0 } },
       "sizeProportion": { "value": "" },
+      "hasOwnStr": { "value": false },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } }
     },
