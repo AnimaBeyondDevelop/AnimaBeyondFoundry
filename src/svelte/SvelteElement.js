@@ -1,8 +1,11 @@
+import { mount, unmount } from 'svelte';
+
 /** 
  * @template {import('svelte').SvelteComponent} [T=import('svelte').SvelteComponent]
  * @classdesc Class representing an Svelte Element (that is, an Svelte component injected inside an HTMLElement)
  */
 export class SvelteElement {
+  // TODO: Update Types por Svelte 5
   /**
    * Holds the Svelte component object
    * @type {T | undefined}
@@ -108,13 +111,14 @@ export class SvelteElement {
     if (this._component && this._htmlElement) {
       target.replaceWith(this._htmlElement);
     } else {
-      this._component = new this._componentConstructor({ target, props: this._props });
+      this._component = mount(this._componentConstructor, { target, props: this._props });
+
       this._htmlElement = target;
     }
   }
 
   destroy() {
-    this._component?.$destroy();
+    unmount(this._component);
     this._htmlElement = undefined;
   }
 }

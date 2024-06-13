@@ -1,6 +1,6 @@
 import { sveltify } from "@svelte/sveltify";
 import { Templates } from "@module/utils/constants";
-import AttackDialog from "@svelte/components/attackDialog.svelte";
+import Spell from "./components/spell.svelte";
 
 export class TestApp extends sveltify(Application) {
   constructor(data) {
@@ -11,11 +11,11 @@ export class TestApp extends sveltify(Application) {
   static get svelteDescriptors() {
     return [
       {
-        componentConstructor: AttackDialog,
+        componentConstructor: Spell,
         selector: '#svelte-app',
         props: {
           contractible: true,
-          spell: game.items?.getName('60 - Escudo Perfecto')
+          spell: game.actors?.get('mkVRiXQsw65FDXke')?.system.mystic.spells[0]
         }
       }
     ]
