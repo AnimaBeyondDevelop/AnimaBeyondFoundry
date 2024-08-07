@@ -8,6 +8,7 @@ import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
+import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
@@ -34,6 +35,7 @@ Hooks.once('init', async () => {
   };
 
   CONFIG.Item.documentClass = ABFItem;
+  CONFIG.ui.actors = ABFActorDirectory;
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);

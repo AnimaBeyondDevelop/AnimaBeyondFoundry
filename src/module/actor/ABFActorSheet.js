@@ -72,6 +72,13 @@ export default class ABFActorSheet extends ActorSheet {
     return 1000;
   }
 
+  render(force = false, options = {}) {    
+    const user = game.user;
+    const permissions = this.actor.ownership;
+    if (permissions[user.id] <= CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED)  return;
+    return super.render(force, options);
+  }
+
   async getData(options) {
     const sheet = await super.getData(options);
 
@@ -80,6 +87,11 @@ export default class ABFActorSheet extends ActorSheet {
 
       sheet.system = sheet.actor.system;
     }
+    sheet.isOwner = this.actor.ownership === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+    sheet.isObserver = this.actor.ownership === CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
+    sheet.isObserverOrHigher = this.actor.ownership >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
+    sheet.isLimited = this.actor.ownership === CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED;
+    sheet.isLimitedOrHigher = this.actor.ownership >= CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED;
 
     sheet.config = CONFIG.config;
 
