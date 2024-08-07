@@ -921,4 +921,33 @@ export class ABFActor extends Actor {
   private getItem(itemId: string) {
     return this.getEmbeddedDocument('Item', itemId);
   }
+
+//   // Custom export function
+//   exportToJSON() {
+// console.log("Custom Export")
+
+//     const data = this.system;
+//     // Add your custom export logic here
+//     const customData = JSON.stringify(data);
+//     saveDataToFile(customData, 'application/json', `${this.name}.json`);
+//   }
+
+//   // Custom static import function
+//   static async importFromJSON(json) {
+//     console.log("Custom Import")
+//     const data = JSON.parse(json);
+//     // Add your custom import logic here
+//     await Actor.create(data);
+//   }
+  
 }
+// // Utility function to save data to file
+// function saveDataToFile(data, type, filename) {
+//   const blob = new Blob([data], { type });
+//   const url = URL.createObjectURL(blob);
+//   const a = document.createElement('a');
+//   a.href = url;
+//   a.download = filename;
+//   a.click();
+//   URL.revokeObjectURL(url);
+// }
