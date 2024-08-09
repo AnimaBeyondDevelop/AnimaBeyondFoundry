@@ -75,8 +75,19 @@ export default class ABFActorSheet extends ActorSheet {
   render(force = false, options = {}) {    
     const user = game.user;
     const permissions = this.actor.ownership;
-    if (permissions[user.id] <= CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED)  return;
+    if (permissions[user.id] <= CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED){
+      this.DisplayActorImagePopout();
+      return;
+    }  
     return super.render(force, options);
+  }
+
+  DisplayActorImagePopout() {
+    const imagePopout = new ImagePopout(this.actor.img, {
+      title: this.actor.name,
+      uuid: this.actor.uuid
+    });
+    imagePopout.render(true);
   }
 
   async getData(options) {
@@ -87,11 +98,6 @@ export default class ABFActorSheet extends ActorSheet {
 
       sheet.system = sheet.actor.system;
     }
-    sheet.isOwner = this.actor.ownership === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
-    sheet.isObserver = this.actor.ownership === CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
-    sheet.isObserverOrHigher = this.actor.ownership >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
-    sheet.isLimited = this.actor.ownership === CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED;
-    sheet.isLimitedOrHigher = this.actor.ownership >= CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED;
 
     sheet.config = CONFIG.config;
 
