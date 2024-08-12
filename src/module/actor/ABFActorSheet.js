@@ -76,7 +76,7 @@ export default class ABFActorSheet extends ActorSheet {
     const user = game.user;
     const permissions = this.actor.ownership;
     if (permissions[user.id] <= CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED){
-      this.DisplayActorImagePopout();
+      this.displayActorImagePopout();
       return;
     }  
     return super.render(force, options);
