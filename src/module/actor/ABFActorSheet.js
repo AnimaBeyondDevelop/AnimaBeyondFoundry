@@ -82,7 +82,7 @@ export default class ABFActorSheet extends ActorSheet {
     return super.render(force, options);
   }
 
-  DisplayActorImagePopout() {
+  displayActorImagePopout() {
     const imagePopout = new ImagePopout(this.actor.img, {
       title: this.actor.name,
       uuid: this.actor.uuid
