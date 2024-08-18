@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Subvía de Conocimiento",
+  "sorting": "m",
+  "type": "Item",
+  "folder": null,
+  "_id": "8HgpRx1KBqPy5rPl",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1709727646454,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_key": "!folders!8HgpRx1KBqPy5rPl"
+}

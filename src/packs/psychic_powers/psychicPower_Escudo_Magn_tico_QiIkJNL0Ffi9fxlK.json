@@ -1,0 +1,87 @@
+{
+  "name": "Escudo Magnético",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "aTQ80ipRe2ZDoMVM",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ru6cbjirwug",
+      "path": "Poderes Mentales#/CF_SEP/Electromagnetismo#/CF_SEP/Nivel 2",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 4"
+      },
+      "40": {
+        "value": "Fatiga 2"
+      },
+      "80": {
+        "value": "Fatiga 1"
+      },
+      "120": {
+        "value": "600 PV"
+      },
+      "140": {
+        "value": "800 PV"
+      },
+      "180": {
+        "value": "1200 PV"
+      },
+      "240": {
+        "value": "1800 PV / Permite parar cualquier clase de ataque físico"
+      },
+      "280": {
+        "value": "2500 PV / Permite parar cualquier clase de ataque físico"
+      },
+      "320": {
+        "value": "4000 PV / Permite parar cualquier clase de ataque físico"
+      },
+      "440": {
+        "value": "6000 PV / Permite parar cualquier clase de ataque físico"
+      }
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "discipline": {
+      "value": "electromagnetism"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084473,
+    "modifiedTime": 1709235141954,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "QiIkJNL0Ffi9fxlK",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!QiIkJNL0Ffi9fxlK"
+}

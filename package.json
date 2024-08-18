@@ -6,17 +6,19 @@
   "scripts": {
     "dev": "nodemon",
     "build:dev": "npm run build:com && npm run copy:files && node scripts/copyDirectoryToFoundrySystem.js animabf",
-    "build:prod": "npm run build:com && npm run copy:files",
+    "build:prod": "npm run compendia:pack && npm run build:com && npm run copy:files",
     "build:com": "rimraf dist/ && npm run build:ts && npm run build:sass",
     "build:ts": "tsc-esm -p .",
     "build:sass": "sass src/scss/animabf.scss dist/animabf.css",
-    "copy:files": "cp src/template.json dist && cp -r src/lang dist && cp -r src/templates dist && cp -r src/assets dist && cp -r src/packs dist && cp src/system.json dist",
+    "copy:files": "cp src/template.json dist && cp -r src/lang dist && cp -r src/templates dist && cp -r src/assets dist && cp -r packs dist && cp src/system.json dist",
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.js",
     "release:dry": "node scripts/release/release.js --dry",
     "test": "jest src",
     "hook:pre-commit": "lint-staged",
-    "cypress:open": "cd integration && cypress open"
+    "cypress:open": "cd integration && cypress open",
+    "compendia:pack": "node scripts/compendia/packCompendia.mjs",
+    "compendia:unpack": "node scripts/compendia/unpackCompendia.mjs"
   },
   "engines": {
     "node": ">18.0.0"

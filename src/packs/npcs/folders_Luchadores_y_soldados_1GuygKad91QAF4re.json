@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Luchadores y soldados",
+  "sorting": "a",
+  "type": "Actor",
+  "folder": null,
+  "_id": "1GuygKad91QAF4re",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": null,
+    "modifiedTime": 1690990635082,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_key": "!folders!1GuygKad91QAF4re"
+}

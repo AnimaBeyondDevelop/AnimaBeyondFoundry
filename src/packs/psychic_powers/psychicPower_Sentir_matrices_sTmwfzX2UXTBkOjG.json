@@ -1,0 +1,87 @@
+{
+  "name": "Sentir matrices",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "ALmEku5mcvBWbI2N",
+  "flags": {
+    "cf": {
+      "id": "temp_rmzkonns57d",
+      "path": "Poderes Mentales#/CF_SEP/Poderes Matriciales",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "0"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 1"
+      },
+      "40": {
+        "value": "10 metros de radio, permite ver matrices psíquicas activas"
+      },
+      "80": {
+        "value": "25 metros de radio, detecta poderes latentes en las personas"
+      },
+      "120": {
+        "value": "50 metros de radio, permite reconocer el poder que se esté utilizando"
+      },
+      "140": {
+        "value": "100 metros de radio"
+      },
+      "180": {
+        "value": "250 metros de radio, nota las disciplinas a las que es afín un psíquico"
+      },
+      "240": {
+        "value": "500 metros de radio, mide el potencial de otro psíquico"
+      },
+      "280": {
+        "value": "1 kilómetro de radio, detecta los CV libres que le quedan a otro psíquico"
+      },
+      "320": {
+        "value": "5 kilómetros de radio, nota los poderes que posee otro psíquico"
+      },
+      "440": {
+        "value": "100 kilómetros de radio"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "matrixPowers"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237672305,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "sTmwfzX2UXTBkOjG",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!sTmwfzX2UXTBkOjG"
+}

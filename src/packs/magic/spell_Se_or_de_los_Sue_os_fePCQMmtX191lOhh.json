@@ -1,0 +1,124 @@
+{
+  "name": "Señor de los Sueños",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "2kafXUGzyl6Egkv1",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_xznkq4kyd8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 80
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "RM 140."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "65"
+        },
+        "description": {
+          "value": "RM 150 / En Vigilia, obtiene Gnosis 40. En zona neutra, 30."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "70"
+        },
+        "description": {
+          "value": "RM 160 / como intermedio, pero el Gnosis en zonas neutras es de 35."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 750
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "RM 180 / Como Avanzado, sin límites espacial."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709814337798,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "fePCQMmtX191lOhh",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!fePCQMmtX191lOhh"
+}

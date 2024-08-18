@@ -1,0 +1,87 @@
+{
+  "name": "Incremento total",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "cnvVZAxrv4k9nMUT",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_843l8cl2caj",
+      "path": "Poderes Mentales#/CF_SEP/Incremento Físico",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 16"
+      },
+      "40": {
+        "value": "Fatiga 12"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "Características físicas +1"
+      },
+      "240": {
+        "value": "Características físicas +2"
+      },
+      "280": {
+        "value": "Características físicas +4"
+      },
+      "320": {
+        "value": "Características físicas +6"
+      },
+      "440": {
+        "value": "Características físicas +8"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "physicalIncrease"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710257945791,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "8FfvWigokSWsWP3b",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!8FfvWigokSWsWP3b"
+}

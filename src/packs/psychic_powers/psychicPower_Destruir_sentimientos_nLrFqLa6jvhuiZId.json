@@ -1,0 +1,87 @@
+{
+  "name": "Destruir sentimientos",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "i8yKRFB4QZpm81sU",
+  "flags": {
+    "cf": {
+      "id": "temp_5xceq14xy2l",
+      "path": "Poderes Mentales#/CF_SEP/Sentiente",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 16"
+      },
+      "40": {
+        "value": "Fatiga 12"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "120 RP"
+      },
+      "240": {
+        "value": "140 RP"
+      },
+      "280": {
+        "value": "160 RP"
+      },
+      "320": {
+        "value": "180 RP"
+      },
+      "440": {
+        "value": "200 RP"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "sentient"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710258183148,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "nLrFqLa6jvhuiZId",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!nLrFqLa6jvhuiZId"
+}

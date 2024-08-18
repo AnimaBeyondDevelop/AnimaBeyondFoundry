@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Comunes",
+  "sorting": "a",
+  "type": "Actor",
+  "folder": null,
+  "_id": "UBJ5wYu4qMyncH21",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": null,
+    "modifiedTime": 1690990618964,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_key": "!folders!UBJ5wYu4qMyncH21"
+}

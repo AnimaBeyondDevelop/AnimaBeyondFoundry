@@ -1,0 +1,156 @@
+{
+  "name": "Tanko",
+  "type": "armor",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "0nEb6Vi8gYUCaAiB",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_f5pbc4lz7sq",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "thrust": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "heat": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "electricity": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cold": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "energy": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "integrity": {
+      "base": {
+        "value": 14
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 14
+    },
+    "presence": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "movementRestriction": {
+      "base": {
+        "value": -1
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": -15
+      },
+      "final": {
+        "value": 0
+      },
+      "value": -15
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 35
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 35
+    },
+    "type": {
+      "value": "hard"
+    },
+    "localization": {
+      "value": "nightdress"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1691058437668,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "tneyIAV53qP1QNko",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!tneyIAV53qP1QNko"
+}

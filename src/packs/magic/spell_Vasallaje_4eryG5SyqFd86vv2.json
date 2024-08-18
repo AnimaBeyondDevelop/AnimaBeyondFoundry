@@ -1,0 +1,124 @@
+{
+  "name": "Vasallaje",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9UTdz9zqymd2munz",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_14almtc4p3cr",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 76
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 100"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 360
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 140"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 180"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 540
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 220"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709814904872,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "4eryG5SyqFd86vv2",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!4eryG5SyqFd86vv2"
+}

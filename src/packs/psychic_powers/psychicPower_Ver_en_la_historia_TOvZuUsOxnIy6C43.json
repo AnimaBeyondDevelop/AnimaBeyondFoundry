@@ -1,0 +1,87 @@
+{
+  "name": "Ver en la historia",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "hGgKxYqNmQz3JTkD",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_u2m5qv5qtd",
+      "path": "Poderes Mentales#/CF_SEP/Telemetría",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 16"
+      },
+      "40": {
+        "value": "Fatiga 12"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "Un año"
+      },
+      "240": {
+        "value": "Diez años"
+      },
+      "280": {
+        "value": "Un siglo"
+      },
+      "320": {
+        "value": "Un milenio"
+      },
+      "440": {
+        "value": "Cualquier periodo de tiempo"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telemetry"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710258241226,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "TOvZuUsOxnIy6C43",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!TOvZuUsOxnIy6C43"
+}
