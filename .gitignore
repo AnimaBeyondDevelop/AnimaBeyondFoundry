@@ -10,4 +10,4 @@ foundryconfig.json
 
 dist/
 package/
-packs
+/packs

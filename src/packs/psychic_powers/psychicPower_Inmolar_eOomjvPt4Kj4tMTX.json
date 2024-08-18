@@ -1,5 +1,5 @@
 {
-  "name": "Immolar",
+  "name": "Inmolar",
   "type": "psychicPower",
   "img": "icons/svg/item-bag.svg",
   "effects": [],
@@ -71,11 +71,11 @@
   },
   "_stats": {
     "systemId": "animabf",
-    "systemVersion": "1.18.0-beta1",
+    "systemVersion": "1.18.1",
     "coreVersion": "11.315",
     "createdTime": 1690991084156,
-    "modifiedTime": 1709237466273,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1723981884550,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
   },
   "_id": "eOomjvPt4Kj4tMTX",
   "sort": 0,
