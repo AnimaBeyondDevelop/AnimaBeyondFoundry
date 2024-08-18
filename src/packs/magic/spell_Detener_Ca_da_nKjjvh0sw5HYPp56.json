@@ -17,7 +17,7 @@
       "value": null
     },
     "via": {
-      "value": "air"
+      "value": "freeAccess"
     },
     "spellType": {
       "value": "effect"
@@ -51,7 +51,7 @@
           "value": "5"
         },
         "description": {
-          "value": ""
+          "value": "50 metros de caída / Presencia máxima 60"
         }
       },
       "intermediate": {
@@ -68,7 +68,7 @@
           "value": "15"
         },
         "description": {
-          "value": ""
+          "value": "150 metros de caída / Presencia máxima 160"
         }
       },
       "advanced": {
@@ -85,7 +85,7 @@
           "value": "20"
         },
         "description": {
-          "value": ""
+          "value": "500 metros de caída / Presencia máxima 240"
         }
       },
       "arcane": {
@@ -102,17 +102,17 @@
           "value": "25"
         },
         "description": {
-          "value": ""
+          "value": "Cualquier distancia / Presencia  máxima 320"
         }
       }
     }
   },
   "_stats": {
     "systemId": "animabf",
-    "systemVersion": "1.18.0-beta2",
+    "systemVersion": "1.18.1",
     "coreVersion": "11.315",
     "createdTime": 1690991082135,
-    "modifiedTime": 1709306146685,
+    "modifiedTime": 1718307062362,
     "lastModifiedBy": "s1iIg3oHOkECBfdY"
   },
   "_id": "nKjjvh0sw5HYPp56",

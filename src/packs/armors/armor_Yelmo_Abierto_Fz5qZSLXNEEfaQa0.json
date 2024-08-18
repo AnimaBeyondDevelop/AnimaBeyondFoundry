@@ -119,6 +119,14 @@
       },
       "value": -20
     },
+    "perceptionPenalty": {
+      "base": {
+        "value": -20
+      },
+      "final": {
+        "value": 0
+      }
+    },
     "wearArmorRequirement": {
       "base": {
         "value": 5
@@ -140,11 +148,11 @@
   },
   "_stats": {
     "systemId": "animabf",
-    "systemVersion": "1.15.1",
-    "coreVersion": "11.299",
+    "systemVersion": "1.18.1",
+    "coreVersion": "11.315",
     "createdTime": 1690991072130,
-    "modifiedTime": 1691058437668,
-    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+    "modifiedTime": 1718130158077,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
   },
   "_id": "Fz5qZSLXNEEfaQa0",
   "sort": 0,

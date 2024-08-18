@@ -17,7 +17,7 @@
       "value": null
     },
     "via": {
-      "value": "air"
+      "value": "freeAccess"
     },
     "spellType": {
       "value": "effect"
@@ -109,10 +109,10 @@
   },
   "_stats": {
     "systemId": "animabf",
-    "systemVersion": "1.18.0-beta2",
+    "systemVersion": "1.18.1",
     "coreVersion": "11.315",
     "createdTime": 1690991081531,
-    "modifiedTime": 1709306254265,
+    "modifiedTime": 1718306872047,
     "lastModifiedBy": "s1iIg3oHOkECBfdY"
   },
   "_id": "X1Tw6I6o7AljMQzE",

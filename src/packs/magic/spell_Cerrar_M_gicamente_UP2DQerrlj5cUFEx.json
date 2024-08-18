@@ -17,7 +17,7 @@
       "value": null
     },
     "via": {
-      "value": "air"
+      "value": "freeAccess"
     },
     "spellType": {
       "value": "effect"
@@ -25,9 +25,17 @@
     "actionType": {
       "value": "active"
     },
+    "combatType": {
+      "value": "attack"
+    },
     "hasDailyMaintenance": {
       "value": false
     },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
     "grades": {
       "base": {
         "name": {
@@ -101,11 +109,11 @@
   },
   "_stats": {
     "systemId": "animabf",
-    "systemVersion": "1.15.1",
-    "coreVersion": "11.299",
+    "systemVersion": "1.18.1",
+    "coreVersion": "11.315",
     "createdTime": 1690991081288,
-    "modifiedTime": 1691058449093,
-    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+    "modifiedTime": 1718306809248,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
   },
   "_id": "UP2DQerrlj5cUFEx",
   "sort": 0,
