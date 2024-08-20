@@ -1,15 +1,15 @@
-import { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+import { ComponentProps, ComponentType, Component } from 'svelte';
 import { Subscriber, Unsubscriber, Writable } from 'svelte/store';
 import { SvelteElement } from './SvelteElement';
 
 /**
  * Object describing the component associated to a `SvelteElement`
  */
-export type ComponentDescriptor<T extends SvelteComponent = SvelteComponent> = {
+export type ComponentDescriptor<T extends Component = Component> = {
   /**
    * The constructor of the associated SvelteComponent.
    */
-  componentConstructor: ComponentType<T>;
+  SvelteComponent: T;
   /**
    * Props used to initialise the SvelteComponent
    */
@@ -27,6 +27,6 @@ export type DebouncedStore<T> = Writable<T> & {
    * @param timeout - Timeout in miliseconds for debouncing, default 500
    */
   debounceSubscribe(fn: Subscriber<T>, timeout?: number): Unsubscriber;
-}
+};
 
 export { sveltify } from './sveltify';

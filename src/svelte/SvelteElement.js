@@ -1,10 +1,11 @@
-/** 
- * @template {import('svelte').SvelteComponent} [T=import('svelte').SvelteComponent]
+import { mount, unmount } from 'svelte';
+/**
+ * @template {import('svelte').Component} [T=import('svelte').Component]
  * @classdesc Class representing an Svelte Element (that is, an Svelte component injected inside an HTMLElement)
  */
 export class SvelteElement {
   /**
-   * Holds the Svelte component object
+   * Holds the Svelte component instance
    * @type {T | undefined}
    * @private
    */
@@ -17,11 +18,11 @@ export class SvelteElement {
    */
   _htmlElement;
   /**
-   * The class of the Svelte component inside this `SvelteElement`
-   * @type{import('svelte').ComponentType<T>}
+   * The Svelte component inside this `SvelteElement`
+   * @type{T}
    * @private
    */
-  _componentConstructor;
+  _SvelteComponent;
 
   /**
    * Props used to inject the svelte component
@@ -37,22 +38,22 @@ export class SvelteElement {
    */
   _selector;
 
-  /** 
+  /**
    * @param {import('.').ComponentDescriptor<T>} descriptor
    */
   constructor(descriptor) {
-    const { selector, componentConstructor, props } = descriptor;
-    this._componentConstructor = componentConstructor;
+    const { selector, SvelteComponent, props } = descriptor;
+    this._SvelteComponent = SvelteComponent;
     this._props = props || {};
     this._selector = selector || `#svelte-${this.name}`;
   }
 
   /**
-  * Returns wether the component is rendered
-  * @returns {boolean}
-  */
+   * Returns wether the component is rendered
+   * @returns {boolean}
+   */
   get isRendered() {
-    return !!this._component && this._htmlElement;
+    return !!this._component && !!this._htmlElement;
   }
 
   /**
@@ -60,7 +61,7 @@ export class SvelteElement {
    * @returns {string}
    */
   get name() {
-    return this._componentConstructor.name;
+    return this._SvelteComponent.name;
   }
 
   /**
@@ -72,35 +73,30 @@ export class SvelteElement {
   }
 
   /**
-  * Updates the props used to inject the component if the component hasn't been injected yet.
-  * @param {import('svelte').ComponentProps<T>} props - Props object to initialise the Svelte component.
-  * @returns {import('svelte').ComponentProps<T>}
-  * @remark `props` merges (overriding) into the default props given in the element's constructor, if any. 
+   * Updates the props used to inject the component if the component hasn't been injected yet.
+   * @param {import('svelte').ComponentProps<T>} props - Props object to initialise the Svelte component.
+   * @remark `props` merges (overriding) into the default props given in the element's constructor, if any.
    */
   updateProps(props) {
     if (!this._component) {
-      return mergeObject(
-        this._props || {},
-        props || {},
-        {
-          insertKeys: true,
-          insertValues: true,
-          overwrite: true,
-          recursive: true
-        }
-      );
+      return mergeObject(this._props || {}, props || {}, {
+        insertKeys: true,
+        insertValues: true,
+        overwrite: true,
+        recursive: true
+      });
     }
   }
 
   /**
-  * Initialises and renders the `SvelteElement` if it is not rendered yet, otherwise it reinjects the
-  * already created `SvelteElement` into its place inside the HTML.
-  * @param {HTMLElement} target The target HTML element to be substituted by the `SvelteElement`
-  * @param {import('svelte').ComponentProps<T>} [props] - Props object to initialise the Svelte component.
-  * @remark `props` merges (overriding) into the default props given in the element's constructor, if any. 
-  */
+   * Initialises and renders the `SvelteElement` if it is not rendered yet, otherwise it reinjects the
+   * already created `SvelteElement` into its place inside the HTML.
+   * @param {HTMLElement} target The target HTML element to be substituted by the `SvelteElement`
+   * @param {import('svelte').ComponentProps<T>} [props] - Props object to initialise the Svelte component.
+   * @remark `props` merges (overriding) into the default props given in the element's constructor, if any.
+   */
   inject(target, props = undefined) {
-    if (props) this.updateProps(props)
+    if (props) this.updateProps(props);
     // If the component has already been created but the template is rendered again (e.g. because of
     // data changes), the DOM changes and the element containing the component is re-created, without
     // the injected component. In such a case, we replace the targetElement with this.element;
@@ -108,13 +104,13 @@ export class SvelteElement {
     if (this._component && this._htmlElement) {
       target.replaceWith(this._htmlElement);
     } else {
-      this._component = new this._componentConstructor({ target, props: this._props });
+      this._component = mount(this._SvelteComponent, { target, props: this._props });
       this._htmlElement = target;
     }
   }
 
   destroy() {
-    this._component?.$destroy();
+    if (this._component) unmount(this._component);
     this._htmlElement = undefined;
   }
 }
