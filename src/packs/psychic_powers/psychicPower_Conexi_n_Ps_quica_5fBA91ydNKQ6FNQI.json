@@ -1,0 +1,87 @@
+{
+  "name": "Conexión Psíquica",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "F5hHHDvDWfxxGkLO",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_08jdpv725sgo",
+      "path": "Poderes Mentales#/CF_SEP/Telepatía",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 6"
+      },
+      "40": {
+        "value": "Fatiga 4"
+      },
+      "80": {
+        "value": "Fatiga 2"
+      },
+      "120": {
+        "value": "100 metros"
+      },
+      "140": {
+        "value": "500 metros"
+      },
+      "180": {
+        "value": "1 kilómetro"
+      },
+      "240": {
+        "value": "10 kilómetros"
+      },
+      "280": {
+        "value": "100 kilómetros"
+      },
+      "320": {
+        "value": "1.000 kilómetros"
+      },
+      "440": {
+        "value": "Cualquier distancia"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telepathy"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237855835,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "5fBA91ydNKQ6FNQI",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!5fBA91ydNKQ6FNQI"
+}

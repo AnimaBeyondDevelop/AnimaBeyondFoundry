@@ -1,0 +1,211 @@
+{
+  "name": "Bastón de Combate",
+  "type": "weapon",
+  "img": "icons/weapons/staves/staff-ornate.webp",
+  "effects": [],
+  "folder": "03cZwhiayO1lPZXJ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_bcl66clrdgh",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "special": {
+      "value": ""
+    },
+    "integrity": {
+      "base": {
+        "value": 10
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 10
+    },
+    "breaking": {
+      "base": {
+        "value": -1
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": -1
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "initiative": {
+      "base": {
+        "value": 15
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 15
+    },
+    "presence": {
+      "base": {
+        "value": 15
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "big"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 5
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 5
+      },
+      "twoHands": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "one_hand"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": false
+    },
+    "range": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": ""
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "impact"
+      },
+      "secondary": {
+        "value": "-"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077555,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "0YlZrjyVXfXILNOO",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!0YlZrjyVXfXILNOO"
+}

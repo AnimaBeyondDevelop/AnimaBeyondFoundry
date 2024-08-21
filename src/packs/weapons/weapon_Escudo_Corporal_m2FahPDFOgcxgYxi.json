@@ -1,0 +1,211 @@
+{
+  "name": "Escudo Corporal",
+  "type": "weapon",
+  "img": "icons/equipment/shield/wardoor-wooden-boss-brown.webp",
+  "effects": [],
+  "folder": "qIsJ2Q2ZMFRT6WxI",
+  "flags": {
+    "cf": {
+      "id": "temp_bki8ya9rhjj",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "special": {
+      "value": "+30 a la parada, +15 a la esquiva, Ver"
+    },
+    "integrity": {
+      "base": {
+        "value": 18
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 18
+    },
+    "breaking": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 30
+    },
+    "damage": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "initiative": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": -40
+    },
+    "presence": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "size": {
+      "value": "big"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 10
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      },
+      "twoHands": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "one_hand"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": false
+    },
+    "range": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": ""
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "impact"
+      },
+      "secondary": {
+        "value": "-"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": -40
+    },
+    "fueRequired": {
+      "value": "10"
+    },
+    "isShield": {
+      "value": true
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077233,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "m2FahPDFOgcxgYxi",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!m2FahPDFOgcxgYxi"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Erudición del Terreno",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9nMUgFoWa3TGm0xG",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_e5p0su3o5pa",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 72
+    },
+    "via": {
+      "value": "earth"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "500 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 270
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "3 kilómetros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 360
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "10 kilómetros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "15 kilómetros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709815748808,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "rWvY5gQQETVK4WI1",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!rWvY5gQQETVK4WI1"
+}

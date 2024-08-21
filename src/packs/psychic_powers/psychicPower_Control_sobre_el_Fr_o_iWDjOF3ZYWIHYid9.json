@@ -1,0 +1,87 @@
+{
+  "name": "Control sobre el Frío",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "7Az1PI5lhqYnlULE",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_fnc51em5lqf",
+      "path": "Poderes Mentales#/CF_SEP/Crioquinesis#/CF_SEP/Nivel 1",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 2"
+      },
+      "40": {
+        "value": "Fatiga 1"
+      },
+      "80": {
+        "value": "4 intensidades / 80 RF"
+      },
+      "120": {
+        "value": "6 intensidades / 100 RF"
+      },
+      "140": {
+        "value": "8 intensidades / 120 RF"
+      },
+      "180": {
+        "value": "12 intensidades / 140 RF"
+      },
+      "240": {
+        "value": "16 intensidades / 160 RF"
+      },
+      "280": {
+        "value": "20 intensidades / 180 RF"
+      },
+      "320": {
+        "value": "25 intensidades / 200 RF"
+      },
+      "440": {
+        "value": "30 intensidades / 240 RF"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "cryokinesis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709234808880,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "iWDjOF3ZYWIHYid9",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!iWDjOF3ZYWIHYid9"
+}

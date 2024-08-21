@@ -1,0 +1,124 @@
+{
+  "name": "Compendio",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "LDo1cUVt70Ir65qc",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ql3798o7zio",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 64
+    },
+    "via": {
+      "value": "literae"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "120 puntos de habilidad intelectual."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 260
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "240 puntos de habilidad intelectual."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 380
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "320 puntos de habilidad intelectual."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "440 puntos de habilidad intelectual."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709727551554,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "wI5qVjs0C0UVtPpU",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!wI5qVjs0C0UVtPpU"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Ubicar Magia",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "0785rt4QrTN5zw3P",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_o70qwdj09x",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 90
+    },
+    "via": {
+      "value": "air"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Conjuros de hasta 100 puntos de Zeon."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 270
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Conjuros de hasta 200 puntos de Zeon."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 360
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "Conjuros de hasta 300 puntos de Zeon."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "45"
+        },
+        "description": {
+          "value": "Conjuros de hasta 400 puntos de Zeon."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709729878026,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "3VBWOpAjxm6KM8SH",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!3VBWOpAjxm6KM8SH"
+}

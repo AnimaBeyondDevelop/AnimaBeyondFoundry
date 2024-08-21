@@ -1,0 +1,124 @@
+{
+  "name": "Caos Primario",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "GGByCbGDO0Kmw4xd",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_oggnu1dcez",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 94
+    },
+    "via": {
+      "value": "chaos"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "500 metros."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 900
+        },
+        "maintenanceCost": {
+          "value": "180"
+        },
+        "description": {
+          "value": "1 kilómetro."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1500
+        },
+        "maintenanceCost": {
+          "value": "300"
+        },
+        "description": {
+          "value": "5 kilómetros / Tras un minuto, cualquiera es afectado por Mutación Caótica en Arcano."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 2400
+        },
+        "maintenanceCost": {
+          "value": "480"
+        },
+        "description": {
+          "value": "25 kilómetros / Igual que Avanzado y a menos de 1 km del núcleo RM 160 o descreación."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709727768400,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "4Nh8Hd7joGUDirMf",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!4Nh8Hd7joGUDirMf"
+}

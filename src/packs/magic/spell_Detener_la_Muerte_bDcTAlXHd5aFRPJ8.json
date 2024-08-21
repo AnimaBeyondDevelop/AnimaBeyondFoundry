@@ -1,0 +1,124 @@
+{
+  "name": "Detener la Muerte",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "zt7DLwuMCRIuFGou",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6ejdmnfztzr",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 84
+    },
+    "via": {
+      "value": "death"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "El personaje ignora cualquier efecto de muerte automática."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "El personaje se vuelve inmortal ante el daño físico."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "El afectado no puede morir a consecuencia de críticos."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1200
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "Inmune a cualquier negativo a la acción derivado del deterioro físico."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709727495666,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "bDcTAlXHd5aFRPJ8",
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!bDcTAlXHd5aFRPJ8"
+}

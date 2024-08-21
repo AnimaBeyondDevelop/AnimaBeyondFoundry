@@ -1,0 +1,87 @@
+{
+  "name": "Percibir residuos",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "3mq0Z6FiNPCFTAe3",
+  "flags": {
+    "cf": {
+      "id": "temp_u2m5qv5qtd",
+      "path": "Poderes Mentales#/CF_SEP/Telemetría",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 1"
+      },
+      "40": {
+        "value": "Una hora"
+      },
+      "80": {
+        "value": "Seis horas"
+      },
+      "120": {
+        "value": "Un día"
+      },
+      "140": {
+        "value": "Tres días"
+      },
+      "180": {
+        "value": "Una semana"
+      },
+      "240": {
+        "value": "Un mes"
+      },
+      "280": {
+        "value": "Un año"
+      },
+      "320": {
+        "value": "Una década"
+      },
+      "440": {
+        "value": "Un siglo"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telemetry"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710258230853,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "MenR2kRYdmxKTcQ1",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!MenR2kRYdmxKTcQ1"
+}

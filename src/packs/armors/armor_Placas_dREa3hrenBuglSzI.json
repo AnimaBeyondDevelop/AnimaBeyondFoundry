@@ -1,0 +1,164 @@
+{
+  "name": "Placas",
+  "type": "armor",
+  "img": "icons/equipment/chest/breastplate-metal-tan.webp",
+  "effects": [],
+  "folder": "RqvwcydcVBdFp0ow",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hux5484g755",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "thrust": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "heat": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "electricity": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cold": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "energy": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "integrity": {
+      "base": {
+        "value": 17
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 17
+    },
+    "presence": {
+      "base": {
+        "value": 40
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 40
+    },
+    "movementRestriction": {
+      "base": {
+        "value": -4
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": -35
+      },
+      "final": {
+        "value": 0
+      },
+      "value": -35
+    },
+    "perceptionPenalty": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 90
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 90
+    },
+    "type": {
+      "value": "hard"
+    },
+    "localization": {
+      "value": "complete"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1720654492510,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "dREa3hrenBuglSzI",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!dREa3hrenBuglSzI"
+}

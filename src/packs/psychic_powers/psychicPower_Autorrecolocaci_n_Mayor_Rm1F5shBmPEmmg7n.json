@@ -1,0 +1,87 @@
+{
+  "name": "Autorrecolocación Mayor",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "GLtc2ktLNzFBdw6q",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hg6ghkyc3se",
+      "path": "Poderes Mentales#/CF_SEP/Teletransporte#/CF_SEP/Nivel 2",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 8"
+      },
+      "80": {
+        "value": "Fatiga 6"
+      },
+      "120": {
+        "value": "Fatiga 4"
+      },
+      "140": {
+        "value": "Fatiga 2"
+      },
+      "180": {
+        "value": "1 kilómetro"
+      },
+      "240": {
+        "value": "10 kilómetros"
+      },
+      "280": {
+        "value": "100 kilómetros"
+      },
+      "320": {
+        "value": "1000 kilómetros"
+      },
+      "440": {
+        "value": "Cualquier lugar del mundo"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "teleportation"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709238226894,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Rm1F5shBmPEmmg7n",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Rm1F5shBmPEmmg7n"
+}

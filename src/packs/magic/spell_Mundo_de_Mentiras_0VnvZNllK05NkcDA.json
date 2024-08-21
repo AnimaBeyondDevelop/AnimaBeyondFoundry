@@ -1,0 +1,124 @@
+{
+  "name": "Mundo de Mentiras",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "DMzhT0ZJJL269Ehr",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_wafci5aa1vi",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 96
+    },
+    "via": {
+      "value": "illusion"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "RM 140 / 10 Km de radio / 100 niveles a repartir entre seres"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 900
+        },
+        "maintenanceCost": {
+          "value": "90"
+        },
+        "description": {
+          "value": "RM 180 / 100 Km de radio / 500 niveles a repartir entre seres"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 1400
+        },
+        "maintenanceCost": {
+          "value": "140"
+        },
+        "description": {
+          "value": "RM 220 / 1000 Km de radio / 1500 niveles a repartir entre seres"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 19
+        },
+        "zeon": {
+          "value": 2000
+        },
+        "maintenanceCost": {
+          "value": "200"
+        },
+        "description": {
+          "value": "RM 260 / 10000 Km de radio / 5000 niveles a repartir entre seres"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709813005749,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "0VnvZNllK05NkcDA",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!0VnvZNllK05NkcDA"
+}

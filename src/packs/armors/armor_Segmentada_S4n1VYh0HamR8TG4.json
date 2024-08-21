@@ -1,0 +1,156 @@
+{
+  "name": "Segmentada",
+  "type": "armor",
+  "img": "icons/equipment/chest/breastplate-banded-steel-gold.webp",
+  "effects": [],
+  "folder": "RqvwcydcVBdFp0ow",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hux5484g755",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "thrust": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "heat": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "electricity": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cold": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "energy": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "integrity": {
+      "base": {
+        "value": 13
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 13
+    },
+    "presence": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "movementRestriction": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": -15
+      },
+      "final": {
+        "value": 0
+      },
+      "value": -15
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 30
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 30
+    },
+    "type": {
+      "value": "hard"
+    },
+    "localization": {
+      "value": "nightdress"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1691058437668,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "S4n1VYh0HamR8TG4",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!S4n1VYh0HamR8TG4"
+}

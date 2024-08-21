@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Animales",
+  "sorting": "a",
+  "type": "Actor",
+  "folder": null,
+  "_id": "Dk9MsTImHbQC49Qb",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": null,
+    "modifiedTime": 1690990629322,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_key": "!folders!Dk9MsTImHbQC49Qb"
+}

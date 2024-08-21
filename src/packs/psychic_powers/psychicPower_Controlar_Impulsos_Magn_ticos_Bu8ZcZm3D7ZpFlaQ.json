@@ -1,0 +1,87 @@
+{
+  "name": "Controlar Impulsos Magnéticos",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "xodcpoM69HeVzVfa",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_lgovouk8n9",
+      "path": "Poderes Mentales#/CF_SEP/Electromagnetismo#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 10"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "Fatiga 2"
+      },
+      "240": {
+        "value": "-40 a toda acción / RF 120"
+      },
+      "280": {
+        "value": "-80 a toda acción / RF 140"
+      },
+      "320": {
+        "value": "Control parcial del cuerpo / RF 160"
+      },
+      "440": {
+        "value": "Control total del cuerpo / RF 180"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "electromagnetism"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709235679211,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Bu8ZcZm3D7ZpFlaQ",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Bu8ZcZm3D7ZpFlaQ"
+}

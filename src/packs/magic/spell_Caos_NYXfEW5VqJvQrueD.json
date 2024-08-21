@@ -1,0 +1,124 @@
+{
+  "name": "Caos",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "52cT6fwgLMudifMm",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_frenwilx93",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 98
+    },
+    "via": {
+      "value": "destruction"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 700
+        },
+        "maintenanceCost": {
+          "value": "70"
+        },
+        "description": {
+          "value": "100 kilómetros de radio / Afecta hasta Gnosis 10."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1200
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "1.000 kilómetros de radio / Afecta hasta Gnosis 20."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 2000
+        },
+        "maintenanceCost": {
+          "value": "90"
+        },
+        "description": {
+          "value": "10.000 kilómetros de radio / Afecta hasta Gnosis 30."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 20
+        },
+        "zeon": {
+          "value": 5000
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "Afecta toda la creación / Afecta hasta Gnosis 40."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709811470340,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "NYXfEW5VqJvQrueD",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!NYXfEW5VqJvQrueD"
+}

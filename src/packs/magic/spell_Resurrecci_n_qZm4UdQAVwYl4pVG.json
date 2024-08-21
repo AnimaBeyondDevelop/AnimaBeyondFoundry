@@ -1,0 +1,124 @@
+{
+  "name": "Resurrección",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "FNXsNwDSeRw8FSgJ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_fqddp3fvqid",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 96
+    },
+    "via": {
+      "value": "essence"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Presencia máxima 30 / 1 mes"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Presencia máxima 60 / 1 año"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Presencia máxima 120 / 1 década"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 700
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Presencia máxima 150 / 1 siglo"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709811899580,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "qZm4UdQAVwYl4pVG",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!qZm4UdQAVwYl4pVG"
+}
