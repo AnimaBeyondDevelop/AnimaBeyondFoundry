@@ -207,7 +207,8 @@ export const INITIAL_ACTOR_DATA = {
         },
         final: {
           value: 0
-        }
+        },
+        applyStatBonus: false
       },
       fatigue: {
         value: 0,
@@ -882,7 +883,8 @@ export const INITIAL_ACTOR_DATA = {
       },
       final: {
         value: 0
-      }
+      },
+      applyStatBonus: false
     },
     block: {
       base: {
@@ -890,7 +892,8 @@ export const INITIAL_ACTOR_DATA = {
       },
       final: {
         value: 0
-      }
+      },
+      applyStatBonus: false
     },
     dodge: {
       base: {
@@ -898,7 +901,8 @@ export const INITIAL_ACTOR_DATA = {
       },
       final: {
         value: 0
-      }
+      },
+      applyStatBonus: false
     },
     wearArmor: {
       value: 0

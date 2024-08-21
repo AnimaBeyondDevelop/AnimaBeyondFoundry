@@ -1,6 +1,7 @@
 import { ABFActorDataSourceData } from '../../../../../types/Actor';
 import { WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
 import { WeaponDataSource } from '../../../../../types/Items';
+import { calculateAttributeModifier } from '..//util/calculateAttributeModifier';
 
 export const mutateInitiative = (data: ABFActorDataSourceData) => {
   const combat = data.combat as { weapons: WeaponDataSource[] };
@@ -12,8 +13,9 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
       Math.min(allActionMod + general.modifiers.physicalActions.final.value, 0) / 2
     ) + general.modifiers.naturalPenalty.final.value;
   const { initiative } = data.characteristics.secondaries;
+  let initiativeStatBonus = data.characteristics.secondaries.initiative.applyStatBonus ? calculateAttributeModifier(data.characteristics.primaries.dexterity.value) + calculateAttributeModifier(data.characteristics.primaries.agility.value) : 0;
 
-  initiative.final.value = initiative.base.value + penalty;
+  initiative.final.value = initiative.base.value + initiativeStatBonus + penalty;
 
   const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 
@@ -58,5 +60,8 @@ export const mutateInitiative = (data: ABFActorDataSourceData) => {
         initiative.final.value -= 10;
       }
     }
+
+    
+    
   }
 };
