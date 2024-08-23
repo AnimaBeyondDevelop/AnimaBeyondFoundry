@@ -6,16 +6,28 @@
    * @property {import('../../module/items/ABFItem').default} item Item represented by the component
    * @property {boolean} [contractible=false] Whether it allows the item's body to contract. Defaults to false.
    * @property {string} [cssClass=''] CSS class to apply to the whole Group of the item. Defaults to ''.
+   * @property {import('svelte').Snippet} header Snippet with item's group header content.
+   * @property {import('svelte').Snippet} body Snippet with item's group body content.
+   * @property {import('svelte').Snippet} footer Snippet with item's group footer content.
    */
 
   /** @type {props} */
-  let { item, contractible = $bindable(false), cssClass = '' } = $props();
+  let {
+    item,
+    contractible = $bindable(false),
+    cssClass = '',
+    header,
+    body,
+    footer
+  } = $props();
 
   let contracted = $state(
     contractible
       ? /** @type {boolean} */ (item.getFlag('animabf', 'contracted')) || false
       : undefined
   );
+  
+  console.log(header)
 
   $effect(() => {
     if (!contractible) return;
@@ -38,8 +50,5 @@
   }
 </script>
 
-<Group title={item.name || ''} bind:contracted {cssClass}>
-  <slot name="header" slot="header" />
-  <slot name="body" slot="body" />
-  <slot name="footer" slot="footer" />
-</Group>
+<Group title={item.name || ''} bind:contracted {cssClass} {header} {body} {footer}
+></Group>

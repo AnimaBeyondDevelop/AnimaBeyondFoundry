@@ -80,6 +80,9 @@ img {
       }
 
       .contractible-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
         top: -0.5rem;
         right: -0.5rem;
@@ -95,10 +98,6 @@ img {
 
         &:hover {
           background-color: $light-gray;
-        }
-
-        &.contracted {
-          transform: rotate(180deg);
         }
       }
     }
