@@ -15,7 +15,7 @@
   {#snippet body()}
     {#each $data.actor.system.mystic.spells as spell}
       <div data-item-id={spell._id} class="spell-row">
-        <Spell bind:spell contractible />
+        <Spell bind:spell contractible isInner />
       </div>
     {/each}
   {/snippet}

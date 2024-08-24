@@ -9,11 +9,12 @@
   /**
    * @typedef {Object} props Properties for the Item componenent
    * @property {import('../../module/items/ABFItem').default} spell Item represented by the component
+   * @property {boolean} [isInner=false] Whether this item is used inside a parent sheet. Defaults to false.
    * @property {boolean} [contractible] Whether it allows the spell's body to contract. Defaults to false.
    */
 
   /** @type {props} */
-  let { contractible=false, spell } = $props()
+  let { contractible=false, isInner, spell=$bindable() } = $props()
 
   let i18n = game.i18n;
 
@@ -21,7 +22,7 @@
   const grades = ['base', 'intermediate', 'advanced', 'arcane'];
 </script>
 
-<Item item={spell} cssClass="spell-svelte" {contractible}>
+<Item bind:item={spell} cssClass="spell-svelte" {isInner} {contractible}>
   {#snippet header()}
     <div class="spell-header">
       <div class="first-row">

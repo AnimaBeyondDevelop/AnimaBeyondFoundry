@@ -4,6 +4,7 @@
   /**
    * @typedef {Object} props Properties for the Item componenent
    * @property {import('../../module/items/ABFItem').default} item Item represented by the component
+   * @property {boolean} [isInner=false] Whether this item is used inside a parent sheet. Defaults to false.
    * @property {boolean} [contractible=false] Whether it allows the item's body to contract. Defaults to false.
    * @property {string} [cssClass=''] CSS class to apply to the whole Group of the item. Defaults to ''.
    * @property {import('svelte').Snippet} header Snippet with item's group header content.
@@ -13,7 +14,8 @@
 
   /** @type {props} */
   let {
-    item,
+    item = $bindable(),
+    isInner = false,
     contractible = $bindable(false),
     cssClass = '',
     header,
@@ -26,8 +28,6 @@
       ? /** @type {boolean} */ (item.getFlag('animabf', 'contracted')) || false
       : undefined
   );
-  
-  console.log(header)
 
   $effect(() => {
     if (!contractible) return;
@@ -41,7 +41,7 @@
    * @param {import('../../module/items/ABFItem').default} item
    */
   function onItemChange(item) {
-    if (!item.parent) return;
+    if (!isInner || !item.parent) return;
 
     const { _id, name, img, system } = item;
     item.parent.updateEmbeddedDocuments('Item', [{ _id, name, img, system }], {
