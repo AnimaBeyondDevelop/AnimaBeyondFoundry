@@ -10,6 +10,7 @@
    * If `undefined`, the group is assumed to be uncontractible, which is the default.
    * @property {import('svelte').Snippet} [header] Snippet with group header content.
    * When not provided, a default rendering group's title is used.
+   * @property {import('svelte').Snippet} buttons Snippet with extra buttons for the group.
    * @property {import('svelte').Snippet} body Snippet with group body content.
    * @property {import('svelte').Snippet} [footer] Optional snippet with group footer content.
    * When not provided, no footer is rendered.
@@ -24,6 +25,7 @@
     cssClass = '',
     contracted = $bindable(undefined),
     header = default_header,
+    buttons,
     body,
     footer
   } = $props();
@@ -36,14 +38,17 @@
   class:contractible-group={contractible}
   class:contracted
 >
-  {#if contractible}
-    <i
-      class="contractible-button fas fa-fw fa-chevron-{contracted ? 'down' : 'up'}"
-      onclick={() => (contracted = !contracted)}
-    >
-    </i>
-    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-  {/if}
+  <div class="group-buttons">
+    {#if contractible}
+      <i
+        class="fas fa-fw fa-chevron-{contracted ? 'down' : 'up'}"
+        onclick={() => (contracted = !contracted)}
+      >
+      </i>
+    {/if}
+
+    {@render buttons()}
+  </div>
 
   <!-- Header start -->
   <div class="group-header {cssClass}">

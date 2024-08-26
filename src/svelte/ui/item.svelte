@@ -51,4 +51,14 @@
 </script>
 
 <Group title={item.name || ''} bind:contracted {cssClass} {header} {body} {footer}
+>
+  {#snippet buttons()}
+    {#if isInner}
+      <i
+        class="fas fa-fw fa-edit"
+        onclick={() => item.sheet?.render(true)}
+      >
+      </i>
+    {/if}
+  {/snippet}
 ></Group>
