@@ -142,10 +142,11 @@ export type ABFItemConfigMinimal<
   prepareItem?: (item: TDataSource) => void;
 
   /**
-   * This function clears the path where this type of Items is stored for a given actor, setting it to an empty array.
+   * If `this.isInternal` is false (that is, when this item is not inner), this function
+   * cleans the path where this type of Items is stored for a given actor, removing old items.
    * @param actor
    */
-  clearFieldPath?: (actor: ABFActor) => void;
+  cleanFieldPath?: (actor: ABFActor) => void;
 
   /**
    * This function adds an item to the path where this type of Items is stored for a given actor.
@@ -183,7 +184,7 @@ export type ABFItemConfig<
   TDynamicChanges = DynamicChanges<TChanges>
 > = WithRequired<
   ABFItemConfigMinimal<TData, TDataSource, TChanges, TDynamicChanges>,
-  'getFromDynamicChanges' | 'clearFieldPath' | 'addToFieldPath' | 'resetFieldPath'
+  'getFromDynamicChanges' | 'cleanFieldPath' | 'addToFieldPath' | 'resetFieldPath'
 >;
 
 export type ItemChanges<T> = {
@@ -269,7 +270,8 @@ export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 export type ArsMagnusItemConfig = ABFItemConfig<ArsMagnusItemData>;
 
 export type SupernaturalShieldItemData = typeof INITIAL_SUPERNATURAL_SHIELD_DATA;
-export type SupernaturalShieldDataSource = ABFItemBaseDataSource<SupernaturalShieldItemData>;
+export type SupernaturalShieldDataSource =
+  ABFItemBaseDataSource<SupernaturalShieldItemData>;
 export type SupernaturalShieldChanges = ItemChanges<SupernaturalShieldItemData>;
 export type SupernaturalShieldItemConfig = ABFItemConfig<SupernaturalShieldItemData>;
 
@@ -360,15 +362,18 @@ export type SummonItemConfig = ABFItemConfig<SummonItemData>;
 export type SecondarySpecialSkillItemData = {
   level: { value: number };
 };
-export type SecondarySpecialSkillDataSource = ABFItemBaseDataSource<SecondarySpecialSkillItemData>;
+export type SecondarySpecialSkillDataSource =
+  ABFItemBaseDataSource<SecondarySpecialSkillItemData>;
 export type SecondarySpecialSkillChanges = ItemChanges<SecondarySpecialSkillItemData>;
-export type SecondarySpecialSkillItemConfig = ABFItemConfig<SecondarySpecialSkillItemData>;
+export type SecondarySpecialSkillItemConfig =
+  ABFItemConfig<SecondarySpecialSkillItemData>;
 
 export type InnatePsychicPowerItemData = {
   effect: { value: string };
   value: { value: number };
 };
-export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<InnatePsychicPowerItemData>;
+export type InnatePsychicPowerDataSource =
+  ABFItemBaseDataSource<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerItemConfig = ABFItemConfig<InnatePsychicPowerItemData>;
 
@@ -378,7 +383,8 @@ export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 export type MentalPatternItemConfig = ABFItemConfig<MentalPatternItemData>;
 
 export type PsychicDisciplineItemData = typeof INITIAL_PSYCHIC_DISCIPLINE_DATA;
-export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
+export type PsychicDisciplineDataSource =
+  ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;
 

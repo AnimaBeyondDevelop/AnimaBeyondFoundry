@@ -1,5 +1,7 @@
 <script>
   import Group from '@svelte/ui/group.svelte';
+  import { Log } from '../../utils/Log';
+  import { ABFDialogs } from '@module/dialogs/ABFDialogs';
 
   /**
    * @typedef {Object} props Properties for the Item componenent
@@ -48,6 +50,28 @@
       render: false
     });
   }
+
+  const i18n = game.i18n;
+
+  function onDelete() {
+    if (!item.parent) {
+      Log.warn(`Cannot delete ${item.type}: item.parent is undefined.`);
+      return;
+    }
+    ABFDialogs.confirm(
+      i18n.localize('dialogs.items.delete.title'),
+      i18n.localize('dialogs.items.delete.body'),
+      {
+        onConfirm: () => {
+          if (!item.id) {
+            Log.warn(`Cannot delete ${item.type}: item.id is ${item.id}.`);
+            return;
+          }
+          item.parent?.deleteEmbeddedDocuments('Item', [item.id])
+        }
+      }
+    );
+  }
 </script>
 
 <Group title={item.name || ''} bind:contracted {cssClass} {header} {body} {footer}
@@ -59,6 +83,7 @@
         onclick={() => item.sheet?.render(true)}
       >
       </i>
+      <i class="fas fa-fw fa-trash" onclick={onDelete} > </i>
     {/if}
   {/snippet}
 ></Group>

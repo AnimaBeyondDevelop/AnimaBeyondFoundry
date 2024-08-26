@@ -18,10 +18,14 @@ export function ABFItemConfigFactory(minimal) {
       const path = ['system', 'dynamic', ...this.fieldPath.slice(-1)];
       return path.reduce((field, nextKey) => field[nextKey], changes);
     },
-    clearFieldPath(actor) {
+    cleanFieldPath(actor) {
+      if (this.isInternal) return;
+      const currentItems = actor.itemTypes[this.type];
       const path = ['system', ...this.fieldPath];
       const lastKey = path.pop();
-      path.reduce((field, nextKey) => field[nextKey], actor)[lastKey] = [];
+      if (!lastKey) return;
+      const parentField = path.reduce((field, nextKey) => field[nextKey], actor);
+      parentField[lastKey] = parentField[lastKey].filter(i => currentItems.includes(i));
     },
     addToFieldPath(actor, item) {
       const path = ['system', ...this.fieldPath];
@@ -35,6 +39,7 @@ export function ABFItemConfigFactory(minimal) {
       }
     },
     async resetFieldPath(actor) {
+      if (!this.isInternal) this.cleanFieldPath(actor);
       const items = actor.getItemsOf(this.type);
 
       for (const item of items) {
