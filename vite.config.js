@@ -40,7 +40,7 @@ export default defineConfig({
       targets: [
         { src: "src/assets", dest: "dist" },
         { src: "src/lang", dest: "dist" },
-        { src: "src/packs", dest: "dist" },
+        { src: "packs", dest: "dist" },
         { src: "src/templates", dest: "dist" },
         { src: "src/system.json", dest: "dist" },
         { src: "src/template.json", dest: "dist" }

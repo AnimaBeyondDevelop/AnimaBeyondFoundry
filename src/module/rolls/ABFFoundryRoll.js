@@ -3,20 +3,26 @@ import { ABFRoll } from './ABFRoll';
 import ABFInitiativeRoll from './ABFInitiativeRoll/ABFInitiativeRoll';
 import ABFControlRoll from './ABFControlRoll/ABFControlRoll';
 import ABFPsychicRoll from './ABFPsychicRoll/ABFPsychicRoll';
-import { ABFActorDataSourceData } from '../types/Actor';
 
 /**
  * This class represents the entrypoint of Foundry
  * We must never add our logic here, all of it must be placed in its own class like ABFExploredRoll
+ * @extends {Roll<import('@module/types/Actor').ABFActorDataSourceData>}
  */
-export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
-  private readonly abfRoll: ABFRoll | undefined;
+export default class ABFFoundryRoll extends Roll {
+  /**
+   * @type {ABFRoll | undefined}
+   * @private
+   * @readonly
+   */
+  abfRoll;
 
-  constructor(
-    rawFormula: string,
-    data?: ABFActorDataSourceData,
-    options?: Partial<RollTerm.EvaluationOptions>
-  ) {
+  /**
+   * @param {string} rawFormula
+   * @param {import('@module/types/Actor').ABFActorDataSourceData} [data]
+   * @param {Partial<RollTerm.EvaluationOptions>} [options]
+   */
+  constructor(rawFormula, data, options) {
     let formula = rawFormula.trim();
 
     // In FoundryVTT 0.8.8 I don't know why but the system inserts at the end a "+ "
@@ -71,12 +77,12 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
     }
   }
 
-  getResults(): number[] {
+  getResults() {
     return this.dice.map(d => d.results.map(res => res.result)).flat();
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(partialOptions?: any): any {
+  evaluate(partialOptions) {
     const options = { ...partialOptions, async: false };
 
     super.evaluate(options);
