@@ -1,0 +1,124 @@
+{
+  "name": "El Miedo hecho Carne",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "RzxDX71OOW1KbYpa",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_lgn9qs3zv7g",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 94
+    },
+    "via": {
+      "value": "threshold"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 120"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 140"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 200"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 240"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709728419313,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "FTyNguIx9dAvEQTn",
+  "sort": 400000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!FTyNguIx9dAvEQTn"
+}

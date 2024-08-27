@@ -21,7 +21,7 @@ git clone https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry.git
 4) Duplica el fichero `foundryconfig.example.json` y renómbralo a `foundryconfig.json`, luego edítalo y el campo `destPath` rellénalo con la ruta donde tengas la carpeta de sistemas, por ejemplo:
    - Windows: `C:/Users/<nombredeUsuario>/AppData/Local/FoundryVTT/Data/systems`
    - Linux: `/home/<nombredeUsuario>/.local/share/FoundryVTT/Data/systems`
-   - WSL (server installation): `/home/<nombredeUsuario>/foundrydata/Data/Systems`
+   - WSL (server installation): `/home/<nombredeUsuario>/foundrydata/Data/systems`
 
 4) Hasta ahora esta carpeta no tiene ningún efecto sobre Foundry. Para generar la carpeta real del sistema, ejecutamos el comando:
 

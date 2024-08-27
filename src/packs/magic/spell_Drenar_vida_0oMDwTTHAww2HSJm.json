@@ -1,0 +1,124 @@
+{
+  "name": "Drenar vida",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "nipIfwVjPnHvn0qJ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_wdxt4jx49ed",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 12
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 50
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM 100"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM 140"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 230
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM 180"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM 240"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709814637495,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "0oMDwTTHAww2HSJm",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!0oMDwTTHAww2HSJm"
+}

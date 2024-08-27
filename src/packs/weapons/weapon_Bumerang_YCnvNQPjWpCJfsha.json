@@ -1,0 +1,211 @@
+{
+  "name": "Bumerang",
+  "type": "weapon",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "tSqKyXfUGJU6lFFv",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_kqknx06da7f",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "special": {
+      "value": "Lanzable, Ver"
+    },
+    "integrity": {
+      "base": {
+        "value": 10
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 10
+    },
+    "breaking": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 30
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 30
+    },
+    "initiative": {
+      "base": {
+        "value": 10
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 10
+    },
+    "presence": {
+      "base": {
+        "value": 15
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "small"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 4
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 4
+      },
+      "twoHands": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "one_hand"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": true
+    },
+    "range": {
+      "base": {
+        "value": 20
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": 60
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "impact"
+      },
+      "secondary": {
+        "value": "cut"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077555,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "YCnvNQPjWpCJfsha",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!YCnvNQPjWpCJfsha"
+}

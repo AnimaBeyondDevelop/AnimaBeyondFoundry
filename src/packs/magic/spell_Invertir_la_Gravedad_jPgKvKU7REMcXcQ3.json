@@ -1,0 +1,124 @@
+{
+  "name": "Invertir la Gravedad",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "b8RhUs4X3eIWIDLg",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_irpcnidhrek",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 66
+    },
+    "via": {
+      "value": "earth"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "25 metros de radio / 50 de altura / 120 RM"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "50 metros de radio / 100 de altura / 140 RM"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "100 metros de radio / 200 de altura / 160 RM"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "65"
+        },
+        "description": {
+          "value": "150 metros de radio / 300 de altura / 180 RM"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709815735682,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "jPgKvKU7REMcXcQ3",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!jPgKvKU7REMcXcQ3"
+}

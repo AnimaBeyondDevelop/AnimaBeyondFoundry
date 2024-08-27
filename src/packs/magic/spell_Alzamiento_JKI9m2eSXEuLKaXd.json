@@ -1,0 +1,124 @@
+{
+  "name": "Alzamiento",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "a75bInPBS5F8K2Tw",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_a8cir1rn4xj",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 82
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Nivel máximo 3"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Nivel máximo 6"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Nivel máximo 9"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1200
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Nivel máximo 12"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709814938710,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "JKI9m2eSXEuLKaXd",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!JKI9m2eSXEuLKaXd"
+}

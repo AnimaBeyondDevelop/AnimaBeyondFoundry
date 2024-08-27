@@ -1,0 +1,124 @@
+{
+  "name": "Matar",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9gCY3nAHw5kHhqSZ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hsq3pdmlx6f",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 66
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 80"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 100"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 120"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 220
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "RM o RF 140"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709814840424,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "fXFlIIsSu63j6C94",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!fXFlIIsSu63j6C94"
+}

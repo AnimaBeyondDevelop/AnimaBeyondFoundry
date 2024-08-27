@@ -1,0 +1,124 @@
+{
+  "name": "Protección contra el Vacío",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Xf2D8m3WNzaz3vya",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_o1abinx1gca",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 74
+    },
+    "via": {
+      "value": "emptiness"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Protege contra conjuros de esta sub-vía."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "El personaje es  inmune a los efectos y ataques de seres basados en el vacío."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "Inmune a cualquier efecto relaciona con el vacío, salvo la nada primordial."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "El personaje es capaz de sobrevivir incluso en la nada primordial."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709728010499,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "MZ87a7RSvdkQ8h05",
+  "sort": 293750,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!MZ87a7RSvdkQ8h05"
+}

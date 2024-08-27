@@ -1,0 +1,87 @@
+{
+  "name": "Recolocar Objeto",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "JTolwd34h8KFA47J",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_m7gj0ovrnf",
+      "path": "Poderes Mentales#/CF_SEP/Teletransporte#/CF_SEP/Nivel 1",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 2"
+      },
+      "40": {
+        "value": "Fatiga 1"
+      },
+      "80": {
+        "value": "1 kilogramo / 1 metro / RF 60"
+      },
+      "120": {
+        "value": "2 kilogramos / 5 metros / RF 80"
+      },
+      "140": {
+        "value": "5 kilogramos / 100 metros / RF 100"
+      },
+      "180": {
+        "value": "10 kilogramos / 500 metros / RF 120"
+      },
+      "240": {
+        "value": "25 kilogramos / 1 kilómetro / RF 140"
+      },
+      "280": {
+        "value": "50 kilogramos / 2 kilómetros / RF 160"
+      },
+      "320": {
+        "value": "100 kilogramos / 5 kilómetros / RF 180"
+      },
+      "440": {
+        "value": "500 kilogramos / 10 kilómetros / RF 200"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "teleportation"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084473,
+    "modifiedTime": 1709238177929,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "0Ok5nne3pH3yBQ9h",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!0Ok5nne3pH3yBQ9h"
+}

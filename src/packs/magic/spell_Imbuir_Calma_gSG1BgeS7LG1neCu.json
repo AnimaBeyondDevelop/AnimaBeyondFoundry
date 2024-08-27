@@ -1,0 +1,124 @@
+{
+  "name": "Imbuir Calma",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "NYxvSSy0rr5RKdUD",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_wrtyn4gz6e",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 6
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 5
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 80 / 10 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 100 / 25 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 120 / 50 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM o RP 150 / 100 metros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709813040904,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "gSG1BgeS7LG1neCu",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!gSG1BgeS7LG1neCu"
+}

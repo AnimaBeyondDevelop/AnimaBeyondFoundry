@@ -1,0 +1,124 @@
+{
+  "name": "Holograma",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "qazGNDXuA3q0rHCv",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_kfwplxdora9",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 26
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "La imagen tiene un tamaño máximo de un metro cuadrado."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "La imagen tiene un tamaño máximo de 15 metros cuadrados."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "La imagen tiene un tamaño máximo de 50 metros cuadrados."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Tamaño máximo de 100 m² y la dificultad de Advertir y Buscar aumentan a 280 y 180."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709814039173,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "a5ZLQe9iDDE6iQqK",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!a5ZLQe9iDDE6iQqK"
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Muerte Psíquica",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "ZXmM8tXcO8DHKrIW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_7nx9q7yx3dq",
+      "path": "Poderes Mentales#/CF_SEP/Telepatía",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 16"
+      },
+      "40": {
+        "value": "Fatiga 12"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "140 RP"
+      },
+      "240": {
+        "value": "160 RP"
+      },
+      "280": {
+        "value": "180 RP"
+      },
+      "320": {
+        "value": "220 RP"
+      },
+      "440": {
+        "value": "240 RP"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telepathy"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084473,
+    "modifiedTime": 1709237927154,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Kw7vdVqdZBFQr1X3",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Kw7vdVqdZBFQr1X3"
+}

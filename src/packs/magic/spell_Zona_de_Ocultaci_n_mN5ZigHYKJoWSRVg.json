@@ -1,0 +1,124 @@
+{
+  "name": "Zona de Ocultación",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "VoFv4fsNxNQT4NEw",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_euv5dc2opt",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 48
+    },
+    "via": {
+      "value": "darkness"
+    },
+    "spellType": {
+      "value": "detection"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "20 metros de radio, RM +100, -140 a Habilidades de detección."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "50 metros de radio, RM +150, -180 a Habilidades de detección."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "250 metros de radio, RM +200, -240 a Habilidades de detección."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "500 metros de radio, RM +300, -320 a Habilidades de detección."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709815177122,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "mN5ZigHYKJoWSRVg",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!mN5ZigHYKJoWSRVg"
+}

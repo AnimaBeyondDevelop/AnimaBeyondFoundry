@@ -1,0 +1,211 @@
+{
+  "name": "Armas Naturales (grande)",
+  "type": "weapon",
+  "img": "icons/creatures/claws/claw-hooked-curved.webp",
+  "effects": [],
+  "folder": "Z14dlK3yKW9iK784",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_5e3d6zdu0a8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "special": {
+      "value": ""
+    },
+    "integrity": {
+      "base": {
+        "value": 16
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 12
+    },
+    "breaking": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 60
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 40
+    },
+    "initiative": {
+      "base": {
+        "value": 10
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 20
+    },
+    "presence": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "medium"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      },
+      "twoHands": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "one_hand"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": false
+    },
+    "range": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": ""
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "cut"
+      },
+      "secondary": {
+        "value": "-"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077555,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "oFRNGWWA5f9SO5I4",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!oFRNGWWA5f9SO5I4"
+}

@@ -1,0 +1,211 @@
+{
+  "name": "Brandistock",
+  "type": "weapon",
+  "img": "icons/weapons/polearms/spear-simple-engraved.webp",
+  "effects": [],
+  "folder": "03cZwhiayO1lPZXJ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_bcl66clrdgh",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "special": {
+      "value": "A 2 manos, Ver"
+    },
+    "integrity": {
+      "base": {
+        "value": 9
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 9
+    },
+    "breaking": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 40
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 40
+    },
+    "initiative": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "presence": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "big"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      },
+      "twoHands": {
+        "base": {
+          "value": 6
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "two_hands"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": false
+    },
+    "range": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": ""
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "thrust"
+      },
+      "secondary": {
+        "value": "impact"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077555,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "AIkiYZXDx3ukP1W5",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!AIkiYZXDx3ukP1W5"
+}

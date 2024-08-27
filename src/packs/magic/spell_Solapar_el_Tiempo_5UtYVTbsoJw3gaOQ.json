@@ -1,0 +1,124 @@
+{
+  "name": "Solapar el Tiempo",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "7suqeBOKQKGsJvBK",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_nyv9otzy5l",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 94
+    },
+    "via": {
+      "value": "time"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "5 metros de radio / Hasta un año en el pasado."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "25 metros de radio / Hasta una década en el pasado."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 1250
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "500 metros de radio / Hasta un siglo en el pasado."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 19
+        },
+        "zeon": {
+          "value": 2500
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "1 kilómetro de radio / Hasta mil años en el pasado."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709727893353,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "5UtYVTbsoJw3gaOQ",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!5UtYVTbsoJw3gaOQ"
+}

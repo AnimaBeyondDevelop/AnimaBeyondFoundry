@@ -1,0 +1,124 @@
+{
+  "name": "Señor de los Muertos",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "ynRlnMhCowZKUhGH",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_f4nhas6obm",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 96
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "100 Kilómetros de radio / 140 RM"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "1000 Kilómetros de radio / 160 RM"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "10000 Kilómetros de radio / 180 RM"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 2000
+        },
+        "maintenanceCost": {
+          "value": "200"
+        },
+        "description": {
+          "value": "100000 Kilómetros de radio / 200 RM"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709814992242,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "X7sjJuZJiYwjwvtx",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!X7sjJuZJiYwjwvtx"
+}

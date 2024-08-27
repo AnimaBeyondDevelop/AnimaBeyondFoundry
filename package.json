@@ -1,19 +1,21 @@
 {
   "private": true,
   "name": "anima-beyond-foundry",
-  "version": "1.17.1",
+  "version": "1.18.1",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build:dev": "npx vite build && node scripts/copyDirectoryToFoundrySystem.cjs animabf",
-    "build:prod": "npx vite build",
+    "build:dev": "npm run compendia:pack && npx vite build && node scripts/copyDirectoryToFoundrySystem.cjs animabf",
+    "build:prod": "npm run compendia:pack && npx vite build",
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.js",
     "release:dry": "node scripts/release/release.js --dry",
     "test": "jest src",
     "hook:pre-commit": "lint-staged",
-    "cypress:open": "cd integration && cypress open"
+    "cypress:open": "cd integration && cypress open",
+    "compendia:pack": "node scripts/compendia/packCompendia.mjs",
+    "compendia:unpack": "node scripts/compendia/unpackCompendia.mjs"
   },
   "engines": {
     "node": ">18.0.0"
@@ -24,6 +26,7 @@
     "@digitak/tsc-esm": "^3.1.4",
     "@sveltejs/vite-plugin-svelte": "^2.5.3",
     "@tinymce/tinymce-svelte": "^2.0.1",
+    "@foundryvtt/foundryvtt-cli": "^1.0.3",
     "@types/faker": "^5.5.6",
     "@types/handlebars": "^4.1.0",
     "@types/jest": "^26.0.23",

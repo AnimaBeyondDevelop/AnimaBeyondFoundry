@@ -1,0 +1,124 @@
+{
+  "name": "Quimera Nigromántica",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9gCY3nAHw5kHhqSZ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hsq3pdmlx6f",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 70
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "Nivel 2"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 360
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "Nivel 6"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "Nivel 10"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "160"
+        },
+        "description": {
+          "value": "Nivel 13"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709814880885,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "YohvS0BimUUHDESt",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!YohvS0BimUUHDESt"
+}

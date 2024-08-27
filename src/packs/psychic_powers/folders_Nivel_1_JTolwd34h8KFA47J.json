@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Nivel 1",
+  "sorting": "a",
+  "type": "Item",
+  "folder": "cvgEEwSStZ0pKm2b",
+  "_id": "JTolwd34h8KFA47J",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": null,
+    "systemVersion": null,
+    "coreVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!JTolwd34h8KFA47J"
+}

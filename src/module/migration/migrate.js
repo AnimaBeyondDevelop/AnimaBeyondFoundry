@@ -1,6 +1,7 @@
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
+import ABFItem from '../items/ABFItem';
 import * as MigrationList from './migrations';
 
 /** @typedef {import('./migrations/Migration').Migration} Migration */
@@ -27,65 +28,144 @@ function migrationApplies(migration) {
 }
 
 /**
+ * Migrates a collection of items. If the collection are items belonging to an actor or pack,
+ * a context needs to be provided for the `updateDocuments(...)` function.
+ * @param {ABFItem[]} items
  * @param {Migration} migration
+ * @param {{parent: ABFActor} | {pack: string} | {}} context - context for the Item.updateDocuments call
  */
-async function migrateAllActors(migration) {
-  if (migration.updateActor) {
-    // migrate world actors and unlinked token actors
-    const unlinkedTokenActors = game.scenes
-      .map(scene =>
-        scene.tokens
-          .filter(token => !token.actorLink && token.actor)
-          .map(token => token.actor)
-      )
-      .flat();
+async function migrateItemCollection(items, migration, context = {}) {
+  if (migration.filterItems) items = items.filter(migration.filterItems);
+  const length = items.length ?? items.size; // takes care of the case of a DocumentCollection
 
-    // add the actors in the compendia
-    const actorPacks = await Promise.all(
-      game.packs
-        .filter(pack => pack.metadata.type === 'Actor')
-        .map(async actorPack => {
-          const packObj = { pack: actorPack, wasLocked: actorPack.locked };
-          await actorPack.configure({ locked: false });
-          return packObj;
-        })
+  if (length === 0 || !migration.updateItem) return;
+  console.log(`AnimaBF | Migrating ${length} Items.`);
+
+  const migrated = await Promise.all(items.map(i => migration.updateItem(i)));
+
+  const updates = migrated
+    .map(i => {
+      if (!i) return;
+      const { _id, name, system } = i;
+      return { _id, name, system };
+    })
+    .filter(u => u);
+
+  await ABFItem.updateDocuments(updates, context);
+}
+
+/**
+ * Migrates a collection of actors, applying the migration to their owned items also.
+ * @param {ABFActor[]} actors
+ * @param {Migration} migration
+ * @param {{parent: ABFActor} | {pack: string} | {}} context - context for the updateDocuments calls
+ */
+async function migrateActorCollection(actors, migration, context = {}) {
+  if (migration.filterActors) actors = actors.filter(migration.filterActors);
+  const length = actors.length ?? actors.size; // takes care of the case of a DocumentCollection
+  if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
+  console.log(`AnimaBF | Migrating ${length} Actors.`);
+
+  if (migration.updateItem) {
+    await Promise.all(
+      actors.map(async a => migrateItemCollection(a.items, migration, { parent: a }))
     );
-    const compendiaActors = (
-      await Promise.all(
-        actorPacks.map(packObject => {
-          return packObject.pack.getDocuments();
-        })
-      )
-    ).flat();
-
-    /** @type {ABFActor[]} */
-    const actors = [...game.actors, ...unlinkedTokenActors, ...compendiaActors];
-
-    for (const actor of actors) {
-      console.log(`AnimaBF | Migrating actor ${actor.name} (${actor.id}).`);
-      const system = (await migration.updateActor(actor)).system;
-      await actor.update({ system });
-    }
-
-    // Lock again packs which where locked
-    actorPacks
-      .filter(packObject => packObject.wasLocked)
-      .forEach(async packObject => {
-        await packObject.pack.configure({ locked: true });
-      });
+  }
+  if (migration.updateActor) {
+    const migrated = await Promise.all(actors.map(a => migration.updateActor(a)));
+    const updates = migrated
+      .map(a => {
+        if (!a) return;
+        const { _id, name, system } = a;
+        return { _id, name, system };
+      })
+      .filter(u => !!u);
+    await ABFActor.updateDocuments(updates, context);
   }
 }
 
 /**
+ * Migrates the actors from unlinked tokens presents on a collection of scenes
+ * @param {Scene[]} scenes
  * @param {Migration} migration
- * @todo Implement this function
+ * @param {{parent: ABFActor} | {pack: string} | {}} context - context for the updateDocuments calls
  */
-function migrateItems(migration) {
-  if (migration.preUpdateItem || migration.updateItem) {
-    throw new Error(
-      'AnimaBF | Trying to update items with a migration, but `migrateItems()` function in `migrate.js` not defined yet'
-    );
+async function migrateUnlinkedActors(scenes, migration, context) {
+  const length = items.length || items.size; // takes care of the case of a DocumentCollection
+  if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
+
+  // This has to be performed individually instead of using directly migrateItemCollection() and
+  // migrateActorCollection() since unlinked (syntetic) actors won't get updated on batch
+  // Actors.updateDocuments() updates. {parent: TOKEN} has to be specified for the update to be
+  // completed.
+  for (const scene of scenes) {
+    for (const token of scene.tokens.filter(token => !token.actorLink && token.actor)) {
+      await migrateActorCollection([token.actor], migration, { parent: token });
+    }
   }
+}
+
+/**
+ * Migrates world items
+ * @param {Migration} migration
+ */
+async function migrateWorldItems(migration) {
+  if (!migration.updateItem) return;
+  await migrateItemCollection(game.items, migration);
+}
+
+/**
+ * Migrates world actors (including unlinked tokens on world's scenes), and their owned items.
+ * @param {Migration} migration
+ */
+async function migrateWorldActors(migration) {
+  if (!migration.updateActor && !migration.updateItem) return;
+
+  migrateActorCollection(game.actors, migration);
+  migrateUnlinkedActors(game.scenes, migration);
+}
+
+/**
+ * @param {Migration} migration
+ */
+async function migratePacks(migration) {
+  // load packs with actors, items or scenes
+  const packTypes = migration.updateItem
+    ? ['Actor', 'Item', 'Scene']
+    : ['Actor', 'Scene'];
+
+  let packs = await Promise.all(
+    game.packs
+      .filter(pack => packTypes.includes(pack.metadata.type))
+      .map(async pack => {
+        const packObj = {
+          pack: pack,
+          wasLocked: pack.locked,
+          id: pack.metadata.id,
+          type: pack.metadata.type
+        };
+        await pack.configure({ locked: false });
+        packObj.documents = await pack.getDocuments();
+        return packObj;
+      })
+  );
+
+  const migrate = {
+    Actor: migrateActorCollection,
+    Item: migrateItemCollection,
+    Scene: migrateUnlinkedActors
+  };
+  await Promise.all(
+    packs.map(pack => migrate[pack.type](pack.documents, migration, { pack: pack.id }))
+  );
+  // Lock again packs which where locked
+  await Promise.all(
+    packs
+      .filter(packObject => packObject.wasLocked)
+      .map(async packObject => {
+        await packObject.pack.configure({ locked: true });
+      })
+  );
 }
 
 /**
@@ -108,9 +188,11 @@ async function applyMigration(migration) {
   try {
     console.log(`AnimaBF | Applying migration ${migration.version}.`);
 
-    await migrateAllActors(migration);
-    migrateItems(migration);
+    await migrateWorldItems(migration);
+    await migrateWorldActors(migration);
+    await migratePacks(migration);
     migrateTokens(migration);
+    migration.migrate?.();
 
     console.log(`AnimaBF | Migration ${migration.version} completed.`);
     game.settings.set(

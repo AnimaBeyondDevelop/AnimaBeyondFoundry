@@ -1,0 +1,124 @@
+{
+  "name": "Pax In Terrax",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "f06XtdROmM5iBR8J",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_dq5hp6f236r",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 94
+    },
+    "via": {
+      "value": "peace"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "1 kilómetro de radio / 120 RM."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "5 kilómetros de radio / 140 RM."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "15 kilómetros de radio / 160 RM."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 1600
+        },
+        "maintenanceCost": {
+          "value": "160"
+        },
+        "description": {
+          "value": "50 kilómetros de radio / 180 RM."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709727429924,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "SPn3kr5498vzMFxa",
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!SPn3kr5498vzMFxa"
+}

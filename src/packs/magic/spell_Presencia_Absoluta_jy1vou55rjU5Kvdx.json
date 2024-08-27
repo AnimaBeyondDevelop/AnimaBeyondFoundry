@@ -1,0 +1,124 @@
+{
+  "name": "Presencia Absoluta",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "cuxTxDUgnIaBKj9Q",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_577pol8lk7a",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 74
+    },
+    "via": {
+      "value": "nobility"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "120 RM o RP / 20 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "160 RM o RP / 50 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "200 RM o RP / 100 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "240 RM o RP / 150 metros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709728306162,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "jy1vou55rjU5Kvdx",
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!jy1vou55rjU5Kvdx"
+}
