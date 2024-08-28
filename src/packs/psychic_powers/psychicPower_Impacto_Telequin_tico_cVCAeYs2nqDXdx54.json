@@ -1,0 +1,87 @@
+{
+  "name": "Impacto Telequinético",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "RojcHZOugef3RPlF",
+  "flags": {
+    "cf": {
+      "id": "temp_gdsqgmuyw8u",
+      "path": "Poderes Mentales#/CF_SEP/Telequinesis",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 2"
+      },
+      "40": {
+        "value": "Fatiga 1"
+      },
+      "80": {
+        "value": "Fuerza 8"
+      },
+      "120": {
+        "value": "Fuerza 10"
+      },
+      "140": {
+        "value": "Fuerza 12"
+      },
+      "180": {
+        "value": "Fuerza 14"
+      },
+      "240": {
+        "value": "Fuerza 15"
+      },
+      "280": {
+        "value": "Fuerza 16"
+      },
+      "320": {
+        "value": "Fuerza 18"
+      },
+      "440": {
+        "value": "Fuerza 20"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "discipline": {
+      "value": "telekenisis"
+    },
+    "critic": {
+      "value": "impact"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237991855,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "cVCAeYs2nqDXdx54",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!cVCAeYs2nqDXdx54"
+}

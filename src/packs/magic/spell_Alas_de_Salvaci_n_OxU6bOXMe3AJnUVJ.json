@@ -1,0 +1,124 @@
+{
+  "name": "Alas de Salvación",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "f06XtdROmM5iBR8J",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_dq5hp6f236r",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 74
+    },
+    "via": {
+      "value": "peace"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "El escudo tiene 500 puntos de Resistencia / 5 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "El escudo tiene 1.200 puntos de Resistencia / 15 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "El escudo tiene 2.500 puntos de Resistencia / 25 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "45"
+        },
+        "description": {
+          "value": "El escudo tiene 5.000 puntos de Resistencia / 50 metros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709727421666,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "OxU6bOXMe3AJnUVJ",
+  "sort": 199219,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!OxU6bOXMe3AJnUVJ"
+}

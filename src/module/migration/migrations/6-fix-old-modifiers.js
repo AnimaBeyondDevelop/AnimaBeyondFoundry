@@ -1,5 +1,3 @@
-//import { systemDataField } from '../../../types/foundry-vtt-types/src/foundry/common/data/fields.mjs';
-import { ABFItems } from '../../items/ABFItems';
 /** @typedef {import('./Migration').Migration} Migration
 
 /** @type Migration */

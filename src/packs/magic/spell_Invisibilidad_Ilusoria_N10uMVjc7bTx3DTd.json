@@ -1,0 +1,124 @@
+{
+  "name": "Invisibilidad Ilusoria",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "kMARKbSVruaBlFZt",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ntth6hn7y2",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 26
+    },
+    "via": {
+      "value": "illusion"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "RM 120 / Presencia máxima 140"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "RM 150 / Presencia máxima 200"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM 180 / Presencia máxima 260"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM 210 / Presencia máxima 320"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709812732364,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "N10uMVjc7bTx3DTd",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!N10uMVjc7bTx3DTd"
+}

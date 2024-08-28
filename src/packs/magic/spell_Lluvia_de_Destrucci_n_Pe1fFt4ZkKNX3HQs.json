@@ -1,0 +1,124 @@
+{
+  "name": "Lluvia de Destrucción",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9pf8P0te1qpYyT9i",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_r1wzah208pa",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 82
+    },
+    "via": {
+      "value": "destruction"
+    },
+    "spellType": {
+      "value": "attack"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": true,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 200 / RM 140 / 50 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 250 / RM 180 / 150 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 300 / RM 220 / 500 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 400 / RM 260 / 1 kilómetro de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709811390790,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Pe1fFt4ZkKNX3HQs",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Pe1fFt4ZkKNX3HQs"
+}

@@ -1,0 +1,2085 @@
+{
+  "name": "Juglar",
+  "type": "character",
+  "img": "icons/svg/mystery-man.svg",
+  "items": [
+    {
+      "_id": "8UV0JQve7MJp7I7a",
+      "name": "Desarmado",
+      "type": "weapon",
+      "img": "icons/skills/melee/unarmed-punch-fist.webp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Item.I3FT8BlayCdnuxM0"
+        },
+        "cf": {
+          "id": "temp_kqknx06da7f",
+          "color": "#000000"
+        }
+      },
+      "system": {
+        "special": {
+          "value": "Precisa"
+        },
+        "integrity": {
+          "base": {
+            "value": null
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": null
+        },
+        "breaking": {
+          "base": {
+            "value": -2
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": -2
+        },
+        "attack": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "block": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "damage": {
+          "base": {
+            "value": 10
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 10
+        },
+        "initiative": {
+          "base": {
+            "value": 20
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 20
+        },
+        "presence": {
+          "base": {
+            "value": null
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "size": {
+          "value": "small"
+        },
+        "strRequired": {
+          "oneHand": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            },
+            "value": 0
+          },
+          "twoHands": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            },
+            "value": 0
+          }
+        },
+        "quality": {
+          "value": 0
+        },
+        "oneOrTwoHanded": {
+          "value": ""
+        },
+        "knowledgeType": {
+          "value": "known"
+        },
+        "manageabilityType": {
+          "value": "one_hand"
+        },
+        "shotType": {
+          "value": "throw"
+        },
+        "isRanged": {
+          "value": false
+        },
+        "range": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "cadence": {
+          "value": ""
+        },
+        "reload": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "sizeProportion": {
+          "value": "normal"
+        },
+        "weaponStrength": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "critic": {
+          "primary": {
+            "value": "impact"
+          },
+          "secondary": {
+            "value": "-"
+          }
+        },
+        "weaponFue": {
+          "value": 0
+        },
+        "initiativeBase": {
+          "value": 0
+        },
+        "fueRequired": {
+          "value": ""
+        },
+        "isShield": {
+          "value": false
+        },
+        "equipped": {
+          "value": true
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "UMfJDL1rZj83Uanc": 3,
+        "s1iIg3oHOkECBfdY": 3
+      },
+      "_stats": {
+        "systemId": null,
+        "systemVersion": null,
+        "coreVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "_key": "!actors.items!QE0J2D4HjcsJoIww.8UV0JQve7MJp7I7a"
+    },
+    {
+      "_id": "BPkD4tka8OhCp5KI",
+      "name": "Daga",
+      "type": "weapon",
+      "img": "icons/weapons/daggers/dagger-straight-blue.webp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Item.AYCVs9ckPGnT7JKY"
+        },
+        "cf": {
+          "id": "temp_kqknx06da7f",
+          "color": "#000000"
+        }
+      },
+      "system": {
+        "special": {
+          "value": "Lanzable, Precisa"
+        },
+        "integrity": {
+          "base": {
+            "value": 10
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 10
+        },
+        "breaking": {
+          "base": {
+            "value": -2
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": -2
+        },
+        "attack": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "block": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "damage": {
+          "base": {
+            "value": 30
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 30
+        },
+        "initiative": {
+          "base": {
+            "value": 20
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 20
+        },
+        "presence": {
+          "base": {
+            "value": 15
+          },
+          "final": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "size": {
+          "value": "small"
+        },
+        "strRequired": {
+          "oneHand": {
+            "base": {
+              "value": 3
+            },
+            "final": {
+              "value": 0
+            },
+            "value": 3
+          },
+          "twoHands": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            },
+            "value": 0
+          }
+        },
+        "quality": {
+          "value": 0
+        },
+        "oneOrTwoHanded": {
+          "value": ""
+        },
+        "knowledgeType": {
+          "value": "known"
+        },
+        "manageabilityType": {
+          "value": "one_hand"
+        },
+        "shotType": {
+          "value": "throw"
+        },
+        "isRanged": {
+          "value": true
+        },
+        "range": {
+          "base": {
+            "value": 20
+          },
+          "final": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "cadence": {
+          "value": 50
+        },
+        "reload": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "sizeProportion": {
+          "value": "normal"
+        },
+        "weaponStrength": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "value": 0
+        },
+        "critic": {
+          "primary": {
+            "value": "thrust"
+          },
+          "secondary": {
+            "value": "cut"
+          }
+        },
+        "weaponFue": {
+          "value": 0
+        },
+        "initiativeBase": {
+          "value": 0
+        },
+        "fueRequired": {
+          "value": ""
+        },
+        "isShield": {
+          "value": false
+        },
+        "equipped": {
+          "value": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "UMfJDL1rZj83Uanc": 3,
+        "s1iIg3oHOkECBfdY": 3
+      },
+      "_stats": {
+        "systemId": null,
+        "systemVersion": null,
+        "coreVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "_key": "!actors.items!QE0J2D4HjcsJoIww.BPkD4tka8OhCp5KI"
+    }
+  ],
+  "effects": [],
+  "folder": "UBJ5wYu4qMyncH21",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ucqim1sy77",
+      "path": "Personajes de ejemplo#/CF_SEP/Comunes",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "version": 1,
+    "ui": {
+      "contractibleItems": {
+        "6y81GKxuFl3903cN": false,
+        "BPkD4tka8OhCp5KI": true,
+        "8UV0JQve7MJp7I7a": true
+      },
+      "tabVisibility": {
+        "mystic": {
+          "value": false
+        },
+        "domine": {
+          "value": false
+        },
+        "psychic": {
+          "value": false
+        }
+      }
+    },
+    "general": {
+      "settings": {
+        "openRolls": {
+          "value": 90
+        },
+        "fumbles": {
+          "value": 3
+        },
+        "openOnDoubles": {
+          "value": false
+        },
+        "defenseType": {
+          "value": ""
+        }
+      },
+      "modifiers": {
+        "physicalActions": {
+          "value": 0
+        },
+        "allActions": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "naturalPenalty": {
+          "byArmors": {
+            "value": 0
+          },
+          "byWearArmorRequirement": {
+            "value": 0
+          }
+        },
+        "extraDamage": {
+          "value": 0
+        }
+      },
+      "destinyPoints": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "presence": {
+        "value": 0,
+        "base": {
+          "value": 30
+        }
+      },
+      "aspect": {
+        "hair": {
+          "value": ""
+        },
+        "eyes": {
+          "value": ""
+        },
+        "height": {
+          "value": ""
+        },
+        "weight": {
+          "value": ""
+        },
+        "age": {
+          "value": ""
+        },
+        "gender": {
+          "value": ""
+        },
+        "race": {
+          "value": ""
+        },
+        "ethnicity": {
+          "value": ""
+        },
+        "appearance": {
+          "value": ""
+        },
+        "size": {
+          "value": "0"
+        }
+      },
+      "advantages": [],
+      "contacts": [],
+      "inventory": [],
+      "money": {
+        "cooper": {
+          "value": 0
+        },
+        "silver": {
+          "value": 0
+        },
+        "gold": {
+          "value": 0
+        }
+      },
+      "description": {
+        "value": "",
+        "enriched": ""
+      },
+      "disadvantages": [],
+      "elan": [],
+      "experience": {
+        "current": {
+          "value": 0
+        },
+        "next": {
+          "value": 0
+        }
+      },
+      "languages": {
+        "base": {
+          "value": ""
+        },
+        "others": []
+      },
+      "levels": [
+        {
+          "_id": "daxDrL8LvCY6NNkgDgSWg",
+          "type": "level",
+          "name": "Novel",
+          "flags": {
+            "version": 1
+          },
+          "system": {
+            "level": 1
+          }
+        }
+      ],
+      "notes": [],
+      "titles": []
+    },
+    "characteristics": {
+      "primaries": {
+        "agility": {
+          "value": 6,
+          "mod": 5
+        },
+        "constitution": {
+          "value": 5,
+          "mod": 0
+        },
+        "dexterity": {
+          "value": 6,
+          "mod": 5
+        },
+        "strength": {
+          "value": 5,
+          "mod": 0
+        },
+        "intelligence": {
+          "value": 6,
+          "mod": 5
+        },
+        "perception": {
+          "value": 5,
+          "mod": 0
+        },
+        "power": {
+          "value": 6,
+          "mod": 5
+        },
+        "willPower": {
+          "value": 6,
+          "mod": 5
+        }
+      },
+      "secondaries": {
+        "lifePoints": {
+          "value": 80,
+          "max": 80
+        },
+        "initiative": {
+          "base": {
+            "value": 55
+          },
+          "final": {
+            "value": 55
+          }
+        },
+        "fatigue": {
+          "value": 5,
+          "max": 5
+        },
+        "regenerationType": {
+          "mod": {
+            "value": 0
+          },
+          "final": {
+            "value": 1
+          }
+        },
+        "regeneration": {
+          "normal": {
+            "value": 5,
+            "period": "d"
+          },
+          "resting": {
+            "value": 10,
+            "period": "d"
+          },
+          "recovery": {
+            "value": -5,
+            "period": "d"
+          }
+        },
+        "movementType": {
+          "mod": {
+            "value": 0
+          },
+          "final": {
+            "value": 6
+          }
+        },
+        "movement": {
+          "maximum": {
+            "value": 22
+          },
+          "running": {
+            "value": 15
+          }
+        },
+        "resistances": {
+          "physical": {
+            "base": {
+              "value": 30
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "disease": {
+            "base": {
+              "value": 30
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "poison": {
+            "base": {
+              "value": 30
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "magic": {
+            "base": {
+              "value": 35
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "psychic": {
+            "base": {
+              "value": 30
+            },
+            "final": {
+              "value": 0
+            }
+          }
+        }
+      }
+    },
+    "secondaries": {
+      "athletics": {
+        "acrobatics": {
+          "base": {
+            "value": 40
+          },
+          "final": {
+            "value": 40
+          }
+        },
+        "athleticism": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "ride": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "swim": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "climb": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "jump": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "piloting": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "vigor": {
+        "composure": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "featsOfStrength": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "withstandPain": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "perception": {
+        "notice": {
+          "base": {
+            "value": 30
+          },
+          "final": {
+            "value": 30
+          }
+        },
+        "search": {
+          "base": {
+            "value": 30
+          },
+          "final": {
+            "value": 30
+          }
+        },
+        "track": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "intellectual": {
+        "animals": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "science": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "law": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "herbalLore": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "history": {
+          "base": {
+            "value": 30
+          },
+          "final": {
+            "value": 30
+          }
+        },
+        "tactics": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "medicine": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "memorize": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "navigation": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "occult": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "appraisal": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "magicAppraisal": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "social": {
+        "style": {
+          "base": {
+            "value": 45
+          },
+          "final": {
+            "value": 45
+          }
+        },
+        "intimidate": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "leadership": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "persuasion": {
+          "base": {
+            "value": 40
+          },
+          "final": {
+            "value": 40
+          }
+        },
+        "trading": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "streetwise": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "etiquette": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "subterfuge": {
+        "lockPicking": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "disguise": {
+          "base": {
+            "value": 30
+          },
+          "final": {
+            "value": 30
+          }
+        },
+        "hide": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "theft": {
+          "base": {
+            "value": 30
+          },
+          "final": {
+            "value": 30
+          }
+        },
+        "stealth": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "trapLore": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "poisons": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "creative": {
+        "art": {
+          "base": {
+            "value": 40
+          },
+          "final": {
+            "value": 40
+          }
+        },
+        "dance": {
+          "base": {
+            "value": 40
+          },
+          "final": {
+            "value": 40
+          }
+        },
+        "forging": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "runes": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "alchemy": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "animism": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "music": {
+          "base": {
+            "value": 55
+          },
+          "final": {
+            "value": 55
+          }
+        },
+        "sleightOfHand": {
+          "base": {
+            "value": 50
+          },
+          "final": {
+            "value": 50
+          }
+        },
+        "ritualCalligraphy": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "jewelry": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "tailoring": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "puppetMaking": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "secondarySpecialSkills": []
+    },
+    "combat": {
+      "attack": {
+        "base": {
+          "value": 10
+        },
+        "final": {
+          "value": 10
+        }
+      },
+      "block": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "dodge": {
+        "base": {
+          "value": 20
+        },
+        "final": {
+          "value": 20
+        }
+      },
+      "wearArmor": {
+        "value": 0
+      },
+      "totalArmor": {
+        "at": {
+          "cut": {
+            "value": 0
+          },
+          "impact": {
+            "value": 0
+          },
+          "thrust": {
+            "value": 0
+          },
+          "heat": {
+            "value": 0
+          },
+          "electricity": {
+            "value": 0
+          },
+          "cold": {
+            "value": 0
+          },
+          "energy": {
+            "value": 0
+          }
+        }
+      },
+      "combatSpecialSkills": [],
+      "combatTables": [],
+      "ammo": [],
+      "weapons": [
+        {
+          "_id": "8UV0JQve7MJp7I7a",
+          "name": "Desarmado",
+          "type": "weapon",
+          "img": "icons/skills/melee/unarmed-punch-fist.webp",
+          "effects": [],
+          "folder": null,
+          "sort": 0,
+          "flags": {
+            "core": {
+              "sourceId": "Item.I3FT8BlayCdnuxM0"
+            },
+            "cf": {
+              "id": "temp_kqknx06da7f",
+              "color": "#000000"
+            }
+          },
+          "system": {
+            "special": {
+              "value": "Precisa"
+            },
+            "integrity": {
+              "base": {
+                "value": null
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": null
+            },
+            "breaking": {
+              "base": {
+                "value": -2
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": -2
+            },
+            "attack": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "block": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "damage": {
+              "base": {
+                "value": 10
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 10
+            },
+            "initiative": {
+              "base": {
+                "value": 20
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 20
+            },
+            "presence": {
+              "base": {
+                "value": null
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "size": {
+              "value": "small"
+            },
+            "strRequired": {
+              "oneHand": {
+                "base": {
+                  "value": 0
+                },
+                "final": {
+                  "value": 0
+                },
+                "value": 0
+              },
+              "twoHands": {
+                "base": {
+                  "value": 0
+                },
+                "final": {
+                  "value": 0
+                },
+                "value": 0
+              }
+            },
+            "quality": {
+              "value": 0
+            },
+            "oneOrTwoHanded": {
+              "value": ""
+            },
+            "knowledgeType": {
+              "value": "known"
+            },
+            "manageabilityType": {
+              "value": "one_hand"
+            },
+            "shotType": {
+              "value": "throw"
+            },
+            "isRanged": {
+              "value": false
+            },
+            "range": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "cadence": {
+              "value": ""
+            },
+            "reload": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "sizeProportion": {
+              "value": "normal"
+            },
+            "weaponStrength": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "critic": {
+              "primary": {
+                "value": "impact"
+              },
+              "secondary": {
+                "value": "-"
+              }
+            },
+            "weaponFue": {
+              "value": 0
+            },
+            "initiativeBase": {
+              "value": 0
+            },
+            "fueRequired": {
+              "value": ""
+            },
+            "isShield": {
+              "value": false
+            },
+            "equipped": {
+              "value": true
+            }
+          },
+          "ownership": {
+            "default": 0,
+            "UMfJDL1rZj83Uanc": 3,
+            "s1iIg3oHOkECBfdY": 3
+          },
+          "_stats": {
+            "systemId": null,
+            "systemVersion": null,
+            "coreVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null
+          }
+        },
+        {
+          "_id": "BPkD4tka8OhCp5KI",
+          "name": "Daga",
+          "type": "weapon",
+          "img": "icons/weapons/daggers/dagger-straight-blue.webp",
+          "effects": [],
+          "folder": null,
+          "sort": 0,
+          "flags": {
+            "core": {
+              "sourceId": "Item.AYCVs9ckPGnT7JKY"
+            },
+            "cf": {
+              "id": "temp_kqknx06da7f",
+              "color": "#000000"
+            }
+          },
+          "system": {
+            "special": {
+              "value": "Lanzable, Precisa"
+            },
+            "integrity": {
+              "base": {
+                "value": 10
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 10
+            },
+            "breaking": {
+              "base": {
+                "value": -2
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": -2
+            },
+            "attack": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "block": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "damage": {
+              "base": {
+                "value": 30
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 30
+            },
+            "initiative": {
+              "base": {
+                "value": 20
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 20
+            },
+            "presence": {
+              "base": {
+                "value": 15
+              },
+              "final": {
+                "value": 0
+              },
+              "special": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "size": {
+              "value": "small"
+            },
+            "strRequired": {
+              "oneHand": {
+                "base": {
+                  "value": 3
+                },
+                "final": {
+                  "value": 0
+                },
+                "value": 3
+              },
+              "twoHands": {
+                "base": {
+                  "value": 0
+                },
+                "final": {
+                  "value": 0
+                },
+                "value": 0
+              }
+            },
+            "quality": {
+              "value": 0
+            },
+            "oneOrTwoHanded": {
+              "value": ""
+            },
+            "knowledgeType": {
+              "value": "known"
+            },
+            "manageabilityType": {
+              "value": "one_hand"
+            },
+            "shotType": {
+              "value": "throw"
+            },
+            "isRanged": {
+              "value": true
+            },
+            "range": {
+              "base": {
+                "value": 20
+              },
+              "final": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "cadence": {
+              "value": 50
+            },
+            "reload": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "sizeProportion": {
+              "value": "normal"
+            },
+            "weaponStrength": {
+              "base": {
+                "value": 0
+              },
+              "final": {
+                "value": 0
+              },
+              "value": 0
+            },
+            "critic": {
+              "primary": {
+                "value": "thrust"
+              },
+              "secondary": {
+                "value": "cut"
+              }
+            },
+            "weaponFue": {
+              "value": 0
+            },
+            "initiativeBase": {
+              "value": 0
+            },
+            "fueRequired": {
+              "value": ""
+            },
+            "isShield": {
+              "value": false
+            },
+            "equipped": {
+              "value": false
+            }
+          },
+          "ownership": {
+            "default": 0,
+            "UMfJDL1rZj83Uanc": 3,
+            "s1iIg3oHOkECBfdY": 3
+          },
+          "_stats": {
+            "systemId": null,
+            "systemVersion": null,
+            "coreVersion": null,
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "armors": []
+    },
+    "mystic": {
+      "act": {
+        "main": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "alternative": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "zeon": {
+        "accumulated": {
+          "value": null
+        },
+        "value": 0,
+        "max": 0
+      },
+      "zeonRegeneration": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "innateMagic": {
+        "main": {
+          "value": 0
+        },
+        "alternative": {
+          "value": 0
+        }
+      },
+      "magicProjection": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "imbalance": {
+          "offensive": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "defensive": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          }
+        }
+      },
+      "magicLevel": {
+        "spheres": {
+          "essence": {
+            "value": 0
+          },
+          "water": {
+            "value": 0
+          },
+          "earth": {
+            "value": 0
+          },
+          "creation": {
+            "value": 0
+          },
+          "darkness": {
+            "value": 0
+          },
+          "necromancy": {
+            "value": 0
+          },
+          "light": {
+            "value": 0
+          },
+          "destruction": {
+            "value": 0
+          },
+          "air": {
+            "value": 0
+          },
+          "fire": {
+            "value": 0
+          },
+          "illusion": {
+            "value": 0
+          }
+        },
+        "total": {
+          "value": 0
+        },
+        "used": {
+          "value": 0
+        }
+      },
+      "summoning": {
+        "summon": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "banish": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "bind": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "control": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
+      },
+      "spells": [],
+      "spellMaintenances": [],
+      "selectedSpells": [],
+      "summons": [],
+      "metamagics": []
+    },
+    "domine": {
+      "kiSkills": [],
+      "nemesisSkills": [],
+      "arsMagnus": [],
+      "martialArts": [],
+      "creatures": [],
+      "specialSkills": [],
+      "techniques": [],
+      "seals": {
+        "minor": {
+          "earth": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "metal": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "wind": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "water": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "wood": {
+            "isActive": {
+              "value": false
+            }
+          }
+        },
+        "major": {
+          "earth": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "metal": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "wind": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "water": {
+            "isActive": {
+              "value": false
+            }
+          },
+          "wood": {
+            "isActive": {
+              "value": false
+            }
+          }
+        }
+      },
+      "martialKnowledge": {
+        "used": {
+          "value": 0
+        },
+        "max": {
+          "value": 0
+        }
+      },
+      "kiAccumulation": {
+        "strength": {
+          "accumulated": {
+            "value": 0
+          },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "agility": {
+          "accumulated": {
+            "value": 0
+          },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "dexterity": {
+          "accumulated": {
+            "value": 0
+          },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "constitution": {
+          "accumulated": {
+            "value": 0
+          },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "willPower": {
+          "accumulated": {
+            "value": 0
+          },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "power": {
+          "accumulated": {
+            "value": 0
+          },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "generic": {
+          "value": 0,
+          "max": 0
+        }
+      }
+    },
+    "psychic": {
+      "psychicPotential": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "psychicProjection": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "imbalance": {
+          "offensive": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "defensive": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          }
+        }
+      },
+      "psychicPoints": {
+        "value": 0,
+        "max": 0
+      },
+      "psychicPowers": [],
+      "psychicDisciplines": [],
+      "mentalPatterns": [],
+      "innatePsychicPower": {
+        "amount": {
+          "value": 0
+        }
+      },
+      "innatePsychicPowers": []
+    }
+  },
+  "prototypeToken": {
+    "name": "Juglar",
+    "displayName": 0,
+    "actorLink": false,
+    "width": 1,
+    "height": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "light": {
+      "alpha": 0.25,
+      "angle": 360,
+      "bright": 0,
+      "coloration": 1,
+      "dim": 0,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "speed": 5,
+        "intensity": 5,
+        "type": null,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      },
+      "attenuation": 0.5
+    },
+    "disposition": -1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": "characteristics.secondaries.lifePoints"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "flags": {},
+    "randomImg": false,
+    "texture": {
+      "src": "juglar.jpg",
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    "sight": {
+      "angle": 360,
+      "enabled": false,
+      "range": 0,
+      "brightness": 1,
+      "visionMode": "basic",
+      "attenuation": 0.1,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "appendNumber": false,
+    "prependAdjective": false,
+    "detectionModes": []
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.17.0",
+    "coreVersion": "11.308",
+    "createdTime": 1690991144980,
+    "modifiedTime": 1698778089662,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "QE0J2D4HjcsJoIww",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!actors!QE0J2D4HjcsJoIww"
+}

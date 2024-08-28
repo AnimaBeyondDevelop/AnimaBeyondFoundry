@@ -1,0 +1,124 @@
+{
+  "name": "Teatro de la Vida",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "LDo1cUVt70Ir65qc",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ql3798o7zio",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 54
+    },
+    "via": {
+      "value": "literae"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM o RP 120/ Límite de Presencia 100 / 20 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 360
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "RM o RP 140 / Límite de Presencia 180 / 40 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 480
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "RM o RP 160 / Límite de Presencia 240 / 80 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "RM o RP 180 / Límite de Presencia 320 / 150 metros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709727548315,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ILe72BY1jxMjvimM",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ILe72BY1jxMjvimM"
+}

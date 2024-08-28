@@ -1,0 +1,124 @@
+{
+  "name": "Escudo Salvador",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "f06XtdROmM5iBR8J",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_dq5hp6f236r",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 4
+    },
+    "via": {
+      "value": "peace"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 50
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "300 puntos de Resistencia / Es capaz de proteger hasta a dos personas sin penalizador."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "900 puntos de Resistencia / Es capaz de proteger hasta a cinco personas sin penalizador."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "1.500 puntos de Resistencia / Es capaz de proteger hasta a ocho personas sin penalizador."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "3.000 puntos de Resistencia / Es capaz de proteger hasta a doce personas sin penalizador."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709727398586,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "FAXTW2e13GIDT1RN",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!FAXTW2e13GIDT1RN"
+}

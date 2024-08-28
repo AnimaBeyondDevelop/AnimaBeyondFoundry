@@ -1,0 +1,124 @@
+{
+  "name": "Escudo de Vacío",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Xf2D8m3WNzaz3vya",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_o1abinx1gca",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 24
+    },
+    "via": {
+      "value": "emptiness"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 50
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "200 Puntos de Resistencia / Dificultad 14 / RF 100."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "300 Puntos de Resistencia / Dificultad 16 / RF 120."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "400 Puntos de Resistencia / Dificultad 18 / RF 140."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "500 Puntos de Resistencia / Dificultad 20 / RF 160."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709727945719,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "M93jvXFLx3qKgu43",
+  "sort": 175000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!M93jvXFLx3qKgu43"
+}

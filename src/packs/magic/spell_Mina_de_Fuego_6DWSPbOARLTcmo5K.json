@@ -1,0 +1,124 @@
+{
+  "name": "Mina de Fuego",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "paS7DQ3uR0s06CYT",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_vp1yvqkp0l",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 40
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "heat"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "10 metros de radio / Daño 80."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "50 metros de radio / Daño 120."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "150 metros de radio / Daño 180."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "250 metros de radio / Daño 240."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709812101889,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "6DWSPbOARLTcmo5K",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!6DWSPbOARLTcmo5K"
+}

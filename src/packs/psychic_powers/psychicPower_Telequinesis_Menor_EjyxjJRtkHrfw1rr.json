@@ -1,0 +1,87 @@
+{
+  "name": "Telequinesis Menor",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "RojcHZOugef3RPlF",
+  "flags": {
+    "cf": {
+      "id": "temp_gdsqgmuyw8u",
+      "path": "Poderes Mentales#/CF_SEP/Telequinesis",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 1"
+      },
+      "40": {
+        "value": "1 Kg. / Tipo de vuelo 4"
+      },
+      "80": {
+        "value": "2 Kg / Tipo de vuelo 6"
+      },
+      "120": {
+        "value": "5 Kg / Tipo de vuelo 8"
+      },
+      "140": {
+        "value": "10 Kg / Tipo de vuelo 10"
+      },
+      "180": {
+        "value": "20 Kg / Tipo de vuelo 12"
+      },
+      "240": {
+        "value": "40 Kg / Tipo de vuelo 14"
+      },
+      "280": {
+        "value": "100 Kg / Tipo de vuelo 16"
+      },
+      "320": {
+        "value": "200 Kg / Tipo de vuelo 18"
+      },
+      "440": {
+        "value": "500 Kg / Tipo de vuelo 20"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telekenisis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709238032850,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "EjyxjJRtkHrfw1rr",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!EjyxjJRtkHrfw1rr"
+}

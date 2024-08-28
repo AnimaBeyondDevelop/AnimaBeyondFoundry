@@ -1,0 +1,124 @@
+{
+  "name": "Escudo de Luz",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "NYxvSSy0rr5RKdUD",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_wrtyn4gz6e",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 10
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 50
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "El escudo tiene 300 puntos de Resistencia."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "El escudo tiene 1.000 puntos de Resistencia."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "El escudo tiene 1.800 puntos de Resistencia."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "El escudo tiene 3.000 puntos de Resistencia."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709813058570,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "aqGQY5oHFbhrwxO1",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!aqGQY5oHFbhrwxO1"
+}

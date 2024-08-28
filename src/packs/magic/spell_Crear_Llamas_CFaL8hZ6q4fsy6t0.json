@@ -1,0 +1,125 @@
+{
+  "name": "Crear Llamas",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "WE6mGb5Pa78L4CWe",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_00h4ctlhhen0u",
+      "path": "Libre Acceso#/CF_SEP/0-10",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": null
+    },
+    "via": {
+      "value": "freeAccess"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "1 intensidad"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "3 intensidades"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 110
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "6 intensidades"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 130
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "9 intensidades"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1718306956087,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "CFaL8hZ6q4fsy6t0",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!CFaL8hZ6q4fsy6t0"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Burbuja Protectora",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "DRQPjcvH8HO5Zd4y",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_l90e7xp2w8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 16
+    },
+    "via": {
+      "value": "water"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "Hasta Daño base 40."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "Hasta Daño base 90."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Hasta Daño base 120."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 220
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Hasta Daño base 160."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709728478386,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Yfjtv1Ji9PiGlIPP",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Yfjtv1Ji9PiGlIPP"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Lentitud Temporal",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "7suqeBOKQKGsJvBK",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_nyv9otzy5l",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 24
+    },
+    "via": {
+      "value": "time"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "-2 Tipos de Movimiento / -40 al Turno / 10 metros de radio / 100 RM."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "-4 Tipos de Movimiento / -60 al Turno / -10 a Toda Acción / 25 metros de radio / 120 RM."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "-6 Tipos de Movimiento / -80 al Turno / -20 a Toda Acción / 50 metros de radio / 140 RM."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "-8 Tipos de Movimiento / -100 al Turno / -30 a Toda Acción / 100 metros de radio / 160 RM."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709727822938,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "iZiHsRW1c36VxLHp",
+  "sort": 250000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!iZiHsRW1c36VxLHp"
+}

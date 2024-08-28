@@ -1,0 +1,124 @@
+{
+  "name": "Caminante Noctámbulo",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "uu25ESR7oCKlevIM",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_vu5vun8vfc",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 44
+    },
+    "via": {
+      "value": "dreams"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "1 kilómetro de distancia máxima."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "2 km máx. / El afectado puede tornarse visible a voluntad y hablar."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "5 km máx. / El mago puede alterar su aspecto físico a voluntad."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "Cualquier distancia / puede entrar en los Sueños de cualquiera, con RM de 150."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709727159509,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Hh81aT2RgovAxwjD",
+  "sort": 175000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Hh81aT2RgovAxwjD"
+}

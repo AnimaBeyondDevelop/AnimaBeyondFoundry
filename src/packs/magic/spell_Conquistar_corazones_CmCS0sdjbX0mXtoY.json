@@ -1,0 +1,124 @@
+{
+  "name": "Conquistar corazones",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "cuxTxDUgnIaBKj9Q",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_577pol8lk7a",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 64
+    },
+    "via": {
+      "value": "nobility"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "120 RM o RP."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "160 RM o RP."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "200 RM o RP."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "240 RM o RP."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709728300680,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "CmCS0sdjbX0mXtoY",
+  "sort": 500000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!CmCS0sdjbX0mXtoY"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Ocultarse Ante la Magia",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "qaolRsp2qRus8QhW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ay42stsa2j7",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 86
+    },
+    "via": {
+      "value": "darkness"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Afecta a conjuros Automáticos de Grado Base."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Afecta a conjuros Automáticos de Grado Intermedio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Afecta a conjuros Automáticos de Grado Avanzado."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Afecta a conjuros Automáticos de Grado Arcano."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709815346336,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "sYBkwom52BmpzWMx",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!sYBkwom52BmpzWMx"
+}

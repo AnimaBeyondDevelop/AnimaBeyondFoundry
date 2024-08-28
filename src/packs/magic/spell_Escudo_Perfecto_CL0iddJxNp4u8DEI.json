@@ -1,0 +1,124 @@
+{
+  "name": "Escudo Perfecto",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "XfsXeGydsUJyjo3o",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_j9uqufpqlj",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 60
+    },
+    "via": {
+      "value": "creation"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Aguanta 100 puntos de daño."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Aguanta 250 puntos de daño."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Aguanta 500 puntos de daño."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "Aguanta 1.000 puntos de daño."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709730099694,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "CL0iddJxNp4u8DEI",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!CL0iddJxNp4u8DEI"
+}

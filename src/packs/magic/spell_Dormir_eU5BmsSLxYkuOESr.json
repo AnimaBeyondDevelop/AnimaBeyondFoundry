@@ -1,0 +1,125 @@
+{
+  "name": "Dormir",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Xqp0delZeBON5ped",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ct7kynyk6k5",
+      "path": "Libre Acceso#/CF_SEP/50-60",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 0
+    },
+    "via": {
+      "value": "freeAccess"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "10 metros de radio / RM 80."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "25 metros de radio / RM 100."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "50 metros de radio / RM 120."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "100 metros de radio / RM 140."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709430271028,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "eU5BmsSLxYkuOESr",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!eU5BmsSLxYkuOESr"
+}

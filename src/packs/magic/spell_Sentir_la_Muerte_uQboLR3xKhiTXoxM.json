@@ -1,0 +1,124 @@
+{
+  "name": "Sentir la Muerte",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Hv3igoeokVpk534P",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_au5i5fdgtlw",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 2
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "detection"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 30
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "100 metros de radio / RM 120"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "250 metros de radio / RM 140"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "500 metros de radio / RM 180"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "1 Kilómetro de radio / RM 180"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709814595799,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "uQboLR3xKhiTXoxM",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!uQboLR3xKhiTXoxM"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Onda Vacua",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Xf2D8m3WNzaz3vya",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_o1abinx1gca",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 14
+    },
+    "via": {
+      "value": "emptiness"
+    },
+    "spellType": {
+      "value": "attack"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 30
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 120 contra escudos."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 250 contra escudos."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 400 contra escudos."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 600 contra escudos."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709727937918,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "j9nJhRJKOspz81vY",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!j9nJhRJKOspz81vY"
+}

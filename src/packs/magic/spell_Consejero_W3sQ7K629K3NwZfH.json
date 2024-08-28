@@ -1,0 +1,124 @@
+{
+  "name": "Consejero",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "8HgpRx1KBqPy5rPl",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_z1xw1yvzp9",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 74
+    },
+    "via": {
+      "value": "knowledge"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "Un consejo aproximado sobre cual es la mejor decisión que ha de tomar."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Mostrará el espectro de de posibilidades y sus posibles consecuencias."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "El lanzador obtiene un consejo con índice de acierto elevado."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Obtiene un consejo detallado con todas las posibilidades y consecuencias."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709727693402,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "W3sQ7K629K3NwZfH",
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!W3sQ7K629K3NwZfH"
+}

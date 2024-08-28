@@ -1,0 +1,124 @@
+{
+  "name": "Aumento de Gravedad",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "B1n9DwYMn7MnbzX5",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6ihj93kemw2",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 86
+    },
+    "via": {
+      "value": "earth"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Dobla el peso / 100 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "Triplica el peso / 200 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Quintuplica el peso / 300 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "Deduplica el peso / 400 metros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709815843345,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ot2LJjiAaX4c3aE4",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ot2LJjiAaX4c3aE4"
+}

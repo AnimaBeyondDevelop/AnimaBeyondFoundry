@@ -1,0 +1,87 @@
+{
+  "name": "Sentidos Superiores",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "95DNipfR7iHG1bTO",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_mdefy9drlgr",
+      "path": "Poderes Mentales#/CF_SEP/Hipersensibilidad#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 10"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "Sentir electromagnetismo"
+      },
+      "240": {
+        "value": "Sentir matrices"
+      },
+      "280": {
+        "value": "Sentir magia"
+      },
+      "320": {
+        "value": "Sentir ki"
+      },
+      "440": {
+        "value": "Sentirlo todo"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "hypersensitivity"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709236611195,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "dijcRGpXpQ0N4Xwy",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!dijcRGpXpQ0N4Xwy"
+}

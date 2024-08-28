@@ -1,0 +1,124 @@
+{
+  "name": "Sombra del Miedo",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "RzxDX71OOW1KbYpa",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_lgn9qs3zv7g",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 14
+    },
+    "via": {
+      "value": "threshold"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "50 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 70
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "250 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "500 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 130
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "1 kilómetro de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709728356966,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ycl3ZV3K1JRRTThu",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ycl3ZV3K1JRRTThu"
+}

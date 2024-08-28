@@ -1,0 +1,125 @@
+{
+  "name": "Curar Heridas",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Xqp0delZeBON5ped",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ct7kynyk6k5",
+      "path": "Libre Acceso#/CF_SEP/50-60",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 0
+    },
+    "via": {
+      "value": "freeAccess"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "40 puntos de vida."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "80 puntos de vida."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "160 puntos de vida."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 220
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "320 puntos de vida."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709430253479,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "HtSFBvsf6nUshVw8",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!HtSFBvsf6nUshVw8"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Entre Sueños y Realidad",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "uu25ESR7oCKlevIM",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_vu5vun8vfc",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 84
+    },
+    "via": {
+      "value": "dreams"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "100 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "500 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 700
+        },
+        "maintenanceCost": {
+          "value": "140"
+        },
+        "description": {
+          "value": "1 kilómetro de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 19
+        },
+        "zeon": {
+          "value": 900
+        },
+        "maintenanceCost": {
+          "value": "180"
+        },
+        "description": {
+          "value": "3 kilómetros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709727223774,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "diEUn8zzBFT0ajoE",
+  "sort": 198438,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!diEUn8zzBFT0ajoE"
+}

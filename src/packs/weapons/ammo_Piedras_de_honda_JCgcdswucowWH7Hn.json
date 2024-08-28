@@ -1,0 +1,64 @@
+{
+  "name": "Piedras de honda",
+  "type": "ammo",
+  "img": "icons/commodities/stone/paver-grey.webp",
+  "effects": [],
+  "folder": "hcsPaQspsiGREXga",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6kkmmy2xtfo",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "amount": {
+      "value": 0
+    },
+    "damage": {
+      "value": 0,
+      "base": {
+        "value": 15
+      }
+    },
+    "critic": {
+      "value": "impact"
+    },
+    "integrity": {
+      "value": 0,
+      "base": {
+        "value": 7
+      }
+    },
+    "breaking": {
+      "value": 0,
+      "base": {
+        "value": 2
+      }
+    },
+    "presence": {
+      "value": 0,
+      "base": {
+        "value": 10
+      }
+    },
+    "special": {
+      "value": "Munición para honda"
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077233,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "JCgcdswucowWH7Hn",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!JCgcdswucowWH7Hn"
+}

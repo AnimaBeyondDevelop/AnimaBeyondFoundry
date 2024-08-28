@@ -1,0 +1,124 @@
+{
+  "name": "Predecir",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "YblTp0AWzVWufCgg",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ackpgxxfwma",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 90
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Un año."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Cinco años."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Cincuenta años / En caso de ser una predicción de menos de un día, será bastante exacta."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Un siglo / En caso de ser una predicción de menos de años, ésta será bastante exacta."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709814376349,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "MeccwN0OnQRNpLwa",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!MeccwN0OnQRNpLwa"
+}

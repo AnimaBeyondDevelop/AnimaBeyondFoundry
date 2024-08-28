@@ -1,0 +1,124 @@
+{
+  "name": "Aura de Protección",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "XfsXeGydsUJyjo3o",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_j9uqufpqlj",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 56
+    },
+    "via": {
+      "value": "creation"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "+20 a las Resistencias / 100 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "+50 a las Resistencias / 500 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "+80 a las Resistencias / 1 kilómetro de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "+120 a las Resistencias / 10 kilómetros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709730085213,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "BpxptX8s9ArOF17y",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!BpxptX8s9ArOF17y"
+}

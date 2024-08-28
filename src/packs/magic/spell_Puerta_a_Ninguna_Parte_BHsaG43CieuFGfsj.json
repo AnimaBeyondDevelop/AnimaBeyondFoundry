@@ -1,0 +1,124 @@
+{
+  "name": "Puerta a Ninguna Parte",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Xf2D8m3WNzaz3vya",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_o1abinx1gca",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 94
+    },
+    "via": {
+      "value": "emptiness"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "2 metros de diámetro."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "5 metros de diámetro."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "15 metros de diámetro."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 1200
+        },
+        "maintenanceCost": {
+          "value": "120"
+        },
+        "description": {
+          "value": "50 metros de diámetro."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709728038492,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "BHsaG43CieuFGfsj",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!BHsaG43CieuFGfsj"
+}

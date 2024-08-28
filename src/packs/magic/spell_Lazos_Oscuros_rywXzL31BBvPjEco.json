@@ -1,0 +1,124 @@
+{
+  "name": "Lazos Oscuros",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "MpPmUiukBsfljlgr",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_dcht6p8ozg5",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 28
+    },
+    "via": {
+      "value": "darkness"
+    },
+    "spellType": {
+      "value": "attack"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": true,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Disponen de una Fuerza base 8 para los controles y tienen Entereza 25."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Disponen de una Fuerza base 12 para los controles y tienen Entereza 25."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Disponen de una Fuerza base 15 para los controles y tienen Entereza 30."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Disponen de una Fuerza base 18 para los controles y tienen Entereza 35."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709815101585,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "rywXzL31BBvPjEco",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!rywXzL31BBvPjEco"
+}

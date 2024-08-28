@@ -1,0 +1,124 @@
+{
+  "name": "Señor del Fuego",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "B9c1xVQNllFt7QLW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_axe8oq77ajf",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 96
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "100 kilómetros de radio / 140 RM."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "45"
+        },
+        "description": {
+          "value": "1.000 kilómetros de radio / 180 RM."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "10.000 kilómetros de radio / 200 RM."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "Afecta cualquier fuente de calor / 240 RM."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709812559867,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Pqb3k4zNZw8K8wLQ",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Pqb3k4zNZw8K8wLQ"
+}

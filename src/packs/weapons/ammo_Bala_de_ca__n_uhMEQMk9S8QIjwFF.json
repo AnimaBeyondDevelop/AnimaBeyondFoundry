@@ -1,0 +1,64 @@
+{
+  "name": "Bala de cañón",
+  "type": "ammo",
+  "img": "icons/weapons/ammunition/shot-round-blue.webp",
+  "effects": [],
+  "folder": "hcsPaQspsiGREXga",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6kkmmy2xtfo",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "amount": {
+      "value": 0
+    },
+    "damage": {
+      "value": 0,
+      "base": {
+        "value": 150
+      }
+    },
+    "critic": {
+      "value": "impact"
+    },
+    "integrity": {
+      "value": 0,
+      "base": {
+        "value": 20
+      }
+    },
+    "breaking": {
+      "value": 0,
+      "base": {
+        "value": 14
+      }
+    },
+    "presence": {
+      "value": 0,
+      "base": {
+        "value": 15
+      }
+    },
+    "special": {
+      "value": "Munición para cañones"
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077233,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "uhMEQMk9S8QIjwFF",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!uhMEQMk9S8QIjwFF"
+}

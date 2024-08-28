@@ -1,0 +1,156 @@
+{
+  "name": "Completa",
+  "type": "armor",
+  "img": "icons/equipment/chest/breastplate-collared-steel.webp",
+  "effects": [],
+  "folder": "RqvwcydcVBdFp0ow",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hux5484g755",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "thrust": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "heat": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "electricity": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cold": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "energy": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "integrity": {
+      "base": {
+        "value": 18
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 18
+    },
+    "presence": {
+      "base": {
+        "value": 45
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 45
+    },
+    "movementRestriction": {
+      "base": {
+        "value": -4
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": -50
+      },
+      "final": {
+        "value": 0
+      },
+      "value": -50
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 100
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 100
+    },
+    "type": {
+      "value": "hard"
+    },
+    "localization": {
+      "value": "complete"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1691058437668,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "GyWy137amdjxd7XD",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!GyWy137amdjxd7XD"
+}

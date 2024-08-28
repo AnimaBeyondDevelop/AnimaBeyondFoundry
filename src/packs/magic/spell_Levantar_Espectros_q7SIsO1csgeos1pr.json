@@ -1,0 +1,124 @@
+{
+  "name": "Levantar Espectros",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "tDw2eSEihQNlW4KW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_347qe90djnt",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 60
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Nivel máximo del espíritu 1 / Suma total de presencias 100"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "Nivel máximo del espíritu 2 / Suma total de presencias 160"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Nivel máximo del espíritu 4 / Suma total de presencias 220"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "Nivel máximo del espíritu 6 / Suma total de presencias 280"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709814818729,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "q7SIsO1csgeos1pr",
+  "sort": 400000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!q7SIsO1csgeos1pr"
+}

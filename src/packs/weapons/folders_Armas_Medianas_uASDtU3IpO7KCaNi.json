@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Armas Medianas",
+  "sorting": "a",
+  "type": "Item",
+  "folder": null,
+  "_id": "uASDtU3IpO7KCaNi",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": null,
+    "systemVersion": null,
+    "coreVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!uASDtU3IpO7KCaNi"
+}

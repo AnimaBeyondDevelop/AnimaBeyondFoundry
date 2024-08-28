@@ -1,0 +1,211 @@
+{
+  "name": "Látigo",
+  "type": "weapon",
+  "img": "icons/weapons/misc/whip-red-yellow.webp",
+  "effects": [],
+  "folder": "uASDtU3IpO7KCaNi",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ch5s71h6u7o",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "special": {
+      "value": "Compleja, Presa (FUE 8)"
+    },
+    "integrity": {
+      "base": {
+        "value": 9
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 9
+    },
+    "breaking": {
+      "base": {
+        "value": -3
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": -3
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 35
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 35
+    },
+    "initiative": {
+      "base": {
+        "value": -20
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": -20
+    },
+    "presence": {
+      "base": {
+        "value": 20
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "medium"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 4
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 4
+      },
+      "twoHands": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "one_hand"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": false
+    },
+    "range": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": ""
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "cut"
+      },
+      "secondary": {
+        "value": "impact"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077555,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "z2tOd6IheY9p2j4T",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!z2tOd6IheY9p2j4T"
+}

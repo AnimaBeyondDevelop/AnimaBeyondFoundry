@@ -1,0 +1,124 @@
+{
+  "name": "Sanación",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "ug3NRS5np4LQ5jt9",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_wd8exkhakb8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 16
+    },
+    "via": {
+      "value": "essence"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "20% de puntos de Vida"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "40% de puntos de Vida"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "60% de puntos de Vida"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "80% de puntos de Vida"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709811523022,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "prp7nz7fLkyp834t",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!prp7nz7fLkyp834t"
+}

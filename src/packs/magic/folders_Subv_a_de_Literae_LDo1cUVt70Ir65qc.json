@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Subvía de Literae",
+  "sorting": "m",
+  "type": "Item",
+  "folder": null,
+  "_id": "LDo1cUVt70Ir65qc",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1709727512187,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_key": "!folders!LDo1cUVt70Ir65qc"
+}
