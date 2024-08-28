@@ -517,6 +517,7 @@
   "contextualMenu.common.options.edit": "Editer",
   "contextualMenu.elan.options.addPower": "Ajouter un pouvoir",
   "contextualMenu.elan.options.deletePower": "Suppimer le pouvoir",
+  "dialogs.select.custom": "[Custom]",
   "dialogs.accept": "Accepter",
   "dialogs.cancel": "Annuler",
   "dialogs.continue": "Continuer",

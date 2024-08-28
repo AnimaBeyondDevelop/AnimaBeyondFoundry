@@ -1,0 +1,124 @@
+{
+  "name": "Cuerpo a Fuego",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "90nXDuaH9rbi0HJV",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_03lb32wetk3b",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 52
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "10 metros de radio / RF 80."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Se gana +30 a sus Resistencias contra efectos basados en calor."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Como Intermedio, el sujeto puede colarse por donde pueda pasar el fuego."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Como Avanzado, pero los ataques basados en frío o agua no sobrenatural no causan daño."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709812206710,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "LDdcw3waT5geFeuz",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!LDdcw3waT5geFeuz"
+}

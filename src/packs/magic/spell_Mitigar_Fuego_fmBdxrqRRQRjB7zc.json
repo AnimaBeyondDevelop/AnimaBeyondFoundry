@@ -1,0 +1,124 @@
+{
+  "name": "Mitigar Fuego",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "IQ5YUZGq0aTTD45B",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_t7wk7yzdzad",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 6
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 5
+        },
+        "zeon": {
+          "value": 30
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-1 intensidad de fuego / RM 100."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-5 intensidades de fuego / RM 120."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-10 intensidades de fuego / RM 140."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-15 intensidades de fuego / RM 180."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709811944558,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "fmBdxrqRRQRjB7zc",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!fmBdxrqRRQRjB7zc"
+}

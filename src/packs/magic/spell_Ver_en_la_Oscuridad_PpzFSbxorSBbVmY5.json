@@ -1,0 +1,124 @@
+{
+  "name": "Ver en la Oscuridad",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "cH1j77ieyVGk8GMK",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_5kbmhhzhl17",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 8
+    },
+    "via": {
+      "value": "darkness"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 5
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "Presencia máxima 80."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Presencia máxima 100."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Presencia máxima 120."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Presencia máxima 140 / Permite ver en la oscuridad sobrenatural."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709815038291,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "PpzFSbxorSBbVmY5",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!PpzFSbxorSBbVmY5"
+}

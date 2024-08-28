@@ -12,6 +12,8 @@ import { registerCombatWebsocketRoutes } from './module/combat/websocket/registe
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
 
+import './scss/animabf.scss';
+
 /* ------------------------------------ */
 /* Initialize system */
 /* ------------------------------------ */

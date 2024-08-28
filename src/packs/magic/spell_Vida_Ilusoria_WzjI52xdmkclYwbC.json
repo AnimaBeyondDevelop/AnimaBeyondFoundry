@@ -1,0 +1,124 @@
+{
+  "name": "Vida Ilusoria",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "0sxyqUNi9IeK3xAh",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_gf3s2karz8e",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 76
+    },
+    "via": {
+      "value": "illusion"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM o RP 140"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "RM o RP 160"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 260
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "RM o RP 180"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "RM o RP 200"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709812932952,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "WzjI52xdmkclYwbC",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!WzjI52xdmkclYwbC"
+}

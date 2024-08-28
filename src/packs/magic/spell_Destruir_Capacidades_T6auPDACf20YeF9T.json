@@ -1,0 +1,124 @@
+{
+  "name": "Destruir Capacidades",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "cr65qit3boXhBVQr",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ivpvmabfw5l",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 78
+    },
+    "via": {
+      "value": "destruction"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-50 PD, RM 120."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-100 PD, RM 160."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-150 PD, RM 200."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-200 PD, RM 240."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709811360247,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "T6auPDACf20YeF9T",
+  "sort": 175000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!T6auPDACf20YeF9T"
+}

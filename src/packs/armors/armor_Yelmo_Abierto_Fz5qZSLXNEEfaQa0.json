@@ -1,0 +1,164 @@
+{
+  "name": "Yelmo Abierto",
+  "type": "armor",
+  "img": "icons/equipment/head/helm-norman-brutal.webp",
+  "effects": [],
+  "folder": "xSODqZuP6HhA4YnC",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ipzu43r4ct",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "thrust": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "heat": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "electricity": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cold": {
+      "base": {
+        "value": 3
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 3
+    },
+    "energy": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "integrity": {
+      "base": {
+        "value": 16
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 16
+    },
+    "presence": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "movementRestriction": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": -20
+      },
+      "final": {
+        "value": 0
+      },
+      "value": -20
+    },
+    "perceptionPenalty": {
+      "base": {
+        "value": -20
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "type": {
+      "value": "hard"
+    },
+    "localization": {
+      "value": "head"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1718130158077,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "Fz5qZSLXNEEfaQa0",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Fz5qZSLXNEEfaQa0"
+}

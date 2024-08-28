@@ -1,0 +1,87 @@
+{
+  "name": "Frío Mayor",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "hyyuZIW85NoH3aMc",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_n142a8tuv4e",
+      "path": "Poderes Mentales#/CF_SEP/Crioquinesis#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 20"
+      },
+      "40": {
+        "value": "Fatiga 16"
+      },
+      "80": {
+        "value": "Fatiga 12"
+      },
+      "120": {
+        "value": "Fatiga 8"
+      },
+      "140": {
+        "value": "Fatiga 6"
+      },
+      "180": {
+        "value": "Fatiga 4"
+      },
+      "240": {
+        "value": "30 intensidades"
+      },
+      "280": {
+        "value": "40 intensidades"
+      },
+      "320": {
+        "value": "50 intensidades"
+      },
+      "440": {
+        "value": "60 intensidades"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "cryokinesis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084473,
+    "modifiedTime": 1709234952253,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "P1m3JTqWRchTCRTH",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!P1m3JTqWRchTCRTH"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Perfección",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "cuxTxDUgnIaBKj9Q",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_577pol8lk7a",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 84
+    },
+    "via": {
+      "value": "nobility"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Apariencia 10 y bono de +100 a Estilo, Persuasión, Intimidar y Liderazgo."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "+3 al nivel de regeneración base."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "El bono aumenta a +200."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "+1 a todos los atributos."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709728312029,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "iGxr0DCrEhxBx3Yi",
+  "sort": 650000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!iGxr0DCrEhxBx3Yi"
+}

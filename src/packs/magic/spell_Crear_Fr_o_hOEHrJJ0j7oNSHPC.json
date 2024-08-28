@@ -1,0 +1,124 @@
+{
+  "name": "Crear Frío",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "nDftIhZnQaoInlrK",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_xmscqlb2979",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 6
+    },
+    "via": {
+      "value": "water"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 5
+        },
+        "zeon": {
+          "value": 30
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "1 Intensidad."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 50
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "3 Intensidades."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "5 Intensidades."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "8 Intensidades."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709728455641,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "hOEHrJJ0j7oNSHPC",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!hOEHrJJ0j7oNSHPC"
+}

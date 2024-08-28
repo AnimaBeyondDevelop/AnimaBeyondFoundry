@@ -1,0 +1,124 @@
+{
+  "name": "Omnisciencia Radial",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "YblTp0AWzVWufCgg",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ackpgxxfwma",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 88
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "500 metros de radio / presencia máxima 60."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "2 kilómetros de radio / presencia máxima 80."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "10 kilómetros de radio / presencia máxima 100."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "65"
+        },
+        "description": {
+          "value": "50 kilómetros de radio / presencia máxima 120."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709814368732,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "54Ib0tzdq3zlDu6Y",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!54Ib0tzdq3zlDu6Y"
+}

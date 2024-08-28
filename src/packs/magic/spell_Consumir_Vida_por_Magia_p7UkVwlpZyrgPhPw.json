@@ -1,0 +1,124 @@
+{
+  "name": "Consumir Vida por Magia",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "jttAL8JU4gZTuSuG",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_n67d04f8d8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 80
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "20 puntos de vida asalto."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "80 puntos de vida asalto."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "140 puntos de vida asalto."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "200 puntos de vida asalto."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709812392235,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "p7UkVwlpZyrgPhPw",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!p7UkVwlpZyrgPhPw"
+}

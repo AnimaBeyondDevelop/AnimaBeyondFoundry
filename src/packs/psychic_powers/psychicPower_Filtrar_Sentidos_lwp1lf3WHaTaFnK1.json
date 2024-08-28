@@ -1,0 +1,87 @@
+{
+  "name": "Filtrar Sentidos",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "BskQfNXgDaUpjyrM",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_l4n0qv4gbp",
+      "path": "Poderes Mentales#/CF_SEP/Hipersensibilidad#/CF_SEP/Nivel 1",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 1"
+      },
+      "40": {
+        "value": "Hasta -10 / Un sentido"
+      },
+      "80": {
+        "value": "Hasta -20 / Un sentido"
+      },
+      "120": {
+        "value": "Hasta -30/ Un sentido"
+      },
+      "140": {
+        "value": "Hasta -40 / Dos sentidos"
+      },
+      "180": {
+        "value": "Hasta -50 / Dos sentidos"
+      },
+      "240": {
+        "value": "Hasta -60 / Tres sentidos"
+      },
+      "280": {
+        "value": "Hasta -70 / Tres sentidos"
+      },
+      "320": {
+        "value": "Hasta -80 / Cuatro sentidos"
+      },
+      "440": {
+        "value": "Hasta -100 / Todos los sentidos"
+      }
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "hypersensitivity"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709236579265,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "lwp1lf3WHaTaFnK1",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!lwp1lf3WHaTaFnK1"
+}

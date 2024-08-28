@@ -1,0 +1,124 @@
+{
+  "name": "Barrera de Fuego",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "pFvELtKAWhBRJUXY",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_cycdmi4kb84",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 22
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "defense"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "heat"
+    },
+    "visible": true,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 50
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "Daño 80 / 2 metros de extensión / 300 puntos de Resistencia."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Daño 90 / 5 metros de extensión / 500 puntos de Resistencia."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Daño 100 / 10 m / 800 puntos de Resistencia / Detiene ataques basados en energía."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Daño 100 / 15 m / 1.500 puntos de Resistencia /  El ataque es contra Imposible / Detiene ataques basados en cualquier tipo de ataque."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709812019246,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "p4DkZrCTiPpuc9RY",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!p4DkZrCTiPpuc9RY"
+}

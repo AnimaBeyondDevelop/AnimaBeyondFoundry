@@ -1,0 +1,125 @@
+{
+  "name": "Crear Emociones",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "wNVfKy9zzJJTAIaO",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_tzio33cigd",
+      "path": "Libre Acceso#/CF_SEP/60-70",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 0
+    },
+    "via": {
+      "value": "freeAccess"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM o RP 120."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "RM o RP 140."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 220
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "RM o RP 160."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "RM o RP 180."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709726425969,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "zfVEJimT5ycFnWhD",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!zfVEJimT5ycFnWhD"
+}

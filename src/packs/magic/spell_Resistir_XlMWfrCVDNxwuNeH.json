@@ -1,0 +1,125 @@
+{
+  "name": "Resistir",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "wNVfKy9zzJJTAIaO",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_tzio33cigd",
+      "path": "Libre Acceso#/CF_SEP/60-70",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 0
+    },
+    "via": {
+      "value": "freeAccess"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "+20 a una Resistencia."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "+40 a una Resistencia."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "+60 a una Resistencia."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "+80 a una Resistencia."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709726461136,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "XlMWfrCVDNxwuNeH",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!XlMWfrCVDNxwuNeH"
+}

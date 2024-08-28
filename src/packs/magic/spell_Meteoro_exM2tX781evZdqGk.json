@@ -1,0 +1,124 @@
+{
+  "name": "Meteoro",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "B1n9DwYMn7MnbzX5",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6ihj93kemw2",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 90
+    },
+    "via": {
+      "value": "earth"
+    },
+    "spellType": {
+      "value": "attack"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "impact"
+    },
+    "visible": true,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 200 / 1 meteoro."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 200 / 5 meteoros."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 200 / 10 meteoros."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Daño 200 / 15 meteoros."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709815885341,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "exM2tX781evZdqGk",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!exM2tX781evZdqGk"
+}

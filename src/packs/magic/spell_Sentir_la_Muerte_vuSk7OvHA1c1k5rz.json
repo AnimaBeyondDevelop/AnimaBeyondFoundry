@@ -1,0 +1,124 @@
+{
+  "name": "Sentir la Muerte",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "zt7DLwuMCRIuFGou",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6ejdmnfztzr",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 54
+    },
+    "via": {
+      "value": "death"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "En 100 m detecta muertes hace < 1 hora, o moribundo morirá < 1 minuto."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "150 m, muertes hace < 6 horas, o si alguien va a morir en diez minutos."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Percibe tiempo de vida de una persona, y si alguien ha muerto en la zona."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Percibe las causas de muertes pasadas y futuras."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709727484930,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "vuSk7OvHA1c1k5rz",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!vuSk7OvHA1c1k5rz"
+}

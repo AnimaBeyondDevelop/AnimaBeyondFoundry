@@ -1,0 +1,87 @@
+{
+  "name": "Consumir",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "5u5N0dCUDc727nCV",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ulo2irygo0s",
+      "path": "Poderes Mentales#/CF_SEP/Piroquinesis#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 16"
+      },
+      "40": {
+        "value": "Fatiga 12"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "120 RF / Daño automático de 80"
+      },
+      "240": {
+        "value": "140 RF / Daño automático de 120"
+      },
+      "280": {
+        "value": "160 RF / Daño automático de 160"
+      },
+      "320": {
+        "value": "180 RF / Daño automático de 200"
+      },
+      "440": {
+        "value": "220 RF / Daño automático de 250"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "discipline": {
+      "value": "pyrokinesis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237590842,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "wDn91rW8QvcwfZa6",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!wDn91rW8QvcwfZa6"
+}

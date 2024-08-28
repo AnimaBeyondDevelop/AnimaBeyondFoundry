@@ -1,0 +1,124 @@
+{
+  "name": "Forma Espectral",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "tDw2eSEihQNlW4KW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_347qe90djnt",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 52
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "El brujo es inmaterial y sólo puede ser dañado por ataques que afecten energía"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "RF o RM vs el doble de presencia o negativo a toda acción y vida perdida por lv de fracaso/2"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "Como el anterior pero recupera la vida que quita el grado intermedio"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "En caso de que se falle la RM o RF por más de 40 puntos el objetivo muere irremisiblemente"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709814798751,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "AMx6VFBItyfqCgi6",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!AMx6VFBItyfqCgi6"
+}

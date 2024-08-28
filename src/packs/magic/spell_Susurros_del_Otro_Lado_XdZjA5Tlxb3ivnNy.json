@@ -1,0 +1,124 @@
+{
+  "name": "Susurros del Otro Lado",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "RzxDX71OOW1KbYpa",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_lgn9qs3zv7g",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 24
+    },
+    "via": {
+      "value": "threshold"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "RM o RP 80 / 10 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "RM o RP 100 / 25 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM o RP 120 / 50 metros de radio."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM o RP 140 / 100 metros de radio."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709728362027,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "XdZjA5Tlxb3ivnNy",
+  "sort": 175000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!XdZjA5Tlxb3ivnNy"
+}

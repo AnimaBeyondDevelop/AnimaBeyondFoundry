@@ -1,0 +1,124 @@
+{
+  "name": "Transfusión",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Rzmw1aKTDVSg5lPD",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_5l1ghv9gncg",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 44
+    },
+    "via": {
+      "value": "blood"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 40
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "x2 a los PV sacrificados."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "x5 a los PV sacrificados."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "x10 a los PV sacrificados."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "x20 a los PV sacrificados."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709727278850,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "cEckmCadd7HN4M5p",
+  "sort": 193750,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!cEckmCadd7HN4M5p"
+}

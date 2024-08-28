@@ -1,0 +1,124 @@
+{
+  "name": "Encontrar",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "XgyKeK2OaUrV5OSR",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_a9bz0oil5ui",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 66
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "detection"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 140."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 180."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 260
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 220."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 260."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709814207606,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "WZ46ZGnptK7Nz1Wy",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!WZ46ZGnptK7Nz1Wy"
+}

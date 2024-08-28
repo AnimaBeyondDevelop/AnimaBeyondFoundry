@@ -1,0 +1,124 @@
+{
+  "name": "Controlar a los Muertos",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "okycOW5LFUwZWGqv",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6twb5nu56yf",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 40
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "20 metros de radio / RM 120"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "50 metros de radio / RM 140"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "100 metros de radio / RM 160"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "150 metros de radio / RM 180"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709814752441,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "OfakDA9D54EiJUiX",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!OfakDA9D54EiJUiX"
+}

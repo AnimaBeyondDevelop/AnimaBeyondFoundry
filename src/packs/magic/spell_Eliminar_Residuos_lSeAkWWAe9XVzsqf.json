@@ -1,0 +1,124 @@
+{
+  "name": "Eliminar Residuos",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "DCPQNlK1tvB1T9VA",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_uirlvk83ei7",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 60
+    },
+    "via": {
+      "value": "darkness"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "50 metros de radio."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "250 metros de radio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "1 km radio / El conjuro además borra las acciones de un individuo ante habilidades que permiten ver el pasado de objetos o lugares."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "5 km radio / Como en grado Avanzado, salvo que el hechicero puede borrar todo rastro de cuanto aconteció en el pasado en la zona afectada."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709815215408,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "lSeAkWWAe9XVzsqf",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!lSeAkWWAe9XVzsqf"
+}

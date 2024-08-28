@@ -1,0 +1,124 @@
+{
+  "name": "Control del Aire",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "k2HcJLIuBEW5qAju",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_net47mw5rj9",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 56
+    },
+    "via": {
+      "value": "air"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Radio de 50 metros / RM 120."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Radio de 300 metros / RM 140."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "Radio de 500 metros / RM 180."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "Radio de 1 kilómetro / RM 220."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709729697189,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ncSt1hvCgAgYJxgW",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ncSt1hvCgAgYJxgW"
+}

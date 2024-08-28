@@ -1,0 +1,124 @@
+{
+  "name": "Existencia Espiritual",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "NrAtkauxUAQ0r4oi",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_fhympnufzv",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 80
+    },
+    "via": {
+      "value": "essence"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Hasta 100 PDs Opcionales en desventajas"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+100 PDs / hasta 100 PDs opcionales en desventajas."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+200 PDs / hasta 200 PDs opcionales en desventajas."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 2500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+300 PDs / hasta 200 PDs opcionales en desventajas."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709811722406,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "zK5Yg83hWamFfpo5",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!zK5Yg83hWamFfpo5"
+}

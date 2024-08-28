@@ -1,0 +1,211 @@
+{
+  "name": "Aries",
+  "type": "weapon",
+  "img": "icons/skills/melee/strike-chain-whip-blue.webp",
+  "effects": [],
+  "folder": "3IjK7OoUu4uHOuK3",
+  "flags": {
+    "cf": {
+      "id": "temp_tz3kaxdm2zq",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "special": {
+      "value": "Compleja, Presa (FUE 10), Alcance (8m), Arma Grande, A 2 manos"
+    },
+    "integrity": {
+      "base": {
+        "value": 16
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 16
+    },
+    "breaking": {
+      "base": {
+        "value": 6
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 6
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 100
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 100
+    },
+    "initiative": {
+      "base": {
+        "value": -20
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": -20
+    },
+    "presence": {
+      "base": {
+        "value": 30
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "big"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      },
+      "twoHands": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "two_hands"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": false
+    },
+    "range": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": ""
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "critic": {
+      "primary": {
+        "value": "thrust"
+      },
+      "secondary": {
+        "value": "cut"
+      }
+    },
+    "weaponFue": {
+      "value": 0
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077233,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "zJLvQocLLkIKtTwB",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!zJLvQocLLkIKtTwB"
+}

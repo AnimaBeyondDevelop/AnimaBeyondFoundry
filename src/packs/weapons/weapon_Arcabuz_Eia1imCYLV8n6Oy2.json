@@ -1,0 +1,215 @@
+{
+  "name": "Arcabuz",
+  "type": "weapon",
+  "img": "icons/weapons/guns/gun-purple.webp",
+  "effects": [],
+  "folder": "FIUPBQlrfFRgs709",
+  "flags": {
+    "cf": {
+      "id": "temp_hi9ttqf7qse",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "special": {
+      "value": "Compleja, Ver"
+    },
+    "integrity": {
+      "base": {
+        "value": 9
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 9
+    },
+    "breaking": {
+      "base": {
+        "value": -3
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 5
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 70
+    },
+    "initiative": {
+      "base": {
+        "value": -20
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": -20
+    },
+    "presence": {
+      "base": {
+        "value": 20
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "small"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      },
+      "twoHands": {
+        "base": {
+          "value": 6
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 6
+      }
+    },
+    "quality": {
+      "value": 0
+    },
+    "oneOrTwoHanded": {
+      "value": ""
+    },
+    "knowledgeType": {
+      "value": ""
+    },
+    "manageabilityType": {
+      "value": "two_hands"
+    },
+    "shotType": {
+      "value": "shot"
+    },
+    "isRanged": {
+      "value": true
+    },
+    "range": {
+      "base": {
+        "value": 80
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cadence": {
+      "value": null
+    },
+    "reload": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 11
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "critic": {
+      "primary": {
+        "value": "-"
+      },
+      "secondary": {
+        "value": "-"
+      }
+    },
+    "weaponFue": {
+      "value": 11
+    },
+    "initiativeBase": {
+      "value": 0
+    },
+    "fueRequired": {
+      "value": ""
+    },
+    "hasOwnStr": {
+      "value": true
+    },
+    "isShield": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077233,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "Eia1imCYLV8n6Oy2",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!Eia1imCYLV8n6Oy2"
+}

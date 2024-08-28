@@ -1,0 +1,87 @@
+{
+  "name": "Teletransporte",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "rtPONX1tCK7NaEyG",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_lipnmctzqsa",
+      "path": "Poderes Mentales#/CF_SEP/Teletransporte#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 8"
+      },
+      "80": {
+        "value": "Fatiga 6"
+      },
+      "120": {
+        "value": "Fatiga 4"
+      },
+      "140": {
+        "value": "Fatiga 2"
+      },
+      "180": {
+        "value": "1 kilómetro / RF 120 / 100 kilogramos"
+      },
+      "240": {
+        "value": "10 kilómetros / RF 140 / 500 kilogramos"
+      },
+      "280": {
+        "value": "100 kilómetros / RF 160 / 1 tonelada"
+      },
+      "320": {
+        "value": "1000 kilómetros / RF 180 / 10 toneladas"
+      },
+      "440": {
+        "value": "10000 kilómetros / RF 200 / 100 toneladas"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "teleportation"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709238244763,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "cQnRlxP2rbiqlAlA",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!cQnRlxP2rbiqlAlA"
+}

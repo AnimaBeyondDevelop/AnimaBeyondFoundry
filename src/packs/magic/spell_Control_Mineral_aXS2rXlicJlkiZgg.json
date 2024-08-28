@@ -1,0 +1,124 @@
+{
+  "name": "Control Mineral",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "VVIFbMOeelDjqfyU",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_1wnrvexyyz8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 6
+    },
+    "via": {
+      "value": "earth"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 5
+        },
+        "zeon": {
+          "value": 30
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "Presencia máxima 30 / RM 100."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Presencia máxima 60 / RM 120."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Presencia máxima 90 / RM 130."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Presencia máxima 120 / RM 140."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709815489361,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "aXS2rXlicJlkiZgg",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!aXS2rXlicJlkiZgg"
+}

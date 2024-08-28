@@ -1,0 +1,124 @@
+{
+  "name": "Revitalizar",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "fI4JHVO33KynmdEh",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_483sn8epb09",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 40
+    },
+    "via": {
+      "value": "essence"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "50 metros de radio"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "200 metros de radio"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "500 metros de radio"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "1 Kilometro de radio"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709811590717,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "LPMqd5sZGpAXUzeZ",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!LPMqd5sZGpAXUzeZ"
+}

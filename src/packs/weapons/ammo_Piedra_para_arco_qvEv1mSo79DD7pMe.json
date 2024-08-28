@@ -1,0 +1,64 @@
+{
+  "name": "Piedra para arco",
+  "type": "ammo",
+  "img": "icons/commodities/stone/stone-white-quartz-ball.webp",
+  "effects": [],
+  "folder": "hcsPaQspsiGREXga",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6kkmmy2xtfo",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "amount": {
+      "value": 0
+    },
+    "damage": {
+      "value": 0,
+      "base": {
+        "value": 20
+      }
+    },
+    "critic": {
+      "value": "impact"
+    },
+    "integrity": {
+      "value": 0,
+      "base": {
+        "value": 5
+      }
+    },
+    "breaking": {
+      "value": 0,
+      "base": {
+        "value": 0
+      }
+    },
+    "presence": {
+      "value": 0,
+      "base": {
+        "value": 5
+      }
+    },
+    "special": {
+      "value": ""
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077233,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "qvEv1mSo79DD7pMe",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!qvEv1mSo79DD7pMe"
+}

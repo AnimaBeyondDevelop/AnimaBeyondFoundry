@@ -1,0 +1,124 @@
+{
+  "name": "Zona de Debilidad",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "prFzFpLKNnToa1lR",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_342b8eafpaw",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 68
+    },
+    "via": {
+      "value": "destruction"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "25 metros de radio / RM 140."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "100 metros de radio / RM 160."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "250 metros de radio / RM 180."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "500 metros de radio / RM 200."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709811318008,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "WBMaSGTMxjIfAbkH",
+  "sort": 175000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!WBMaSGTMxjIfAbkH"
+}

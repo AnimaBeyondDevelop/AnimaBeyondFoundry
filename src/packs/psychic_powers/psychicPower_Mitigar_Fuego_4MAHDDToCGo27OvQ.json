@@ -1,0 +1,87 @@
+{
+  "name": "Mitigar Fuego",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "THuBPMsH6XCpGsei",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_3iyov61k85",
+      "path": "Poderes Mentales#/CF_SEP/Piroquinesis#/CF_SEP/Nivel 1",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 1"
+      },
+      "40": {
+        "value": "-1 intensidad / 80 RF"
+      },
+      "80": {
+        "value": "-3 intensidades / 100 RF"
+      },
+      "120": {
+        "value": "-5 intensidades / 120 RF"
+      },
+      "140": {
+        "value": "-7 intensidades / 140 RF"
+      },
+      "180": {
+        "value": "-10 intensidades / 160 RF"
+      },
+      "240": {
+        "value": "-15 intensidades / 180 RF"
+      },
+      "280": {
+        "value": "-20 intensidades / 200 RF"
+      },
+      "320": {
+        "value": "-30 intensidades / 220 RF"
+      },
+      "440": {
+        "value": "-40 intensidades / 260 RF"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "pyrokinesis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237373523,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "4MAHDDToCGo27OvQ",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!4MAHDDToCGo27OvQ"
+}

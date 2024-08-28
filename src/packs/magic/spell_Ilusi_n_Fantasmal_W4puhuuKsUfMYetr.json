@@ -1,0 +1,124 @@
+{
+  "name": "Ilusión Fantasmal",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "WP6TlqPdCBtWuZPN",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_iv68g6extfs",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 50
+    },
+    "via": {
+      "value": "illusion"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM 120 / Presencia máxima 60"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM 150 / Presencia máxima 80"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM 180 / Presencia máxima 100"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM 210 / Presencia máxima 120"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709812804476,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "W4puhuuKsUfMYetr",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!W4puhuuKsUfMYetr"
+}

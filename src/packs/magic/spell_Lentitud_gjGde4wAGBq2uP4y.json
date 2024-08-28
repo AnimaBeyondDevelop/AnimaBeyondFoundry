@@ -1,0 +1,124 @@
+{
+  "name": "Lentitud",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "MkRVl5ZMMpDWkSCq",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_8qexb2whmsq",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 22
+    },
+    "via": {
+      "value": "earth"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM 120 / -50 al turno y -2 al Tipo de Movimiento."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "RM 140 / -70 al turno y -4 al Tipo de Movimiento."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM 160 / -90 al turno y -6 al Tipo de Movimiento."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "RM 180 / -120 al turno y -10 al Tipo de Movimiento."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709815573979,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "gjGde4wAGBq2uP4y",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!gjGde4wAGBq2uP4y"
+}

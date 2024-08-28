@@ -1,0 +1,124 @@
+{
+  "name": "Sacrificio de Poder",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "YR9MYm65kADlL7DD",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_e90gdfq1jfj",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 66
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 7
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "20 puntos de Zeon por asalto."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "50 puntos de Zeon por asalto."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "80 puntos de Zeon por asalto."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "120 puntos de Zeon por asalto."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709812237159,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "rhv8vjcpcwiKivxm",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!rhv8vjcpcwiKivxm"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Esencia Oscura",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "3HZrHIKf8BMG7LL5",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6erbmdw5rer",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 96
+    },
+    "via": {
+      "value": "darkness"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Un día."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Una semana."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Un mes."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Un año."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709815407100,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ij0162GRX5KZTZHS",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ij0162GRX5KZTZHS"
+}

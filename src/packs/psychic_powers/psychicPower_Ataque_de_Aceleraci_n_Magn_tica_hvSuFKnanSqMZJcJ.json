@@ -1,0 +1,87 @@
+{
+  "name": "Ataque de Aceleración Magnética",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "xodcpoM69HeVzVfa",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_lgovouk8n9",
+      "path": "Poderes Mentales#/CF_SEP/Electromagnetismo#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 10"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "Fatiga 2"
+      },
+      "240": {
+        "value": "+20 al daño / Rotura 14 / 50 metros de línea / 500 gramos"
+      },
+      "280": {
+        "value": "+40 al daño / Rotura 18 / 100 metros de línea / 1 kilogramo"
+      },
+      "320": {
+        "value": "+80 al daño / Rotura 26 / 150 metros de línea / 10 kilogramos"
+      },
+      "440": {
+        "value": "+120 al daño / Rotura 30 / 300 metros de línea / 100 kilogramos"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "discipline": {
+      "value": "electromagnetism"
+    },
+    "critic": {
+      "value": "thrust"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709235697595,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "hvSuFKnanSqMZJcJ",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!hvSuFKnanSqMZJcJ"
+}

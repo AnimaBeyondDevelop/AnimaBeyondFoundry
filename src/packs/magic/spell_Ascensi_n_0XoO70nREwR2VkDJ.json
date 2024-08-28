@@ -1,0 +1,124 @@
+{
+  "name": "Ascensión",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "IDXh1noA2Azer762",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_r7hiqxqble",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 98
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Gnosis máximo 30."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "Gnosis máximo 35."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 2000
+        },
+        "maintenanceCost": {
+          "value": "45"
+        },
+        "description": {
+          "value": "Gnosis máximo 40."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 20
+        },
+        "zeon": {
+          "value": 5000
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "Gnosis máximo 45."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709814427439,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "0XoO70nREwR2VkDJ",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!0XoO70nREwR2VkDJ"
+}

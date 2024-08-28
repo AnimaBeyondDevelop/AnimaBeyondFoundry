@@ -56,7 +56,7 @@ img {
 
 .common- {
   &group {
-    & .contractible-group {
+    &.contractible-group {
       position: relative;
 
       &.contracted {
@@ -79,6 +79,32 @@ img {
         }
       }
 
+      .group-buttons {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        z-index: 10;
+
+        i {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          background-color: white;
+          width: 1.25rem;
+          height: 1.25rem;
+          border-radius: 50%;
+          border: none;
+          margin-bottom: 3px;
+
+          transition: background-color 0.3ms ease-in-out;
+
+          &:hover {
+            background-color: $light-gray;
+          }
+        }
+      }
+      // TODO: Next needed for handlebars group contractible handling. Remove when all are in svelte
       .contractible-button {
         position: absolute;
         top: -0.5rem;
@@ -100,7 +126,7 @@ img {
         &.contracted {
           transform: rotate(180deg);
         }
-      }
+      } // End of removal after svelte
     }
 
     width: 100%;

@@ -1,0 +1,124 @@
+{
+  "name": "Signo de Paz",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "f06XtdROmM5iBR8J",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_dq5hp6f236r",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 54
+    },
+    "via": {
+      "value": "peace"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 120."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 180
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 160."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 260
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 200."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 340
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "RM 240."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709727415430,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ZelKHpJnUIgh3knC",
+  "sort": 196875,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ZelKHpJnUIgh3knC"
+}

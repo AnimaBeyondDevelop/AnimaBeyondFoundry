@@ -1,0 +1,87 @@
+{
+  "name": "Control Mental",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "ZXmM8tXcO8DHKrIW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_7nx9q7yx3dq",
+      "path": "Poderes Mentales#/CF_SEP/Telepatía",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 8"
+      },
+      "80": {
+        "value": "Fatiga 6"
+      },
+      "120": {
+        "value": "Fatiga 4"
+      },
+      "140": {
+        "value": "100 RP"
+      },
+      "180": {
+        "value": "120 RP"
+      },
+      "240": {
+        "value": "140 RP"
+      },
+      "280": {
+        "value": "160 RP"
+      },
+      "320": {
+        "value": "180 RP"
+      },
+      "440": {
+        "value": "220 RP"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telepathy"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237917268,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "f7fmvpoNc8gRJ7nf",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!f7fmvpoNc8gRJ7nf"
+}

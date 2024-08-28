@@ -1,0 +1,124 @@
+{
+  "name": "Armadura de Luz",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "da9Gh2g71Qfwiad4",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_o3nf83lrqzk",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 16
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 60
+        },
+        "maintenanceCost": {
+          "value": "5"
+        },
+        "description": {
+          "value": "TA 2 en Energía y TA 1 en el resto."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 90
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "TA 5 en Energía y TA 2 en el resto."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "TA 8 en Energía y TA 4 en el resto."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "TA 12 en Energía y TA 6 en el resto."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709813080893,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "miZTeWqEZfmLhi8O",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!miZTeWqEZfmLhi8O"
+}

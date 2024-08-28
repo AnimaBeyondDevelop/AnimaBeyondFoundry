@@ -1,0 +1,87 @@
+{
+  "name": "Telequinesis Orgánica",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "2tzDD4KCi9ends71",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_l57iohj382f",
+      "path": "Poderes Mentales#/CF_SEP/Telequinesis",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 6"
+      },
+      "40": {
+        "value": "Fatiga 4"
+      },
+      "80": {
+        "value": "Fatiga 2"
+      },
+      "120": {
+        "value": "100 Kg. / Tipo de vuelo 4 / 100 RF"
+      },
+      "140": {
+        "value": "250 Kg. / Tipo de vuelo 6 / 120 RF"
+      },
+      "180": {
+        "value": "500 Kg. / Tipo de vuelo 8 / 140 RF"
+      },
+      "240": {
+        "value": "1.000 Kg. / Tipo de vuelo 10 / 160 RF"
+      },
+      "280": {
+        "value": "2.500 Kg. / Tipo de vuelo 12 / 180 RF"
+      },
+      "320": {
+        "value": "5.000 Kg. / Tipo de vuelo 14 / 200 RF"
+      },
+      "440": {
+        "value": "10.000 Kg. / Tipo de vuelo 16 / 220 RF"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telekenisis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709238073981,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "6yUFmPkBwr5wkK2P",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!6yUFmPkBwr5wkK2P"
+}
