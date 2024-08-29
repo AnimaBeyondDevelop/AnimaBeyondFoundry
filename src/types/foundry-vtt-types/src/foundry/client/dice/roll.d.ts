@@ -147,10 +147,8 @@ declare global {
      * console.log(r.total);  // 11
      * ```
      */
-    evaluate(options?: InexactPartial<Options> & { async: true }): Promise<Evaluated<this>>;
-    evaluate(options: InexactPartial<Options & { async: false }>): Evaluated<this>;
-    evaluate(options?: InexactPartial<Options>): Evaluated<this> | Promise<Evaluated<this>>;
-
+    evaluate(options?): Promise<Roll>;
+    
     /**
      * Evaluate the roll asynchronously.
      * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
@@ -173,9 +171,7 @@ declare global {
      * Alias for evaluate.
      * @see Roll#evaluate
      */
-    roll(options?: InexactPartial<Options> & { async: true }): Promise<Evaluated<this>>;
-    roll(options: InexactPartial<Options & { async: false }>): Evaluated<this>;
-    roll(options?: InexactPartial<Options>): Evaluated<this> | Promise<Evaluated<this>>;
+    roll(options?): Promise<Roll>;
 
     /**
      * Create a new Roll object using the original provided formula and data.
@@ -183,9 +179,7 @@ declare global {
      * @param options - Evaluation options passed to Roll#evaluate
      * @returns A new Roll object, rolled using the same formula and data
      */
-    reroll(options?: InexactPartial<Options> & { async: true }): Promise<Evaluated<this>>;
-    reroll(options: InexactPartial<Options & { async: false }>): Evaluated<this>;
-    reroll(options?: InexactPartial<Options>): Evaluated<this> | Promise<Evaluated<this>>;
+    reroll(options?): Promise<Roll>;
 
     /**
      * A factory method which constructs a Roll instance using the default configured Roll class.

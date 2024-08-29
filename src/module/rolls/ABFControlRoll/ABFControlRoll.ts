@@ -4,7 +4,7 @@ import { ABFRoll } from '../ABFRoll';
 export default class ABFControlRoll extends ABFRoll {
   success = false;
 
-  public evaluate(): ABFFoundryRoll {
+  public evaluate(): Promise<ABFFoundryRoll> {
     let penalty = Math.max(0, Math.floor(-this.foundryRoll.data.general.modifiers.allActions.final.value / 20));
 
     if (this.foundryRoll.lastResult === 10) {
@@ -14,6 +14,8 @@ export default class ABFControlRoll extends ABFRoll {
 
     this.foundryRoll.recalculateTotal(-penalty);
 
-    return this.foundryRoll;
+    return new Promise<ABFFoundryRoll>((resolve, reject) => {
+      resolve(this.foundryRoll);
+    });
   }
 }

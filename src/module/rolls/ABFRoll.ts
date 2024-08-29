@@ -39,5 +39,5 @@ export abstract class ABFRoll {
     return this.foundryRoll;
   }
 
-  abstract evaluate(options?: any): ABFFoundryRoll;
+  abstract evaluate(options?: any): Promise<ABFFoundryRoll>;
 }

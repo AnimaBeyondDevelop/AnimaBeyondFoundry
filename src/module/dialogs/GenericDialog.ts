@@ -22,7 +22,7 @@ export class GenericDialog extends FormApplication<FormApplicationOptions, Gener
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['abf-dialog generic-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
@@ -58,7 +58,7 @@ export class GenericDialog extends FormApplication<FormApplicationOptions, Gener
   }
 
   async _updateObject(event, formData) {
-    this.modalData = mergeObject(this.modalData, formData);
+    this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
     this.render();
   }

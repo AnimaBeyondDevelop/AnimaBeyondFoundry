@@ -4,16 +4,22 @@ import { ABFRoll } from '../ABFRoll';
 export default class ABFExploderRoll extends ABFRoll {
   private lastOpenRange = this.openRollRange;
   
-  get canExplode() {
-    const lastResult = this.firstDice.results[this.firstDice.results.length-1]
-    if (this.openOnDoubles && this.checkDoubles(lastResult.result)) {
-      this.firstDice.results[this.firstDice.results.length-1] = {
-        ...lastResult,
-        success: true,
-        exploded: true,
-        count: 100
+  async canExplode() {
+    const lastResult = this.firstDice.results[this.firstDice.results.length-1];
+    
+    if (this.openOnDoubles && lastResult.result % 11 === 0) {
+      const newRoll = new ABFFoundryRoll('1d10');
+      await newRoll.evaluate();
+
+      if(newRoll.total === (lastResult.result / 11)) {
+        this.firstDice.results[this.firstDice.results.length-1] = {
+          ...lastResult,
+          success: true,
+          exploded: true,
+          count: 100
+        }
+        return true;
       }
-      return true;
     }
     let exploded = lastResult.result >= this.lastOpenRange;
     lastResult.success = exploded;
@@ -26,16 +32,17 @@ export default class ABFExploderRoll extends ABFRoll {
 
   protected checkDoubles(result: number): boolean {
     if (result % 11 === 0) {
-      const newRoll = new ABFFoundryRoll('1d10').evaluate();
+      const newRoll = new ABFFoundryRoll('1d10');
+      newRoll.evaluate();
 
       return (newRoll.total === (result / 11)) 
     }
     return false;
   }
 
-  public evaluate(): ABFFoundryRoll {
-    if (this.canExplode) {
-      this.explodeDice(this.lastOpenRange + 1);
+  public async evaluate(): Promise<ABFFoundryRoll> {
+    if (await this.canExplode()) {
+      await this.explodeDice(this.lastOpenRange + 1);
     }
 
     this.firstDice.results[0].failure = 
@@ -43,17 +50,21 @@ export default class ABFExploderRoll extends ABFRoll {
 
     this.foundryRoll.recalculateTotal();
 
-    return this.foundryRoll;
+    return new Promise<ABFFoundryRoll>((resolve, reject) => {
+      resolve(this.foundryRoll);
+    });
   }
 
-  private explodeDice(openRange: number) {
+  private async explodeDice(openRange: number) {
     this.lastOpenRange = Math.min(openRange, 100);
 
-    const newRoll = new ABFFoundryRoll('1d100').evaluate();
+    const newRoll = new ABFFoundryRoll('1d100');
+    await newRoll.evaluate();
+    
     const newResult = this.addRoll(newRoll);
 
-    if (this.canExplode) {
-      this.explodeDice(openRange + 1);
+    if (await this.canExplode()) {
+      await this.explodeDice(openRange + 1);
     }
   }
 }

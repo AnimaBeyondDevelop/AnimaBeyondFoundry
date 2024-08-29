@@ -220,7 +220,7 @@ export class CombatAttackDialog extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['abf-dialog combat-attack-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
@@ -261,7 +261,7 @@ export class CombatAttackDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('.send-attack').click(() => {
+    html.find('.send-attack').click(async () => {
       const {
         combat: {
           weapon,
@@ -342,7 +342,7 @@ export class CombatAttackDialog extends FormApplication {
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
 
-        roll.roll();
+        await roll.roll();
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
@@ -685,7 +685,7 @@ export class CombatAttackDialog extends FormApplication {
     const prevSpell = this.modalData.attacker.mystic.spellUsed;
     const prevPower = this.modalData.attacker.psychic.powerUsed;
 
-    this.modalData = mergeObject(this.modalData, formData);
+    this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
     if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
       this.modalData.attacker.combat.criticSelected = undefined;

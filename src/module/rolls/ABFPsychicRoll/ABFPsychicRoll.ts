@@ -4,7 +4,7 @@ import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffec
 import { psychicFatigueCheck } from '../../combat/utils/psychicFatigueCheck.js';
 
 export default class ABFPsychicRoll extends ABFExploderRoll {
-  public evaluate(): ABFFoundryRoll {
+  public evaluate(): Promise<ABFFoundryRoll> {
     super.evaluate();
     const {
       general: {
@@ -45,6 +45,8 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
 
     this.foundryRoll.overrideTotal(newPotentialTotal);
 
-    return this.foundryRoll;
+    return new Promise<ABFFoundryRoll>((resolve, reject) => {
+      resolve(this.foundryRoll);
+    });
   }
 }

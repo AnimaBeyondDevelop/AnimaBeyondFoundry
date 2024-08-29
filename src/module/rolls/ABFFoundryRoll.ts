@@ -12,7 +12,7 @@ import { ABFActorDataSourceData } from '../types/Actor';
 export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
   private readonly abfRoll: ABFRoll | undefined;
 
-  constructor(
+   constructor(
     rawFormula: string,
     data?: ABFActorDataSourceData,
     options?: Partial<RollTerm.EvaluationOptions>
@@ -76,13 +76,15 @@ export default class ABFFoundryRoll extends Roll<ABFActorDataSourceData> {
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(partialOptions?: any): any {
-    const options = { ...partialOptions, async: false };
+  async evaluate(options?): Promise<Roll> {
 
-    super.evaluate(options);
+    await super.evaluate(options);
 
-    this.abfRoll?.evaluate(options);
+    await this.abfRoll?.evaluate(options);
 
-    return this;
+    return new Promise<Roll>((resolve, reject) => {
+      resolve(this);
+    });
   }
 }
+
