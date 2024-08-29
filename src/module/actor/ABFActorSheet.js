@@ -82,6 +82,28 @@ export default class ABFActorSheet extends sveltify(
     return 1000;
   }
 
+   /**
+   * Tests if a given user has permission to render the ActorSheet.
+   * If it does not, instead of rendering the sheet, shows the Actor's portrait.
+   * @param {ABFActor} user
+   * @returns {boolean}
+   */
+   _canUserView(user) {
+    const canView = this.actor.testUserPermission(user, 'OBSERVER');
+    if (!canView) {
+      this.displayActorImagePopout();
+    }
+    return canView;
+  }
+
+  displayActorImagePopout() {
+    const imagePopout = new ImagePopout(this.actor.img, {
+      title: this.actor.name,
+      uuid: this.actor.uuid
+    });
+    imagePopout.render(true);
+  }
+
   async getData(options) {
     const sheet = await super.getData(options);
 
