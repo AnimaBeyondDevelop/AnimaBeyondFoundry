@@ -20,7 +20,7 @@ export default class ABFFoundryRoll extends Roll {
   /**
    * @param {string} rawFormula
    * @param {import('../types/Actor').ABFActorDataSourceData} [data]
-   * @param {Partial<Roll<RollTerm.EvaluationOptions>} [options]
+   * @param {Partial<RollTerm.EvaluationOptions>} [options]
    */
   constructor(rawFormula, data, options) {
     let formula = rawFormula.trim();
@@ -82,13 +82,16 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(partialOptions) {
+  /** @returns {Promise<Roll>} */
+  async evaluate(partialOptions) {
     const options = { ...partialOptions, async: false };
 
-    super.evaluate(options);
+    await super.evaluate(options);
 
-    this.abfRoll?.evaluate(options);
+    await this.abfRoll?.evaluate(options);
 
-    return this;
+    return new Promise((resolve, reject) => {
+      resolve(this);
+    });
   }
 }

@@ -2,14 +2,15 @@ import ABFFoundryRoll from '../ABFFoundryRoll';
 import ABFExploderRoll from '../ABFExploderRoll/ABFExploderRoll';
 
 export default class ABFInitiativeRoll extends ABFExploderRoll {
-  evaluate() {
-    super.evaluate();
+  async evaluate() {
+    await super.evaluate();
 
     if (this.fumbled) {
       this.foundryRoll.recalculateTotal(this.calculateFumbledInitiativeMod());
     }
-
-    return this.foundryRoll;
+    return new Promise((resolve, reject) => {
+      resolve(this.foundryRoll);
+    });
   }
 
   /** @private */

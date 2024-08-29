@@ -238,7 +238,7 @@ export class CombatDefenseDialog extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['abf-dialog combat-defense-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
@@ -277,7 +277,7 @@ export class CombatDefenseDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('.send-defense').click(e => {
+    html.find('.send-defense').click(async e => {
       const {
         combat: {
           fatigueUsed,
@@ -378,7 +378,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
 
-      roll.roll();
+      await roll.roll();
 
       if (this.modalData.defender.showRoll) {
         const { i18n } = game;
@@ -711,7 +711,7 @@ export class CombatDefenseDialog extends FormApplication {
   async _updateObject(event, formData) {
     const prevSpell = this.modalData.defender.mystic.spellUsed;
 
-    this.modalData = mergeObject(this.modalData, formData);
+    this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
     if (prevSpell !== this.modalData.defender.mystic.spellUsed) {
       const { spells } = this.defenderActor.system.mystic;

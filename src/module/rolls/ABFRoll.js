@@ -80,7 +80,7 @@ export class ABFRoll {
 
   /**
    * @abstract
-   * @return {ABFFoundryRoll}
+   * @return {Promise<ABFFoundryRoll>}
    */
   evaluate(options) {}
 }

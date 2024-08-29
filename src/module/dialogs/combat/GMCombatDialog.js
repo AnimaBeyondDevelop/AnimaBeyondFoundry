@@ -46,7 +46,7 @@ export class GMCombatDialog extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['abf-dialog gm-combat-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
@@ -128,14 +128,14 @@ export class GMCombatDialog extends FormApplication {
       this.close();
     });
 
-    html.find('.roll-resistance').click(() => {
+    html.find('.roll-resistance').click(async () => {
       const { value, type } = this.modalData.attacker.result.values?.resistanceEffect;
       const resistance =
         this.defenderActor.system.characteristics.secondaries.resistances[type].base
           .value;
       let formula = `1d100 + ${resistance ?? 0} - ${value ?? 0}`;
       const resistanceRoll = new ABFFoundryRoll(formula, this.defenderActor.system);
-      resistanceRoll.roll();
+      await resistanceRoll.roll();
       const { i18n } = game;
       const flavor = i18n.format('macros.combat.dialog.physicalDefense.resist.title', {
         target: this.modalData.attacker.token.name
@@ -328,7 +328,7 @@ export class GMCombatDialog extends FormApplication {
   }
 
   async _updateObject(event, formData) {
-    this.modalData = mergeObject(this.modalData, formData);
+    this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
     this.render();
   }
