@@ -1,0 +1,156 @@
+{
+  "name": "Completa pesada",
+  "type": "armor",
+  "img": "icons/equipment/chest/breastplate-cuirass-steel-grey.webp",
+  "effects": [],
+  "folder": "RqvwcydcVBdFp0ow",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hux5484g755",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 6
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 6
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 6
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 6
+    },
+    "thrust": {
+      "base": {
+        "value": 6
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 6
+    },
+    "heat": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "electricity": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "cold": {
+      "base": {
+        "value": 4
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 4
+    },
+    "energy": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "integrity": {
+      "base": {
+        "value": 19
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 19
+    },
+    "presence": {
+      "base": {
+        "value": 45
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 45
+    },
+    "movementRestriction": {
+      "base": {
+        "value": -5
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": -60
+      },
+      "final": {
+        "value": 0
+      },
+      "value": -60
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 120
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 120
+    },
+    "type": {
+      "value": "hard"
+    },
+    "localization": {
+      "value": "complete"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1691058437668,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "ZNqD1UQTyD336Wze",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ZNqD1UQTyD336Wze"
+}

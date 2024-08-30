@@ -1,0 +1,124 @@
+{
+  "name": "Destrucción de Zeon",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9pf8P0te1qpYyT9i",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_r1wzah208pa",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 86
+    },
+    "via": {
+      "value": "destruction"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-50 al Zeon del Conjuro / Sólo afecta a conjuros de grado base."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-150 al Zeon del Conjuro / Afecta a conjuros hasta grado intermedio."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-250 al Zeon del Conjuro / Afecta a conjuros hasta grado avanzado."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 700
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "-350 al Zeon del Conjuro/ Afecta a conjuros hasta grado arcano."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709811416134,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "WU63L3LS0ip6Pdoi",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!WU63L3LS0ip6Pdoi"
+}

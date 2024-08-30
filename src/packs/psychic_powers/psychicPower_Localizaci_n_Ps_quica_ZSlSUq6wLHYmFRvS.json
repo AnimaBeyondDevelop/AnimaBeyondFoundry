@@ -1,0 +1,87 @@
+{
+  "name": "Localización Psíquica",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "F5hHHDvDWfxxGkLO",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_08jdpv725sgo",
+      "path": "Poderes Mentales#/CF_SEP/Telepatía",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 8"
+      },
+      "40": {
+        "value": "Fatiga 6"
+      },
+      "80": {
+        "value": "Fatiga 4"
+      },
+      "120": {
+        "value": "Fatiga 2"
+      },
+      "140": {
+        "value": "Hasta 10 kilómetros de radio / 140 RP"
+      },
+      "180": {
+        "value": "Hasta 100 kilómetros de radio / 160 RP"
+      },
+      "240": {
+        "value": "Hasta 500 kilómetros de radio / 180 RP"
+      },
+      "280": {
+        "value": "Hasta 1.000 kilómetros de radio / 200 RP"
+      },
+      "320": {
+        "value": "Hasta 5.000 kilómetros de radio / 220 RP"
+      },
+      "440": {
+        "value": "Cualquier distancia / 260 RP"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telepathy"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084473,
+    "modifiedTime": 1709237887317,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "ZSlSUq6wLHYmFRvS",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ZSlSUq6wLHYmFRvS"
+}

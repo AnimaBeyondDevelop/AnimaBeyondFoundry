@@ -1,0 +1,124 @@
+{
+  "name": "El Don de la Vida",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "C2vKkSwv6m089E0m",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_d8ar7ov6uc7",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 98
+    },
+    "via": {
+      "value": "creation"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Nivel 1 y 50 PD en el caso de que se trate de un ser natural."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 2000
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Nivel 6 y 100 PD en el caso de que se trate de un ser natural."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 4000
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Nivel 11 y 150 PD en el caso de que se trate de un ser natural."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 19
+        },
+        "zeon": {
+          "value": 8000
+        },
+        "maintenanceCost": {
+          "value": "No"
+        },
+        "description": {
+          "value": "Nivel 16 y 200 PD en el caso de que se trate de un ser natural."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709730234475,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "tzxRSjdpocUHNqkI",
+  "sort": 175000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!tzxRSjdpocUHNqkI"
+}

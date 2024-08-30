@@ -1,0 +1,124 @@
+{
+  "name": "Descarga de Almas",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9gCY3nAHw5kHhqSZ",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_hsq3pdmlx6f",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 68
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "attack"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 140
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Daño 100"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 11
+        },
+        "zeon": {
+          "value": 260
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Daño 200"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 380
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Daño 300"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "Daño 400"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709814847359,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "hNIEdROUG6CLQb2H",
+  "sort": 250000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!hNIEdROUG6CLQb2H"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Reflejo del Alma",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "PfMzDYOHgBOXpzE4",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_sz089gj08z9",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 76
+    },
+    "via": {
+      "value": "water"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "RM 140 / Copia entidades de hasta Nivel 3."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "RM 160 / Copia entidades de hasta Nivel 5."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "RM 180 / Copia entidades de hasta Nivel 8 / Imita poderes de hasta Gnosis 25."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "RM 200 / Copia entidades de hasta Nivel 12 / Imita poderes de hasta Gnosis 30."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082658,
+    "modifiedTime": 1709728828918,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "hxfuihDUS0NdGRR7",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!hxfuihDUS0NdGRR7"
+}

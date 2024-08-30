@@ -1,0 +1,124 @@
+{
+  "name": "Detener el Tiempo",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "7suqeBOKQKGsJvBK",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_nyv9otzy5l",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 44
+    },
+    "via": {
+      "value": "time"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "120 RM / 10 metros."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "140 RM / 25 metros."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "160 RM / 50 metros."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "180 RM / 100 metros."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082135,
+    "modifiedTime": 1709727835055,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "T7pNHuUe4f1ArPJa",
+  "sort": 287500,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!T7pNHuUe4f1ArPJa"
+}

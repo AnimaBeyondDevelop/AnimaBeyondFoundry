@@ -1,0 +1,124 @@
+{
+  "name": "Tormenta de Fuego",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "jttAL8JU4gZTuSuG",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_n67d04f8d8",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 76
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "heat"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 8
+        },
+        "zeon": {
+          "value": 150
+        },
+        "maintenanceCost": {
+          "value": "15"
+        },
+        "description": {
+          "value": "Daño 100 / 25 metros de radio / Habilidad de Ataque Absurdo (180)."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "Daño 100 / 150 metros de radio / Habilidad de Ataque Casi Imposible (240)."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 240
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "Daño 100 / 200 metros de radio / Habilidad de Imposible (280)."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 280
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "Daño 100 / 250 metros de radio / Habilidad de Ataque Inhumano (320)."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709812320296,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "LCtiUX2FcZ5CFVyK",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!LCtiUX2FcZ5CFVyK"
+}

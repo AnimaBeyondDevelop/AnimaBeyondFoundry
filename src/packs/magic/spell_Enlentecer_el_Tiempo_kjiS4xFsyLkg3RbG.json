@@ -1,0 +1,124 @@
+{
+  "name": "Enlentecer el Tiempo",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "PfMzDYOHgBOXpzE4",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_sz089gj08z9",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 80
+    },
+    "via": {
+      "value": "water"
+    },
+    "spellType": {
+      "value": "automatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "100 metros de radio / RM 120 / El tiempo se reduce una décima parte."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 320
+        },
+        "maintenanceCost": {
+          "value": "25"
+        },
+        "description": {
+          "value": "200 metros de radio / RM 140 / El tiempo se reduce una centésima parte."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 450
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "500 metros de radio / RM 160 / El tiempo se reduce una milésima parte."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "35"
+        },
+        "description": {
+          "value": "1 kilómetro de radio / RM 180 / El tiempo se reduce una millonésima parte."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991082409,
+    "modifiedTime": 1709728834717,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "kjiS4xFsyLkg3RbG",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!kjiS4xFsyLkg3RbG"
+}

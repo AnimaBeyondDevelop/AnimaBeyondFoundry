@@ -1,0 +1,76 @@
+{
+  "name": "Un Instante Eterno",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "hyyuZIW85NoH3aMc",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_n142a8tuv4e",
+      "path": "Poderes Mentales#/CF_SEP/Crioquinesis#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 16"
+      },
+      "40": {
+        "value": "Fatiga 12"
+      },
+      "80": {
+        "value": "Fatiga 8"
+      },
+      "120": {
+        "value": "Fatiga 6"
+      },
+      "140": {
+        "value": "Fatiga 4"
+      },
+      "180": {
+        "value": "120 RF / 5 metros de radio"
+      },
+      "240": {
+        "value": "140 RF / 10 metros de radio"
+      },
+      "280": {
+        "value": "160 RF / 20 metros de radio"
+      },
+      "320": {
+        "value": "180 RF / 50 metros de radio"
+      },
+      "440": {
+        "value": "200 RF / 100 metros de radio"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "hasMaintenance": {
+      "value": true
+    },
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1691058457457,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "ku3VV1AykkzxGIfc",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!ku3VV1AykkzxGIfc"
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Sacrificar a Otros",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "B9c1xVQNllFt7QLW",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_axe8oq77ajf",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 92
+    },
+    "via": {
+      "value": "fire"
+    },
+    "spellType": {
+      "value": "animatic"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "attack"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "energy"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "RM 120 / 1 kilómetro de área."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "70"
+        },
+        "description": {
+          "value": "RM 140 / 2 kilómetros de área."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "100"
+        },
+        "description": {
+          "value": "RM 160 / 3 kilómetros de área."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 19
+        },
+        "zeon": {
+          "value": 750
+        },
+        "maintenanceCost": {
+          "value": "150"
+        },
+        "description": {
+          "value": "RM 180 / 5 kilómetros de área."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709812478599,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "kKyQRixtfHrRRPbj",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!kKyQRixtfHrRRPbj"
+}

@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Subvía de Vacío",
+  "sorting": "m",
+  "type": "Item",
+  "folder": null,
+  "_id": "Xf2D8m3WNzaz3vya",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1709727900959,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_key": "!folders!Xf2D8m3WNzaz3vya"
+}

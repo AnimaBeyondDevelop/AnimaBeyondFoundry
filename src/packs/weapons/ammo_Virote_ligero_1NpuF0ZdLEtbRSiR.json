@@ -1,0 +1,64 @@
+{
+  "name": "Virote ligero",
+  "type": "ammo",
+  "img": "icons/weapons/polearms/spear-hooked-red.webp",
+  "effects": [],
+  "folder": "hcsPaQspsiGREXga",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_6kkmmy2xtfo",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "amount": {
+      "value": 0
+    },
+    "damage": {
+      "value": 0,
+      "base": {
+        "value": 120
+      }
+    },
+    "critic": {
+      "value": "thrust"
+    },
+    "integrity": {
+      "value": 0,
+      "base": {
+        "value": 16
+      }
+    },
+    "breaking": {
+      "value": 0,
+      "base": {
+        "value": 8
+      }
+    },
+    "presence": {
+      "value": 0,
+      "base": {
+        "value": 15
+      }
+    },
+    "special": {
+      "value": "Munición para balistas"
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991077555,
+    "modifiedTime": 1691058443100,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "1NpuF0ZdLEtbRSiR",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!1NpuF0ZdLEtbRSiR"
+}

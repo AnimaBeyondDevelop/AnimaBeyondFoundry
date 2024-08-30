@@ -1,0 +1,124 @@
+{
+  "name": "En el Interior del Espejo",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "iDWVLHX2kFAsY7J7",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_ossaaz3mm4o",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 90
+    },
+    "via": {
+      "value": "water"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "30"
+        },
+        "description": {
+          "value": "500 metros de radio máximo."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 480
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "2 kilómetros de radio máximo."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "5 kilómetros de radio máximo."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 17
+        },
+        "zeon": {
+          "value": 800
+        },
+        "maintenanceCost": {
+          "value": "70"
+        },
+        "description": {
+          "value": "10 kilómetros de radio máximo / Se pueden imitar seres de hasta presencia 30."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709728860718,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "QXhSa1173NLbKQk2",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!QXhSa1173NLbKQk2"
+}
