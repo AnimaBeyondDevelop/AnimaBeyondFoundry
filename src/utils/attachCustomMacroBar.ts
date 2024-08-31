@@ -2,7 +2,7 @@ import { renderTemplates } from '../module/utils/renderTemplates';
 import { Templates } from '../module/utils/constants';
 import { ABFMacros } from '../module/macros/ABFMacros';
 import { ABFSettingsKeys } from './registerSettings';
-import { Log } from './Log';
+import { Logger } from './log';
 import { PromptDialog } from '../module/dialogs/PromptDialog';
 
 type DefaultMacroConfig = {
@@ -52,7 +52,7 @@ export const attachCustomMacroBar = async () => {
     defaultMacroConfigs.push({
       hotkey: e => e.ctrlKey && e.key === 'd',
       fn() {
-        Log.log('Debug');
+        Logger.log('Debug');
         return new PromptDialog('This is a test, are you ready to explode?');
       }
     });

@@ -7,7 +7,7 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { prepareActor } from './utils/prepareActor/prepareActor';
 import { INITIAL_ACTOR_DATA } from './constants';
 import ABFActorSheet from './ABFActorSheet';
-import { Log } from '../../utils/Log';
+import { Logger } from '../../utils';
 import { migrateItem } from '../items/migrations/migrateItem';
 import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
@@ -33,7 +33,7 @@ export class ABFActor extends Actor {
     this.i18n = (game as Game).i18n;
 
     if (this.system.version !== INITIAL_ACTOR_DATA.version) {
-      Log.log(
+      Logger.log(
         `Upgrading actor ${this.name} (${this._id}) from version ${this.system.version} to ${INITIAL_ACTOR_DATA.version}`
       );
 

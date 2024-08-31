@@ -1,5 +1,6 @@
 import { registerSettings } from './utils/registerSettings';
 import { preloadTemplates } from './utils/preloadTemplates';
+import { Logger } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
@@ -16,7 +17,7 @@ import { applyMigrations } from './module/migration/migrate';
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-  console.log('AnimaBF | Initializing system');
+  Logger.log('Initializing system');
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
@@ -98,3 +99,4 @@ Handlebars.JavaScriptCompiler.prototype.nameLookup = function (parent, name) {
 
   return `${parent}['${name}']`;
 };
+
