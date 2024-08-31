@@ -74,23 +74,6 @@ Hooks.once('ready', () => {
   applyMigrations();
 });
 
-Hooks.on('getActorDirectoryEntryContext', (html, options) => {
-  // Add a new context menu option
-  options.push({
-    name: "Custom Option",
-    icon: '<i class="fas fa-user"></i>', // You can change this to any FontAwesome icon
-    callback: target => {
-      let actorId = target.data('document-id');
-      let actor = game.actors.get(actorId);
-      if (actor) {
-        // Your custom action here
-        console.log(`Custom option clicked for actor: ${actor.name}`);
-        ui.notifications.info(`Custom option clicked for actor: ${actor.name}`);
-      }
-    }
-  });
-});
-
 // Add any additional hooks if necessary
 
 // This function allow us to use xRoot in templates to extract the root object in Handlebars template
