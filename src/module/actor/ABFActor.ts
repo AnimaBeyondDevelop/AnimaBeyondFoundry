@@ -884,7 +884,7 @@ export class ABFActor extends Actor {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
     if (!configuration) {
-      console.error(`No configuration found for item type ${type}`);
+      Logger.error(`No configuration found for item type ${type}`);
 
       return [];
     }
@@ -900,7 +900,7 @@ export class ABFActor extends Actor {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
     if (!configuration) {
-      console.error(`No configuration found for item type ${type}`);
+      Logger.error(`No configuration found for item type ${type}`);
 
       return [];
     }
