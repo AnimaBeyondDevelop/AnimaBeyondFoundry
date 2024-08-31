@@ -1,7 +1,7 @@
 import { Templates } from '../module/utils/constants';
 
 export const preloadTemplates = () => {
-  const templatePaths: string[] = [
+  const templatePaths = [
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
     Templates.Dialog.newSupernaturalShield.main,

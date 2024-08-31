@@ -1,6 +1,5 @@
 import { registerSettings } from './utils/registerSettings';
-import { preloadTemplates } from './utils/preloadTemplates';
-import { Logger } from './utils';
+import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
