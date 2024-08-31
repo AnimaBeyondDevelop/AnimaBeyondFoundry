@@ -1,0 +1,1 @@
+export { sveltify } from './sveltify';

@@ -38,7 +38,7 @@ export const SpellGradeNames = {
   ARCANE: 'anima.ui.mystic.spell.grade.arcane.title'
 };
 export const INITIAL_MYSTIC_SPELL_DATA = {
-  description: { value: '' },
+  description: '',
   level: { value: 0 },
   via: { value: '' },
   hasDailyMaintenance: { value: false },
