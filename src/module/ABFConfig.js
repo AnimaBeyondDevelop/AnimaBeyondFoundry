@@ -13,7 +13,8 @@ import {
 } from './types/psychic/PsychicPowerItemConfig.js';
 import { SpellGrades } from './types/mystic/SpellItemConfig';
 
-export const ABFConfig: Record<string, any> = {};
+/** @type {Record<string, object>} */
+export const ABFConfig = {};
 
 const criticTypes = {
   [WeaponCritic.CUT]: 'anima.ui.combat.armors.at.cut.title',

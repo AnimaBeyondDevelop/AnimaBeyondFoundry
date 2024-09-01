@@ -3,7 +3,8 @@ import { Templates } from '../../utils/constants';
 import { ABFDialogs } from '../../dialogs/ABFDialogs';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
 
-const openDialog = async (): Promise<{ [key: string]: unknown }> => {
+/** @type {() => Promise<{ [key: string]: unknown }>} */
+const openDialog = async () => {
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
       name: Templates.Dialog.DamageCalculator,
@@ -15,19 +16,18 @@ const openDialog = async (): Promise<{ [key: string]: unknown }> => {
   );
 
   return new Promise(resolve => {
-    const typedGame = game as Game;
-
     new Dialog({
-      title: typedGame.i18n.localize('macros.damageCalculator.dialog.title'),
+      title: game.i18n.localize('macros.damageCalculator.dialog.title'),
       content: dialogHTML,
       buttons: {
         submit: {
           icon: iconHTML,
-          label: typedGame.i18n.localize('dialogs.continue'),
-          callback: (html: JQuery) => {
+          label: game.i18n.localize('dialogs.continue'),
+          callback: html => {
+            /** @type {{ [key: string]: number }} */
             const results = new FormDataExtended(html.find('form')[0], {}).toObject();
 
-            resolve(results as { [key: string]: number });
+            resolve(results);
           }
         }
       },
@@ -64,9 +64,8 @@ export const damageCalculatorMacro = async () => {
     final = `${final}<h2>Daño final: <span style='color:#ff1515'>${result.damage}</span></h2>`;
   }
 
-  const typedGame = game as Game;
-
-  const user = typedGame.collections?.get('User') as User[] | undefined;
+  /** @type {User[] | undefined} */
+  const user = game.collections?.get('User');
 
   if (user !== undefined) {
     const isGM = u => u.isGM;
@@ -75,7 +74,7 @@ export const damageCalculatorMacro = async () => {
     const gmIds = user
       .filter(isGM)
       .filter(hasId)
-      .map(u => u.id!);
+      .map(u => u.id);
 
     if (gmIds.length > 0) {
       ChatMessage.create({
