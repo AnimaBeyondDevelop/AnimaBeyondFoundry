@@ -1,8 +1,6 @@
-import { HandlebarsHelper } from '../registerHelpers';
-
-export const getKeyOfHBSHelper: HandlebarsHelper<void> = {
+export const getKeyOfHBSHelper = {
   name: 'getKeyOf',
-  fn: (dataKey: string) => {
+  fn: dataKey => {
     if (!dataKey.startsWith('data')) {
       throw Error('getKeyOf handlebar helper: parameter must start with "data"');
     }

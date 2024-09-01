@@ -5,13 +5,15 @@ import { ABFSettingsKeys } from './registerSettings';
 import { Logger } from './log';
 import { PromptDialog } from '../module/dialogs/PromptDialog';
 
-type DefaultMacroConfig = {
-  macroSelectorId?: `#${string}`;
-  hotkey: (e: KeyboardEvent) => boolean;
-  fn: () => void;
-};
+/**
+ * @typedef {Object} DefaultMacroConfig
+ * @property {`#{string}`} [macroSelectorId]
+ * @property {(e: KeyboardEvent) => boolean} hotkey
+ * @property {() => void} fn
+ */
 
-const DEFAULT_GM_MACROS: DefaultMacroConfig[] = [
+/** @type {DefaultMacroConfig[]} */
+const DEFAULT_GM_MACROS = [
   {
     macroSelectorId: '#custom-hotbar-damage-calculator',
     hotkey: e => e.ctrlKey && e.key === '1',
@@ -24,7 +26,8 @@ const DEFAULT_GM_MACROS: DefaultMacroConfig[] = [
   }
 ];
 
-const DEFAULT_USER_MACROS: DefaultMacroConfig[] = [
+/** @type {DefaultMacroConfig[]} */
+const DEFAULT_USER_MACROS = [
   {
     macroSelectorId: '#custom-hotbar-send-attack-request',
     hotkey: e => e.ctrlKey && e.key === '1',
@@ -33,9 +36,7 @@ const DEFAULT_USER_MACROS: DefaultMacroConfig[] = [
 ];
 
 export const attachCustomMacroBar = async () => {
-  const tgame = game as Game;
-
-  const isGM = tgame.user?.isGM;
+  const isGM = game.user?.isGM;
 
   const [customHotbarHTML] = await renderTemplates({
     name: Templates.CustomHotBar,
@@ -48,7 +49,7 @@ export const attachCustomMacroBar = async () => {
 
   const defaultMacroConfigs = isGM ? DEFAULT_GM_MACROS : DEFAULT_USER_MACROS;
 
-  if (tgame.settings.get('animabf', ABFSettingsKeys.DEVELOP_MODE) && isGM) {
+  if (game.settings.get('animabf', ABFSettingsKeys.DEVELOP_MODE) && isGM) {
     defaultMacroConfigs.push({
       hotkey: e => e.ctrlKey && e.key === 'd',
       fn() {

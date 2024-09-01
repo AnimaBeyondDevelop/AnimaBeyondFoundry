@@ -1,6 +1,4 @@
-import { HandlebarsHelper } from '../registerHelpers';
-
-export const mathHBSHelper: HandlebarsHelper<number> = {
+export const mathHBSHelper = {
   name: 'math',
   fn: (...rawArgs) => {
     const validArgs = rawArgs.filter(

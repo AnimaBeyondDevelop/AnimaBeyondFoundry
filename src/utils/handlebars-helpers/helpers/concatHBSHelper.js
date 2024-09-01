@@ -1,6 +1,4 @@
-import { HandlebarsHelper } from '../registerHelpers';
-
-export const concatHBSHelper: HandlebarsHelper<string> = {
+export const concatHBSHelper = {
   name: 'concat',
   fn: (...args) => {
     // eslint-disable-next-line no-param-reassign

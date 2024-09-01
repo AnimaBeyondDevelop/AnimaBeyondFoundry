@@ -1,8 +1,6 @@
-import { HandlebarsHelper } from '../registerHelpers';
-
-export const manipulateStringHBSHelper: HandlebarsHelper<void> = {
+export const manipulateStringHBSHelper = {
   name: 'manipulateString',
-  fn: (functionName: unknown, value: unknown) => {
+  fn: (functionName, value) => {
     if (!functionName || typeof functionName !== 'string') {
       throw Error(
         `manipulateString handlebar helper: first parameter must be a valid functionName: ${functionName}`

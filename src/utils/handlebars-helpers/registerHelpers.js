@@ -15,10 +15,8 @@ import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
 
-export type HandlebarsHelper<T> = { name: string; fn: (...args: unknown[]) => T };
-
 export const registerHelpers = () => {
-  const helpers: HandlebarsHelper<unknown>[] = [
+  const helpers = [
     calculateExperienceHBSHelper,
     concatHBSHelper,
     notHBSHelper,
