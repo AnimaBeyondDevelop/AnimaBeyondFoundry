@@ -1,4 +1,4 @@
-import { ABFItems } from '../items/ABFItems';
+import { ABFItems, ABFItemsEnum } from '../items/ABFItems';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFActorDataSourceData } from './Actor';
 import ABFItem from '../items/ABFItem';
@@ -31,7 +31,7 @@ export type ABFItemConfigMinimal<
   /**
    * The type of the item
    */
-  type: ABFItems;
+  type: ABFItemsEnum;
 
   /**
    * The default value for `item.system` when created from scratch
@@ -269,7 +269,8 @@ export type ArsMagnusChanges = ItemChanges<ArsMagnusItemData>;
 export type ArsMagnusItemConfig = ABFItemConfig<ArsMagnusItemData>;
 
 export type SupernaturalShieldItemData = typeof INITIAL_SUPERNATURAL_SHIELD_DATA;
-export type SupernaturalShieldDataSource = ABFItemBaseDataSource<SupernaturalShieldItemData>;
+export type SupernaturalShieldDataSource =
+  ABFItemBaseDataSource<SupernaturalShieldItemData>;
 export type SupernaturalShieldChanges = ItemChanges<SupernaturalShieldItemData>;
 export type SupernaturalShieldItemConfig = ABFItemConfig<SupernaturalShieldItemData>;
 
@@ -360,15 +361,18 @@ export type SummonItemConfig = ABFItemConfig<SummonItemData>;
 export type SecondarySpecialSkillItemData = {
   level: { value: number };
 };
-export type SecondarySpecialSkillDataSource = ABFItemBaseDataSource<SecondarySpecialSkillItemData>;
+export type SecondarySpecialSkillDataSource =
+  ABFItemBaseDataSource<SecondarySpecialSkillItemData>;
 export type SecondarySpecialSkillChanges = ItemChanges<SecondarySpecialSkillItemData>;
-export type SecondarySpecialSkillItemConfig = ABFItemConfig<SecondarySpecialSkillItemData>;
+export type SecondarySpecialSkillItemConfig =
+  ABFItemConfig<SecondarySpecialSkillItemData>;
 
 export type InnatePsychicPowerItemData = {
   effect: { value: string };
   value: { value: number };
 };
-export type InnatePsychicPowerDataSource = ABFItemBaseDataSource<InnatePsychicPowerItemData>;
+export type InnatePsychicPowerDataSource =
+  ABFItemBaseDataSource<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerChanges = ItemChanges<InnatePsychicPowerItemData>;
 export type InnatePsychicPowerItemConfig = ABFItemConfig<InnatePsychicPowerItemData>;
 
@@ -378,7 +382,8 @@ export type MentalPatternChanges = ItemChanges<MentalPatternItemData>;
 export type MentalPatternItemConfig = ABFItemConfig<MentalPatternItemData>;
 
 export type PsychicDisciplineItemData = typeof INITIAL_PSYCHIC_DISCIPLINE_DATA;
-export type PsychicDisciplineDataSource = ABFItemBaseDataSource<PsychicDisciplineItemData>;
+export type PsychicDisciplineDataSource =
+  ABFItemBaseDataSource<PsychicDisciplineItemData>;
 export type PsychicDisciplineChanges = ItemChanges<PsychicDisciplineItemData>;
 export type PsychicDisciplineItemConfig = ABFItemConfig<PsychicDisciplineItemData>;
 

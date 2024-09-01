@@ -1,10 +1,12 @@
 import { Logger } from '../../../utils';
 
-export const splitAsActorAndItemChanges = (
-  changes: Record<string, unknown>
-): [Record<string, unknown>, Record<string, unknown>] => {
-  const actorChanges: Record<string, unknown> = {};
-  const itemsChanges: Record<string, unknown> = {};
+/**
+ * @param  {Record<string, unknown>} changes
+ * @returns {[Record<string, unknown>, Record<string, unknown>]} [actorChanges, itemChanges]
+ */
+export const splitAsActorAndItemChanges = changes => {
+  const actorChanges = {};
+  const itemsChanges = {};
 
   for (const key of Object.keys(changes)) {
     if (key.includes('.data.')) {
