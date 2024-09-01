@@ -1,4 +1,7 @@
-export const getWeaponRangeFromStrength = (strength: number): number | undefined => {
+/**
+ * @param {number} strength
+ */
+export const getWeaponRangeFromStrength = strength => {
   switch (strength) {
     case 3:
       return -30;

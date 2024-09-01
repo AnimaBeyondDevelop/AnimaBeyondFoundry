@@ -1,7 +1,12 @@
-import { WeaponEquippedHandType, WeaponManageabilityType } from '../../../../../../../types/combat/WeaponItemConfig';
-import { WeaponDataSource } from '../../../../../../../types/Items';
+import {
+  WeaponEquippedHandType,
+  WeaponManageabilityType
+} from '../../../../../../../types/combat/WeaponItemConfig';
 
-export const getStrengthRequirement = (weapon: WeaponDataSource) => {
+/**
+ * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon
+ */
+export const getStrengthRequirement = weapon => {
   switch (weapon.system.manageabilityType.value) {
     case WeaponManageabilityType.ONE_HAND:
       return weapon.system.strRequired.oneHand.final.value;

@@ -1,7 +1,7 @@
 import { WeaponKnowledgeType } from '../../../../../../../types/combat/WeaponItemConfig';
-import { WeaponDataSource } from '../../../../../../../types/Items';
 
-export const getWeaponKnowledgePenalty = (weapon: WeaponDataSource) => {
+/** @param {WeaponDataSource} weapon */
+export const getWeaponKnowledgePenalty = weapon => {
   switch (weapon.system.knowledgeType.value) {
     case WeaponKnowledgeType.SIMILAR:
       return -20;

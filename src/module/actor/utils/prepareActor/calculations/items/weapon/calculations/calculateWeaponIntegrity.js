@@ -1,7 +1,9 @@
 import { WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
-import { WeaponDataSource } from '../../../../../../../types/Items';
 
-export const calculateWeaponIntegrity = (weapon: WeaponDataSource) => {
+/**
+ * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon
+ */
+export const calculateWeaponIntegrity = weapon => {
   let integrity = weapon.system.integrity.base.value + weapon.system.quality.value * 2;
 
   if (weapon.system.sizeProportion.value === WeaponSizeProportion.ENORMOUS) {

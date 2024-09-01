@@ -1,4 +1,7 @@
-export const getWeaponBreakingFromStrength = (strength: number): number => {
+/**
+ * @param {number} strength
+ */
+export const getWeaponBreakingFromStrength = strength => {
   switch (strength) {
     case 8:
     case 9:

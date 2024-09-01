@@ -2,11 +2,13 @@ import {
   WeaponShotType,
   WeaponSizeProportion
 } from '../../../../../../../types/combat/WeaponItemConfig';
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
-import { WeaponDataSource } from '../../../../../../../types/Items';
 
-const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
+/**
+ * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon
+ * @param {number} damage
+ */
+const addSizeModifier = (weapon, damage) => {
   if (weapon.system.sizeProportion.value === WeaponSizeProportion.ENORMOUS) {
     damage *= 1.5;
 
@@ -20,12 +22,19 @@ const addSizeModifier = (weapon: WeaponDataSource, damage: number) => {
   return damage;
 };
 
-export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDataSourceData) => {
+/**
+ * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon
+ * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const calculateWeaponDamage = (weapon, data) => {
   const getDamage = () => {
     const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
     const extraDamage = data.general.modifiers.extraDamage.value;
 
-    if (weapon.system.isRanged.value && weapon.system.shotType.value === WeaponShotType.SHOT) {
+    if (
+      weapon.system.isRanged.value &&
+      weapon.system.shotType.value === WeaponShotType.SHOT
+    ) {
       const { ammo } = weapon.system;
 
       if (ammo) {
@@ -41,7 +50,12 @@ export const calculateWeaponDamage = (weapon: WeaponDataSource, data: ABFActorDa
       return 0;
     }
 
-    return addSizeModifier(weapon, weapon.system.damage.base.value) + weaponStrengthModifier + extraDamage + weapon.system.quality.value * 2;
+    return (
+      addSizeModifier(weapon, weapon.system.damage.base.value) +
+      weaponStrengthModifier +
+      extraDamage +
+      weapon.system.quality.value * 2
+    );
   };
 
   return Math.max(getDamage(), 0);

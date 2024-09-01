@@ -1,4 +1,3 @@
-import { ABFActorDataSourceData } from '../../../../../../types/Actor';
 import { WeaponShotType } from '../../../../../../types/combat/WeaponItemConfig';
 import { calculateWeaponAttack } from './calculations/calculateWeaponAttack';
 import { calculateWeaponBlock } from './calculations/calculateWeaponBlock';
@@ -9,10 +8,14 @@ import { calculateWeaponBreaking } from './calculations/calculateWeaponBreaking'
 import { calculateWeaponPresence } from './calculations/calculateWeaponPresence';
 import { calculateWeaponRange } from './calculations/calculateWeaponRange';
 import { calculateWeaponInitiative } from './calculations/calculateWeaponInitiative';
-import { WeaponDataSource } from '../../../../../../types/Items';
 
-export const mutateWeaponsData = (data: ABFActorDataSourceData) => {
-  const combat = data.combat as { weapons: WeaponDataSource[] };
+/**
+ *
+ * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const mutateWeaponsData = data => {
+  /** @type {{weapons: import('../../../../../../types/Items').WeaponDataSource[]}} */
+  const combat = data.combat;
 
   combat.weapons = combat.weapons.map(weapon => {
     weapon.system.attack = {
