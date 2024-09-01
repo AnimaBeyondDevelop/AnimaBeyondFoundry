@@ -17,20 +17,22 @@ import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.j
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
-import { SpellCasting } from '../types/mystic/SpellItemConfig.js';
+import { INITIAL_SPELL_CASTING_DATA } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
-  i18n: Localization;
+  i18n = game.i18n;
+  /** @type {INITIAL_ACTOR_DATA} */
+  system;
 
-  constructor(
-    data: ConstructorParameters<typeof foundry.documents.BaseActor>[0],
-    context: ConstructorParameters<typeof foundry.documents.BaseActor>[1]
-  ) {
+  /**
+   * @param {ConstructorParameters<typeof foundry.documents.BaseActor>[0]} data
+   * @param {ConstructorParameters<typeof foundry.documents.BaseActor>[1]} context
+   */
+  constructor(data, context) {
     super(data, context);
-
-    this.i18n = (game as Game).i18n;
 
     if (this.system.version !== INITIAL_ACTOR_DATA.version) {
       Logger.log(
@@ -57,7 +59,7 @@ export class ABFActor extends Actor {
    * @param {number} fatigueUsed - The amount of fatigue to be subtracted from the current value.
    * @returns {void}
    */
-  applyFatigue(fatigueUsed: number) {
+  applyFatigue(fatigueUsed) {
     const newFatigue =
       this.system.characteristics.secondaries.fatigue.value - fatigueUsed;
 
@@ -83,7 +85,7 @@ export class ABFActor extends Actor {
    *
    * This code creates a new instance of the ABFActor class and calls the `rollAbility` method with the ability name 'agility' and the `sendToChat` parameter set to true. The method will calculate the ability value, prompt the user for a modifier, roll the dice, and display the result in the chat.
    */
-  async rollAbility(ability: string, sendToChat = true) {
+  async rollAbility(ability, sendToChat = true) {
     const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
     const { secondaries } = this.system;
     let groupPath = '';
@@ -116,20 +118,14 @@ export class ABFActor extends Actor {
   /**
    * Creates a new supernatural shield item for the ABFActor class and execute a macro using the shield's name.
    *
-   * @param {string} type - The type of the supernatural shield ('psychic' or 'mystic').
+   * @param {string} type The type of the supernatural shield ('psychic' or 'mystic').
    * @param {any} power - The power object containing information about the psychic power. Only needed if type = 'psychic'.
    * @param {number} psychicDifficulty - The difficulty level of the psychic power. Only needed if type = 'psychic'.
    * @param {any} spell - The spell object containing information about the mystic spell. Only needed if type = 'mystic'.
    * @param {string} spellGrade - The grade of the mystic spell. Only needed if type = 'mystic'.
    * @returns {Promise<string>} - The ID of the newly created supernatural shield item.
    */
-  async newSupernaturalShield(
-    type: string,
-    power: any,
-    psychicDifficulty: number,
-    spell: any,
-    spellGrade: string
-  ) {
+  async newSupernaturalShield(type, power, psychicDifficulty, spell, spellGrade) {
     const supernaturalShieldData = {
       name: '',
       type: ABFItems.SUPERNATURAL_SHIELD,
@@ -196,10 +192,10 @@ export class ABFActor extends Actor {
   /**
    * Deletes a supernatural shield item from the actor's inventory and exucute a macro passing argument 'newShield: false, shieldId: supShieldId' to stop the corresponding the animation.
    *
-   * @param supShieldId - The ID of the supernatural shield item to be deleted.
+   * @param {string} supShieldId  The ID of the supernatural shield item to be deleted.
    * @returns {void}
    */
-  async deleteSupernaturalShield(supShieldId: string) {
+  async deleteSupernaturalShield(supShieldId) {
     const supShield = this.getItem(supShieldId);
     if (supShield) {
       this.deleteItem(supShieldId);
@@ -223,12 +219,7 @@ export class ABFActor extends Actor {
    *
    * @returns {void}
    */
-  async applyDamageSupernaturalShield(
-    supShieldId: string,
-    damage: number,
-    dobleDamage?: boolean,
-    newCombatResult?: any
-  ) {
+  async applyDamageSupernaturalShield(supShieldId, damage, dobleDamage, newCombatResult) {
     const supShield = this.getItem(supShieldId);
     const shieldValue = supShield?.system.shieldPoints;
     const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
@@ -241,7 +232,7 @@ export class ABFActor extends Actor {
       this.deleteSupernaturalShield(supShieldId);
       // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && newCombatResult) {
-        const needToRound = (game as Game).settings.get(
+        const needToRound = game.settings.get(
           'animabf',
           ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
         );
@@ -271,9 +262,9 @@ export class ABFActor extends Actor {
    * @returns {number} The calculated psychic fatigue value.
    */
   async evaluatePsychicFatigue(
-    power: any,
-    psychicDifficulty: number,
-    eliminateFatigue: boolean,
+    power,
+    psychicDifficulty,
+    eliminateFatigue,
     sendToChat = true
   ) {
     const {
@@ -328,10 +319,9 @@ export class ABFActor extends Actor {
    * If a psychic shield is overmaintained, it is either unset or damaged based on the `revert` parameter.
    * Its executed in every next turn in ABFCombat, if the combat goes to a previous turn the 'revert' parameter is set to true.
    *
-   * @param revert - A flag indicating whether to revert the maintenance or not.
-   * @returns {void}
+   * @param {boolean} revert - A flag indicating whether to revert the maintenance or not.
    */
-  async psychicShieldsMaintenance(revert: boolean) {
+  async psychicShieldsMaintenance(revert) {
     const psychicShields = this.system.combat.supernaturalShields.filter(
       s => s.system.type === 'psychic'
     );
@@ -357,10 +347,10 @@ export class ABFActor extends Actor {
    * Updates the defenses counter for an actor based on the value of the `keepAccumulating` parameter.
    *
    * @param {boolean} keepAccumulating - A flag indicating whether to continue accumulating defenses or not.
-   * @returns {void}
    */
-  accumulateDefenses(keepAccumulating: boolean) {
-    const defensesCounter: any = this.getFlag('animabf', 'defensesCounter') || {
+  accumulateDefenses(keepAccumulating) {
+    /** @type {{accumulated: number, keepAccumulating: boolean}} */
+    const defensesCounter = this.getFlag('animabf', 'defensesCounter') || {
       accumulated: 0,
       keepAccumulating
     };
@@ -381,8 +371,6 @@ export class ABFActor extends Actor {
    * @example
    * const actor = new ABFActor(data, context);
    * actor.resetDefensesCounter();
-   *
-   * @returns {void}
    */
   resetDefensesCounter() {
     const defensesCounter = this.getFlag('animabf', 'defensesCounter');
@@ -401,24 +389,24 @@ export class ABFActor extends Actor {
    *
    * @param spell - The spell object that contains information about the spell, including the
    * zeon cost for each grade.
-   * @param spellGrade - The grade of the spell that the character wants to cast.
-   * @param casted - An object that indicates whether the spell has been casted before,
+   * @param {string} spellGrade - The grade of the spell that the character wants to cast.
+   * @param {{prepared: boolean, innate:boolean}} [casted] - An object that indicates whether the spell has been casted before,
    * either as a prepared spell or an innate spell.
    * Default is { prepared: false, innate: false }.
-   * @param override - A flag that indicates whether to override the normal casting rules and
+   * @param {boolean} override - A flag that indicates whether to override the normal casting rules and
    * allow the spell to be casted regardless of zeon points or previous casting.
    * Default is false.
-   * @returns {SpellCasting} - An object that contains information about the zeon points,
+   * @returns {import('../types/mystic/SpellItemConfig.js').SpellCasting} - An object that contains information about the zeon points,
    * whether the spell can be cast (prepared or innate), if the spell has been casted, and
    * whether the casting rules should be overridden.
    */
   mysticCanCastEvaluate(
-    spell: any,
-    spellGrade: string,
+    spell,
+    spellGrade,
     casted = { prepared: false, innate: false },
     override = false
   ) {
-    const spellCasting = SpellCasting;
+    const spellCasting = INITIAL_SPELL_CASTING_DATA;
     spellCasting.casted = casted;
     spellCasting.override = override;
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
@@ -454,12 +442,12 @@ export class ABFActor extends Actor {
    * Evaluates the spell casting conditions and returns a boolean value indicating whether the
    * spell can be cast or not.
    *
-   * @param {SpellCasting} spellCasting - - An object that contains information about the zeon
+   * @param {import('../types/mystic/SpellItemConfig.js').SpellCasting} spellCasting - - An object that contains information about the zeon
    * points, whether the spell can be cast (prepared or innate), if the spell has been casted,
    * and whether the casting rules should be overridden.
    * @returns {boolean} - A boolean value indicating whether the spell can be cast or not.
    */
-  evaluateCast(spellCasting: SpellCasting) {
+  evaluateCast(spellCasting) {
     const { i18n } = game;
     const { canCast, casted, zeon, override } = spellCasting;
     if (override) {
@@ -491,13 +479,11 @@ export class ABFActor extends Actor {
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
    *
-   * @param {SpellCasting} spellCasting - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
-   * @param spellName - The name of the spell being casted.
-   * @param spellGrade - The grade of the spell being casted.
-   *
-   * @returns {void}
+   * @param {import('../types/mystic/SpellItemConfig.js').SpellCasting} spellCasting An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
+   * @param {string} spellName The name of the spell being casted.
+   * @param {string} spellGrade The grade of the spell being casted.
    */
-  mysticCast(spellCasting: SpellCasting, spellName: string, spellGrade: string) {
+  mysticCast(spellCasting, spellName, spellGrade) {
     const { zeon, casted, override } = spellCasting;
     if (override) {
       return;
@@ -515,10 +501,9 @@ export class ABFActor extends Actor {
   /**
    * Updates the accumulated zeon value of a mystic character by subtracting the zeon cost of a spell.
    *
-   * @param {number} zeonCost - The amount of zeon to be consumed.
-   * @returns {void}
+   * @param {number} zeonCost The amount of zeon to be consumed.
    */
-  consumeAccumulatedZeon(zeonCost: number) {
+  consumeAccumulatedZeon(zeonCost) {
     const newAccumulateZeon = this.system.mystic.zeon.accumulated - zeonCost;
 
     this.update({
@@ -534,10 +519,10 @@ export class ABFActor extends Actor {
    * Consumes or restores the amount of maintained Zeon for a Mystic character.
    * Used in every turn change in ABFCombat.
    *
-   * @param {boolean} revert - A flag indicating whether to consume or restore the maintained Zeon. If `true`, the maintained Zeon will be restored to the character's total Zeon value. If `false`, the maintained Zeon will be consumed from the character's total Zeon value.
+   * @param {boolean} revert A flag indicating whether to consume or restore the maintained Zeon. If `true`, the maintained Zeon will be restored to the character's total Zeon value. If `false`, the maintained Zeon will be consumed from the character's total Zeon value.
    * @returns A promise that resolves when the update is complete.
    */
-  async consumeMaintainedZeon(revert: boolean) {
+  async consumeMaintainedZeon(revert) {
     const { zeon, zeonMaintained } = this.system.mystic;
     const updatedZeon = revert
       ? zeon.value + zeonMaintained.value
@@ -555,13 +540,13 @@ export class ABFActor extends Actor {
   /**
    * Deletes a prepared spell from the `mystic.preparedSpells` array of the `ABFActor` class.
    *
-   * @param spellName - The name of the spell to be deleted.
-   * @param spellGrade - The grade of the spell to be deleted.
-   * @returns None. The method updates the `mystic.preparedSpells` array of the actor.
+   * @param {string} spellName The name of the spell to be deleted.
+   * @param {string} spellGrade The grade of the spell to be deleted.
+   * @returns The method updates the `mystic.preparedSpells` array of the actor.
    */
-  deletePreparedSpell(spellName: string, spellGrade: string) {
+  deletePreparedSpell(spellName, spellGrade) {
     let preparedSpellId = this.system.mystic.preparedSpells.find(
-      (ps: any) =>
+      ps =>
         ps.name == spellName &&
         ps.system.grade.value == spellGrade &&
         ps.system.prepared.value == true
@@ -580,10 +565,8 @@ export class ABFActor extends Actor {
   /**
    * Updates the `lifePoints` attribute of an `ABFActor` object by subtracting the specified `damage` value.
    * @param {number} damage - The amount of damage to be subtracted from the `lifePoints` attribute.
-   * @returns {void}
-   * @example
    */
-  applyDamage(damage: number) {
+  applyDamage(damage) {
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
 
@@ -596,15 +579,13 @@ export class ABFActor extends Actor {
     });
   }
 
-  public async createItem({
-    type,
-    name,
-    system = {}
-  }: {
-    type: ABFItems;
-    name: string;
-    system?: unknown;
-  }) {
+  /**
+   *  @param {Object} data
+   *  @param {import('../items/ABFItems').ABFItemsEnum} data.type
+   *  @param {string} data.name
+   *  @param {ABFItem["system"]} data.system
+   */
+  async createItem({ type, name, system = {} }) {
     const items = await this.createEmbeddedDocuments('Item', [
       {
         type,
@@ -615,19 +596,16 @@ export class ABFActor extends Actor {
     return items[0];
   }
 
-  public async createInnerItem({
-    type,
-    name,
-    system = {}
-  }: {
-    type: ABFItems;
-    name: string;
-    system?: unknown;
-  }) {
+  /**
+   *  @param {Object} data
+   *  @param {import('../items/ABFItems').ABFItemsEnum} data.type
+   *  @param {string} data.name
+   *  @param {Record<string, unknown>} data.system
+   */
+  async createInnerItem({ type, name, system = {} }) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
-    const items =
-      getFieldValueFromPath<any[]>(this.system, configuration.fieldPath) ?? [];
+    const items = getFieldValueFromPath(this.system, configuration.fieldPath) ?? [];
 
     await this.update({
       system: getUpdateObjectFromPath(
@@ -645,7 +623,10 @@ export class ABFActor extends Actor {
     });
   }
 
-  public async deleteItem(id: string) {
+  /**
+   * @param {string} id
+   */
+  async deleteItem(id) {
     const item = this.getItem(id);
 
     if (item) {
@@ -653,19 +634,17 @@ export class ABFActor extends Actor {
     }
   }
 
-  public async updateItem({
-    id,
-    name,
-    system = {}
-  }: {
-    id: string;
-    name?: string;
-    system?: unknown;
-  }) {
+  /**
+   *  @param {Object} data
+   *  @param {import('../items/ABFItems').ABFItemsEnum} data.type
+   *  @param {string} data.name
+   *  @param {ABFItem["system"]} data.system
+   */
+  async updateItem({ id, name, system = {} }) {
     const item = this.getItem(id);
 
     if (item) {
-      let updateObject: Record<string, unknown> = { system };
+      let updateObject = { system };
 
       if (name) {
         updateObject = {
@@ -683,20 +662,15 @@ export class ABFActor extends Actor {
     }
   }
 
-  public async updateInnerItem(
-    {
-      type,
-      id,
-      name,
-      system = {}
-    }: {
-      type: ABFItems;
-      id: string;
-      name?: string;
-      system?: unknown;
-    },
-    forceSave = false
-  ) {
+  /**
+   *  @param {Object} data
+   *  @param {import('../items/ABFItems').ABFItemsEnum} data.type
+   *  @param {string} data.id
+   *  @param {string} data.name
+   *  @param {Record<string, unknown>} data.system
+   *  @param {boolean} forceSave
+   */
+  async updateInnerItem({ type, id, name, system = {} }, forceSave = false) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
     const items = this.getInnerItems(type);
@@ -724,163 +698,172 @@ export class ABFActor extends Actor {
     }
   }
 
-  getInnerItem(type: ABFItems, itemId: string) {
+  /**
+   * @param {import('../items/ABFItems').ABFItemsEnum} data.type
+   * @param {string} itemId
+   */
+  getInnerItem(type, itemId) {
     return this.getItemsOf(type).find(item => item._id === itemId);
   }
 
-  public getSecondarySpecialSkills() {
+  getSecondarySpecialSkills() {
     return this.getItemsOf(ABFItems.SECONDARY_SPECIAL_SKILL);
   }
 
-  public getKnownSpells() {
+  getKnownSpells() {
     return this.getItemsOf(ABFItems.SPELL);
   }
 
-  public getSpellMaintenances() {
+  getSpellMaintenances() {
     return this.getItemsOf(ABFItems.SPELL_MAINTENANCE);
   }
 
-  public getSelectedSpells() {
+  getSelectedSpells() {
     return this.getItemsOf(ABFItems.SELECTED_SPELL);
   }
 
-  public getActVias() {
+  getActVias() {
     return this.getItemsOf(ABFItems.ACT_VIA);
   }
 
-  public getInnateMagicVias() {
+  getInnateMagicVias() {
     return this.getItemsOf(ABFItems.INNATE_MAGIC_VIA);
   }
 
-  public getPreparedSpells() {
+  getPreparedSpells() {
     return this.getItemsOf(ABFItems.PREPARED_SPELL);
   }
 
-  public getSupernaturalShields() {
+  getSupernaturalShields() {
     return this.getItemsOf(ABFItems.SUPERNATURAL_SHIELD);
   }
 
-  public getKnownMetamagics() {
+  getKnownMetamagics() {
     return this.getItemsOf(ABFItems.METAMAGIC);
   }
 
-  public getKnownSummonings() {
+  getKnownSummonings() {
     return this.getItemsOf(ABFItems.SUMMON);
   }
 
-  public getCategories() {
+  getCategories() {
     return this.getItemsOf(ABFItems.LEVEL);
   }
 
-  public getKnownLanguages() {
+  getKnownLanguages() {
     return this.getItemsOf(ABFItems.LANGUAGE);
   }
 
-  public getElans() {
+  getElans() {
     return this.getItemsOf(ABFItems.ELAN);
   }
 
-  public getElanPowers() {
+  getElanPowers() {
     return this.getItemsOf(ABFItems.ELAN_POWER);
   }
 
-  public getTitles() {
+  getTitles() {
     return this.getItemsOf(ABFItems.TITLE);
   }
 
-  public getAdvantages() {
+  getAdvantages() {
     return this.getItemsOf(ABFItems.ADVANTAGE);
   }
 
-  public getDisadvantages() {
+  getDisadvantages() {
     return this.getItemsOf(ABFItems.DISADVANTAGE);
   }
 
-  public getContacts() {
+  getContacts() {
     return this.getItemsOf(ABFItems.CONTACT);
   }
 
-  public getNotes() {
+  getNotes() {
     return this.getItemsOf(ABFItems.NOTE);
   }
 
-  public getPsychicDisciplines() {
+  getPsychicDisciplines() {
     return this.getItemsOf(ABFItems.PSYCHIC_DISCIPLINE);
   }
 
-  public getMentalPatterns() {
+  getMentalPatterns() {
     return this.getItemsOf(ABFItems.MENTAL_PATTERN);
   }
 
-  public getInnatePsychicPowers() {
+  getInnatePsychicPowers() {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
   }
 
-  public getPsychicPowers() {
+  getPsychicPowers() {
     return this.getItemsOf(ABFItems.PSYCHIC_POWER);
   }
 
-  public getKiSkills() {
+  getKiSkills() {
     return this.getItemsOf(ABFItems.KI_SKILL);
   }
 
-  public getNemesisSkills() {
+  getNemesisSkills() {
     return this.getItemsOf(ABFItems.NEMESIS_SKILL);
   }
 
-  public getArsMagnus() {
+  getArsMagnus() {
     return this.getItemsOf(ABFItems.ARS_MAGNUS);
   }
 
-  public getMartialArts() {
+  getMartialArts() {
     return this.getItemsOf(ABFItems.MARTIAL_ART);
   }
 
-  public getKnownCreatures() {
+  getKnownCreatures() {
     return this.getItemsOf(ABFItems.CREATURE);
   }
 
-  public getSpecialSkills() {
+  getSpecialSkills() {
     return this.getItemsOf(ABFItems.SPECIAL_SKILL);
   }
 
-  public getKnownTechniques() {
+  getKnownTechniques() {
     return this.getItemsOf(ABFItems.TECHNIQUE);
   }
 
-  public getCombatSpecialSkills() {
+  getCombatSpecialSkills() {
     return this.getItemsOf(ABFItems.COMBAT_SPECIAL_SKILL);
   }
 
-  public getCombatTables() {
+  getCombatTables() {
     return this.getItemsOf(ABFItems.COMBAT_TABLE);
   }
 
-  public getAmmos() {
+  getAmmos() {
     return this.getItemsOf(ABFItems.AMMO);
   }
 
-  public getWeapons() {
+  getWeapons() {
     return this.getItemsOf(ABFItems.WEAPON);
   }
 
-  public getArmors() {
+  getArmors() {
     return this.getItemsOf(ABFItems.ARMOR);
   }
 
-  public getInventoryItems() {
+  getInventoryItems() {
     return this.getItemsOf(ABFItems.INVENTORY_ITEM);
   }
 
-  public getAllItems() {
+  getAllItems() {
     return Object.values(ABFItems).flatMap(itemType => this.getItemsOf(itemType));
   }
 
-  protected _getSheetClass(): ConstructorOf<FormApplication> | null {
-    return ABFActorSheet as unknown as ConstructorOf<FormApplication>;
+  _getSheetClass() {
+    return ABFActorSheet;
   }
 
-  private getItemsOf(type) {
+  /**
+   * @param {import('../items/ABFItems').ABFItemsEnum} type
+   * @returns {ABFItem[]}
+   * @TODO: Improve return type
+   */
+  getItemsOf(type) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
     if (!configuration) {
@@ -896,7 +879,11 @@ export class ABFActor extends Actor {
     return this.items.filter(i => i.type === type);
   }
 
-  private getInnerItems(type) {
+  /**
+   * @param {import('../items/ABFItems').ABFItemsEnum} type
+   * @TODO: Improve return type
+   */
+  getInnerItems(type) {
     const configuration = ALL_ITEM_CONFIGURATIONS[type];
 
     if (!configuration) {
@@ -909,7 +896,7 @@ export class ABFActor extends Actor {
       return [];
     }
 
-    const items = getFieldValueFromPath<any>(this.system, configuration.fieldPath);
+    const items = getFieldValueFromPath(this.system, configuration.fieldPath);
 
     if (Array.isArray(items)) {
       return items.map(migrateItem);
@@ -918,7 +905,10 @@ export class ABFActor extends Actor {
     return [];
   }
 
-  private getItem(itemId: string) {
+  /**
+   * @param {ABFItem["id"]} itemId
+   */
+  getItem(itemId) {
     return this.getEmbeddedDocument('Item', itemId);
   }
 }
