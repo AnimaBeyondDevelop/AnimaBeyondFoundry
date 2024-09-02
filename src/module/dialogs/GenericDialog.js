@@ -1,19 +1,28 @@
 import { Templates } from '../utils/constants';
-import ClickEvent = JQuery.ClickEvent;
 
-type ButtonConfig = { id: string; content: string; fn?: (e?: ClickEvent) => void };
+/**
+ * @typedef {{id: string, content: string, fn?: (e?: JQuery.ClickEvent) => void}} ButtonConfig
+ */
 
-type GenericDialogData = {
-  class?: string;
-  content: string;
-  onClose?: () => boolean | void;
-  buttons: ButtonConfig[];
-};
+/**
+ * @typedef {object} GenericDialogData
+ * @property {string} [class]
+ * @property {string} content
+ * @property {() => boolean | void} [onClose]
+ * @property {ButtonConfig[]} buttons
+ */
 
-export class GenericDialog extends FormApplication<FormApplicationOptions, GenericDialogData> {
-  private modalData: GenericDialogData;
+/**
+ * @extends {FormApplication<FormApplicationOptions,GenericDialogData>}
+ */
+export class GenericDialog extends FormApplication {
+  /** @type {GenericDialogData} */
+  modalData;
 
-  constructor(data: GenericDialogData) {
+  /**
+   * @param {GenericDialogData} data
+   */
+  constructor(data) {
     super(data);
 
     this.modalData = data;
@@ -45,7 +54,7 @@ export class GenericDialog extends FormApplication<FormApplicationOptions, Gener
     }
   }
 
-  async close(): Promise<void> {
+  async close() {
     if (!this.modalData.onClose?.()) {
       return super.close();
     }
@@ -53,7 +62,7 @@ export class GenericDialog extends FormApplication<FormApplicationOptions, Gener
     return undefined;
   }
 
-  getData(): Promise<GenericDialogData> | GenericDialogData {
+  getData() {
     return this.modalData;
   }
 

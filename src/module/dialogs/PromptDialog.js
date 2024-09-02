@@ -1,7 +1,12 @@
 import { GenericDialog } from './GenericDialog';
 
 export class PromptDialog extends GenericDialog {
-  constructor(body: string, { onAccept }: { onAccept?: () => void } = {}) {
+  /**
+   * @param {string} body
+   * @param {object} [hooks]
+   * @param {() => void} [onAccept]
+   */
+  constructor(body, { onAccept } = {}) {
     super({
       class: 'prompt-dialog',
       content: `<p class='body'>${body}</p>`,
@@ -9,7 +14,7 @@ export class PromptDialog extends GenericDialog {
         {
           id: 'on-confirm-button',
           fn: onAccept,
-          content: (game as Game).i18n.localize('dialogs.accept')
+          content: game.i18n.localize('dialogs.accept')
         }
       ]
     });
