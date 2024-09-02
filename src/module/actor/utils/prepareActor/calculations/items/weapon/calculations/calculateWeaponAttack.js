@@ -1,9 +1,12 @@
-import { WeaponDataSource } from '../../../../../../../types/Items';
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponKnowledgePenalty } from '../util/getWeaponKnowledgePenalty';
 import { calculateStrengthRequiredPenalty } from '../util/calculateStrengthRequiredPenalty';
 
-export const calculateWeaponAttack = (weapon: WeaponDataSource, data: ABFActorDataSourceData) =>
+/**
+ * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon
+ * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
+ * @returns {number}
+ */
+export const calculateWeaponAttack = (weapon, data) =>
   data.combat.attack.final.value +
   weapon.system.attack.special.value +
   weapon.system.quality.value +

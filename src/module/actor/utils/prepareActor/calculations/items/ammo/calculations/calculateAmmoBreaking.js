@@ -1,8 +1,10 @@
-import { AmmoDataSource } from "../../../../../../../types/Items";
-import { ABFActorDataSourceData } from '../../../../../../../types/Actor';
 import { getWeaponBreakingFromStrength } from '../../weapon/util/getWeaponBreakingFromStrength';
 
-export const calculateAmmoBreaking = (ammo: AmmoDataSource, data: ABFActorDataSourceData) => {
+/**
+ * @param {import("../../../../../../../types/Items").AmmoDataSource} ammo
+ * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
+ */
+export const calculateAmmoBreaking = (ammo, data) => {
   const strength = data.characteristics.primaries.strength.value;
 
   return (
