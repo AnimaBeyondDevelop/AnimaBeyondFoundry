@@ -12,8 +12,6 @@ export default class ABFActorDirectory extends ActorDirectory {
     let result = super._getEntryContextOptions();
     let excelImportEntry = this.getExcelImportContextOption();
     result.push(excelImportEntry);
-    console.log("ABFActorDirectory _getEntryContextOptions");
-    console.log(result);
     return result;
   }
 
@@ -42,10 +40,10 @@ export default class ABFActorDirectory extends ActorDirectory {
   async importFromExcelDialog(document) {
     console.log(document);
     new Dialog({
-      title: `Import Data: ${this.name}`,
+      title: `Import Data: ${document.name}`,
       content: await renderTemplate("systems/animabf/templates/dialog/import-data-from-excel.html", {
-        hint1: game.i18n.format("DOCUMENT.ImportDataHint1", {document: this.documentName}),
-        hint2: game.i18n.format("DOCUMENT.ImportDataHint2", {name: this.name})
+        hint1: "Puede importar los datos de este " + document.documentName + " desde un archivo Excel",
+        hint2: game.i18n.format("DOCUMENT.ImportDataHint2", {name: document.name})
       }),
       buttons: {
         import: {
@@ -78,10 +76,10 @@ export default class ABFActorDirectory extends ActorDirectory {
     reader.onload = function (e) {
       const data = new Uint8Array(e.target.result);
       const workbook = read(data, { type: 'array' });
-      const worksheet = workbook.Sheets["FoundryData"];
+      const worksheet = workbook.Sheets["NamedRangesList"];
       if (typeof worksheet !== "undefined") {
         const rows = utils.sheet_to_json(worksheet).reduce((acc, obj) => {
-          acc[obj.ID] = obj.Value;
+          acc[obj.Name] = obj.Value;
           return acc;
         }, {});
         resolve(rows);
