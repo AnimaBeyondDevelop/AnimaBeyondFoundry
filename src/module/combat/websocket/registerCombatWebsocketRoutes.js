@@ -3,12 +3,10 @@ import { WSUserCombatManager } from './ws-combat/user/WSUserCombatManager';
 import { Logger } from '../../../utils';
 
 export const registerCombatWebsocketRoutes = () => {
-  const tgame = game as Game;
-
-  if (tgame.user?.isGM) {
+  if (game.user?.isGM) {
     Logger.log('Initialized Combat Manager as GM');
 
-    const combatManager = new WSGMCombatManager(tgame);
+    const combatManager = new WSGMCombatManager(game);
 
     window.Websocket = {
       sendAttack: async () => {
@@ -23,7 +21,7 @@ export const registerCombatWebsocketRoutes = () => {
   } else {
     Logger.log('Initialized Combat Manager as User');
 
-    const combatManager = new WSUserCombatManager(tgame);
+    const combatManager = new WSUserCombatManager(game);
 
     window.Websocket = {
       sendAttackRequest: async () => {

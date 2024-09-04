@@ -4,14 +4,26 @@ import { calculateCounterAttackBonus } from './calculateCounterAttackBonus';
 import { calculateDamage } from './calculateDamage';
 import { roundTo5Multiples } from './roundTo5Multiples';
 
+/**
+ *
+ * @param {number} attack
+ * @param {number} defense
+ * @param {number} at
+ * @param {number} damage
+ * @param {boolean} [halvedAbsorption]
+ * @returns {{ canCounterAttack: true; counterAttackBonus: number } | { canCounterAttack: false; damage: number }}
+ */
 export const calculateCombatResult = (
-  attack: number,
-  defense: number,
-  at: number,
-  damage: number,
-  halvedAbsorption: boolean = false
-): { canCounterAttack: true; counterAttackBonus: number } | { canCounterAttack: false; damage: number } => {
-  const needToRound = (game as Game).settings.get('animabf', ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5);
+  attack,
+  defense,
+  at,
+  damage,
+  halvedAbsorption = false
+) => {
+  const needToRound = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
+  );
 
   if (canCounterAttack(attack, defense)) {
     return {

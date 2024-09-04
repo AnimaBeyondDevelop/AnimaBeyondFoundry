@@ -1,16 +1,17 @@
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 
 export default class ABFCombat extends Combat {
-  constructor(
-    data: ConstructorParameters<typeof foundry.documents.BaseCombat>[0],
-    context: ConstructorParameters<typeof foundry.documents.BaseCombat>[1]
-  ) {
+  /**
+   *  @param {import('../../types/foundry-vtt-types/src/foundry/common/data/data.mjs/combatData').CombatDataConstructorData} data
+   *  @param {Context<null>} [context]
+   */
+  constructor(data, context) {
     super(data, context);
     this.setFlag('world', 'newRound', true);
   }
 
   async startCombat() {
-    const combatants = this.combatants.map(c => c.token)
+    const combatants = this.combatants.map(c => c.token);
     for (let token of combatants) {
       token?.actor?.resetDefensesCounter();
     }
@@ -29,7 +30,7 @@ export default class ABFCombat extends Combat {
     await this.resetAll();
     this.setFlag('world', 'newRound', true);
 
-    const combatants = this.combatants.map(c => c.token)
+    const combatants = this.combatants.map(c => c.token);
     for (let token of combatants) {
       token?.actor?.resetDefensesCounter();
       token?.actor?.consumeMaintainedZeon();
@@ -43,7 +44,7 @@ export default class ABFCombat extends Combat {
     // Reset initiative for everyone when going to the next round
     await this.resetAll();
 
-    const combatants = this.combatants.map(c => c.token)
+    const combatants = this.combatants.map(c => c.token);
     for (let token of combatants) {
       token?.actor?.consumeMaintainedZeon(true);
       token?.actor?.psychicShieldsMaintenance(true);
@@ -60,8 +61,12 @@ export default class ABFCombat extends Combat {
     });
   }
 
-  // Modify rollInitiative so that it asks for modifiers
-  async rollInitiative(ids: string[] | string, { updateTurn = false, messageOptions }: any = {}): Promise<this> {
+  /**
+   * Modify rollInitiative so that it asks for modifiers
+   * @param {string[] | string} ids
+   * @param {{updateTurn?: boolean, messageOptions?: any}} [options]
+   */
+  async rollInitiative(ids, { updateTurn = false, messageOptions } = {}) {
     const mod = await openModDialog();
 
     if (typeof ids === 'string') {
@@ -84,14 +89,24 @@ export default class ABFCombat extends Combat {
     return this;
   }
 
-  protected override _sortCombatants(
-    a: Combatant,
-    b: Combatant
-  ): number {
-    let initiativeA = a.initiative || -9999;
-    let initiativeB = b.initiative || -9999;
-    if (initiativeA < (a?.actor?.system.characteristics.secondaries.initiative.final.value || 0)) initiativeA -= 2000;
-    if (initiativeB < (b?.actor?.system.characteristics.secondaries.initiative.final.value || 0)) initiativeB -= 2000;
+  /**
+   * @protected @override
+   * @param {Combatant} combatantA
+   * @param {Combatant} combatantB
+   */
+  _sortCombatants(combatantA, combatantB) {
+    let initiativeA = combatantA.initiative || -9999;
+    let initiativeB = combatantB.initiative || -9999;
+    if (
+      initiativeA <
+      (combatantA?.actor?.system.characteristics.secondaries.initiative.final.value || 0)
+    )
+      initiativeA -= 2000;
+    if (
+      initiativeB <
+      (combatantB?.actor?.system.characteristics.secondaries.initiative.final.value || 0)
+    )
+      initiativeB -= 2000;
     return initiativeB - initiativeA;
   }
 }
