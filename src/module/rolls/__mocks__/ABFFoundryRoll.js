@@ -5,18 +5,27 @@
 import { nextValueService } from './nextValueService';
 
 export default class ABFFoundryRoll {
-  _formula: string;
-  system: Record<string, unknown> | undefined;
+  /** @type {string} */
+  _formula;
+  /** @type {Record<string,unknown> | undefined} */
+  system;
 
   _rolled = false;
-  _total: number;
+  /** @type {number} */
+  _total;
 
-  dice: DiceTerm[];
+  /** @type {DiceTerm[]} */
+  dice;
 
   // Test variable
-  static nextValue: number | null;
+  /** @type {number | null} */
+  static nextValue;
 
-  constructor(formula: string, data?: Record<string, unknown>) {
+  /**
+   * @param {string} formula
+   * @param {Record<string,unknown>} [data]
+   */
+  constructor(formula, data) {
     this._formula = formula;
     this.system = data;
 
@@ -39,20 +48,22 @@ export default class ABFFoundryRoll {
     return this.getResults()[this.getResults().length - 1];
   }
 
-  getResults(): number[] {
+  getResults() {
     return this.dice.map(d => d.results.map(res => res.result)).flat();
   }
 
-  get firstDice(): DiceTerm {
+  get firstDice() {
     return this.dice[0];
   }
 
   evaluate() {
     if (this._rolled) throw new Error('Already rolled');
 
-    const value = nextValueService.getNextValue() ?? Math.min(1, Math.floor(Math.random() * 100));
+    const value =
+      nextValueService.getNextValue() ?? Math.min(1, Math.floor(Math.random() * 100));
 
-    const diceTerm = { results: [{ result: value, active: true }] } as DiceTerm;
+    /** @type {DiceTerm} */
+    const diceTerm = { results: [{ result: value, active: true }] };
 
     this.dice.push(diceTerm);
 

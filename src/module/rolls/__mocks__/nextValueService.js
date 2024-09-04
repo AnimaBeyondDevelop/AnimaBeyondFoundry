@@ -1,8 +1,10 @@
 const service = () => {
+  /** @type {number} */
   let nextValue;
 
   return {
-    setNextValue(value: number | undefined) {
+    /** @param {number} [value] */
+    setNextValue(value) {
       nextValue = value;
     },
     getNextValue() {

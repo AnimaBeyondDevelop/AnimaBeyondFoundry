@@ -1,6 +1,6 @@
-module.exports = {
-  transform: {'^.+\\.ts?$': 'ts-jest'},
+export default {
+  transform: {},
   testEnvironment: 'node',
-  testRegex: '.*\\.(test|spec)?\\.(ts|tsx)$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
+  testRegex: '.*\\.(test|spec)\\.js$',
+  modulePathIgnorePatterns: ['<rootDir>/dist/']
 };

@@ -2,12 +2,16 @@ import ABFExploderRoll from './ABFExploderRoll';
 import ABFRollTesting from '../__mocks__/ABFFoundryRoll';
 import ABFFoundryRoll from '../ABFFoundryRoll';
 import { nextValueService } from '../__mocks__/nextValueService';
+import { jest } from '@jest/globals';
 
 jest.mock('../ABFFoundryRoll');
 
-function getRoll(formula: string) {
+/**
+ * @param {string} formula
+ */
+function getRoll(formula) {
   const abfRoll = new ABFFoundryRoll(formula);
-  const abfRollTesting = abfRoll as unknown as ABFRollTesting;
+  const abfRollTesting = /** @type {ABFRollTesting} */ (abfRoll);
   return { abfRoll, abfRollTesting };
 }
 

@@ -4,7 +4,7 @@ import { psychicPotentialEffect } from '../../combat/utils/psychicPotentialEffec
 import { psychicFatigueCheck } from '../../combat/utils/psychicFatigueCheck.js';
 
 export default class ABFPsychicRoll extends ABFExploderRoll {
-  public evaluate(): ABFFoundryRoll {
+  evaluate() {
     super.evaluate();
     const {
       general: {
@@ -16,7 +16,10 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
     } = this.foundryRoll.data;
     const powerDiscipline = power?.system.discipline.value;
     // @ts-ignore
-    let imbalance: any = psychicDisciplines.find((i: any) => i.name === powerDiscipline)?.system.imbalance ? 1 : 0;
+    let imbalance = psychicDisciplines.find(i => i.name === powerDiscipline)?.system
+      .imbalance
+      ? 1
+      : 0;
     let newPotentialTotal = psychicPotentialEffect(
       this.foundryRoll.total ?? 0,
       imbalance,
@@ -31,9 +34,10 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
           inhuman.value,
           zen.value
         );
-      }
-      else if (power?.system.combatType.value === 'attack' &&
-        mentalPatterns.find((i: any) => i.name == 'courage')) {
+      } else if (
+        power?.system.combatType.value === 'attack' &&
+        mentalPatterns.find(i => i.name == 'courage')
+      ) {
         newPotentialTotal = psychicPotentialEffect(
           newPotentialTotal,
           1,
