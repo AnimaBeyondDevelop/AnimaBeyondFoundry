@@ -57,19 +57,18 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
         return;
       }
       actor.setFlag('animabf', 'spellCastingOverride', override);
-      const spellCasting = actor.mysticCanCastEvaluate(spell, spellGrade, { innate, prepared }, override);
+      const spellCasting = actor.mysticCanCastEvaluate(
+        spell,
+        spellGrade,
+        { innate, prepared },
+        override
+      );
       spellCasting.casted = { innate, prepared };
       if (actor.evaluateCast(spellCasting)) {
         return;
       }
       actor.mysticCast(spellCasting, spell.name, spellGrade);
-      actor.newSupernaturalShield(
-        'mystic',
-        {},
-        0,
-        spell,
-        spellGrade
-      );
+      actor.newSupernaturalShield('mystic', {}, 0, spell, spellGrade);
     } else if (tab === 'psychic') {
       const powerID = results['new.psychicShield.id'];
       const eliminateFatigue = results['new.psychicShield.eliminateFatigue'];
@@ -104,11 +103,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
           return;
         }
       }
-      actor.newSupernaturalShield(
-        'psychic',
-        power,
-        powerDifficulty
-      );
+      actor.newSupernaturalShield('psychic', power, powerDifficulty);
     }
   }
 });
