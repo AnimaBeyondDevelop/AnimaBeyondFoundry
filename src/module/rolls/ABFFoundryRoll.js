@@ -83,9 +83,7 @@ export default class ABFFoundryRoll extends Roll {
 
   // TODO Evaluate not finished this | Promise<this>
   /** @returns {Promise<Roll>} */
-  async evaluate(partialOptions) {
-    const options = { ...partialOptions, async: false };
-
+  async evaluate(options) {
     await super.evaluate(options);
 
     await this.abfRoll?.evaluate(options);
