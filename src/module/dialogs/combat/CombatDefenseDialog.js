@@ -492,8 +492,8 @@ export class CombatDefenseDialog extends FormApplication {
         // Mastery reduces the fumble range
         formula = formula.replace('xa', 'xamastery');
       }
-      const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
-      roll.roll();
+      const roll = new ABFFoundryRoll(formula, this.defenderActor.system);
+      await roll.roll();
 
       if (this.modalData.defender.showRoll) {
         const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
@@ -574,7 +574,7 @@ export class CombatDefenseDialog extends FormApplication {
         formula,
         this.defenderActor.system
       );
-      psychicProjectionRoll.roll();
+      await psychicProjectionRoll.roll();
       const rolled = psychicProjectionRoll.total - psychicProjection - combatModifier;
 
       if (!newShield) {
@@ -592,7 +592,7 @@ export class CombatDefenseDialog extends FormApplication {
           `1d100PsychicRoll + ${psychicPotential.final}`,
           { ...this.defenderActor.system, power, mentalPatternImbalance }
         );
-        psychicPotentialRoll.roll();
+        await psychicPotentialRoll.roll();
         newPsychicPotential = psychicPotentialRoll.total;
         if (this.modalData.defender.showRoll) {
           psychicPotentialRoll.toMessage({

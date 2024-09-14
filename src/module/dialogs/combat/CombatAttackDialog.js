@@ -403,7 +403,7 @@ export class CombatAttackDialog extends FormApplication {
       }
     });
 
-    html.find('.send-mystic-attack').click(() => {
+    html.find('.send-mystic-attack').click(async () => {
       const {
         mystic: {
           magicProjection,
@@ -455,7 +455,7 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
-        roll.roll();
+        await roll.roll();
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
@@ -545,13 +545,13 @@ export class CombatAttackDialog extends FormApplication {
           formula,
           this.attackerActor.system
         );
-        psychicProjectionRoll.roll();
+        await psychicProjectionRoll.roll();
 
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,
           { ...this.attackerActor.system, power, mentalPatternImbalance }
         );
-        psychicPotentialRoll.roll();
+        await psychicPotentialRoll.roll();
         if (this.modalData.attacker.showRoll) {
           psychicPotentialRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),

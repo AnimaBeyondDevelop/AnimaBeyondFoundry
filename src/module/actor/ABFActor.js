@@ -105,7 +105,7 @@ export class ABFActor extends Actor {
     let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
     if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
     const roll = new ABFFoundryRoll(formula, this.system);
-    roll.roll();
+    await roll.roll();
     if (sendToChat) {
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this }),

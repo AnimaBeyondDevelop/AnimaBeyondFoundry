@@ -87,7 +87,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
           `1d100PsychicRoll + ${psychicPotential} + ${mod}`,
           { ...actor.system, power, mentalPatternImbalance }
         );
-        psychicPotentialRoll.roll();
+        await psychicPotentialRoll.roll();
         powerDifficulty = psychicPotentialRoll.total;
         psychicPotentialRoll.toMessage({
           speaker: ChatMessage.getSpeaker({ actor }),
