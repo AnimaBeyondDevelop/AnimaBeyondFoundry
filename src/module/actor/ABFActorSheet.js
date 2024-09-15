@@ -9,6 +9,7 @@ import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
 import { sveltify } from '@svelte/sveltify';
 import SpellsBoard from '@svelte/components/spellBoard.svelte';
+import { Logger } from '../../utils';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -82,13 +83,13 @@ export default class ABFActorSheet extends sveltify(
     return 1000;
   }
 
-   /**
+  /**
    * Tests if a given user has permission to render the ActorSheet.
    * If it does not, instead of rendering the sheet, shows the Actor's portrait.
    * @param {ABFActor} user
    * @returns {boolean}
    */
-   _canUserView(user) {
+  _canUserView(user) {
     const canView = this.actor.testUserPermission(user, 'OBSERVER');
     if (!canView) {
       this.displayActorImagePopout();
@@ -193,7 +194,7 @@ export default class ABFActorSheet extends sveltify(
     const a = event.currentTarget;
     const tr = a.closest('tr');
     const effect = tr.dataset.effectId ? owner.effects.get(tr.dataset.effectId) : null;
-    const status = effect?.disabled
+    const status = effect?.disabled;
     switch (a.dataset.action) {
       case 'create':
         return owner.createEmbeddedDocuments('ActiveEffect', [
@@ -292,10 +293,10 @@ export default class ABFActorSheet extends sveltify(
             if (item?.sheet) {
               item.sheet.render(true);
             } else {
-              console.warn('Item sheet was not found for item:', item);
+              Logger.warn('Item sheet was not found for item:', item);
             }
           } else {
-            console.warn('Item ID was not found for target:', target);
+            Logger.warn('Item ID was not found for target:', target);
           }
         }
       });
@@ -307,7 +308,7 @@ export default class ABFActorSheet extends sveltify(
         icon: '<i class="fas fa-trash fa-fw"></i>',
         callback: target => {
           if (!customCallbackFn && !fieldPath) {
-            console.warn(
+            Logger.warn(
               `buildCommonContextualMenu: no custom callback and configuration set, could not delete the item: ${itemConfig.type}`
             );
           }

@@ -5,7 +5,7 @@ import { WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
  * @param {import('../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const mutateInitiative = data => {
-  /** @type {import('../../../../../types/Items').WeaponDataSource} */
+  /** @type {{weapons: import('../../../../../types/Items').WeaponDataSource[]}} */
   const combat = data.combat;
   const { general } = data;
 

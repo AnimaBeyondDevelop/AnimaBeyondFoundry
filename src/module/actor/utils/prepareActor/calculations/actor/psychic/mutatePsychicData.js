@@ -12,14 +12,14 @@ export const mutatePsychicData = data => {
   );
   psychicProjection.imbalance.offensive.final.value = Math.max(
     psychicProjection.imbalance.offensive.base.value +
-    psychicProjection.imbalance.offensive.special.value +
-    allActionsPenalty,
+      psychicProjection.imbalance.offensive.special.value +
+      allActionsPenalty,
     0
   );
   psychicProjection.imbalance.defensive.final.value = Math.max(
     psychicProjection.imbalance.defensive.base.value +
-    psychicProjection.imbalance.defensive.special.value +
-    allActionsPenalty,
+      psychicProjection.imbalance.defensive.special.value +
+      allActionsPenalty,
     0
   );
 

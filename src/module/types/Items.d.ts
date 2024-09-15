@@ -1,4 +1,4 @@
-import { ABFItems } from '../items/ABFItems';
+import { ABFItems, ABFItemsEnum } from '../items/ABFItems';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFActorDataSourceData } from './Actor';
 import ABFItem from '../items/ABFItem';
@@ -31,7 +31,7 @@ export type ABFItemConfigMinimal<
   /**
    * The type of the item
    */
-  type: ABFItems;
+  type: ABFItemsEnum;
 
   /**
    * The default value for `item.system` when created from scratch
