@@ -24,8 +24,6 @@ import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
   i18n = game.i18n;
-  /** @type {INITIAL_ACTOR_DATA} */
-  system;
 
   /**
    * @param {ConstructorParameters<typeof foundry.documents.BaseActor>[0]} data
@@ -33,6 +31,10 @@ export class ABFActor extends Actor {
    */
   constructor(data, context) {
     super(data, context);
+
+    // Not needed but sets the type for intellisense
+    /** @type {INITIAL_ACTOR_DATA} */
+    this.system = this.system;
 
     if (this.system.version !== INITIAL_ACTOR_DATA.version) {
       Logger.log(
