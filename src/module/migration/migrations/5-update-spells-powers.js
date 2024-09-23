@@ -1,5 +1,7 @@
 /** @typedef {import('./Migration').Migration} Migration */
 
+import { Logger } from '../../../utils';
+
 const newItems = {
   get ready() {
     return !!this.spell && !!this.psychicPowers;
@@ -35,7 +37,7 @@ export const Migration5UpdateSpellsPowers = {
   },
   async updateItem(item) {
     if (!['spell', 'psychicPower'].includes(item.type)) {
-      console.error('AnimaBF | spell/psychicPower filter not working');
+      Logger.error('spell/psychicPower filter not working');
       return;
     }
 

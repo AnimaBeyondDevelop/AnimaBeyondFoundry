@@ -2,7 +2,7 @@ import { ABFConfig } from './module/ABFConfig';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import { WSUserCombatManager } from './module/combat/websocket/ws-combat/user/WSUserCombatManager';
 import { WSGMCombatManager } from './module/combat/websocket/ws-combat/gm/WSGMCombatManager';
-import { ABFItems } from './module/items/ABFItems';
+import { ABFItemsEnum } from './module/items/ABFItems';
 
 export type ABFItemBaseDataSource<
   D extends Record<string, any>,
@@ -10,7 +10,7 @@ export type ABFItemBaseDataSource<
 > = {
   _id: string;
 
-  type: ABFItems;
+  type: ABFItemsEnum;
   name: string;
 
   system: D;
