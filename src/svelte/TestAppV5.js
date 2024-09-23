@@ -1,7 +1,6 @@
 import { Templates } from "@module/utils/constants";
 import { mount } from "svelte";
 import AttackDialog from "@svelte/components/attackDialog.svelte";
-import AttackDialogCombat from "./components/attackDialogCombat.svelte";
 
 export class SvelteApplication extends Application {
   constructor(attacker, defender) {
@@ -15,7 +14,7 @@ export class SvelteApplication extends Application {
       let element = document.getElementById("svelte-app");
       if (element) {
         let props = { data: this.data }
-        mount(AttackDialogCombat, { target: element, props })
+        mount(AttackDialog, { target: element, props })
       }
       return v
     })
@@ -31,8 +30,8 @@ export class SvelteApplication extends Application {
     return mergeObject(super.defaultOptions, {
       classes: ['overflow'],
       template: Templates.Svelte.SvelteApp,
-      width: null,
-      height: null,
+      width: 430,
+      height: 230,
     });
   }
 }
