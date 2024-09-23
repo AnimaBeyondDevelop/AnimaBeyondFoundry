@@ -141,7 +141,7 @@ export class CombatAttackDialog extends FormApplication {
           this.modalData.attacker.token,
           this.modalData.defender.token,
           { gridSpaces: true }
-        ) / canvas.grid.grid.options.dimensions.distance;
+        ) / canvas.dimensions.distance;
       this.modalData.attacker.distance.value = calculateDistance;
     }
 
