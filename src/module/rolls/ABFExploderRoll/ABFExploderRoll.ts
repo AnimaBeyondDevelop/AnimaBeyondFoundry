@@ -3,6 +3,7 @@ import { ABFRoll } from '../ABFRoll';
 
 export default class ABFExploderRoll extends ABFRoll {
   private lastOpenRange = this.openRollRange;
+  private success = false
   
   get canExplode() {
     const lastResult = this.firstDice.results[this.firstDice.results.length-1]
@@ -47,6 +48,7 @@ export default class ABFExploderRoll extends ABFRoll {
   }
 
   private explodeDice(openRange: number) {
+    this.success = true
     this.lastOpenRange = Math.min(openRange, 100);
 
     const newRoll = new ABFFoundryRoll('1d100').evaluate();
