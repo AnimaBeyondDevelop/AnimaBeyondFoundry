@@ -5,7 +5,7 @@ import { UserMessageTypes } from '../user/WSUserCombatMessageTypes';
 import { GMCombatDialog } from '../../../../dialogs/combat/GMCombatDialog';
 import { CombatDialogs } from '../../dialogs/CombatDialogs';
 import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
-import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
+import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
 import { getTargetToken } from '../util/getTargetToken';
@@ -35,12 +35,6 @@ export class WSGMCombatManager extends WSCombatManager {
 
       const { attackerToken, defenderToken, defenderActor } = this.combat;
 
-      const { critic } = msg.payload.values;
-      const { visible } = msg.payload.values;
-      const { projectile } = msg.payload.values;
-      const { damage } = msg.payload.values;
-      const { distance } = msg.payload.values;
-
       if (canOwnerReceiveMessage(defenderActor)) {
         const newMsg = {
           type: GMMessageTypes.Attack,
@@ -57,12 +51,7 @@ export class WSGMCombatManager extends WSCombatManager {
           this.manageDefense(
             attackerToken,
             defenderToken,
-            msg.payload.type,
-            critic,
-            visible,
-            projectile,
-            damage,
-            distance
+            msg.payload
           );
         } catch (err) {
           if (err) {
@@ -262,9 +251,8 @@ export class WSGMCombatManager extends WSCombatManager {
   }
 
   manageAttack(attacker, defender, bonus) {
-    this.attackDialog = new CombatAttackDialog(
+    this.attackDialog = new SvelteAttackDialog(
       attacker,
-      defender,
       {
         onAttack: result => {
           this.attackDialog?.close({ force: true });
@@ -286,22 +274,12 @@ export class WSGMCombatManager extends WSCombatManager {
 
               this.emit(newMsg);
             } else {
-              const { critic } = result.values;
-              const { visible } = result.values;
-              const { projectile } = result.values;
-              const { damage } = result.values;
-              const { distance } = result.values;
 
               try {
                 this.manageDefense(
                   attacker,
                   defender,
-                  result.type,
-                  critic,
-                  visible,
-                  projectile,
-                  damage,
-                  distance
+                  result
                 );
               } catch (err) {
                 if (err) {
@@ -321,22 +299,12 @@ export class WSGMCombatManager extends WSCombatManager {
   manageDefense(
     attacker,
     defender,
-    attackType,
-    critic,
-    visible,
-    projectile,
-    damage,
-    distance
+    result
   ) {
     this.defendDialog = new CombatDefenseDialog(
       {
         token: attacker,
-        attackType,
-        critic,
-        visible,
-        projectile,
-        damage,
-        distance
+        result
       },
       defender,
       {

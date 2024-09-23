@@ -2,7 +2,7 @@ import { Log } from '../../../../../utils/Log';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
-import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
+import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
 import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
@@ -87,7 +87,7 @@ export class WSUserCombatManager extends WSCombatManager {
               }
             };
             this.emit(msg);
-            this.attackDialog = new CombatAttackDialog(attackerToken, targetToken, {
+            this.attackDialog = new SvelteAttackDialog(attackerToken, {
               onAttack: result => {
                 const newMsg = {
                   type: UserMessageTypes.Attack,
@@ -112,9 +112,8 @@ export class WSUserCombatManager extends WSCombatManager {
     const attacker = this.findTokenById(attackerTokenId);
     const defender = this.findTokenById(defenderTokenId);
 
-    this.attackDialog = new CombatAttackDialog(
+    this.attackDialog = new SvelteAttackDialog(
       attacker,
-      defender,
       {
         onAttack: result => {
           const newMsg = {
@@ -168,12 +167,7 @@ export class WSUserCombatManager extends WSCombatManager {
       this.defenseDialog = new CombatDefenseDialog(
         {
           token: attacker,
-          attackType: result.type,
-          critic: result.values.critic,
-          visible: result.values.visible,
-          projectile: result.values.projectile,
-          damage: result.values.damage,
-          distance: result.values.distance
+          result
         },
         defender,
         {
