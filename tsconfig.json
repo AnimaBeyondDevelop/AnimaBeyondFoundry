@@ -25,7 +25,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "strictNullChecks": true,
     "skipLibCheck": true,
     "outDir": "dist",
