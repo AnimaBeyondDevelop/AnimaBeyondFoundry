@@ -1,0 +1,210 @@
+<script>
+  // @ts-nocheck
+  import CardSelect from '@svelte/ui/card/cardSelect.svelte';
+  import IconInput from '@svelte/ui/iconInput.svelte';
+  import IconBox from '@svelte/ui/iconBox.svelte';
+  import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
+  import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
+  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import CardCombat from '@svelte/ui/card/cardCombat.svelte';
+
+  let { manager } = $props();
+  const i18n = game.i18n;
+
+  let markerWidth = { min: '150px', max: '435px' };
+  let togglePanel = $state(false);
+  let psychicPointSwitch = $state(true);
+</script>
+
+<div class="template">
+  <g class="background">
+    <CardCombat
+      width={togglePanel ? '650px' : '500px'}
+      sidebar={togglePanel ? '210px' : '60px'}
+    ></CardCombat>
+  </g>
+  <div class="sidebar">
+    <div></div>
+    <div></div>
+  </div>
+  <div class="box">
+    {#if psychicPointSwitch}
+      <IconBox
+        icon="psychic-point"
+        bind:activeIcons={manager.data.psychicPoints.usedProjection}
+        quantity={Math.min(
+          manager.data.psychicPoints.available -
+            manager.data.psychicPoints.usedPotential -
+            manager.data.psychicPoints.eliminateFatigue,
+          5
+        )}
+        onChange={value => manager.usePsychicPoints(value, 'psychicProjection')}
+        title={i18n.localize('anima.ui.psychic.psychicPoints.title') +
+          ` (${manager.data.psychicPoints.available})`}
+      />
+    {:else}
+      <IconBox
+        icon="psychic-point"
+        bind:activeIcons={manager.data.psychicPoints.usedPotential}
+        quantity={Math.min(
+          manager.data.psychicPoints.available -
+            manager.data.psychicPoints.usedProjection -
+            manager.data.psychicPoints.eliminateFatigue,
+          5
+        )}
+        onChange={value => manager.usePsychicPoints(value, 'psychicPotential')}
+        title={i18n.localize('anima.ui.psychic.psychicPoints.title') +
+          ` (${manager.data.psychicPoints.available})`}
+        --transform="rotate(180deg)"
+      />
+    {/if}
+    <IconCheckBox
+      icon={psychicPointSwitch ? 'psychic' : 'psychic-potential'}
+      bind:value={psychicPointSwitch}
+      title={`${i18n.localize('anima.ui.psychic.psychicPoints.title')} ${
+        psychicPointSwitch
+          ? i18n.localize('anima.ui.psychic.psychicProjection.projection.title')
+          : i18n.localize('anima.ui.psychic.psychicPotential.potential.title')
+      }`}
+      noStyle={true}
+      --icon-size="30px"
+    />
+  </div>
+  <g class="select">
+    <CardSelect
+      bind:selection={manager.data.powerUsed}
+      options={manager.data.psychicPowers}
+      onChange={value => manager.onPowerChange(value)}
+      >{#if manager.data.psychicPowers.length === 0}
+        <option>No Power Found</option>
+      {/if}</CardSelect
+    >
+  </g>
+  <g class="marker">
+    <CardMarkerCritic
+      value={manager.damage}
+      bind:modifier={manager.damageModifiers.special.modifier}
+      bind:critics={manager.data.critics}
+      {markerWidth}
+    />
+  </g>
+  <g class="primary">
+    <IconInput
+      icon="psychic"
+      value={manager.attack}
+      bind:modifier={manager.modifiers.special.modifier}
+      title={i18n.localize('anima.ui.psychic.psychicProjection.projection.title')}
+    />
+  </g>
+  <g class="secondary">
+    <IconInput
+      icon="psychic-potential"
+      value={manager.psychicPotential}
+      bind:modifier={manager.potentialModifiers.special.modifier}
+      title={i18n.localize('anima.ui.psychic.psychicPotential.potential.title')}
+    />
+  </g>
+  <div class="bottom">
+    <IconCheckBox
+      icon="avoid-psychic-fatigue"
+      bind:value={manager.data.eliminateFatigue}
+      title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
+      disabled={manager.data.psychicPoints.available <=
+        manager.data.psychicPoints.usedPotential +
+          manager.data.psychicPoints.usedProjection}
+      onClick={value => manager.usePsychicPoints(value ? 1 : 0, 'eliminateFatigue')}
+      --icon-size="30px"
+    />
+    <IconCheckBox
+      icon="mental-pattern-imbalance"
+      bind:value={manager.data.mentalPatternImbalance}
+      title={i18n.localize('macros.combat.dialog.mentalPatternImbalance.title')}
+      --icon-size="28px"
+    />
+  </div>
+  <div class="button">
+    <CardButton title={'Atacar'} onClick={() => manager.onAttack()} />
+  </div>
+</div>
+
+<style lang="scss">
+  .template {
+    height: 300px;
+    width: 500px;
+    display: grid;
+    grid-template: 2fr 2fr 2fr 2.8fr/65px 150px 150px 1fr;
+    gap: 5px;
+
+    .background {
+      grid-area: 1 / 1 / -1 / -1;
+      justify-self: end;
+    }
+    .box {
+      display: flex;
+      gap: 20px;
+      grid-area: 1 / 3 / 1 / -1;
+      justify-self: end;
+      align-self: center;
+      margin-right: 40px;
+      margin-top: 5px;
+      z-index: 1;
+      --gap: 8px;
+      --opacity: 60%;
+    }
+    .select {
+      grid-area: 3 / 1 / 4 /-1;
+      justify-self: end;
+      align-self: center;
+    }
+    .marker {
+      grid-area: 3 / 1 / 4 /-1;
+      justify-self: end;
+      align-self: center;
+      margin: -5px -5px 0;
+      z-index: 1;
+    }
+    .marker {
+      width: --marker-widht;
+    }
+    .sidebar {
+      width: 60px;
+      grid-area: 1 / 1 / span 4;
+      place-self: start end;
+      padding: 15px;
+      display: grid;
+      grid-template: 30px 30px 40px 55px 40px / 1fr;
+      gap: 5px;
+      place-items: center;
+    }
+
+    .primary {
+      display: grid;
+      grid-area: 2/2;
+      place-self: end start;
+      z-index: 1;
+    }
+
+    .secondary {
+      display: grid;
+      grid-area: 2/3;
+      place-self: end start;
+      z-index: 1;
+    }
+    .bottom {
+      display: flex;
+      place-items: center;
+      height: 40%;
+      gap: 30px;
+      margin-left: 20px;
+      grid-area: 4/2;
+      z-index: 1;
+    }
+
+    .button {
+      grid-area: 4 / 3 / 5 / 5;
+      justify-self: end;
+      align-self: center;
+      margin-right: -25px;
+    }
+  }
+</style>
