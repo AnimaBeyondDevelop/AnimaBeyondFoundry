@@ -392,7 +392,7 @@ export class ABFActor extends Actor {
    * @returns {SpellCasting} - An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
    */
   mysticCanCastEvaluate(spell: any, spellGrade: string, casted = { prepared: false, innate: false }, override = false) {
-    const spellCasting = SpellCasting;
+    const spellCasting = foundry.utils.deepClone(SpellCasting);
     spellCasting.casted = casted
     spellCasting.override = override
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
@@ -413,12 +413,6 @@ export class ABFActor extends Actor {
         : innateMagic.main.final.value;
     spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
 
-    if (!spellCasting.canCast.innate) {
-      spellCasting.casted.innate = false;
-    }
-    if (!spellCasting.canCast.prepared) {
-      spellCasting.casted.prepared = false;
-    }
     return spellCasting;
   }
 
