@@ -5,6 +5,7 @@
   import IconBox from '@svelte/ui/iconBox.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
+  import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
 
@@ -122,6 +123,21 @@
       --icon-size="28px"
     />
   </div>
+  {#if !manager.data.distance.enable && manager.data.projectile.value}
+    <div class="circle-distance">
+      <CardCircle size="40px">
+        <IconCheckBox
+          icon={manager.data.distance.pointBlank ? 'point-blank' : 'distance'}
+          bind:value={manager.data.distance.pointBlank}
+          title={manager.data.distance.pointBlank
+            ? i18n.localize('macros.combat.dialog.pointBlank.title')
+            : i18n.localize('macros.combat.dialog.distance.title')}
+          noStyle={true}
+          --icon-size={manager.data.distance.pointBlank ? '15px' : '25px'}
+        />
+      </CardCircle>
+    </div>
+  {/if}
   <div class="button">
     <CardButton title={'Atacar'} onClick={() => manager.onAttack()} />
   </div>
@@ -205,6 +221,12 @@
       justify-self: end;
       align-self: center;
       margin-right: -25px;
+    }
+    .circle-distance {
+      grid-area: 4 / 1;
+      justify-self: center;
+      align-self: center;
+      margin-right: -70px;
     }
   }
 </style>

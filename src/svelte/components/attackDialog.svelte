@@ -17,14 +17,15 @@
 
   let combatManager = new CombatAttackManager(
     data.attacker,
+    data.defender,
     data.hook,
     data.options
   );
   let mysticManager = actorMystic
-    ? new MysticAttackManager(data.attacker, data.hook, data.options)
+    ? new MysticAttackManager(data.attacker, data.defender, data.hook, data.options)
     : undefined;
   let psychicManager = actorPsychic
-    ? new PsychicAttackManager(data.attacker, data.hook, data.options)
+    ? new PsychicAttackManager(data.attacker, data.defender, data.hook, data.options)
     : undefined;
   let activeTab = $state('combat');
 

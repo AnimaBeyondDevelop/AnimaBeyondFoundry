@@ -48,6 +48,8 @@ export class MysticAttackManager extends AttackManager {
 
         this.data.spellGrade = 'base'
 
+        this.data.projectile.value = true
+
         this.onSpellChange()
     }
 

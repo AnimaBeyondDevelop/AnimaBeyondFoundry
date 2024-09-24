@@ -107,11 +107,27 @@
       }}
     />
   </div>
+  {#if !manager.data.distance.enable && manager.data.projectile.value}
+    <div class="circle-distance">
+      <CardCircle size="40px">
+        <IconCheckBox
+          icon={manager.data.distance.pointBlank ? 'point-blank' : 'distance'}
+          bind:value={manager.data.distance.pointBlank}
+          title={manager.data.distance.pointBlank
+            ? i18n.localize('macros.combat.dialog.pointBlank.title')
+            : i18n.localize('macros.combat.dialog.distance.title')}
+          noStyle={true}
+          onClick={value => manager.distanceCheck(value)}
+          --icon-size={manager.data.distance.pointBlank ? '15px' : '25px'}
+        />
+      </CardCircle>
+    </div>
+  {/if}
   <div class="button">
     <CardButton title={'Atacar'} onClick={() => manager.onAttack()} />
   </div>
   {#if manager.data.projectile.type === 'throw'}
-    <div class="circle">
+    <div class="circle-throw">
       <CardCircle>
         <IconCheckBox
           icon={manager.data.projectile.value ? 'throw' : 'no-throw'}
@@ -200,7 +216,13 @@
       align-self: center;
       margin-right: -25px;
     }
-    .circle {
+    .circle-distance {
+      grid-area: 4 / 1;
+      justify-self: center;
+      align-self: center;
+      margin-right: -70px;
+    }
+    .circle-throw {
       grid-area: 4 / 3;
       justify-self: center;
       align-self: center;

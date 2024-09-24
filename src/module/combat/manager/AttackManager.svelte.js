@@ -37,6 +37,7 @@ export class AttackManager {
         highGround: 20,
         poorVisibility: -20,
         targetInCover: - 40,
+        pointBlank: 30,
         secondaryCritic: - 10,
         psychicProjection: 10,
         psychicPotential: 20

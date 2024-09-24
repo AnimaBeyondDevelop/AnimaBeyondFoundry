@@ -75,11 +75,20 @@ export class CombatAttackManager extends AttackManager {
             this.data.projectile.type = ""
             this.resetProjectileModifiers()
         }
+        this.distanceCheck(this.data.distance.pointBlank)
     }
 
     onCriticChange(critic) {
         let secondaryCritic = this.data.critics.secondary === critic ? 1 : 0;
         this.addModfier("secondaryCritic", secondaryCritic)
+    }
+
+    distanceCheck(pointBlank) {
+        if (pointBlank && this.data.projectile.value && this.data.projectile.type === "shot") {
+            this.addModfier("pointBlank", 1)
+        } else {
+            this.addModfier("pointBlank", 0)
+        }
     }
 
     resetProjectileModifiers() {

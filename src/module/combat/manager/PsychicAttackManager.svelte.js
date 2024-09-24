@@ -36,6 +36,7 @@ export class PsychicAttackManager extends AttackManager {
         this.data.eliminateFatigue = false
         this.data.mentalPatternImbalance = false
 
+        this.data.projectile.value = true
 
         this.onPowerChange()
     }
