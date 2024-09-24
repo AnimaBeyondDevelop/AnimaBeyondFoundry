@@ -252,7 +252,7 @@ export class WSGMCombatManager extends WSCombatManager {
 
   manageAttack(attacker, defender, bonus) {
     this.attackDialog = new SvelteAttackDialog(
-      attacker,
+      attacker, defender,
       {
         onAttack: result => {
           this.attackDialog?.close({ force: true });

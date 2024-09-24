@@ -10,8 +10,8 @@ export class PsychicAttackManager extends AttackManager {
 
     potentialModifiers = $state({ special: { modifier: 0, active: true } })
 
-    constructor(attacker, hooks, options) {
-        super(attacker, hooks, options);
+    constructor(attacker, defender, hooks, options) {
+        super(attacker, defender, hooks, options);
 
         this.data.attack = {
             base: this.data.system.psychic.psychicProjection.imbalance.offensive.base.value,
@@ -138,7 +138,8 @@ export class PsychicAttackManager extends AttackManager {
                     'macros.combat.dialog.psychicAttack.title',
                     {
                         power: rollToMessageFlavor(this.power.name, psychicProjectionRoll),
-                        potential: psychicPotentialRoll.total
+                        potential: psychicPotentialRoll.total,
+                        target: this.data.defenderToken.name
                     }
                 );
                 psychicProjectionRoll.toMessage({

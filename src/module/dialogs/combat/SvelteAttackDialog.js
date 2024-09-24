@@ -3,9 +3,9 @@ import { mount } from "svelte";
 import AttackDialog from "@svelte/components/attackDialog.svelte";
 
 export class SvelteAttackDialog extends Application {
-  constructor(attacker, hook, bonus) {
+  constructor(attacker, defender, hook, bonus) {
     super()
-    this.data = { attacker, hook, bonus }
+    this.data = { attacker, defender, hook, bonus }
     this.render(true)
   }
 

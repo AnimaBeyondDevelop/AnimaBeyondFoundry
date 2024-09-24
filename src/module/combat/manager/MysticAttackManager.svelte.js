@@ -20,8 +20,8 @@ export class MysticAttackManager extends AttackManager {
     )
     attainableSpellGrades = $derived(this.getAttainableSpellGrades(this.data.spellUsed, this.castMethod));
 
-    constructor(attacker, hooks, options) {
-        super(attacker, hooks, options);
+    constructor(attacker, defender, hooks, options) {
+        super(attacker, defender, hooks, options);
 
         this.data.attack = {
             base: this.data.system.mystic.magicProjection.imbalance.offensive.base.value,
@@ -133,7 +133,8 @@ export class MysticAttackManager extends AttackManager {
             const { i18n } = game;
 
             const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
-                spell: rollToMessageFlavor(this.spell?.name, roll)
+                spell: rollToMessageFlavor(this.spell?.name, roll),
+                target: this.data.defenderToken.name
             })
 
             roll.toMessage({

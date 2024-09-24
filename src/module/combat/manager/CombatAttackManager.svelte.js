@@ -5,8 +5,8 @@ import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 export class CombatAttackManager extends AttackManager {
     weapon = $derived(this.getWeapon(this.data.weaponUsed));
-    constructor(attacker, hooks, options) {
-        super(attacker, hooks, options);
+    constructor(attacker, defender, hooks, options) {
+        super(attacker, defender, hooks, options);
 
         this.data.attack = {
             base: this.data.system.combat.attack.base.value,
@@ -114,10 +114,12 @@ export class CombatAttackManager extends AttackManager {
 
             const flavor = this.weapon
                 ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-                    weapon: rollToMessageFlavor(this.weapon?.name, roll)
+                    weapon: rollToMessageFlavor(this.weapon?.name, roll),
+                    target: this.data.defenderToken.name
                 })
                 : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                    unarmed: rollToMessageFlavor(i18n.format('macros.combat.dialog.unarmed.title'), roll)
+                    unarmed: rollToMessageFlavor(i18n.format('macros.combat.dialog.unarmed.title'), roll),
+                    target: this.data.defenderToken.name
                 });
 
             roll.toMessage({

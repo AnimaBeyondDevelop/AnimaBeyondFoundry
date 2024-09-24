@@ -42,10 +42,11 @@ export class AttackManager {
         psychicPotential: 20
     }
 
-    constructor(attacker, hooks, options) {
+    constructor(attacker, defender, hooks, options) {
         this.data.actor = attacker.actor
         this.data.token = attacker
         this.data.system = this.data.actor.system // No es reactivo. tampoco funciona inicializando como attacker.actor.system
+        this.data.defenderToken = defender
 
         this.hooks = hooks
 

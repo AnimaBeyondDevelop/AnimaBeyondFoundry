@@ -87,7 +87,7 @@ export class WSUserCombatManager extends WSCombatManager {
               }
             };
             this.emit(msg);
-            this.attackDialog = new SvelteAttackDialog(attackerToken, {
+            this.attackDialog = new SvelteAttackDialog(attackerToken, targetToken, {
               onAttack: result => {
                 const newMsg = {
                   type: UserMessageTypes.Attack,
@@ -113,7 +113,7 @@ export class WSUserCombatManager extends WSCombatManager {
     const defender = this.findTokenById(defenderTokenId);
 
     this.attackDialog = new SvelteAttackDialog(
-      attacker,
+      attacker, defender,
       {
         onAttack: result => {
           const newMsg = {
