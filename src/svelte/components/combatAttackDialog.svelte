@@ -47,7 +47,7 @@
       icon="fatigue"
       bind:activeIcons={manager.data.fatigue.used}
       quantity={Math.min(manager.data.fatigue.available, 5)}
-      onChange={value => manager.addModfier("fatigue", value)}
+      onChange={value => manager.addModfier('fatigue', value)}
       title={i18n.localize('macros.combat.dialog.fatigue.title') +
         ` (${manager.data.fatigue.available})`}
     />
@@ -57,7 +57,8 @@
       bind:selection={manager.data.weaponUsed}
       options={manager.data.weapons}
       onChange={value => manager.onWeaponChange(value)}
-      ><option value="unarmed">{i18n.format('macros.combat.dialog.unarmed.title')}</option></CardSelect
+      ><option value="unarmed">{i18n.format('macros.combat.dialog.unarmed.title')}</option
+      ></CardSelect
     >
   </g>
   <g class="marker">
@@ -83,7 +84,7 @@
       bind:value={manager.data.highGround}
       title={i18n.localize('macros.combat.dialog.highGround.title')}
       onClick={value => {
-        manager.addModfier("highGround", value);
+        manager.addModfier('highGround', value);
       }}
       --icon-size="30px"
     />
@@ -93,7 +94,7 @@
       title={i18n.localize('macros.combat.dialog.targetInCover.title')}
       hidden={!manager.weapon?.system.isRanged.value || !manager.data.projectile.value}
       onClick={value => {
-        manager.addModfier("targetInCover", value);
+        manager.addModfier('targetInCover', value);
       }}
     />
     <IconCheckBox
@@ -102,23 +103,25 @@
       title={i18n.localize('macros.combat.dialog.poorVisibility.title')}
       hidden={!manager.weapon?.system.isRanged.value || !manager.data.projectile.value}
       onClick={value => {
-        manager.addModfier("poorVisibility", value);
+        manager.addModfier('poorVisibility', value);
       }}
     />
   </div>
   <div class="button">
     <CardButton title={'Atacar'} onClick={() => manager.onAttack()} />
   </div>
-  {#if manager.data.projectile.type === "throw"}
+  {#if manager.data.projectile.type === 'throw'}
     <div class="circle">
       <CardCircle>
         <IconCheckBox
-          icon={manager.data.projectile.value? "throw" : "no-throw"}
+          icon={manager.data.projectile.value ? 'throw' : 'no-throw'}
           bind:value={manager.data.projectile.value}
-          title={manager.data.projectile.value? i18n.localize("macros.combat.dialog.throw.title") : i18n.localize("macros.combat.dialog.melee.title")}
+          title={manager.data.projectile.value
+            ? i18n.localize('macros.combat.dialog.throw.title')
+            : i18n.localize('macros.combat.dialog.melee.title')}
           noStyle={true}
-          --icon-size={manager.data.projectile.value? "32px" : "22px"}
-          --transform={manager.data.projectile.value? "rotate(360deg)" : "rotate(0deg)"}
+          --icon-size={manager.data.projectile.value ? '32px' : '22px'}
+          --transform={manager.data.projectile.value ? 'rotate(360deg)' : 'rotate(0deg)'}
         />
       </CardCircle>
     </div>
