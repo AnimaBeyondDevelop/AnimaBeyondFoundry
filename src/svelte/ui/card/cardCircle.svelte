@@ -3,7 +3,7 @@
   let {
     data,
     title,
-    height,
+    size,
     width,
     border,
     secondary,
@@ -13,8 +13,7 @@
 
 <div
   class="button"
-  style={`--height:${height || '50px'};
---width:${width || '50px'};
+  style={`--size:${size || '50px'};
 --border:${border || '5px'};
 --color:${secondary ? 'var(--secondary-color)' : 'var(--light-color)'}
 `}
@@ -28,8 +27,8 @@
   .button {
     display: grid;
     place-items: center;
-    height: var(--height);
-    width: var(--width);
+    height: var(--size);
+    width: var(--size);
     position: relative;
     background: var(--background-color);
     clip-path: circle();
@@ -40,8 +39,8 @@
 
     &::before {
       content: '';
-      height: calc(var(--height) - var(--border) * 2);
-      width: calc(var(--width) - var(--border) * 2);
+      height: calc(var(--size) - var(--border) * 2);
+      width: calc(var(--size) - var(--border) * 2);
       position: absolute;
       top: 5px;
       left: 5px;
