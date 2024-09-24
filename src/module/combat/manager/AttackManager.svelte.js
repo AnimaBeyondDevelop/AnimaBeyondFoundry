@@ -23,7 +23,7 @@ export class AttackManager {
         distance: {
             value: 0,
             enable: false,
-            check: false
+            pointBlank: false
         }
     })
     attack = $derived(this.applyModifiers(this.modifiers))
@@ -69,6 +69,17 @@ export class AttackManager {
 
         this.data.distance.enable = combatDistance
 
+        if (combatDistance) {
+            let calculateDistance =
+                canvas.grid.measureDistance(
+                    this.data.token,
+                    this.data.defenderToken,
+                    { gridSpaces: true }
+                );
+            this.data.distance.value = calculateDistance;
+            this.data.distance.pointBlank = (calculateDistance /
+                canvas.dimensions.distance) <= 1
+        }
     }
 
     addModfier(modifier, multiplier) {
