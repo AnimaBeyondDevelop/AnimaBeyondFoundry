@@ -88,7 +88,7 @@ export class AttackManager {
     }
 
     removeModifiers(modifiers) {
-        for (let mod in modifiers) {
+        for (let mod of modifiers) {
             this.addModfier(mod, 0)
         }
     }
