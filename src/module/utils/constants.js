@@ -56,6 +56,9 @@ export const Templates = {
   },
   Svelte: {
     SvelteApp: 'systems/animabf/templates/svelte/svelte-application.html',
-    SvelteFormApp: 'systems/animabf/templates/svelte/svelte-form-application.html'
+    SvelteFormApp: 'systems/animabf/templates/svelte/svelte-form-application.html',
+    CombatAttackDialog: 'systems/animabf/templates/svelte/attack-svelte-application.html',
+    CombatDefenseDialog: 'systems/animabf/templates/svelte/defense-svelte-application.html',
+    GMCombatDialog: 'systems/animabf/templates/svelte/gm-combat-svelte-application.html'
   }
 };

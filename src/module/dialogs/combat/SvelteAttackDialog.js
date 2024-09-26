@@ -11,7 +11,7 @@ export class SvelteAttackDialog extends Application {
 
   async _render(force = false, options = {}) {
     return super._render(force, options).then(v => {
-      let element = document.getElementById("svelte-app");
+      let element = document.getElementById("attack-svelte-app");
       if (element) {
         let props = { data: this.data }
         mount(AttackDialog, { target: element, props })
@@ -29,7 +29,7 @@ export class SvelteAttackDialog extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ['overflow'],
-      template: Templates.Svelte.SvelteApp,
+      template: Templates.Svelte.CombatAttackDialog,
       width: 430,
       height: 230,
     });
