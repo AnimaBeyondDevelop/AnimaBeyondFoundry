@@ -84,7 +84,7 @@ export class PsychicAttackManager extends AttackManager {
     usePsychicPoints(usedPoints, type) {
         switch (type) {
             case "psychicProjection":
-                this.addModfier(type, usedPoints)
+                this.addModifier(type, usedPoints)
                 break
             case "psychicPotential":
                 this.addPotentialModifier(type, usedPoints)

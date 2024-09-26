@@ -47,7 +47,7 @@
       icon="fatigue"
       bind:activeIcons={manager.data.fatigue.used}
       quantity={Math.min(manager.data.fatigue.available, 5)}
-      onChange={value => manager.addModfier('fatigue', value)}
+      onChange={value => manager.addModifier('fatigue', value)}
       title={i18n.localize('macros.combat.dialog.fatigue.title') +
         ` (${manager.data.fatigue.available})`}
     />
@@ -84,7 +84,7 @@
       bind:value={manager.data.highGround}
       title={i18n.localize('macros.combat.dialog.highGround.title')}
       onClick={value => {
-        manager.addModfier('highGround', value);
+        manager.addModifier('highGround', value);
       }}
       --icon-size="30px"
     />
@@ -94,7 +94,7 @@
       title={i18n.localize('macros.combat.dialog.targetInCover.title')}
       hidden={!manager.weapon?.system.isRanged.value || !manager.data.projectile.value}
       onClick={value => {
-        manager.addModfier('targetInCover', value);
+        manager.addModifier('targetInCover', value);
       }}
     />
     <IconCheckBox
@@ -103,7 +103,7 @@
       title={i18n.localize('macros.combat.dialog.poorVisibility.title')}
       hidden={!manager.weapon?.system.isRanged.value || !manager.data.projectile.value}
       onClick={value => {
-        manager.addModfier('poorVisibility', value);
+        manager.addModifier('poorVisibility', value);
       }}
     />
   </div>

@@ -79,14 +79,14 @@ export class CombatAttackManager extends AttackManager {
 
     onCriticChange(critic) {
         let secondaryCritic = this.data.critics.secondary === critic ? 1 : 0;
-        this.addModfier("secondaryCritic", secondaryCritic)
+        this.addModifier("secondaryCritic", secondaryCritic)
     }
 
     distanceCheck(pointBlank) {
         if (pointBlank && this.data.projectile.value && this.data.projectile.type === "shot") {
-            this.addModfier("pointBlank", 1)
+            this.addModifier("pointBlank", 1)
         } else {
-            this.addModfier("pointBlank", 0)
+            this.addModifier("pointBlank", 0)
         }
     }
 
