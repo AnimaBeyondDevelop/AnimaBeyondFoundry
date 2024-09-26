@@ -87,6 +87,12 @@ export class AttackManager {
         this.modifiers[modifier] = { modifier: this.modifiersTable[modifier] * multiplier, active: true }
     }
 
+    removeModifiers(modifiers) {
+        for (let mod in modifiers) {
+            this.addModfier(mod, 0)
+        }
+    }
+
     applyModifiers(modifiers) {
         let totalModifier = 0;
         for (const key in modifiers) {

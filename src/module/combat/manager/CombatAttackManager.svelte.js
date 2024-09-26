@@ -37,9 +37,8 @@ export class CombatAttackManager extends AttackManager {
 
         if (this.data.weaponUsed === "unarmed") {
             return this.data.attack.final + totalModifier;
-        } else {
-            return this.weapon.system.attack.final.value + totalModifier
         }
+        return this.weapon.system.attack.final.value + totalModifier
     }
 
     calculateDamage(damageModifiers) {
@@ -47,17 +46,15 @@ export class CombatAttackManager extends AttackManager {
 
         if (this.data.weaponUsed === "unarmed") {
             return 10 + this.data.system.characteristics.primaries.strength.mod + totalModifier
-        } else {
-            return this.weapon.system.damage.final.value + totalModifier
         }
+        return this.weapon.system.damage.final.value + totalModifier
     }
 
     getWeapon(weaponUsed) {
         if (weaponUsed === "unarmed") {
             return undefined
-        } else {
-            return this.data.weapons.find(w => w.id === weaponUsed)
         }
+        return this.data.weapons.find(w => w.id === weaponUsed)
     }
 
     onWeaponChange() {
@@ -73,7 +70,9 @@ export class CombatAttackManager extends AttackManager {
         } else {
             this.data.projectile.value = false
             this.data.projectile.type = ""
-            this.resetProjectileModifiers()
+            this.removeModifiers(["poorVisibility", "targetInCover"])
+            this.data.poorVisibility = false
+            this.data.targetInCover = false
         }
         this.distanceCheck(this.data.distance.pointBlank)
     }
@@ -89,13 +88,6 @@ export class CombatAttackManager extends AttackManager {
         } else {
             this.addModfier("pointBlank", 0)
         }
-    }
-
-    resetProjectileModifiers() {
-        this.addModfier("poorVisibility", 0)
-        this.addModfier("targetInCover", 0)
-        this.data.poorVisibility = false
-        this.data.targetInCover = false
     }
 
     onAttack() {
