@@ -1,6 +1,14 @@
 <script>
   // @ts-nocheck
-  let { icon, value, modifier = $bindable(0), title, clickEvent, disabled } = $props();
+  let {
+    icon,
+    value,
+    modifier = $bindable(0),
+    title,
+    clickEvent,
+    invert,
+    disabled
+  } = $props();
   let src = $derived('/systems/animabf/assets/icons/svg/' + icon + '.svg');
 
   function onchange(e) {
@@ -24,7 +32,8 @@
     {src}
     alt=""
     onclick={clickEvent}
-    style={clickEvent ? '--hover-scale:1.05' : ''}
+    style={(invert ? '--filter:invert(1);' : '') +
+      (clickEvent ? '--hover-scale:1.05' : '')}
   />
   <input
     class="input"
@@ -49,6 +58,7 @@
       justify-self: right;
       transition: var(--transition, scale 0.3s ease-out, transform 0.4s ease-out);
       transform: var(--transform);
+      filter: var(--filter);
       &:hover {
         scale: var(--hover-scale, 1);
       }
