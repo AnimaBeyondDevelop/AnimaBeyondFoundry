@@ -655,6 +655,8 @@
   "macros.combat.dialog.attacking.title": "Attacking to ",
   "macros.combat.dialog.blockButton.title": "Try to block",
   "macros.combat.dialog.blockValue.title": "Block value",
+  "macros.combat.dialog.button.defense.title": "Defend",
+  "macros.combat.dialog.button.attack.title": "Attack",
   "macros.combat.dialog.cancelButton.title": "Cancel",
   "macros.combat.dialog.combatMod.modifier.title": "Modifier",
   "macros.combat.dialog.combatMod.blindness.title": "Absolute blindness",
