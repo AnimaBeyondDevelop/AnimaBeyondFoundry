@@ -1,0 +1,245 @@
+<script>
+  // @ts-nocheck
+  import CardSelect from '@svelte/ui/card/cardSelect.svelte';
+  import IconInput from '@svelte/ui/iconInput.svelte';
+  import IconBox from '@svelte/ui/iconBox.svelte';
+  import CardMarker from '@svelte/ui/card/cardMarker.svelte';
+  import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
+  import CardCircle from '@svelte/ui/card/cardCircle.svelte';
+  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import CardCombat from '@svelte/ui/card/cardCombat.svelte';
+
+  let { manager } = $props();
+  const i18n = game.i18n;
+
+  let markerWidth = { min: '150px', max: '435px' };
+  let togglePanel = $state(false);
+  let psychicPointSwitch = $state(true);
+</script>
+
+<div class="template">
+  <g class="background">
+    <CardCombat
+      width={togglePanel ? '650px' : '500px'}
+      sidebar={togglePanel ? '210px' : '60px'}
+    ></CardCombat>
+  </g>
+  <div class="sidebar">
+    <div></div>
+    <div></div>
+  </div>
+  <div class="box">
+    {#if psychicPointSwitch}
+      <IconBox
+        icon="psychic-point"
+        bind:activeIcons={manager.data.psychicPoints.usedProjection}
+        quantity={Math.min(
+          manager.data.psychicPoints.available -
+            manager.data.psychicPoints.usedPotential -
+            manager.data.psychicPoints.eliminateFatigue,
+          5
+        )}
+        onChange={value => manager.usePsychicPoints(value, 'psychicProjection')}
+        title={i18n.localize('anima.ui.psychic.psychicPoints.title') +
+          ` (${manager.data.psychicPoints.available})`}
+      />
+    {:else}
+      <IconBox
+        icon="psychic-point"
+        bind:activeIcons={manager.data.psychicPoints.usedPotential}
+        quantity={Math.min(
+          manager.data.psychicPoints.available -
+            manager.data.psychicPoints.usedProjection -
+            manager.data.psychicPoints.eliminateFatigue,
+          5
+        )}
+        onChange={value => manager.usePsychicPoints(value, 'psychicPotential')}
+        title={i18n.localize('anima.ui.psychic.psychicPoints.title') +
+          ` (${manager.data.psychicPoints.available})`}
+        --transform="rotate(180deg)"
+      />
+    {/if}
+    <IconCheckBox
+      icon={psychicPointSwitch ? 'psychic' : 'psychic-potential'}
+      bind:value={psychicPointSwitch}
+      title={`${i18n.localize('anima.ui.psychic.psychicPoints.title')} ${
+        psychicPointSwitch
+          ? i18n.localize('anima.ui.psychic.psychicProjection.projection.title')
+          : i18n.localize('anima.ui.psychic.psychicPotential.potential.title')
+      }`}
+      noStyle={true}
+      disabled={!manager.data.newShield}
+      --icon-size="30px"
+    />
+  </div>
+  <g class="select">
+    <CardSelect
+      bind:selection={manager.data.powerUsed}
+      options={manager.data.newShield
+        ? manager.data.psychicPowers
+        : manager.data.supernaturalShields}
+      onChange={value => manager.onPowerChange(value)}
+      >{#if manager.data.psychicPowers.length === 0}
+        <option>No Power Found</option>
+      {/if}</CardSelect
+    >
+  </g>
+  <g class="marker">
+    <CardMarker>
+      <div class="marker-content">
+        <IconInput
+          icon="supernatural-shield"
+          value={manager.data.shieldPoints}
+          title={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
+          invert={true}
+          disabled={true}
+        />
+      </div></CardMarker
+    >
+  </g>
+  <g class="primary">
+    <IconInput
+      icon="psychic"
+      value={manager.defense}
+      bind:modifier={manager.modifiers.special.modifier}
+      title={i18n.localize('anima.ui.psychic.psychicProjection.projection.title')}
+    />
+  </g>
+  <g class="secondary">
+    {#if manager.data.newShield}
+      <IconInput
+        icon="psychic-potential"
+        value={manager.psychicPotential}
+        bind:modifier={manager.potentialModifiers.special.modifier}
+        title={i18n.localize('anima.ui.psychic.psychicPotential.potential.title')}
+      />
+    {/if}
+  </g>
+  <div class="bottom">
+    {#if manager.data.newShield}
+      <IconCheckBox
+        icon="avoid-psychic-fatigue"
+        bind:value={manager.data.eliminateFatigue}
+        title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
+        disabled={manager.data.psychicPoints.available <=
+          manager.data.psychicPoints.usedPotential +
+            manager.data.psychicPoints.usedProjection}
+        onClick={value => manager.usePsychicPoints(value ? 1 : 0, 'eliminateFatigue')}
+        --icon-size="30px"
+      />
+      <IconCheckBox
+        icon="mental-pattern-imbalance"
+        bind:value={manager.data.mentalPatternImbalance}
+        title={i18n.localize('macros.combat.dialog.mentalPatternImbalance.title')}
+        --icon-size="28px"
+      />
+    {/if}
+  </div>
+  <div class="circle-new-shield">
+    <CardCircle size="40px">
+      <IconCheckBox
+        icon="plus"
+        bind:value={manager.data.newShield}
+        title={i18n.localize('macros.combat.dialog.newShield.title')}
+        onClick={value => {
+          manager.onNewShield(value);
+          if (!value) {
+            psychicPointSwitch = true;
+          }
+        }}
+        --icon-size="18px"
+      />
+    </CardCircle>
+  </div>
+  <div class="button">
+    <CardButton
+      title={i18n.localize('macros.combat.dialog.button.defense.title')}
+      onClick={() => manager.onDefense()}
+    />
+  </div>
+</div>
+
+<style lang="scss">
+  .template {
+    height: 300px;
+    width: 500px;
+    display: grid;
+    grid-template: 2fr 2fr 2fr 2.8fr/65px 150px 150px 1fr;
+    gap: 5px;
+
+    .background {
+      grid-area: 1 / 1 / -1 / -1;
+      justify-self: end;
+    }
+    .box {
+      display: flex;
+      gap: 20px;
+      grid-area: 1 / 3 / 1 / -1;
+      justify-self: end;
+      align-self: center;
+      margin-right: 40px;
+      margin-top: 5px;
+      z-index: 1;
+      --gap: 8px;
+      --opacity: 60%;
+    }
+    .select {
+      grid-area: 3 / 1 / 4 /-1;
+      justify-self: end;
+      align-self: center;
+    }
+    .marker {
+      grid-area: 3 / 1 / 4 /-1;
+      justify-self: end;
+      align-self: center;
+      margin: -5px -5px 0;
+      z-index: 1;
+    }
+    .sidebar {
+      width: 60px;
+      grid-area: 1 / 1 / span 4;
+      place-self: start end;
+      padding: 15px;
+      display: grid;
+      grid-template: 30px 30px 40px 55px 40px / 1fr;
+      gap: 5px;
+      place-items: center;
+    }
+
+    .primary {
+      display: grid;
+      grid-area: 2/2;
+      place-self: end start;
+      z-index: 1;
+    }
+
+    .secondary {
+      display: grid;
+      grid-area: 2/3;
+      place-self: end start;
+      z-index: 1;
+    }
+    .bottom {
+      display: flex;
+      place-items: center;
+      height: 40%;
+      gap: 30px;
+      margin-left: 20px;
+      grid-area: 4/2;
+      z-index: 1;
+    }
+
+    .button {
+      grid-area: 4 / 3 / 5 / 5;
+      justify-self: end;
+      align-self: center;
+      margin-right: -25px;
+    }
+    .circle-new-shield {
+      grid-area: 4 / 1;
+      justify-self: center;
+      align-self: center;
+      margin-right: -70px;
+    }
+  }
+</style>
