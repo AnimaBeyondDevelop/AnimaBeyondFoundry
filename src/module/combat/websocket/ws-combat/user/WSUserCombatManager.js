@@ -3,7 +3,7 @@ import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
 import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
-import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
+import { SvelteDefenseDialog } from '../../../../dialogs/combat/SvelteDefenseDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { getTargetToken } from '../util/getTargetToken';
@@ -164,10 +164,10 @@ export class WSUserCombatManager extends WSCombatManager {
     const defender = this.findTokenById(defenderTokenId);
 
     try {
-      this.defenseDialog = new CombatDefenseDialog(
+      this.defenseDialog = new SvelteDefenseDialog(
         {
           token: attacker,
-          result
+          ...result
         },
         defender,
         {

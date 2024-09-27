@@ -4,7 +4,7 @@ import { GMMessageTypes } from './WSGMCombatMessageTypes';
 import { UserMessageTypes } from '../user/WSUserCombatMessageTypes';
 import { GMCombatDialog } from '../../../../dialogs/combat/GMCombatDialog';
 import { CombatDialogs } from '../../dialogs/CombatDialogs';
-import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
+import { SvelteDefenseDialog } from '../../../../dialogs/combat/SvelteDefenseDialog';
 import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
@@ -301,10 +301,10 @@ export class WSGMCombatManager extends WSCombatManager {
     defender,
     result
   ) {
-    this.defendDialog = new CombatDefenseDialog(
+    this.defendDialog = new SvelteDefenseDialog(
       {
         token: attacker,
-        result
+        ...result
       },
       defender,
       {
