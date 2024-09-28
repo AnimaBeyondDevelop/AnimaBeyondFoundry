@@ -51,9 +51,9 @@ export class DefenseManager {
         this.data.showRoll = !isGM || showRollByDefault
 
         let perceiveMystic =
-            this.actorSystem.general.settings.perceiveMystic.value;
+            this.data.actor.system.general.settings.perceiveMystic.value;
         let perceivePsychic =
-            this.actorSystem.general.settings.perceivePsychic.value;
+            this.data.actor.system.general.settings.perceivePsychic.value;
 
         if (!this.data.attacker.visible) {
             const { attackType } = this.data.attacker
