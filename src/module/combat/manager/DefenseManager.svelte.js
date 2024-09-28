@@ -4,11 +4,11 @@ export class DefenseManager {
     data = $state({
         actor: {},
         token: {},
-        system: {},
         showRoll: true,
         withRoll: true,
         defense: { base: 0, final: 0 },
     })
+    actorSystem = $derived(this.data.actor.system)
     defense = $derived(this.applyModifiers(this.modifiers))
     armor = $derived(this.calculateArmor(this.armorModifiers))
 
@@ -31,7 +31,6 @@ export class DefenseManager {
     constructor(attacker, defender, hooks, options) {
         this.data.actor = defender.actor
         this.data.token = defender
-        this.data.system = this.data.actor.system // No es reactivo. tampoco funciona inicializando como attacker.actor.system
         this.data.attacker = {
             token: attacker.token,
             attackType: attacker.type,
@@ -52,9 +51,9 @@ export class DefenseManager {
         this.data.showRoll = !isGM || showRollByDefault
 
         let perceiveMystic =
-            this.data.system.general.settings.perceiveMystic.value;
+            this.actorSystem.general.settings.perceiveMystic.value;
         let perceivePsychic =
-            this.data.system.general.settings.perceivePsychic.value;
+            this.actorSystem.general.settings.perceivePsychic.value;
 
         if (!this.data.attacker.visible) {
             const { attackType } = this.data.attacker
@@ -94,6 +93,6 @@ export class DefenseManager {
             totalModifier += this.armorModifiers[key]?.active ? this.armorModifiers[key].modifier : 0;
         }
         return totalModifier +
-            this.data.system.combat.totalArmor.at[this.data.attacker.critic]?.value ?? 0
+            this.actorSystem.combat.totalArmor.at[this.data.attacker.critic]?.value ?? 0
     }
 }

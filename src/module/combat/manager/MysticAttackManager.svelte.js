@@ -24,10 +24,10 @@ export class MysticAttackManager extends AttackManager {
         super(attacker, defender, hooks, options);
 
         this.data.attack = {
-            base: this.data.system.mystic.magicProjection.imbalance.offensive.base.value,
-            final: this.data.system.mystic.magicProjection.imbalance.offensive.final.value
+            base: this.actorSystem.mystic.magicProjection.imbalance.offensive.base.value,
+            final: this.actorSystem.mystic.magicProjection.imbalance.offensive.final.value
         }
-        this.data.spells = this.data.system.mystic.spells.filter(w => w.system.combatType.value === 'attack')
+        this.data.spells = this.actorSystem.mystic.spells.filter(w => w.system.combatType.value === 'attack')
 
         const lastOffensiveSpellUsed = this.data.actor.getFlag(
             'animabf',
@@ -76,8 +76,8 @@ export class MysticAttackManager extends AttackManager {
             return ['base', 'intermediate', 'advanced', 'arcane']
         } else {
             let attainableSpellGrades = []
-            let intelligence = this.data.system.characteristics.primaries.intelligence.value
-            let finalIntelligence = this.data.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+            let intelligence = this.actorSystem.characteristics.primaries.intelligence.value
+            let finalIntelligence = this.actorSystem.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
             for (let grade in this.spell?.system.grades) {
                 if (finalIntelligence >= this.spell?.system.grades[grade].intRequired.value) {
                     attainableSpellGrades.push(grade)
@@ -127,7 +127,7 @@ export class MysticAttackManager extends AttackManager {
             formula = formula.replace('xa', 'xamastery');
         }
 
-        const roll = new ABFFoundryRoll(formula, this.data.system);
+        const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
         roll.roll();
 

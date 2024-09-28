@@ -9,11 +9,11 @@ export class CombatAttackManager extends AttackManager {
         super(attacker, defender, hooks, options);
 
         this.data.attack = {
-            base: this.data.system.combat.attack.base.value,
-            final: this.data.system.combat.attack.final.value
+            base: this.actorSystem.combat.attack.base.value,
+            final: this.actorSystem.combat.attack.final.value
         }
-        this.data.fatigue = { used: 0, available: this.data.system.characteristics.secondaries.fatigue.value };
-        this.data.weapons = this.data.system.combat.weapons
+        this.data.fatigue = { used: 0, available: this.actorSystem.characteristics.secondaries.fatigue.value };
+        this.data.weapons = this.actorSystem.combat.weapons
 
         const lastOffensiveWeaponUsed = this.data.actor.getFlag(
             'animabf',
@@ -45,7 +45,7 @@ export class CombatAttackManager extends AttackManager {
         let totalModifier = super.calculateDamage(damageModifiers);
 
         if (this.data.weaponUsed === "unarmed") {
-            return 10 + this.data.system.characteristics.primaries.strength.mod + totalModifier
+            return 10 + this.actorSystem.characteristics.primaries.strength.mod + totalModifier
         }
         return this.weapon.system.damage.final.value + totalModifier
     }
@@ -106,7 +106,7 @@ export class CombatAttackManager extends AttackManager {
             formula = formula.replace('xa', 'xamastery');
         }
 
-        const roll = new ABFFoundryRoll(formula, this.data.system);
+        const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
         roll.roll();
 

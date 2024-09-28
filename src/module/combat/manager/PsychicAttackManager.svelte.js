@@ -14,14 +14,14 @@ export class PsychicAttackManager extends AttackManager {
         super(attacker, defender, hooks, options);
 
         this.data.attack = {
-            base: this.data.system.psychic.psychicProjection.imbalance.offensive.base.value,
-            final: this.data.system.psychic.psychicProjection.imbalance.offensive.final.value
+            base: this.actorSystem.psychic.psychicProjection.imbalance.offensive.base.value,
+            final: this.actorSystem.psychic.psychicProjection.imbalance.offensive.final.value
         }
-        this.data.psychicPotential = this.data.system.psychic.psychicPotential.final.value
+        this.data.psychicPotential = this.actorSystem.psychic.psychicPotential.final.value
 
-        this.data.psychicPoints = { usedProjection: 0, usedPotential: 0, eliminateFatigue: 0, available: this.data.system.psychic.psychicPoints.value }
+        this.data.psychicPoints = { usedProjection: 0, usedPotential: 0, eliminateFatigue: 0, available: this.actorSystem.psychic.psychicPoints.value }
 
-        this.data.psychicPowers = this.data.system.psychic.psychicPowers.filter(w => w.system.combatType.value === 'attack')
+        this.data.psychicPowers = this.actorSystem.psychic.psychicPowers.filter(w => w.system.combatType.value === 'attack')
 
         const lastOffensivePowerUsed = this.data.actor.getFlag(
             'animabf',
@@ -109,13 +109,13 @@ export class PsychicAttackManager extends AttackManager {
             formula = formula.replace('xa', 'xamastery');
         }
 
-        const psychicProjectionRoll = new ABFFoundryRoll(formula, this.data.system);
+        const psychicProjectionRoll = new ABFFoundryRoll(formula, this.actorSystem);
 
         psychicProjectionRoll.roll();
 
         const psychicPotentialRoll = new ABFFoundryRoll(
             `1d100PsychicRoll + ${this.psychicPotential}`,
-            { ...this.data.system, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
+            { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
         );
         psychicPotentialRoll.roll();
 

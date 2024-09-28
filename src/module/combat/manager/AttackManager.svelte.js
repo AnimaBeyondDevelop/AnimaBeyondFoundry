@@ -4,7 +4,6 @@ export class AttackManager {
     data = $state({
         actor: {},
         token: {},
-        system: {},
         showRoll: true,
         withRoll: true,
         counterAttackBonus: 0,
@@ -26,6 +25,7 @@ export class AttackManager {
             pointBlank: false
         }
     })
+    actorSystem = $derived(this.data.actor.system)
     attack = $derived(this.applyModifiers(this.modifiers))
     damage = $derived(this.calculateDamage(this.damageModifiers))
 
@@ -46,7 +46,6 @@ export class AttackManager {
     constructor(attacker, defender, hooks, options) {
         this.data.actor = attacker.actor
         this.data.token = attacker
-        this.data.system = this.data.actor.system // No es reactivo. tampoco funciona inicializando como attacker.actor.system
         this.data.defenderToken = defender
 
         this.hooks = hooks

@@ -9,17 +9,17 @@ export class CombatDefenseManager extends DefenseManager {
         super(attacker, defender, hooks, options);
 
         this.data.block = {
-            base: this.data.system.combat.block.base.value,
-            final: this.data.system.combat.block.final.value
+            base: this.actorSystem.combat.block.base.value,
+            final: this.actorSystem.combat.block.final.value
         }
         this.data.dodge = {
-            base: this.data.system.combat.dodge.base.value,
-            final: this.data.system.combat.dodge.final.value
+            base: this.actorSystem.combat.dodge.base.value,
+            final: this.actorSystem.combat.dodge.final.value
         }
         this.data.defenseType = this.data.block.final > this.data.dodge.final ? "block" : "dodge"
 
-        this.data.fatigue = { used: 0, available: this.data.system.characteristics.secondaries.fatigue.value };
-        this.data.weapons = this.data.system.combat.weapons
+        this.data.fatigue = { used: 0, available: this.actorSystem.characteristics.secondaries.fatigue.value };
+        this.data.weapons = this.actorSystem.combat.weapons
 
         const lastDefensiveWeaponUsed = this.data.actor.getFlag(
             'animabf',
@@ -108,7 +108,7 @@ export class CombatDefenseManager extends DefenseManager {
             formula = formula.replace('xa', 'xamastery');
         }
 
-        const roll = new ABFFoundryRoll(formula, this.data.system);
+        const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
         roll.roll();
 

@@ -14,14 +14,14 @@ export class PsychicDefenseManager extends DefenseManager {
         super(attacker, defender, hooks, options);
 
         this.data.defense = {
-            base: this.data.system.psychic.psychicProjection.imbalance.defensive.base.value,
-            final: this.data.system.psychic.psychicProjection.imbalance.defensive.final.value
+            base: this.actorSystem.psychic.psychicProjection.imbalance.defensive.base.value,
+            final: this.actorSystem.psychic.psychicProjection.imbalance.defensive.final.value
         }
-        this.data.psychicPotential = this.data.system.psychic.psychicPotential.final.value
+        this.data.psychicPotential = this.actorSystem.psychic.psychicPotential.final.value
 
-        this.data.psychicPoints = { usedProjection: 0, usedPotential: 0, eliminateFatigue: 0, available: this.data.system.psychic.psychicPoints.value }
+        this.data.psychicPoints = { usedProjection: 0, usedPotential: 0, eliminateFatigue: 0, available: this.actorSystem.psychic.psychicPoints.value }
 
-        this.data.psychicPowers = this.data.system.psychic.psychicPowers.filter(w => w.system.combatType.value === 'defense')
+        this.data.psychicPowers = this.actorSystem.psychic.psychicPowers.filter(w => w.system.combatType.value === 'defense')
 
         const lastDefensivePowerUsed = this.data.actor.getFlag(
             'animabf',
@@ -36,7 +36,7 @@ export class PsychicDefenseManager extends DefenseManager {
         this.data.eliminateFatigue = false
         this.data.mentalPatternImbalance = false
 
-        this.data.supernaturalShields = this.data.system.combat.supernaturalShields
+        this.data.supernaturalShields = this.actorSystem.combat.supernaturalShields
         this.data.newShield = this.data.supernaturalShields.length === 0
         this.data.shieldPoints = 0
 
@@ -114,7 +114,7 @@ export class PsychicDefenseManager extends DefenseManager {
             formula = formula.replace('xa', 'xamastery');
         }
 
-        const psychicProjectionRoll = new ABFFoundryRoll(formula, this.data.system);
+        const psychicProjectionRoll = new ABFFoundryRoll(formula, this.actorSystem);
 
         psychicProjectionRoll.roll();
 
@@ -126,7 +126,7 @@ export class PsychicDefenseManager extends DefenseManager {
 
             psychicPotentialRoll = new ABFFoundryRoll(
                 `1d100PsychicRoll + ${this.psychicPotential}`,
-                { ...this.data.system, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
+                { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
             );
             psychicPotentialRoll.roll();
 

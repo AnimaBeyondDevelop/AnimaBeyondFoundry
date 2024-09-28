@@ -24,10 +24,10 @@ export class MysticDefenseManager extends DefenseManager {
         super(attacker, defender, hooks, options);
 
         this.data.defense = {
-            base: this.data.system.mystic.magicProjection.imbalance.defensive.base.value,
-            final: this.data.system.mystic.magicProjection.imbalance.defensive.final.value
+            base: this.actorSystem.mystic.magicProjection.imbalance.defensive.base.value,
+            final: this.actorSystem.mystic.magicProjection.imbalance.defensive.final.value
         }
-        this.data.spells = this.data.system.mystic.spells.filter(w => w.system.combatType.value === 'defense')
+        this.data.spells = this.actorSystem.mystic.spells.filter(w => w.system.combatType.value === 'defense')
 
         const lastDefensiveSpellUsed = this.data.actor.getFlag(
             'animabf',
@@ -48,7 +48,7 @@ export class MysticDefenseManager extends DefenseManager {
 
         this.data.spellGrade = 'base'
 
-        this.data.supernaturalShields = this.data.system.combat.supernaturalShields
+        this.data.supernaturalShields = this.actorSystem.combat.supernaturalShields
         this.data.newShield = this.data.supernaturalShields.length === 0
         this.data.shieldPoints = 0
 
@@ -66,8 +66,8 @@ export class MysticDefenseManager extends DefenseManager {
             return ['base', 'intermediate', 'advanced', 'arcane']
         } else {
             let attainableSpellGrades = []
-            let intelligence = this.data.system.characteristics.primaries.intelligence.value
-            let finalIntelligence = this.data.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+            let intelligence = this.actorSystem.characteristics.primaries.intelligence.value
+            let finalIntelligence = this.actorSystem.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
             for (let grade in this.spell?.system.grades) {
                 if (finalIntelligence >= this.spell?.system.grades[grade].intRequired.value) {
                     attainableSpellGrades.push(grade)
@@ -117,7 +117,7 @@ export class MysticDefenseManager extends DefenseManager {
             formula = formula.replace('xa', 'xamastery');
         }
 
-        const roll = new ABFFoundryRoll(formula, this.data.system);
+        const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
         roll.roll();
 
