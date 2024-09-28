@@ -198,7 +198,7 @@ export class ABFActor extends Actor {
   async deleteSupernaturalShield(supShieldId) {
     const supShield = this.getItem(supShieldId);
     if (supShield) {
-      this.deleteItem(supShieldId);
+      await this.deleteItem(supShieldId);
       let args = {
         thisActor: this,
         newShield: false,
