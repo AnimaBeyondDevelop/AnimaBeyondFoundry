@@ -1,4 +1,4 @@
-import { Log } from '../../../../../utils/Log';
+import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from './WSGMCombatMessageTypes';
 import { UserMessageTypes } from '../user/WSUserCombatMessageTypes';
@@ -25,7 +25,7 @@ export class WSGMCombatManager extends WSCombatManager {
         this.manageUserDefense(msg);
         break;
       default:
-        Log.warn('Unknown message', msg);
+        Logger.warn('Unknown message', msg);
     }
   }
 
@@ -66,14 +66,14 @@ export class WSGMCombatManager extends WSCombatManager {
           );
         } catch (err) {
           if (err) {
-            Log.error(err);
+            Logger.error(err);
           }
 
           this.endCombat();
         }
       }
     } else {
-      Log.warn('User attack received but none combat is running');
+      Logger.warn('User attack received but none combat is running');
     }
   }
 
@@ -81,7 +81,7 @@ export class WSGMCombatManager extends WSCombatManager {
     if (this.combat) {
       this.combat.updateDefenderData(msg.payload);
     } else {
-      Log.warn('User attack received but none combat is running');
+      Logger.warn('User attack received but none combat is running');
     }
   }
 
@@ -178,7 +178,7 @@ export class WSGMCombatManager extends WSCombatManager {
     const defender = this.findTokenById(defenderTokenId);
 
     if (!attacker || !defender) {
-      Log.warn(
+      Logger.warn(
         'Can not handle user attack request due attacker or defender actor do not exist'
       );
       return;
@@ -205,7 +205,7 @@ export class WSGMCombatManager extends WSCombatManager {
       this.emit(newMsg);
     } catch (err) {
       if (err) {
-        Log.error(err);
+        Logger.error(err);
       }
 
       const newMsg = {
@@ -305,7 +305,7 @@ export class WSGMCombatManager extends WSCombatManager {
                 );
               } catch (err) {
                 if (err) {
-                  Log.error(err);
+                  Logger.error(err);
                 }
 
                 this.endCombat();

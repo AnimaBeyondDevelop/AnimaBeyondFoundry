@@ -1,3 +1,5 @@
+import { Logger } from '../../../utils';
+
 /** @typedef {import('./Migration').Migration} Migration
 
 /** @type Migration */
@@ -14,7 +16,7 @@ export const Migration8RemoveWeaponFue = {
   },
   async updateItem(item) {
     if (item.type !== 'weapon') {
-      console.error('AnimaBF | weapon filter in migration not working');
+      Logger.error('Weapon filter in migration not working');
       return;
     }
     await item.update({ 'system.-=weaponFue': null });

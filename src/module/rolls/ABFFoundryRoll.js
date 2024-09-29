@@ -7,13 +7,13 @@ import ABFPsychicRoll from './ABFPsychicRoll/ABFPsychicRoll';
 /**
  * This class represents the entrypoint of Foundry
  * We must never add our logic here, all of it must be placed in its own class like ABFExploredRoll
- * @extends {Roll<import('@module/types/Actor').ABFActorDataSourceData>}
+ * @extends {Roll<import('../types/Actor').ABFActorDataSourceData>}
  */
 export default class ABFFoundryRoll extends Roll {
   /**
-   * @type {ABFRoll | undefined}
    * @private
    * @readonly
+   * @type {ABFRoll | undefined}
    */
   abfRoll;
 
@@ -82,13 +82,14 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(partialOptions) {
-    const options = { ...partialOptions, async: false };
+  /** @returns {Promise<Roll>} */
+  async evaluate(options) {
+    await super.evaluate(options);
 
-    super.evaluate(options);
+    await this.abfRoll?.evaluate(options);
 
-    this.abfRoll?.evaluate(options);
-
-    return this;
+    return new Promise((resolve, reject) => {
+      resolve(this);
+    });
   }
 }

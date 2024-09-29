@@ -7,27 +7,27 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @readonly
  * @enum {string}
  */
-export const WeaponEquippedHandType = {
+export const WeaponEquippedHandType = /** @type {const} */ ({
   ONE_HANDED: 'one-handed',
   TWO_HANDED: 'two-handed'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const WeaponKnowledgeType = {
+export const WeaponKnowledgeType = /** @type {const} */ ({
   KNOWN: 'known',
   SIMILAR: 'similar',
   MIXED: 'mixed',
   DIFFERENT: 'different'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const WeaponCritic = {
+export const WeaponCritic = /** @type {const} */ ({
   CUT: 'cut',
   IMPACT: 'impact',
   THRUST: 'thrust',
@@ -35,54 +35,54 @@ export const WeaponCritic = {
   ELECTRICITY: 'electricity',
   COLD: 'cold',
   ENERGY: 'energy'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const NoneWeaponCritic = {
+export const NoneWeaponCritic = /** @type {const} */ ({
   NONE: '-'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const WeaponManageabilityType = {
+export const WeaponManageabilityType = /** @type {const} */ ({
   ONE_HAND: 'one_hand',
   TWO_HAND: 'two_hands',
   ONE_OR_TWO_HAND: 'one_or_two_hands'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const WeaponShotType = {
+export const WeaponShotType = /** @type {const} */ ({
   SHOT: 'shot',
   THROW: 'throw'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const WeaponSize = {
+export const WeaponSize = /** @type {const} */ ({
   SMALL: 'small',
   MEDIUM: 'medium',
   BIG: 'big'
-};
+});
 
 /**
  * @readonly
  * @enum {string}
  */
-export const WeaponSizeProportion = {
+export const WeaponSizeProportion = /** @type {const} */ ({
   NORMAL: 'normal',
   ENORMOUS: 'enormous',
   GIANT: 'giant'
-};
+});
 
 /**
  * Initial data for a new weapon. Used to infer the type of the data inside `weapon.system`

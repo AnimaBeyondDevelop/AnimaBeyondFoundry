@@ -113,7 +113,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: true,
           type: 'shot'
         },
-        damageModifier: 0,
+        damageModifier: 0
       }
     },
     defender: {
@@ -141,9 +141,7 @@ export class CombatAttackDialog extends FormApplication {
           this.modalData.attacker.token,
           this.modalData.defender.token,
           { gridSpaces: true }
-        ) /
-        canvas.grid.grid.options.dimensions.distance
-        ;
+        ) / canvas.dimensions.distance;
       this.modalData.attacker.distance.value = calculateDistance;
     }
 
@@ -186,13 +184,21 @@ export class CombatAttackDialog extends FormApplication {
       const spell = spells.find(w => w._id === mystic.spellUsed);
       mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
       if (this.modalData.attacker.mystic.spellCasting.override) {
-        this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+        this.modalData.attacker.mystic.attainableSpellGrades = [
+          'base',
+          'intermediate',
+          'advanced',
+          'arcane'
+        ];
       } else {
-        const intelligence = this.attackerActor.system.characteristics.primaries.intelligence.value
-        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+        const intelligence =
+          this.attackerActor.system.characteristics.primaries.intelligence.value;
+        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment
+          ? intelligence + 3
+          : intelligence;
         for (const grade in spell?.system.grades) {
           if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
-            mystic.attainableSpellGrades.push(grade)
+            mystic.attainableSpellGrades.push(grade);
           }
         }
       }
@@ -220,7 +226,7 @@ export class CombatAttackDialog extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['abf-dialog combat-attack-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
@@ -261,7 +267,7 @@ export class CombatAttackDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find('.send-attack').click(() => {
+    html.find('.send-attack').click(async () => {
       const {
         combat: {
           weapon,
@@ -279,7 +285,7 @@ export class CombatAttackDialog extends FormApplication {
         poorVisibility,
         targetInCover
       } = this.modalData.attacker;
-      distance.check = distanceCheck
+      distance.check = distanceCheck;
       this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
         const attackerCombatMod = {
@@ -293,7 +299,7 @@ export class CombatAttackDialog extends FormApplication {
             type: weapon.system.shotType.value
           };
           if (weapon.system.shotType.value === 'shot') {
-            projectile.name = weapon.system.ammo?.name
+            projectile.name = weapon.system.ammo?.name;
           }
           if (
             (!distance.enable && distance.check) ||
@@ -342,19 +348,19 @@ export class CombatAttackDialog extends FormApplication {
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
 
-        roll.roll();
+        await roll.roll();
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
 
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-              weapon: weapon?.name,
-              target: this.modalData.defender.token.name
-            })
+                weapon: weapon?.name,
+                target: this.modalData.defender.token.name
+              })
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-              target: this.modalData.defender.token.name
-            });
+                target: this.modalData.defender.token.name
+              });
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
@@ -397,9 +403,10 @@ export class CombatAttackDialog extends FormApplication {
       }
     });
 
-    html.find('.send-mystic-attack').click(() => {
+    html.find('.send-mystic-attack').click(async () => {
       const {
-        mystic: { magicProjection,
+        mystic: {
+          magicProjection,
           spellUsed,
           spellGrade,
           spellCasting,
@@ -408,8 +415,10 @@ export class CombatAttackDialog extends FormApplication {
           damage,
           projectile,
           distanceCheck
-        }, distance } = this.modalData.attacker;
-      distance.check = distanceCheck
+        },
+        distance
+      } = this.modalData.attacker;
+      distance.check = distanceCheck;
       if (spellUsed) {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true }
@@ -446,7 +455,7 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
-        roll.roll();
+        await roll.roll();
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
@@ -494,19 +503,22 @@ export class CombatAttackDialog extends FormApplication {
     });
 
     html.find('.send-psychic-attack').click(async () => {
-      const { psychic: {
-        powerUsed,
-        modifier,
-        psychicPotential,
-        psychicProjection,
-        critic,
-        eliminateFatigue,
-        damageModifier,
-        mentalPatternImbalance,
-        projectile,
-        distanceCheck }, distance
+      const {
+        psychic: {
+          powerUsed,
+          modifier,
+          psychicPotential,
+          psychicProjection,
+          critic,
+          eliminateFatigue,
+          damageModifier,
+          mentalPatternImbalance,
+          projectile,
+          distanceCheck
+        },
+        distance
       } = this.modalData.attacker;
-      distance.check = distanceCheck
+      distance.check = distanceCheck;
       const { i18n } = game;
       if (powerUsed) {
         const attackerCombatMod = {
@@ -533,13 +545,13 @@ export class CombatAttackDialog extends FormApplication {
           formula,
           this.attackerActor.system
         );
-        psychicProjectionRoll.roll();
+        await psychicProjectionRoll.roll();
 
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,
           { ...this.attackerActor.system, power, mentalPatternImbalance }
         );
-        psychicPotentialRoll.roll();
+        await psychicPotentialRoll.roll();
         if (this.modalData.attacker.showRoll) {
           psychicPotentialRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
@@ -638,7 +650,12 @@ export class CombatAttackDialog extends FormApplication {
     const spellUsedEffect =
       spell?.system.grades[mystic.spellGrade].description.value ?? '';
     mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
-    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
+    mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(
+      spell,
+      mystic.spellGrade,
+      mystic.spellCasting.casted,
+      mystic.spellCasting.override
+    );
 
     const { weapons } = this.attackerActor.system.combat;
 
@@ -685,7 +702,7 @@ export class CombatAttackDialog extends FormApplication {
     const prevSpell = this.modalData.attacker.mystic.spellUsed;
     const prevPower = this.modalData.attacker.psychic.powerUsed;
 
-    this.modalData = mergeObject(this.modalData, formData);
+    this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
     if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
       this.modalData.attacker.combat.criticSelected = undefined;
@@ -693,24 +710,37 @@ export class CombatAttackDialog extends FormApplication {
     if (prevSpell !== this.modalData.attacker.mystic.spellUsed) {
       const { spells } = this.attackerActor.system.mystic;
       const spell = spells.find(w => w._id === this.modalData.attacker.mystic.spellUsed);
-      this.modalData.attacker.mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
-      this.modalData.attacker.mystic.spellGrade = 'base'
-      this.modalData.attacker.mystic.attainableSpellGrades = []
-      const intelligence = this.attackerActor.system.characteristics.primaries.intelligence.value
-      const finalIntelligence = this.attackerActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+      this.modalData.attacker.mystic.critic =
+        spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      this.modalData.attacker.mystic.spellGrade = 'base';
+      this.modalData.attacker.mystic.attainableSpellGrades = [];
+      const intelligence =
+        this.attackerActor.system.characteristics.primaries.intelligence.value;
+      const finalIntelligence = this.attackerActor.system.mystic.mysticSettings
+        .aptitudeForMagicDevelopment
+        ? intelligence + 3
+        : intelligence;
       for (const grade in spell?.system.grades) {
         if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
-          this.modalData.attacker.mystic.attainableSpellGrades.push(grade)
+          this.modalData.attacker.mystic.attainableSpellGrades.push(grade);
         }
       }
     }
     if (this.modalData.attacker.mystic.spellCasting.override) {
-      this.modalData.attacker.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+      this.modalData.attacker.mystic.attainableSpellGrades = [
+        'base',
+        'intermediate',
+        'advanced',
+        'arcane'
+      ];
     }
     if (prevPower !== this.modalData.attacker.psychic.powerUsed) {
       const { psychicPowers } = this.attackerActor.system.psychic;
-      const power = psychicPowers.find(w => w._id === this.modalData.attacker.psychic.powerUsed);
-      this.modalData.attacker.psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
+      const power = psychicPowers.find(
+        w => w._id === this.modalData.attacker.psychic.powerUsed
+      );
+      this.modalData.attacker.psychic.critic =
+        power?.system.critic.value ?? NoneWeaponCritic.NONE;
     }
 
     this.render();

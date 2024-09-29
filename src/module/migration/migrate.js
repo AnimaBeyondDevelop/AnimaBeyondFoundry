@@ -1,3 +1,4 @@
+import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
@@ -20,8 +21,8 @@ function migrationApplies(migration) {
     return true;
   }
   if (game.settings.get('animabf', ABFSettingsKeys.DEVELOP_MODE)) {
-    console.warn(
-      `AnimaBF | Migration ${migration.version} needs not to be applied, current system migration version is ${currentVersion}.`
+    Logger.warn(
+      `Migration ${migration.version} needs not to be applied, current system migration version is ${currentVersion}.`
     );
   }
   return false;
@@ -39,7 +40,7 @@ async function migrateItemCollection(items, migration, context = {}) {
   const length = items.length ?? items.size; // takes care of the case of a DocumentCollection
 
   if (length === 0 || !migration.updateItem) return;
-  console.log(`AnimaBF | Migrating ${length} Items.`);
+  Logger.log(`Migrating ${length} Items.`);
 
   const migrated = await Promise.all(items.map(i => migration.updateItem(i)));
 
@@ -64,7 +65,7 @@ async function migrateActorCollection(actors, migration, context = {}) {
   if (migration.filterActors) actors = actors.filter(migration.filterActors);
   const length = actors.length ?? actors.size; // takes care of the case of a DocumentCollection
   if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
-  console.log(`AnimaBF | Migrating ${length} Actors.`);
+  Logger.log(`Migrating ${length} Actors.`);
 
   if (migration.updateItem) {
     await Promise.all(
@@ -186,7 +187,7 @@ function migrateTokens(migration) {
  */
 async function applyMigration(migration) {
   try {
-    console.log(`AnimaBF | Applying migration ${migration.version}.`);
+    Logger.log(`Applying migration ${migration.version}.`);
 
     await migrateWorldItems(migration);
     await migrateWorldActors(migration);
@@ -194,7 +195,7 @@ async function applyMigration(migration) {
     migrateTokens(migration);
     migration.migrate?.();
 
-    console.log(`AnimaBF | Migration ${migration.version} completed.`);
+    Logger.log(`Migration ${migration.version} completed.`);
     game.settings.set(
       'animabf',
       ABFSettingsKeys.SYSTEM_MIGRATION_VERSION,
@@ -209,9 +210,7 @@ async function applyMigration(migration) {
     );
     return true;
   } catch (err) {
-    console.error(
-      `AnimaBF | Error when trying to apply migration ${migration.version}:\n${err}`
-    );
+    Logger.error(`Error when trying to apply migration ${migration.version}:\n${err}`);
     await ABFDialogs.prompt(
       game.i18n.format('dialogs.migrations.error', {
         version: migration.version,
