@@ -93,7 +93,7 @@ export function sveltify(Base) {
         id: 'svelte-application',
         title: 'Svelte Application'
       };
-      return mergeObject(super['defaultOptions'], options);
+      return foundry.utils.mergeObject(super['defaultOptions'], options);
     }
 
     /**
@@ -153,12 +153,12 @@ export function sveltify(Base) {
         const diff = await document.updateSource({ name, img, system }, { dryRun: true });
         if (!diff) return;
         // If the current document is equal to the document in the store value, no need to re-update
-        if (isEmpty(diff)) return;
+        if (foundry.utils.isEmpty(diff)) return;
         // If the only difference is on the arrays of external items, return aswell
         const itemsPaths = Object.values(ITEM_CONFIGURATIONS).map(itemConfig =>
           ['system', ...itemConfig.fieldPath].join('.')
         );
-        const diffKeys = Object.keys(flattenObject(diff));
+        const diffKeys = Object.keys(foundry.utils.flattenObject(diff));
         if (diffKeys.filter(k => !itemsPaths.includes(k)).length === 0) return;
 
         await document.update({ name, img, system });

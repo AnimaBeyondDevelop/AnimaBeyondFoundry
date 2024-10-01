@@ -35,7 +35,7 @@ export class CombatDefenseManager extends DefenseManager {
             accumulated: 0,
             keepAccumulating: true
         };
-
+        defensesCounter.accumulated = Math.min(defensesCounter.accumulated, 4)
         this.data.defenseCounter = defensesCounter
 
         this.addMultipleDefensesPenalty(this.data.defenseCounter.accumulated)
@@ -95,7 +95,7 @@ export class CombatDefenseManager extends DefenseManager {
         }
     }
 
-    onDefense() {
+    async onDefense() {
         this.data.actor.setFlag('animabf', 'lastDefensiveWeaponUsed', this.data.weaponUsed)
 
         let formula = `1d100xa + ${this.defense}`;
@@ -110,7 +110,7 @@ export class CombatDefenseManager extends DefenseManager {
 
         const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
-        roll.roll();
+        await roll.roll();
 
         if (this.data.showRoll) {
             const { i18n } = game;

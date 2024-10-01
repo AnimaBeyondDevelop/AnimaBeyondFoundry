@@ -37,6 +37,7 @@ export class PsychicAttackManager extends AttackManager {
         this.data.mentalPatternImbalance = false
 
         this.data.projectile.value = true
+        this.data.projectile.type = 'shot'
 
         this.onPowerChange()
     }
@@ -111,13 +112,13 @@ export class PsychicAttackManager extends AttackManager {
 
         const psychicProjectionRoll = new ABFFoundryRoll(formula, this.actorSystem);
 
-        psychicProjectionRoll.roll();
+        await psychicProjectionRoll.roll();
 
         const psychicPotentialRoll = new ABFFoundryRoll(
             `1d100PsychicRoll + ${this.psychicPotential}`,
             { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
         );
-        psychicPotentialRoll.roll();
+        await psychicPotentialRoll.roll();
 
         if (this.data.showRoll) {
             psychicPotentialRoll.toMessage({

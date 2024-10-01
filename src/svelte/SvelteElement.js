@@ -82,7 +82,7 @@ export class SvelteElement {
    */
   updateProps(props) {
     if (!this._component) {
-      return mergeObject(
+      return foundry.utils.mergeObject(
         this._props || {},
         props || {},
         {

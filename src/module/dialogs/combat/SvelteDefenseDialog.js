@@ -27,7 +27,7 @@ export class SvelteDefenseDialog extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['overflow'],
       template: Templates.Svelte.CombatDefenseDialog,
       width: 430,

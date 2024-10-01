@@ -1,7 +1,5 @@
-import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
 import { DefenseManager } from '@module/combat/manager/DefenseManager.svelte.js'
 import { rollToMessageFlavor } from '@module/combat/utils/rollToMessageFlavor.js'
-import { damageCheck } from '@module/combat/utils/damageCheck.js';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 export class PsychicDefenseManager extends DefenseManager {
@@ -116,7 +114,7 @@ export class PsychicDefenseManager extends DefenseManager {
 
         const psychicProjectionRoll = new ABFFoundryRoll(formula, this.actorSystem);
 
-        psychicProjectionRoll.roll();
+        await psychicProjectionRoll.roll();
 
         let psychicFatigue = 0;
         let psychicPotentialRoll;
@@ -128,7 +126,7 @@ export class PsychicDefenseManager extends DefenseManager {
                 `1d100PsychicRoll + ${this.psychicPotential}`,
                 { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
             );
-            psychicPotentialRoll.roll();
+            await psychicPotentialRoll.roll();
 
             if (this.data.showRoll) {
                 psychicPotentialRoll.toMessage({

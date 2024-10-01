@@ -90,7 +90,7 @@ export class CombatAttackManager extends AttackManager {
         }
     }
 
-    onAttack() {
+    async onAttack() {
         this.data.actor.setFlag('animabf', 'lastOffensiveWeaponUsed', this.data.weaponUsed)
         if (this.weapon !== undefined) {
             this.data.resistanceEffect = resistanceEffectCheck(this.weapon.system.special.value);
@@ -108,7 +108,7 @@ export class CombatAttackManager extends AttackManager {
 
         const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
-        roll.roll();
+        await roll.roll();
 
         if (this.data.showRoll) {
             const { i18n } = game;

@@ -22,7 +22,7 @@ export class TestApp extends sveltify(Application) {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: Templates.Svelte.SvelteApp,
       width: 600,
       height: 600

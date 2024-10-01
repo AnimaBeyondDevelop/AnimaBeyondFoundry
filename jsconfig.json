@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["svelte", "@types/jest"],
     "paths": {
@@ -12,7 +11,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,

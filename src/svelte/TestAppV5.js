@@ -27,7 +27,7 @@ export class SvelteApplication extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['overflow'],
       template: Templates.Svelte.SvelteApp,
       width: 430,

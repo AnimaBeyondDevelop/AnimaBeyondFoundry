@@ -70,14 +70,13 @@ export class AttackManager {
         this.data.distance.enable = combatDistance
 
         if (combatDistance) {
-            let calculateDistance =
-                canvas.grid.measureDistance(
-                    this.data.token,
-                    this.data.defenderToken,
-                    { gridSpaces: true }
+            let measurePath =
+                canvas.grid.measurePath([
+                    { x: this.data.token.x, y: this.data.token.y },
+                    { x: this.data.defenderToken.x, y: this.data.defenderToken.y }]
                 );
-            this.data.distance.value = calculateDistance;
-            this.data.distance.pointBlank = (calculateDistance /
+            this.data.distance.value = measurePath.distance;
+            this.data.distance.pointBlank = (measurePath.distance /
                 canvas.dimensions.distance) <= 1
         }
     }

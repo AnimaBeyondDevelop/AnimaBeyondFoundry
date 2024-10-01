@@ -49,6 +49,7 @@ export class MysticAttackManager extends AttackManager {
         this.data.spellGrade = 'base'
 
         this.data.projectile.value = true
+        this.data.projectile.type = 'shot'
 
         this.onSpellChange()
     }
@@ -105,7 +106,7 @@ export class MysticAttackManager extends AttackManager {
         this.getAttainableSpellGrades()
     }
 
-    onAttack() {
+    async onAttack() {
         this.data.actor.setFlag('animabf', 'spellCastingOverride', this.castMethod === "override");
         this.data.actor.setFlag('animabf', 'lastOffensiveSpellUsed', this.data.spellUsed)
 
@@ -129,7 +130,7 @@ export class MysticAttackManager extends AttackManager {
 
         const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
-        roll.roll();
+        await roll.roll();
 
         if (this.data.showRoll) {
             const { i18n } = game;

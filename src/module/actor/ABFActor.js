@@ -24,8 +24,6 @@ import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
   i18n = game.i18n;
-  /** @type {INITIAL_ACTOR_DATA} */
-  system;
 
   /**
    * @param {ConstructorParameters<typeof foundry.documents.BaseActor>[0]} data
@@ -406,7 +404,7 @@ export class ABFActor extends Actor {
     casted = { prepared: false, innate: false },
     override = false
   ) {
-    const spellCasting = foundry.utils.deepClone(SpellCasting);
+    const spellCasting = foundry.utils.deepClone(INITIAL_SPELL_CASTING_DATA);
     spellCasting.casted = casted;
     spellCasting.override = override;
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
@@ -682,7 +680,7 @@ export class ABFActor extends Actor {
         }
 
         if (system) {
-          item.system = mergeObject(item.system, system);
+          item.system = foundry.utils.mergeObject(item.system, system);
         }
 
         await this.update({

@@ -95,7 +95,7 @@ export class MysticDefenseManager extends DefenseManager {
         this.onSpellChange()
     }
 
-    onDefense() {
+    async onDefense() {
         if (this.data.newShield && this.data.spellUsed) {
             this.data.actor.setFlag('animabf', 'spellCastingOverride', this.castMethod === "override");
             this.data.actor.setFlag('animabf', 'lastDefensiveSpellUsed', this.data.spellUsed)
@@ -119,7 +119,7 @@ export class MysticDefenseManager extends DefenseManager {
 
         const roll = new ABFFoundryRoll(formula, this.actorSystem);
 
-        roll.roll();
+        await roll.roll();
 
         if (this.data.showRoll) {
             const { i18n } = game;

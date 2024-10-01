@@ -31,17 +31,6 @@ export default class ABFExploderRoll extends ABFRoll {
     return this.foundryRoll.firstResult <= this.fumbleRange;
   }
 
-  /** @param {number} result */
-  checkDoubles(result) {
-    if (result % 11 === 0) {
-      const newRoll = new ABFFoundryRoll('1d10');
-      newRoll.evaluate();
-
-      return newRoll.total === result / 11;
-    }
-    return false;
-  }
-
   /** @returns {Promise<ABFFoundryRoll>} */
   async evaluate() {
     if (await this.canExplode()) {
