@@ -1,0 +1,87 @@
+{
+  "name": "Escudo Telequinético",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "RojcHZOugef3RPlF",
+  "flags": {
+    "cf": {
+      "id": "temp_gdsqgmuyw8u",
+      "path": "Poderes Mentales#/CF_SEP/Telequinesis",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 2"
+      },
+      "40": {
+        "value": "Fatiga 1"
+      },
+      "80": {
+        "value": "300 PV"
+      },
+      "120": {
+        "value": "500 PV"
+      },
+      "140": {
+        "value": "700 PV"
+      },
+      "180": {
+        "value": "1.000 PV"
+      },
+      "240": {
+        "value": "1.500 PV / Barrera de daño 60"
+      },
+      "280": {
+        "value": "2.000 PV / Barrera de daño 80 / Detiene energía"
+      },
+      "320": {
+        "value": "3.000 PV / Barrera de daño 120 / Detiene energía"
+      },
+      "440": {
+        "value": "5.000 PV / Barrera de daño 160 / Detiene energía"
+      }
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "discipline": {
+      "value": "telekenisis"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709237952556,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "HX3zPr7JUuRGvcy9",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!HX3zPr7JUuRGvcy9"
+}

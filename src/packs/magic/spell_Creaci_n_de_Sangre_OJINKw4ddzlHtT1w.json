@@ -1,0 +1,124 @@
+{
+  "name": "Creación de Sangre",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "Rzmw1aKTDVSg5lPD",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_5l1ghv9gncg",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 34
+    },
+    "via": {
+      "value": "blood"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 80
+        },
+        "maintenanceCost": {
+          "value": "10"
+        },
+        "description": {
+          "value": "Perdida de -10 PV / Calidad +0 / Objetos de hasta 2 kilos."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 120
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "Perdida de -20 PV / Calidad +5 / Objetos de hasta 5 kilos."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 160
+        },
+        "maintenanceCost": {
+          "value": "50"
+        },
+        "description": {
+          "value": "Perdida de -40 PV / Calidad +10 / Objetos de hasta 15 kilos."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "Perdida de -60 PV / Calidad +15 / Objetos de hasta 25 kilos."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081531,
+    "modifiedTime": 1709727274776,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "OJINKw4ddzlHtT1w",
+  "sort": 187500,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!OJINKw4ddzlHtT1w"
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Transporte Defensivo",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "JTolwd34h8KFA47J",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_m7gj0ovrnf",
+      "path": "Poderes Mentales#/CF_SEP/Teletransporte#/CF_SEP/Nivel 1",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 6"
+      },
+      "40": {
+        "value": "Fatiga 4"
+      },
+      "80": {
+        "value": "Fatiga 2"
+      },
+      "120": {
+        "value": "1 Esquiva / 5 metros"
+      },
+      "140": {
+        "value": "2 Esquivas / 10 metros"
+      },
+      "180": {
+        "value": "3 Esquivas / 15 metros"
+      },
+      "240": {
+        "value": "4 Esquivas / 25 metros"
+      },
+      "280": {
+        "value": "6 Esquivas / 50 metros"
+      },
+      "320": {
+        "value": "8 Esquivas / 100 metros"
+      },
+      "440": {
+        "value": "Cualquier cantidad de esquivas / Nunca sufre penalizador de área"
+      }
+    },
+    "actionType": {
+      "value": "passive"
+    },
+    "combatType": {
+      "value": "defense"
+    },
+    "discipline": {
+      "value": "teleportation"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1709238188775,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "au8QiLA7nTK0B2Oh",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!au8QiLA7nTK0B2Oh"
+}

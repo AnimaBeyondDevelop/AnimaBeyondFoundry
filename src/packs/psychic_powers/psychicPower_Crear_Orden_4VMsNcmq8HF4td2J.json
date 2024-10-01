@@ -1,0 +1,76 @@
+{
+  "name": "Crear Orden",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "eMRCXNWjZENtMjyP",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_w2oz4h1tpzb",
+      "path": "Poderes Mentales#/CF_SEP/Causalidad#/CF_SEP/Nivel 3",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "3"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 12"
+      },
+      "40": {
+        "value": "Fatiga 8"
+      },
+      "80": {
+        "value": "Fatiga 6"
+      },
+      "120": {
+        "value": "Fatiga 4"
+      },
+      "140": {
+        "value": "Fatiga 2"
+      },
+      "180": {
+        "value": "50 metros"
+      },
+      "240": {
+        "value": "500 metros"
+      },
+      "280": {
+        "value": "-10 al ACT / -20 a Convocatoria / 1 kilómetro"
+      },
+      "320": {
+        "value": "-20 al ACT / -40 a Convocatoria / 2 kilómetros"
+      },
+      "440": {
+        "value": "-40 al ACT / -80 a Convocatoria / 5 kilómetros"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "hasMaintenance": {
+      "value": true
+    },
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1691058457457,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "4VMsNcmq8HF4td2J",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!4VMsNcmq8HF4td2J"
+}

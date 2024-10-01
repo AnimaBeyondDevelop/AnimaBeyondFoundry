@@ -1,0 +1,124 @@
+{
+  "name": "Espía de Luz",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "4DUstWrSWMSIAgEy",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_gxcphwwu7d",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 36
+    },
+    "via": {
+      "value": "light"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": true
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 6
+        },
+        "zeon": {
+          "value": 100
+        },
+        "maintenanceCost": {
+          "value": "20"
+        },
+        "description": {
+          "value": "100 en Advertir y Buscar / 1 Kilómetro de distancia máxima."
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 200
+        },
+        "maintenanceCost": {
+          "value": "40"
+        },
+        "description": {
+          "value": "150 en Advertir y Buscar / 10 Kilómetros de  distancia máxima."
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 300
+        },
+        "maintenanceCost": {
+          "value": "60"
+        },
+        "description": {
+          "value": "200 en Advertir y Buscar / 50 Kilómetros de distancia  máxima."
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 400
+        },
+        "maintenanceCost": {
+          "value": "80"
+        },
+        "description": {
+          "value": "250 en Advertir y Buscar / 500 Kilómetros de distancia  máxima."
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081830,
+    "modifiedTime": 1709814084593,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "pgyL48PfGygNgZTF",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!pgyL48PfGygNgZTF"
+}

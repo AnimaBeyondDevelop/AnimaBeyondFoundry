@@ -1,0 +1,124 @@
+{
+  "name": "Superar la Muerte",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "9UTdz9zqymd2munz",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_14almtc4p3cr",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 80
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 10
+        },
+        "zeon": {
+          "value": 250
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+100 PD / hasta 100 PD opcionales en desventajas"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 13
+        },
+        "zeon": {
+          "value": 500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+200 PD / hasta 100 PD opcionales en desventajas"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 15
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+300 PD / hasta 200 PD opcionales en desventajas"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 18
+        },
+        "zeon": {
+          "value": 2500
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "+400 PD / hasta 200 PD opcionales en desventajas"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081288,
+    "modifiedTime": 1709814923798,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "o8EaEDY8xjodfDyl",
+  "sort": 400000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!o8EaEDY8xjodfDyl"
+}

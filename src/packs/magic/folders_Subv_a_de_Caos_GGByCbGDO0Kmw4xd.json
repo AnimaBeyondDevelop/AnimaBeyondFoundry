@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Subvía de Caos",
+  "sorting": "m",
+  "type": "Item",
+  "folder": null,
+  "_id": "GGByCbGDO0Kmw4xd",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1709727713319,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_key": "!folders!GGByCbGDO0Kmw4xd"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Nivel 1",
+  "sorting": "a",
+  "folder": "721MxS1lxVXMyjGy",
+  "type": "Item",
+  "_id": "RL0QQUpo7ip7d05a",
+  "sort": 0,
+  "color": "#000000",
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1710257711191,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_key": "!folders!RL0QQUpo7ip7d05a"
+}

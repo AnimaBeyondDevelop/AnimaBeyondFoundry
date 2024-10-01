@@ -1,0 +1,87 @@
+{
+  "name": "Modificación de Recuerdos",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "F5hHHDvDWfxxGkLO",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_08jdpv725sgo",
+      "path": "Poderes Mentales#/CF_SEP/Telepatía",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 8"
+      },
+      "40": {
+        "value": "Fatiga 6"
+      },
+      "80": {
+        "value": "Fatiga 4"
+      },
+      "120": {
+        "value": "Fatiga 2"
+      },
+      "140": {
+        "value": "100 RP"
+      },
+      "180": {
+        "value": "120 RP"
+      },
+      "240": {
+        "value": "140 RP"
+      },
+      "280": {
+        "value": "160 RP"
+      },
+      "320": {
+        "value": "180 RP"
+      },
+      "440": {
+        "value": "200 RP"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "telepathy"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta1",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084473,
+    "modifiedTime": 1709237898836,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "PpJwL2zfHGk0Kgw6",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!PpJwL2zfHGk0Kgw6"
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Detectar sentimientos",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "nmjjLflxUUrM6n9d",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_5xceq14xy2l",
+      "path": "Poderes Mentales#/CF_SEP/Sentiente",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 2"
+      },
+      "40": {
+        "value": "Fatiga 1"
+      },
+      "80": {
+        "value": "80 RP / 10 metros de radio"
+      },
+      "120": {
+        "value": "100 RP / 50 metros de radio"
+      },
+      "140": {
+        "value": "120 RP / 100 metros de radio"
+      },
+      "180": {
+        "value": "140 RP / 250 metros de radio"
+      },
+      "240": {
+        "value": "160 RP / 500 metros de radio"
+      },
+      "280": {
+        "value": "180 RP / 1 kilómetro de radio"
+      },
+      "320": {
+        "value": "200 RP / 10 kilómetros de radio"
+      },
+      "440": {
+        "value": "220 RP / 100 kilómetros de radio"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "sentient"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710258113760,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "eP9O2ahvY9T8DSvM",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!eP9O2ahvY9T8DSvM"
+}

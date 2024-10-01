@@ -1,4 +1,4 @@
-import { Log } from '../../../../../utils/Log';
+import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
@@ -27,7 +27,7 @@ export class WSUserCombatManager extends WSCombatManager {
         this.manageCounterAttack(msg);
         break;
       default:
-        Log.warn('Unknown message', msg);
+        Logger.warn('Unknown message', msg);
     }
   }
 
@@ -183,7 +183,7 @@ export class WSUserCombatManager extends WSCombatManager {
       );
     } catch (err) {
       if (err) {
-        Log.error(err);
+        Logger.error(err);
       }
 
       this.endCombat();

@@ -23,5 +23,6 @@ export const mutateNaturalPenalty = data => {
     unreducedNaturalPenalty +
     naturalPenaltyReduction +
     equippedArmorsPenalty +
+    data.general.modifiers.naturalPenalty.base.value +
     data.general.modifiers.naturalPenalty.special.value;
 };

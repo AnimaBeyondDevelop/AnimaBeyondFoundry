@@ -1,0 +1,124 @@
+{
+  "name": "Tierra Maldita",
+  "type": "spell",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "a75bInPBS5F8K2Tw",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_a8cir1rn4xj",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": 88
+    },
+    "via": {
+      "value": "necromancy"
+    },
+    "spellType": {
+      "value": "effect"
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "hasDailyMaintenance": {
+      "value": false
+    },
+    "critic": {
+      "value": "-"
+    },
+    "visible": false,
+    "macro": "",
+    "grades": {
+      "base": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 9
+        },
+        "zeon": {
+          "value": 350
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "1 Kilómetro de radio"
+        }
+      },
+      "intermediate": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 12
+        },
+        "zeon": {
+          "value": 600
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "10 Kilómetro de radio"
+        }
+      },
+      "advanced": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 14
+        },
+        "zeon": {
+          "value": 900
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "100 Kilómetro de radio"
+        }
+      },
+      "arcane": {
+        "name": {
+          "value": ""
+        },
+        "intRequired": {
+          "value": 16
+        },
+        "zeon": {
+          "value": 1000
+        },
+        "maintenanceCost": {
+          "value": "0"
+        },
+        "description": {
+          "value": "1000 Kilómetro de radio"
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991081011,
+    "modifiedTime": 1709814951112,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "GOooUtT3gkSdNddb",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!GOooUtT3gkSdNddb"
+}

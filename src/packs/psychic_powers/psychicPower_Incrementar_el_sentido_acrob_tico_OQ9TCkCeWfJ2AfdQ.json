@@ -1,0 +1,87 @@
+{
+  "name": "Incrementar el sentido acrobático",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "sAUDPdmxJP5Ac5Q4",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_843l8cl2caj",
+      "path": "Poderes Mentales#/CF_SEP/Incremento Físico",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "level": {
+      "value": "1"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 2"
+      },
+      "40": {
+        "value": "+10 a Acrobacias"
+      },
+      "80": {
+        "value": "+20 a Acrobacias"
+      },
+      "120": {
+        "value": "+40 a Acrobacias"
+      },
+      "140": {
+        "value": "+80 a Acrobacias"
+      },
+      "180": {
+        "value": "+120 a Acrobacias / Inhumanidad"
+      },
+      "240": {
+        "value": "+180 a Acrobacias / Inhumanidad"
+      },
+      "280": {
+        "value": "+220 a Acrobacias / Inhumanidad"
+      },
+      "320": {
+        "value": "+280 a Acrobacias / Zen"
+      },
+      "440": {
+        "value": "+320 a Acrobacias / Zen"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "physicalIncrease"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": true
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710257910795,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "OQ9TCkCeWfJ2AfdQ",
+  "sort": 106250,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!OQ9TCkCeWfJ2AfdQ"
+}

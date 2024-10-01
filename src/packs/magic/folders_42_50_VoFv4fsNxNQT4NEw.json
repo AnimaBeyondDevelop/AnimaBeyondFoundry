@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "42-50",
+  "sorting": "m",
+  "type": "Item",
+  "folder": "eINIfa9X6y7QpbVu",
+  "_id": "VoFv4fsNxNQT4NEw",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1709815153111,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_key": "!folders!VoFv4fsNxNQT4NEw"
+}

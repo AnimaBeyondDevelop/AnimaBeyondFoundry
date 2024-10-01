@@ -1,0 +1,156 @@
+{
+  "name": "Completa de Cuero",
+  "type": "armor",
+  "img": "icons/equipment/chest/breastplate-leather-brown-belted.webp",
+  "effects": [],
+  "folder": "PSqrgKb9KiaAIBE1",
+  "flags": {
+    "core": {},
+    "cf": {
+      "id": "temp_3kz4aib1xi9",
+      "color": "#000000"
+    }
+  },
+  "system": {
+    "cut": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "pierce": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "impact": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "thrust": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "heat": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "electricity": {
+      "base": {
+        "value": 2
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 2
+    },
+    "cold": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 1
+    },
+    "energy": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "integrity": {
+      "base": {
+        "value": 12
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 12
+    },
+    "presence": {
+      "base": {
+        "value": 25
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 25
+    },
+    "movementRestriction": {
+      "base": {
+        "value": -1
+      },
+      "final": {
+        "value": 0
+      }
+    },
+    "naturalPenalty": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "wearArmorRequirement": {
+      "base": {
+        "value": 10
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 10
+    },
+    "type": {
+      "value": "soft"
+    },
+    "localization": {
+      "value": "complete"
+    },
+    "isEnchanted": {
+      "value": false
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.15.1",
+    "coreVersion": "11.299",
+    "createdTime": 1690991072130,
+    "modifiedTime": 1691058437668,
+    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+  },
+  "_id": "g457C4UDex9qah95",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!g457C4UDex9qah95"
+}

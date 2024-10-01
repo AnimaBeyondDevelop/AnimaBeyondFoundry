@@ -1,0 +1,87 @@
+{
+  "name": "Modificar naturaleza",
+  "type": "psychicPower",
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "fFDq4mbMoLp8bu6T",
+  "flags": {
+    "cf": {
+      "id": "temp_0sw3vpzu278n",
+      "path": "Poderes Mentales#/CF_SEP/Energía",
+      "color": "#000000"
+    },
+    "core": {}
+  },
+  "system": {
+    "level": {
+      "value": "2"
+    },
+    "effects": {
+      "20": {
+        "value": "Fatiga 8"
+      },
+      "40": {
+        "value": "Fatiga 6"
+      },
+      "80": {
+        "value": "Fatiga 4"
+      },
+      "120": {
+        "value": "Fatiga 2"
+      },
+      "140": {
+        "value": "6 intensidades / 100 RF"
+      },
+      "180": {
+        "value": "8 intensidades / 120 RF"
+      },
+      "240": {
+        "value": "12 intensidades / 140 RF"
+      },
+      "280": {
+        "value": "16 intensidades / 160 RF"
+      },
+      "320": {
+        "value": "20 intensidades / 180 RF"
+      },
+      "440": {
+        "value": "25 intensidades / 220 RF"
+      }
+    },
+    "actionType": {
+      "value": "active"
+    },
+    "combatType": {
+      "value": "none"
+    },
+    "discipline": {
+      "value": "energy"
+    },
+    "critic": {
+      "value": "-"
+    },
+    "macro": "",
+    "hasMaintenance": {
+      "value": false
+    },
+    "visible": false,
+    "bonus": {
+      "value": 0
+    }
+  },
+  "_stats": {
+    "systemId": "animabf",
+    "systemVersion": "1.18.0-beta2",
+    "coreVersion": "11.315",
+    "createdTime": 1690991084156,
+    "modifiedTime": 1710257799993,
+    "lastModifiedBy": "XPjkpsqO9GAyS2nK"
+  },
+  "_id": "wtfFZECQQMcBdMSs",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "jsmBo00pwrK7EnHs": 3
+  },
+  "_key": "!items!wtfFZECQQMcBdMSs"
+}
