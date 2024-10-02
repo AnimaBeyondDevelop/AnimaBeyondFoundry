@@ -1,6 +1,6 @@
 <script>
   // @ts-nocheck
-  let { selection, options, children, onChange } = $props();
+  let { selection, options, children, onChange, disabled } = $props();
   function onchange(e) {
     e.target.blur();
     onChange?.(e.target.value)
@@ -9,7 +9,7 @@
 
 <div class="select-wrapper">
   <div class="select-container">
-    <select class="select-box" disabled={options.length === 0} bind:value={selection} onchange={e => onchange(e)} >
+    <select class="select-box" disabled={disabled || options.length === 0} bind:value={selection} onchange={e => onchange(e)} >
       {#each options as option}
         <option value={option.id}>{option.name}</option>
       {/each}
