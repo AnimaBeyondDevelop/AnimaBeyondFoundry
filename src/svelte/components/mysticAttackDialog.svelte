@@ -58,7 +58,7 @@
     <IconInput
       icon="zeon-cost"
       value={manager.spellCasting.zeon.cost}
-      title={i18n.localize('anima.ui.mystic.spell.grade.zeon.title')}
+      title={i18n.localize('macros.combat.dialog.zeonCost.title')}
       disabled={true}
       --icon-size="45px"
     />

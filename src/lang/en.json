@@ -764,6 +764,7 @@
   "macros.combat.dialog.spellGrade.base.title": "Base",
   "macros.combat.dialog.spellGrade.intermediate.title": "Intermediate",
   "macros.combat.dialog.spellGrade.title": "Spell grade",
+  "macros.combat.dialog.zeonCost.title": "Zeon cost",
   "macros.combat.dialog.throw.title": "Throw",
   "macros.combat.dialog.melee.title": "Melee",
   "macros.combat.dialog.total.title": "Total",

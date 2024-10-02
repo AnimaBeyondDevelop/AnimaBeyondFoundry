@@ -766,6 +766,7 @@
   "macros.combat.dialog.spellGrade.base.title": "Base",
   "macros.combat.dialog.spellGrade.intermediate.title": "Intermedio",
   "macros.combat.dialog.spellGrade.title": "Grado del hechizo",
+  "macros.combat.dialog.zeonCost.title": "Coste de Zeon",
   "macros.combat.dialog.throw.title": "Lanzar",
   "macros.combat.dialog.melee.title": "Cuerpo a cuerpo",
   "macros.combat.dialog.total.title": "Total",
