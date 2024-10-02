@@ -197,6 +197,10 @@ export class ABFActor extends Actor {
     const supShield = this.getItem(supShieldId);
     if (supShield) {
       await this.deleteItem(supShieldId);
+      let items = this.getSupernaturalShields();
+      items = items.filter(item => item._id !== supShieldId);
+      const fieldPath = ['combat', 'supernaturalShields'];
+      await this.update({ system: getUpdateObjectFromPath(items, fieldPath) });
       let args = {
         thisActor: this,
         newShield: false,

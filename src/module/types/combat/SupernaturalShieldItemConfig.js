@@ -32,12 +32,12 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       {
         name: game.i18n.localize('contextualMenu.superntarualShield.options.release'),
         icon: '<i class="fa fa-times" aria-hidden="true"></i>',
-        callback: target => {
+        callback: async target => {
           const { itemId } = target[0].dataset;
 
           if (!itemId) throw new Error('supernaturalShieldId missing');
 
-          actor.deleteSupernaturalShield(itemId);
+          await actor.deleteSupernaturalShield(itemId);
         }
       }
     ]
@@ -103,7 +103,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
           return;
         }
       }
-      actor.newSupernaturalShield('psychic', power, powerDifficulty);
+      await actor.newSupernaturalShield('psychic', power, powerDifficulty);
     }
   }
 });
