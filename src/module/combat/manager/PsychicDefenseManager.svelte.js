@@ -1,5 +1,6 @@
 import { DefenseManager } from '@module/combat/manager/DefenseManager.svelte.js'
 import { rollToMessageFlavor } from '@module/combat/utils/rollToMessageFlavor.js'
+import { shieldValueCheck } from '@module/combat/utils/shieldValueCheck.js';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 export class PsychicDefenseManager extends DefenseManager {
@@ -16,6 +17,8 @@ export class PsychicDefenseManager extends DefenseManager {
             final: this.actorSystem.psychic.psychicProjection.imbalance.defensive.final.value
         }
         this.data.psychicPotential = this.actorSystem.psychic.psychicPotential.final.value
+        this.data.psychicPotentialRoll = undefined
+        this.data.psychicFatigue = 0
 
         this.data.psychicPoints = { usedProjection: 0, usedPotential: 0, eliminateFatigue: 0, available: this.actorSystem.psychic.psychicPoints.value }
 
@@ -30,7 +33,7 @@ export class PsychicDefenseManager extends DefenseManager {
         } else {
             this.data.powerUsed = this.data.psychicPowers[0]?._id
         }
-
+        this.data.powerUsedEffect = ''
         this.data.eliminateFatigue = false
         this.data.mentalPatternImbalance = false
 
@@ -71,16 +74,14 @@ export class PsychicDefenseManager extends DefenseManager {
     }
 
     onNewShield(newShield) {
+        this.data.eliminateFatigue = false
+        this.data.mentalPatternImbalance = false
+        this.data.psychicPoints.usedPotential = 0
+        this.usePsychicPoints(0, "psychicPotential")
+        this.usePsychicPoints(0, "eliminateFatigue")
+
         this.data.powerUsed = this.data[newShield ? "psychicPowers" : "supernaturalShields"][0]?.id
         this.onPowerChange()
-
-        if (!newShield) {
-            this.data.eliminateFatigue = false
-            this.data.mentalPatternImbalance = false
-            this.data.psychicPoints.usedPotential = 0
-            this.usePsychicPoints(0, "psychicPotential")
-            this.usePsychicPoints(0, "eliminateFatigue")
-        }
     }
 
     usePsychicPoints(usedPoints, type) {
@@ -97,8 +98,37 @@ export class PsychicDefenseManager extends DefenseManager {
         }
     }
 
+    async onPsychicPotential() {
+        const { i18n } = game;
+
+        const psychicPotentialRoll = new ABFFoundryRoll(
+            `1d100PsychicRoll + ${this.psychicPotential}`,
+            { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
+        );
+        await psychicPotentialRoll.roll();
+
+        this.data.psychicPotentialRoll = psychicPotentialRoll.total
+
+        if (this.data.showRoll) {
+            psychicPotentialRoll.toMessage({
+                speaker: ChatMessage.getSpeaker({ token: this.data.token }),
+                flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
+            });
+        }
+
+        this.data.psychicFatigue = await this.data.actor.evaluatePsychicFatigue(
+            this.power,
+            psychicPotentialRoll.total,
+            this.data.eliminateFatigue,
+            this.data.showRoll
+        );
+
+        this.data.powerUsedEffect = this.power?.system.effects[psychicPotentialRoll.total].value;
+        this.data.shieldPoints = shieldValueCheck(this.data.powerUsedEffect)
+        
+    }
+
     async onDefense() {
-        console.log(this)
         const { i18n } = game;
         this.data.actor.setFlag('animabf', 'lastDefensivePowerUsed', this.data.powerUsed)
 
@@ -116,36 +146,9 @@ export class PsychicDefenseManager extends DefenseManager {
 
         await psychicProjectionRoll.roll();
 
-        let psychicFatigue = 0;
-        let psychicPotentialRoll;
-
-        if (this.data.newShield && this.data.powerUsed) {
-            this.data.actor.setFlag('animabf', 'lastDefensivePowerUsed', this.data.powerUsed);
-
-            psychicPotentialRoll = new ABFFoundryRoll(
-                `1d100PsychicRoll + ${this.psychicPotential}`,
-                { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
-            );
-            await psychicPotentialRoll.roll();
-
-            if (this.data.showRoll) {
-                psychicPotentialRoll.toMessage({
-                    speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                    flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
-                });
-            }
-            // Evaluate psychic fatigue
-            psychicFatigue = await this.data.actor.evaluatePsychicFatigue(
-                this.power,
-                psychicPotentialRoll.total,
-                this.data.eliminateFatigue,
-                this.data.showRoll
-            );
-        }
-
-        let supShield = { create: this.data.newShield && !psychicFatigue, id: this.data.powerUsed };
+        let supShield = { create: this.data.newShield && !this.data.psychicFatigue, id: this.data.powerUsed };
         // If no psychic fatigue, show defense roll message
-        if (!psychicFatigue && this.data.showRoll) {
+        if (!this.data.psychicFatigue && this.data.showRoll) {
             const projectionFlavor = i18n.format(
                 'macros.combat.dialog.psychicDefense.title',
                 {
@@ -166,9 +169,9 @@ export class PsychicDefenseManager extends DefenseManager {
             values: {
                 powerUsed: this.data.powerUsed,
                 powerName: this.power.name,
-                psychicPotential: psychicPotentialRoll?.total ?? 0,
+                psychicPotential: this.data.psychicPotentialRoll ?? 0,
                 psychicProjection: this.defense,
-                psychicFatigue,
+                psychicFatigue: this.data.psychicFatigue,
                 at: this.armor,
                 roll: rolled,
                 total: psychicProjectionRoll.total,

@@ -14,7 +14,7 @@
 
   let markerWidth = { min: '150px', max: '435px' };
   let togglePanel = $state(false);
-  let psychicPointSwitch = $state(true);
+  let psychicPotentialRolled = $derived(manager.data.psychicPotentialRoll != undefined);
 </script>
 
 <div class="template">
@@ -29,7 +29,7 @@
     <div></div>
   </div>
   <div class="box">
-    {#if psychicPointSwitch}
+    {#if psychicPotentialRolled}
       <IconBox
         icon="psychic-point"
         bind:activeIcons={manager.data.psychicPoints.usedProjection}
@@ -60,13 +60,13 @@
       />
     {/if}
     <IconCheckBox
-      icon={psychicPointSwitch ? 'psychic' : 'psychic-potential'}
-      bind:value={psychicPointSwitch}
+      icon={psychicPotentialRolled ? 'psychic' : 'psychic-potential'}
       title={`${i18n.localize('anima.ui.psychic.psychicPoints.title')} ${
-        psychicPointSwitch
+        psychicPotentialRolled
           ? i18n.localize('anima.ui.psychic.psychicProjection.projection.title')
           : i18n.localize('anima.ui.psychic.psychicPotential.potential.title')
       }`}
+      disabled={true}
       noStyle={true}
       --icon-size="30px"
     />
@@ -76,6 +76,7 @@
       bind:selection={manager.data.powerUsed}
       options={manager.data.psychicPowers}
       onChange={value => manager.onPowerChange(value)}
+      disabled={psychicPotentialRolled}
       >{#if manager.data.psychicPowers.length === 0}
         <option>No Power Found</option>
       {/if}</CardSelect
@@ -89,22 +90,26 @@
       {markerWidth}
     />
   </g>
-  <g class="primary">
+  <div class="primary">
     <IconInput
       icon="psychic"
       value={manager.attack}
       bind:modifier={manager.modifiers.special.modifier}
       title={i18n.localize('anima.ui.psychic.psychicProjection.projection.title')}
+      disabled={!psychicPotentialRolled}
+      --opacity={psychicPotentialRolled ? '' : '60%'}
     />
-  </g>
-  <g class="secondary">
+  </div>
+  <div class="secondary">
     <IconInput
       icon="psychic-potential"
       value={manager.psychicPotential}
       bind:modifier={manager.potentialModifiers.special.modifier}
       title={i18n.localize('anima.ui.psychic.psychicPotential.potential.title')}
+      disabled={psychicPotentialRolled}
+      --opacity={psychicPotentialRolled ? '60%' : ''}
     />
-  </g>
+  </div>
   <div class="bottom">
     <IconCheckBox
       icon="avoid-psychic-fatigue"
@@ -112,7 +117,7 @@
       title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
       disabled={manager.data.psychicPoints.available <=
         manager.data.psychicPoints.usedPotential +
-          manager.data.psychicPoints.usedProjection}
+          manager.data.psychicPoints.usedProjection || psychicPotentialRolled}
       onClick={value => manager.usePsychicPoints(value ? 1 : 0, 'eliminateFatigue')}
       --icon-size="30px"
     />
@@ -120,6 +125,7 @@
       icon="mental-pattern-imbalance"
       bind:value={manager.data.mentalPatternImbalance}
       title={i18n.localize('macros.combat.dialog.mentalPatternImbalance.title')}
+      disabled={psychicPotentialRolled}
       --icon-size="28px"
     />
   </div>
@@ -139,7 +145,17 @@
     </div>
   {/if}
   <div class="button">
-    <CardButton title={'Atacar'} onClick={() => manager.onAttack()} />
+    {#if psychicPotentialRolled}
+      <CardButton
+        title={i18n.localize('macros.combat.dialog.button.attack.title')}
+        onClick={() => manager.onAttack()}
+      />
+    {:else}
+      <CardButton
+        title={i18n.localize('macros.combat.dialog.gm.psychicPotential.title')}
+        onClick={() => manager.onPsychicPotential()}
+      />
+    {/if}
   </div>
 </div>
 

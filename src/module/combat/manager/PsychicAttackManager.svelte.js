@@ -18,6 +18,8 @@ export class PsychicAttackManager extends AttackManager {
             final: this.actorSystem.psychic.psychicProjection.imbalance.offensive.final.value
         }
         this.data.psychicPotential = this.actorSystem.psychic.psychicPotential.final.value
+        this.data.psychicPotentialRoll = undefined
+        this.data.psychicFatigue = 0
 
         this.data.psychicPoints = { usedProjection: 0, usedPotential: 0, eliminateFatigue: 0, available: this.actorSystem.psychic.psychicPoints.value }
 
@@ -32,7 +34,7 @@ export class PsychicAttackManager extends AttackManager {
         } else {
             this.data.powerUsed = this.data.psychicPowers[0]?._id
         }
-
+        this.data.powerUsedEffect = ''
         this.data.eliminateFatigue = false
         this.data.mentalPatternImbalance = false
 
@@ -63,7 +65,7 @@ export class PsychicAttackManager extends AttackManager {
     calculateDamage(damageModifiers) {
         let totalModifier = super.calculateDamage(damageModifiers);
 
-        return totalModifier
+        return damageCheck(this.data.powerUsedEffect) + totalModifier
     }
 
     getPower(powerUsed) {
@@ -96,6 +98,35 @@ export class PsychicAttackManager extends AttackManager {
         }
     }
 
+    async onPsychicPotential() {
+        const { i18n } = game;
+
+        const psychicPotentialRoll = new ABFFoundryRoll(
+            `1d100PsychicRoll + ${this.psychicPotential}`,
+            { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
+        );
+        await psychicPotentialRoll.roll();
+
+        this.data.psychicPotentialRoll = psychicPotentialRoll.total
+
+        if (this.data.showRoll) {
+            psychicPotentialRoll.toMessage({
+                speaker: ChatMessage.getSpeaker({ token: this.data.token }),
+                flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
+            });
+        }
+
+        this.data.psychicFatigue = await this.data.actor.evaluatePsychicFatigue(
+            this.power,
+            psychicPotentialRoll.total,
+            this.data.eliminateFatigue,
+            this.data.showRoll
+        );
+
+        this.data.powerUsedEffect = this.power?.system.effects[psychicPotentialRoll.total].value;
+        this.data.resistanceEffect = resistanceEffectCheck(this.data.powerUsedEffect);
+    }
+
     async onAttack() {
         const { i18n } = game;
         this.data.actor.setFlag('animabf', 'lastOffensivePowerUsed', this.data.powerUsed)
@@ -114,57 +145,32 @@ export class PsychicAttackManager extends AttackManager {
 
         await psychicProjectionRoll.roll();
 
-        const psychicPotentialRoll = new ABFFoundryRoll(
-            `1d100PsychicRoll + ${this.psychicPotential}`,
-            { ...this.actorSystem, power: this.power, mentalPatternImbalance: this.data.mentalPatternImbalance }
-        );
-        await psychicPotentialRoll.roll();
-
-        if (this.data.showRoll) {
-            psychicPotentialRoll.toMessage({
+        if (this.data.showRoll && !this.data.psychicFatigue) {
+            const projectionFlavor = i18n.format(
+                'macros.combat.dialog.psychicAttack.title',
+                {
+                    power: rollToMessageFlavor(this.power.name, psychicProjectionRoll),
+                    potential: this.data.psychicPotentialRoll,
+                    target: this.data.defenderToken.name
+                }
+            );
+            psychicProjectionRoll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor: i18n.format('macros.combat.dialog.psychicPotential.title')
+                flavor: projectionFlavor
             });
         }
 
-        const psychicFatigue = await this.data.actor.evaluatePsychicFatigue(
-            this.power,
-            psychicPotentialRoll.total,
-            this.data.eliminateFatigue,
-            this.data.showRoll
-        );
-
-        if (this.data.showRoll) {
-            if (!psychicFatigue) {
-                const projectionFlavor = i18n.format(
-                    'macros.combat.dialog.psychicAttack.title',
-                    {
-                        power: rollToMessageFlavor(this.power.name, psychicProjectionRoll),
-                        potential: psychicPotentialRoll.total,
-                        target: this.data.defenderToken.name
-                    }
-                );
-                psychicProjectionRoll.toMessage({
-                    speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                    flavor: projectionFlavor
-                });
-            }
-        }
-
         const rolled = psychicProjectionRoll.total - this.attack;
-
-        const powerUsedEffect = this.power?.system.effects[psychicPotentialRoll.total].value;
-        this.data.resistanceEffect = resistanceEffectCheck(powerUsedEffect);
 
         this.hooks.onAttack({
             type: 'psychic',
             values: {
                 powerUsed: this.data.powerUsed,
                 powerName: this.power.name,
-                psychicPotential: psychicPotentialRoll.total,
+                psychicPotential: this.data.psychicPotentialRoll,
                 psychicProjection: this.attack,
-                psychicFatigue,
-                damage: damageCheck(powerUsedEffect) + this.damage,
+                psychicFatigue: this.data.psychicFatigue,
+                damage: this.damage,
                 critic: this.data.critics.selected,
                 roll: rolled,
                 total: psychicProjectionRoll.total,

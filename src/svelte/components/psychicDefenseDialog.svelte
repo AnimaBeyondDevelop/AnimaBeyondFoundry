@@ -14,7 +14,7 @@
 
   let markerWidth = { min: '150px', max: '435px' };
   let togglePanel = $state(false);
-  let psychicPointSwitch = $state(true);
+  let psychicPotentialRolled = $derived(manager.data.psychicPotentialRoll != undefined);
 </script>
 
 <div class="template">
@@ -29,7 +29,7 @@
     <div></div>
   </div>
   <div class="box">
-    {#if psychicPointSwitch}
+    {#if psychicPotentialRolled || !manager.data.newShield}
       <IconBox
         icon="psychic-point"
         bind:activeIcons={manager.data.psychicPoints.usedProjection}
@@ -60,15 +60,16 @@
       />
     {/if}
     <IconCheckBox
-      icon={psychicPointSwitch ? 'psychic' : 'psychic-potential'}
-      bind:value={psychicPointSwitch}
+      icon={psychicPotentialRolled || !manager.data.newShield
+        ? 'psychic'
+        : 'psychic-potential'}
       title={`${i18n.localize('anima.ui.psychic.psychicPoints.title')} ${
-        psychicPointSwitch
+        psychicPotentialRolled || !manager.data.newShield
           ? i18n.localize('anima.ui.psychic.psychicProjection.projection.title')
           : i18n.localize('anima.ui.psychic.psychicPotential.potential.title')
       }`}
+      disabled={true}
       noStyle={true}
-      disabled={!manager.data.newShield}
       --icon-size="30px"
     />
   </div>
@@ -79,6 +80,7 @@
         ? manager.data.psychicPowers
         : manager.data.supernaturalShields}
       onChange={value => manager.onPowerChange(value)}
+      disabled={psychicPotentialRolled}
       >{#if manager.data.psychicPowers.length === 0}
         <option>No Power Found</option>
       {/if}</CardSelect
@@ -97,24 +99,28 @@
       </div></CardMarker
     >
   </g>
-  <g class="primary">
+  <div class="primary">
     <IconInput
       icon="psychic"
       value={manager.defense}
       bind:modifier={manager.modifiers.special.modifier}
       title={i18n.localize('anima.ui.psychic.psychicProjection.projection.title')}
+      disabled={!psychicPotentialRolled}
+      --opacity={psychicPotentialRolled ? '' : '60%'}
     />
-  </g>
-  <g class="secondary">
+  </div>
+  <div class="secondary">
     {#if manager.data.newShield}
       <IconInput
         icon="psychic-potential"
         value={manager.psychicPotential}
         bind:modifier={manager.potentialModifiers.special.modifier}
         title={i18n.localize('anima.ui.psychic.psychicPotential.potential.title')}
+        disabled={psychicPotentialRolled}
+        --opacity={psychicPotentialRolled ? '60%' : ''}
       />
     {/if}
-  </g>
+  </div>
   <div class="bottom">
     {#if manager.data.newShield}
       <IconCheckBox
@@ -123,7 +129,7 @@
         title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
         disabled={manager.data.psychicPoints.available <=
           manager.data.psychicPoints.usedPotential +
-            manager.data.psychicPoints.usedProjection}
+            manager.data.psychicPoints.usedProjection || psychicPotentialRolled}
         onClick={value => manager.usePsychicPoints(value ? 1 : 0, 'eliminateFatigue')}
         --icon-size="30px"
       />
@@ -131,6 +137,7 @@
         icon="mental-pattern-imbalance"
         bind:value={manager.data.mentalPatternImbalance}
         title={i18n.localize('macros.combat.dialog.mentalPatternImbalance.title')}
+        disabled={psychicPotentialRolled}
         --icon-size="28px"
       />
     {/if}
@@ -141,21 +148,24 @@
         icon="plus"
         bind:value={manager.data.newShield}
         title={i18n.localize('macros.combat.dialog.newShield.title')}
-        onClick={value => {
-          manager.onNewShield(value);
-          if (!value) {
-            psychicPointSwitch = true;
-          }
-        }}
+        onClick={value => manager.onNewShield(value)}
+        disabled={psychicPotentialRolled}
         --icon-size="18px"
       />
     </CardCircle>
   </div>
   <div class="button">
-    <CardButton
-      title={i18n.localize('macros.combat.dialog.button.defense.title')}
-      onClick={() => manager.onDefense()}
-    />
+    {#if psychicPotentialRolled || !manager.data.newShield}
+      <CardButton
+        title={i18n.localize('macros.combat.dialog.button.defense.title')}
+        onClick={() => manager.onDefense()}
+      />
+    {:else}
+      <CardButton
+        title={i18n.localize('macros.combat.dialog.gm.psychicPotential.title')}
+        onClick={() => manager.onPsychicPotential()}
+      />
+    {/if}
   </div>
 </div>
 
