@@ -100,7 +100,7 @@
     </div>
   {/if}
   <div class="button">
-    <CardButton title={'Atacar'} onClick={() => manager.onAttack()} />
+    <CardButton title={i18n.localize('macros.combat.dialog.button.attack.title')} onClick={() => manager.onAttack()} />
   </div>
   <div class="circle-cast-method">
     <CardCircle>
