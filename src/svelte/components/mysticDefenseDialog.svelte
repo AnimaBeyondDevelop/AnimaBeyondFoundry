@@ -45,7 +45,7 @@
       <div class="marker-content">
         <IconInput
           icon="supernatural-shield"
-          value={manager.data.shieldPoints}
+          value={manager.shieldPoints}
           title={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
           invert={true}
           disabled={true}

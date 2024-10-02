@@ -1,11 +1,11 @@
-import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
 import { DefenseManager } from '@module/combat/manager/DefenseManager.svelte.js'
 import { rollToMessageFlavor } from '@module/combat/utils/rollToMessageFlavor.js'
-import { damageCheck } from '@module/combat/utils/damageCheck.js';
+import { shieldValueCheck } from '@module/combat/utils/shieldValueCheck.js';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 export class MysticDefenseManager extends DefenseManager {
     spell = $derived(this.getSpell(this.data.spellUsed, this.data.newShield));
+    shieldPoints = $derived(this.getShieldPoints(this.data.spellUsed, this.data.spellGrade, this.data.newShield));
     castMethod = $state("accumulated")
     spellCasting = $derived(
         this.data.actor.mysticCanCastEvaluate(
@@ -50,7 +50,6 @@ export class MysticDefenseManager extends DefenseManager {
 
         this.data.supernaturalShields = this.actorSystem.combat.supernaturalShields
         this.data.newShield = this.data.supernaturalShields.length === 0
-        this.data.shieldPoints = 0
 
         this.onNewShield(this.data.newShield)
     }
@@ -86,8 +85,16 @@ export class MysticDefenseManager extends DefenseManager {
 
     onSpellChange() {
         this.data.spellGrade = 'base'
-        this.data.shieldPoints = this.data.newShield ? 0 : this.spell.system.shieldPoints
         this.getAttainableSpellGrades()
+    }
+
+    getShieldPoints(spellUsed, spellGrade, newShield) {
+        if (newShield) {
+            return shieldValueCheck(
+                this.spell?.system.grades[spellGrade].description.value ?? ''
+            )
+        }
+        return this.spell?.system.shieldPoints
     }
 
     onNewShield(newShield) {
