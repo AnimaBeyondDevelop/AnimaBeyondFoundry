@@ -58,6 +58,7 @@
       justify-self: right;
       transition: var(--transition, scale 0.3s ease-out, transform 0.4s ease-out);
       transform: var(--transform);
+      opacity: var(--opacity);
       filter: var(--filter);
       &:hover {
         scale: var(--hover-scale, 1);
