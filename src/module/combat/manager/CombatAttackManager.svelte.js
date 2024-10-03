@@ -113,19 +113,14 @@ export class CombatAttackManager extends AttackManager {
         if (this.data.showRoll) {
             const { i18n } = game;
 
-            const flavor = this.weapon
-                ? i18n.format('macros.combat.dialog.physicalAttack.title', {
-                    weapon: rollToMessageFlavor(this.weapon?.name, roll),
-                    target: this.data.defenderToken.name
-                })
-                : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
-                    unarmed: rollToMessageFlavor(i18n.format('macros.combat.dialog.unarmed.title'), roll),
-                    target: this.data.defenderToken.name
-                });
+            const flavor = i18n.format(`macros.combat.dialog.physicalAttack.${this.weapon ? 'title' : 'unarmed.title'}`, {
+                weapon: this.weapon?.name,
+                target: this.data.defenderToken.name
+            })
 
             roll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor
+                flavor: rollToMessageFlavor(flavor, roll)
             });
         }
 

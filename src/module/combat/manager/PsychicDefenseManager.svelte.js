@@ -125,7 +125,7 @@ export class PsychicDefenseManager extends DefenseManager {
 
         this.data.powerUsedEffect = this.power?.system.effects[psychicPotentialRoll.total].value;
         this.data.shieldPoints = shieldValueCheck(this.data.powerUsedEffect)
-        
+
     }
 
     async onDefense() {
@@ -152,13 +152,13 @@ export class PsychicDefenseManager extends DefenseManager {
             const projectionFlavor = i18n.format(
                 'macros.combat.dialog.psychicDefense.title',
                 {
-                    power: rollToMessageFlavor(this.power.name, psychicProjectionRoll),
+                    power: this.power.name,
                     target: this.data.attacker.token.name
                 }
             );
             psychicProjectionRoll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor: projectionFlavor
+                flavor: rollToMessageFlavor(projectionFlavor, psychicProjectionRoll)
             });
         }
 

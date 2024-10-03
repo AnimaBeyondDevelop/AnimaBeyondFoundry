@@ -132,13 +132,13 @@ export class MysticDefenseManager extends DefenseManager {
             const { i18n } = game;
 
             const flavor = i18n.format('macros.combat.dialog.magicDefense.title', {
-                spell: rollToMessageFlavor(this.spell?.name, roll),
+                spell: this.spell?.name,
                 target: this.data.attacker.token.name
             })
 
             roll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor
+                flavor: rollToMessageFlavor(flavor, roll)
             });
         }
 

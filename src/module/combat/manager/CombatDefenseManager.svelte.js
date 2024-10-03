@@ -117,11 +117,11 @@ export class CombatDefenseManager extends DefenseManager {
 
             const flavor = i18n.format(`macros.combat.dialog.physicalDefense.${this.data.defenseType}.title`, {
                 target: this.data.attacker.token.name
-            }); // Integrar rollToMessageFlavor
+            });
 
             roll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor
+                flavor: rollToMessageFlavor(flavor, roll)
             });
         }
 

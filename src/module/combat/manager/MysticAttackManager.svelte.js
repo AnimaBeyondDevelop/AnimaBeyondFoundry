@@ -136,13 +136,13 @@ export class MysticAttackManager extends AttackManager {
             const { i18n } = game;
 
             const flavor = i18n.format('macros.combat.dialog.magicAttack.title', {
-                spell: rollToMessageFlavor(this.spell?.name, roll),
+                spell: this.spell?.name,
                 target: this.data.defenderToken.name
             })
 
             roll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor
+                flavor: rollToMessageFlavor(flavor, roll)
             });
         }
 

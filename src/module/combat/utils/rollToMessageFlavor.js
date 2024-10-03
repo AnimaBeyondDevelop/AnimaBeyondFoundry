@@ -1,9 +1,9 @@
 export const rollToMessageFlavor = (text, roll) => {
   if (roll.abfRoll.success) {
-    return `<b style="color:green">${text}</b>`
+    return text.replace('<b>', '<b style="color:green">')
   } else if (roll.abfRoll.fumbled) {
-    return `<b style="color:red">${text}</b>`
+    return text.replace('<b>', '<b style="color:red">')
   } else {
-    return `<b>${text}</b>`
+    return text
   }
 };

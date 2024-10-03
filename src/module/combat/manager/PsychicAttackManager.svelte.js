@@ -149,14 +149,14 @@ export class PsychicAttackManager extends AttackManager {
             const projectionFlavor = i18n.format(
                 'macros.combat.dialog.psychicAttack.title',
                 {
-                    power: rollToMessageFlavor(this.power.name, psychicProjectionRoll),
+                    power: this.power.name,
                     potential: this.data.psychicPotentialRoll,
                     target: this.data.defenderToken.name
                 }
             );
             psychicProjectionRoll.toMessage({
                 speaker: ChatMessage.getSpeaker({ token: this.data.token }),
-                flavor: projectionFlavor
+                flavor: rollToMessageFlavor(projectionFlavor, psychicProjectionRoll)
             });
         }
 
