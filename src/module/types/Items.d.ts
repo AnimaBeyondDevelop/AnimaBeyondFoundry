@@ -142,10 +142,11 @@ export type ABFItemConfigMinimal<
   prepareItem?: (item: TDataSource) => void;
 
   /**
-   * This function clears the path where this type of Items is stored for a given actor, setting it to an empty array.
+   * If `this.isInternal` is false (that is, when this item is not inner), this function
+   * cleans the path where this type of Items is stored for a given actor, removing old items.
    * @param actor
    */
-  clearFieldPath?: (actor: ABFActor) => void;
+  cleanFieldPath?: (actor: ABFActor) => void;
 
   /**
    * This function adds an item to the path where this type of Items is stored for a given actor.
@@ -183,7 +184,7 @@ export type ABFItemConfig<
   TDynamicChanges = DynamicChanges<TChanges>
 > = WithRequired<
   ABFItemConfigMinimal<TData, TDataSource, TChanges, TDynamicChanges>,
-  'getFromDynamicChanges' | 'clearFieldPath' | 'addToFieldPath' | 'resetFieldPath'
+  'getFromDynamicChanges' | 'cleanFieldPath' | 'addToFieldPath' | 'resetFieldPath'
 >;
 
 export type ItemChanges<T> = {

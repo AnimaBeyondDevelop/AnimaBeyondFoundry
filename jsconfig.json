@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["svelte", "@types/jest"],
+    "types": ["svelte", "@types/jest", "@league-of-foundry-developers/foundry-vtt-types"],
     "paths": {
       "@svelte/*": ["./src/svelte/*"],
       "@module/*": ["./src/module/*"],
       "@assets/*": ["./src/assets/*"]
     },
-    "moduleResolution": "node",
+    "module": "ES2022",
+    "moduleResolution": "node", // This might conflict with foundry-vtt-types
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,

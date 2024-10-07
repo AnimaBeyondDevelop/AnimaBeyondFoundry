@@ -12,9 +12,7 @@ export default class ABFItemSheet extends sveltify(ItemSheet) {
   }
 
   static get svelteDescriptors() {
-    return [
-      { componentConstructor: SpellContainer, selector: '#svelte-spell' },
-    ]
+    return [{ SvelteComponent: SpellContainer, selector: '#svelte-spell' }];
   }
 
   static get defaultOptions() {

@@ -13,7 +13,9 @@ import { Logger } from '../../utils';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-export default class ABFActorSheet extends sveltify(/** @type {TFormApplication} */(ActorSheet)) {
+export default class ABFActorSheet extends sveltify(
+  /** @type {TFormApplication} */ (ActorSheet)
+) {
   i18n;
 
   constructor(actor, options) {
@@ -25,9 +27,7 @@ export default class ABFActorSheet extends sveltify(/** @type {TFormApplication}
   }
 
   static get svelteDescriptors() {
-    return [
-      { componentConstructor: SpellsBoard, selector: '#svelte-spell-board' }
-    ];
+    return [{ SvelteComponent: SpellsBoard, selector: '#svelte-spell-board' }];
   }
 
   static get defaultOptions() {

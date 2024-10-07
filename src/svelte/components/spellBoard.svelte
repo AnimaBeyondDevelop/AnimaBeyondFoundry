@@ -12,11 +12,11 @@
   title={i18n.localize('anima.ui.mystic.spells.title')}
   addRowButtonData="add-spell"
 >
-  <svelte:fragment slot="body">
+  {#snippet body()}
     {#each $data.actor.system.mystic.spells as spell}
       <div data-item-id={spell._id} class="spell-row">
-        <Spell bind:spell contractible />
+        <Spell bind:spell contractible isInner />
       </div>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </Group>
