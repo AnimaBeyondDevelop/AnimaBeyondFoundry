@@ -14,7 +14,7 @@
    */
 
   /** @type {props} */
-  let { contractible=false, isInner, spell=$bindable() } = $props()
+  let { contractible = false, isInner, spell = $bindable() } = $props();
 
   let i18n = game.i18n;
 
