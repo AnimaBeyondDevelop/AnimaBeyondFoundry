@@ -33,7 +33,12 @@ export default defineConfig({
     }
   },
   plugins: [
-    svelte(),
+    svelte({
+      onwarn(warning, defaultHandler) {
+        if (warning.code.startsWith('a11y')) return;
+        defaultHandler(warning);
+      }
+    }),
     copy({
       targets: [
         { src: 'src/assets', dest: 'dist' },
