@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    // "checkJs": true,
+    "checkJs": true,
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
