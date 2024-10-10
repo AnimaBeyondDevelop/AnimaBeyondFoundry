@@ -53,5 +53,9 @@ export const Templates = {
   CustomHotBar: 'systems/animabf/templates/custom-hotbar/custom-hotbar.hbs',
   Chat: {
     CombatResult: 'systems/animabf/templates/chat/combat-result.hbs'
+  },
+  Svelte: {
+    SvelteApp: 'systems/animabf/templates/svelte/svelte-application.html',
+    SvelteFormApp: 'systems/animabf/templates/svelte/svelte-form-application.html'
   }
 };
