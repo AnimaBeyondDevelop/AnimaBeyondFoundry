@@ -4,18 +4,27 @@ const { execSync } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 
-const config = fs.readJSONSync('foundryconfig.json');
-const directory = process.argv[2];
+const directory = process.argv[2] ?? 'animabf';
+let destPath;
 
 try {
-  fs.rmSync(`${config.destPath}/${directory}`, { recursive: true, force: true });
+  console.log(chalk.yellow('Trying to use fvtt to get dataPath...'));
+  dataPath = execSync('fvtt configure get dataPath', { encoding: 'utf8' }).trim();
+  destPath = `${dataPath}/Data/systems`;
+} catch (e) {
+  console.log(chalk.yellow('Falling back to foundryconfig.json'));
+  destPath = fs.readJSONSync('foundryconfig.json').destPath;
+}
+
+try {
+  fs.rmSync(`${destPath}/${directory}`, { recursive: true, force: true });
 } catch {
   // ignore
 }
 
 try {
-  execSync(`cp -r $(pwd)/dist ${config.destPath}/${directory}`);
-  console.log(chalk.green(`Directory ${directory} copied into ${config.destPath}\n\n`));
+  execSync(`cp -r $(pwd)/dist ${destPath}/${directory}`);
+  console.log(chalk.green(`Directory ${directory} copied into ${destPath}\n\n`));
 } catch (e) {
   console.error(chalk.red(e.stack));
 }
