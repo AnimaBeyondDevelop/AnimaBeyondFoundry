@@ -151,9 +151,8 @@ export class MysticAttackManager extends AttackManager {
         this.hooks.onAttack({
             type: 'mystic',
             values: {
-                spellUsed: this.data.spellUsed,
+                spell: this.spell,
                 spellGrade: this.data.spellGrade,
-                spellName: this.spell?.name,
                 magicProjection: this.attack,
                 spellCasting: this.spellCasting,
                 damage: this.damage,

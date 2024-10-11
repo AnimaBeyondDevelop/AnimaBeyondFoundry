@@ -131,10 +131,9 @@ export class CombatDefenseManager extends DefenseManager {
             type: 'combat',
             values: {
                 type: this.data.defenseType,
-                unarmed: this.data.weaponUsed === 'unarmed', //rev
                 defense: this.defense,
                 at: this.armor,
-                weaponUsed: this.data.weaponUsed,
+                weapon: this.weapon,
                 fatigueUsed: this.data.fatigue.used,
                 roll: rolled,
                 total: roll.total,

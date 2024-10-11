@@ -167,8 +167,7 @@ export class PsychicDefenseManager extends DefenseManager {
         this.hooks.onDefense({
             type: 'psychic',
             values: {
-                powerUsed: this.data.powerUsed,
-                powerName: this.power.name,
+                power: this.power,
                 psychicPotential: this.data.psychicPotentialRoll ?? 0,
                 psychicProjection: this.defense,
                 psychicFatigue: this.data.psychicFatigue,

@@ -165,8 +165,7 @@ export class PsychicAttackManager extends AttackManager {
         this.hooks.onAttack({
             type: 'psychic',
             values: {
-                powerUsed: this.data.powerUsed,
-                powerName: this.power.name,
+                power: this.power,
                 psychicPotential: this.data.psychicPotentialRoll,
                 psychicProjection: this.attack,
                 psychicFatigue: this.data.psychicFatigue,

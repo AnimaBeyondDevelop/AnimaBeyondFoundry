@@ -147,9 +147,8 @@ export class MysticDefenseManager extends DefenseManager {
         this.hooks.onDefense({
             type: 'mystic',
             values: {
-                spellUsed: this.data.spellUsed,
+                spell: this.data.spell,
                 spellGrade: this.data.spellGrade,
-                spellName: this.spell?.name,
                 magicProjection: this.defense,
                 spellCasting: this.spellCasting,
                 roll: rolled,

@@ -132,7 +132,7 @@ export class CombatAttackManager extends AttackManager {
                 unarmed: this.data.weaponUsed === 'unarmed', //rev
                 damage: this.damage,
                 attack: this.attack,
-                weaponUsed: this.data.weaponUsed,
+                weapon: this.weapon,
                 critic: this.data.critics.selected,
                 fatigueUsed: this.data.fatigue.used,
                 roll: rolled,
