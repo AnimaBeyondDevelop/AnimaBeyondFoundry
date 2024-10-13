@@ -24,7 +24,7 @@ const openDialog = async () => {
           icon: iconHTML,
           label: game.i18n.localize('dialogs.continue'),
           callback: html => {
-            /* @type {{ [key: string]: number }} */
+            /** @type {{ [key: string]: number }} */
             const results = new FormDataExtended(html.find('form')[0], {}).object;
 
             resolve(results);
