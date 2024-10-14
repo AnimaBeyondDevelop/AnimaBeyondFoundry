@@ -4,7 +4,8 @@
   import IconInput from '@svelte/ui/iconInput.svelte';
   import IconBox from '@svelte/ui/iconBox.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import Button from '@svelte/ui/button.svelte';
+  import CardLabel from '@svelte/ui/card/cardLabel.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
@@ -66,7 +67,10 @@
           onClick={value => manager.addMultipleDefensesPenalty(value)}
           --icon-size="40px"
         />
-        <Input value={manager.data.defenseCounter.accumulated + 1 + 'º'} disabled={true} />
+        <Input
+          value={manager.data.defenseCounter.accumulated + 1 + 'º'}
+          disabled={true}
+        />
       </div>
     </CardMarker>
   </g>
@@ -98,12 +102,14 @@
     </CardCircle>
   </div>
   <div class="button">
-    <CardButton
-      title={i18n.localize(
-        `macros.combat.dialog.defenseType.${manager.data.defenseType}.title`
-      )}
-      onClick={() => manager.onDefense()}
-    />
+    <CardLabel
+      ><Button
+        title={i18n.localize(
+          `macros.combat.dialog.defenseType.${manager.data.defenseType}.title`
+        )}
+        onClick={() => manager.onDefense()}
+      /></CardLabel
+    >
   </div>
   <div class="circle-switch">
     <CardCircle>

@@ -1,41 +1,32 @@
 <script>
   // @ts-nocheck
-  let {
-    data,
-    title,
-    onClick,
-    height,
-    width,
-    border,
-    edge,
-    fontSize,
-    fontColor,
-    color,
-    secondary
-  } = $props();
+  let { height, width, edge, border, secondaryColor, children } = $props();
 </script>
 
 <div
-  class="button"
-  style={`--height:${height || '60px'};
---width:${width || '220px'};
---border:${border || '5px'};
---edge:${edge || '25px'};
---font-size:${fontSize || '34px'};
---font-color:${secondary ? 'var(--secondary-text-color)' : 'var(--main-text-color)'};
---color:${secondary ? 'var(--secondary-color)' : 'var(--light-color)'}
+  class="label"
+  style={`
+  --height:${height || '60px'};
+  --width:${width || '220px'};
+  --edge:${edge || '25px'};
+  --border:${border || '5px'};
+  --color:${secondaryColor ? 'var(--secondary-color)' : 'var(--light-color)'}
 `}
 >
-  <button data-id={data} type="button" onclick={onClick}>{title}</button>
+{#if children}
+  {@render children()}
+{/if}
 </div>
 
 <style lang="scss">
-  .button {
-    display: grid;
-    place-items: center;
+  .label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: var(--height);
     width: var(--width);
     position: relative;
+    isolation: isolate;
     background: var(--background-color);
     clip-path: polygon(
       calc(var(--edge) + var(--border) / 2) 0,
@@ -71,23 +62,6 @@
         height 0.5s ease-in-out,
         width 0.5s ease-in-out,
         clip-path 0.5s ease-in-out;
-    }
-
-    button {
-      width: auto;
-      border: none;
-      background: none;
-      font-size: var(--font-size);
-      color: var(--font-color);
-      cursor: pointer;
-      transition: font-size 0.2s;
-      &:hover {
-        box-shadow: none;
-        font-size: calc(var(--font-size) - 2px);
-      }
-      &:focus {
-        box-shadow: none;
-      }
     }
   }
 </style>

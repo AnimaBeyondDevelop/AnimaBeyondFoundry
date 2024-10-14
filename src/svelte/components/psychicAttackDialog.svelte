@@ -6,7 +6,8 @@
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import Button from '@svelte/ui/button.svelte';
+  import CardLabel from '@svelte/ui/card/cardLabel.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
 
   let { manager } = $props();
@@ -146,15 +147,19 @@
   {/if}
   <div class="button">
     {#if psychicPotentialRolled}
-      <CardButton
-        title={i18n.localize('macros.combat.dialog.button.attack.title')}
-        onClick={() => manager.onAttack()}
-      />
+      <CardLabel
+        ><Button
+          title={i18n.localize('macros.combat.dialog.button.attack.title')}
+          onClick={() => manager.onAttack()}
+        /></CardLabel
+      >
     {:else}
-      <CardButton
-        title={i18n.localize('macros.combat.dialog.gm.psychicPotential.title')}
-        onClick={() => manager.onPsychicPotential()}
-      />
+      <CardLabel
+        ><Button
+          title={i18n.localize('macros.combat.dialog.gm.psychicPotential.title')}
+          onClick={() => manager.onPsychicPotential()}
+        /></CardLabel
+      >
     {/if}
   </div>
 </div>

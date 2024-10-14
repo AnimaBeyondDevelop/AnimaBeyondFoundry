@@ -4,7 +4,8 @@
   import IconInput from '@svelte/ui/iconInput.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import Button from '@svelte/ui/button.svelte';
+  import CardLabel from '@svelte/ui/card/cardLabel.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
@@ -100,7 +101,12 @@
     </div>
   {/if}
   <div class="button">
-    <CardButton title={i18n.localize('macros.combat.dialog.button.attack.title')} onClick={() => manager.onAttack()} />
+    <CardLabel
+      ><Button
+        title={i18n.localize('macros.combat.dialog.button.attack.title')}
+        onClick={() => manager.onAttack()}
+      /></CardLabel
+    >
   </div>
   <div class="circle-cast-method">
     <CardCircle>

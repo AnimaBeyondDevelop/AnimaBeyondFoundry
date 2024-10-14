@@ -3,7 +3,8 @@
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
   import IconInput from '@svelte/ui/iconInput.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import Button from '@svelte/ui/button.svelte';
+  import CardLabel from '@svelte/ui/card/cardLabel.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
 
@@ -55,10 +56,12 @@
     />
   </div>
   <div class="button">
-    <CardButton
-      title={i18n.localize('macros.combat.dialog.button.defense.title')}
-      onClick={() => manager.onDefense()}
-    />
+    <CardLabel
+      ><Button
+        title={i18n.localize('macros.combat.dialog.button.defense.title')}
+        onClick={() => manager.onDefense()}
+      /></CardLabel
+    >
   </div>
 </div>
 

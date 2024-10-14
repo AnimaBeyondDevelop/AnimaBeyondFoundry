@@ -1,6 +1,7 @@
 <script>
   // @ts-nocheck
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import Button from '@svelte/ui/button.svelte';
+  import CardLabel from '@svelte/ui/card/cardLabel.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CombatAttackDialog from '@svelte/components/combatAttackDialog.svelte';
   import MysticAttackDialog from '@svelte/components/mysticAttackDialog.svelte';
@@ -70,39 +71,48 @@
 
 <div class="template">
   <g class="navigation">
-    <CardButton
-      data="combat"
-      title={activeTab === 'combat' ? 'Combate' : 'C'}
+    <CardLabel
       height="35px"
       edge="12px"
       width={activeTab === 'combat' ? '120px' : '50px'}
-      fontSize="20px"
-      onClick={navigationClick}
-      secondary
-    />
+      secondaryColor
+      ><Button
+        data="combat"
+        title={activeTab === 'combat' ? 'Combate' : 'C'}
+        fontSize="20px"
+        onClick={navigationClick}
+        secondaryColor
+      ></Button></CardLabel
+    >
     {#if actorMystic}
-      <CardButton
-        data="mystic"
-        title={activeTab === 'mystic' ? 'Místico' : 'M'}
+      <CardLabel
         height="35px"
         edge="12px"
         width={activeTab === 'mystic' ? '120px' : '50px'}
-        fontSize="20px"
-        onClick={navigationClick}
-        secondary
-      />
+        secondaryColor
+        ><Button
+          data="mystic"
+          title={activeTab === 'mystic' ? 'Místico' : 'M'}
+          fontSize="20px"
+          onClick={navigationClick}
+          secondaryColor
+        ></Button></CardLabel
+      >
     {/if}
     {#if actorPsychic}
-      <CardButton
-        data="psychic"
-        title={activeTab === 'psychic' ? 'Psíquico' : 'P'}
+      <CardLabel
         height="35px"
         edge="12px"
         width={activeTab === 'psychic' ? '120px' : '50px'}
-        fontSize="20px"
-        onClick={navigationClick}
-        secondary
-      />
+        secondaryColor
+        ><Button
+          data="psychic"
+          title={activeTab === 'psychic' ? 'Psíquico' : 'P'}
+          fontSize="20px"
+          onClick={navigationClick}
+          secondaryColor
+        ></Button></CardLabel
+      >
     {/if}
   </g>
   <section hidden={activeTab !== 'combat'} class="dialog">
