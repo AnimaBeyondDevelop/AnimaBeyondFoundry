@@ -1,21 +1,18 @@
 <script>
   // @ts-nocheck
   let {
-    data,
-    title,
     size,
-    width,
     border,
-    secondary,
+    secondaryColor,
     children
   } = $props();
 </script>
 
 <div
-  class="button"
+  class="circle"
   style={`--size:${size || '50px'};
 --border:${border || '5px'};
---color:${secondary ? 'var(--secondary-color)' : 'var(--light-color)'}
+--color:${secondaryColor ? 'var(--secondary-color)' : 'var(--light-color)'}
 `}
 >
 {#if children}
@@ -24,7 +21,7 @@
 </div>
 
 <style lang="scss">
-  .button {
+  .circle {
     display: grid;
     place-items: center;
     height: var(--size);
