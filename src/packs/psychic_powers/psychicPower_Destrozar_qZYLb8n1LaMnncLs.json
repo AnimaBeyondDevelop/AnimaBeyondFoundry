@@ -30,22 +30,22 @@
         "value": "Fatiga 2"
       },
       "140": {
-        "value": "100 RP"
+        "value": "100 RF"
       },
       "180": {
-        "value": "120 RP"
+        "value": "120 RF"
       },
       "240": {
-        "value": "140 RP"
+        "value": "140 RF"
       },
       "280": {
-        "value": "160 RP"
+        "value": "160 RF"
       },
       "320": {
-        "value": "180 RP"
+        "value": "180 RF"
       },
       "440": {
-        "value": "220 RP"
+        "value": "220 RF"
       }
     },
     "actionType": {
