@@ -10,7 +10,7 @@
     } else if (input === '') {
       modifier = 0;
     } else {
-      modifier = parseInt(input) - value;
+      modifier += parseInt(input) - value;
     }
   }
 </script>
