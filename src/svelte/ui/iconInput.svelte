@@ -69,7 +69,7 @@
       all: unset;
       width: 85px;
       color: white;
-      font-size: 40px;
+      font-size: var(--font-size, 40px);
       -webkit-text-stroke: 4px black;
       paint-order: stroke fill;
       text-align: center;
