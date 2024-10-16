@@ -1,6 +1,6 @@
 <script>
   import Group from '@svelte/ui/group.svelte';
-  import { Log } from '../../utils/Log';
+  import { Logger } from '../../utils';
   import { ABFDialogs } from '@module/dialogs/ABFDialogs';
 
   /**
@@ -55,7 +55,7 @@
 
   function onDelete() {
     if (!item.parent) {
-      Log.warn(`Cannot delete ${item.type}: item.parent is undefined.`);
+      Logger.warn(`Cannot delete ${item.type}: item.parent is undefined.`);
       return;
     }
     ABFDialogs.confirm(
@@ -64,7 +64,7 @@
       {
         onConfirm: () => {
           if (!item.id) {
-            Log.warn(`Cannot delete ${item.type}: item.id is ${item.id}.`);
+            Logger.warn(`Cannot delete ${item.type}: item.id is ${item.id}.`);
             return;
           }
           item.parent?.deleteEmbeddedDocuments('Item', [item.id])
