@@ -24,8 +24,6 @@ import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
   i18n = game.i18n;
-  /** @type {INITIAL_ACTOR_DATA} */
-  system;
 
   /**
    * @param {ConstructorParameters<typeof foundry.documents.BaseActor>[0]} data
