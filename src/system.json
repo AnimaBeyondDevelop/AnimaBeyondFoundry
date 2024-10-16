@@ -11,7 +11,7 @@
   "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
   "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
   "scripts": [],
-  "esmodules": ["animabf.mjs"],
+  "esmodules": ["animabf.js"],
   "styles": ["animabf.css"],
   "socket": true,
   "packs": [

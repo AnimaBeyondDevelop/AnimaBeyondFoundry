@@ -19,7 +19,7 @@ export default class ABFFoundryRoll extends Roll {
 
   /**
    * @param {string} rawFormula
-   * @param {import('../types/Actor').ABFActorDataSourceData} [data]
+   * @param {import('@module/types/Actor').ABFActorDataSourceData} [data]
    * @param {Partial<RollTerm.EvaluationOptions>} [options]
    */
   constructor(rawFormula, data, options) {

@@ -566,6 +566,7 @@
   "contextualMenu.common.options.edit": "Editar",
   "contextualMenu.elan.options.addPower": "Añadir poder",
   "contextualMenu.elan.options.deletePower": "Eliminar poder",
+  "dialogs.select.custom": "[Personalizado]",
   "contextualMenu.superntarualShield.options.release": "Liberar",
   "dialogs.accept": "Aceptar",
   "dialogs.cancel": "Cancelar",
