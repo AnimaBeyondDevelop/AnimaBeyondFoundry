@@ -5,8 +5,8 @@ import { psychicFatigueCheck } from '../../combat/utils/psychicFatigueCheck.js';
 
 export default class ABFPsychicRoll extends ABFExploderRoll {
   /** @returns {Promise<ABFFoundryRoll>} */
-  evaluate() {
-    super.evaluate();
+  async evaluate() {
+    await super.evaluate();
     const {
       general: {
         settings: { inhuman, zen }
