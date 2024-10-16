@@ -3,7 +3,7 @@
   "title": "Anima Beyond Fantasy",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "version": "1.18.1",
-  "compatibility": { "minimum": "11", "verified": "11.315" },
+  "compatibility": { "minimum": "12", "verified": "12.331" },
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
   "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.18.1",
@@ -68,6 +68,8 @@
   ],
   "relationships": { "requires": [] },
   "primaryTokenAttribute": "characteristics.secondaries.lifePoints",
-  "gridDistance": 1,
-  "gridUnits": "m"
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  }
 }

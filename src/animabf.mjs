@@ -1,5 +1,5 @@
 import { registerSettings } from './utils/registerSettings';
-import { preloadTemplates } from './utils/preloadTemplates';
+import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
@@ -8,7 +8,6 @@ import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
-import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
@@ -19,7 +18,7 @@ import './scss/animabf.scss';
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-  console.log('AnimaBF | Initializing system');
+  Logger.log('Initializing system');
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
@@ -37,7 +36,6 @@ Hooks.once('init', async () => {
   };
 
   CONFIG.Item.documentClass = ABFItem;
-  CONFIG.ui.actors = ABFActorDirectory;
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);

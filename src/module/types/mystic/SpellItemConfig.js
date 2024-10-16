@@ -11,7 +11,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @property {{ prepared: boolean, innate: boolean }} casted - An object that indicates whether the spell has been casted before, either as a prepared spell or an innate spell.
  * @property {boolean} override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting.
  */
-export const SpellCasting = {
+export const INITIAL_SPELL_CASTING_DATA = {
   zeon: { accumulated: 0, cost: 0 },
   canCast: { prepared: false, innate: false },
   casted: { prepared: false, innate: false },

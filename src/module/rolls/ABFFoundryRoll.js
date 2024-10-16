@@ -14,6 +14,7 @@ export default class ABFFoundryRoll extends Roll {
    * @type {ABFRoll | undefined}
    * @private
    * @readonly
+
    */
   abfRoll;
 
@@ -82,13 +83,14 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   // TODO Evaluate not finished this | Promise<this>
-  evaluate(partialOptions) {
-    const options = { ...partialOptions, async: false };
+  /** @returns {Promise<Roll>} */
+  async evaluate(options) {
+    await super.evaluate(options);
 
-    super.evaluate(options);
+    await this.abfRoll?.evaluate(options);
 
-    this.abfRoll?.evaluate(options);
-
-    return this;
+    return new Promise((resolve, reject) => {
+      resolve(this);
+    });
   }
 }
