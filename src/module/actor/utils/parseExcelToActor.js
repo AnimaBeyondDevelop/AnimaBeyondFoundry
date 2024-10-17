@@ -2,6 +2,7 @@ import { ABFActor } from '../ABFActor';
 import { ABFItems } from '../../items/ABFItems';
 import { calculateRegenerationTypeFromConstitution } from './prepareActor/calculations/actor/general/calculations/calculateRegenerationTypeFromConstitution';
 import { calculateAttributeModifier } from './prepareActor/calculations/util/calculateAttributeModifier';
+import { INITIAL_TECHNIQUE_DATA } from '../../types/domine/TechniqueItemConfig';
 
 /**
  * Parses excel data to actor data
@@ -27,8 +28,8 @@ export const parseExcelToActor = async (excelData, actor) => {
     const bonoRP = excelData.RP_final - volResistance;
 
     const habilidades = separarHabilidadesKi(excelData.HabilidadesKiNemesis);
-    const habilidadesKi = habilidades[0].split(',').map(value => value.trim()).filter(element => element !== '');
-    const habilidadesNem = habilidades[1].split(',').map(value => value.trim()).filter(element => element !== '');
+    const habilidadesKi = habilidades.habilidadesKi.split(',').map(value => value.trim()).filter(element => element !== '');
+    const habilidadesNem = habilidades.habilidadesNemesis.split(',').map(value => value.trim()).filter(element => element !== '');
     const arsMagnus = excelData.ArsMagnusSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
     const armasConocidas = excelData.Armas_Conocidas.split(',').map(value => value.trim()).filter(element => element !== '');
     const categorias = excelData.CategoríasSeleccionadas.split('/').map(value => value.trim()).filter(element => element !== '');
@@ -39,23 +40,11 @@ export const parseExcelToActor = async (excelData, actor) => {
     const legadosDeSangre = excelData.LegadosSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
     const desventajas = excelData.DesventajasSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
     const elan = separarElan(excelData.ElanSeleccionado);
-    const aptoParaElDesarrolloDeLaMagia = ventajasSobrenaturales.includes("Apto desarrollo de la magia")
-
-    const selloMaderaMenor = excelData.Sello_Madera_Menor === '1';
-    const selloMaderaMayor = excelData.Sello_Madera_Mayor === '1';
-
-    const selloMetalMenor = excelData.Sello_Metal_Menor === '1';
-    const selloMetalMayor = excelData.Sello_Metal_Mayor === '1';
-
-    const selloVientoMenor = excelData.Sello_Viento_Menor === '1';
-    const selloVientoMayor = excelData.Sello_Viento_Mayor === '1';
-
-    const selloAguaMenor = excelData.Sello_Agua_Menor === '1';
-    const selloAguaMayor = excelData.Sello_Agua_Mayor === '1';
-
-    const selloFuegoMenor = excelData.Sello_Fuego_Menor === '1';
-    const selloFuegoMayor = excelData.Sello_Fuego_Mayor === '1';
-
+    const aptoParaElDesarrolloDeLaMagia = ventajasSobrenaturales.includes("Apto desarrollo de la magia");
+    const artesMarciales = excelData.ArtesMarcialesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const tablasDeEstilo = excelData.TablasDeEstilo.split(',').map(value => value.trim()).filter(element => element !== '');
+    const tecnicasKi = excelData.TécnicasKi.split(',').map(value => value.trim()).filter(element => element !== '');
+    const invocaciones = excelData.InvocacionesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
     //Remove previous adventages
     let previousAdventages = [];
     actor.system.general.advantages.forEach(adventage => {
@@ -180,7 +169,9 @@ export const parseExcelToActor = async (excelData, actor) => {
                 },
                 wearArmor: {
                     value: excelData.LlevarArmadura_final
-                }
+                },
+                combatSpecialSkills: [],
+                combatTables: []
             },
             general: {
                 presence: {
@@ -320,7 +311,11 @@ export const parseExcelToActor = async (excelData, actor) => {
                 },
                 mysticSettings: {
                     aptitudeForMagicDevelopment: aptoParaElDesarrolloDeLaMagia
-                }
+                },
+                summons: [],
+                metamagics: [],
+                spellMaintenances: [],
+                selectedSpells: []
             },
             psychic: {
                 psychicPotential: {
@@ -677,20 +672,21 @@ export const parseExcelToActor = async (excelData, actor) => {
                 seals: {
                     minor: {
                         earth: {
-                            isActive: {
-                                value: true
-                            } 
+                            isActive: excelData.Sello_Madera_Menor === '1'
                         },
                         metal: {
                             isActive: excelData.Sello_Metal_Menor === '1'
                         },
                         wind: {
-                            isActive: excelData.Sello_Viento_Menor === '1'
+                            isActive: excelData.Sello_Aire_Menor === '1'
                         },
                         water: {
                             isActive: excelData.Sello_Agua_Menor === '1'
                         },
                         wood: {
+                            isActive: excelData.Sello_Madera_Menor === '1'
+                        },
+                        fire: {
                             isActive: excelData.Sello_Fuego_Menor === '1'
                         }
                     },
@@ -702,16 +698,22 @@ export const parseExcelToActor = async (excelData, actor) => {
                             isActive: excelData.Sello_Metal_Mayor === '1'
                         },
                         wind: {
-                            isActive: excelData.Sello_Viento_Mayor === '1'
+                            isActive: excelData.Sello_Aire_Mayor === '1'
                         },
                         water: {
                             isActive: excelData.Sello_Agua_Mayor === '1'
                         },
                         wood: {
+                            isActive: excelData.Sello_Madera_Mayor === '1'
+                        },
+                        fire: {
                             isActive: excelData.Sello_Fuego_Mayor === '1'
                         }
                     }
-                }
+                },
+                specialSkills: [],
+                techniques: [],
+                martialArts: []
             }
         }
     });
@@ -719,14 +721,10 @@ export const parseExcelToActor = async (excelData, actor) => {
     //Settear habilidades del Ki
     for (var i = 0; i < habilidadesKi.length; i++) {
         let abilityName = habilidadesKi[i];
-        if (abilityName.indexOf("Detección del Ki") !== -1) {
+        if (abilityName.indexOf("Detección del Ki") !== -1 || abilityName.indexOf("Ocultación del Ki") !== -1) {
             abilityName = splitAndRemoveLast(habilidadesKi[i]);
         }
-        if (abilityName.indexOf("Ataque elemental") !== -1) {
-            const ataqueElementalSeparado = habilidadesKi[i].split('(');
-            ataqueElementalSeparado.pop();
-            abilityName = ataqueElementalSeparado;
-        }
+        
         await actor.createInnerItem({
             name: abilityName,
             type: ABFItems.KI_SKILL
@@ -746,6 +744,10 @@ export const parseExcelToActor = async (excelData, actor) => {
         await actor.createInnerItem({
             name: arsMagnus[i],
             type: ABFItems.ARS_MAGNUS
+        });
+        await actor.createInnerItem({
+            name: arsMagnus[i],
+            type: ABFItems.COMBAT_SPECIAL_SKILL
         });
     };
 
@@ -824,19 +826,79 @@ export const parseExcelToActor = async (excelData, actor) => {
             }
         });
     };
+
+    for (var i = 0; i < tablasDeEstilo.length; i++) {
+        await actor.createInnerItem({
+            name: tablasDeEstilo[i],
+            type: ABFItems.COMBAT_TABLE
+        });
+        await actor.createInnerItem({
+            name: tablasDeEstilo[i],
+            type: ABFItems.SPECIAL_SKILL
+        });
+    };
+
+    for (var i = 0; i < artesMarciales.length; i++) {
+        const arteMarcialSeparada = artesMarciales[i].split('(').map(value => value.trim()).filter(element => element !== '');;
+        const grade = arteMarcialSeparada[1].replace(/[ \)]+/g, '');
+        await actor.createInnerItem({
+            name: arteMarcialSeparada[0],
+            type: ABFItems.MARTIAL_ART,
+            system: {
+              grade: { value: grade }
+            }
+        });
+    };
+
+    for (var i = 0; i < tecnicasKi.length; i++) {
+        await actor.createItem({
+            name: tecnicasKi[i],
+            type: ABFItems.TECHNIQUE,
+            system: INITIAL_TECHNIQUE_DATA
+        });
+    };
+
+    for (var i = 0; i < invocaciones.length; i++) {
+        await actor.createInnerItem({
+            name: invocaciones[i],
+            type: ABFItems.SUMMON
+        });
+    };
 }
 
 function separarHabilidadesKi(habilidades) {
-    const índice = habilidades.indexOf("Uso del Némesis");
-
-    if (índice === -1) {
-        return [habilidades, ""];
+    let result = {
+        habilidadesKi: "",
+        habilidadesNemesis: ""
+    };
+    
+    const indexSellos = habilidades.indexOf("Sellos: ");
+    let habilidadesSinSellos="habilidades";
+    if (indexSellos !== -1) {
+        habilidadesSinSellos = habilidades.slice(0, indexSellos).trim();
     }
 
-    const habilidadesKi = habilidades.slice(0, índice).trim();
-    const habilidadesNem = habilidades.slice(índice).trim();
+    const indexNemesis = habilidadesSinSellos.indexOf("Uso del Némesis");
 
-    return [habilidadesKi, habilidadesNem];
+    if (indexNemesis === -1) {
+        result.habilidadesKi=habilidadesSinSellos;
+        return result;
+    }
+
+    result.habilidadesKi = habilidadesSinSellos.slice(0, indexNemesis).trim();
+    result.habilidadesNemesis = habilidadesSinSellos.slice(indexNemesis).trim();
+
+    const indexAtaqueElemental = result.habilidadesKi.indexOf("Ataque elemental (");
+    if (indexAtaqueElemental !== -1) {
+        let habilidadesKiSeparadas = result.habilidadesKi.split("Ataque elemental (");
+        console.log(habilidadesKiSeparadas);
+        let indexCierreAtaqueElemental = habilidadesKiSeparadas[1].indexOf(')');
+        let habilidadesKiPostAtaqueElemental = habilidadesKiSeparadas[1].slice(indexCierreAtaqueElemental + 1);
+        console.log(habilidadesKiPostAtaqueElemental);
+        result.habilidadesKi = [habilidadesKiSeparadas[0], habilidadesKiPostAtaqueElemental].join('Ataque elemental, ');
+    }
+
+    return result;
 }
 
 function splitAndRemoveLast(cadena) {
