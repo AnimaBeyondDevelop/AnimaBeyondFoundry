@@ -153,7 +153,47 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                     zen: {
                         value: excelData.Zen
                     }
-                }
+                },
+                aspect: {
+                    hair:{
+                        value: excelData.Pelo
+                    },
+                    eyes:{
+                        value: excelData.Ojos
+                    },
+                    height:{
+                        value: excelData.Altura + " m"
+                    },
+                    weight:{
+                        value: excelData.Peso + " Kg"
+                    },
+                    age:{
+                        value: excelData.Edad
+                    },
+                    gender:{
+                        value: excelData.Sexo
+                    },
+                    race:{
+                        value: excelData.Raza + " (" + excelData.Nephilim + ")"
+                    },
+                    ethnicity:{
+                        value: excelData.Etnia
+                    },
+                    appearance:{
+                        value: excelData.Apariencia
+                    },
+                    size:{
+                        value: excelData.Tamaño
+                    },
+                    
+                },
+                languages: {
+                    base: {
+                        value: excelData.IdiomaBase
+                    },
+                    others: []
+                },
+                levels: []
             },
             mystic: {
                 act: {
@@ -559,7 +599,8 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                     }
                 },
                 kiSkills: [],
-                nemesisSkills: []
+                nemesisSkills: [],
+                arsMagnus: []
             }
         }
     });
@@ -586,6 +627,50 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
         await actor.createInnerItem({
             name: habilidadesNem[i],
             type: ABFItems.NEMESIS_SKILL
+          });
+      };
+
+    const arsMagnus = excelData.ArsMagnusSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
+    console.log(arsMagnus);
+    for (var i = 0; i < arsMagnus.length; i++) {
+        await actor.createInnerItem({
+            name: arsMagnus[i],
+            type: ABFItems.ARS_MAGNUS
+          });
+      };
+
+      const armasConocidas = excelData.Armas_Conocidas.split(',').map(value => value.trim()).filter(element => element !== '');
+      console.log(armasConocidas);
+      //console.log(excelData.CategoríasSeleccionadas);
+      const categorias = excelData.CategoríasSeleccionadas.split('/').map(value => value.trim()).filter(element => element !== '');
+      console.log(categorias);
+      for (var i = 0; i < categorias.length; i++) {
+        let categorySubstrings = categorias[i].split(' ').map(value => value.trim()).filter(element => element !== '');
+        
+        
+            if (isNaN(Number(categorySubstrings[categorySubstrings.length-1]))) {
+                await actor.createInnerItem({
+                    name: categorias[i],
+                    type: ABFItems.LEVEL,
+                    system: { level: excelData.Nivel_Total } 
+                  });
+            }
+            else{
+                let level = categorySubstrings.pop();
+                await actor.createInnerItem({
+                    name: categorySubstrings.join(' '),
+                    type: ABFItems.LEVEL,
+                    system: { level: level } 
+                  });
+            }
+      };
+
+      const idiomasExtra = excelData.IdiomasExtra.split(',').map(value => value.trim()).filter(element => element !== '');
+      console.log(idiomasExtra);
+      for (var i = 0; i < idiomasExtra.length; i++) {
+        await actor.createInnerItem({
+            name: idiomasExtra[i],
+            type: ABFItems.LANGUAGE
           });
       };
   }
