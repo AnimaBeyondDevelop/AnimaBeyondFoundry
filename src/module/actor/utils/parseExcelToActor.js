@@ -3,13 +3,13 @@ import { ABFItems } from '../../items/ABFItems';
 import { calculateRegenerationTypeFromConstitution } from './prepareActor/calculations/actor/general/calculations/calculateRegenerationTypeFromConstitution';
 import { calculateAttributeModifier } from './prepareActor/calculations/util/calculateAttributeModifier';
 
-  /**
-   * Parses excel data to actor data
-   *
-   * @param {any} excelData - provided exel data
-   * @param {ABFActor} actor - provided Actor to update
-   */
-  export const parseExcelToActor = async (excelData, actor) => {
+/**
+ * Parses excel data to actor data
+ *
+ * @param {any} excelData - provided exel data
+ * @param {ABFActor} actor - provided Actor to update
+ */
+export const parseExcelToActor = async (excelData, actor) => {
     console.log(actor);
 
     const movementModifier = excelData.TipodeMovimiento - excelData.AGI;
@@ -20,14 +20,61 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
     const volResistance = excelData.Presencia_final + calculateAttributeModifier(excelData.VOL);
 
     //Esto es para cuando esté la automatización de las resistencias
-    const bonoRF = excelData.RF_final-conResistance;
-    const bonoRE = excelData.RE_final-conResistance;
-    const bonoRV = excelData.RV_final-conResistance;
-    const bonoRM = excelData.RM_final-podResistance;
-    const bonoRP = excelData.RP_final-volResistance;
-    
-    
-    console.log(excelData);
+    const bonoRF = excelData.RF_final - conResistance;
+    const bonoRE = excelData.RE_final - conResistance;
+    const bonoRV = excelData.RV_final - conResistance;
+    const bonoRM = excelData.RM_final - podResistance;
+    const bonoRP = excelData.RP_final - volResistance;
+
+    const habilidades = separarHabilidadesKi(excelData.HabilidadesKiNemesis);
+    const habilidadesKi = habilidades[0].split(',').map(value => value.trim()).filter(element => element !== '');
+    const habilidadesNem = habilidades[1].split(',').map(value => value.trim()).filter(element => element !== '');
+    const arsMagnus = excelData.ArsMagnusSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
+    const armasConocidas = excelData.Armas_Conocidas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const categorias = excelData.CategoríasSeleccionadas.split('/').map(value => value.trim()).filter(element => element !== '');
+    const idiomasExtra = excelData.IdiomasExtra.split(',').map(value => value.trim()).filter(element => element !== '');
+    const ventajasComunes = excelData.VentajasComunesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const ventajasSobrenaturales = excelData.VentajasSobrenaturalesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const ventajasTrasfondo = excelData.VentajasTrasfondoSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const legadosDeSangre = excelData.LegadosSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
+    const desventajas = excelData.DesventajasSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const elan = separarElan(excelData.ElanSeleccionado);
+    const aptoParaElDesarrolloDeLaMagia = ventajasSobrenaturales.includes("Apto desarrollo de la magia")
+
+    const selloMaderaMenor = excelData.Sello_Madera_Menor === '1';
+    const selloMaderaMayor = excelData.Sello_Madera_Mayor === '1';
+
+    const selloMetalMenor = excelData.Sello_Metal_Menor === '1';
+    const selloMetalMayor = excelData.Sello_Metal_Mayor === '1';
+
+    const selloVientoMenor = excelData.Sello_Viento_Menor === '1';
+    const selloVientoMayor = excelData.Sello_Viento_Mayor === '1';
+
+    const selloAguaMenor = excelData.Sello_Agua_Menor === '1';
+    const selloAguaMayor = excelData.Sello_Agua_Mayor === '1';
+
+    const selloFuegoMenor = excelData.Sello_Fuego_Menor === '1';
+    const selloFuegoMayor = excelData.Sello_Fuego_Mayor === '1';
+
+    //Remove previous adventages
+    let previousAdventages = [];
+    actor.system.general.advantages.forEach(adventage => {
+        previousAdventages.push(adventage._id);
+    });
+
+    previousAdventages.forEach(async adventageId => {
+        await actor.deleteItem(adventageId);
+    });
+
+    //Remove previous disadventages
+    let previousDisadventages = [];
+    actor.system.general.disadvantages.forEach(disadvantage => {
+        previousDisadventages.push(disadvantage._id);
+    });
+
+    previousDisadventages.forEach(async disadventageId => {
+        await actor.deleteItem(disadventageId);
+    });
 
     await actor.update({
         name: excelData.Nombre,
@@ -62,30 +109,30 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                         value: excelData.VOL
                     }
                 },
-                secondaries: { 
-                    fatigue: { 
-                        value: excelData.Cansancio,  
+                secondaries: {
+                    fatigue: {
+                        value: excelData.Cansancio,
                         max: excelData.Cansancio
-                    }, 
-                    initiative: { 
+                    },
+                    initiative: {
                         base: {
                             value: excelData.Turno_Nat_final
-                        }  
-                    }, 
-                    lifePoints: { 
-                        value: excelData.Vida_final,  
+                        }
+                    },
+                    lifePoints: {
+                        value: excelData.Vida_final,
                         max: excelData.Vida_final
-                    }, 
-                    movementType: { 
+                    },
+                    movementType: {
                         mod: {
                             value: movementModifier
-                        } 
-                    }, 
-                    regenerationType: { 
+                        }
+                    },
+                    regenerationType: {
                         mod: {
                             value: regenerationModifier
-                        } 
-                    }, 
+                        }
+                    },
                     resistances: {
                         physical: {
                             base: {
@@ -155,37 +202,37 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                     }
                 },
                 aspect: {
-                    hair:{
+                    hair: {
                         value: excelData.Pelo
                     },
-                    eyes:{
+                    eyes: {
                         value: excelData.Ojos
                     },
-                    height:{
+                    height: {
                         value: excelData.Altura + " m"
                     },
-                    weight:{
+                    weight: {
                         value: excelData.Peso + " Kg"
                     },
-                    age:{
+                    age: {
                         value: excelData.Edad
                     },
-                    gender:{
+                    gender: {
                         value: excelData.Sexo
                     },
-                    race:{
+                    race: {
                         value: excelData.Raza + " (" + excelData.Nephilim + ")"
                     },
-                    ethnicity:{
+                    ethnicity: {
                         value: excelData.Etnia
                     },
-                    appearance:{
+                    appearance: {
                         value: excelData.Apariencia
                     },
-                    size:{
+                    size: {
                         value: excelData.Tamaño
                     },
-                    
+
                 },
                 languages: {
                     base: {
@@ -193,7 +240,30 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                     },
                     others: []
                 },
-                levels: []
+                levels: [],
+                destinyPoints: {
+                    base: {
+                        value: excelData.PuntosDeDestino_Max - excelData.PuntosDeDestino_Gastados
+                    },
+                    final: {
+                        value: excelData.PuntosDeDestino_Max
+                    }
+                },
+                advantages: [],
+                disadvantages: [],
+                elan: [],
+                titles: [],
+                money: {
+                    cooper: {
+                        value: excelData.Monedas_Oro
+                    },
+                    silver: {
+                        value: excelData.Monedas_Plata
+                    },
+                    gold: {
+                        value: excelData.Monedas_Cobre
+                    }
+                }
             },
             mystic: {
                 act: {
@@ -247,6 +317,9 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                     base: {
                         value: excelData.RegZeon_final
                     }
+                },
+                mysticSettings: {
+                    aptitudeForMagicDevelopment: aptoParaElDesarrolloDeLaMagia
                 }
             },
             psychic: {
@@ -285,269 +358,269 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
             secondaries: {
                 athletics: {
                     acrobatics: {
-                        base: { 
+                        base: {
                             value: excelData.Acrobacias_final
                         }
                     },
                     athleticism: {
-                        base: { 
+                        base: {
                             value: excelData.Atletismo_final
                         }
                     },
                     ride: {
-                        base: { 
+                        base: {
                             value: excelData.Montar_final
                         }
                     },
                     swim: {
-                        base: { 
+                        base: {
                             value: excelData.Nadar_final
                         }
                     },
                     climb: {
-                        base: { 
+                        base: {
                             value: excelData.Trepar_final
                         }
                     },
                     jump: {
-                        base: { 
+                        base: {
                             value: excelData.Saltar_final
                         }
                     },
                     piloting: {
-                        base: { 
+                        base: {
                             value: excelData.Pilotar_final
                         }
                     }
                 },
                 vigor: {
                     composure: {
-                        base: { 
+                        base: {
                             value: excelData.Frialdad_final
                         }
                     },
                     featsOfStrength: {
-                        base: { 
+                        base: {
                             value: excelData["P.Fuerza_final"]
                         }
                     },
                     withstandPain: {
-                        base: { 
+                        base: {
                             value: excelData["Res.Dolor_final"]
                         }
                     }
                 },
                 perception: {
                     notice: {
-                        base: { 
+                        base: {
                             value: excelData.Advertir_final
                         }
                     },
                     search: {
-                        base: { 
+                        base: {
                             value: excelData.Buscar_final
                         }
                     },
                     track: {
-                        base: { 
+                        base: {
                             value: excelData.Rastrear_final
                         }
                     }
                 },
                 intellectual: {
                     animals: {
-                        base: { 
+                        base: {
                             value: excelData.Animales_final
                         }
                     },
                     science: {
-                        base: { 
+                        base: {
                             value: excelData.Ciencia_final
                         }
                     },
                     law: {
-                        base: { 
+                        base: {
                             value: excelData.Ley_final
                         }
                     },
                     herbalLore: {
-                        base: { 
+                        base: {
                             value: excelData.Herbolaria_final
                         }
                     },
                     history: {
-                        base: { 
+                        base: {
                             value: excelData.Historia_final
                         }
                     },
                     tactics: {
-                        base: { 
+                        base: {
                             value: excelData.Tactica_final
                         }
                     },
                     medicine: {
-                        base: { 
+                        base: {
                             value: excelData.Medicina_final
                         }
                     },
                     memorize: {
-                        base: { 
+                        base: {
                             value: excelData.Memorizar_final
                         }
                     },
                     navigation: {
-                        base: { 
+                        base: {
                             value: excelData.Navegación_final
                         }
                     },
                     occult: {
-                        base: { 
+                        base: {
                             value: excelData.Ocultismo_final
                         }
                     },
                     appraisal: {
-                        base: { 
+                        base: {
                             value: excelData.Tasación_final
                         }
                     },
                     magicAppraisal: {
-                        base: { 
+                        base: {
                             value: excelData["V.Mágica_final"]
                         }
                     }
                 },
                 social: {
                     style: {
-                        base: { 
+                        base: {
                             value: excelData.Estilo_final
                         }
                     },
                     intimidate: {
-                        base: { 
+                        base: {
                             value: excelData.Intimidar_final
                         }
                     },
                     leadership: {
-                        base: { 
+                        base: {
                             value: excelData.Liderazgo_final
                         }
                     },
                     persuasion: {
-                        base: { 
+                        base: {
                             value: excelData.Persuasión_final
                         }
                     },
                     trading: {
-                        base: { 
+                        base: {
                             value: excelData.Comercio_final
                         }
                     },
                     streetwise: {
-                        base: { 
+                        base: {
                             value: excelData.Callejeo_final
                         }
                     },
                     etiquette: {
-                        base: { 
+                        base: {
                             value: excelData.Etiqueta_final
                         }
                     }
                 },
                 subterfuge: {
                     lockPicking: {
-                        base: { 
+                        base: {
                             value: excelData.Cerrajería_final
                         }
                     },
                     disguise: {
-                        base: { 
+                        base: {
                             value: excelData.Disfraz_final
                         }
                     },
                     hide: {
-                        base: { 
+                        base: {
                             value: excelData.Ocultarse_final
                         }
                     },
                     theft: {
-                        base: { 
+                        base: {
                             value: excelData.Robo_final
                         }
                     },
                     stealth: {
-                        base: { 
+                        base: {
                             value: excelData.Sigilo_final
                         }
                     },
                     trapLore: {
-                        base: { 
+                        base: {
                             value: excelData.Trampería_final
                         }
                     },
                     poisons: {
-                        base: { 
+                        base: {
                             value: excelData.Venenos_final
                         }
                     }
                 },
                 creative: {
                     art: {
-                        base: { 
+                        base: {
                             value: excelData.Arte_final
                         }
                     },
                     dance: {
-                        base: { 
+                        base: {
                             value: excelData.Baile_final
                         }
                     },
                     forging: {
-                        base: { 
+                        base: {
                             value: excelData.Forja_final
                         }
                     },
                     runes: {
-                        base: { 
+                        base: {
                             value: excelData.Runas_final
                         }
                     },
                     alchemy: {
-                        base: { 
+                        base: {
                             value: excelData.Alquimia_final
                         }
                     },
                     animism: {
-                        base: { 
+                        base: {
                             value: excelData.Animismo_final
                         }
                     },
                     music: {
-                        base: { 
+                        base: {
                             value: excelData.Música_final
                         }
                     },
                     sleightOfHand: {
-                        base: { 
+                        base: {
                             value: excelData["T.Manos_final"]
                         }
                     },
                     ritualCalligraphy: {
-                        base: { 
+                        base: {
                             value: excelData.Caligrafíaritual_final
                         }
                     },
                     jewelry: {
-                        base: { 
+                        base: {
                             value: excelData.Orfebrería_final
                         }
                     },
                     tailoring: {
-                        base: { 
+                        base: {
                             value: excelData.Confección_final
                         }
                     },
                     puppetMaking: {
-                        base: { 
+                        base: {
                             value: excelData["Conf.marionetas_final"]
                         }
                     }
@@ -600,82 +673,160 @@ import { calculateAttributeModifier } from './prepareActor/calculations/util/cal
                 },
                 kiSkills: [],
                 nemesisSkills: [],
-                arsMagnus: []
+                arsMagnus: [],
+                seals: {
+                    minor: {
+                        earth: {
+                            isActive: {
+                                value: true
+                            } 
+                        },
+                        metal: {
+                            isActive: excelData.Sello_Metal_Menor === '1'
+                        },
+                        wind: {
+                            isActive: excelData.Sello_Viento_Menor === '1'
+                        },
+                        water: {
+                            isActive: excelData.Sello_Agua_Menor === '1'
+                        },
+                        wood: {
+                            isActive: excelData.Sello_Fuego_Menor === '1'
+                        }
+                    },
+                    major: {
+                        earth: {
+                            isActive: excelData.Sello_Madera_Mayor === '1'
+                        },
+                        metal: {
+                            isActive: excelData.Sello_Metal_Mayor === '1'
+                        },
+                        wind: {
+                            isActive: excelData.Sello_Viento_Mayor === '1'
+                        },
+                        water: {
+                            isActive: excelData.Sello_Agua_Mayor === '1'
+                        },
+                        wood: {
+                            isActive: excelData.Sello_Fuego_Mayor === '1'
+                        }
+                    }
+                }
             }
         }
     });
 
-    const habilidades = separarHabilidadesKi(excelData.HabilidadesKiNemesis);
-    console.log(habilidades[0]);
-    console.log(habilidades[1]);
-    const habilidadesKi = habilidades[0].split(',').map(value => value.trim()).filter(element => element !== '');
-    const habilidadesNem = habilidades[1].split(',').map(value => value.trim()).filter(element => element !== '');
-    console.log(habilidadesKi);
-    console.log(habilidadesNem);
+    //Settear habilidades del Ki
     for (var i = 0; i < habilidadesKi.length; i++) {
         let abilityName = habilidadesKi[i];
-        if(abilityName.indexOf("Detección del Ki") !== -1)
-        {
+        if (abilityName.indexOf("Detección del Ki") !== -1) {
             abilityName = splitAndRemoveLast(habilidadesKi[i]);
+        }
+        if (abilityName.indexOf("Ataque elemental") !== -1) {
+            const ataqueElementalSeparado = habilidadesKi[i].split('(');
+            ataqueElementalSeparado.pop();
+            abilityName = ataqueElementalSeparado;
         }
         await actor.createInnerItem({
             name: abilityName,
             type: ABFItems.KI_SKILL
-          });
-      };
+        });
+    };
+
+    //Settear habilidades del némesis
     for (var i = 0; i < habilidadesNem.length; i++) {
         await actor.createInnerItem({
             name: habilidadesNem[i],
             type: ABFItems.NEMESIS_SKILL
-          });
-      };
+        });
+    };
 
-    const arsMagnus = excelData.ArsMagnusSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
-    console.log(arsMagnus);
+    //Settear ars magnus
     for (var i = 0; i < arsMagnus.length; i++) {
         await actor.createInnerItem({
             name: arsMagnus[i],
             type: ABFItems.ARS_MAGNUS
-          });
-      };
+        });
+    };
 
-      const armasConocidas = excelData.Armas_Conocidas.split(',').map(value => value.trim()).filter(element => element !== '');
-      console.log(armasConocidas);
-      //console.log(excelData.CategoríasSeleccionadas);
-      const categorias = excelData.CategoríasSeleccionadas.split('/').map(value => value.trim()).filter(element => element !== '');
-      console.log(categorias);
-      for (var i = 0; i < categorias.length; i++) {
+    for (var i = 0; i < categorias.length; i++) {
         let categorySubstrings = categorias[i].split(' ').map(value => value.trim()).filter(element => element !== '');
-        
-        
-            if (isNaN(Number(categorySubstrings[categorySubstrings.length-1]))) {
-                await actor.createInnerItem({
-                    name: categorias[i],
-                    type: ABFItems.LEVEL,
-                    system: { level: excelData.Nivel_Total } 
-                  });
-            }
-            else{
-                let level = categorySubstrings.pop();
-                await actor.createInnerItem({
-                    name: categorySubstrings.join(' '),
-                    type: ABFItems.LEVEL,
-                    system: { level: level } 
-                  });
-            }
-      };
 
-      const idiomasExtra = excelData.IdiomasExtra.split(',').map(value => value.trim()).filter(element => element !== '');
-      console.log(idiomasExtra);
-      for (var i = 0; i < idiomasExtra.length; i++) {
+
+        if (isNaN(Number(categorySubstrings[categorySubstrings.length - 1]))) {
+            await actor.createInnerItem({
+                name: categorias[i],
+                type: ABFItems.LEVEL,
+                system: { level: excelData.Nivel_Total }
+            });
+        }
+        else {
+            let level = categorySubstrings.pop();
+            await actor.createInnerItem({
+                name: categorySubstrings.join(' '),
+                type: ABFItems.LEVEL,
+                system: { level: level }
+            });
+        }
+    };
+
+    for (var i = 0; i < idiomasExtra.length; i++) {
         await actor.createInnerItem({
             name: idiomasExtra[i],
             type: ABFItems.LANGUAGE
-          });
-      };
-  }
+        });
+    };
 
-  function separarHabilidadesKi(habilidades) {
+
+
+    for (var i = 0; i < ventajasComunes.length; i++) {
+        await actor.createItem({
+            name: ventajasComunes[i],
+            type: ABFItems.ADVANTAGE
+        });
+    };
+
+    for (var i = 0; i < ventajasSobrenaturales.length; i++) {
+        await actor.createItem({
+            name: ventajasSobrenaturales[i],
+            type: ABFItems.ADVANTAGE
+        });
+    };
+
+    for (var i = 0; i < ventajasTrasfondo.length; i++) {
+        await actor.createItem({
+            name: ventajasTrasfondo[i],
+            type: ABFItems.ADVANTAGE
+        });
+    };
+
+    for (var i = 0; i < legadosDeSangre.length; i++) {
+        await actor.createItem({
+            name: legadosDeSangre[i],
+            type: ABFItems.ADVANTAGE
+        });
+    };
+
+    for (var i = 0; i < desventajas.length; i++) {
+        await actor.createItem({
+            name: desventajas[i],
+            type: ABFItems.DISADVANTAGE
+        });
+    };
+
+    for (var i = 0; i < elan.length; i++) {
+        await actor.createInnerItem({
+            name: elan[i].deidad,
+            type: ABFItems.ELAN,
+            system: {
+                level: { value: elan[i].nivel },
+                powers: []
+            }
+        });
+    };
+}
+
+function separarHabilidadesKi(habilidades) {
     const índice = habilidades.indexOf("Uso del Némesis");
 
     if (índice === -1) {
@@ -694,4 +845,19 @@ function splitAndRemoveLast(cadena) {
     return partes.join(' ').trim();
 }
 
-
+function separarElan(elanesCombinados) {
+    let result = []
+    const elanes = elanesCombinados.split(')').map(value => value.trim()).filter(element => element !== '');
+    elanes.forEach(elan => {
+        const elanSplitted = elan.split('(');
+        const deidad = elanSplitted[0].split(' ').map(value => value.trim()).filter(element => element !== '');
+        const poderes = elanSplitted[1];
+        const nivel = deidad.pop();
+        result.push({
+            deidad: deidad.join(' ').replace(/, /g, ''),
+            nivel: nivel,
+            poderes: poderes.split(',').map(value => value.trim()).filter(element => element !== '')
+        });
+    });
+    return result;
+}
