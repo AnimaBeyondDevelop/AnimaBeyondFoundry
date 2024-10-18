@@ -3,6 +3,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { calculateRegenerationTypeFromConstitution } from './prepareActor/calculations/actor/general/calculations/calculateRegenerationTypeFromConstitution';
 import { calculateAttributeModifier } from './prepareActor/calculations/util/calculateAttributeModifier';
 import { INITIAL_TECHNIQUE_DATA } from '../../types/domine/TechniqueItemConfig';
+import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternItemConfig';
 
 /**
  * Parses excel data to actor data
@@ -41,10 +42,18 @@ export const parseExcelToActor = async (excelData, actor) => {
     const desventajas = excelData.DesventajasSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
     const elan = separarElan(excelData.ElanSeleccionado);
     const aptoParaElDesarrolloDeLaMagia = ventajasSobrenaturales.includes("Apto desarrollo de la magia");
+    const resistenciaALaFatigaPsiquica = ventajasSobrenaturales.includes("Res. a la fatiga psíquica");
     const artesMarciales = excelData.ArtesMarcialesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
     const tablasDeEstilo = excelData.TablasDeEstilo.split(',').map(value => value.trim()).filter(element => element !== '');
     const tecnicasKi = excelData.TécnicasKi.split(',').map(value => value.trim()).filter(element => element !== '');
     const invocaciones = excelData.InvocacionesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
+    const viasMagia = separarNivelDeVia(excelData.VíasDeMagiaSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== ''));
+    const conjurosMantenidos = excelData.Mantenimientos_Magia.split(';').map(value => value.trim()).filter(element => element !== '');
+    const conjurosSeleccionados = excelData.ConjurosSeleccionados.split(';').map(value => value.trim()).filter(element => element !== '');
+    const metamagias = excelData.MetamagiasSeleccionadas.split(';').map(value => value.trim()).filter(element => element !== '');
+    const disciplinas_psi = excelData.Disciplinas_Psi_Actuales.split(',').map(value => value.trim()).filter(element => element !== '');
+    const patrones_psi = excelData.Patrones_Psi_Actuales.split(',').map(value => value.trim()).filter(element => element !== '');
+
     //Remove previous adventages
     let previousAdventages = [];
     actor.system.general.advantages.forEach(adventage => {
@@ -63,6 +72,26 @@ export const parseExcelToActor = async (excelData, actor) => {
 
     previousDisadventages.forEach(async disadventageId => {
         await actor.deleteItem(disadventageId);
+    });
+
+    //Remove psi disciplines
+    let previousPsiDisciplines = [];
+    actor.system.psychic.psychicDisciplines.forEach(discipline => {
+        previousPsiDisciplines.push(discipline._id);
+    });
+
+    previousPsiDisciplines.forEach(async disciplineId => {
+        await actor.deleteItem(disciplineId);
+    });
+
+    //Remove psi patterns
+    let previousPsiPatterns = [];
+    actor.system.psychic.mentalPatterns.forEach(pattern => {
+        previousPsiPatterns.push(pattern._id);
+    });
+
+    previousPsiPatterns.forEach(async patternId => {
+        await actor.deleteItem(patternId);
     });
 
     await actor.update({
@@ -315,7 +344,50 @@ export const parseExcelToActor = async (excelData, actor) => {
                 summons: [],
                 metamagics: [],
                 spellMaintenances: [],
-                selectedSpells: []
+                selectedSpells: [],
+                magicLevel: {
+                    total: {
+                        value: excelData.NiveldeMagia_final
+                    },
+                    used: {
+                        value: excelData.NivelMagia_usado
+                    },
+                    spheres: {
+                        darkness: {
+                            value: viasMagia.oscuridad
+                        },
+                        light: {
+                            value: viasMagia.luz
+                        },
+                        creation: {
+                            value: viasMagia.creacion
+                        },
+                        destruction: {
+                            value: viasMagia.destruccion
+                        },
+                        fire: {
+                            value: viasMagia.fuego
+                        },
+                        water: {
+                            value: viasMagia.agua
+                        },
+                        air: {
+                            value: viasMagia.aire
+                        },
+                        earth: {
+                            value: viasMagia.tierra
+                        },
+                        essence: {
+                            value: viasMagia.esencia
+                        },
+                        illusion: {
+                            value: viasMagia.ilusion
+                        },
+                        necromancy: {
+                            value: viasMagia.nigromancia
+                        },
+                    }
+                }
             },
             psychic: {
                 psychicPotential: {
@@ -348,7 +420,14 @@ export const parseExcelToActor = async (excelData, actor) => {
                     amount: {
                         value: excelData.Innatos_Psi
                     }
-                }
+                },
+                psychicSettings: {
+                    fatigueResistance: resistenciaALaFatigaPsiquica
+                },
+                psychicPowers: [],
+                psychicDisciplines: [],
+                mentalPatterns: [],
+                innatePsychicPowers: []
             },
             secondaries: {
                 athletics: {
@@ -724,7 +803,7 @@ export const parseExcelToActor = async (excelData, actor) => {
         if (abilityName.indexOf("Detección del Ki") !== -1 || abilityName.indexOf("Ocultación del Ki") !== -1) {
             abilityName = splitAndRemoveLast(habilidadesKi[i]);
         }
-        
+
         await actor.createInnerItem({
             name: abilityName,
             type: ABFItems.KI_SKILL
@@ -839,29 +918,110 @@ export const parseExcelToActor = async (excelData, actor) => {
     };
 
     for (var i = 0; i < artesMarciales.length; i++) {
-        const arteMarcialSeparada = artesMarciales[i].split('(').map(value => value.trim()).filter(element => element !== '');;
+        const arteMarcialSeparada = artesMarciales[i].split('(').map(value => value.trim()).filter(element => element !== '');
         const grade = arteMarcialSeparada[1].replace(/[ \)]+/g, '');
         await actor.createInnerItem({
             name: arteMarcialSeparada[0],
             type: ABFItems.MARTIAL_ART,
             system: {
-              grade: { value: grade }
+                grade: { value: grade }
             }
         });
     };
 
-    for (var i = 0; i < tecnicasKi.length; i++) {
-        await actor.createItem({
-            name: tecnicasKi[i],
-            type: ABFItems.TECHNIQUE,
-            system: INITIAL_TECHNIQUE_DATA
-        });
-    };
+    // for (var i = 0; i < tecnicasKi.length; i++) {
+    //     await actor.createItem({
+    //         name: tecnicasKi[i],
+    //         type: ABFItems.TECHNIQUE,
+    //         system: INITIAL_TECHNIQUE_DATA
+    //     });
+    // };
 
     for (var i = 0; i < invocaciones.length; i++) {
         await actor.createInnerItem({
             name: invocaciones[i],
             type: ABFItems.SUMMON
+        });
+    };
+
+    for (var i = 0; i < conjurosMantenidos.length; i++) {
+        let mantenidoSeparado = conjurosMantenidos[i].split('|').map(value => value.trim()).filter(element => element !== '');
+
+        await actor.createInnerItem({
+            name: mantenidoSeparado[0],
+            type: ABFItems.SPELL_MAINTENANCE,
+            system: { cost: { value: mantenidoSeparado[1] } }
+        });
+    };
+
+    for (var i = 0; i < metamagias.length; i++) {
+        let metamagiaSeparada = metamagias[i].split('(').map(value => value.trim()).filter(element => element !== '');
+        let grade = 0;
+        if (metamagiaSeparada.length > 1) {
+            grade = metamagiaSeparada[1].replace(/[ \)]+/g, '');
+        }
+        await actor.createInnerItem({
+            name: metamagiaSeparada[0],
+            type: ABFItems.METAMAGIC,
+            system: { grade: { value: grade } }
+        });
+    };
+
+    for (var i = 0; i < conjurosSeleccionados.length; i++) {
+        let conjuroSeparado = conjurosSeleccionados[i].split('|').map(value => value.trim()).filter(element => element !== '');
+        let cost = Math.ceil(Number(conjuroSeparado[1]) / 10) * 2;
+        await actor.createInnerItem({
+            name: conjuroSeparado[0],
+            type: ABFItems.SELECTED_SPELL,
+            system: { cost: { value: cost } }
+        });
+    };
+
+    let disciplinesDictionary = {
+        "Energía": "energy",
+        "Causalidad": "causality",
+        "Telepatía": "telepathy",
+        "Telequinesis": "telekenisis",
+        "Teletransporte": "teleportation",
+        "Telemetría": "telemetry",
+        "Piroquinesis": "pyrokinesis",
+        "Crioquinesis": "cryokinesis",
+        "Incremento Físico": "physicalIncrease",
+        "Sentiente": "sentient",
+        "Electromagnetismo": "electromagnetism",
+        "Luz": "light",
+        "Hipersensibilidad": "hypersensitivity"
+    };
+
+    for (var i = 0; i < disciplinas_psi.length; i++) {
+        console.log(disciplinas_psi[i]);
+        let disciplineName = disciplinesDictionary[disciplinas_psi[i]];
+        console.log(disciplineName);
+        await actor.createItem({
+            name: disciplineName,
+            type: ABFItems.PSYCHIC_DISCIPLINE,
+            system: { imbalance: false }
+        });
+    };
+
+    let patternsDictionary = {
+        "Introversión": "introversion",
+        "Extroversión": "extroversion",
+        "Locura": "madness",
+        "Psicopatía": "psychopath",
+        "Compasión": "compassion",
+        "Cobardía": "cowardice",
+        "Valentía": "courage"
+    };
+
+    for (var i = 0; i < patrones_psi.length; i++) {
+        console.log(patrones_psi[i]);
+        let patternName = patternsDictionary[patrones_psi[i]];
+        console.log(patternName);
+        await actor.createItem({
+            name: patternName,
+            type: ABFItems.MENTAL_PATTERN,
+            system: INITIAL_MENTAL_PATTERN_DATA
         });
     };
 }
@@ -871,9 +1031,9 @@ function separarHabilidadesKi(habilidades) {
         habilidadesKi: "",
         habilidadesNemesis: ""
     };
-    
+
     const indexSellos = habilidades.indexOf("Sellos: ");
-    let habilidadesSinSellos="habilidades";
+    let habilidadesSinSellos = "habilidades";
     if (indexSellos !== -1) {
         habilidadesSinSellos = habilidades.slice(0, indexSellos).trim();
     }
@@ -881,7 +1041,7 @@ function separarHabilidadesKi(habilidades) {
     const indexNemesis = habilidadesSinSellos.indexOf("Uso del Némesis");
 
     if (indexNemesis === -1) {
-        result.habilidadesKi=habilidadesSinSellos;
+        result.habilidadesKi = habilidadesSinSellos;
         return result;
     }
 
@@ -921,5 +1081,69 @@ function separarElan(elanesCombinados) {
             poderes: poderes.split(',').map(value => value.trim()).filter(element => element !== '')
         });
     });
+    return result;
+}
+
+function separarNivelDeVia(nivelDeVias) {
+    console.log(nivelDeVias);
+
+    let result = {
+        oscuridad: 0,
+        luz: 0,
+        creacion: 0,
+        destruccion: 0,
+        agua: 0,
+        fuego: 0,
+        aire: 0,
+        tierra: 0,
+        esencia: 0,
+        ilusion: 0,
+        nigromancia: 0,
+    }
+
+    nivelDeVias.forEach(nivelDeVia => {
+        console.log(nivelDeVia);
+        let nivelDeViaSeparado = nivelDeVia.split(' ').map(value => value.trim()).filter(element => element !== '');
+        console.log(nivelDeViaSeparado);
+        console.log(nivelDeViaSeparado.length);
+        console.log(nivelDeViaSeparado[0]);
+        if (nivelDeViaSeparado.length >= 2) {
+            if (nivelDeVia.includes("Oscuridad")) {
+                result.oscuridad = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Luz")) {
+                result.luz = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Creación")) {
+                result.creacion = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Destrucción")) {
+                result.destruccion = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Agua")) {
+                result.agua = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Fuego")) {
+                result.fuego = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Aire")) {
+                result.aire = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Tierra")) {
+                result.tierra = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Esencia")) {
+                result.esencia = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Ilusión")) {
+                result.ilusion = nivelDeViaSeparado[0];
+            }
+            else if (nivelDeVia.includes("Nigromancia")) {
+                result.nigromancia = nivelDeViaSeparado[0];
+            }
+        }
+
+    });
+
     return result;
 }
