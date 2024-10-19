@@ -563,6 +563,7 @@
   "contextualMenu.common.options.edit": "Edit",
   "contextualMenu.elan.options.addPower": "Add power",
   "contextualMenu.elan.options.deletePower": "Delete power",
+  "dialogs.select.custom": "[Custom]",
   "contextualMenu.superntarualShield.options.release": "Release",
   "dialogs.accept": "Accept",
   "dialogs.cancel": "Cancel",

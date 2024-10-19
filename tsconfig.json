@@ -1,15 +1,34 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["@types/jest"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": [
+      "svelte",
+      "@types/jest"
+    ],
+    "paths": {
+      "@svelte/*": [
+        "./src/svelte/*"
+      ],
+      "@module/*": [
+        "./src/module/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
+    },
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
+    "checkJs": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "outDir": "dist",
   },
   "include": ["src"],
   "exclude": ["./**/.*.test.*", "./**/__mocks__", "node_modules"]

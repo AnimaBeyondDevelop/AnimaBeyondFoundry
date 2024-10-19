@@ -51,6 +51,7 @@ export class ABFActor extends Actor {
     await prepareActor(this);
   }
 
+
   /**
    * Updates the value of the 'fatigue' secondary characteristic of an ABFActor object.
    *
@@ -909,4 +910,5 @@ export class ABFActor extends Actor {
   getItem(itemId) {
     return this.getEmbeddedDocument('Item', itemId);
   }
+  
 }

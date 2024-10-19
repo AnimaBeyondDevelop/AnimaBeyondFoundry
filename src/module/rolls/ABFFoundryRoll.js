@@ -7,19 +7,20 @@ import ABFPsychicRoll from './ABFPsychicRoll/ABFPsychicRoll';
 /**
  * This class represents the entrypoint of Foundry
  * We must never add our logic here, all of it must be placed in its own class like ABFExploredRoll
- * @extends {Roll<import('../types/Actor').ABFActorDataSourceData>}
+ * @extends {Roll<import('@module/types/Actor').ABFActorDataSourceData>}
  */
 export default class ABFFoundryRoll extends Roll {
   /**
+   * @type {ABFRoll | undefined}
    * @private
    * @readonly
-   * @type {ABFRoll | undefined}
+
    */
   abfRoll;
 
   /**
    * @param {string} rawFormula
-   * @param {import('../types/Actor').ABFActorDataSourceData} [data]
+   * @param {import('@module/types/Actor').ABFActorDataSourceData} [data]
    * @param {Partial<RollTerm.EvaluationOptions>} [options]
    */
   constructor(rawFormula, data, options) {
