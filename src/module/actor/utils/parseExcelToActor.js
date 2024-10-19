@@ -12,7 +12,6 @@ import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternIt
  * @param {ABFActor} actor - provided Actor to update
  */
 export const parseExcelToActor = async (excelData, actor) => {
-    console.log(actor);
 
     const movementModifier = excelData.TipodeMovimiento - excelData.AGI;
     const regenerationModifier = excelData.Regeneración_final - calculateRegenerationTypeFromConstitution(excelData.CON);
@@ -858,8 +857,6 @@ export const parseExcelToActor = async (excelData, actor) => {
         });
     };
 
-
-
     for (var i = 0; i < ventajasComunes.length; i++) {
         await actor.createItem({
             name: ventajasComunes[i],
@@ -994,9 +991,7 @@ export const parseExcelToActor = async (excelData, actor) => {
     };
 
     for (var i = 0; i < disciplinas_psi.length; i++) {
-        console.log(disciplinas_psi[i]);
         let disciplineName = disciplinesDictionary[disciplinas_psi[i]];
-        console.log(disciplineName);
         await actor.createItem({
             name: disciplineName,
             type: ABFItems.PSYCHIC_DISCIPLINE,
@@ -1015,9 +1010,7 @@ export const parseExcelToActor = async (excelData, actor) => {
     };
 
     for (var i = 0; i < patrones_psi.length; i++) {
-        console.log(patrones_psi[i]);
         let patternName = patternsDictionary[patrones_psi[i]];
-        console.log(patternName);
         await actor.createItem({
             name: patternName,
             type: ABFItems.MENTAL_PATTERN,
@@ -1051,10 +1044,8 @@ function separarHabilidadesKi(habilidades) {
     const indexAtaqueElemental = result.habilidadesKi.indexOf("Ataque elemental (");
     if (indexAtaqueElemental !== -1) {
         let habilidadesKiSeparadas = result.habilidadesKi.split("Ataque elemental (");
-        console.log(habilidadesKiSeparadas);
         let indexCierreAtaqueElemental = habilidadesKiSeparadas[1].indexOf(')');
         let habilidadesKiPostAtaqueElemental = habilidadesKiSeparadas[1].slice(indexCierreAtaqueElemental + 1);
-        console.log(habilidadesKiPostAtaqueElemental);
         result.habilidadesKi = [habilidadesKiSeparadas[0], habilidadesKiPostAtaqueElemental].join('Ataque elemental, ');
     }
 
@@ -1085,7 +1076,6 @@ function separarElan(elanesCombinados) {
 }
 
 function separarNivelDeVia(nivelDeVias) {
-    console.log(nivelDeVias);
 
     let result = {
         oscuridad: 0,
@@ -1102,11 +1092,7 @@ function separarNivelDeVia(nivelDeVias) {
     }
 
     nivelDeVias.forEach(nivelDeVia => {
-        console.log(nivelDeVia);
         let nivelDeViaSeparado = nivelDeVia.split(' ').map(value => value.trim()).filter(element => element !== '');
-        console.log(nivelDeViaSeparado);
-        console.log(nivelDeViaSeparado.length);
-        console.log(nivelDeViaSeparado[0]);
         if (nivelDeViaSeparado.length >= 2) {
             if (nivelDeVia.includes("Oscuridad")) {
                 result.oscuridad = nivelDeViaSeparado[0];

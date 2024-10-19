@@ -38,7 +38,6 @@ export default class ABFActorDirectory extends ActorDirectory {
      * @memberof ClientDocumentMixin#
      */
   async importFromExcelDialog(document) {
-    console.log(document);
     new Dialog({
       title: `Import Data: ${document.name}`,
       content: await renderTemplate("systems/animabf/templates/dialog/import-data-from-excel.html", {
@@ -52,8 +51,6 @@ export default class ABFActorDirectory extends ActorDirectory {
           callback: html => {
             const form = html.find("form")[0];
             if ( !form.data.files.length ) return ui.notifications.error("You did not upload a data file!");
-            
-            console.log(form.data.files[0]);
 
             this.readExcelData(form).then(excelRows => parseExcelToActor(excelRows, document));
             ;
