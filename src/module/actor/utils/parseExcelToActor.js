@@ -423,10 +423,8 @@ export const parseExcelToActor = async (excelData, actor) => {
                 psychicSettings: {
                     fatigueResistance: resistenciaALaFatigaPsiquica
                 },
-                psychicPowers: [],
                 psychicDisciplines: [],
-                mentalPatterns: [],
-                innatePsychicPowers: []
+                mentalPatterns: []
             },
             secondaries: {
                 athletics: {
