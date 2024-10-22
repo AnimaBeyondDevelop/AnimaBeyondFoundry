@@ -1,5 +1,5 @@
 import { Templates } from '../../utils/constants';
-import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
+import { NoneCriticType, CriticType } from '../../types/combat/CriticType';
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
@@ -81,7 +81,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           override: false
         },
         overrideMysticCast: false,
-        critic: NoneWeaponCritic.NONE,
+        critic: NoneCriticType.NONE,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distanceCheck: false,
@@ -103,7 +103,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           final: attackerActor.system.psychic.psychicPotential.final.value
         },
         powerUsed: undefined,
-        critic: NoneWeaponCritic.NONE,
+        critic: NoneCriticType.NONE,
         eliminateFatigue: false,
         mentalPatternImbalance: false,
         resistanceEffect: { value: 0, type: undefined, check: false },
@@ -162,7 +162,7 @@ export class CombatAttackDialog extends FormApplication {
         )?._id;
       }
       const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-      psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
+      psychic.critic = power?.system.critic.value ?? NoneCriticType.NONE;
     }
 
     if (spells.length > 0) {
@@ -182,7 +182,7 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
       const spell = spells.find(w => w._id === mystic.spellUsed);
-      mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      mystic.critic = spell?.system.critic.value ?? NoneCriticType.NONE;
       if (this.modalData.attacker.mystic.spellCasting.override) {
         this.modalData.attacker.mystic.attainableSpellGrades = [
           'base',
@@ -322,7 +322,7 @@ export class CombatAttackDialog extends FormApplication {
         }
         if (
           weapon !== undefined &&
-          criticSelected !== NoneWeaponCritic.NONE &&
+          criticSelected !== NoneCriticType.NONE &&
           criticSelected == weapon?.system.critic.secondary.value
         ) {
           attackerCombatMod.secondaryCritic = { value: -10, apply: true };
@@ -368,7 +368,7 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const critic = criticSelected ?? WeaponCritic.IMPACT;
+        const critic = criticSelected ?? CriticType.IMPACT;
         let resistanceEffect = { value: 0, type: undefined, check: false };
         if (weapon !== undefined) {
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
@@ -687,7 +687,7 @@ export class CombatAttackDialog extends FormApplication {
       }
 
       ui.weaponHasSecondaryCritic =
-        weapon.system.critic.secondary.value !== NoneWeaponCritic.NONE;
+        weapon.system.critic.secondary.value !== NoneCriticType.NONE;
 
       combat.damage.final = combat.damage.special + weapon.system.damage.final.value;
     }
@@ -711,7 +711,7 @@ export class CombatAttackDialog extends FormApplication {
       const { spells } = this.attackerActor.system.mystic;
       const spell = spells.find(w => w._id === this.modalData.attacker.mystic.spellUsed);
       this.modalData.attacker.mystic.critic =
-        spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+        spell?.system.critic.value ?? NoneCriticType.NONE;
       this.modalData.attacker.mystic.spellGrade = 'base';
       this.modalData.attacker.mystic.attainableSpellGrades = [];
       const intelligence =
@@ -740,7 +740,7 @@ export class CombatAttackDialog extends FormApplication {
         w => w._id === this.modalData.attacker.psychic.powerUsed
       );
       this.modalData.attacker.psychic.critic =
-        power?.system.critic.value ?? NoneWeaponCritic.NONE;
+        power?.system.critic.value ?? NoneCriticType.NONE;
     }
 
     this.render();

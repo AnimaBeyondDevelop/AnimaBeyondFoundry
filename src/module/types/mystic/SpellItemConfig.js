@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
+import { NoneCriticType } from '../combat/CriticType';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
@@ -43,7 +43,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
   via: { value: '' },
   hasDailyMaintenance: { value: false },
   visible: false,
-  critic: { value: NoneWeaponCritic.NONE },
+  critic: { value: NoneCriticType.NONE },
   spellType: { value: '' },
   actionType: { value: '' },
   combatType: { value: '' },
