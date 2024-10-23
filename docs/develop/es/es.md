@@ -39,6 +39,7 @@ git clone https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry.git
 > echo "alias foundry='node $HOME/foundryvtt/resources/app/main.js --dataPath=$HOME/foundrydata'" >> ~/.bash_aliases
 >```
 > *Tras crear el alias (y reiniciar la terminal para que surta efecto), bastará con usar el comando `foundry` para lanzarlo. Para conectarse habrá que abrir cualquier explorador y abrir la url `localhost:30000`.*
+> *Aunque el alias es suficiente cuando se tiene una sola versión instalada, el cli de Foundry ([foundryvtt-cli](https://github.com/foundryvtt/foundryvtt-cli)) es una buena herramienta para gestionar distintas instalaciones. En [esta página](./foundry-cli.md) pueden encontrarse instrucciones para gestionar instalaciones con foundryvtt-cli.*
 
 ## Instrucciones de trabajo para desarrolladores
 
