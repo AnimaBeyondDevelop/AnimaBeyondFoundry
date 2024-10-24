@@ -12,7 +12,21 @@ import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternIt
  * @param {ABFActor} actor - provided Actor to update
  */
 export const parseExcelToActor = async (excelData, actor) => {
+    const requiredExcelVersions = [
+        "8.6.4"
+    ];
+    const excelVersionSplitted = SetEmptyIfUndefined(excelData.Version).split(' ').map(value => value.trim()).filter(element => element !== '');
 
+    if(excelVersionSplitted.length>0){
+        let excelVersion = excelVersionSplitted.pop();
+        if(!requiredExcelVersions.some(item => item === excelVersion))
+        {
+            const versionWarning ="Incompatible excel version, please try with one of the following: " + requiredExcelVersions.join(', ');
+            ui.notifications.warn(versionWarning);
+            return;
+        }
+    }
+    
     const movementModifier = excelData.TipodeMovimiento - excelData.AGI;
     const regenerationModifier = excelData.Regeneración_final - calculateRegenerationTypeFromConstitution(excelData.CON);
     const extraDamage = (excelData.DañoIncrementado ? 10 : 0) + (excelData.Extensióndelauraalarma ? 10 : 0);
@@ -28,30 +42,30 @@ export const parseExcelToActor = async (excelData, actor) => {
     const bonoRP = excelData.RP_final - volResistance;
 
     const habilidades = separarHabilidadesKi(excelData.HabilidadesKiNemesis);
-    const habilidadesKi = habilidades.habilidadesKi.split(',').map(value => value.trim()).filter(element => element !== '');
-    const habilidadesNem = habilidades.habilidadesNemesis.split(',').map(value => value.trim()).filter(element => element !== '');
-    const arsMagnus = excelData.ArsMagnusSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
-    const armasConocidas = excelData.Armas_Conocidas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const categorias = excelData.CategoríasSeleccionadas.split('/').map(value => value.trim()).filter(element => element !== '');
-    const idiomasExtra = excelData.IdiomasExtra.split(',').map(value => value.trim()).filter(element => element !== '');
-    const ventajasComunes = excelData.VentajasComunesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const ventajasSobrenaturales = excelData.VentajasSobrenaturalesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const ventajasTrasfondo = excelData.VentajasTrasfondoSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const legadosDeSangre = excelData.LegadosSeleccionados.split(',').map(value => value.trim()).filter(element => element !== '');
-    const desventajas = excelData.DesventajasSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const elan = separarElan(excelData.ElanSeleccionado);
+    const habilidadesKi = SetEmptyIfUndefined(habilidades.habilidadesKi).split(',').map(value => value.trim()).filter(element => element !== '');
+    const habilidadesNem = SetEmptyIfUndefined(habilidades.habilidadesNemesis).split(',').map(value => value.trim()).filter(element => element !== '');
+    const arsMagnus = SetEmptyIfUndefined(excelData.ArsMagnusSeleccionados).split(',').map(value => value.trim()).filter(element => element !== '');
+    const armasConocidas = SetEmptyIfUndefined(excelData.Armas_Conocidas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const categorias = SetEmptyIfUndefined(excelData.CategoríasSeleccionadas).split('/').map(value => value.trim()).filter(element => element !== '');
+    const idiomasExtra = SetEmptyIfUndefined(excelData.IdiomasExtra).split(',').map(value => value.trim()).filter(element => element !== '');
+    const ventajasComunes = SetEmptyIfUndefined(excelData.VentajasComunesSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const ventajasSobrenaturales = SetEmptyIfUndefined(excelData.VentajasSobrenaturalesSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const ventajasTrasfondo = SetEmptyIfUndefined(excelData.VentajasTrasfondoSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const legadosDeSangre = SetEmptyIfUndefined(excelData.LegadosSeleccionados).split(',').map(value => value.trim()).filter(element => element !== '');
+    const desventajas = SetEmptyIfUndefined(excelData.DesventajasSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const elan = separarElan(SetEmptyIfUndefined(excelData.ElanSeleccionado));
     const aptoParaElDesarrolloDeLaMagia = ventajasSobrenaturales.includes("Apto desarrollo de la magia");
     const resistenciaALaFatigaPsiquica = ventajasSobrenaturales.includes("Res. a la fatiga psíquica");
-    const artesMarciales = excelData.ArtesMarcialesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const tablasDeEstilo = excelData.TablasDeEstilo.split(',').map(value => value.trim()).filter(element => element !== '');
-    const tecnicasKi = excelData.TécnicasKi.split(',').map(value => value.trim()).filter(element => element !== '');
-    const invocaciones = excelData.InvocacionesSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== '');
-    const viasMagia = separarNivelDeVia(excelData.VíasDeMagiaSeleccionadas.split(',').map(value => value.trim()).filter(element => element !== ''));
-    const conjurosMantenidos = excelData.Mantenimientos_Magia.split(';').map(value => value.trim()).filter(element => element !== '');
-    const conjurosSeleccionados = excelData.ConjurosSeleccionados.split(';').map(value => value.trim()).filter(element => element !== '');
-    const metamagias = excelData.MetamagiasSeleccionadas.split(';').map(value => value.trim()).filter(element => element !== '');
-    const disciplinas_psi = excelData.Disciplinas_Psi_Actuales.split(',').map(value => value.trim()).filter(element => element !== '');
-    const patrones_psi = excelData.Patrones_Psi_Actuales.split(',').map(value => value.trim()).filter(element => element !== '');
+    const artesMarciales = SetEmptyIfUndefined(excelData.ArtesMarcialesSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const tablasDeEstilo = SetEmptyIfUndefined(excelData.TablasDeEstilo).split(',').map(value => value.trim()).filter(element => element !== '');
+    const tecnicasKi = SetEmptyIfUndefined(excelData.TécnicasKi).split(',').map(value => value.trim()).filter(element => element !== '');
+    const invocaciones = SetEmptyIfUndefined(excelData.InvocacionesSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== '');
+    const viasMagia = separarNivelDeVia(SetEmptyIfUndefined(excelData.VíasDeMagiaSeleccionadas).split(',').map(value => value.trim()).filter(element => element !== ''));
+    const conjurosMantenidos = SetEmptyIfUndefined(excelData.Mantenimientos_Magia).split(';').map(value => value.trim()).filter(element => element !== '');
+    const conjurosSeleccionados = SetEmptyIfUndefined(excelData.ConjurosSeleccionados).split(';').map(value => value.trim()).filter(element => element !== '');
+    const metamagias = SetEmptyIfUndefined(excelData.MetamagiasSeleccionadas).split(';').map(value => value.trim()).filter(element => element !== '');
+    const disciplinas_psi = SetEmptyIfUndefined(excelData.Disciplinas_Psi_Actuales).split(',').map(value => value.trim()).filter(element => element !== '');
+    const patrones_psi = SetEmptyIfUndefined(excelData.Patrones_Psi_Actuales).split(',').map(value => value.trim()).filter(element => element !== '');
 
     //Remove previous adventages
     let previousAdventages = [];
@@ -1024,7 +1038,7 @@ function separarHabilidadesKi(habilidades) {
     };
 
     const indexSellos = habilidades.indexOf("Sellos: ");
-    let habilidadesSinSellos = "habilidades";
+    let habilidadesSinSellos = "";
     if (indexSellos !== -1) {
         habilidadesSinSellos = habilidades.slice(0, indexSellos).trim();
     }
@@ -1130,4 +1144,12 @@ function separarNivelDeVia(nivelDeVias) {
     });
 
     return result;
+}
+
+function SetEmptyIfUndefined(data){
+    if (typeof data === "undefined")
+    {
+        return "";
+    }
+    return data;
 }
