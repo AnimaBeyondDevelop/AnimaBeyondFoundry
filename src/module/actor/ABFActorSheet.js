@@ -7,9 +7,15 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
+import { sveltify } from '@svelte/sveltify';
+import SpellsBoard from '@svelte/components/spellBoard.svelte';
 import { Logger } from '../../utils';
 
-export default class ABFActorSheet extends ActorSheet {
+/** @typedef {import('./constants').TActorData} TData */
+/** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
+export default class ABFActorSheet extends sveltify(
+  /** @type {TFormApplication} */ (ActorSheet)
+) {
   i18n;
 
   constructor(actor, options) {
@@ -18,6 +24,10 @@ export default class ABFActorSheet extends ActorSheet {
     this.i18n = game.i18n;
 
     this.position.width = this.getWidthDependingFromContent();
+  }
+
+  static get svelteDescriptors() {
+    return [{ SvelteComponent: SpellsBoard, selector: '#svelte-spell-board' }];
   }
 
   static get defaultOptions() {
