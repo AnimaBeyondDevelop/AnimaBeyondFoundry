@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build:dev": "npm run compendia:pack && npx vite build && node scripts/copyDirectoryToFoundrySystem.cjs animabf",
+    "build:dev": "npm run build:prod && node scripts/copyDirectoryToFoundrySystem.cjs animabf",
     "build:prod": "npm run compendia:pack && npx vite build",
+    "svelte-check": "npx svelte-check --no-tsconfig --threshold error",
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.js",
     "release:dry": "node scripts/release/release.js --dry",
@@ -25,7 +26,8 @@
   "devDependencies": {
     "@digitak/tsc-esm": "^3.1.4",
     "@foundryvtt/foundryvtt-cli": "^1.0.3",
-    "@sveltejs/vite-plugin-svelte": "^2.5.3",
+    "@league-of-foundry-developers/foundry-vtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#v12/main",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
     "@tinymce/tinymce-svelte": "^2.0.1",
     "@types/faker": "^5.5.6",
     "@types/handlebars": "^4.1.0",
@@ -55,10 +57,10 @@
     "rollup-plugin-copy": "^3.5.0",
     "sass": "^1.32.8",
     "sass-lint": "^1.13.1",
-    "svelte": "^5.0.0-next.225",
-    "ts-jest": "^26.5.6",
-    "typescript": "^4.9.5",
-    "vite": "^4.5.0",
+    "svelte": "^5.0.0-next.262",
+    "svelte-check": "^4.0.4",
+    "typescript": "^5.6.2",
+    "vite": "^5.0.0",
     "yargs": "^16.2.0"
   },
   "dependencies": {

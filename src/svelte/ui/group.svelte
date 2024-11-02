@@ -47,7 +47,9 @@
       </i>
     {/if}
 
-    {@render buttons()}
+    {#if buttons}
+      {@render buttons()}
+    {/if}
   </div>
 
   <!-- Header start -->
