@@ -39,6 +39,7 @@ export default class ABFActorSheet extends sveltify(
         width: 1000,
         height: 850,
         submitOnChange: true,
+        viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
         tabs: [
           {
             navSelector: '.sheet-tabs',
@@ -83,18 +84,13 @@ export default class ABFActorSheet extends sveltify(
     return 1000;
   }
 
-  /**
-   * Tests if a given user has permission to render the ActorSheet.
-   * If it does not, instead of rendering the sheet, shows the Actor's portrait.
-   * @param {ABFActor} user
-   * @returns {boolean}
-   */
-  _canUserView(user) {
-    const canView = this.actor.testUserPermission(user, 'OBSERVER');
-    if (!canView) {
+  async _render(force, options = {}) {
+    // If user permission is exactly LIMITED, then display image popout and quit; else do normal render
+    if (force && this.actor.testUserPermission(game.user, 'LIMITED', { exact: true })) {
       this.displayActorImagePopout();
+      return;
     }
-    return canView;
+    return super._render(force, options);
   }
 
   displayActorImagePopout() {
