@@ -1,6 +1,7 @@
 <script>
   import IconInput from '@svelte/ui/iconInput.svelte';
-  import ModifiedAbilityInput from '@svelte/ui/modifiedAbility.svelte';
+  import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import InputLabel from '@svelte/ui/inputLabel.svelte';
 
   /**
    * @typedef {object} props
@@ -53,13 +54,13 @@
         />
       {/if}
     {/each}
-    <ModifiedAbilityInput
+    <InputLabel
+      label={'anima.ui.combat.armors.at.' + selectedCritic}
       icon={'critic/' + selectedCritic}
-      bind:ability={damage}
       oniconClick={() => (expanded = !expanded)}
-      title={i18n.localize('anima.ui.combat.armors.at.' + selectedCritic + '.title')}
-      {disabled}
-    />
+    >
+      <ModifiedAbilityInput bind:ability={damage} {disabled} />
+    </InputLabel>
   </div>
 </div>
 

@@ -6,7 +6,8 @@
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
-  import ModifiedAbility from '@svelte/ui/modifiedAbility.svelte';
+  import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import InputLabel from '@svelte/ui/inputLabel.svelte';
 
   /**
    * @typedef {import("@module/combat/PhysicAttack.svelte").PhysicAttack} PhysicAttack
@@ -73,11 +74,9 @@
     />
   </g>
   <g class="primary">
-    <ModifiedAbility
-      icon="attack"
-      bind:ability={attack.ability}
-      title={i18n.localize('macros.combat.dialog.attack.title')}
-    />
+    <InputLabel label="macros.combat.dialog.attack" icon="attack">
+      <ModifiedAbilityInput bind:ability={attack.ability} />
+    </InputLabel>
   </g>
   <div class="right-icons">
     <IconCheckBox
@@ -87,6 +86,7 @@
       --icon-size="30px"
     />
     {#if attack.isRanged}
+      <!-- TODO: Are this "hidden" needed? -->
       <IconCheckBox
         icon="target-in-cover"
         bind:value={attack.ability.modifiers.targetInCover.active}
