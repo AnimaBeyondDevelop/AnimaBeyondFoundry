@@ -11,7 +11,6 @@ import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
-import { SvelteApplication } from '@svelte/TestAppV5';
 import { TestAppV2 } from '@svelte/test/TestAppV2';
 
 import './scss/animabf.scss';
