@@ -1,6 +1,13 @@
 <script>
   // @ts-nocheck
-  let { icon, activeIcons, quantity, title, onChange, disabled } = $props();
+  let {
+    icon,
+    activeIcons = $bindable(0),
+    quantity,
+    title,
+    onChange,
+    disabled
+  } = $props();
   let iconOff = '/systems/animabf/assets/icons/svg/' + icon + '.svg';
   let iconOn = '/systems/animabf/assets/icons/svg/' + icon + '_fill.svg';
 

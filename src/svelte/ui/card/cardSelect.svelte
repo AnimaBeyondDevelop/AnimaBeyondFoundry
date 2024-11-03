@@ -1,17 +1,26 @@
 <script>
-  // @ts-nocheck
-  let { selection, options, children, onChange, disabled } = $props();
-  function onchange(e) {
-    e.target.blur();
-    onChange?.(e.target.value)
-  }
+  /**
+   * @template {{name: string}} T
+   * @typedef {object} Props
+   * @property {T} value The selected option.
+   * @property {T[]} options List of available options.
+   * @property {import('svelte').Snippet} [children] A snippet holding extra options.
+   * @property {boolean} [disabled] Whether this select is disabled or not.
+   */
+
+  /** @type {Props<{name: string}>} */
+  let { value=$bindable(), options, children=undefined, disabled=false } = $props();
 </script>
 
 <div class="select-wrapper">
   <div class="select-container">
-    <select class="select-box" disabled={disabled || options.length === 0} bind:value={selection} onchange={e => onchange(e)} >
+    <select
+      class="select-box"
+      disabled={disabled || options.length === 0}
+      bind:value
+    >
       {#each options as option}
-        <option value={option.id}>{option.name}</option>
+        <option value={option}>{option.name}</option>
       {/each}
       {#if children}
         {@render children()}

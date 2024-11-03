@@ -1,44 +1,51 @@
 <script>
-  let {
-    icon,
-    value,
-    modifier = $bindable(0),
-    title,
-    clickEvent,
-    invert,
-    disabled
-  } = $props();
-  let src = $derived('/systems/animabf/assets/icons/svg/' + icon + '.svg');
+  /**
+   * @typedef {Object} props
+   * @property {import("@module/common/ModifiedAbility.svelte").ModifiedAbility} ability
+   * @property {string} title
+   * @property {string} [icon]
+   * @property {import('svelte/elements').MouseEventHandler<HTMLInputElement>} [oniconClick]
+   * @property {boolean} [disabled]
+   */
 
+  /** @type {props} */
+  let { ability = $bindable(), title, icon, oniconClick, disabled = false } = $props();
+
+  let iconPath = $derived('/systems/animabf/assets/icons/svg/' + icon + '.svg');
+  ability.addModifier('special', { value: 0 });
+
+  /**
+   * @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}
+   */
   function onchange(e) {
-    e.target.blur();
-    const input = e.target.value;
+    e.currentTarget.blur();
+    const input = e.currentTarget.value;
     if (['+', '-'].includes(input.slice(0, 1))) {
-      modifier += parseInt(input);
+      ability.modifiers.special.value += parseInt(input);
     } else if (input === '') {
-      modifier = 0;
+      ability.modifiers.special.value = 0;
     } else {
-      modifier += parseInt(input) - value;
+      ability.modifiers.special.value += parseInt(input) - ability.final;
     }
   }
 </script>
 
 <div class="content">
-  <input
-    class="icon"
-    type="image"
-    {title}
-    {src}
-    alt=""
-    onclick={clickEvent}
-    style={(invert ? '--filter:invert(1);' : '') +
-      (clickEvent ? '--hover-scale:1.05' : '')}
-  />
+  {#if icon}
+    <input
+      class="icon"
+      type="image"
+      onclick={oniconClick}
+      {title}
+      src={iconPath}
+      alt={title}
+    />
+  {/if}
   <input
     class="input"
-    {value}
+    value={ability.final}
     type="text"
-    onfocus={e => e.target.select()}
+    onfocus={e => e.currentTarget.select()}
     {onchange}
     {disabled}
   />
