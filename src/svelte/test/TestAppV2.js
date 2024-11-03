@@ -27,7 +27,7 @@ export class TestAppV2 extends SvelteApplicationMixin(ActorSheetV2) {
 
 Hooks.once('ready', () => {
   new TestAppV2({
-    document: game.actors.get('4Dar4DPacvjzsGKQ')
+    document: game.actors.getName('Killiam')
   })
     .render(true)
     .then(app => (window.a = app));
