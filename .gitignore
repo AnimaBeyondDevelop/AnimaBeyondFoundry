@@ -11,3 +11,4 @@ foundryconfig.json
 dist/
 package/
 /packs
+.nvim.lua
