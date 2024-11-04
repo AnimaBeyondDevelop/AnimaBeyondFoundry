@@ -54,10 +54,8 @@ export class MysticDefenseManager extends DefenseManager {
         this.onNewShield(this.data.newShield)
     }
 
-    applyModifiers(modifiers) {
-        let totalModifier = super.applyModifiers(modifiers);
-
-        return totalModifier + this.data.defense.final
+    getDefense() {
+        return this.data.defense.final
     }
 
     getAttainableSpellGrades(spellUsed, castMethod) {
@@ -149,10 +147,11 @@ export class MysticDefenseManager extends DefenseManager {
             values: {
                 spell: this.data.spell,
                 spellGrade: this.data.spellGrade,
-                magicProjection: this.defense,
+                defense: this.getDefense(),
                 spellCasting: this.spellCasting,
+                castMethod: this.castMethod,
+                armor: this.armor,
                 roll: rolled,
-                total: roll.total,
                 fumble: roll.fumbled,
                 supShield,
                 defenderCombatMod: this.modifiers

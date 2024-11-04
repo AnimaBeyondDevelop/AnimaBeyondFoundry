@@ -44,14 +44,12 @@ export class PsychicAttackManager extends AttackManager {
         this.onPowerChange()
     }
 
-    addPotentialModifier(modifier, multiplier) {
-        this.potentialModifiers[modifier] = { modifier: this.modifiersTable[modifier] * multiplier, active: true }
+    getAttack() {
+        return this.data.attack.final
     }
 
-    applyModifiers(modifiers) {
-        let totalModifier = super.applyModifiers(modifiers);
-
-        return totalModifier + this.data.attack.final
+    addPotentialModifier(modifier, multiplier) {
+        this.potentialModifiers[modifier] = { modifier: this.modifiersTable[modifier] * multiplier, active: true }
     }
 
     applyPotentialModifiers(potentialModifiers) {
@@ -167,12 +165,11 @@ export class PsychicAttackManager extends AttackManager {
             values: {
                 power: this.power,
                 psychicPotential: this.data.psychicPotentialRoll,
-                psychicProjection: this.attack,
+                attack: this.getAttack(),
                 psychicFatigue: this.data.psychicFatigue,
                 damage: this.damage,
                 critic: this.data.critics.selected,
                 roll: rolled,
-                total: psychicProjectionRoll.total,
                 fumble: psychicProjectionRoll.fumbled,
                 resistanceEffect: this.data.resistanceEffect,
                 visible: this.data.visible,

@@ -42,19 +42,17 @@ export class CombatDefenseManager extends DefenseManager {
         this.onWeaponChange()
     }
 
-    addMultipleDefensesPenalty(value) {
-        this.addModifier("multipleDefensesPenalty", value)
-    }
-
-    applyModifiers(modifiers) {
-        let totalModifier = super.applyModifiers(modifiers);
-
+    getDefense() {
         const { defenseType, weaponUsed } = this.data;
 
         if (defenseType === "dodge" || weaponUsed === "unarmed") {
-            return this.data[defenseType].final + totalModifier;
+            return this.data[defenseType].final;
         }
-        return this.weapon.system.block.final.value + totalModifier;
+        return this.weapon.system.block.final.value;
+    }
+
+    addMultipleDefensesPenalty(value) {
+        this.addModifier("multipleDefensesPenalty", value)
     }
 
     getWeapon(weaponUsed) {
@@ -131,12 +129,11 @@ export class CombatDefenseManager extends DefenseManager {
             type: 'combat',
             values: {
                 type: this.data.defenseType,
-                defense: this.defense,
-                at: this.armor,
+                defense: this.getDefense(),
+                armor: this.armor,
                 weapon: this.weapon,
                 fatigueUsed: this.data.fatigue.used,
                 roll: rolled,
-                total: roll.total,
                 fumble: roll.fumbled,
                 accumulateDefenses: this.data.defenseCounter.keepAccumulating,
                 defenderCombatMod: this.modifiers //rev hace falta agregar armorModifiers?

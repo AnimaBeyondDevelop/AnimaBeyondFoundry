@@ -65,6 +65,10 @@ export class DefenseManager {
         }
     }
 
+    getDefense() {
+        return 0
+    }
+
     addModifier(modifier, multiplier) {
         if (modifier === "multipleDefensesPenalty") {
             this.modifiers[modifier] = { modifier: multiplier === 0 ? 0 : (-20 * multiplier) - 10, active: true }
@@ -84,7 +88,7 @@ export class DefenseManager {
         for (const key in modifiers) {
             totalModifier += this.modifiers[key].modifier;
         }
-        return totalModifier
+        return totalModifier + this.getDefense()
     }
 
     calculateArmor(armorModifiers) {

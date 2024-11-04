@@ -80,6 +80,9 @@ export class AttackManager {
                 canvas.dimensions.distance) <= 1
         }
     }
+    getAttack() {
+        return 0
+    }
 
     addModifier(modifier, multiplier) {
         this.modifiers[modifier] = { modifier: this.modifiersTable[modifier] * multiplier, active: true }
@@ -96,7 +99,7 @@ export class AttackManager {
         for (const key in modifiers) {
             totalModifier += this.modifiers[key].modifier;
         }
-        return totalModifier
+        return totalModifier + this.getAttack()
     }
 
     calculateDamage(damageModifiers) {

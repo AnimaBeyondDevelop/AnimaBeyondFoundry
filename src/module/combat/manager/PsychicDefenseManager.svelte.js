@@ -44,14 +44,12 @@ export class PsychicDefenseManager extends DefenseManager {
         this.onNewShield(this.data.newShield)
     }
 
-    addPotentialModifier(modifier, multiplier) {
-        this.potentialModifiers[modifier] = { modifier: this.modifiersTable[modifier] * multiplier, active: true }
+    getDefense() {
+        return this.data.defense.final
     }
 
-    applyModifiers(modifiers) {
-        let totalModifier = super.applyModifiers(modifiers);
-
-        return totalModifier + this.data.defense.final
+    addPotentialModifier(modifier, multiplier) {
+        this.potentialModifiers[modifier] = { modifier: this.modifiersTable[modifier] * multiplier, active: true }
     }
 
     applyPotentialModifiers(potentialModifiers) {
@@ -169,11 +167,10 @@ export class PsychicDefenseManager extends DefenseManager {
             values: {
                 power: this.power,
                 psychicPotential: this.data.psychicPotentialRoll ?? 0,
-                psychicProjection: this.defense,
+                defense: this.getDefense(),
                 psychicFatigue: this.data.psychicFatigue,
-                at: this.armor,
+                armor: this.armor,
                 roll: rolled,
-                total: psychicProjectionRoll.total,
                 fumble: psychicProjectionRoll.fumbled,
                 supShield,
                 defenderCombatMod: this.modifiers //rev hace falta agregar damageModifiers? prob si

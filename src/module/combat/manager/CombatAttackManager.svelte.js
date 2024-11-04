@@ -32,13 +32,11 @@ export class CombatAttackManager extends AttackManager {
         this.onWeaponChange()
     }
 
-    applyModifiers(modifiers) {
-        let totalModifier = super.applyModifiers(modifiers);
-
+    getAttack() {
         if (this.data.weaponUsed === "unarmed") {
-            return this.data.attack.final + totalModifier;
+            return this.data.attack.final;
         }
-        return this.weapon.system.attack.final.value + totalModifier
+        return this.weapon.system.attack.final.value
     }
 
     calculateDamage(damageModifiers) {
@@ -131,12 +129,11 @@ export class CombatAttackManager extends AttackManager {
             values: {
                 unarmed: this.data.weaponUsed === 'unarmed', //rev
                 damage: this.damage,
-                attack: this.attack,
+                attack: this.getAttack(),
                 weapon: this.weapon,
                 critic: this.data.critics.selected,
                 fatigueUsed: this.data.fatigue.used,
                 roll: rolled,
-                total: roll.total,
                 fumble: roll.fumbled,
                 resistanceEffect: this.data.resistanceEffect,
                 visible: this.data.visible,

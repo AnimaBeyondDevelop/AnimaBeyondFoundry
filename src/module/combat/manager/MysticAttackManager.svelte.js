@@ -54,10 +54,8 @@ export class MysticAttackManager extends AttackManager {
         this.onSpellChange()
     }
 
-    applyModifiers(modifiers) {
-        let totalModifier = super.applyModifiers(modifiers);
-
-        return totalModifier + this.data.attack.final
+    getAttack() {
+        return this.data.attack.final
     }
 
     calculateDamage(damageModifiers) {
@@ -153,12 +151,12 @@ export class MysticAttackManager extends AttackManager {
             values: {
                 spell: this.spell,
                 spellGrade: this.data.spellGrade,
-                magicProjection: this.attack,
+                attack: this.getAttack(),
                 spellCasting: this.spellCasting,
+                castMethod: this.castMethod,
                 damage: this.damage,
                 critic: this.data.critics.selected,
                 roll: rolled,
-                total: roll.total,
                 fumble: roll.fumbled,
                 resistanceEffect: this.data.resistanceEffect,
                 visible: this.data.visible,
