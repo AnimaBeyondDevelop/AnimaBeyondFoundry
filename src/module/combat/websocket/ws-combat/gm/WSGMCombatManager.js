@@ -2,8 +2,8 @@ import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from './WSGMCombatMessageTypes';
 import { UserMessageTypes } from '../user/WSUserCombatMessageTypes';
-import { GMCombatDialog } from '../../../../dialogs/combat/GMCombatDialog';
 import { CombatDialogs } from '../../dialogs/CombatDialogs';
+import { SvelteGMCombatDialog } from '../../../../dialogs/combat/SvelteGMCombatDialog';
 import { SvelteDefenseDialog } from '../../../../dialogs/combat/SvelteDefenseDialog';
 import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
@@ -31,16 +31,16 @@ export class WSGMCombatManager extends WSCombatManager {
 
   async manageUserAttack(msg) {
     if (this.combat) {
-      this.combat.updateAttackerData(msg.payload);
+      this.combat.manager.updateAttackerData(msg.payload);
 
-      const { attackerToken, defenderToken, defenderActor } = this.combat;
+      const { attacker, defender } = this.combat.manager.data;
 
-      if (canOwnerReceiveMessage(defenderActor)) {
+      if (canOwnerReceiveMessage(defender.actor)) {
         const newMsg = {
           type: GMMessageTypes.Attack,
           payload: {
-            attackerTokenId: attackerToken.id,
-            defenderTokenId: defenderToken.id,
+            attackerTokenId: attacker.token.id,
+            defenderTokenId: defender.token.id,
             result: msg.payload
           }
         };
@@ -49,8 +49,8 @@ export class WSGMCombatManager extends WSCombatManager {
       } else {
         try {
           this.manageDefense(
-            attackerToken,
-            defenderToken,
+            attacker.token,
+            defender.token,
             msg.payload
           );
         } catch (err) {
@@ -68,7 +68,7 @@ export class WSGMCombatManager extends WSCombatManager {
 
   manageUserDefense(msg) {
     if (this.combat) {
-      this.combat.updateDefenderData(msg.payload);
+      this.combat.manager.updateDefenderData(msg.payload);
     } else {
       Logger.warn('User attack received but none combat is running');
     }
@@ -208,14 +208,14 @@ export class WSGMCombatManager extends WSCombatManager {
   }
 
   createNewCombat(attacker, defender) {
-    return new GMCombatDialog(attacker, defender, {
+    return new SvelteGMCombatDialog(attacker, defender, {
       onClose: () => {
         this.endCombat();
       },
       onCounterAttack: bonus => {
         this.endCombat();
 
-        this.combat = new GMCombatDialog(
+        this.combat = new SvelteGMCombatDialog(
           defender,
           attacker,
           {
@@ -260,7 +260,7 @@ export class WSGMCombatManager extends WSCombatManager {
           this.attackDialog = undefined;
 
           if (this.combat) {
-            this.combat.updateAttackerData(result);
+            this.combat.manager.updateAttackerData(result);
 
             if (canOwnerReceiveMessage(defender.actor)) {
               const newMsg = {
@@ -315,7 +315,7 @@ export class WSGMCombatManager extends WSCombatManager {
             this.defendDialog = undefined;
 
             if (this.combat) {
-              this.combat.updateDefenderData(result);
+              this.combat.manager.updateDefenderData(result);
             }
           }
         }
