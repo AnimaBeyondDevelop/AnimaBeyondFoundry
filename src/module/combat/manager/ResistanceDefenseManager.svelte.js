@@ -1,6 +1,4 @@
 import { DefenseManager } from '@module/combat/manager/DefenseManager.svelte.js'
-import { rollToMessageFlavor } from '@module/combat/utils/rollToMessageFlavor.js'
-import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 export class ResistanceDefenseManager extends DefenseManager {
     constructor(attacker, defender, hooks, options) {
@@ -15,8 +13,9 @@ export class ResistanceDefenseManager extends DefenseManager {
         this.hooks.onDefense({
             type: 'resistance',
             values: {
-                at: this.armor,
-                total: 0,
+                defense: 0,
+                armor: this.armor,
+                roll: 0,
                 surprised: this.data.surprised,
                 defenderCombatMod: this.modifiers
             }
