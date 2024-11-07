@@ -243,7 +243,7 @@
   "anima.ui.inventoryItemsSection.name.title": "Object",
   "anima.ui.inventoryItemsSection.title": "Inventory",
   "anima.ui.inventoryItemsSection.weight.title": "Weight (kg)",
-  "anima.ui.importDataFromExcelHint1": "You can import data from this ",
+  "anima.ui.importDataFromExcelHint1": "You can import data from this {documentType} from an Excel file.",
   "anima.ui.importDataFromExcelHint2": "This operation will update the data for {name} and cannot be undone.",
   "anima.ui.importDataFromExcelTitle": "Import Data: {name}",
   "anima.ui.importDataFromExcelWarning": "Incompatible excel version, please try with one of the following ",

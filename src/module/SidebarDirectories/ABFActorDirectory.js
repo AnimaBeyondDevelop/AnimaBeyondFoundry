@@ -38,10 +38,9 @@ export default class ABFActorDirectory extends ActorDirectory {
         content: await renderTemplate(
           'systems/animabf/templates/dialog/import-data-from-excel.html',
           {
-            hint1:
-              game.i18n.localize('anima.ui.importDataFromExcelHint1') +
-              document.documentName +
-              ' desde un archivo Excel',
+            hint1: game.i18n.format(
+              'anima.ui.importDataFromExcelHint1', {documentType: document.documentName}
+            ),
             hint2: game.i18n.format('anima.ui.importDataFromExcelHint2', { name: document.name })
           }
         ),
