@@ -907,4 +907,27 @@ export class ABFActor extends Actor {
   getItem(itemId) {
     return this.getEmbeddedDocument('Item', itemId);
   }
+
+  /**
+   * Returns the last weapon used if still available, otherwise undefined.
+   * @param {"offensive" | "defensive"} usage Whether to retrieve the last weapon used for attacking
+   * or defending
+   */
+  getLastWeaponUsed(usage) {
+    usage = usage[0].toLowerCase() + usage.slice(1);
+    const lastWeaponUsed = this.getFlag('animabf', `last${usage}WeaponUsed`);
+
+    return this.getWeapons().find(w => w.id === lastWeaponUsed);
+  }
+
+  /**
+   * Sets the last weapon used to a flag.
+   * @param {import('../items/ABFItems').ABFItemsEnum} weapon
+   * @param {"offensive" | "defensive"} usage Whether to save the last weapon used for attacking
+   * or defending
+   */
+  setLastWeaponUsed(weapon, usage) {
+    usage = usage[0].toLowerCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}WeaponUsed`, weapon.id);
+  }
 }

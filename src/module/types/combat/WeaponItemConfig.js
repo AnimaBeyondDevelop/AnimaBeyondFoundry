@@ -2,6 +2,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { mutateWeapon } from '../../items/utils/prepareItem/items/mutateWeapon';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { CriticType, NoneCriticType } from './CriticType';
 
 /**
  * @readonly
@@ -21,28 +22,6 @@ export const WeaponKnowledgeType = /** @type {const} */ ({
   SIMILAR: 'similar',
   MIXED: 'mixed',
   DIFFERENT: 'different'
-});
-
-/**
- * @readonly
- * @enum {string}
- */
-export const WeaponCritic = /** @type {const} */ ({
-  CUT: 'cut',
-  IMPACT: 'impact',
-  THRUST: 'thrust',
-  HEAT: 'heat',
-  ELECTRICITY: 'electricity',
-  COLD: 'cold',
-  ENERGY: 'energy'
-});
-
-/**
- * @readonly
- * @enum {string}
- */
-export const NoneWeaponCritic = /** @type {const} */ ({
-  NONE: '-'
 });
 
 /**
@@ -153,8 +132,8 @@ export const INITIAL_WEAPON_DATA = {
     final: { value: 0 }
   },
   critic: {
-    primary: { value: WeaponCritic.CUT },
-    secondary: { value: NoneWeaponCritic.NONE }
+    primary: { value: CriticType.CUT },
+    secondary: { value: NoneCriticType.NONE }
   }
 };
 

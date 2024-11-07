@@ -1,85 +1,66 @@
 <script>
-  // @ts-nocheck
   import IconInput from '@svelte/ui/iconInput.svelte';
+  import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import InputLabel from '@svelte/ui/inputLabel.svelte';
+
+  /**
+   * @typedef {object} props
+   * @property {import('@module/common/ModifiedAbility.svelte').ModifiedAbility} damage
+   * @property {{primary: {value: string}, secondary: {value : string}}} critics
+   * @property {string} selectedCritic
+   * @property {{normal: string, expanded: string}} width
+   * @property {boolean} [disabled]
+   */
+
+  /** @type {props} */
   let {
-    value,
-    modifier = $bindable(0),
-    critics = $bindable(),
-    markerWidth,
-    onChange,
+    damage = $bindable(),
+    selectedCritic = $bindable(),
+    critics,
+    width,
     disabled
   } = $props();
-  let width = $state(markerWidth.min);
 
-  let criticChoices = [
-    'none',
-    'cut',
-    'impact',
-    'thrust',
-    'heat',
-    'electricity',
-    'cold',
-    'energy'
-  ];
-  const i18n = game.i18n;
+  let expanded = $state(false);
+  let currentWidth = $derived(expanded ? width.expanded : width.normal);
 
-  function selectCritic(critic) {
-    critics.selected = critic;
-    width = markerWidth.min;
-    onChange?.(critic);
-  }
-
-  function expandMarker() {
-    if (width === markerWidth.max) {
-      width = markerWidth.min;
-    } else {
-      width = markerWidth.max;
-    }
-  }
+  let availableCritics = $derived([critics.secondary.value, critics.primary.value]);
+  // TODO: use ABFConfig.iterables instead
+  let criticChoices = $derived(
+    ['none', 'cut', 'impact', 'thrust', 'heat', 'electricity', 'cold', 'energy'].sort(
+      (a, b) =>
+        availableCritics.findIndex(v => v === a) -
+        availableCritics.findIndex(v => v === b)
+    )
+  );
+  const i18n = /** @type {Localization} */ (game.i18n);
 </script>
 
-<div class="marker" style="--marker-width:{width}; --marker-border:5px;">
+<div class="marker" style="--marker-width:{currentWidth}; --marker-border:5px;">
   <div class="body">
-    {#each criticChoices as critic, i}
-      {#if critic !== critics.selected && critic !== critics.primary && (critics.secondary === 'none' || critic !== critics.secondary)}
+    {#each criticChoices as critic}
+      {#if critic !== selectedCritic}
         <input
-          class="icon off"
+          class="icon"
+          class:off={!availableCritics.includes(critic)}
           type="image"
           title={i18n.localize('anima.ui.combat.armors.at.' + critic + '.title')}
-          onclick={() => selectCritic(critic)}
+          onclick={() => {
+            selectedCritic = critic;
+            expanded = false;
+          }}
           src={'/systems/animabf/assets/icons/svg/critic/' + critic + '.svg'}
           alt=""
         />
       {/if}
     {/each}
-    {#if critics.secondary && critics.secondary !== critics.selected && critics.secondary !== 'none'}
-      <input
-        class="icon"
-        type="image"
-        title={i18n.localize('anima.ui.combat.armors.at.' + critics.secondary + '.title')}
-        onclick={() => selectCritic(critics.secondary)}
-        src={'/systems/animabf/assets/icons/svg/critic/' + critics.secondary + '.svg'}
-        alt=""
-      />
-    {/if}
-    {#if critics.primary && critics.primary !== critics.selected}
-      <input
-        class="icon"
-        type="image"
-        title={i18n.localize('anima.ui.combat.armors.at.' + critics.primary + '.title')}
-        onclick={() => selectCritic(critics.primary)}
-        src={'/systems/animabf/assets/icons/svg/critic/' + critics.primary + '.svg'}
-        alt=""
-      />
-    {/if}
-    <IconInput
-      icon={'critic/' + critics.selected}
-      {value}
-      bind:modifier
-      clickEvent={expandMarker}
-      title={i18n.localize('anima.ui.combat.armors.at.' + critics.selected + '.title')}
-      {disabled}
-    />
+    <InputLabel
+      label={'anima.ui.combat.armors.at.' + selectedCritic}
+      icon={'critic/' + selectedCritic}
+      oniconClick={() => (expanded = !expanded)}
+    >
+      <ModifiedAbilityInput bind:ability={damage} {disabled} />
+    </InputLabel>
   </div>
 </div>
 

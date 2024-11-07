@@ -3,7 +3,7 @@ import { ABFRoll } from '../ABFRoll';
 
 export default class ABFExploderRoll extends ABFRoll {
   lastOpenRange = this.openRollRange;
-  success = false
+  success = false;
 
   async canExplode() {
     const lastResult = this.firstDice.results[this.firstDice.results.length - 1];
@@ -31,6 +31,10 @@ export default class ABFExploderRoll extends ABFRoll {
     return this.foundryRoll.firstResult <= this.fumbleRange;
   }
 
+  get openRoll() {
+    return this.success;
+  }
+
   /** @returns {Promise<ABFFoundryRoll>} */
   async evaluate() {
     if (await this.canExplode()) {
@@ -49,7 +53,7 @@ export default class ABFExploderRoll extends ABFRoll {
 
   /** @param {number} openRange */
   async explodeDice(openRange) {
-    this.success = true
+    this.success = true;
     this.lastOpenRange = Math.min(openRange, 100);
 
     const newRoll = new ABFFoundryRoll('1d100');

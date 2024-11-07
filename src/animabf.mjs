@@ -11,7 +11,8 @@ import ABFItem from './module/items/ABFItem';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
-import { SvelteApplication } from '@svelte/TestAppV5';
+import { TestAppV2 } from '@svelte/test/TestAppV2';
+
 import './scss/animabf.scss';
 
 /* ------------------------------------ */
@@ -72,12 +73,6 @@ Hooks.once('ready', () => {
   attachCustomMacroBar();
 
   applyMigrations();
-
-  let attacker = game.actors?.get('RSA7ddRn7MIaXGuG')?.getActiveTokens()[0];
-  let defender = game.actors?.get('mkVRiXQsw65FDXke')?.getActiveTokens()[0];
-
-  let app = new SvelteApplication(attacker, defender);
-
 });
 
 // Add any additional hooks if necessary

@@ -8,6 +8,7 @@ export default defineConfig({
     alias: {
       '@svelte': path.resolve(__dirname, './src/svelte'),
       '@module': path.resolve(__dirname, './src/module'),
+      '@utils': path.resolve(__dirname, './src/utils'),
       '@assets': path.resolve(__dirname, './src/assets')
     }
   },

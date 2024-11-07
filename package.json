@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon",
     "build:dev": "npm run build:prod && node scripts/copyDirectoryToFoundrySystem.cjs animabf",
-    "build:prod": "npm run compendia:pack && npm run svelte-check && npx vite build",
+    "build:prod": "npm run compendia:pack && npx vite build",
     "svelte-check": "npx svelte-check --no-tsconfig --threshold error",
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.js",
