@@ -275,17 +275,17 @@ export const parseExcelToActor = async (excelData, actor) => {
       combat: {
         attack: {
           base: {
-            value: excelData.HA_final
+            value: Math.max(excelData.HA_final, excelData.HA_SinArmas_final)
           }
         },
         block: {
           base: {
-            value: excelData.HD_final
+            value: Math.max(excelData.HP_final, excelData.HP_SinArmas_final)
           }
         },
         dodge: {
           base: {
-            value: excelData.HE_final
+            value: Math.max(excelData.HE_final, excelData.HE_SinArmas_final)
           }
         },
         wearArmor: {
