@@ -22,7 +22,7 @@ export const parseExcelToActor = async (excelData, actor) => {
     let excelVersion = excelVersionSplitted.pop();
     if (!requiredExcelVersions.some(item => item === excelVersion)) {
       const versionWarning =
-        'Incompatible excel version, please try with one of the following: ' +
+        game.i18n.localize("anima.ui.importDataFromExcelWarning") +
         requiredExcelVersions.join(', ');
       ui.notifications.warn(versionWarning);
       return;
