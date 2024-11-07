@@ -34,14 +34,18 @@ export default class ABFActorDirectory extends ActorDirectory {
   async importFromExcelDialog(document) {
     new Dialog(
       {
-        title: game.i18n.format('anima.ui.importDataFromExcelTitle', { name: document.name }),
+        title: game.i18n.format('anima.ui.importDataFromExcelTitle', {
+          name: document.name
+        }),
         content: await renderTemplate(
           'systems/animabf/templates/dialog/import-data-from-excel.html',
           {
-            hint1: game.i18n.format(
-              'anima.ui.importDataFromExcelHint1', {documentType: document.documentName}
-            ),
-            hint2: game.i18n.format('anima.ui.importDataFromExcelHint2', { name: document.name })
+            hint1: game.i18n.format('anima.ui.importDataFromExcelHint1', {
+              documentType: document.documentName
+            }),
+            hint2: game.i18n.format('anima.ui.importDataFromExcelHint2', {
+              name: document.name
+            })
           }
         ),
         buttons: {
@@ -96,4 +100,3 @@ export default class ABFActorDirectory extends ActorDirectory {
     });
   }
 }
-
