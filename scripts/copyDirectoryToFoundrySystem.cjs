@@ -10,6 +10,11 @@ let destPath;
 try {
   console.log(chalk.yellow('Trying to use fvtt to get dataPath...'));
   dataPath = execSync('fvtt configure get dataPath', { encoding: 'utf8' }).trim();
+  if (!dataPath || dataPath === 'undefined') {
+    msg = 'Error: fvtt not configured!';
+    console.log(chalk.yellow(msg));
+    throw new Error(msg);
+  }
   destPath = `${dataPath}/Data/systems`;
 } catch (e) {
   console.log(chalk.yellow('Falling back to foundryconfig.json'));

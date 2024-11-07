@@ -275,17 +275,17 @@ export const parseExcelToActor = async (excelData, actor) => {
       combat: {
         attack: {
           base: {
-            value: excelData.HA_final
+            value: Math.max(excelData.HA_final, excelData.HA_SinArmas_final)
           }
         },
         block: {
           base: {
-            value: excelData.HD_final
+            value: Math.max(excelData.HP_final, excelData.HP_SinArmas_final)
           }
         },
         dodge: {
           base: {
-            value: excelData.HE_final
+            value: Math.max(excelData.HE_final, excelData.HE_SinArmas_final)
           }
         },
         wearArmor: {
@@ -1008,19 +1008,29 @@ export const parseExcelToActor = async (excelData, actor) => {
     });
   }
 
+  
+
   for (var i = 0; i < artesMarciales.length; i++) {
-    const arteMarcialSeparada = artesMarciales[i]
-      .split('(')
-      .map(value => value.trim())
-      .filter(element => element !== '');
-    const grade = arteMarcialSeparada[1].replace(/[ \)]+/g, '');
-    await actor.createInnerItem({
-      name: arteMarcialSeparada[0],
-      type: ABFItems.MARTIAL_ART,
-      system: {
-        grade: { value: grade }
-      }
-    });
+    if (artesMarciales[i].includes("Tabla de Armas:")) {
+      await actor.createInnerItem({
+        name: artesMarciales[i],
+        type: ABFItems.COMBAT_TABLE
+      });
+    }
+    else {
+      const arteMarcialSeparada = artesMarciales[i]
+        .split('(')
+        .map(value => value.trim())
+        .filter(element => element !== '');
+      const grade = arteMarcialSeparada[1].replace(/[ \)]+/g, '');
+      await actor.createInnerItem({
+        name: arteMarcialSeparada[0],
+        type: ABFItems.MARTIAL_ART,
+        system: {
+          grade: { value: grade }
+        }
+      });
+    }
   }
 
   // for (var i = 0; i < tecnicasKi.length; i++) {
