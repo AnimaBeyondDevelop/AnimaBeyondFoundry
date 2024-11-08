@@ -12,7 +12,7 @@ import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternIt
  * @param {ABFActor} actor - provided Actor to update
  */
 export const parseExcelToActor = async (excelData, actor) => {
-  const requiredExcelVersions = ['8.6.4'];
+  const requiredExcelVersions = ['8.6.4', '8.7.0'];
   const excelVersionSplitted = SetEmptyIfUndefined(excelData.Version)
     .split(' ')
     .map(value => value.trim())
