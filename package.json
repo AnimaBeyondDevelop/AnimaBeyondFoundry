@@ -64,7 +64,8 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "lint-staged": {
     "src/**/*.ts": "eslint --fix --cache",
