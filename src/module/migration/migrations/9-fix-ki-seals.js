@@ -38,6 +38,8 @@ export const Migration9FixKiSeals = {
       if (typeof actor.system.domine.seals.major.water.isActive.value !== 'undefined') {
         actor.system.domine.seals.major.water.isActive = actor.system.domine.seals.major.water.isActive.value;
       }
+      delete actor.system.domine.seals.minor.earth;
+      delete actor.system.domine.seals.major.earth;
       return actor;
     }
 };
