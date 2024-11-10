@@ -7,10 +7,10 @@ const prettier = require('prettier');
 
 const { argv } = require('yargs');
 
-const { log } = require('./utils/log');
-const { getFile } = require('./utils/getFile');
-const { throwError } = require('./utils/throwError');
-const { zip } = require('./utils/zip');
+const { log } = require('./utils/log.cjs');
+const { getFile } = require('./utils/getFile.cjs');
+const { throwError } = require('./utils/throwError.cjs');
+const { zip } = require('./utils/zip.cjs');
 
 const { dry } = argv;
 
