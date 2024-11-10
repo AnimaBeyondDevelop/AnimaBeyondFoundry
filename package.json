@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "anima-beyond-foundry",
-  "version": "1.19.2",
+  "version": "1.19.3",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "type": "module",
   "scripts": {
@@ -10,8 +10,8 @@
     "build:prod": "npm run compendia:pack && npx vite build",
     "svelte-check": "npx svelte-check --no-tsconfig --threshold error",
     "clean": "rimraf dist/",
-    "release": "node scripts/release/release.js",
-    "release:dry": "node scripts/release/release.js --dry",
+    "release": "node scripts/release/release.cjs",
+    "release:dry": "node scripts/release/release.cjs --dry",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest src",
     "hook:pre-commit": "lint-staged",
     "cypress:open": "cd integration && cypress open",
@@ -64,7 +64,8 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "lint-staged": {
     "src/**/*.ts": "eslint --fix --cache",
