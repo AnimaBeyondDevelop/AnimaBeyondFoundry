@@ -1097,7 +1097,7 @@ export const INITIAL_ACTOR_DATA = {
     techniques: [],
     seals: {
       minor: {
-        earth: {
+        fire: {
           isActive: false
         },
         metal: {
@@ -1114,7 +1114,7 @@ export const INITIAL_ACTOR_DATA = {
         }
       },
       major: {
-        earth: {
+        fire: {
           isActive: false
         },
         metal: {

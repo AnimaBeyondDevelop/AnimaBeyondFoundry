@@ -38,13 +38,6 @@ export const Migration9FixKiSeals = {
       if (typeof actor.system.domine.seals.major.water.isActive.value !== 'undefined') {
         actor.system.domine.seals.major.water.isActive = actor.system.domine.seals.major.water.isActive.value;
       }
-      //fire
-      if (typeof actor.system.domine.seals.minor.fire.isActive.value !== 'undefined') {
-        actor.system.domine.seals.minor.fire.isActive = actor.system.domine.seals.minor.fire.isActive.value;
-      }
-      if (typeof actor.system.domine.seals.major.fire.isActive.value !== 'undefined') {
-        actor.system.domine.seals.major.fire.isActive = actor.system.domine.seals.major.fire.isActive.value;
-      }
       return actor;
     }
 };
