@@ -839,9 +839,6 @@ export const parseExcelToActor = async (excelData, actor) => {
         arsMagnus: [],
         seals: {
           minor: {
-            earth: {
-              isActive: excelData.Sello_Madera_Menor === '1'
-            },
             metal: {
               isActive: excelData.Sello_Metal_Menor === '1'
             },
@@ -859,9 +856,6 @@ export const parseExcelToActor = async (excelData, actor) => {
             }
           },
           major: {
-            earth: {
-              isActive: excelData.Sello_Madera_Mayor === '1'
-            },
             metal: {
               isActive: excelData.Sello_Metal_Mayor === '1'
             },

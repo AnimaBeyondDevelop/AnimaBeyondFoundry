@@ -470,14 +470,14 @@
         "techniques": [],
         "seals": {
           "minor": {
-            "earth": { "isActive": false },
+            "fire": { "isActive": false },
             "metal": { "isActive": false },
             "wind": { "isActive": false },
             "water": { "isActive": false },
             "wood": { "isActive": false }
           },
           "major": {
-            "earth": { "isActive": false },
+            "fire": { "isActive": false },
             "metal": { "isActive": false },
             "wind": { "isActive": false },
             "water": { "isActive": false },
