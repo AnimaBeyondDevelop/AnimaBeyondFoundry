@@ -3,7 +3,8 @@
   import IconBox from '@svelte/ui/iconBox.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import Button from '@svelte/ui/button.svelte';
+  import CardLabel from '@svelte/ui/card/cardLabel.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
@@ -116,11 +117,14 @@
       </CardCircle>
     </div>
   {/if}
+
   <div class="button">
-    <CardButton
-      title={i18n.localize('macros.combat.dialog.button.attack.title')}
-      onClick={() => onAttack(attack)}
-    />
+    <CardLabel
+      ><Button
+        title={i18n.localize('macros.combat.dialog.button.attack.title')}
+        onClick={() => onAttack(attack)}
+      /></CardLabel
+    >
   </div>
   {#if attack.isThrownable}
     <div class="circle-throw">
