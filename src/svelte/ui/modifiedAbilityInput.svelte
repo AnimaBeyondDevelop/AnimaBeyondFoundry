@@ -28,7 +28,7 @@
 </script>
 
 <input
-  class="input {cssClass}"
+  class={cssClass}
   value={ability.final}
   type="text"
   onfocus={e => e.currentTarget.select()}
@@ -37,7 +37,7 @@
 />
 
 <style lang="scss">
-  .input {
+  input[type='text'] {
     all: unset;
     width: 85px;
     color: white;
