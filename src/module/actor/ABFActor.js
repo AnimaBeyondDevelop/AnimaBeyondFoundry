@@ -706,8 +706,11 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.SECONDARY_SPECIAL_SKILL);
   }
 
-  getKnownSpells() {
-    return this.getItemsOf(ABFItems.SPELL);
+  getKnownSpells(combatType) {
+    if (combatType) {
+      return this.getItemsOf(ABFItems.SPELL).filter(w => w.system.combatType.value === combatType);
+    }
+    return this.getItemsOf(ABFItems.SPELL)
   }
 
   getSpellMaintenances() {
@@ -790,7 +793,10 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
   }
 
-  getPsychicPowers() {
+  getPsychicPowers(combatType) {
+    if (combatType) {
+      return this.getItemsOf(ABFItems.PSYCHIC_POWER).filter(w => w.system.combatType.value === combatType);
+    }
     return this.getItemsOf(ABFItems.PSYCHIC_POWER);
   }
 
@@ -914,10 +920,22 @@ export class ABFActor extends Actor {
    * or defending
    */
   getLastWeaponUsed(usage) {
-    usage = usage[0].toLowerCase() + usage.slice(1);
+    usage = usage[0].toUpperCase() + usage.slice(1);
     const lastWeaponUsed = this.getFlag('animabf', `last${usage}WeaponUsed`);
 
     return this.getWeapons().find(w => w.id === lastWeaponUsed);
+  }
+  getLastSpellUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastSpellUsed = this.getFlag('animabf', `last${usage}SpellUsed`);
+
+    return this.getKnownSpells().find(w => w.id === lastSpellUsed);
+  }
+  getLastPowerUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastPowerUsed = this.getFlag('animabf', `last${usage}PowerUsed`);
+
+    return this.getPsychicPowers().find(w => w.id === lastPowerUsed);
   }
 
   /**
@@ -927,7 +945,15 @@ export class ABFActor extends Actor {
    * or defending
    */
   setLastWeaponUsed(weapon, usage) {
-    usage = usage[0].toLowerCase() + usage.slice(1);
+    usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}WeaponUsed`, weapon.id);
+  }
+  setLastSpellUsed(spell, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}SpellUsed`, spell.id);
+  }
+  setLastPowerUsed(power, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
   }
 }
