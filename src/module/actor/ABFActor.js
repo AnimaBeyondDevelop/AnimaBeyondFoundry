@@ -538,7 +538,7 @@ export class ABFActor extends Actor {
     if (override) {
       return;
     }
-    if (castedi.nnate) {
+    if (casted.innate) {
       return;
     }
     if (casted.prepared) {
