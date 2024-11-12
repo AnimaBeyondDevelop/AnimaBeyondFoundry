@@ -1,21 +1,32 @@
 <script>
-  import PhysicAttackDialog from '@svelte/components/physicAttackDialog.svelte';
+  import Card from '@svelte/ui/card/card.svelte';
+  import CardMarker from '@svelte/ui/card/cardMarker.svelte';
   import { PhysicAttack } from '@module/combat/PhysicAttack.svelte';
+  import CardCombat from '@svelte/ui/card/cardCombat.svelte';
+  import ClippedBorder from '@svelte/ui/clippedBorder.svelte';
   let { data, document } = $props();
 
-  function onAttack(attack) {
-    console.log(attack);
-  }
-
-  let attack = new PhysicAttack(document);
-  console.log(attack);
-  let v = $derived(attack.modifiers.secondaryCritic.value());
+  let expanded = $state(false);
+  let { width, height } = $derived({
+    width: expanded ? '500px' : '300px',
+    height: '260px'
+  });
 </script>
 
-<PhysicAttackDialog {attack} {onAttack} />
-<p>Thrownable: {attack.isThrownable}</p>
-<p>Projectile: {attack.isProjectile}</p>
-<p>Thrown: {attack.thrown}</p>
-<p>Ranged: {attack.isRanged}</p>
-<p>ability.isSecondaryCritic: {attack.ability.modifiers.secondaryCritic.value}</p>
-<p>modifiers.isSecondaryCritic: {v}</p>
+<!---->
+<!-- <Card --width={width} --height={height}> -->
+<!--   {#snippet sidebar()} -->
+<!--     <CardMarker --width="30px" --height="15px"/> -->
+<!--   {/snippet} -->
+<!---->
+<!--   {#snippet body()} -->
+<!--     <h1>Patata</h1> -->
+<ClippedBorder --width={width} --height={height} --border-color="white"></ClippedBorder>
+<!--   {/snippet} -->
+<!---->
+<!--   {#snippet buttons()} -->
+<!--     <button>Click</button> -->
+<!--   {/snippet} -->
+<!-- </Card> -->
+
+<button onclick={() => (expanded = !expanded)}>Resize</button>

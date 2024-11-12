@@ -1,19 +1,16 @@
 <script>
-  // @ts-nocheck
-  let {
-    height,
-    width,
-    border,
-    children
-  } = $props();
+  /**
+   * @typedef {object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
 
 </script>
 
-<div class="marker"
-style={`--height:${height || '80px'};
---width:${width || '150px'};
---border:${border || '5px'};`}>
-  <div class="body">
+<div class="marker">
+  <div class="marker-body">
     {#if children}
       {@render children()}
     {/if}
@@ -21,27 +18,36 @@ style={`--height:${height || '80px'};
 </div>
 
 <style lang="scss">
+  $direction: var(--direction, "left");
+  $height: var(--height, 80px);
+  $width: var(--width, 150px);
+  $border: var(--border, 5px);
+
+  @mixin marker-shape($offset: 0px) {
+    clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%);
+  }
+
   .marker {
-    height: var(--height);
-    width: var(--width);
+    height: $height;
+    width: $width;
     position: relative;
-    background: black;
-    clip-path: polygon(37px 0, 100% 0, 100% 100%, 37px 100%, 0 40px);
+    background: $border-color;
+    padding: $border;
+    @include marker-shape();
     transition: width 1s ease-in-out;
 
-    .body {
-      display: grid;
-      grid-template-rows: 1fr;
+    .marker-body {
+      display: flex;
       gap: 8px;
       justify-content: end;
       place-items: center;
-      height: calc(var(--height) - var(--border) * 2);
-      width: calc(var(--width) - var(--border) * 2);
+      height: calc($height - $border * 2);
+      width: calc($width - $border * 2);
       position: absolute;
-      top: var(--border);
-      left: var(--border);
-      background: rgb(45, 45, 45);
-      clip-path: polygon(35px 0, 100% 0, 100% 100%, 35px 100%, 3px 35px);
+      top: $border;
+      left: $border;
+      background: $background-main;
+      @include marker-shape();
       transition: width 1s ease-in-out;
       z-index: -1;
     }
