@@ -24,7 +24,7 @@ import { mount, unmount } from 'svelte';
  *   - On submit, `this.document.update(this.plainData)` is called (using foundry's DocumentSheetV2 methods)
  * @template {import("svelte").Component} T
  * @template {Record<string,any>} TRenderContext
- * @param {ApplicationV2} BaseApplication
+ * @param {foundry.applications.api.ApplicationV2} BaseApplication
  */
 export default function SvelteApplicationMixin(BaseApplication) {
   /**
@@ -52,7 +52,11 @@ export default function SvelteApplicationMixin(BaseApplication) {
      * @type {SveltePart<T>}
      * @abstract
      */
-    get sveltePart() {}
+    get sveltePart() {
+      throw Error(
+        `SvelteRenderingError: ${this.constructor.name} must define 'get sveltePart()'.`
+      );
+    }
 
     /**
      * Instanciated svelte component
