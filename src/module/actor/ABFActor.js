@@ -472,6 +472,60 @@ export class ABFActor extends Actor {
     } else return false;
   }
 
+  canCast(
+    spell,
+    spellGrade,
+    castMethod,
+    increasedCost = { zeon: 0, pool: 0 }) {
+
+    let canCast = false;
+    let warningMessage = "";
+    let zeonCost = spell?.system.grades[spellGrade].zeon.value + increasedCost.zeon;
+    let zeonPool = this.system.mystic.zeon.value;
+
+    switch (castMethod) {
+      case "accumulated": {
+        let zeonAccumulated = this.system.mystic.zeon.accumulated;
+        canCast = zeonAccumulated >= increasedCost.zeon
+        warningMessage = 'dialogs.spellCasting.warning.zeonAccumulated'
+        break;
+      };
+      case "innate": {
+        let spellVia = spell?.system.via.value;
+        let innateMagic = this.system.mystic.innateMagic;
+        let innateVia = innateMagic.via.find(i => i.name == spellVia);
+        let innateMagicValue =
+          innateMagic.via.length !== 0 && innateVia
+            ? innateVia.system.final.value
+            : innateMagic.main.final.value;
+        canCast = innateMagicValue >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.innateMagic'
+        break;
+      };
+      case "prepared": {
+        canCast =
+          this.getPreparedSpells().find(
+            ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+          )?.system.prepared.value ?? false;
+        warningMessage = 'dialogs.spellCasting.warning.preparedSpell'
+        break;
+      };
+      case "override": {
+        return true
+      };
+    }
+    if (zeonPool < increasedCost.pool) {
+      canCast = false
+      warningMessage = 'dialogs.spellCasting.warning.zeonPool'
+    }
+    if (!canCast) {
+      ui.notifications.warn(
+        i18n.localize(warningMessage)
+      )
+    }
+    return canCast;
+  }
+
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
    *
@@ -484,7 +538,7 @@ export class ABFActor extends Actor {
     if (override) {
       return;
     }
-    if (casted.innate) {
+    if (castedi.nnate) {
       return;
     }
     if (casted.prepared) {
