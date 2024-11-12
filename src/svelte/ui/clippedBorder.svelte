@@ -14,25 +14,35 @@
 </div>
 
 <style lang="scss">
+  @use 'sass:list';
   $height: var(--height, 100px);
   $width: var(--width, 100px);
   $border: var(--border, 5px);
   $edge: var(--edge, 40px);
-  $clip: var(--clipp, polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%));
   $bg-color: var(--bg-color, $background-main);
   $border-color: var(--border-color, $border-color);
 
-  @mixin card-clip($edge, $border, $outer: 0) {
+  @function corner($coord-x, $coord-y, $slant-param) {
+    @if $coord-x != $coord-y {
+      @return (
+        calc($coord-x - $slant-param) $coord-y,
+        $coord-x calc($coord-y + $slant-param)
+      );
+    }
+    @return (
+      $coord-x calc($coord-y + $slant-param),
+      calc($coord-x + $slant-param) $coord-y
+    );
+  }
+
+  @mixin slanted-clip($edge, $border, $corners: 0 1 1 1, $outer: 0) {
     $offset: calc(($border * sqrt(2) - 2 * $border) * $outer);
+    $slant-param: calc($edge - $offset);
     $clip: polygon(
-      calc($edge - $offset) 0,
-      calc(100% - $edge + $offset) 0,
-      100% calc($edge - $offset),
-      100% calc(100% - $edge + $offset),
-      calc(100% - $edge + $offset) 100%,
-      calc($edge - $offset) 100%,
-      0 calc(100% - $edge + $offset),
-      0 calc($edge - $offset)
+      corner(0%, 0%, calc(list.nth($corners, 1) * $slant-param)),
+      corner(100%, 0%, calc(list.nth($corners, 2) * $slant-param)),
+      corner(100%, 100%, calc(-1 * list.nth($corners, 3) * $slant-param)),
+      corner(0%, 100%, calc(-1 * list.nth($corners, 4) * $slant-param))
     );
     -webkit-clip-path: $clip;
     clip-path: $clip;
@@ -43,7 +53,7 @@
     width: $width;
     height: $height;
     background: $border-color;
-    @include card-clip($edge, $border, 1);
+    @include slanted-clip($edge, $border, $outer: 1);
     transition: width 1s ease-in-out;
 
     &::before {
@@ -51,8 +61,7 @@
       position: absolute;
       inset: $border;
       background: $bg-color;
-      @include card-clip($edge, $border);
-      // transition: width 1s ease-in-out;
+      @include slanted-clip($edge, $border);
     }
   }
 </style>
