@@ -656,6 +656,7 @@
   "dialogs.spellCasting.warning.innateMagic": "No cuentas con suficiente Magia Innata",
   "dialogs.spellCasting.warning.preparedSpell": "No tienes este Conjuro Preparado",
   "dialogs.spellCasting.warning.zeonAccumulated": "No cuentas con suficiente Zeon Acumulado",
+  "dialogs.spellCasting.warning.zeonPool": "No cuentas con suficiente Zeon",
   "macros.combat.dialog.closeButton.title": "Cerrar",
   "macros.combat.dialog.confirmButton.title": "Confirmar",
   "macros.combat.dialog.applyAndCloseButton.title": "Aplicar y salir",
