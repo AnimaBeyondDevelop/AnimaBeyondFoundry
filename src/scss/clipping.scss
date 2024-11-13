@@ -1,0 +1,40 @@
+@use 'sass:list';
+
+/// Calculates the value of the corner points.
+/// @param {number} $coord-x - x coordinate of the corner
+/// @param {number} $coord-y - y coordinate of the corner
+/// @param {number} $slant-param - vertical/horizontal size of the slanted edge
+/// @return {list} - list of two values representing the points for the corner.
+@function corner($coord-x, $coord-y, $slant-param) {
+  @if $coord-x != $coord-y {
+    @return (
+      calc($coord-x - $slant-param) $coord-y,
+      $coord-x calc($coord-y + $slant-param)
+    );
+  }
+  @return (
+    $coord-x calc($coord-y + $slant-param),
+    calc($coord-x + $slant-param) $coord-y
+  );
+}
+
+///
+/// @param {Number} $edge - vertical/horizontal size of the slanted egde. Asumed to be 45º
+/// @param {Number} $border - border size in pixels
+/// @param {list} $corners [0 1 1 1] - List indicating which corners are slanted.
+/// Starting from the top left corner and advancing clockwise, a 1 indicates the corresponding corner
+/// is slanted and a 0 indicates a square corner.
+/// @param {Number} $outer [0] - A number indicating whether to get the outer (1) clip-path or the inner (0).
+/// @output
+@mixin slanted-edges($edge, $border, $corners: 0 1 1 1, $outer: 0) {
+  $offset: calc(($border * sqrt(2) - 2 * $border) * $outer);
+  $slant-param: calc($edge - $offset);
+  $clip: polygon(
+    corner(0%, 0%, calc(list.nth($corners, 1) * $slant-param)),
+    corner(100%, 0%, calc(list.nth($corners, 2) * $slant-param)),
+    corner(100%, 100%, calc(-1 * list.nth($corners, 3) * $slant-param)),
+    corner(0%, 100%, calc(-1 * list.nth($corners, 4) * $slant-param))
+  );
+  -webkit-clip-path: $clip;
+  clip-path: $clip;
+}
