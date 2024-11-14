@@ -13,19 +13,30 @@
   {@render children?.()}
 </div>
 
+<div class="card"></div>
+
+<div class="card2"></div>
+
 <style lang="scss">
-  @use 'clipping';
+  @use 'borders';
   $height: var(--height, 100px);
   $width: var(--width, 100px);
   $border: var(--border, 5px);
   $edge: var(--edge, 40px);
-  $corners: 1 0 0 1;
+
+  $corners: 0 0 0 1;
 
   .clipped-border {
     width: $width;
-    height: $height;
     transition: width 1s ease-in-out;
 
-    @include clipping.slanted-edges($edge, $border, $corners);
+    @include borders.arrow-shape(80px, $border);
+  }
+
+  .card {
+    margin: 10px;
+    width: $width;
+    height: $height;
+    @include borders.slanted-edges($edge, $border, $corners);
   }
 </style>
