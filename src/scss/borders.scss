@@ -100,39 +100,44 @@
 /// @param {number} $tip-width - Indicates the width for the arrow tips.
 /// @param {Number} $border-size - border size in pixels
 /// @param {Number} $inner [0] - A number indicating whether to get the outer (1) clip-path or the inner (0).
-@function arrow-clip($tip-width, $border-size, $inner: 0) {
+/// @param {String} $direction ['both'] - Direction of the arrow. Can be "left", "right" or "both".
+@function arrow-clip($tip-width, $border-size, $inner: 0, $direction: 'both') {
   $width: slant-width($tip-width, $border-size, $inner);
   $tip-offset: calc($inner * (sqrt(2) - 1) * $border-size);
+
+  $left: if($direction == 'both' or $direction == 'left', 1, 0);
+  $right: if($direction == 'both' or $direction == 'right', 1, 0);
   @return polygon(
     // Left arrow tip
-    calc(0% + $width) 100%,
-    calc(0% + $tip-offset) 50%,
-    calc(0% + $width) 0%,
+    calc(0% + $left * $width) 100%,
+    calc(0% + $left * $tip-offset) 50%,
+    calc(0% + $left * $width) 0%,
     // Right arrow tip
-    calc(100% - $width) 0%,
-    calc(100% - $tip-offset) 50%,
-    calc(100% - $width) 100%
+    calc(100% - $right * $width) 0%,
+    calc(100% - $right * $tip-offset) 50%,
+    calc(100% - $right * $width) 100%
   );
 }
 
 /// Draws a border with arrow (<=>) shape.
 /// @param {Number} $height - height of the element.
 /// @param {Number} $border-size - border size in pixels.
+/// @param {String} $direction ['both'] - Direction of the arrow. Can be "left", "right" or "both".
 /// @param {color} $border-color - Color used for the border.
 /// Defaults to `var(--border-color, variable.$border-color)`.
 /// @param {color} $bg-color - Color used for the background.
 /// Defaults to `var(--border-color, variable.$background-main)`.
-/// @output
 @mixin arrow-shape(
   $height,
   $border-size,
+  $direction: 'both',
   $border-color: var(--border-color, variable.$border-color),
   $bg-color: var(--bg-color, variable.$background-main)
 ) {
   height: $height;
   @include clipped-border(
-    arrow-clip(calc($height / 2), $border-size, 1),
-    arrow-clip(calc($height / 2), $border-size),
+    arrow-clip(calc($height / 2), $border-size, $inner: 1, $direction: $direction),
+    arrow-clip(calc($height / 2), $border-size, $direction: $direction),
     $border-size,
     $border-color,
     $bg-color
