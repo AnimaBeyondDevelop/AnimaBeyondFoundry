@@ -19,24 +19,13 @@
   $width: var(--width, 100px);
   $border: var(--border, 5px);
   $edge: var(--edge, 40px);
-  $bg-color: var(--bg-color, $background-main);
-  $border-color: var(--border-color, $border-color);
-  $corners: 1 1 0 1;
+  $corners: 1 0 0 1;
 
   .clipped-border {
-    position: relative;
     width: $width;
     height: $height;
-    background: $border-color;
-    @include clipping.slanted-edges($edge, $border, $corners, $outer: 1);
     transition: width 1s ease-in-out;
 
-    &::before {
-      content: '';
-      position: absolute;
-      inset: $border;
-      background: $bg-color;
-      @include clipping.slanted-edges($edge, $border, $corners);
-    }
+    @include clipping.slanted-edges($edge, $border, $corners);
   }
 </style>
