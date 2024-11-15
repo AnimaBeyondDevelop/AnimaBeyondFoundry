@@ -486,7 +486,7 @@ export class ABFActor extends Actor {
     switch (castMethod) {
       case "accumulated": {
         let zeonAccumulated = this.system.mystic.zeon.accumulated;
-        canCast = zeonAccumulated >= increasedCost.zeon
+        canCast = zeonAccumulated >= zeonCost
         warningMessage = 'dialogs.spellCasting.warning.zeonAccumulated'
         break;
       };
@@ -520,7 +520,7 @@ export class ABFActor extends Actor {
     }
     if (!canCast) {
       ui.notifications.warn(
-        i18n.localize(warningMessage)
+        game.i18n.localize(warningMessage)
       )
     }
     return canCast;
