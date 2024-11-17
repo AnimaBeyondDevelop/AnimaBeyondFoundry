@@ -1,27 +1,35 @@
 @use 'sass:list';
-@use 'variable';
+@use 'variable' as variables;
 
 /// Draws a border around a colored shape given by a clip-path.
 /// @param {clip-path} $innerClip - Clip defining the inner line of the border.
 /// @param {clip-path} $outerClip - Clip defining the outer line of the border.
 /// @param {Number} $border-size - border size in pixels
 /// @param {color} $border-color - Color used for the border.
-/// Defaults to `var(--border-color, variable.$border-color)`.
 /// @param {color} $bg-color - Color used for the background.
-/// Defaults to `var(--border-color, variable.$background-main)`.
 @mixin clipped-border($innerClip, $outerClip, $border-size, $border-color, $bg-color) {
+  border: unset;
   position: relative;
   background: $border-color;
   -webkit-clip-path: $outerClip;
   clip-path: $outerClip;
 
-  &::before {
-    content: '';
+  .content {
     position: absolute;
     inset: $border-size;
     background: $bg-color;
     -webkit-clip-path: $innerClip;
     clip-path: $innerClip;
+  }
+
+  &::before {
+    position: absolute;
+    inset: $border-size;
+    background: $bg-color;
+    -webkit-clip-path: $innerClip;
+    clip-path: $innerClip;
+    content: '';
+    z-index: -1;
   }
 }
 
@@ -76,16 +84,16 @@
 /// Starting from the top left corner and advancing clockwise, a 1 indicates the corresponding corner
 /// is slanted and a 0 indicates a square corner.
 /// @param {color} $border-color - Color used for the border.
-/// Defaults to `var(--border-color, variable.$border-color)`.
+/// Defaults to `variables.$border-color`.
 /// @param {color} $bg-color - Color used for the background.
-/// Defaults to `var(--border-color, variable.$background-main)`.
+/// Defaults to `variables.$background-main`.
 /// @output
 @mixin slanted-edges(
   $edge,
   $border-size,
   $corners: 0 1 1 1,
-  $border-color: var(--border-color, variable.$border-color),
-  $bg-color: var(--bg-color, variable.$background-main)
+  $border-color: variables.$border-color,
+  $bg-color: variables.$background-main
 ) {
   @include clipped-border(
     slanted-clip($edge, $border-size, $corners, $inner: 1),
@@ -124,15 +132,15 @@
 /// @param {Number} $border-size - border size in pixels.
 /// @param {String} $direction ['both'] - Direction of the arrow. Can be "left", "right" or "both".
 /// @param {color} $border-color - Color used for the border.
-/// Defaults to `var(--border-color, variable.$border-color)`.
+/// Defaults to `variables.$border-color`.
 /// @param {color} $bg-color - Color used for the background.
-/// Defaults to `var(--border-color, variable.$background-main)`.
+/// Defaults to `variables.$background-main`.
 @mixin arrow-shape(
   $height,
   $border-size,
   $direction: 'both',
-  $border-color: var(--border-color, variable.$border-color),
-  $bg-color: var(--bg-color, variable.$background-main)
+  $border-color: variables.$border-color,
+  $bg-color: variables.$background-main
 ) {
   height: $height;
   @include clipped-border(
