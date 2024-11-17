@@ -6,7 +6,6 @@
 
   /** @type {Props} */
   let { children } = $props();
-
 </script>
 
 <div class="marker">
@@ -18,7 +17,9 @@
 </div>
 
 <style lang="scss">
-  $direction: var(--direction, "left");
+  @use 'variable' as *;
+
+  $direction: var(--direction, 'left');
   $height: var(--height, 80px);
   $width: var(--width, 150px);
   $border: var(--border, 5px);

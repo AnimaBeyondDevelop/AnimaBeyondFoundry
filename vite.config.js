@@ -38,8 +38,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern-compiler',
-        loadPaths: ['src/scss'],
-        additionalData: `@use 'variable.scss' as *;`
+        loadPaths: ['src/scss']
       }
     }
   },

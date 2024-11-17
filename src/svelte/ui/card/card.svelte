@@ -29,6 +29,7 @@
 </div>
 
 <style lang="scss">
+  @use 'variable' as *;
   @use 'borders';
 
   $height: var(--height, 260px);
