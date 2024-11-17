@@ -3,7 +3,6 @@
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
   import { PhysicAttack } from '@module/combat/PhysicAttack.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
-  import ClippedBorder from '@svelte/ui/clippedBorder.svelte';
   let { data, document } = $props();
 
   let expanded = $state(false);
@@ -21,7 +20,6 @@
 <!---->
 <!--   {#snippet body()} -->
 <!--     <h1>Patata</h1> -->
-<ClippedBorder --width={width} --height={height} --border-color="white"></ClippedBorder>
 <!--   {/snippet} -->
 <!---->
 <!--   {#snippet buttons()} -->
