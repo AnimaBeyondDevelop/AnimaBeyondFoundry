@@ -37,7 +37,14 @@
   .card-border {
     height: $height;
     width: $width;
-    @include borders.slanted-edges($edge, $border, 0 1 0 1);
+    // bg-color set to sidebar-color to avoid a 1px diagonal line on slanted bottom-left corner
+    @include borders.slanted-edges(
+      $edge,
+      $border,
+      0 1 0 1,
+      $border-color,
+      $sidebar-color
+    );
 
     .content {
       display: flex;
