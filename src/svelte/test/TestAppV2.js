@@ -4,8 +4,12 @@ import SvelteApplicationMixin from '@svelte/SvelteApplicationMixin.svelte';
 const { ApplicationV2, DocumentSheetV2 } = foundry.applications.api;
 const { ItemSheetV2, ActorSheetV2 } = foundry.applications.sheets;
 
-export class TestAppV2 extends SvelteApplicationMixin(ActorSheetV2) {
+export class TestAppV2 extends SvelteApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
+    classes: ['animabf-frameless-app'],
+    window: {
+      frame: false
+    },
     form: {
       submitOnChange: true
     }
