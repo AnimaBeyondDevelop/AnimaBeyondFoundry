@@ -1,4 +1,5 @@
 <script>
+  // TODO: Remove this file, it is no longer used (instead we use tabs and cardTabbedCombat)
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CombatAttackDialog from '@svelte/components/combatAttackDialog.svelte';
@@ -152,14 +153,6 @@
 </div>
 
 <style lang="scss">
-  :global(:root) {
-    --background-color: black;
-    --main-color: rgb(184, 184, 184);
-    --secondary-color: rgb(45, 45, 45);
-    --light-color: white;
-    --main-text-color: black;
-    --secondary-text-color: white;
-  }
   .template {
     height: 300px;
     width: 500px;

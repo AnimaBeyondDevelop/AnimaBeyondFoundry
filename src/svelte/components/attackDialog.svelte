@@ -140,14 +140,6 @@
 </div>
 
 <style lang="scss">
-  :global(:root) {
-    --background-color: black;
-    --main-color: rgb(184, 184, 184);
-    --secondary-color: rgb(45, 45, 45);
-    --light-color: white;
-    --main-text-color: black;
-    --secondary-text-color: white;
-  }
   .template {
     height: 300px;
     width: 500px;
