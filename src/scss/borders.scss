@@ -151,3 +151,17 @@
     $bg-color
   );
 }
+
+@mixin circle(
+  $height,
+  $border-size,
+  $border-color: variables.$border-color,
+  $bg-color: variables.$background-main
+) {
+  width: $height;
+  height: $height;
+  border: $border-size solid;
+  border-radius: 50%;
+  border-color: $border-color;
+  background: $bg-color;
+} ;

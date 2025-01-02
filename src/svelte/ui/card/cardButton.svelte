@@ -1,93 +1,89 @@
 <script>
-  // @ts-nocheck
+  import { parseCssCustomProperties } from '@svelte/utils';
+  import Icon from '../icon.svelte';
+
+  /**
+   * @import { FormEventHandler } from "svelte/elements";
+   *
+   * @typedef Props
+   * @property {string} [text]
+   * @property {string} [icon]
+   * @property {FormEventHandler<HTMLButtonElement>} onclick
+   * @property {string} [class]
+   * @property {"angled"|"circle"} [shape="angled"]
+   * @property {string} [height="60px"]
+   * @property {string} [width="fit-content"]
+   */
+
+  /** @type {Props} */
   let {
-    data,
-    title,
-    onClick,
+    text = '',
+    icon,
+    onclick,
+    shape = 'angled',
     height,
     width,
-    border,
-    edge,
-    fontSize,
-    fontColor,
-    color,
-    secondary
+    class: cssClass = ''
   } = $props();
+
+  let cssCustomProps = parseCssCustomProperties({ height, width });
 </script>
 
-<div
-  class="button"
-  style={`--height:${height || '60px'};
---width:${width || '220px'};
---border:${border || '5px'};
---edge:${edge || '25px'};
---font-size:${fontSize || '34px'};
---font-color:${secondary ? 'var(--secondary-text-color)' : 'var(--main-text-color)'};
---color:${secondary ? 'var(--secondary-color)' : 'var(--light-color)'}
-`}
->
-  <button data-id={data} type="button" onclick={onClick}>{title}</button>
-</div>
+<!--
+@component
+Button component with card styling. Its shape can be either `circle` or `angled`.
+
+Notes:
+- It reads styles from `./card.scss`, but their value can overwritten by passings custom css properties
+to this component:
+```tsx
+  <CardButton text="Attack" shape="angled" height="25px" --border-size=5px />
+```
+```tsx
+  <CardButton icon="point-blank" shape="circle" height="25px" --border-size={0.01 * height} />
+```
+-->
+<button class={cssClass + ' ' + shape} type="button" style={cssCustomProps} {onclick}>
+  {#if icon}
+    <Icon name={icon} />
+  {/if}
+  {text}
+</button>
 
 <style lang="scss">
-  .button {
-    display: grid;
-    place-items: center;
-    height: var(--height);
-    width: var(--width);
-    position: relative;
-    background: var(--background-color);
-    clip-path: polygon(
-      calc(var(--edge) + var(--border) / 2) 0,
-      calc(100% - calc(var(--edge) + var(--border) / 2)) 0,
-      100% calc(var(--height) / 2),
-      calc(100% - calc(var(--edge) + var(--border) / 2)) 100%,
-      calc(var(--edge) + var(--border) / 2) 100%,
-      0 calc(var(--height) / 2)
-    );
-    transition:
-      height 0.5s ease-in-out,
-      width 0.5s ease-in-out,
-      clip-path 0.5s ease-in-out;
+  @use 'variable';
+  @use 'borders';
+  @use 'card' as *;
 
-    &::before {
-      content: '';
-      height: calc(var(--height) - var(--border) * 2);
-      width: calc(var(--width) - var(--border) * 2);
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      background: var(--color);
-      clip-path: polygon(
-        var(--edge) 0,
-        calc(100% - var(--edge)) 0,
-        calc(100% - calc(var(--edge) / 10)) calc((var(--height) - var(--border) * 2) / 2),
-        calc(100% - var(--edge)) 100%,
-        var(--edge) 100%,
-        calc(var(--edge) / 10) calc((var(--height) - var(--border) * 2) / 2)
+  $height: var(--height, 60px);
+  $width: var(--width, fit-content);
+
+  button {
+    height: $height;
+    width: $width;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    @include text();
+    @include buttonlike();
+
+    &.angled {
+      @include borders.arrow-shape(
+        $height,
+        $border-size,
+        'both',
+        $border-color,
+        $background-color
       );
-      z-index: -1;
-      transition:
-        height 0.5s ease-in-out,
-        width 0.5s ease-in-out,
-        clip-path 0.5s ease-in-out;
+      padding-left: calc($height / 2);
+      padding-right: calc($height / 2);
     }
 
-    button {
-      width: auto;
-      border: none;
-      background: none;
-      font-size: var(--font-size);
-      color: var(--font-color);
-      cursor: pointer;
-      transition: font-size 0.2s;
-      &:hover {
-        box-shadow: none;
-        font-size: calc(var(--font-size) - 2px);
-      }
-      &:focus {
-        box-shadow: none;
-      }
+    &.circle {
+      @include borders.circle($height, $border-size, $border-color, $background-color);
+      padding: calc(0.8 * $border-size);
     }
   }
 </style>
