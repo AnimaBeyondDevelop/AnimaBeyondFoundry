@@ -1,0 +1,34 @@
+@use "variable";
+
+$card-height: var(--height, 260px);
+$card-width: var(--width, 500px);
+$border-size: var(--border-size, 5px);
+$edge-size: var(--edge, 40px);
+$sidebar-size: var(--sidebar-size, 60px);
+
+$border-color: var(--border-color, variable.$border-color);
+$background-color: var(--background-color, variable.$background-main);
+$background-light: var(--background-light, variable.$background-light);
+$sidebar-color: var(--sidebar-color, variable.$background-secondary);
+$text-color: var(--text-color, variable.$text-color);
+
+$font-size: var(--font-size, 34px);
+$font-color: var(--font-color, currentcolor);
+
+@mixin buttonlike {
+  cursor: pointer;
+
+  &:hover {
+    --background-color: var(--background-active, #{$background-light});
+    transform: scale(1.02);
+    box-shadow: unset;
+  }
+  &:focus {
+    box-shadow: unset;
+  }
+}
+
+@mixin text {
+  font-size: $font-size;
+  color: $font-color;
+}

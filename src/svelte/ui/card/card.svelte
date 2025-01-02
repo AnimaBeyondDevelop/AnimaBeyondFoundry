@@ -1,7 +1,7 @@
 <script>
   /**
    * @typedef {Object} Props
-   * @property {import('svelte').Snippet} sidebar
+   * @property {import('svelte').Snippet} [sidebar]
    * @property {import('svelte').Snippet} body
    */
 
@@ -21,29 +21,43 @@
   </div>
 </div>
 
+<!--
+@component
+Card component. It defines a slanted card shape, with a sidebar and a body snippets.
+
+Notes:
+- It reads styles from `./card.scss`, but their value can overwritten by passings custom css properties
+to this component:
+```tsx
+  <Card {body} {sidebar} --border-size=5px />
+```
+```tsx
+  <Card --width=300px --border-size=10px >
+    {#snippet sidebar()}
+      <Icon name="dice" />
+    {/snippet}
+
+    {#snippet body()}
+      <h1> Card title </h1>
+    {/snippet}
+  </Card>
+```
+-->
 <style lang="scss">
   @use 'variable' as *;
   @use 'borders';
-
-  $height: var(--height, 260px);
-  $width: var(--width, 500px);
-  $border: var(--border, 5px);
-  $border-color: var(--border-color, $border-color);
-  $bg-color: var(--bg-color, $background-main);
-  $sidebar-color: var(--sidebar-color, $background-secondary);
-  $edge: var(--edge, 40px);
-  $sidebar: var(--sidebar, 60px);
+  @use 'card';
 
   .card-border {
-    height: $height;
-    width: $width;
+    height: card.$card-height;
+    width: card.$card-width;
     // bg-color set to sidebar-color to avoid a 1px diagonal line on slanted bottom-left corner
     @include borders.slanted-edges(
-      $edge,
-      $border,
+      card.$edge-size,
+      card.$border-size,
       0 1 0 1,
-      $border-color,
-      $sidebar-color
+      card.$border-color,
+      card.$sidebar-color
     );
 
     .content {
@@ -58,20 +72,20 @@
         gap: 5px;
         place-items: center;
         justify-content: end;
-        height: calc($height - $border * 2);
-        width: $sidebar;
-        background: $sidebar-color;
+        height: calc(card.$card-height - card.$border-size * 2);
+        width: card.$sidebar-size;
+        background: card.$sidebar-color;
       }
 
       .separator {
-        background-color: $border-color;
-        width: $border;
+        background-color: card.$border-color;
+        width: card.$border-size;
         flex-shrink: 0;
       }
 
       .card-body {
-        width: calc($width - $border - $edge);
-        background: $bg-color;
+        width: calc(card.$card-width - card.$border-size - card.$edge-size);
+        background: card.$background-color;
       }
     }
   }
