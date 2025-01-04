@@ -9,7 +9,7 @@
 </script>
 
 <div class="marker">
-  <div class="marker-body">
+  <div class="content">
     {#if children}
       {@render children()}
     {/if}
@@ -18,6 +18,7 @@
 
 <style lang="scss">
   @use 'variable' as *;
+  @use 'borders';
 
   $direction: var(--direction, 'left');
   $height: var(--height, 80px);
@@ -29,28 +30,7 @@
   }
 
   .marker {
-    height: $height;
     width: $width;
-    position: relative;
-    background: $border-color;
-    padding: $border;
-    @include marker-shape();
-    transition: width 1s ease-in-out;
-
-    .marker-body {
-      display: flex;
-      gap: 8px;
-      justify-content: end;
-      place-items: center;
-      height: calc($height - $border * 2);
-      width: calc($width - $border * 2);
-      position: absolute;
-      top: $border;
-      left: $border;
-      background: $background-main;
-      @include marker-shape();
-      transition: width 1s ease-in-out;
-      z-index: -1;
-    }
+    @include borders.arrow-shape($height, $border, 'left');
   }
 </style>
