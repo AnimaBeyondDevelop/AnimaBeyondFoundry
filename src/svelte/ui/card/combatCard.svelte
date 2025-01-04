@@ -37,6 +37,8 @@ Combat card component. It defines a card component with a body divided into a to
 selector (middle) and bottom regions. It also adds combat buttons around the card.
 
 Notes:
+- It expects top snippet to have divs with the .row css class, the last of which will be located right
+on top of the selector.
 - It reads styles from `./card.scss`, but their value can overwritten by passings custom css properties
 to this component:
 ```tsx
@@ -59,7 +61,9 @@ to this component:
     {/snippet}
 
     {#snippet top()}
-      <h1> Attacking! </h1>
+      <div class='row'>
+        <h1> Attacking! </h1>
+      </div>
     {/snippet}
   </CombatCard>
 ```
@@ -117,12 +121,27 @@ to this component:
     .content {
       .body {
         height: 100%;
-        width: calc($width - $border - $edge);
+        width: 100%;
         display: flex;
         flex-direction: column;
 
+        .row {
+          display: flex;
+          padding: 5px;
+          &:first-child {
+            padding-right: card.$edge-size;
+          }
+          &:last-child {
+            margin-top: auto;
+          }
+          & > div:last-of-type {
+            margin-left: auto;
+          }
+        }
         .top {
-          height: 55%;
+          flex: 2;
+          display: flex;
+          flex-direction: column;
         }
 
         .selector {
@@ -130,7 +149,9 @@ to this component:
           flex-shrink: 0;
         }
         .bottom {
-          height: 30%;
+          flex: 1;
+          display: flex;
+          flex-direction: row;
         }
       }
     }
