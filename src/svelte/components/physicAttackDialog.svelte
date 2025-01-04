@@ -8,6 +8,7 @@
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
+  import CombatCard from '@svelte/ui/card/combatCard.svelte';
 
   /**
    * @typedef {import("@module/combat/PhysicAttack.svelte").PhysicAttack} PhysicAttack
@@ -25,16 +26,21 @@
   let markerWidth = { normal: '150px', expanded: '435px' };
   let togglePanel = $state(false);
   let fatigueAvailable = attack.attacker.system.characteristics.secondaries.fatigue.value;
+  // TODO: expanded sidebar 210px (i.e. 150px bigger). Width should be updated accordingly
+
+  const buttons = [
+    { location: 'sidebar', props: { icon: 'dice', onclick: () => {} } },
+    { location: 'separator', props: { icon: 'distance', onclick: () => {} } },
+    {
+      location: 'main',
+      props: { text: 'Attack', onclick: () => {} },
+      secondary: { icon: 'no-throw', onclick: () => {} }
+    }
+  ];
 </script>
 
-<div class="template">
-  <g class="background">
-    <CardCombat
-      width={togglePanel ? '650px' : '500px'}
-      sidebar={togglePanel ? '210px' : '60px'}
-    ></CardCombat>
-  </g>
-  <div class="sidebar">
+<CombatCard {buttons}>
+  {#snippet sidebar()}
     <div></div>
     <div></div>
     <!-- 
@@ -52,55 +58,60 @@
       --icon-margin="-5px"
       --transform={!togglePanel ? 'scaleX(-1)' : ''}
     /> -->
-  </div>
-  <div class="box">
-    <IconBox
-      icon="fatigue"
-      bind:activeIcons={attack.ability.modifiers.fatigue.value}
-      quantity={Math.min(fatigueAvailable, 5)}
-      title={i18n?.localize('macros.combat.dialog.fatigue.title') +
-        ` (${fatigueAvailable})`}
-    />
-  </div>
-  <g class="select">
+  {/snippet}
+  {#snippet top()}
+    <div class="box">
+      <IconBox
+        icon="fatigue"
+        bind:activeIcons={attack.ability.modifiers.fatigue.value}
+        quantity={Math.min(fatigueAvailable, 5)}
+        title={i18n?.localize('macros.combat.dialog.fatigue.title') +
+          ` (${fatigueAvailable})`}
+      />
+    </div>
+    <div class="row">
+      <div class="primary">
+        <InputLabel label="macros.combat.dialog.attack" icon="attack">
+          <ModifiedAbilityInput bind:ability={attack.ability} />
+        </InputLabel>
+      </div>
+      <div class="right-icons">
+        <IconCheckBox
+          icon="high-ground"
+          bind:value={attack.ability.modifiers.highGround.active}
+          title={i18n.localize('macros.combat.dialog.highGround.title')}
+          --icon-size="30px"
+        />
+        {#if attack.isRanged}
+          <!-- TODO: Are this "hidden" needed? -->
+          <IconCheckBox
+            icon="target-in-cover"
+            bind:value={attack.ability.modifiers.targetInCover.active}
+            title={i18n.localize('macros.combat.dialog.targetInCover.title')}
+            hidden={!attack.isRanged}
+          />
+          <IconCheckBox
+            icon="poor-visibility"
+            bind:value={attack.ability.modifiers.poorVisibility.active}
+            title={i18n.localize('macros.combat.dialog.poorVisibility.title')}
+            hidden={!attack.isRanged}
+          />
+        {/if}
+      </div>
+    </div>
+  {/snippet}
+  {#snippet selector()}
     <CardSelect bind:value={attack.weapon} options={attack.availableWeapons} />
-  </g>
-  <g class="marker">
-    <CardMarkerCritic
-      bind:damage={attack.damage}
-      bind:selectedCritic={attack.critic}
-      critics={attack.weapon.system.critic}
-      width={markerWidth}
-    />
-  </g>
-  <g class="primary">
-    <InputLabel label="macros.combat.dialog.attack" icon="attack">
-      <ModifiedAbilityInput bind:ability={attack.ability} />
-    </InputLabel>
-  </g>
-  <div class="right-icons">
-    <IconCheckBox
-      icon="high-ground"
-      bind:value={attack.ability.modifiers.highGround.active}
-      title={i18n.localize('macros.combat.dialog.highGround.title')}
-      --icon-size="30px"
-    />
-    {#if attack.isRanged}
-      <!-- TODO: Are this "hidden" needed? -->
-      <IconCheckBox
-        icon="target-in-cover"
-        bind:value={attack.ability.modifiers.targetInCover.active}
-        title={i18n.localize('macros.combat.dialog.targetInCover.title')}
-        hidden={!attack.isRanged}
+    <g class="marker">
+      <CardMarkerCritic
+        bind:damage={attack.damage}
+        bind:selectedCritic={attack.critic}
+        critics={attack.weapon.system.critic}
+        width={markerWidth}
       />
-      <IconCheckBox
-        icon="poor-visibility"
-        bind:value={attack.ability.modifiers.poorVisibility.active}
-        title={i18n.localize('macros.combat.dialog.poorVisibility.title')}
-        hidden={!attack.isRanged}
-      />
-    {/if}
-  </div>
+    </g>
+  {/snippet}
+  <!-- TODO: implement this logic.
   {#if !distanceAutomation && attack.isRanged}
     <div class="circle-distance">
       <CardCircle size="40px">
@@ -138,7 +149,8 @@
       </CardCircle>
     </div>
   {/if}
-</div>
+  -->
+</CombatCard>
 
 <style lang="scss">
   .template {
