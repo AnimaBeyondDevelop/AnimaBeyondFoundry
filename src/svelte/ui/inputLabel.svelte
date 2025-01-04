@@ -6,7 +6,7 @@
    * @property {string} [iconFolder] Path to the folder containing the icons.
    * Default value is `/systems/animabf/assets/icons/svg/`
    * @property {import('svelte/elements').MouseEventHandler<HTMLInputElement>} [oniconClick]
-   * @property {import('svelte').Snippet} children
+   * @property {import('svelte').Snippet} [children]
    * @property {boolean} [iconLabel] If set, forces the label to be an icon (when `true`) or a text
    * label (when `false`). When unset, it reads the value set in system settings.
    */
@@ -14,7 +14,7 @@
   /** @type {props} */
   let {
     label,
-    icon=$bindable(''),
+    icon = $bindable(''),
     iconFolder = $bindable('/systems/animabf/assets/icons/svg/'),
     oniconClick,
     children,
@@ -22,7 +22,7 @@
   } = $props();
 
   if (iconLabel === undefined) {
-    iconLabel = /** @type {boolean} */ (game.settings?.get("animabf", "USE_ICON_LABELS"));
+    iconLabel = /** @type {boolean} */ (game.settings?.get('animabf', 'USE_ICON_LABELS'));
   }
 
   let iconPath = $derived.by(() => {
@@ -34,23 +34,21 @@
 
 <div class="label-container">
   <input
-    class={iconLabel ? "icon" : "label"}
+    class={iconLabel ? 'icon' : 'label'}
     type="image"
     onclick={oniconClick}
-    title={game.i18n?.localize(label+'.tooltip')}
+    title={game.i18n?.localize(label + '.tooltip')}
     src={iconPath}
-    alt={game.i18n?.localize(label+'.label')}
+    alt={game.i18n?.localize(label + '.label')}
   />
   {@render children?.()}
 </div>
 
 <style lang="scss">
   .label-container {
-    width: 140px;
-    display: grid;
-    grid-template: 1fr/0.6fr 1fr;
-    place-items: center;
-    gap: 0.2rem;
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
 
     .icon {
       height: var(--icon-size, 35px);
@@ -64,7 +62,7 @@
       }
     }
 
-    .label {
+    input {
       color: white;
       font-size: 20px;
     }

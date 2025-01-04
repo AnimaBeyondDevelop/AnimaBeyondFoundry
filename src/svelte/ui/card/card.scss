@@ -6,9 +6,12 @@ $border-size: var(--border-size, 5px);
 $edge-size: var(--edge, 40px);
 $sidebar-size: var(--sidebar-size, 60px);
 
+$navbutton-size: var(--nav-size, 50px);
+
 $border-color: var(--border-color, variable.$border-color);
 $background-color: var(--background-color, variable.$background-main);
 $background-light: var(--background-light, variable.$background-light);
+$background-active: var(--background-active, #{$background-light});
 $sidebar-color: var(--sidebar-color, variable.$background-secondary);
 $text-color: var(--text-color, variable.$text-color);
 
@@ -19,7 +22,7 @@ $font-color: var(--font-color, currentcolor);
   cursor: pointer;
 
   &:hover {
-    --background-color: var(--background-active, #{$background-light});
+    --background-color: #{$background-active};
     transform: scale(1.02);
     box-shadow: unset;
   }
