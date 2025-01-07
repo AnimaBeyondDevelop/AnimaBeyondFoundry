@@ -10,26 +10,37 @@
 @mixin clipped-border($innerClip, $outerClip, $border-size, $border-color, $bg-color) {
   border: unset;
   position: relative;
-  background: $border-color;
-  -webkit-clip-path: $outerClip;
-  clip-path: $outerClip;
+  padding: $border-size;
+  background: transparent;
+  isolation: isolate;
 
   .content {
-    position: absolute;
-    inset: $border-size;
-    background: $bg-color;
+    height: 100%;
+    width: 100%;
     -webkit-clip-path: $innerClip;
     clip-path: $innerClip;
   }
 
   &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background: $border-color;
+    -webkit-clip-path: $outerClip;
+    clip-path: $outerClip;
+  }
+
+  &::after {
+    content: '';
     position: absolute;
     inset: $border-size;
+    z-index: -1;
+
     background: $bg-color;
     -webkit-clip-path: $innerClip;
     clip-path: $innerClip;
-    content: '';
-    z-index: -1;
   }
 }
 
