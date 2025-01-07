@@ -21,7 +21,7 @@
    * @property {Snippet} [top]
    * @property {Snippet} [selector]
    * @property {Snippet} [bottom]
-   * @property {CombatCardButton[]} buttons
+   * @property {Snippet} [buttons]
    */
 
   import Card from '@svelte/ui/card/card.svelte';
@@ -79,14 +79,9 @@ to this component:
     {/snippet}
   </Card>
 
-  {#each buttons as { location, secondary, props }}
-    <div class={`button-${location}`}>
-      <CardButton {...props} shape={location === 'main' ? 'angled' : 'circle'} />
-      {#if secondary}
-        <CardButton {...secondary} class="secondary" shape="circle" />
-      {/if}
-    </div>
-  {/each}
+  <div class="buttons">
+    {@render buttons?.()}
+  </div>
 </div>
 
 <style lang="scss">
@@ -166,32 +161,34 @@ to this component:
       }
     }
 
-    .button-sidebar {
-      @include button-container(32px);
-      position: absolute;
-      left: calc(($border * 0.2) - $height / 2);
-      bottom: calc($edge + ($border * 1.5) - $height / 2);
-    }
-
-    .button-separator {
-      @include button-container(32px);
-      position: absolute;
-      bottom: calc(($border * 1.5) - $height / 2);
-      left: calc($sidebar + ($border * 1.5) - $height / 2);
-    }
-
-    .button-main {
-      @include button-container(50px);
-      display: flex;
-      flex-shrink: 0;
-      align-items: center;
-      position: absolute;
-      bottom: calc(($border - $height) / 2);
-      right: calc(($border - $height) / 2);
-      .secondary {
+    .buttons :global {
+      #sidebar-button {
+        @include button-container(32px);
         position: absolute;
-        left: -16px;
-        --height: 38px;
+        left: calc(($border * 0.2) - $height / 2);
+        bottom: calc($edge + ($border * 1.5) - $height / 2);
+      }
+
+      #separator-button {
+        @include button-container(32px);
+        position: absolute;
+        bottom: calc(($border * 1.5) - $height / 2);
+        left: calc($sidebar + ($border * 1.5) - $height / 2);
+      }
+
+      #main-button {
+        @include button-container(50px);
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        position: absolute;
+        bottom: calc(($border - $height) / 2);
+        right: calc(($border - $height) / 2);
+        .secondary {
+          position: absolute;
+          left: -16px;
+          --height: 38px;
+        }
       }
     }
   }
