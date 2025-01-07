@@ -17,20 +17,29 @@
 </div>
 
 <style lang="scss">
-  @use 'variable' as *;
+  @use 'card';
   @use 'borders';
 
-  $direction: var(--direction, 'left');
-  $height: var(--height, 80px);
-  $width: var(--width, 150px);
-  $border: var(--border, 5px);
-
-  @mixin marker-shape($offset: 0px) {
-    clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%);
-  }
+  $height: var(--height, 70px);
+  $width: var(--width, fit-content);
+  $border: card.$border-size;
 
   .marker {
-    width: $width;
-    @include borders.arrow-shape($height, $border, 'left');
+    width: fit-content;
+    transition: width 1s ease-in-out;
+    @include borders.arrow-shape(
+      $height,
+      $border,
+      'left',
+      card.$border-color,
+      card.$sidebar-color
+    );
+    .content {
+      @include card.text(light);
+      display: flex;
+      place-items: center;
+      gap: 2px;
+      padding-left: calc($height / 3);
+    }
   }
 </style>

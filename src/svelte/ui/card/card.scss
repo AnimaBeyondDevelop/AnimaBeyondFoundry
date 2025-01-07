@@ -14,9 +14,9 @@ $background-light: var(--background-light, variable.$background-light);
 $background-active: var(--background-active, #{$background-light});
 $sidebar-color: var(--sidebar-color, variable.$background-secondary);
 $text-color: var(--text-color, variable.$text-color);
+$text-color-light: var(--text-color-light, variable.$background-light);
 
 $font-size: var(--font-size, 34px);
-$font-color: var(--font-color, currentcolor);
 
 @mixin buttonlike {
   cursor: pointer;
@@ -31,7 +31,11 @@ $font-color: var(--font-color, currentcolor);
   }
 }
 
-@mixin text {
+@mixin text($theme: dark) {
   font-size: $font-size;
-  color: $font-color;
+  @if $theme == light {
+    color: $text-color-light;
+  } @else {
+    color: $text-color;
+  }
 }

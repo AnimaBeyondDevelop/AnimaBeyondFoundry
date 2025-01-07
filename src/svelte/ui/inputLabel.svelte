@@ -48,7 +48,7 @@
   .label-container {
     display: flex;
     flex-direction: row;
-    padding: 6px;
+    align-items: center;
 
     .icon {
       height: var(--icon-size, 35px);
