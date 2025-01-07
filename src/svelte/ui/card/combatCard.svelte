@@ -127,7 +127,8 @@ to this component:
 
         .row {
           display: flex;
-          padding: 5px;
+          padding-inline: 10px;
+          align-items: center;
           &:first-child {
             padding-right: card.$edge-size;
           }
@@ -145,8 +146,17 @@ to this component:
         }
 
         .selector {
+          position: relative;
           height: 60px;
           flex-shrink: 0;
+          display: flex;
+          :global {
+            .marker {
+              position: absolute;
+              right: calc(-2 * card.$border-size);
+              top: calc(-1 * card.$border-size);
+            }
+          }
         }
         .bottom {
           flex: 1;
