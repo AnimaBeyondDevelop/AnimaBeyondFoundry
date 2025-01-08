@@ -3,7 +3,7 @@
    * @typedef Props
    * @property {string} name Name of the icon file (without extension).
    * @property {string} [folderPath] Path to the folder containing the icon file, relative assets folder.
-   * Defaults to `icons/svg`, which will find icons in `src/assets/icons/svg`.
+   * Defaults to `icons/svg/`, which will find icons in `src/assets/icons/svg/`.
    * @property {string} [iconID] Id of the svg element representing the icon inside the icon file.
    * Defaults to `icon`.
    * @property {string} [fillingID] Id of the svg element representing the icon inside the icon file.

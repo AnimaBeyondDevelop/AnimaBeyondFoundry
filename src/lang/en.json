@@ -703,6 +703,7 @@
   "macros.combat.dialog.castOverride.title": "Cast spell without validations",
   "macros.combat.dialog.critic.title": "Critic",
   "macros.combat.dialog.damage.title": "Damage",
+  "macros.combat.dialog.damage.tooltip": "Damage",
   "macros.combat.dialog.psychic.damageModifier.title": "Damage modifier",
   "macros.combat.dialog.damageDeal.title": "Damage deal",
   "macros.combat.dialog.defend.title": "Defense",

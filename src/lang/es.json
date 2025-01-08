@@ -703,6 +703,7 @@
   "macros.combat.dialog.castOverride.title": "Lanzar conjuro sin validaciones",
   "macros.combat.dialog.critic.title": "Crítico",
   "macros.combat.dialog.damage.title": "Daño",
+  "macros.combat.dialog.damage.tooltip": "Daño",
   "macros.combat.dialog.psychic.damageModifier.title": "Modificador al daño",
   "macros.combat.dialog.damageDeal.title": "Daño hecho",
   "macros.combat.dialog.defend.title": "Defensa",

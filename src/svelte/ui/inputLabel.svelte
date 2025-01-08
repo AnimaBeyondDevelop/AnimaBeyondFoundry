@@ -1,70 +1,71 @@
 <script>
+  import Icon from './icon.svelte';
+
   /**
    * @typedef {Object} props
-   * @property {string} label Localize key to obtain the label and tooltip.
+   * @property {string} label Localize key to obtain the global tooltip.
    * @property {string} icon Name of the icon representing the label.
-   * @property {string} [iconFolder] Path to the folder containing the icons.
-   * Default value is `/systems/animabf/assets/icons/svg/`
-   * @property {import('svelte/elements').MouseEventHandler<HTMLInputElement>} [oniconClick]
+   * @property {string} [iconLabel] Localize key to obtain the icon's tooltip and label.
+   * @property {import('svelte/elements').MouseEventHandler<HTMLButtonElement>} [oniconClick]
    * @property {import('svelte').Snippet} [children]
-   * @property {boolean} [iconLabel] If set, forces the label to be an icon (when `true`) or a text
+   * @property {boolean} [useIcon] If set, forces the label to be an icon (when `true`) or a text
    * label (when `false`). When unset, it reads the value set in system settings.
+   * @property {string} [class] Css class to apply to the label container.
    */
 
   /** @type {props} */
   let {
     label,
-    icon = $bindable(''),
-    iconFolder = $bindable('/systems/animabf/assets/icons/svg/'),
+    icon,
+    iconLabel = label,
     oniconClick,
     children,
-    iconLabel
+    useIcon,
+    class: cssClass
   } = $props();
 
-  if (iconLabel === undefined) {
-    iconLabel = /** @type {boolean} */ (game.settings?.get('animabf', 'USE_ICON_LABELS'));
+  if (useIcon === undefined) {
+    useIcon = /** @type {boolean} */ (game.settings?.get('animabf', 'USE_ICON_LABELS'));
   }
-
-  let iconPath = $derived.by(() => {
-    if (!iconLabel) return undefined;
-    if (!iconFolder.endsWith('/')) iconFolder += '/';
-    return iconFolder + icon + '.svg';
-  });
 </script>
 
-<div class="label-container">
-  <input
-    class={iconLabel ? 'icon' : 'label'}
-    type="image"
+<div
+  class={['label-container', cssClass].join(' ')}
+  title={game.i18n?.localize(label + '.tooltip')}
+>
+  <button
+    class="label"
     onclick={oniconClick}
-    title={game.i18n?.localize(label + '.tooltip')}
-    src={iconPath}
-    alt={game.i18n?.localize(label + '.label')}
-  />
+    class:interactive={!!oniconClick}
+    title={game.i18n?.localize(iconLabel + '.tooltip')}
+  >
+    {#if useIcon}
+      <Icon name={icon} class="icon" />
+    {:else}
+      {game.i18n?.localize(iconLabel + '.label')}
+    {/if}
+  </button>
   {@render children?.()}
 </div>
 
 <style lang="scss">
+  @use 'card';
+
   .label-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    .label {
+      @include card.noninteractive();
 
-    .icon {
       height: var(--icon-size, 35px);
+      background: unset;
+      border: unset;
       justify-self: right;
-      transition: var(--transition, scale 0.3s ease-out, transform 0.4s ease-out);
-      transform: var(--transform);
-      opacity: var(--opacity);
-      filter: var(--filter);
-      &:hover {
-        scale: var(--hover-scale, 1);
-      }
     }
 
-    input {
-      color: white;
-      font-size: 20px;
+    .interactive {
+      @include card.buttonlike();
     }
   }
 </style>

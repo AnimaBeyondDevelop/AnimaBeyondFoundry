@@ -49,25 +49,23 @@
         out:fly={{ x: -100, duration: 400 }}
       >
         {#each criticChoices as critic}
-          <input
-            class="icon"
-            class:off={!availableCritics.includes(critic)}
-            type="image"
-            title={i18n.localize('anima.ui.combat.armors.at.' + critic + '.title')}
-            onclick={() => {
+          <InputLabel
+            label={i18n.localize('anima.ui.combat.armors.at.' + critic)}
+            icon={'critic/' + critic}
+            oniconClick={() => {
               selectedCritic = critic;
               expanded = false;
             }}
-            src={'/systems/animabf/assets/icons/svg/critic/' + critic + '.svg'}
-            alt=""
+            class={!availableCritics.includes(critic) ? 'off' : ''}
           />
         {/each}
       </div>
     </div>
   {/if}
   <InputLabel
-    label={'anima.ui.combat.armors.at.' + selectedCritic}
+    label="macros.combat.dialog.damage"
     icon={'critic/' + selectedCritic}
+    iconLabel={'anima.ui.combat.armors.at.' + selectedCritic}
     oniconClick={() => (expanded = !expanded)}
   >
     <ModifiedAbilityInput bind:ability={damage} {disabled} />
@@ -78,17 +76,19 @@
   .critic-select {
     display: flex;
     place-items: center;
-    gap: 2px;
-  }
-  .icon {
-    height: 35px;
-    justify-self: center;
-    transition: scale 0.3s ease-out;
-    &:hover {
-      scale: 1.05;
-    }
-    &.off {
-      opacity: 60%;
+    :global {
+      button {
+        padding: 0px;
+        height: 35px;
+        justify-self: center;
+        transition: scale 0.3s ease-out;
+        &:hover {
+          scale: 1.05;
+        }
+      }
+      .off {
+        opacity: 60%;
+      }
     }
   }
 </style>
