@@ -20,6 +20,7 @@
    * @property {Snippet} [sidebar]
    * @property {Snippet} [top]
    * @property {Snippet} [selector]
+   * @property {Snippet} [marker]
    * @property {Snippet} [bottom]
    * @property {Snippet} [buttons]
    */
@@ -28,7 +29,8 @@
   import CardButton from '@svelte/ui/card/cardButton.svelte';
 
   /** @type {Props} */
-  let { sidebar, top, selector, bottom, buttons } = $props();
+  let { sidebar, top, selector, marker, bottom, buttons } = $props();
+  let topHeight = $state();
 </script>
 
 <!--
@@ -72,12 +74,14 @@ to this component:
   <Card {sidebar}>
     {#snippet body()}
       <div class="body">
-        <div class="top">{@render top?.()}</div>
+        <div class="top" bind:offsetHeight={topHeight}>{@render top?.()}</div>
         <div class="selector">{@render selector?.()}</div>
         <div class="bottom">{@render bottom?.()}</div>
       </div>
     {/snippet}
   </Card>
+
+  <div class="marker-container" style:top={`${topHeight}px`}>{@render marker?.()}</div>
 
   <div class="buttons">
     {@render buttons?.()}
@@ -97,6 +101,8 @@ to this component:
   $bg-color: card.$background-color;
   $sidebar-color: card.$sidebar-color;
 
+  $selector-size: 60px;
+
   @mixin button-container($height) {
     justify-self: end;
     align-self: center;
@@ -104,6 +110,11 @@ to this component:
     --height: #{$height};
     height: $height;
     width: fit-content;
+  }
+
+  .prueba {
+    position: absolute;
+    right: 0;
   }
 
   .card-container :global {
@@ -122,10 +133,10 @@ to this component:
 
         .row {
           display: flex;
-          padding-inline: 10px;
+          padding: 10px;
           align-items: center;
           &:first-child {
-            padding-right: card.$edge-size;
+            padding-right: calc(card.$edge-size - card.$border-size);
           }
           &:last-child {
             margin-top: auto;
@@ -134,6 +145,7 @@ to this component:
             margin-left: auto;
           }
         }
+
         .top {
           flex: 2;
           display: flex;
@@ -142,16 +154,9 @@ to this component:
 
         .selector {
           position: relative;
-          height: 60px;
+          height: $selector-size;
           flex-shrink: 0;
           display: flex;
-          :global {
-            .marker {
-              position: absolute;
-              right: calc(-2 * card.$border-size);
-              top: calc(-1 * card.$border-size);
-            }
-          }
         }
         .bottom {
           flex: 1;
@@ -161,33 +166,42 @@ to this component:
       }
     }
 
+    .marker-container {
+      position: absolute;
+      right: calc(-2 * card.$border-size);
+      --height: #{calc($selector-size + 2 * card.$border-size)};
+    }
+
     .buttons :global {
       #sidebar-button {
-        @include button-container(32px);
+        @include button-container(38px);
         position: absolute;
         left: calc(($border * 0.2) - $height / 2);
         bottom: calc($edge + ($border * 1.5) - $height / 2);
       }
 
       #separator-button {
-        @include button-container(32px);
+        @include button-container(38px);
         position: absolute;
         bottom: calc(($border * 1.5) - $height / 2);
         left: calc($sidebar + ($border * 1.5) - $height / 2);
       }
 
       #main-button {
-        @include button-container(50px);
+        @include button-container(60px);
         display: flex;
         flex-shrink: 0;
         align-items: center;
         position: absolute;
         bottom: calc(($border - $height) / 2);
         right: calc(($border - $height) / 2);
+        .main {
+          min-width: 200px;
+        }
         .secondary {
           position: absolute;
-          left: -16px;
-          --height: 38px;
+          --height: 43px;
+          left: calc(-0.2 * var(--height));
         }
       }
     }
