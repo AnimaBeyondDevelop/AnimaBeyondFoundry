@@ -2,7 +2,7 @@
   // @ts-nocheck
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
   import IconInput from '@svelte/ui/iconInput.svelte';
-  import IconBox from '@svelte/ui/iconBox.svelte';
+  import IconRange from '@svelte/ui/iconRange.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
@@ -43,7 +43,7 @@
     /> -->
   </div>
   <div class="box">
-    <IconBox
+    <IconRange
       icon="fatigue"
       bind:activeIcons={manager.data.fatigue.used}
       quantity={Math.min(manager.data.fatigue.available, 5)}
@@ -124,7 +124,10 @@
     </div>
   {/if}
   <div class="button">
-    <CardButton title={i18n.localize('macros.combat.dialog.button.attack.title')} onClick={() => manager.onAttack()} />
+    <CardButton
+      title={i18n.localize('macros.combat.dialog.button.attack.title')}
+      onClick={() => manager.onAttack()}
+    />
   </div>
   {#if manager.data.projectile.type === 'throw'}
     <div class="circle-throw">

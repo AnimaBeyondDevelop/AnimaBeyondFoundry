@@ -2,7 +2,7 @@
   // @ts-nocheck
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
   import IconInput from '@svelte/ui/iconInput.svelte';
-  import IconBox from '@svelte/ui/iconBox.svelte';
+  import IconRange from '@svelte/ui/iconRange.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
@@ -30,7 +30,7 @@
   </div>
   <div class="box">
     {#if psychicPotentialRolled}
-      <IconBox
+      <IconRange
         icon="psychic-point"
         bind:activeIcons={manager.data.psychicPoints.usedProjection}
         quantity={Math.min(
@@ -44,7 +44,7 @@
           ` (${manager.data.psychicPoints.available})`}
       />
     {:else}
-      <IconBox
+      <IconRange
         icon="psychic-point"
         bind:activeIcons={manager.data.psychicPoints.usedPotential}
         quantity={Math.min(

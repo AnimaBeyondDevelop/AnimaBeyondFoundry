@@ -2,7 +2,7 @@
   // @ts-nocheck
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
   import IconInput from '@svelte/ui/iconInput.svelte';
-  import IconBox from '@svelte/ui/iconBox.svelte';
+  import IconRange from '@svelte/ui/iconRange.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
@@ -30,7 +30,7 @@
     <div></div>
   </div>
   <div class="box">
-    <IconBox
+    <IconRange
       icon="fatigue"
       bind:activeIcons={manager.data.fatigue.used}
       quantity={Math.min(manager.data.fatigue.available, 5)}
@@ -66,7 +66,10 @@
           onClick={value => manager.addMultipleDefensesPenalty(value)}
           --icon-size="40px"
         />
-        <Input value={manager.data.defenseCounter.accumulated + 1 + 'º'} disabled={true} />
+        <Input
+          value={manager.data.defenseCounter.accumulated + 1 + 'º'}
+          disabled={true}
+        />
       </div>
     </CardMarker>
   </g>

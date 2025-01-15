@@ -1,6 +1,6 @@
 <script>
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
-  import IconBox from '@svelte/ui/iconBox.svelte';
+  import IconRange from '@svelte/ui/iconRange.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
@@ -61,7 +61,7 @@
   {/snippet}
   {#snippet top()}
     <div class="box">
-      <IconBox
+      <IconRange
         icon="fatigue"
         bind:activeIcons={attack.ability.modifiers.fatigue.value}
         quantity={Math.min(fatigueAvailable, 5)}
