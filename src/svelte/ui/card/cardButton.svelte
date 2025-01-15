@@ -3,12 +3,12 @@
   import Icon from '../icon.svelte';
 
   /**
-   * @import { FormEventHandler } from "svelte/elements";
+   * @import { HTMLButtonAttributes } from "svelte/elements";
+   * @import { Snippet } from "svelte";
    *
    * @typedef Props
-   * @property {string} [text]
+   * @property {Snippet} [children]
    * @property {string} [icon]
-   * @property {FormEventHandler<HTMLButtonElement>} onclick
    * @property {string} [class]
    * @property {"angled"|"circle"} [shape]
    * @property {"dark"|"light"|"default"} [style="default"]
@@ -16,16 +16,17 @@
    * @property {string} [width="fit-content"]
    */
 
-  /** @type {Props} */
+  /** @type {Props&Partial<HTMLButtonAttributes>} */
   let {
-    text = '',
+    children,
     icon,
-    onclick,
-    shape = 'angled',
+    shape,
     style = 'default',
     height,
     width,
-    class: cssClass = ''
+    class: cssClass = '',
+    onclick,
+    ...rest
   } = $props();
 
   let cssCustomProps = parseCssCustomProperties({ height, width });
@@ -33,7 +34,8 @@
 
 <!--
 @component
-Button component with card styling. Its shape can be either `circle`, `angled`.
+Button component with card styling. Its shape can be either `circle`, `angled` or `undefined`.
+Extra attributes are passed on to the <button/> element.
 
 Notes:
 - It reads styles from `./card.scss`, but their value can overwritten by passings custom css properties
@@ -47,14 +49,14 @@ to this component:
 -->
 <button
   class={[cssClass, shape, style].join(' ')}
-  type="button"
   style={cssCustomProps}
   {onclick}
+  {...rest}
 >
   {#if icon}
     <Icon name={icon} class="content" />
   {/if}
-  {text}
+  {@render children?.()}
 </button>
 
 <style lang="scss">
@@ -62,7 +64,7 @@ to this component:
   @use 'borders';
   @use 'card' as *;
 
-  $height: var(--height, 60px);
+  $height: var(--height, 100%);
   $width: var(--width, fit-content);
 
   button {
@@ -72,6 +74,7 @@ to this component:
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 
     @include text();
     @include buttonlike();

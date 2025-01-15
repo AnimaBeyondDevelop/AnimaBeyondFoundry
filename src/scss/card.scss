@@ -18,19 +18,9 @@ $text-color-light: var(--text-color-light, variable.$background-light);
 
 $font-size: var(--font-size, 34px);
 
-@mixin buttonlike() {
-  cursor: pointer;
-
-  &:hover {
-    --background-color: #{$background-active};
-    transform: scale(1.02);
-    box-shadow: unset;
-  }
-  &:focus {
-    box-shadow: unset;
-  }
-}
 @mixin noninteractive() {
+  border: unset;
+  background: unset;
   cursor: default;
 
   &:hover {
@@ -38,6 +28,16 @@ $font-size: var(--font-size, 34px);
   }
   &:focus {
     box-shadow: unset;
+  }
+}
+
+@mixin buttonlike() {
+  @include noninteractive();
+  cursor: pointer;
+
+  &:hover {
+    --background-color: #{$background-active};
+    transform: scale(1.02);
   }
 }
 
