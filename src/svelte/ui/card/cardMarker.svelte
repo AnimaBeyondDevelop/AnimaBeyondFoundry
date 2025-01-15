@@ -8,11 +8,22 @@
   let { children } = $props();
 </script>
 
+<!--
+@component
+Component implementing a card marker (with a left pointing arrow shape).
+
+Notes:
+- It reads styles from `./card.scss`, but their value can overwritten by passings custom css properties
+to this component:
+```tsx
+  <CardMarker --border-color="white">
+    ...
+  </CardMarker>
+```
+-->
 <div class="marker">
   <div class="content">
-    {#if children}
-      {@render children()}
-    {/if}
+    {@render children?.()}
   </div>
 </div>
 
@@ -26,7 +37,6 @@
 
   .marker {
     width: fit-content;
-    transition: width 1s ease-in-out;
     @include borders.arrow-shape(
       $height,
       $border,
