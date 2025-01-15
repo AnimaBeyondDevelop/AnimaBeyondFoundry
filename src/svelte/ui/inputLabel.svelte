@@ -29,6 +29,13 @@
   }
 </script>
 
+<!--
+@component
+Wrapper component which adds a label to an input child. Implements logic to use icon or text labels.
+It reads game.settings.get("animabf", "USE_ICON_LABELS") for a default option on whether rendering
+icon or text labels, and provides a way to override this setting by specifying a boolean `useIcon`.
+Allows onclick bindings for the icon with the `onIconClick` prop.
+-->
 <div
   class={['label-container', cssClass].join(' ')}
   title={game.i18n?.localize(label + '.tooltip')}
@@ -40,7 +47,7 @@
     title={game.i18n?.localize(iconLabel + '.tooltip')}
   >
     {#if useIcon}
-      <Icon name={icon} class="icon" />
+      <Icon name={icon} class="icon" height="35px" />
     {:else}
       {game.i18n?.localize(iconLabel + '.label')}
     {/if}
@@ -58,9 +65,6 @@
     .label {
       @include card.noninteractive();
 
-      height: var(--icon-size, 35px);
-      background: unset;
-      border: unset;
       justify-self: right;
     }
 

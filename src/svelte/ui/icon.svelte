@@ -11,6 +11,7 @@
    * @property {string} [color] Icon color. Defaults to `currentcolor`.
    * @property {string} [filling] Color for the icon filling. If unset, no filling is drawn.
    * Defaults to `transparent`.
+   * @property {string} [height="100%"] Height for the icon.
    */
 
   /** @type {Props&import('svelte/elements').SVGAttributes<*>} */
@@ -21,6 +22,7 @@
     class: cssClass = '',
     color = 'currentcolor',
     filling = 'transparent',
+    height = '100%',
     ...rest
   } = $props();
 
@@ -46,13 +48,19 @@ Usage:
   <Icon name="area_attack" width="25px" />
   ```
 -->
-<svg {...rest} fill={color}>
-  <!-- Filling needs to be first to be behind the icon (otherwise psychic-points won't work) -->
-  <use href={iconPath + '#filling'} fill={filling} />
-  <use href={iconPath + '#icon'} />
-</svg>
+<div class="icon" style:height>
+  <svg {...rest} fill={color}>
+    <!-- Filling needs to be first to be behind the icon (otherwise psychic-points won't work) -->
+    <use href={iconPath + '#filling'} fill={filling} />
+    <use href={iconPath + '#icon'} />
+  </svg>
+</div>
 
 <style>
+  .icon {
+    display: flex;
+    place-items: center;
+  }
   svg {
     height: 100%;
     width: auto;
