@@ -90,7 +90,6 @@ export class ModifiedAbility {
         enumerable: true
       });
     }
-    console.log(mod);
     this.modifiers[label] = mod;
   }
 
