@@ -21,6 +21,8 @@ export class Attack {
   critic = $state('-');
   /** @type {ABFFoundryRoll} */
   #roll;
+  /** @type {boolean} */
+  withRoll = $state(true);
 
   /**
    * @param {import('@module/actor/ABFActor').ABFActor} attacker The attacker actor.
@@ -51,7 +53,7 @@ export class Attack {
 
   async roll() {
     const mod = this.ability.final < 200 ? 'xa' : 'xamasery';
-    const formula = `1d100${mod} + ${this.ability.final}`;
+    const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.attacker.system);
     await this.#roll.roll();
   }
