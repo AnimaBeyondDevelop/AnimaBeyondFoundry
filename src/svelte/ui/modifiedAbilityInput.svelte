@@ -9,8 +9,11 @@
   /** @type {props} */
   let { ability = $bindable(), disabled = false, class: cssClass = '' } = $props();
 
-  ability.addModifier('special', { value: 0 });
-
+  $effect(() => {
+    if (!ability.modifiers.special) {
+      ability.addModifier('special', { value: 0 });
+    }
+  });
   /**
    * @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}
    */
