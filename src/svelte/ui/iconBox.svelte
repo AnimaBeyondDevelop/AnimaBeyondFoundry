@@ -1,66 +1,80 @@
 <script>
-  // @ts-nocheck
+  import { parseCssCustomProperties } from '@svelte/utils';
+  /**
+   * @typedef {Object} Props
+   * @property {string} icon Name of the icon to be used. This component will load the svg file
+   * with the given name from /src/assets/icons/svg. If required, a subfolder can be specified.
+   * @property {number} value Current value of the range selector.
+   * @property {number} maxValue Maximum value for the range selector.
+   * @property {boolean} [disabled=false] Wether the button should be disabled or no. Defaults to false.
+   * @property {string} [title] Title given to the button (shown in tooltip).
+   * @property {string} [height="30px"] A height for the icons.
+   */
+
+  import Icon from './icon.svelte';
+
+  /** @type {Props} */
   let {
     icon,
-    activeIcons = $bindable(0),
-    quantity,
+    value = $bindable(0),
+    maxValue,
     title,
-    onChange,
-    disabled
+    disabled,
+    height = '30px'
   } = $props();
-  let iconOff = '/systems/animabf/assets/icons/svg/' + icon + '.svg';
-  let iconOn = '/systems/animabf/assets/icons/svg/' + icon + '_fill.svg';
 
-  function iconSwitch(i) {
-    if (activeIcons === i + 1) {
-      activeIcons = 0;
-    } else activeIcons = i + 1;
-    onChange?.(activeIcons);
+  /** @param {number} n */
+  function onclick(n) {
+    if (value != n) {
+      value = n;
+    } else {
+      value = 0;
+    }
   }
+  let style = $derived(parseCssCustomProperties({ height }));
 </script>
 
-<div class="content" style="--quantity:{quantity};">
-  {#each { length: quantity } as _, i}
-    {#if i < activeIcons}
-      <input
-        class="icon"
-        type="image"
-        {title}
-        onclick={() => iconSwitch(i)}
-        src={iconOn}
-        alt=""
-        {disabled}
+<!--
+@component
+Component implementing an icon version of a range input, allowing to chose an integer value.
+
+Notes:
+- It loads the svg file `/src/assets/icons/svg/{icon}.svg`. Therefore, if the aimed svg is inside a subfolder
+it can be specified:
+```tsx
+  <IconRange icon="critic/cold" bind:value maxValue=10 />
+```
+-->
+<div class="icon-box" {title}>
+  {#each { length: maxValue } as _, index}
+    {@const v = index + 1}
+    <button class:off={value < v} onclick={() => onclick(v)} {disabled}>
+      <Icon
+        name={icon}
+        color="black"
+        filling={value < v ? 'transparent' : 'white'}
+        {height}
       />
-    {:else}
-      <input
-        class="icon off"
-        type="image"
-        {title}
-        onclick={() => iconSwitch(i)}
-        src={iconOff}
-        alt=""
-        {disabled}
-      />
-    {/if}
+    </button>
   {/each}
 </div>
 
 <style lang="scss">
-  .content {
-    display: grid;
-    grid-template: 1fr / repeat(var(--quantity), 1fr);
-    place-items: center;
-    gap: var(--gap);
+  @use 'card';
 
-    .icon {
-      height: var(--icon-size, 30px);
-      justify-self: right;
-      transition: var(--transition, scale 0.3s ease-out, transform 0.4s ease-out);
-      transform: var(--transform);
-      &:hover {
-        scale: 1.05;
+  .icon-box {
+    display: flex;
+    place-content: center;
+
+    :global {
+      button {
+        height: var(--height);
+        margin-inline: 0;
+        padding-inline: 0;
+        justify-self: right;
+        @include card.buttonlike();
       }
-      &.off {
+      .off {
         opacity: 60%;
       }
     }
