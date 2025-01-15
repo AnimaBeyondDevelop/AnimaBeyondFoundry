@@ -166,6 +166,14 @@ to this component:
       }
     }
 
+    .right-icons {
+      height: 35px;
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 10px;
+      place-items: center;
+    }
+
     .marker-container {
       position: absolute;
       right: calc(-2 * card.$border-size);
