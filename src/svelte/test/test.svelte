@@ -1,29 +1,19 @@
 <script>
-  import Card from '@svelte/ui/card/card.svelte';
-  import CardMarker from '@svelte/ui/card/cardMarker.svelte';
+  import AttackDialog from '@module/combat/attackDialog.svelte';
   import { PhysicAttack } from '@module/combat/PhysicAttack.svelte';
-  import CardCombat from '@svelte/ui/card/cardCombat.svelte';
+  import CardMarker from '@svelte/ui/card/cardMarker.svelte';
+  import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
+  import IconSwitch from '@svelte/ui/iconSwitch.svelte';
   let { data, document } = $props();
 
+  let attacker = game.actors.getName('Killiam');
+  let defender = game.actors.getName('Kotarum');
+  let attack = new PhysicAttack(attacker);
+
   let expanded = $state(true);
-  let { width, height } = $derived({
-    width: expanded ? '500px' : '300px',
-    height: '260px'
-  });
 </script>
 
-<!---->
-<Card --width={width} --height={height} --border-color="white">
-  {#snippet sidebar()}
-    <!-- <CardMarker --width="30px" --height="15px"/> -->
-    a
-  {/snippet}
+<AttackDialog {attacker} {defender} />
 
-  {#snippet body()}
-    <h1>Patata</h1>
-  {/snippet}
-
-  {#snippet buttons()}
-    <button class="arrow" onclick={() => (expanded = !expanded)}>Resize</button>
-  {/snippet}
-</Card>
+<style lang="scss">
+</style>
