@@ -26,7 +26,6 @@
    */
 
   import Card from '@svelte/ui/card/card.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
 
   /** @type {Props} */
   let { sidebar, top, selector, marker, bottom, buttons } = $props();
@@ -41,25 +40,29 @@ selector (middle) and bottom regions. It also adds combat buttons around the car
 Notes:
 - It expects top snippet to have divs with the .row css class, the last of which will be located right
 on top of the selector.
+- It expects buttons snippet to have elements with the #main-button, #separator-button and #sidebar-button
+ids, which will render in the corresponding locations. They can be <div></div> elements.
+- The #main-button element must contain a .main (card)button and can contain a .secondary element which will
+be overlayed on the left side of the .main button.
 - It reads styles from `./card.scss`, but their value can overwritten by passings custom css properties
 to this component:
 ```tsx
-  <script>
-    const buttonSpecs = [
-      { location: 'sidebar', props: { icon: 'dice', onclick: () => {} } },
-      { location: 'separator', props: { icon: 'distance', onclick: () => {} } },
-      {
-        location: 'main',
-        props: { text: 'Attack', onclick: () => {} },
-        secondary: { icon: 'no-throw', onclick: () => {} }
-      }
-    ];
-    let attackOptions = [{ name: 'Espada larga' }, { name: 'Descarga de luz' }];
-    let selectedAttack = $state(attackOptions[0]);
-  </script>
-  <CombatCard {buttons} --width=300px --border-size=10px >
+  <CombatCard --width=300px --border-size=10px >
+    {#snippet buttons()}
+      <div id="sidebar-button">
+        ...
+      </div>
+      <div id="separator-button">
+        ...
+      </div>
+      <div id="main-button">
+        <CardButton shape="angled" class="main" />
+        <CardButton shape="circle" class="secondary" />
+      </div>
+    {/snippet}
+
     {#snippet selector()}
-      <CardSelect options={attackOptions} bind:value={selectedAttack} />
+      ...
     {/snippet}
 
     {#snippet top()}
