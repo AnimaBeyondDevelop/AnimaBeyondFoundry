@@ -40,11 +40,13 @@
 />
 
 <style lang="scss">
+  @use 'card';
+
   .input {
     all: unset;
     width: 85px;
     color: white;
-    font-size: 40px;
+    font-size: card.$font-size;
     -webkit-text-stroke: 4px black;
     paint-order: stroke fill;
     text-align: center;
@@ -52,7 +54,7 @@
       all: unset;
       width: 85px;
       color: white;
-      font-size: 40px;
+      font-size: card.$font-size;
       -webkit-text-stroke: 4px black;
       paint-order: stroke fill;
       text-align: center;
