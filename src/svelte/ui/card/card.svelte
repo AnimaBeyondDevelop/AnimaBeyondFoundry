@@ -58,7 +58,7 @@ to this component:
       {@render sidebar?.()}
     </div>
     <div class="separator"></div>
-    <div class="card-body">
+    <div class="card-body" class:has-header={!!header} class:has-footer={!!footer}>
       {@render body?.()}
     </div>
     {#if sidebarRight}
@@ -72,18 +72,18 @@ to this component:
     <div class="header">
       <div>{header}</div>
     </div>
-  {:else}
+  {:else if header}
     <div class="header">
-      {@render header?.()}
+      {@render header()}
     </div>
   {/if}
   {#if typeof footer === 'string'}
     <div class="footer">
       <div>{footer}</div>
     </div>
-  {:else}
+  {:else if footer}
     <div class="footer">
-      {@render footer?.()}
+      {@render footer()}
     </div>
   {/if}
 </div>
@@ -94,6 +94,16 @@ to this component:
   @use 'variable' as *;
   @use 'borders';
   @use 'card';
+
+  $header-height: var(--header-height, calc(card.$sidebar-size - card.$edge-size + 20px));
+  $footer-height: var(--footer-height, calc(card.$sidebar-size - card.$edge-size + 20px));
+
+  .has-header {
+    padding-top: $header-height;
+  }
+  .has-footer {
+    padding-bottom: $footer-height;
+  }
 
   .card-border {
     height: card.$card-height;
@@ -142,7 +152,6 @@ to this component:
       position: absolute;
       left: card.$edge-size;
       right: card.$edge-size;
-      height: calc(card.$sidebar-size - card.$edge-size + 20px);
       & > div {
         text-align: center;
         height: 100%;
@@ -152,6 +161,7 @@ to this component:
 
     .header {
       top: 0;
+      height: $header-height;
       & > div {
         @include borders.slanted-edges(
           calc(card.$sidebar-size - card.$edge-size + card.$border-size),
@@ -165,6 +175,7 @@ to this component:
     }
     .footer {
       bottom: 0;
+      height: $footer-height;
       & > div {
         @include borders.slanted-edges(
           calc(card.$sidebar-size - card.$edge-size + card.$border-size),
