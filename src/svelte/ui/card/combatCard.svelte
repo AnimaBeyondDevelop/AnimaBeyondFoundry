@@ -184,17 +184,19 @@ to this component:
     }
 
     .buttons :global {
+      $height: var(--height);
+
       #sidebar-button {
         @include button-container(38px);
         position: absolute;
-        left: calc(($border * 0.2) - $height / 2);
-        bottom: calc($edge + ($border * 1.5) - $height / 2);
+        left: calc(($border * 0.5) - $height / 2);
+        bottom: calc($edge + ($border * 0.5) - $height / 2);
       }
 
       #separator-button {
         @include button-container(38px);
         position: absolute;
-        bottom: calc(($border * 1.5) - $height / 2);
+        bottom: calc(($border * 0.5) - $height / 2);
         left: calc($sidebar + ($border * 1.5) - $height / 2);
       }
 

@@ -121,7 +121,6 @@ to this component:
         gap: 5px;
         place-items: center;
         justify-content: end;
-        height: calc(card.$card-height - card.$border-size * 2);
         width: card.$sidebar-size;
         background: card.$sidebar-color;
       }
