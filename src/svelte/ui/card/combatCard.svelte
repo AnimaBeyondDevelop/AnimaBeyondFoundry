@@ -1,20 +1,6 @@
 <script>
   /**
    * @import {Snippet} from 'svelte'
-   * @import { FormEventHandler } from 'svelte/elements';
-   *
-   * @typedef {Object} AttackOption
-   * @property {string} name
-   *
-   * @typedef {Object} ButtonSpec
-   * @property {string} [text]
-   * @property {string} [icon]
-   * @property {FormEventHandler<HTMLButtonElement>} onclick
-   *
-   * @typedef {Object} CombatCardButton
-   * @property {string} location
-   * @property {ButtonSpec} props
-   * @property {ButtonSpec} [secondary]
    *
    * @typedef {Object} Props
    * @property {Snippet} [sidebar]
