@@ -195,11 +195,11 @@ to this component:
         bottom: calc(($border - $height) / 2);
         right: calc(($border - $height) / 2);
         .main {
-          min-width: 200px;
+          min-width: 215px;
         }
         .secondary {
           position: absolute;
-          --height: 43px;
+          --height: 48px;
           left: calc(-0.2 * var(--height));
         }
       }

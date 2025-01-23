@@ -70,6 +70,8 @@ to this component:
   button {
     height: $height;
     width: $width;
+    margin: 0;
+    padding: 0;
 
     display: flex;
     flex-direction: row;
