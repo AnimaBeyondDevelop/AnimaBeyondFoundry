@@ -1,3 +1,4 @@
+import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
@@ -11,34 +12,43 @@ import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 export class Attack {
   /** @type {AttackType} */
   type;
-  /** @type {import('@module/actor/ABFActor').ABFActor} */
-  _attacker;
+  /** @type {Token} */
+  _attackerToken;
+  /** @type {Token} */
+  _defenderToken;
   /** @type {ModifiedAbility} */
   ability;
   /** @type {ModifiedAbility} */
   damage;
   /** @type {string} */
   critic = $state('-');
+  /** @type {boolean} Whether the attack is visible or not. Defaults to `true`.*/
+  visible = true;
+  /** @type {boolean} Whether the attack is at point blank or not. Defaults to `false`.*/
+  inMelee = $state(false);
   /** @type {ABFFoundryRoll} */
   #roll;
 
   /**
-   * @param {import('@module/actor/ABFActor').ABFActor} attacker The attacker actor.
-   * @param {boolean} [visible=true] Whether the attack is visible or not. Defaults to `true`.
+   * @param {Token} attacker The attacker token.
+   * @param {Token} defender The defender token.
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
-  constructor(attacker, visible = true, counterattackBonus) {
-    this._attacker = attacker;
+  constructor(attacker, defender, counterattackBonus) {
+    this._attackerToken = attacker;
+    this._defenderToken = defender;
     this.ability = new ModifiedAbility();
     if (counterattackBonus) {
       this.ability.addModifier('counterattackBonus', { value: counterattackBonus });
     }
     this.damage = new ModifiedAbility();
-    this.visible = visible;
+    this.inMelee = this.distance <= 1;
   }
-
+  /**
+   * @type {import('@module/actor/ABFActor').ABFActor} The attacker actor.
+   */
   get attacker() {
-    return this._attacker;
+    return this._attackerToken.actor;
   }
 
   get isCounterattack() {
@@ -46,11 +56,15 @@ export class Attack {
   }
 
   get isRolled() {
-    return this.#roll !== undefined && this.#roll.total;
+    return this.#roll !== undefined && this.#roll.result;
+  }
+
+  get mastery() {
+    return false;
   }
 
   async roll() {
-    const mod = this.ability.final < 200 ? 'xa' : 'xamasery';
+    const mod = this.mastery ? 'xa' : 'xamasery';
     const formula = `1d100${mod} + ${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.attacker.system);
     await this.#roll.roll();
@@ -69,18 +83,56 @@ export class Attack {
     return this.#roll.openRoll;
   }
 
+  get distance() {
+    const combatDistance = !!game.settings.get(
+      'animabf',
+      ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE
+    );
+
+    if (combatDistance) {
+      let measurePath =
+        canvas.grid.measurePath([
+          { x: this._attackerToken.x, y: this._attackerToken.y },
+          { x: this._defenderToken.x, y: this._defenderToken.y }]
+        );
+      return measurePath.distance /
+        canvas.dimensions.distance
+    }
+    return;
+  }
+
+  get isRanged() {
+    return true
+  }
+
+  get isPointBlank() {
+    return this.isRanged && this.inMelee;
+  }
+
+  get showRoll() {
+    const showRollByDefault = !!game.settings.get(
+      'animabf',
+      ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
+    );
+    const isGM = !!game.user?.isGM;
+
+    return !isGM || showRollByDefault
+  }
+
   /**
    * @param {string} flavor
    */
   toMessage(flavor) {
+    if (!this.showRoll) { return }
+
     if (this.openRoll) {
-      flavor.replace('<b>', '<b style="color:green">');
+      flavor = flavor.replace('<b>', '<b style="color:green">');
     } else if (this.fumbled) {
-      flavor.replace('<b>', '<b style="color:red">');
+      flavor = flavor.replace('<b>', '<b style="color:red">');
     }
 
     this.#roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.attacker }),
+      speaker: ChatMessage.getSpeaker({ token: this._attackerToken }),
       flavor
     });
   }

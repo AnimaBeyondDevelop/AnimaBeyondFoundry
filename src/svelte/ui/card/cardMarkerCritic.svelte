@@ -23,8 +23,11 @@
 
   let expanded = $state(false);
   let currentWidth = $derived(expanded ? width.expanded : width.normal);
+  let critic = selectedCritic;
 
-  let availableCritics = $derived([critics.secondary.value, critics.primary.value]);
+  let availableCritics = $derived(
+    critics ? [critics.secondary.value, critics.primary.value] : [critic]
+  );
   // TODO: use ABFConfig.iterables instead
   let criticChoices = $derived(
     ['none', 'cut', 'impact', 'thrust', 'heat', 'electricity', 'cold', 'energy'].sort(

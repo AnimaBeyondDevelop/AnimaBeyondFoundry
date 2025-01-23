@@ -5,7 +5,7 @@ import { UserMessageTypes } from '../user/WSUserCombatMessageTypes';
 import { CombatDialogs } from '../../dialogs/CombatDialogs';
 import { SvelteGMCombatDialog } from '../../../../dialogs/combat/SvelteGMCombatDialog';
 import { SvelteDefenseDialog } from '../../../../dialogs/combat/SvelteDefenseDialog';
-import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
+import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog2';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
 import { getTargetToken } from '../util/getTargetToken';

@@ -1,18 +1,18 @@
 <script>
   import PhysicAttackDialog from '@svelte/components/physicAttackDialog.svelte';
   import { PhysicAttack } from '@module/combat/PhysicAttack.svelte';
-  let { data, document } = $props();
+  let { data, attacker, defender } = $props();
 
-  function onAttack(attack) {
+  function sendAttack(attack) {
     console.log(attack);
   }
 
-  let attack = new PhysicAttack(document);
+  let attack = new PhysicAttack(attacker, defender);
   console.log(attack);
   let v = $derived(attack.modifiers.secondaryCritic.value());
 </script>
 
-<PhysicAttackDialog {attack} {onAttack} />
+<PhysicAttackDialog {attack} {sendAttack} />
 <p>Thrownable: {attack.isThrownable}</p>
 <p>Projectile: {attack.isProjectile}</p>
 <p>Thrown: {attack.thrown}</p>

@@ -10,7 +10,7 @@
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
-  import Input from '@svelte/ui/Input.svelte';
+  import Input from '@svelte/ui/input.svelte';
 
   let { manager } = $props();
   const i18n = game.i18n;

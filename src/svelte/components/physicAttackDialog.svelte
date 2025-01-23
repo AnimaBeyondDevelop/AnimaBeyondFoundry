@@ -15,13 +15,18 @@
    * @typedef props
    * @property {PhysicAttack} attack
    * @property {(attack: PhysicAttack) => void | Promise<void>} onAttack Function called when hitting
-   * @property {boolean} [distanceAutomation] Whether distance automations are enabled or not
    * the attack button.
    */
 
   /** @type {props} */
-  let { attack, onAttack, distanceAutomation = false } = $props();
+  let { attack, sendAttack } = $props();
   const i18n = game.i18n;
+
+  async function onAttack() {
+    await attack.roll();
+    attack.toMessage();
+    sendAttack(attack);
+  }
 
   let markerWidth = { normal: '150px', expanded: '435px' };
   let togglePanel = $state(false);
@@ -102,7 +107,7 @@
       />
     {/if}
   </div>
-  {#if !distanceAutomation && attack.isRanged}
+  {#if attack.distance == undefined && attack.isRanged}
     <div class="circle-distance">
       <CardCircle size="40px">
         <IconCheckBox
@@ -122,7 +127,7 @@
     <CardLabel
       ><Button
         title={i18n.localize('macros.combat.dialog.button.attack.title')}
-        onClick={() => onAttack(attack)}
+        onClick={onAttack}
       /></CardLabel
     >
   </div>

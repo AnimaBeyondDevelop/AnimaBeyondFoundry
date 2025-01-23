@@ -8,7 +8,7 @@
   import CardRibbon from '@svelte/ui/card/cardRibbon.svelte';
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import IconInput from '@svelte/ui/iconInput.svelte';
-  import Input from '@svelte/ui/Input.svelte';
+  import Input from '@svelte/ui/input.svelte';
 
   let { manager, close } = $props();
   const i18n = game.i18n;

@@ -263,7 +263,7 @@ export class ABFActor extends Actor {
    *
    * @returns {number} The calculated psychic fatigue value.
    */
-  async evaluatePsychicFatigue(
+  evaluatePsychicFatigue(
     power,
     psychicDifficulty,
     eliminateFatigue,

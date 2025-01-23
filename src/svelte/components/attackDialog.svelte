@@ -11,7 +11,7 @@
   import { PsychicAttackManager } from '@module/combat/manager/PsychicAttackManager.svelte.js';
   import { ABFSettingsKeys } from '../../utils/registerSettings';
 
-  let { data } = $props();
+  let { attacker, defender, sendAttack } = $props();
   const i18n = game.i18n;
   let actorMystic = data.attacker.actor.system.mystic.spells.length !== 0;
   let actorPsychic = data.attacker.actor.system.psychic.psychicPowers.length !== 0;

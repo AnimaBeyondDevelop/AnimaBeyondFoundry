@@ -26,7 +26,7 @@
 />
 
 <style lang="scss">
-  .input {
+  input[type='text'] {
     all: unset;
     width: var(--input-width, 85px);
     color: white;

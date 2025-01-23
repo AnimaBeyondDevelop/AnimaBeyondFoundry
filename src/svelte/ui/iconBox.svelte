@@ -26,7 +26,7 @@
         class="icon"
         type="image"
         {title}
-        onclick={() => iconSwitch(i)}
+        onclick={e => iconSwitch(i)}
         src={iconOn}
         alt=""
         {disabled}
@@ -36,7 +36,7 @@
         class="icon off"
         type="image"
         {title}
-        onclick={() => iconSwitch(i)}
+        onclick={e => iconSwitch(i)}
         src={iconOff}
         alt=""
         {disabled}

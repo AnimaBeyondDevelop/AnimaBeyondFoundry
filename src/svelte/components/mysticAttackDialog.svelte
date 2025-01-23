@@ -2,6 +2,7 @@
   // @ts-nocheck
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
   import IconInput from '@svelte/ui/iconInput.svelte';
+  import Input from '@svelte/ui/input.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import Button from '@svelte/ui/button.svelte';
@@ -9,11 +10,21 @@
   import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import InputLabel from '@svelte/ui/inputLabel.svelte';
 
-  let { manager } = $props();
+  let { attack, sendAttack } = $props();
   const i18n = game.i18n;
 
-  let markerWidth = { min: '150px', max: '435px' };
+  async function onAttack() {
+    if (!attack.canCast) return;
+
+    await attack.roll();
+    attack.toMessage();
+    sendAttack(attack);
+  }
+
+  let markerWidth = { normal: '150px', expanded: '435px' };
   let togglePanel = $state(false);
 </script>
 
@@ -30,72 +41,62 @@
   </div>
   <div class="box"></div>
   <g class="select">
-    <CardSelect
-      bind:selection={manager.data.spellUsed}
-      options={manager.data.spells}
-      onChange={value => manager.onSpellChange(value)}
-      >{#if manager.data.spells.length === 0}
-        <option>No Spell Found</option>
-      {/if}</CardSelect
-    >
+    <CardSelect bind:value={attack.spell} options={attack.availableSpells} />
   </g>
   <g class="marker">
     <CardMarkerCritic
-      value={manager.damage}
-      bind:modifier={manager.damageModifiers.special.modifier}
-      bind:critics={manager.data.critics}
-      {markerWidth}
+      bind:damage={attack.damage}
+      bind:selectedCritic={attack.critic}
+      width={markerWidth}
     />
   </g>
   <g class="primary">
-    <IconInput
-      icon="mystic"
-      value={manager.attack}
-      bind:modifier={manager.modifiers.special.modifier}
-      title={i18n.localize('anima.ui.mystic.magicProjection.final.title')}
-    />
+    <InputLabel label="anima.ui.mystic.magicProjection.final.title" icon="mystic">
+      <ModifiedAbilityInput bind:ability={attack.ability} />
+    </InputLabel>
   </g>
   <div class="secondary">
-    <IconInput
+    <InputLabel
+      label="macros.combat.dialog.zeonCost.title"
       icon="zeon-cost"
-      value={manager.spellCasting.zeon.cost}
-      title={i18n.localize('macros.combat.dialog.zeonCost.title')}
-      disabled={true}
       --icon-size="45px"
-    />
+    >
+      <Input value={attack.zeonCost} disabled={true} />
+    </InputLabel>
   </div>
   <g class="upper-left">
-    <IconInput
+    <InputLabel
+      label="macros.combat.dialog.zeonAccumulated.title"
       icon="zeon-accumulated"
-      value={manager.spellCasting.zeon.accumulated}
-      title={i18n.localize('macros.combat.dialog.zeonAccumulated.title')}
-      disabled={true}
-    />
+      --icon-size="40px"
+    >
+      <Input value={attack.zeonAccumulated} disabled={true} />
+    </InputLabel>
   </g>
   <div class="spell-grade">
-    {#each manager.attainableSpellGrades as spellGrade, i}
+    {#each attack.availableSpellGrades as spellGrade, i}
       <input
-        class={manager.data.spellGrade === spellGrade ? 'selected' : ''}
+        class={attack.spellGrade === spellGrade ? 'selected' : ''}
         title={i18n.localize(`macros.combat.dialog.spellGrade.${spellGrade}.title`)}
         type="image"
         src={`/systems/animabf/assets/icons/svg/spell-${spellGrade}.svg`}
         alt={spellGrade}
-        onclick={() => (manager.data.spellGrade = spellGrade)}
+        onclick={() => (attack.spellGrade = spellGrade)}
         style={i < 2 ? '--icon-size:26px' : ''}
       />
     {/each}
   </div>
-  {#if !manager.data.distance.enable && manager.data.projectile.value}
+  {#if attack.distance == undefined && attack.isRanged}
     <div class="circle-distance">
       <CardCircle size="40px">
         <IconCheckBox
-          icon={manager.data.distance.pointBlank ? 'point-blank' : 'distance'}
-          bind:value={manager.data.distance.pointBlank}
-          title={manager.data.distance.pointBlank
+          icon={attack.inMelee ? 'point-blank' : 'distance'}
+          bind:value={attack.inMelee}
+          title={attack.inMelee
             ? i18n.localize('macros.combat.dialog.pointBlank.title')
             : i18n.localize('macros.combat.dialog.distance.title')}
           noStyle={true}
-          --icon-size={manager.data.distance.pointBlank ? '15px' : '25px'}
+          --icon-size={attack.inMelee ? '15px' : '25px'}
         />
       </CardCircle>
     </div>
@@ -104,7 +105,7 @@
     <CardLabel
       ><Button
         title={i18n.localize('macros.combat.dialog.button.attack.title')}
-        onClick={() => manager.onAttack()}
+        onClick={onAttack}
       /></CardLabel
     >
   </div>
@@ -112,9 +113,9 @@
     <CardCircle>
       <IconSwitch
         icons={['cast-accumulated', 'cast-prepared', 'cast-innate', 'cast-override']}
-        bind:value={manager.castMethod}
+        bind:value={attack.castMethod}
         options={['accumulated', 'prepared', 'innate', 'override']}
-        title={i18n.localize(`dialogs.castSpell.${manager.castMethod}.title`)}
+        title={i18n.localize(`dialogs.castSpell.${attack.castMethod}.title`)}
         --icon-size="30px"
       />
     </CardCircle>

@@ -1,5 +1,6 @@
 export const resistanceEffectCheck = effect => {
   const resistanceEffect = { value: 0, type: undefined, check: false };
+  if (!effect) return resistanceEffect;
   const resistances = { physical: 'RF', disease: 'RE', poison: 'RV', magic: 'RM', psychic: 'RP' }
 
   function updateResistanceEffect(type, regExp) {
