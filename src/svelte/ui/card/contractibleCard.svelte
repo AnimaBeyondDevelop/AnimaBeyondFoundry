@@ -10,12 +10,17 @@
    * @property {"up"|"down"} [direction=down] Direction on which the card should expand.
    * @property {boolean} [expanded=false]
    * @property {Snippet|string} title Title text or snippet to render the hide/show button.
+   * @property {number} titleHeight Height of the button holding the title. Meant as a readonly prop.
    */
 
   /** @type {Props&CardProps} */
-  let { direction = 'down', expanded = $bindable(false), title, ...rest } = $props();
-
-  let titleHeight = $state();
+  let {
+    direction = 'down',
+    expanded = $bindable(false),
+    title,
+    titleHeight = $bindable(),
+    ...rest
+  } = $props();
 </script>
 
 <!--
@@ -48,7 +53,7 @@ to this component:
 -->
 <div
   class="contractible-card direction-{direction}"
-  style="--title-height: {titleHeight}px;"
+  style:--title-height="{titleHeight}px;"
 >
   {#if expanded}
     <div in:slide={{ axis: 'y', duration: 400 }} out:slide={{ axis: 'y', duration: 400 }}>
