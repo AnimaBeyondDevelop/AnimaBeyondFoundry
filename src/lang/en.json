@@ -738,6 +738,9 @@
   "macros.combat.dialog.error.yourSelf.title": "Can't attack yourself!",
   "macros.combat.dialog.fatigue.title": "Fatigue points",
   "macros.combat.dialog.fatigueUsed.title": "Used fatigue",
+  "macros.combat.dialog.gm.ability.physic.title": "Attack",
+  "macros.combat.dialog.gm.ability.magic.title": "Magic Projection",
+  "macros.combat.dialog.gm.ability.psychic.title": "Psychic Projection",
   "macros.combat.dialog.gm.psychicPower.title": "Power",
   "macros.combat.dialog.gm.psychicPotential.title": "Potential",
   "macros.combat.dialog.gm.projection.title": "Projection",
@@ -775,6 +778,7 @@
   "macros.combat.dialog.mentalPatternImbalance.title": "Mental Pattern Imbalance",
   "macros.combat.dialog.requestPermission.title": " requests permission to attack ",
   "macros.combat.dialog.rolled.title": "Dice rolled",
+  "macros.combat.dialog.rolled.tooltip": "Dice rolled",
   "macros.combat.dialog.showResultsButton.title": "Send to chat the results",
   "macros.combat.dialog.showRoll.title": "Show roll",
   "macros.combat.dialog.combat.accumulateDefenses.title": "Accumulate defense",
@@ -811,5 +815,7 @@
   "macros.damageCalculator.dialog.damage.title": "Damage",
   "macros.damageCalculator.dialog.defense.title": "Defense",
   "macros.damageCalculator.dialog.ta.title": "AT",
+  "macros.combat.dialog.at.tooltip": "AT",
+  "macros.combat.dialog.at.label": "AT",
   "macros.damageCalculator.dialog.title": "Damage calculator"
 }
