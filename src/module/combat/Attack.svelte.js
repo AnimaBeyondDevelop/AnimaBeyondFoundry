@@ -47,8 +47,6 @@ export class Attack {
     return '';
   }
 
-  get isRolled() {
-    return this.#roll !== undefined && this.#roll.total;
   get isCounterattack() {
     return 'counterattackBonus' in this.ability.modifiers;
   }
@@ -58,11 +56,16 @@ export class Attack {
     const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.attacker.system);
     await this.#roll.roll();
+    return this;
+  }
+
+  get isRolled() {
+    return this.#roll !== undefined && !!this.#roll.total;
   }
 
   get rolled() {
-    if (!this.#roll?.total) return undefined;
-    return this.#roll.total - this.ability.final;
+    if (!this.isRolled) return undefined;
+    return this.#roll.getResults().reduce((sum, value) => sum + value);
   }
 
   get fumbled() {
@@ -71,6 +74,15 @@ export class Attack {
 
   get openRoll() {
     return this.#roll.openRoll;
+  }
+
+  /**
+   * @type {number|undefined} Value of the total attack ability.
+   * When not rolled, this is undefined; otherwise is the ability.final plus roll.
+   */
+  get total() {
+    if (!this.rolled) return undefined;
+    return this.ability.final + this.rolled;
   }
 
   /**
