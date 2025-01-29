@@ -43,12 +43,14 @@ export class Attack {
     return this._attacker;
   }
 
-  get isCounterattack() {
-    return 'counterattackBonus' in this.ability.modifiers;
+  get displayName() {
+    return '';
   }
 
   get isRolled() {
     return this.#roll !== undefined && this.#roll.total;
+  get isCounterattack() {
+    return 'counterattackBonus' in this.ability.modifiers;
   }
 
   async roll() {

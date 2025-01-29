@@ -61,6 +61,10 @@ export class PhysicAttack extends Attack {
     this.ability.registerModTable(this.#modifiers);
   }
 
+  get displayName() {
+    return /** @type {string} */ (this.weapon.name);
+  }
+
   get modifiers() {
     return this.#modifiers;
   }
