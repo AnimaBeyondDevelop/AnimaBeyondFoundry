@@ -42,11 +42,8 @@ to this component:
   .select-container {
     @include card.buttonlike();
     @include borders.slanted-edges(
-      card.$edge-size,
-      card.$border-size,
       0 0 0 1,
-      card.$border-color,
-      card.$background-light
+      $bg-color: card.$background-light
     );
 
     $offset: calc(0.5 * card.$border-size + card.$edge-size);

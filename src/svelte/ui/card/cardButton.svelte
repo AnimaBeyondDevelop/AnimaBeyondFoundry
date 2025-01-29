@@ -90,19 +90,13 @@ to this component:
     }
 
     &.angled {
-      @include borders.arrow-shape(
-        $height,
-        $border-size,
-        'both',
-        $border-color,
-        $background-color
-      );
+      @include borders.arrow-shape($height, 'both');
       padding-left: calc($height / 2);
       padding-right: calc($height / 2);
     }
 
     &.circle {
-      @include borders.circle($height, $border-size, $border-color, $background-color);
+      @include borders.circle($height);
       padding: calc(0.15 * $height);
     }
   }

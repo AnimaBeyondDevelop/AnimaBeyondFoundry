@@ -92,13 +92,7 @@ to this component:
 
   .direction-down {
     .title {
-      @include borders.slanted-edges(
-        card.$edge-size,
-        card.$border-size,
-        1 1 0 0,
-        card.$border-color,
-        card.$background-light
-      );
+      @include borders.slanted-edges(1 1 0 0, $bg-color: card.$background-light);
       position: absolute;
       top: 0;
     }
@@ -114,13 +108,7 @@ to this component:
   }
   .direction-up {
     .title {
-      @include borders.slanted-edges(
-        card.$edge-size,
-        card.$border-size,
-        0 0 1 1,
-        card.$border-color,
-        card.$background-light
-      );
+      @include borders.slanted-edges(0 0 1 1, $bg-color: card.$background-light);
       position: absolute;
       bottom: 0;
     }

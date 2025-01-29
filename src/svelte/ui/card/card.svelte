@@ -110,11 +110,8 @@ to this component:
     width: card.$card-width;
     // bg-color set to sidebar-color to avoid a 1px diagonal line on slanted bottom-left corner
     @include borders.slanted-edges(
-      card.$edge-size,
-      card.$border-size,
       var(--slanted0) var(--slanted1) var(--slanted2) var(--slanted3),
-      card.$border-color,
-      card.$sidebar-color
+      $bg-color: card.$sidebar-color
     );
     @include card.text(dark);
 
@@ -164,11 +161,9 @@ to this component:
       height: $header-height;
       & > div {
         @include borders.slanted-edges(
-          calc(card.$sidebar-size - card.$edge-size + card.$border-size),
-          card.$border-size,
           0 0 1 1,
-          card.$border-color,
-          card.$background-light
+          $edge: calc(card.$sidebar-size - card.$edge-size + card.$border-size),
+          $bg-color: card.$background-light
         );
         padding: 0;
       }
@@ -178,11 +173,9 @@ to this component:
       height: $footer-height;
       & > div {
         @include borders.slanted-edges(
-          calc(card.$sidebar-size - card.$edge-size + card.$border-size),
-          card.$border-size,
           1 1 0 0,
-          card.$border-color,
-          card.$background-light
+          $edge: calc(card.$sidebar-size - card.$edge-size + card.$border-size),
+          $bg-color: card.$background-light
         );
         padding: 0;
       }

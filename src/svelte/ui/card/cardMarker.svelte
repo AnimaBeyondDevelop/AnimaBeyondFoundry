@@ -37,13 +37,7 @@ to this component:
 
   .marker {
     width: fit-content;
-    @include borders.arrow-shape(
-      $height,
-      $border,
-      'left',
-      card.$border-color,
-      card.$sidebar-color
-    );
+    @include borders.arrow-shape($height, 'left', $bg-color: card.$sidebar-color);
     .content {
       @include card.text(light);
       display: flex;

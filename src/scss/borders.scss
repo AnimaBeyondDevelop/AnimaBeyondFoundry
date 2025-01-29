@@ -1,5 +1,5 @@
 @use 'sass:list';
-@use 'variable' as variables;
+@use 'card.scss';
 
 /// Draws a border around a colored shape given by a clip-path.
 /// @param {clip-path} $innerClip - Clip defining the inner line of the border.
@@ -89,22 +89,20 @@
 }
 
 /// Draws a border with slanted edges in the specified corners.
-/// @param {Number} $edge - vertical/horizontal size of the slanted egde. Asumed to be 45 degrees.
-/// @param {Number} $border-size - border size in pixels
 /// @param {list} $corners [0 1 1 1] - List indicating which corners are slanted.
 /// Starting from the top left corner and advancing clockwise, a 1 indicates the corresponding corner
 /// is slanted and a 0 indicates a square corner.
-/// @param {color} $border-color - Color used for the border.
-/// Defaults to `variables.$border-color`.
-/// @param {color} $bg-color - Color used for the background.
-/// Defaults to `variables.$background-main`.
-/// @output
+/// @param {Number} $edge [card.$edge-size] - vertical/horizontal size of the slanted egde.
+/// Asumed to be 45 degrees.
+/// @param {Number} $border-size [card.$border-size] - border size in pixels
+/// @param {color} $border-color [card.$border-color] - Color used for the border.
+/// @param {color} $bg-color [card.$background-color] - Color used for the background.
 @mixin slanted-edges(
-  $edge,
-  $border-size,
   $corners: 0 1 1 1,
-  $border-color: variables.$border-color,
-  $bg-color: variables.$background-main
+  $edge: card.$edge-size,
+  $border-size: card.$border-size,
+  $border-color: card.$border-color,
+  $bg-color: card.$background-color
 ) {
   @include clipped-border(
     slanted-clip($edge, $border-size, $corners, $inner: 1),
@@ -140,18 +138,16 @@
 
 /// Draws a border with arrow (<=>) shape.
 /// @param {Number} $height - height of the element.
-/// @param {Number} $border-size - border size in pixels.
 /// @param {String} $direction ['both'] - Direction of the arrow. Can be "left", "right" or "both".
-/// @param {color} $border-color - Color used for the border.
-/// Defaults to `variables.$border-color`.
-/// @param {color} $bg-color - Color used for the background.
-/// Defaults to `variables.$background-main`.
+/// @param {Number} $border-size [card.$border-size] - border size in pixels.
+/// @param {color} $border-color [card.$border-color] - Color used for the border.
+/// @param {color} $bg-color [color.$background-color] - Color used for the background.
 @mixin arrow-shape(
   $height,
-  $border-size,
   $direction: 'both',
-  $border-color: variables.$border-color,
-  $bg-color: variables.$background-main
+  $border-size: card.$border-size,
+  $border-color: card.$border-color,
+  $bg-color: card.$background-color
 ) {
   height: $height;
   @include clipped-border(
@@ -163,11 +159,16 @@
   );
 }
 
+/// Draws a border with circle shape.
+/// @param {Number} $height - height of the element.
+/// @param {Number} $border-size [card.$border-size] - border size in pixels.
+/// @param {color} $border-color [card.$border-color] - Color used for the border.
+/// @param {color} $bg-color [color.$background-color] - Color used for the background.
 @mixin circle(
   $height,
-  $border-size,
-  $border-color: variables.$border-color,
-  $bg-color: variables.$background-main
+  $border-size: card.$border-size,
+  $border-color: card.$border-color,
+  $bg-color: card.$background-color
 ) {
   width: $height;
   height: $height;
