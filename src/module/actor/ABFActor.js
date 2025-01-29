@@ -263,12 +263,7 @@ export class ABFActor extends Actor {
    *
    * @returns {number} The calculated psychic fatigue value.
    */
-  async evaluatePsychicFatigue(
-    power,
-    psychicDifficulty,
-    eliminateFatigue,
-    sendToChat = true
-  ) {
+  evaluatePsychicFatigue(power, psychicDifficulty, eliminateFatigue, sendToChat = true) {
     const {
       psychic: {
         psychicSettings: { fatigueResistance },
@@ -470,6 +465,53 @@ export class ABFActor extends Actor {
       );
       return true;
     } else return false;
+  }
+
+  canCast(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
+    let canCast = false;
+    let warningMessage = '';
+    let zeonCost = spell?.system.grades[spellGrade].zeon.value + increasedCost.zeon;
+    let zeonPool = this.system.mystic.zeon.value;
+
+    switch (castMethod) {
+      case 'accumulated': {
+        let zeonAccumulated = this.system.mystic.zeon.accumulated;
+        canCast = zeonAccumulated >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.zeonAccumulated';
+        break;
+      }
+      case 'innate': {
+        let spellVia = spell?.system.via.value;
+        let innateMagic = this.system.mystic.innateMagic;
+        let innateVia = innateMagic.via.find(i => i.name == spellVia);
+        let innateMagicValue =
+          innateMagic.via.length !== 0 && innateVia
+            ? innateVia.system.final.value
+            : innateMagic.main.final.value;
+        canCast = innateMagicValue >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.innateMagic';
+        break;
+      }
+      case 'prepared': {
+        canCast =
+          this.getPreparedSpells().find(
+            ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+          )?.system.prepared.value ?? false;
+        warningMessage = 'dialogs.spellCasting.warning.preparedSpell';
+        break;
+      }
+      case 'override': {
+        return true;
+      }
+    }
+    if (zeonPool < increasedCost.pool) {
+      canCast = false;
+      warningMessage = 'dialogs.spellCasting.warning.zeonPool';
+    }
+    if (!canCast) {
+      ui.notifications.warn(game.i18n.localize(warningMessage));
+    }
+    return canCast;
   }
 
   /**
@@ -706,7 +748,12 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.SECONDARY_SPECIAL_SKILL);
   }
 
-  getKnownSpells() {
+  getKnownSpells(combatType) {
+    if (combatType) {
+      return this.getItemsOf(ABFItems.SPELL).filter(
+        w => w.system.combatType.value === combatType
+      );
+    }
     return this.getItemsOf(ABFItems.SPELL);
   }
 
@@ -790,7 +837,12 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
   }
 
-  getPsychicPowers() {
+  getPsychicPowers(combatType) {
+    if (combatType) {
+      return this.getItemsOf(ABFItems.PSYCHIC_POWER).filter(
+        w => w.system.combatType.value === combatType
+      );
+    }
     return this.getItemsOf(ABFItems.PSYCHIC_POWER);
   }
 
@@ -914,10 +966,22 @@ export class ABFActor extends Actor {
    * or defending
    */
   getLastWeaponUsed(usage) {
-    usage = usage[0].toLowerCase() + usage.slice(1);
+    usage = usage[0].toUpperCase() + usage.slice(1);
     const lastWeaponUsed = this.getFlag('animabf', `last${usage}WeaponUsed`);
 
     return this.getWeapons().find(w => w.id === lastWeaponUsed);
+  }
+  getLastSpellUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastSpellUsed = this.getFlag('animabf', `last${usage}SpellUsed`);
+
+    return this.getKnownSpells().find(w => w.id === lastSpellUsed);
+  }
+  getLastPowerUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastPowerUsed = this.getFlag('animabf', `last${usage}PowerUsed`);
+
+    return this.getPsychicPowers().find(w => w.id === lastPowerUsed);
   }
 
   /**
@@ -927,7 +991,15 @@ export class ABFActor extends Actor {
    * or defending
    */
   setLastWeaponUsed(weapon, usage) {
-    usage = usage[0].toLowerCase() + usage.slice(1);
+    usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}WeaponUsed`, weapon.id);
+  }
+  setLastSpellUsed(spell, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}SpellUsed`, spell.id);
+  }
+  setLastPowerUsed(power, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
   }
 }
