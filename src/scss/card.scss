@@ -49,3 +49,16 @@ $font-size: var(--font-size, 34px);
     color: $text-color;
   }
 }
+
+.card-input {
+  all: unset;
+  width: 60px;
+  color: white;
+  font-size: $font-size;
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
+  text-align: center;
+  &:focus {
+    @extend .card-input;
+  }
+}

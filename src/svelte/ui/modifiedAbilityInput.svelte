@@ -31,7 +31,7 @@
 </script>
 
 <input
-  class="input {cssClass}"
+  class="card-input {cssClass}"
   value={ability.final}
   type="text"
   onfocus={e => e.currentTarget.select()}
@@ -41,23 +41,4 @@
 
 <style lang="scss">
   @use 'card';
-
-  .input {
-    all: unset;
-    width: 85px;
-    color: white;
-    font-size: card.$font-size;
-    -webkit-text-stroke: 4px black;
-    paint-order: stroke fill;
-    text-align: center;
-    &:focus {
-      all: unset;
-      width: 85px;
-      color: white;
-      font-size: card.$font-size;
-      -webkit-text-stroke: 4px black;
-      paint-order: stroke fill;
-      text-align: center;
-    }
-  }
 </style>
