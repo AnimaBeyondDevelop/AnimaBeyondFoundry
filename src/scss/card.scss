@@ -5,6 +5,7 @@ $card-width: var(--width, 500px);
 $border-size: var(--border-size, 5px);
 $edge-size: var(--edge, 40px);
 $sidebar-size: var(--sidebar-size, 60px);
+$title-height: var(--title-height, calc($sidebar-size - $edge-size + 20px));
 
 $navbutton-size: var(--nav-size, 50px);
 

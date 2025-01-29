@@ -7,6 +7,7 @@
    * @property {import('svelte').Snippet|string} [header]
    * @property {import('svelte').Snippet|string} [footer]
    * @property {string} [slantedCorners="0 1 0 1"]
+   * @property {string} [class] Css class to apply to the card outer div
    */
 
   /** @type {Props} */
@@ -16,7 +17,8 @@
     sidebarRight,
     header,
     footer,
-    slantedCorners = '0 1 0 1'
+    slantedCorners = '0 1 0 1',
+    class: cssClass
   } = $props();
 
   // Allow to specify <Card sidebarRight> ... </Card> to add an empty right sidebar
@@ -52,7 +54,7 @@ to this component:
   </Card>
 ```
 -->
-<div class="card-border" style={cssCorners}>
+<div class="card-border {cssClass}" style={cssCorners}>
   <div class="content">
     <div class="sidebar">
       {@render sidebar?.()}
@@ -95,8 +97,8 @@ to this component:
   @use 'borders';
   @use 'card';
 
-  $header-height: var(--header-height, calc(card.$sidebar-size - card.$edge-size + 20px));
-  $footer-height: var(--footer-height, calc(card.$sidebar-size - card.$edge-size + 20px));
+  $header-height: var(--header-height, card.$title-height);
+  $footer-height: var(--footer-height, card.$title-height);
 
   .has-header {
     padding-top: $header-height;
@@ -121,11 +123,6 @@ to this component:
       .sidebar {
         @include card.text(light);
         flex-shrink: 0;
-        grid-area: 1 / 1 / span 4;
-        grid-template: 30px 30px 40px 55px 40px / 1fr;
-        padding: 15px;
-        display: grid;
-        gap: 5px;
         place-items: center;
         justify-content: end;
         width: card.$sidebar-size;
@@ -151,6 +148,7 @@ to this component:
       right: card.$edge-size;
       & > div {
         text-align: center;
+        align-content: center;
         height: 100%;
         width: 100%;
       }
