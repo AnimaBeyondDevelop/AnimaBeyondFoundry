@@ -1,4 +1,6 @@
 <script>
+  import { parseCssCustomProperties } from '@svelte/utils';
+
   /**
    * @template {{name: string}} T
    * @typedef {object} Props
@@ -6,10 +8,27 @@
    * @property {T[]} options List of available options.
    * @property {import('svelte').Snippet} [children] A snippet holding extra options.
    * @property {boolean} [disabled] Whether this select is disabled or not.
+   * @property {"right"|"left"} [slanted="left"] Which side should have the slanted edge.
    */
 
   /** @type {Props<{name: string}>} */
-  let { value = $bindable(), options, children = undefined, disabled = false } = $props();
+  let {
+    value = $bindable(),
+    options,
+    children = undefined,
+    disabled = false,
+    slanted = 'left'
+  } = $props();
+
+  let slantedLeft, slantedRight;
+  if (slanted === 'left') {
+    slantedLeft = '1';
+    slantedRight = '0';
+  } else if (slanted === 'right') {
+    slantedLeft = '0';
+    slantedRight = '1';
+  }
+  let style = parseCssCustomProperties({ slantedLeft, slantedRight });
 </script>
 
 <!--
@@ -27,8 +46,8 @@ to this component:
   <CardSelect {options} bind:value --border-size=5px />
 ```
 -->
-<div class="select-container">
-  <select class="content" disabled={disabled || options.length === 0} bind:value>
+<div class="card-select" {style}>
+  <select disabled={disabled || options.length === 0} bind:value>
     {#each options as option}
       <option value={option}>{option.name}</option>
     {/each}
@@ -39,10 +58,10 @@ to this component:
 <style lang="scss">
   @use 'card';
   @use 'borders';
-  .select-container {
+  .card-select {
     @include card.buttonlike();
     @include borders.slanted-edges(
-      0 0 0 1,
+      0 0 var(--slantedRight) var(--slantedLeft),
       $bg-color: card.$background-light
     );
 
