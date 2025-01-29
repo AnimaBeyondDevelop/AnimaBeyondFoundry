@@ -26,7 +26,6 @@
   let togglePanel = $state(false);
   // TODO: expanded sidebar 210px (i.e. 150px bigger). Width should be updated accordingly
 
-  function diceToggle() {}
   let distanceOptions = [
     {
       value: true,
