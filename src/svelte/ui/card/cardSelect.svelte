@@ -46,13 +46,11 @@ to this component:
       $bg-color: card.$background-light
     );
 
-    $offset: calc(0.5 * card.$border-size + card.$edge-size);
-    position: relative;
-    left: calc(-1 * $offset);
     height: 100%;
-    width: calc(100% + $offset);
+    width: 100%;
+    padding: 0 calc(card.$edge-size + 5px);
+    align-content: center;
     select {
-      padding-left: calc(card.$edge-size + 5px);
       cursor: inherit;
       box-shadow: unset;
       border: none;
@@ -64,6 +62,7 @@ to this component:
 
     option {
       background: white;
+      font-size: smaller;
     }
   }
 </style>

@@ -143,7 +143,11 @@ to this component:
 
         .selector {
           position: relative;
+          $offset: calc(0.5 * card.$border-size + card.$edge-size);
+          left: calc(-1 * $offset);
           height: $selector-size;
+          width: calc(100% + $offset);
+
           flex-shrink: 0;
           display: flex;
         }
