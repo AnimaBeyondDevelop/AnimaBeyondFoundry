@@ -26,9 +26,21 @@ export class PhysicAttack extends Attack {
       spec: -10,
       active: true
     },
-    poorVisibility: { value: () => (this.isRanged ? 1 : 0), spec: -20, active: false },
-    targetInCover: { value: () => (this.isRanged ? 1 : 0), spec: -40, active: false },
-    pointBlank: { value: () => (this.isRanged ? 1 : 0), spec: -30, active: false }
+    poorVisibility: {
+      value: () => (this.isRanged && !this.meleeCombat ? 1 : 0),
+      spec: -20,
+      active: false
+    },
+    targetInCover: {
+      value: () => (this.isRanged && !this.meleeCombat ? 1 : 0),
+      spec: -40,
+      active: false
+    },
+    pointBlank: {
+      value: () => (this.isRanged && this.meleeCombat ? 1 : 0),
+      spec: -30,
+      active: true
+    }
   };
 
   #unarmed = {
@@ -48,15 +60,15 @@ export class PhysicAttack extends Attack {
   };
 
   /**
-   * @param {import('@module/actor/ABFActor').ABFActor} attacker The attacker actor.
-   * @param {boolean} [visible=true] Whether the attack is visible or not. Defaults to `true`.
+   * @param {Token} attacker The attacker token.
+   * @param {Token} defender The defender token.
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
-  constructor(attacker, visible = true, counterattackBonus) {
-    super(attacker, visible, counterattackBonus);
+  constructor(attacker, defender, counterattackBonus) {
+    super(attacker, defender, counterattackBonus);
 
     this.weapon =
-      this.attacker.getLastWeaponUsed('offensive') ?? this.attacker.getWeapons()[0];
+      this.attacker.getLastWeaponUsed('offensive') ?? this.availableWeapons[0];
 
     this.ability.registerModTable(this.#modifiers);
   }
@@ -79,7 +91,6 @@ export class PhysicAttack extends Attack {
 
   set weapon(weapon) {
     this.#weapon = weapon?.id ?? 'unarmed';
-    weapon = this.weapon;
     this.ability.base = weapon.system.attack.final.value;
     this.damage.base = weapon.system.damage.final.value;
     this.critic = weapon.system.critic.primary.value;
@@ -106,5 +117,22 @@ export class PhysicAttack extends Attack {
 
   get isThrownable() {
     return this.rangedType === 'throw';
+  }
+
+  get mastery() {
+    return this.attacker.system.combat.attack.base.value >= 200;
+  }
+
+  toMessage() {
+    let flavor = game.i18n.format(
+      `macros.combat.dialog.physicalAttack.${
+        this.#weapon === 'unarmed' ? 'unarmed.title' : 'title'
+      }`,
+      {
+        weapon: this.weapon?.name,
+        target: this._defenderToken.name
+      }
+    );
+    super.toMessage(flavor);
   }
 }

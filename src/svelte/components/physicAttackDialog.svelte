@@ -14,12 +14,11 @@
    * @typedef props
    * @property {PhysicAttack} attack
    * @property {(attack: PhysicAttack) => void | Promise<void>} onAttack Function called when hitting
-   * @property {boolean} [distanceAutomation] Whether distance automations are enabled or not
    * the attack button.
    */
 
   /** @type {props} */
-  let { attack, onAttack, distanceAutomation = false } = $props();
+  let { attack, onAttack } = $props();
   const i18n = game.i18n;
 
   let fatigueAvailable = attack.attacker.system.characteristics.secondaries.fatigue.value;
@@ -30,12 +29,12 @@
     {
       value: true,
       icon: 'point-blank',
-      titile: i18n.localize('macros.combat.dialog.pointBlank.title')
+      title: i18n.localize('macros.combat.dialog.pointBlank.title')
     },
     {
       value: false,
       icon: 'distance',
-      titile: i18n.localize('macros.combat.dialog.distance.title')
+      title: i18n.localize('macros.combat.dialog.distance.title')
     }
   ];
   let throwOptions = [
@@ -65,12 +64,12 @@
         )}
       />
     </div>
-    {#if !distanceAutomation && attack.isRanged}
+    {#if !attack.distance && attack.isRanged}
       <div id="separator-button">
         <IconSwitch
           shape="circle"
           options={distanceOptions}
-          bind:value={attack.ability.modifiers.pointBlank.active}
+          bind:value={attack.meleeCombat}
           style="light"
         />
       </div>
@@ -134,7 +133,7 @@
           bind:value={attack.ability.modifiers.highGround.active}
           title={i18n.localize('macros.combat.dialog.highGround.title')}
         />
-        {#if attack.isRanged}
+        {#if !attack.meleeCombat && attack.isRanged}
           <IconCheckBox
             icon="target-in-cover"
             bind:value={attack.ability.modifiers.targetInCover.active}

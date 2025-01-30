@@ -6,9 +6,9 @@
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
   let { data, document } = $props();
 
-  let attacker = game.actors.getName('Killiam');
-  let defender = game.actors.getName('Kotarum');
-  let attack = new PhysicAttack(attacker);
+  let attacker = game.scenes.active.tokens.getName('Killiam');
+  let defender = game.scenes.active.tokens.getName('Luko');
+  let attack = new PhysicAttack(attacker, defender);
 
   let expanded = $state(true);
 </script>
