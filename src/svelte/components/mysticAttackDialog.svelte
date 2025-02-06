@@ -1,224 +1,137 @@
 <script>
-  // @ts-nocheck
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
-  import IconInput from '@svelte/ui/iconInput.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
-  import CardButton from '@svelte/ui/card/cardButton.svelte';
-  import CardCircle from '@svelte/ui/card/cardCircle.svelte';
-  import CardCombat from '@svelte/ui/card/cardCombat.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import InputLabel from '@svelte/ui/inputLabel.svelte';
+  import CombatCard from '@svelte/ui/card/combatCard.svelte';
+  import CardButton from '@svelte/ui/card/cardButton.svelte';
+  import IconSelect from '@svelte/ui/iconSelect.svelte';
 
-  let { manager } = $props();
+  /**
+   * @typedef {import("@module/combat/MysticAttack.svelte").MysticAttack} MysticAttack
+   * @typedef props
+   * @property {MysticAttack} attack
+   * @property {(attack: MysticAttack) => void | Promise<void>} onAttack Function called when hitting
+   * the attack button.
+   */
+
+  /** @type {props} */
+  let { attack, onAttack } = $props();
   const i18n = game.i18n;
 
-  let markerWidth = { min: '150px', max: '435px' };
-  let togglePanel = $state(false);
+  async function onAttacka() {
+    if (!attack.canCast) return;
+
+    await attack.roll();
+    attack.toMessage();
+    onAttack(attack);
+  }
+
+  let distanceOptions = [
+    {
+      value: true,
+      icon: 'point-blank',
+      title: i18n.localize('macros.combat.dialog.pointBlank.title')
+    },
+    {
+      value: false,
+      icon: 'distance',
+      title: i18n.localize('macros.combat.dialog.distance.title')
+    }
+  ];
 </script>
 
-<div class="template">
-  <g class="background">
-    <CardCombat
-      width={togglePanel ? '650px' : '500px'}
-      sidebar={togglePanel ? '210px' : '60px'}
-    ></CardCombat>
-  </g>
-  <div class="sidebar">
-    <div></div>
-    <div></div>
-  </div>
-  <div class="box"></div>
-  <g class="select">
-    <CardSelect
-      bind:selection={manager.data.spellUsed}
-      options={manager.data.spells}
-      onChange={value => manager.onSpellChange(value)}
-      >{#if manager.data.spells.length === 0}
-        <option>No Spell Found</option>
-      {/if}</CardSelect
-    >
-  </g>
-  <g class="marker">
-    <CardMarkerCritic
-      value={manager.damage}
-      bind:modifier={manager.damageModifiers.special.modifier}
-      bind:critics={manager.data.critics}
-      {markerWidth}
-    />
-  </g>
-  <g class="primary">
-    <IconInput
-      icon="mystic"
-      value={manager.attack}
-      bind:modifier={manager.modifiers.special.modifier}
-      title={i18n.localize('anima.ui.mystic.magicProjection.final.title')}
-    />
-  </g>
-  <div class="secondary">
-    <IconInput
-      icon="zeon-cost"
-      value={manager.spellCasting.zeon.cost}
-      title={i18n.localize('macros.combat.dialog.zeonCost.title')}
-      disabled={true}
-      --icon-size="45px"
-    />
-  </div>
-  <g class="upper-left">
-    <IconInput
-      icon="zeon-accumulated"
-      value={manager.spellCasting.zeon.accumulated}
-      title={i18n.localize('macros.combat.dialog.zeonAccumulated.title')}
-      disabled={true}
-    />
-  </g>
-  <div class="spell-grade">
-    {#each manager.attainableSpellGrades as spellGrade, i}
-      <input
-        class={manager.data.spellGrade === spellGrade ? 'selected' : ''}
-        title={i18n.localize(`macros.combat.dialog.spellGrade.${spellGrade}.title`)}
-        type="image"
-        src={`/systems/animabf/assets/icons/svg/spell-${spellGrade}.svg`}
-        alt={spellGrade}
-        onclick={() => (manager.data.spellGrade = spellGrade)}
-        style={i < 2 ? '--icon-size:26px' : ''}
+<CombatCard>
+  {#snippet buttons()}
+    <div id="sidebar-button">
+      <IconCheckBox
+        icon="dice"
+        bind:value={attack.withRoll}
+        shape="circle"
+        style="dark"
+        title={i18n.localize(
+          `macros.combat.dialog.${attack.withRoll ? 'withRoll' : 'withoutRoll'}.title`
+        )}
       />
-    {/each}
-  </div>
-  {#if !manager.data.distance.enable && manager.data.projectile.value}
-    <div class="circle-distance">
-      <CardCircle size="40px">
-        <IconCheckBox
-          icon={manager.data.distance.pointBlank ? 'point-blank' : 'distance'}
-          bind:value={manager.data.distance.pointBlank}
-          title={manager.data.distance.pointBlank
-            ? i18n.localize('macros.combat.dialog.pointBlank.title')
-            : i18n.localize('macros.combat.dialog.distance.title')}
-          noStyle={true}
-          --icon-size={manager.data.distance.pointBlank ? '15px' : '25px'}
-        />
-      </CardCircle>
     </div>
-  {/if}
-  <div class="button">
-    <CardButton title={i18n.localize('macros.combat.dialog.button.attack.title')} onClick={() => manager.onAttack()} />
-  </div>
-  <div class="circle-cast-method">
-    <CardCircle>
+    {#if !attack.distance && attack.isRanged}
+      <div id="separator-button">
+        <IconSwitch
+          shape="circle"
+          options={distanceOptions}
+          bind:value={attack.meleeCombat}
+          style="light"
+        />
+      </div>
+    {/if}
+    <div id="main-button">
+      <CardButton
+        shape="angled"
+        onclick={() => onAttack(attack)}
+        style="light"
+        class="main"
+      >
+        {i18n.localize('macros.combat.dialog.button.attack.title')}
+      </CardButton>
+
       <IconSwitch
-        icons={['cast-accumulated', 'cast-prepared', 'cast-innate', 'cast-override']}
-        bind:value={manager.castMethod}
-        options={['accumulated', 'prepared', 'innate', 'override']}
-        title={i18n.localize(`dialogs.castSpell.${manager.castMethod}.title`)}
-        --icon-size="30px"
+        shape="circle"
+        options={['accumulated', 'prepared', 'innate', 'override'].map(method => ({
+          value: method,
+          icon: `cast-${method}`,
+          title: i18n.localize(`dialogs.castSpell.${method}.title`)
+        }))}
+        bind:value={attack.castMethod}
+        style="light"
+        class="secondary"
       />
-    </CardCircle>
-  </div>
-</div>
+    </div>
+  {/snippet}
+  {#snippet top()}
+    <div class="row pull-left">
+      <InputLabel
+        label="macros.combat.dialog.zeonAccumulated"
+        icon="zeon-accumulated"
+        useIcon
+      >
+        <input class="card-input" value={attack.zeonAccumulated || 0} disabled />
+      </InputLabel>
+    </div>
+    <div class="row pull-left">
+      <InputLabel label="anima.ui.mystic.magicProjection.final" icon="mystic">
+        <ModifiedAbilityInput bind:ability={attack.ability} />
+      </InputLabel>
+      <InputLabel label="macros.combat.dialog.zeonCost" icon="zeon-cost" useIcon>
+        <input class="card-input" value={attack.zeonCost} disabled />
+      </InputLabel>
+    </div>
+  {/snippet}
+  {#snippet selector()}
+    <CardSelect bind:value={attack.spell} options={attack.availableSpells} />
+  {/snippet}
+  {#snippet marker()}
+    <CardMarkerCritic
+      bind:damage={attack.damage}
+      bind:selectedCritic={attack.critic}
+      critics={{ primary: attack.spell.system.critic }}
+    />
+  {/snippet}
+  {#snippet bottom()}
+    <IconSelect
+      class="spell-grade"
+      bind:value={attack.spellGrade}
+      height="30px"
+      options={attack.availableSpellGrades.map(grade => ({
+        title: i18n.localize(`macros.combat.dialog.spellGrade.${grade}.title`),
+        icon: `spell-${grade}`,
+        value: grade
+      }))}
+    />
+  {/snippet}
+</CombatCard>
 
 <style lang="scss">
-  .template {
-    height: 300px;
-    width: 500px;
-    display: grid;
-    grid-template: 2fr 2fr 2fr 2.8fr/65px 150px 150px 1fr;
-    gap: 5px;
-
-    .background {
-      grid-area: 1 / 1 / -1 / -1;
-      justify-self: end;
-    }
-    .box {
-      grid-area: 1 / 3 / 1 / -1;
-      justify-self: end;
-      align-self: center;
-      margin-right: 40px;
-      margin-top: 5px;
-      z-index: 1;
-    }
-    .select {
-      grid-area: 3 / 1 / 4 /-1;
-      justify-self: end;
-      align-self: center;
-    }
-    .marker {
-      grid-area: 3 / 1 / 4 /-1;
-      justify-self: end;
-      align-self: center;
-      margin: -5px -5px 0;
-      z-index: 1;
-    }
-    .marker {
-      width: --marker-widht;
-    }
-    .sidebar {
-      width: 60px;
-      grid-area: 1 / 1 / span 4;
-      place-self: start end;
-      padding: 15px;
-      display: grid;
-      grid-template: 30px 30px 40px 55px 40px / 1fr;
-      gap: 5px;
-      place-items: center;
-    }
-
-    .primary {
-      display: grid;
-      grid-area: 2/2;
-      place-self: end start;
-      z-index: 1;
-    }
-
-    .secondary {
-      display: grid;
-      grid-area: 2/3;
-      place-self: end start;
-      z-index: 1;
-    }
-
-    .upper-left {
-      display: grid;
-      grid-area: 1/2;
-      place-self: end start;
-      z-index: 1;
-    }
-    .spell-grade {
-      display: flex;
-      grid-area: 4/2;
-      height: 30px;
-      margin-left: 10px;
-      place-items: center;
-      z-index: 1;
-      input {
-        width: var(--icon-size, 30px);
-        height: var(--icon-size, 30px);
-        margin-left: 10px;
-        transition: scale 0.3s ease-out;
-        opacity: 60%;
-        &.selected {
-          opacity: 1;
-        }
-        &:hover {
-          scale: 1.05;
-        }
-      }
-    }
-    .button {
-      grid-area: 4 / 3 / 5 / 5;
-      justify-self: end;
-      align-self: center;
-      margin-right: -25px;
-    }
-    .circle-distance {
-      grid-area: 4 / 1;
-      justify-self: center;
-      align-self: center;
-      margin-right: -70px;
-    }
-    .circle-cast-method {
-      grid-area: 4 / 3;
-      justify-self: center;
-      align-self: center;
-      margin-right: -25px;
-    }
-  }
+  @use 'card';
 </style>
