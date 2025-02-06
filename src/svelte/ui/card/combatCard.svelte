@@ -25,7 +25,9 @@ selector (middle) and bottom regions. It also adds combat buttons around the car
 
 Notes:
 - It expects top snippet to have divs with the .row css class, the last of which will be located right
-on top of the selector.
+on top of the selector. This rows can have the following classes to specify alignment of its elements:
+  - `.pull-left`, `.pull-right` will pull all the elements to the left/right.
+  - `.justify` will place the first item on the left, the last item on the right and others evenly spaced.
 - It expects buttons snippet to have elements with the #main-button, #separator-button and #sidebar-button
 ids, which will render in the corresponding locations. They can be <div></div> elements.
 - The #main-button element must contain a .main (card)button and can contain a .secondary element which will
@@ -65,7 +67,7 @@ to this component:
       <div class="body">
         <div class="top" bind:offsetHeight={topHeight}>{@render top?.()}</div>
         <div class="selector">{@render selector?.()}</div>
-        <div class="bottom">{@render bottom?.()}</div>
+        <div class="bottom row">{@render bottom?.()}</div>
       </div>
     {/snippet}
   </Card>
@@ -121,17 +123,26 @@ to this component:
         flex-direction: column;
 
         .row {
+          height: 62px;
           display: flex;
           padding: 10px;
           align-items: center;
+          gap: 50px;
+
           &:first-child {
             padding-right: calc(card.$edge-size - card.$border-size);
           }
           &:last-child {
             margin-top: auto;
           }
-          & > div:last-of-type {
-            margin-left: auto;
+          &.pull-left {
+            justify-content: flex-start;
+          }
+          &.pull-right {
+            justify-content: flex-end;
+          }
+          &.justify {
+            justify-content: space-between;
           }
         }
 
@@ -150,11 +161,12 @@ to this component:
 
           flex-shrink: 0;
           display: flex;
+          .card-select {
+            padding-right: 115px;
+          }
         }
         .bottom {
           flex: 1;
-          display: flex;
-          flex-direction: row;
         }
       }
     }

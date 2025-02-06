@@ -114,7 +114,7 @@
     /> -->
   {/snippet}
   {#snippet top()}
-    <div class="row">
+    <div class="row pull-right">
       <IconRange
         icon="fatigue"
         bind:value={attack.ability.modifiers.fatigue.value}
@@ -123,7 +123,7 @@
           ` (${fatigueAvailable})`}
       />
     </div>
-    <div class="row">
+    <div class="row justify">
       <InputLabel label="macros.combat.dialog.attack" icon="attack" useIcon>
         <ModifiedAbilityInput bind:ability={attack.ability} />
       </InputLabel>
