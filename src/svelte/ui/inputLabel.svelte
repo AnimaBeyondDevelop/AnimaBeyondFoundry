@@ -4,7 +4,7 @@
   /**
    * @typedef {Object} props
    * @property {string} label Localize key to obtain the global tooltip.
-   * @property {string} icon Name of the icon representing the label.
+   * @property {string} [icon] Name of the icon representing the label.
    * @property {string} [iconLabel] Localize key to obtain the icon's tooltip and label.
    * @property {import('svelte/elements').MouseEventHandler<HTMLButtonElement>} [oniconClick]
    * @property {import('svelte').Snippet} [children]
@@ -23,6 +23,8 @@
     useIcon,
     class: cssClass
   } = $props();
+
+  if (!icon) useIcon = false;
 
   if (useIcon === undefined) {
     useIcon = /** @type {boolean} */ (game.settings?.get('animabf', 'USE_ICON_LABELS'));
