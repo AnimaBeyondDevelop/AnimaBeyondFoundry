@@ -47,7 +47,7 @@ to this component:
 ```
 -->
 <div class="card-select" {style}>
-  <select disabled={disabled || options.length === 0} bind:value>
+  <select disabled={disabled || options.length === 0} bind:value title={value.name}>
     {#each options as option}
       <option value={option}>{option.name}</option>
     {/each}
