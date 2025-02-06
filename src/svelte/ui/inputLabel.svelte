@@ -38,13 +38,13 @@ Allows onclick bindings for the icon with the `onIconClick` prop.
 -->
 <div
   class={['label-container', cssClass].join(' ')}
-  title={game.i18n?.localize(label + '.tooltip')}
+  title={game.i18n?.localize(label + '.title')}
 >
   <button
     class="label"
     onclick={oniconClick}
     class:interactive={!!oniconClick}
-    title={game.i18n?.localize(iconLabel + '.tooltip')}
+    title={game.i18n?.localize(iconLabel + '.title')}
   >
     {#if useIcon}
       <Icon name={icon} class="icon" height="35px" />
