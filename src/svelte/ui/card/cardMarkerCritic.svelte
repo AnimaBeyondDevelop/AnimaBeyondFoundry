@@ -7,7 +7,7 @@
   /**
    * @typedef {object} props
    * @property {import('@module/common/ModifiedAbility.svelte').ModifiedAbility} damage
-   * @property {{primary: {value: string}, secondary: {value : string}}} critics
+   * @property {{primary: {value: string}, secondary?: {value : string}}} [critics]
    * @property {string} selectedCritic
    * @property {boolean} [disabled]
    */
@@ -22,7 +22,9 @@
 
   let expanded = $state(false);
 
-  let availableCritics = $derived([critics.secondary.value, critics.primary.value]);
+  let availableCritics = $derived(
+    [critics?.secondary?.value, critics?.primary.value].filter(v => v !== undefined)
+  );
   // TODO: use ABFConfig.iterables instead
   let criticChoices = $derived(
     ['none', 'cut', 'impact', 'thrust', 'heat', 'electricity', 'cold', 'energy']
@@ -37,7 +39,7 @@
 </script>
 
 <CardMarker>
-  {#if expanded}
+  {#if critics && expanded}
     <div
       class="selector-wrapper"
       in:slide={{ axis: 'x', duration: 400 }}
@@ -66,7 +68,7 @@
     label="macros.combat.dialog.damage"
     icon={'critic/' + selectedCritic}
     iconLabel={'anima.ui.combat.armors.at.' + selectedCritic}
-    oniconClick={() => (expanded = !expanded)}
+    oniconClick={!!critics ? () => (expanded = !expanded) : undefined}
   >
     <ModifiedAbilityInput bind:ability={damage} {disabled} />
   </InputLabel>
