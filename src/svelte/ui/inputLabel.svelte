@@ -65,13 +65,8 @@ Allows onclick bindings for the icon with the `onIconClick` prop.
     flex-direction: row;
     align-items: center;
     .label {
-      @include card.noninteractive();
 
       justify-self: right;
-    }
-
-    .interactive {
-      @include card.buttonlike();
     }
   }
 </style>

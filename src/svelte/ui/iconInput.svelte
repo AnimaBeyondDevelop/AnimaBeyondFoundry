@@ -1,4 +1,5 @@
 <script>
+  // TODO: Delete this file once migrated
   let {
     icon,
     value,

@@ -72,7 +72,6 @@ it can be specified:
         margin-inline: 0;
         padding-inline: 0;
         justify-self: right;
-        @include card.buttonlike();
       }
       .off {
         opacity: 60%;

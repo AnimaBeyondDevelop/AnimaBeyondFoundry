@@ -46,7 +46,7 @@ to this component:
   <CardSelect {options} bind:value --border-size=5px />
 ```
 -->
-<div class="card-select" {style}>
+<div class="card-select buttonlike" {style}>
   <select disabled={disabled || options.length === 0} bind:value title={value.name}>
     {#each options as option}
       <option value={option}>{option.name}</option>
@@ -59,7 +59,6 @@ to this component:
   @use 'card';
   @use 'borders';
   .card-select {
-    @include card.buttonlike();
     @include borders.slanted-edges(
       0 0 var(--slantedRight) var(--slantedLeft),
       $bg-color: card.$background-light

@@ -79,7 +79,6 @@ to this component:
     justify-content: center;
 
     @include text();
-    @include buttonlike();
 
     &.light {
       --background-color: #{variable.$background-light};

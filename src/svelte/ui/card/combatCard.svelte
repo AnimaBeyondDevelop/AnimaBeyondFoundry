@@ -127,6 +127,7 @@ to this component:
           display: flex;
           padding: 10px;
           align-items: center;
+          place-items: center;
           gap: 50px;
 
           &:first-child {

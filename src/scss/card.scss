@@ -18,11 +18,20 @@ $text-color: var(--text-color, variable.$text-color);
 $text-color-light: var(--text-color-light, variable.$background-light);
 
 $font-size: var(--font-size, 34px);
+$icon-size: var(--icon-size, 35px);
 
-@mixin noninteractive() {
+.buttonlike {
+  cursor: pointer;
+
+  &:hover {
+    --background-color: #{$background-active};
+    transform: scale(1.02);
+  }
+}
+
+button {
   border: unset;
   background: unset;
-  cursor: default;
 
   &:hover {
     box-shadow: unset;
@@ -30,15 +39,14 @@ $font-size: var(--font-size, 34px);
   &:focus {
     box-shadow: unset;
   }
+  @extend .buttonlike;
 }
 
-@mixin buttonlike() {
-  @include noninteractive();
-  cursor: pointer;
+.noninteractive {
+  cursor: default;
 
   &:hover {
-    --background-color: #{$background-active};
-    transform: scale(1.02);
+    transform: unset;
   }
 }
 
