@@ -4,6 +4,7 @@
    * @property {string} name Name of the icon file (without extension).
    * @property {string} [folderPath] Path to the folder containing the icon file, relative assets folder.
    * Defaults to `icons/svg/`, which will find icons in `src/assets/icons/svg/`.
+   * @property {string} [title] Title for the icon, displayed in the tooltip.
    * @property {string} [iconID] Id of the svg element representing the icon inside the icon file.
    * Defaults to `icon`.
    * @property {string} [fillingID] Id of the svg element representing the icon inside the icon file.
@@ -20,6 +21,7 @@
     folderPath = 'icons/svg/',
     iconID = 'icon',
     class: cssClass = '',
+    title,
     color = 'currentcolor',
     filling = 'transparent',
     height = '100%',
@@ -48,7 +50,7 @@ Usage:
   <Icon name="area_attack" width="25px" />
   ```
 -->
-<div class="icon" style:height>
+<div class="icon" style:height {title}>
   <svg {...rest} fill={color}>
     <!-- Filling needs to be first to be behind the icon (otherwise psychic-points won't work) -->
     <use href={iconPath + '#filling'} fill={filling} />
