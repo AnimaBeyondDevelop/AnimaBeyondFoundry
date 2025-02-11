@@ -971,12 +971,22 @@ export class ABFActor extends Actor {
 
     return this.getWeapons().find(w => w.id === lastWeaponUsed);
   }
+  /**
+   * Returns the last spell used if still available, otherwise undefined.
+   * @param {"offensive" | "defensive"} usage Whether to retrieve the last spell used for attacking
+   * or defending
+   */
   getLastSpellUsed(usage) {
     usage = usage[0].toUpperCase() + usage.slice(1);
     const lastSpellUsed = this.getFlag('animabf', `last${usage}SpellUsed`);
 
     return this.getKnownSpells().find(w => w.id === lastSpellUsed);
   }
+  /**
+   * Returns the last psychic power used if still available, otherwise undefined.
+   * @param {"offensive" | "defensive"} usage Whether to retrieve the last psychic power used for attacking
+   * or defending
+   */
   getLastPowerUsed(usage) {
     usage = usage[0].toUpperCase() + usage.slice(1);
     const lastPowerUsed = this.getFlag('animabf', `last${usage}PowerUsed`);
@@ -994,10 +1004,22 @@ export class ABFActor extends Actor {
     usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}WeaponUsed`, weapon.id);
   }
+  /**
+   * Sets the last spell used to a flag.
+   * @param {import('../items/ABFItems').ABFItemsEnum} spell
+   * @param {"offensive" | "defensive"} usage Whether to save the last spell used for attacking
+   * or defending
+   */
   setLastSpellUsed(spell, usage) {
     usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}SpellUsed`, spell.id);
   }
+  /**
+   * Sets the last psychic power used to a flag.
+   * @param {import('../items/ABFItems').ABFItemsEnum} psychic power
+   * @param {"offensive" | "defensive"} usage Whether to save the last psychic power used for attacking
+   * or defending
+   */
   setLastPowerUsed(power, usage) {
     usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
