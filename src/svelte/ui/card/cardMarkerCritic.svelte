@@ -52,7 +52,7 @@
       >
         {#each criticChoices as critic}
           <InputLabel
-            label={i18n.localize('anima.ui.combat.armors.at.' + critic)}
+            label={i18n.localize(`anima.ui.combat.armors.at.${critic}.title`)}
             icon={'critic/' + critic}
             oniconClick={() => {
               selectedCritic = critic;
@@ -65,9 +65,9 @@
     </div>
   {/if}
   <InputLabel
-    label="macros.combat.dialog.damage"
+    label={i18n.localize('macros.combat.dialog.damage.title')}
     icon={'critic/' + selectedCritic}
-    iconLabel={'anima.ui.combat.armors.at.' + selectedCritic}
+    iconLabel={i18n?.localize(`anima.ui.combat.armors.at.${selectedCritic}.title`)}
     oniconClick={!!critics ? () => (expanded = !expanded) : undefined}
   >
     <ModifiedAbilityInput bind:ability={damage} {disabled} />

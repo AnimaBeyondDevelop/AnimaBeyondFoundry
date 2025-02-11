@@ -92,7 +92,7 @@
   {#snippet top()}
     <div class="row pull-left">
       <InputLabel
-        label="macros.combat.dialog.zeonAccumulated"
+        label={i18n?.localize('macros.combat.dialog.zeonAccumulated.title')}
         icon="zeon-accumulated"
         useIcon
       >
@@ -100,10 +100,17 @@
       </InputLabel>
     </div>
     <div class="row pull-left">
-      <InputLabel label="anima.ui.mystic.magicProjection.final" icon="mystic">
+      <InputLabel
+        label={i18n?.localize('anima.ui.mystic.magicProjection.final.title')}
+        icon="mystic"
+      >
         <ModifiedAbilityInput bind:ability={attack.ability} />
       </InputLabel>
-      <InputLabel label="macros.combat.dialog.zeonCost" icon="zeon-cost" useIcon>
+      <InputLabel
+        label={i18n?.localize('macros.combat.dialog.zeonCost.title')}
+        icon="zeon-cost"
+        useIcon
+      >
         <input class="card-input" value={attack.zeonCost} disabled />
       </InputLabel>
     </div>

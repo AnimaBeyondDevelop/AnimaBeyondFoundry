@@ -21,6 +21,8 @@
 
   /** @type {number} */
   let titleHeight = $state(0);
+
+  const i18n = game.i18n;
 </script>
 
 {#snippet overview(/** @type {Attack} */ dataObject)}
@@ -37,7 +39,7 @@
   <div class="row">
     <InputLabel
       icon={dataObject.type === 'physic' ? actionType : dataObject.type}
-      label="macros.combat.dialog.gm.ability.{dataObject.type}"
+      label={i18n?.localize(`macros.combat.dialog.gm.ability.${dataObject.type}.title`)}
       useIcon
     >
       <ModifiedAbilityInput bind:ability={dataObject.ability} />
@@ -45,20 +47,20 @@
     {#if actionType === 'attack'}
       <InputLabel
         icon="critic/{dataObject.critic}"
-        label="macros.combat.dialog.damage"
-        iconLabel="anima.ui.combat.armors.at.{dataObject.critic}"
+        label={i18n?.localize('macros.combat.dialog.damage')}
+        iconLabel={i18n?.localize(`anima.ui.combat.armors.at.${dataObject.critic}.title`)}
         useIcon
       >
         <ModifiedAbilityInput bind:ability={dataObject.damage} />
       </InputLabel>
     {:else}
-      <InputLabel icon="armor" label="macros.combat.dialog.at" useIcon>
+      <InputLabel icon="armor" label={i18n?.localize('macros.combat.dialog.at.title')} useIcon>
         <ModifiedAbilityInput bind:ability={dataObject.at} />
       </InputLabel>
     {/if}
   </div>
   <div class="row">
-    <InputLabel icon="dice" label="macros.combat.dialog.rolled" useIcon>
+    <InputLabel icon="dice" label={i18n?.localize('macros.combat.dialog.rolled.title')} useIcon>
       <input
         value={dataObject.rolled}
         class="card-input"

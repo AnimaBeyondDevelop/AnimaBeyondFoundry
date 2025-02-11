@@ -124,7 +124,11 @@
       />
     </div>
     <div class="row justify">
-      <InputLabel label="macros.combat.dialog.attack" icon="attack" useIcon>
+      <InputLabel
+        label={i18n?.localize('macros.combat.dialog.attack.title')}
+        icon="attack"
+        useIcon
+      >
         <ModifiedAbilityInput bind:ability={attack.ability} />
       </InputLabel>
       <div class="right-icons">
