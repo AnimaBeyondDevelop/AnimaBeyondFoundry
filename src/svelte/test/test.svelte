@@ -7,7 +7,7 @@
   let { data, document } = $props();
 
   let attacker = game.scenes.active.tokens.getName('Killiam');
-  let defender = game.scenes.active.tokens.getName('Luko');
+  let defender = game.scenes.active.tokens.getName('Mentalista');
   let attack = new PhysicAttack(attacker, defender);
 
   let expanded = $state(true);

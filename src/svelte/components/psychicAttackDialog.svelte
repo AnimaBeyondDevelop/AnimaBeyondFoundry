@@ -1,248 +1,188 @@
 <script>
-  // @ts-nocheck
-  import CardSelect from '@svelte/ui/card/cardSelect.svelte';
-  import IconInput from '@svelte/ui/iconInput.svelte';
-  import IconRange from '@svelte/ui/iconRange.svelte';
-  import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
-  import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
-  import CardCircle from '@svelte/ui/card/cardCircle.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
-  import CardCombat from '@svelte/ui/card/cardCombat.svelte';
+  import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
+  import CardSelect from '@svelte/ui/card/cardSelect.svelte';
+  import CombatCard from '@svelte/ui/card/combatCard.svelte';
+  import Icon from '@svelte/ui/icon.svelte';
+  import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
+  import IconRange from '@svelte/ui/iconRange.svelte';
+  import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import InputLabel from '@svelte/ui/inputLabel.svelte';
+  import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
 
-  let { manager } = $props();
+  /**
+   * @typedef {import("@module/combat/PsychicAttack.svelte").PsychicAttack} PsychicAttack
+   * @typedef props
+   * @property {PsychicAttack} attack
+   * @property {(attack: PsychicAttack) => void | Promise<void>} onAttack Function called when hitting
+   * the attack button.
+   */
+
+  /** @type {props} */
+  let { attack, sendAttack } = $props();
   const i18n = game.i18n;
 
-  let markerWidth = { min: '150px', max: '435px' };
+  async function onAttack() {
+    await attack.roll();
+    attack.toMessage();
+    sendAttack(attack);
+  }
+
+  async function onPsychicPotential() {
+    await attack.rollPotential();
+    attack.potentialToMessage();
+  }
+
   let togglePanel = $state(false);
-  let psychicPotentialRolled = $derived(manager.data.psychicPotentialRoll != undefined);
 </script>
 
-<div class="template">
-  <g class="background">
-    <CardCombat
-      width={togglePanel ? '650px' : '500px'}
-      sidebar={togglePanel ? '210px' : '60px'}
-    ></CardCombat>
-  </g>
-  <div class="sidebar">
-    <div></div>
-    <div></div>
-  </div>
-  <div class="box">
-    {#if psychicPotentialRolled}
-      <IconRange
-        icon="psychic-point"
-        bind:activeIcons={manager.data.psychicPoints.usedProjection}
-        quantity={Math.min(
-          manager.data.psychicPoints.available -
-            manager.data.psychicPoints.usedPotential -
-            manager.data.psychicPoints.eliminateFatigue,
-          5
-        )}
-        onChange={value => manager.usePsychicPoints(value, 'psychicProjection')}
-        title={i18n.localize('anima.ui.psychic.psychicPoints.title') +
-          ` (${manager.data.psychicPoints.available})`}
-      />
-    {:else}
-      <IconRange
-        icon="psychic-point"
-        bind:activeIcons={manager.data.psychicPoints.usedPotential}
-        quantity={Math.min(
-          manager.data.psychicPoints.available -
-            manager.data.psychicPoints.usedProjection -
-            manager.data.psychicPoints.eliminateFatigue,
-          5
-        )}
-        onChange={value => manager.usePsychicPoints(value, 'psychicPotential')}
-        title={i18n.localize('anima.ui.psychic.psychicPoints.title') +
-          ` (${manager.data.psychicPoints.available})`}
-        --transform="rotate(180deg)"
-      />
-    {/if}
-    <IconCheckBox
-      icon={psychicPotentialRolled ? 'psychic' : 'psychic-potential'}
-      title={`${i18n.localize('anima.ui.psychic.psychicPoints.title')} ${
-        psychicPotentialRolled
-          ? i18n.localize('anima.ui.psychic.psychicProjection.projection.title')
-          : i18n.localize('anima.ui.psychic.psychicPotential.potential.title')
-      }`}
-      disabled={true}
-      noStyle={true}
-      --icon-size="30px"
-    />
-  </div>
-  <g class="select">
-    <CardSelect
-      bind:selection={manager.data.powerUsed}
-      options={manager.data.psychicPowers}
-      onChange={value => manager.onPowerChange(value)}
-      disabled={psychicPotentialRolled}
-      >{#if manager.data.psychicPowers.length === 0}
-        <option>No Power Found</option>
-      {/if}</CardSelect
-    >
-  </g>
-  <g class="marker">
-    <CardMarkerCritic
-      value={manager.damage}
-      bind:modifier={manager.damageModifiers.special.modifier}
-      bind:critics={manager.data.critics}
-      {markerWidth}
-    />
-  </g>
-  <div class="primary">
-    <IconInput
-      icon="psychic"
-      value={manager.attack}
-      bind:modifier={manager.modifiers.special.modifier}
-      title={i18n.localize('anima.ui.psychic.psychicProjection.projection.title')}
-      disabled={!psychicPotentialRolled}
-      --opacity={psychicPotentialRolled ? '' : '60%'}
-    />
-  </div>
-  <div class="secondary">
-    <IconInput
-      icon="psychic-potential"
-      value={manager.psychicPotential}
-      bind:modifier={manager.potentialModifiers.special.modifier}
-      title={i18n.localize('anima.ui.psychic.psychicPotential.potential.title')}
-      disabled={psychicPotentialRolled}
-      --opacity={psychicPotentialRolled ? '60%' : ''}
-    />
-  </div>
-  <div class="bottom">
-    <IconCheckBox
-      icon="avoid-psychic-fatigue"
-      bind:value={manager.data.eliminateFatigue}
-      title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
-      disabled={manager.data.psychicPoints.available <=
-        manager.data.psychicPoints.usedPotential +
-          manager.data.psychicPoints.usedProjection || psychicPotentialRolled}
-      onClick={value => manager.usePsychicPoints(value ? 1 : 0, 'eliminateFatigue')}
-      --icon-size="30px"
-    />
-    <IconCheckBox
-      icon="mental-pattern-imbalance"
-      bind:value={manager.data.mentalPatternImbalance}
-      title={i18n.localize('macros.combat.dialog.mentalPatternImbalance.title')}
-      disabled={psychicPotentialRolled}
-      --icon-size="28px"
-    />
-  </div>
-  {#if !manager.data.distance.enable && manager.data.projectile.value}
-    <div class="circle-distance">
-      <CardCircle size="40px">
-        <IconCheckBox
-          icon={manager.data.distance.pointBlank ? 'point-blank' : 'distance'}
-          bind:value={manager.data.distance.pointBlank}
-          title={manager.data.distance.pointBlank
-            ? i18n.localize('macros.combat.dialog.pointBlank.title')
-            : i18n.localize('macros.combat.dialog.distance.title')}
-          noStyle={true}
-          --icon-size={manager.data.distance.pointBlank ? '15px' : '25px'}
-        />
-      </CardCircle>
+<CombatCard>
+  {#snippet top()}
+    <div class="row pull-right">
+      {#if attack.isPotentialRolled}
+        <InputLabel
+          icon="psychic"
+          label={i18n.localize('anima.ui.psychic.psychicPoints.title') +
+            ' ' +
+            i18n.localize('anima.ui.psychic.psychicProjection.projection.title')}
+          useIcon
+        >
+          <IconRange
+            icon="psychic-point"
+            bind:value={attack.ability.modifiers.cvs.value}
+            maxValue={Math.min(attack.availablePsychicPoints, 5)}
+            title={i18n.localize('anima.ui.psychic.psychicPoints.title')}
+          />
+        </InputLabel>
+      {:else}
+        <InputLabel
+          icon="psychic-potential"
+          label={i18n.localize('anima.ui.psychic.psychicPoints.title') +
+            ' ' +
+            i18n.localize('anima.ui.psychic.psychicPotential.potential.title')}
+          useIcon
+        >
+          <IconRange
+            icon="psychic-point"
+            bind:value={attack.potential.modifiers.cvs.value}
+            maxValue={Math.min(attack.availablePsychicPoints, 5)}
+            title={i18n.localize('anima.ui.psychic.psychicPoints.title')}
+          />
+        </InputLabel>
+      {/if}
     </div>
-  {/if}
-  <div class="button">
-    {#if psychicPotentialRolled}
-      <CardButton
-        title={i18n.localize('macros.combat.dialog.button.attack.title')}
-        onClick={() => manager.onAttack()}
+
+    <div class="row">
+      <InputLabel
+        label={i18n?.localize('anima.ui.psychic.psychicProjection.projection.title')}
+        icon="psychic"
+        dimOnDisabled
+      >
+        <ModifiedAbilityInput
+          bind:ability={attack.ability}
+          disabled={!attack.isPotentialRolled}
+        />
+      </InputLabel>
+
+      <InputLabel
+        label={i18n?.localize('anima.ui.psychic.psychicPotential.potential.title')}
+        icon="psychic-potential"
+        dimOnDisabled
+      >
+        <ModifiedAbilityInput
+          bind:ability={attack.potential}
+          disabled={attack.isPotentialRolled}
+        />
+      </InputLabel>
+    </div>
+  {/snippet}
+
+  {#snippet selector()}
+    <CardSelect bind:value={attack.power} options={attack.availablePowers} />
+  {/snippet}
+  {#snippet marker()}
+    <CardMarkerCritic
+      bind:damage={attack.damage}
+      bind:selectedCritic={attack.critic}
+      critics={{ primary: attack.power.system.critic }}
+    />
+  {/snippet}
+
+  {#snippet bottom()}
+    <div class="bottom-icons">
+      <IconCheckBox
+        icon="avoid-psychic-fatigue"
+        bind:value={attack.preventFatigue}
+        title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
+        disabled={attack.isPotentialRolled ||
+          (!attack.preventFatigue && attack.availablePsychicPoints < 1)}
       />
-    {:else}
-      <CardButton
-        title={i18n.localize('macros.combat.dialog.gm.psychicPotential.title')}
-        onClick={() => manager.onPsychicPotential()}
+      {#if attack.attacker.system.psychic.mentalPatterns.length > 0}
+        <IconCheckBox
+          icon="mental-pattern-imbalance"
+          bind:value={attack.mentalPatternImbalance}
+          title={i18n.localize('macros.combat.dialog.mentalPatternImbalance.title')}
+          disabled={attack.isPotentialRolled}
+        />
+      {/if}
+    </div>
+  {/snippet}
+  {#snippet buttons()}
+    <div id="sidebar-button">
+      <IconCheckBox
+        icon="dice"
+        bind:value={attack.withRoll}
+        shape="circle"
+        style="dark"
+        title={i18n.localize(
+          `macros.combat.dialog.${attack.withRoll ? 'withRoll' : 'withoutRoll'}.title`
+        )}
       />
+    </div>
+    {#if !attack.distance && attack.isRanged}
+      <div id="separator-button">
+        <IconSwitch
+          shape="circle"
+          options={[
+            {
+              value: true,
+              icon: 'point-blank',
+              title: i18n.localize('macros.combat.dialog.pointBlank.title')
+            },
+            {
+              value: false,
+              icon: 'distance',
+              title: i18n.localize('macros.combat.dialog.distance.title')
+            }
+          ]}
+          bind:value={attack.meleeCombat}
+          style="light"
+        />
+      </div>
     {/if}
-  </div>
-</div>
+    <div id="main-button">
+      {#if attack.isPotentialRolled}
+        <CardButton onclick={onAttack} class="main" style="light" shape="angled">
+          {i18n.localize('macros.combat.dialog.button.attack.title')}
+        </CardButton>
+      {:else}
+        <CardButton
+          onclick={onPsychicPotential}
+          class="main"
+          style="light"
+          shape="angled"
+        >
+          {i18n.localize('macros.combat.dialog.gm.psychicPotential.title')}
+        </CardButton>
+      {/if}
+    </div>
+  {/snippet}
+</CombatCard>
 
 <style lang="scss">
-  .template {
-    height: 300px;
-    width: 500px;
-    display: grid;
-    grid-template: 2fr 2fr 2fr 2.8fr/65px 150px 150px 1fr;
-    gap: 5px;
-
-    .background {
-      grid-area: 1 / 1 / -1 / -1;
-      justify-self: end;
-    }
-    .box {
-      display: flex;
-      gap: 20px;
-      grid-area: 1 / 3 / 1 / -1;
-      justify-self: end;
-      align-self: center;
-      margin-right: 40px;
-      margin-top: 5px;
-      z-index: 1;
-      --gap: 8px;
-      --opacity: 60%;
-    }
-    .select {
-      grid-area: 3 / 1 / 4 /-1;
-      justify-self: end;
-      align-self: center;
-    }
-    .marker {
-      grid-area: 3 / 1 / 4 /-1;
-      justify-self: end;
-      align-self: center;
-      margin: -5px -5px 0;
-      z-index: 1;
-    }
-    .marker {
-      width: --marker-widht;
-    }
-    .sidebar {
-      width: 60px;
-      grid-area: 1 / 1 / span 4;
-      place-self: start end;
-      padding: 15px;
-      display: grid;
-      grid-template: 30px 30px 40px 55px 40px / 1fr;
-      gap: 5px;
-      place-items: center;
-    }
-
-    .primary {
-      display: grid;
-      grid-area: 2/2;
-      place-self: end start;
-      z-index: 1;
-    }
-
-    .secondary {
-      display: grid;
-      grid-area: 2/3;
-      place-self: end start;
-      z-index: 1;
-    }
-    .bottom {
-      display: flex;
-      place-items: center;
-      height: 40%;
-      gap: 30px;
-      margin-left: 20px;
-      grid-area: 4/2;
-      z-index: 1;
-    }
-
-    .button {
-      grid-area: 4 / 3 / 5 / 5;
-      justify-self: end;
-      align-self: center;
-      margin-right: -25px;
-    }
-    .circle-distance {
-      grid-area: 4 / 1;
-      justify-self: center;
-      align-self: center;
-      margin-right: -70px;
-    }
+  .bottom-icons {
+    height: 30px;
+    display: flex;
+    gap: 10px;
   }
 </style>
