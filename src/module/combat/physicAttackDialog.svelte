@@ -13,7 +13,7 @@
    * @typedef {import("@module/combat/PhysicAttack.svelte").PhysicAttack} PhysicAttack
    * @typedef props
    * @property {PhysicAttack} attack
-   * @property {(attack: PhysicAttack) => void | Promise<void>} onAttack Function called when hitting
+   * @property {() => void} onAttack Function called when hitting
    * the attack button.
    */
 
@@ -75,12 +75,7 @@
       </div>
     {/if}
     <div id="main-button">
-      <CardButton
-        shape="angled"
-        onclick={() => onAttack(attack)}
-        style="light"
-        class="main"
-      >
+      <CardButton shape="angled" onclick={() => onAttack()} style="light" class="main">
         {i18n.localize('macros.combat.dialog.button.attack.title')}
       </CardButton>
       {#if attack.isThrownable}

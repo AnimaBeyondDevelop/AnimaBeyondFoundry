@@ -13,21 +13,13 @@
    * @typedef {import("@module/combat/MysticAttack.svelte").MysticAttack} MysticAttack
    * @typedef props
    * @property {MysticAttack} attack
-   * @property {(attack: MysticAttack) => void | Promise<void>} onAttack Function called when hitting
+   * @property {() => void} onAttack Function called when hitting
    * the attack button.
    */
 
   /** @type {props} */
   let { attack, onAttack } = $props();
   const i18n = game.i18n;
-
-  async function onAttacka() {
-    if (!attack.canCast) return;
-
-    await attack.roll();
-    attack.toMessage();
-    onAttack(attack);
-  }
 
   let distanceOptions = [
     {
@@ -67,12 +59,7 @@
       </div>
     {/if}
     <div id="main-button">
-      <CardButton
-        shape="angled"
-        onclick={() => onAttack(attack)}
-        style="light"
-        class="main"
-      >
+      <CardButton shape="angled" onclick={() => onAttack()} style="light" class="main">
         {i18n.localize('macros.combat.dialog.button.attack.title')}
       </CardButton>
 

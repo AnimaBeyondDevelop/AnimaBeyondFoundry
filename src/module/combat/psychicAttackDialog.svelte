@@ -3,7 +3,6 @@
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import CardSelect from '@svelte/ui/card/cardSelect.svelte';
   import CombatCard from '@svelte/ui/card/combatCard.svelte';
-  import Icon from '@svelte/ui/icon.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import IconRange from '@svelte/ui/iconRange.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
@@ -14,19 +13,13 @@
    * @typedef {import("@module/combat/PsychicAttack.svelte").PsychicAttack} PsychicAttack
    * @typedef props
    * @property {PsychicAttack} attack
-   * @property {(attack: PsychicAttack) => void | Promise<void>} onAttack Function called when hitting
+   * @property {() => void} onAttack Function called when hitting
    * the attack button.
    */
 
   /** @type {props} */
-  let { attack, sendAttack } = $props();
+  let { attack, onAttack } = $props();
   const i18n = game.i18n;
-
-  async function onAttack() {
-    await attack.roll();
-    attack.toMessage();
-    sendAttack(attack);
-  }
 
   async function onPsychicPotential() {
     await attack.rollPotential();
@@ -162,7 +155,7 @@
     {/if}
     <div id="main-button">
       {#if attack.isPotentialRolled}
-        <CardButton onclick={onAttack} class="main" style="light" shape="angled">
+        <CardButton onclick={() => onAttack()} class="main" style="light" shape="angled">
           {i18n.localize('macros.combat.dialog.button.attack.title')}
         </CardButton>
       {:else}
