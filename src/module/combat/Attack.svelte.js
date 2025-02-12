@@ -83,7 +83,7 @@ export class Attack {
   }
 
   async roll() {
-    const mod = this.mastery ? 'xamasery' : 'xa';
+    const mod = this.mastery ? 'xamastery' : 'xa';
     const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.attacker.system);
     await this.#roll.roll();
