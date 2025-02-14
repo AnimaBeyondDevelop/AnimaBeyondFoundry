@@ -53,12 +53,5 @@ export const Templates = {
   CustomHotBar: 'systems/animabf/templates/custom-hotbar/custom-hotbar.hbs',
   Chat: {
     CombatResult: 'systems/animabf/templates/chat/combat-result.hbs'
-  },
-  Svelte: {
-    SvelteApp: 'systems/animabf/templates/svelte/svelte-application.html',
-    SvelteFormApp: 'systems/animabf/templates/svelte/svelte-form-application.html',
-    CombatAttackDialog: 'systems/animabf/templates/svelte/attack-svelte-application.html',
-    CombatDefenseDialog: 'systems/animabf/templates/svelte/defense-svelte-application.html',
-    GMCombatDialog: 'systems/animabf/templates/svelte/gm-combat-svelte-application.html'
   }
 };
