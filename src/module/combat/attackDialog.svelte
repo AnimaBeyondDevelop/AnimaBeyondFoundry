@@ -13,12 +13,13 @@
    * @typedef Props
    * @property {Token} attacker
    * @property {Token} defender
-   * @property {(attack: Attack) => void} sendAttack Function called when hitting
+   * @property {(attack: Attack) => void} onAttack Function called when hitting
+   * @property {number} [counterAttackBonus]
    * the attack button.
    */
 
   /** @type {Props} */
-  let { attacker, defender, sendAttack } = $props();
+  let { attacker, defender, onAttack, counterAttackBonus } = $props();
 
   let allTabs = [
     {
@@ -52,9 +53,10 @@
           onAttack() {
             this.attack.roll().then(() => {
               this.attack.toMessage();
-              sendAttack(this.attack);
+              onAttack(this.attack);
             });
-          }
+          },
+          counterAttackBonus
         }
       };
     });
