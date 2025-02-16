@@ -132,6 +132,6 @@ export const registerSettings = () => {
     config: true,
     scope: 'world',
     type: Boolean,
-    default: true
+    default: false
   });
 };
