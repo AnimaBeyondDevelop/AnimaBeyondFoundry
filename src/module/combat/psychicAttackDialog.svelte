@@ -70,6 +70,7 @@
         label={i18n?.localize('anima.ui.psychic.psychicProjection.projection.title')}
         icon="psychic"
         dimOnDisabled
+        useIcon
       >
         <ModifiedAbilityInput
           bind:ability={attack.ability}
@@ -81,6 +82,7 @@
         label={i18n?.localize('anima.ui.psychic.psychicPotential.potential.title')}
         icon="psychic-potential"
         dimOnDisabled
+        useIcon
       >
         <ModifiedAbilityInput
           bind:ability={attack.potential}

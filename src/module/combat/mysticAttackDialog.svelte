@@ -90,6 +90,7 @@
       <InputLabel
         label={i18n?.localize('anima.ui.mystic.magicProjection.final.title')}
         icon="mystic"
+        useIcon
       >
         <ModifiedAbilityInput bind:ability={attack.ability} />
       </InputLabel>
