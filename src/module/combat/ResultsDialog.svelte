@@ -8,16 +8,18 @@
   import { Attack } from './attack';
 
   /**
-   * @import { MouseEventHandler } from 'svelte/elements';
-   * @import { PhysicAttack } from './PhysicAttack.svelte';
+   * @import { Defense } from './Defense';
    *
    * @typedef {Object} Props
-   * @property {MouseEventHandler<HTMLButtonElement>} onCloseButton Callback for hitting Close Button
-   * @property {PhysicAttack} attack
+   * @property {() => void} onClose Callback for hitting Close Button
+   * @property {(bonus: number) => void} onCounterAttack Callback for hitting Counter Attack Button
+   * @property {() => void} onApply Callback for hitting Apply Button
+   * @property {Attack} attack
+   * @property {Defense} defense
    */
 
   /** @type {Props} */
-  let { onCloseButton, attack } = $props();
+  let { attack, defense, onApply, onCounterAttack, onClose } = $props();
 
   /** @type {number} */
   let titleHeight = $state(0);
@@ -36,43 +38,57 @@
   {#await actor.getTokenImages() then images}
     <img src={images[0]} alt={actor.name} />
   {/await}
-  <div class="row">
-    <InputLabel
-      icon={dataObject.type === 'physic' ? actionType : dataObject.type}
-      label={i18n?.localize(`macros.combat.dialog.gm.ability.${dataObject.type}.title`)}
-      useIcon
-    >
-      <ModifiedAbilityInput bind:ability={dataObject.ability} />
-    </InputLabel>
-    {#if actionType === 'attack'}
+  {#if attack.rolled}
+    <div class="row">
       <InputLabel
-        icon="critic/{dataObject.critic}"
-        label={i18n?.localize('macros.combat.dialog.damage')}
-        iconLabel={i18n?.localize(`anima.ui.combat.armors.at.${dataObject.critic}.title`)}
+        icon={dataObject.type === 'physic' ? actionType : dataObject.type}
+        label={i18n?.localize(`macros.combat.dialog.gm.ability.${dataObject.type}.title`)}
         useIcon
       >
-        <ModifiedAbilityInput bind:ability={dataObject.damage} />
+        <ModifiedAbilityInput bind:ability={dataObject.ability} />
       </InputLabel>
-    {:else}
-      <InputLabel icon="armor" label={i18n?.localize('macros.combat.dialog.at.title')} useIcon>
-        <ModifiedAbilityInput bind:ability={dataObject.at} />
+      {#if actionType === 'attack'}
+        <InputLabel
+          icon="critic/{dataObject.critic}"
+          label={i18n?.localize('macros.combat.dialog.damage')}
+          iconLabel={i18n?.localize(
+            `anima.ui.combat.armors.at.${dataObject.critic}.title`
+          )}
+          useIcon
+        >
+          <ModifiedAbilityInput bind:ability={dataObject.damage} />
+        </InputLabel>
+      {:else}
+        <InputLabel
+          icon="armor"
+          label={i18n?.localize('macros.combat.dialog.at.title')}
+          useIcon
+        >
+          <ModifiedAbilityInput bind:ability={dataObject.at} />
+        </InputLabel>
+      {/if}
+    </div>
+    <div class="row">
+      <InputLabel
+        icon="dice"
+        label={i18n?.localize('macros.combat.dialog.rolled.title')}
+        useIcon
+      >
+        <input
+          value={dataObject.rolled}
+          class="card-input"
+          class:fumbled={dataObject.fumbled}
+          class:open-roll={dataObject.openRoll}
+          disabled
+        />
       </InputLabel>
-    {/if}
-  </div>
-  <div class="row">
-    <InputLabel icon="dice" label={i18n?.localize('macros.combat.dialog.rolled.title')} useIcon>
-      <input
-        value={dataObject.rolled}
-        class="card-input"
-        class:fumbled={dataObject.fumbled}
-        class:open-roll={dataObject.openRoll}
-        disabled
-      />
-    </InputLabel>
-  </div>
-  <div class="total">
-    <input type="text" class="card-input" value={dataObject.total} disabled />
-  </div>
+    </div>
+    <div class="total">
+      <input type="text" class="card-input" value={dataObject.total} disabled />
+    </div>
+  {:else}
+    Loading...
+  {/if}
 {/snippet}
 
 <div
@@ -87,7 +103,7 @@
     {#snippet body()}
       <div class="attack">{@render overview(attack)}</div>
       <div class="separator"></div>
-      <div class="defense">{@render overview(attack)}</div>
+      <div class="defense">{@render overview(defense)}</div>
     {/snippet}
   </Card>
 
@@ -111,7 +127,7 @@
     height="35px"
     class="close-button"
     style="light"
-    onclick={e => onCloseButton(e)}
+    onclick={e => onClose(e)}
   />
 </div>
 
