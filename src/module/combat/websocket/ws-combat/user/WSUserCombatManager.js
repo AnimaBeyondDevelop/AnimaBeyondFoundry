@@ -2,7 +2,6 @@ import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
-import { SvelteAttackDialog } from '../../../../dialogs/combat/SvelteAttackDialog';
 import { SvelteDefenseDialog } from '../../../../dialogs/combat/SvelteDefenseDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
@@ -10,6 +9,8 @@ import { getTargetToken } from '../util/getTargetToken';
 import { assertCurrentScene } from '../util/assertCurrentScene';
 import { assertGMActive } from '../util/assertGMActive';
 import { getSelectedToken } from '../util/getSelectedToken';
+import { SvelteApplication } from '@svelte/SvelteApplication.svelte';
+import { Attack, AttackDialog } from '@module/combat/attack';
 
 export class WSUserCombatManager extends WSCombatManager {
   receive(msg) {
@@ -87,15 +88,22 @@ export class WSUserCombatManager extends WSCombatManager {
               }
             };
             this.emit(msg);
-            this.attackDialog = new SvelteAttackDialog(attackerToken, targetToken, {
-              onAttack: result => {
-                const newMsg = {
-                  type: UserMessageTypes.Attack,
-                  payload: result
-                };
-                this.emit(newMsg);
-              }
-            });
+            this.attackDialog = new SvelteApplication(
+              AttackDialog,
+              {
+                attacker: attackerToken,
+                defender: targetToken,
+                onAttack: result => {
+                  const newMsg = {
+                    type: UserMessageTypes.Attack,
+                    payload: result
+                  };
+                  this.emit(newMsg);
+                  this.attackDialog.close();
+                }
+              },
+              { frameless: true }
+            );
           }
         }
       }
@@ -112,9 +120,11 @@ export class WSUserCombatManager extends WSCombatManager {
     const attacker = this.findTokenById(attackerTokenId);
     const defender = this.findTokenById(defenderTokenId);
 
-    this.attackDialog = new SvelteAttackDialog(
-      attacker, defender,
+    this.attackDialog = new SvelteApplication(
+      AttackDialog,
       {
+        attacker,
+        defender,
         onAttack: result => {
           const newMsg = {
             type: UserMessageTypes.Attack,
@@ -122,12 +132,10 @@ export class WSUserCombatManager extends WSCombatManager {
           };
 
           this.emit(newMsg);
-        }
-      },
-      {
-        allowed: true,
+        },
         counterAttackBonus: msg.payload.counterAttackBonus
-      }
+      },
+      { frameless: true }
     );
   }
 
@@ -137,7 +145,7 @@ export class WSUserCombatManager extends WSCombatManager {
     if (!this.attackDialog) return;
 
     if (msg.payload.allowed) {
-      this.attackDialog.updatePermissions(msg.payload.allowed);
+      this.attackDialog.render(true);
     } else {
       this.endCombat();
 
