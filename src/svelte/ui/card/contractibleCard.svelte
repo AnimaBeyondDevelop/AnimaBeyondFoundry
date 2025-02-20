@@ -84,7 +84,6 @@ to this component:
     position: relative;
     .title {
       @include card.text(dark);
-      @include card.buttonlike();
 
       width: card.$card-width;
       min-height: $title-height;
