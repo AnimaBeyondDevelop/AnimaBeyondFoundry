@@ -12,10 +12,13 @@ import { mount, unmount } from 'svelte';
  *
  * How it works
  * ============
- * - Expects `this._prepareContext()` to return an object, which is passed to the component as a `$state(...)`
- *   in an extra prop `data`.
+ * - Creates a foundry application on which it renders a svelte component, given by getter `sveltePart`.
+ *   @see {@link SvelteApplication.sveltePart}
+ *   @see {@link SvelteApplication.props()}
+ * - Expects `this._prepareContext()` to return an object, which is passed to the component as an extra
+ *   prop `data` if the object is non-empty.
  * - First time `.render()` is called, mounts the svelte component and injects it into the `.window-content`
- * - Following calls to `.render()` run `this.updateData()`, which by default updates `this.data` with
+ * - Following calls to `.render()` run `this.updateData()`, which by default updates `this.props.data` with
  *   the return of `this._prepareContext()`.
  * - If `this.document` is not undefined, this app is assumed to be a `DocumentSheet`, which implies:
  *   - A default `_prepareContext()` is provided, returning `{_id, name, type, img, system}` from the document,
@@ -41,16 +44,53 @@ export default function SvelteApplicationMixin(BaseApplication) {
       return $state.snapshot(this.data);
     }
 
+    /** @type {Partial<import('svelte').ComponentProps<T>>&{data?: object, document?: object}} */
+    #props = $state.raw({});
+
+    /**
+     * This getter returns an object with a getter/setter for evry prop in `this.#props`.
+     * This, together with the `$state.raw()` in `#props` allows reactivity when updating props.
+     * @type {Partial<import('svelte').ComponentProps<T>>}
+     */
+    get props() {
+      const propGetters = {};
+      for (const prop in this.#props) {
+        Object.defineProperty(propGetters, prop, {
+          get: () => this.#props?.[prop],
+          set: value => {
+            this.#props = { ...this.#props, [prop]: value };
+          }
+        });
+      }
+      return propGetters;
+    }
+    /**
+     * This setter sets `this.#props` to a new object containing the old props and the new ones
+     * for the sake of reactivity.
+     * @param {Partial<import('svelte').ComponentProps<T>>} value
+     */
+    set props(value) {
+      this.#props = { ...this.#props, ...value };
+    }
+
     get isDocumentSheet() {
-      return !!this.document;
+      return 'document' in this;
     }
 
     /**
      * Defines the top level component, together with its props for initialisation.
      * In addition to the props provided here, an extra `data` prop is passed through,
      * containing `$state(this._prepareContext())`.
+     * Moreover, new props can be registered by setting `this.props = { newProp: value }`.
+     * @see setter {@link props}
      * @type {SveltePart<T>}
      * @abstract
+     *
+     * @example
+     * //Example implementation for a subclass
+     * get sveltePart() {
+     *  return {component: MySvelteComponent, props: {myProp: 'value'}}
+     * }
      */
     get sveltePart() {
       throw Error(
@@ -88,11 +128,15 @@ export default function SvelteApplicationMixin(BaseApplication) {
      */
     updateData() {
       this._prepareContext({}).then(data => {
+        if (foundry.utils.isEmpty(data)) return;
         for (const key in data) {
           if (data.hasOwnProperty(key)) {
             this.data[key] = data[key];
           }
         }
+        this.#props.data = data;
+        // PERF: This could probably be done by setting `this.props.data = data` directly, with data
+        // a plain object.
       });
     }
 
@@ -115,11 +159,10 @@ export default function SvelteApplicationMixin(BaseApplication) {
     _replaceHTML(result, content, options) {
       if (!options.isFirstRender) return;
       if (this.#componentInstance) return;
-      let props = { data: this.data, ...this.sveltePart.props };
-      if (this.isDocumentSheet) props.document = this.document;
+      if (this.isDocumentSheet) this.#props.document = this.document;
       this.#componentInstance = mount(this.sveltePart.component, {
         target: content,
-        props
+        props: this.props
       });
     }
 

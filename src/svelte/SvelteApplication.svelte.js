@@ -1,6 +1,11 @@
+import { SvelteMap } from 'svelte/reactivity';
 import SvelteApplicationMixin from './SvelteApplicationMixin.svelte';
 
 const { ApplicationV2 } = foundry.applications.api;
+
+/**
+ * @import { ComponentProps } from 'svelte';
+ */
 
 /**
  * Class definition for a simple Svelte Application.
@@ -8,18 +13,8 @@ const { ApplicationV2 } = foundry.applications.api;
  * @template {import('svelte').Component} T
  */
 export class SvelteApplication extends SvelteApplicationMixin(ApplicationV2) {
-  static FRAMELESS_OPTIONS = {
-    classes: ['animabf-frameless-app'],
-    window: {
-      frame: false
-    }
-  };
-
-  /** @type {import('./SvelteApplicationMixin.svelte').SveltePart<T>} */
-  #svelteDescriptor;
-
   get sveltePart() {
-    return this.#svelteDescriptor;
+    return { component: this.component };
   }
 
   /**
@@ -37,6 +32,7 @@ export class SvelteApplication extends SvelteApplicationMixin(ApplicationV2) {
       });
     }
     super(options);
-    this.#svelteDescriptor = { component: Component, props };
+    this.component = Component;
+    this.props = props;
   }
 }
