@@ -10,7 +10,7 @@
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
 
   /**
-   * @typedef {import("@module/combat/PsychicAttack.svelte").PsychicAttack} PsychicAttack
+   * @typedef {import(".").PsychicAttack} PsychicAttack
    * @typedef props
    * @property {PsychicAttack} attack
    * @property {() => void} onAttack Function called when hitting

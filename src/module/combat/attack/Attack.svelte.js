@@ -1,4 +1,4 @@
-import { ABFSettingsKeys } from '../../utils/registerSettings';
+import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
@@ -12,11 +12,15 @@ import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
  */
 export class Attack {
   /** @type {AttackType} */
-  type;
-  /** @type {Token} */
-  _attackerToken;
-  /** @type {Token} */
-  _defenderToken;
+  static type;
+  /** @type {AttackType} */
+  get type() {
+    return this.constructor.type;
+  }
+  /** @type {TokenDocument} */
+  #attackerToken;
+  /** @type {TokenDocument} */
+  #defenderToken;
   /** @type {ModifiedAbility} */
   ability;
   /** @type {ModifiedAbility} */
@@ -50,13 +54,13 @@ export class Attack {
   );
 
   /**
-   * @param {Token} attacker The attacker token.
-   * @param {Token} defender The defender token.
+   * @param {TokenDocument} attacker The attacker token.
+   * @param {TokenDocument} defender The defender token.
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
   constructor(attacker, defender, counterattackBonus) {
-    this._attackerToken = attacker;
-    this._defenderToken = defender;
+    this.#attackerToken = attacker;
+    this.#defenderToken = defender;
     this.ability = new ModifiedAbility();
     if (counterattackBonus) {
       this.ability.addModifier('counterattackBonus', { value: counterattackBonus });
@@ -67,7 +71,19 @@ export class Attack {
    * @type {ABFActor} The attacker actor.
    */
   get attacker() {
-    return this._attackerToken.actor;
+    return this.#attackerToken.actor;
+  }
+  get attackerToken() {
+    return this.#attackerToken;
+  }
+  /**
+   * @type {ABFActor} The attacker actor.
+   */
+  get defender() {
+    return this.#defenderToken.actor;
+  }
+  get defenderToken() {
+    return this.#defenderToken;
   }
 
   get displayName() {
@@ -122,8 +138,8 @@ export class Attack {
   get distance() {
     if (this.combatDistanceDefault) {
       let measurePath = canvas.grid.measurePath([
-        { x: this._attackerToken.x, y: this._attackerToken.y },
-        { x: this._defenderToken.x, y: this._defenderToken.y }
+        { x: this.#attackerToken.x, y: this.#attackerToken.y },
+        { x: this.#defenderToken.x, y: this.#defenderToken.y }
       ]);
       return measurePath.distance / canvas.dimensions.distance;
     }
@@ -176,8 +192,67 @@ export class Attack {
     }
 
     this.#roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ token: this._attackerToken }),
+      speaker: ChatMessage.getSpeaker({ token: this.#attackerToken }),
       flavor
     });
+  }
+
+  toJSON() {
+    let { type, ability, damage, critic, visible, withRoll } = this;
+    return $state.snapshot({
+      type,
+      attackerId: this.#attackerToken.id,
+      defenderId: this.#defenderToken.id,
+      ability: ability.toJSON(),
+      damage: damage.toJSON(),
+      critic,
+      visible,
+      meleeCombat: this.meleeCombat,
+      withRoll,
+      roll: this.#roll?.toJSON()
+    });
+  }
+
+  /** @param {ReturnType<Attack['toJSON']>} json */
+  loadJSON(json) {
+    let { ability, damage, critic, visible, meleeCombat, withRoll } = json;
+    this.ability = ModifiedAbility.fromJSON(ability);
+    this.damage = ModifiedAbility.fromJSON(damage);
+    this.critic = critic;
+    this.visible = visible;
+    this.meleeCombat = meleeCombat;
+    this.withRoll = withRoll;
+    this.#roll = ABFFoundryRoll.fromData(json.roll);
+
+    return this;
+  }
+
+  /** @param {ReturnType<Attack['toJSON']>} json */
+  static fromJSON(json) {
+    let { attackerId, defenderId, type } = json;
+    const attacker = game.scenes?.active?.tokens.get(attackerId);
+    const defender = game.scenes?.active?.tokens.get(defenderId);
+
+    if (!attacker || !defender)
+      throw new Error(
+        'Attack cannot be recovered from JSON: Tokens not found for attackerId:' +
+          attackerId +
+          'and defenderId:' +
+          defenderId
+      );
+    const Subclass = this.#attackClasses.get(type);
+    if (!Subclass) throw new Error('Attack subclass not found for type: ' + type);
+    let attack = new Subclass(attacker, defender);
+    return attack.loadJSON(json);
+  }
+
+  /** @type {Map<AttackType, typeof Attack>} */
+  static #attackClasses = new Map();
+  /**
+   * @template {typeof Attack} T
+   * @param {T} cls
+   */
+  static registerAttackClass(cls) {
+    this.#attackClasses.set(cls.type, cls);
   }
 }

@@ -1,4 +1,4 @@
-import { Attack } from './Attack.svelte';
+import { Attack } from '.';
 import { damageCheck } from '@module/combat/utils/damageCheck.js';
 import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
 
@@ -8,7 +8,7 @@ import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectChec
 
 export class MysticAttack extends Attack {
   /** @type {'mystic'} */
-  type = 'mystic';
+  static type = 'mystic';
   /**
    * ID of the used spell. Initialised to the last spell used.
    * @type {string}
@@ -26,8 +26,8 @@ export class MysticAttack extends Attack {
   castMethod = $state('accumulated');
 
   /**
-   * @param {Token} attacker The attacker token.
-   * @param {Token} defender The defender token.
+   * @param {TokenDocument} attacker The attacker token.
+   * @param {TokenDocument} defender The defender token.
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
   constructor(attacker, defender, counterattackBonus) {
@@ -44,7 +44,9 @@ export class MysticAttack extends Attack {
   }
 
   get spell() {
-    return this.availableSpells.find(w => w.id === this.#spell);
+    return (
+      this.availableSpells.find(w => w.id === this.#spell) ?? this.availableSpells[0]
+    );
   }
 
   /** @param {ABFItem} spell */
@@ -99,7 +101,7 @@ export class MysticAttack extends Attack {
   toMessage() {
     let flavor = game.i18n.format('macros.combat.dialog.magicAttack.title', {
       spell: this.spell?.name,
-      target: this._defenderToken.name
+      target: this.defenderToken.name
     });
     super.toMessage(flavor);
   }
@@ -108,4 +110,35 @@ export class MysticAttack extends Attack {
     let spellEffect = this.spell?.system.grades[this.spellGrade].description.value;
     return resistanceEffectCheck(spellEffect);
   }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      spellId: this.#spell,
+      spellGrade: this.#spellGrade,
+      castMethod: this.castMethod
+    };
+  }
+
+  /** @param {ReturnType<MysticAttack['toJSON']>} json */
+  loadJSON(json) {
+    super.loadJSON(json);
+
+    let { spellId, spellGrade, castMethod } = json;
+    const spell = this.availableSpells.find(s => s.id === spellId);
+    if (!spell)
+      throw new Error(
+        `Spell ${spellId} not found in actor's (${this.attacker.id}) available spells`
+      );
+    this.spell = spell;
+    this.castMethod = castMethod;
+    if (!(spellGrade in this.availableSpellGrades))
+      throw new Error(
+        `Spell ${spellId} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
+      );
+    this.spellGrade = spellGrade;
+    return this;
+  }
 }
+
+Attack.registerAttackClass(MysticAttack);

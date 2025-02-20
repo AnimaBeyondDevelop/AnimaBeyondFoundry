@@ -25,7 +25,7 @@ export class TestAppV2 extends SvelteApplicationMixin(ApplicationV2) {
   // }
 
   constructor(options) {
-    super(options);
+    super();
   }
 }
 

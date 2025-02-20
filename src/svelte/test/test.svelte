@@ -1,6 +1,5 @@
 <script>
-  import AttackDialog from '@module/combat/attackDialog.svelte';
-  import { PhysicAttack } from '@module/combat/PhysicAttack.svelte';
+  import { PhysicAttack, AttackDialog } from '@module/combat/attack';
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
   import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';

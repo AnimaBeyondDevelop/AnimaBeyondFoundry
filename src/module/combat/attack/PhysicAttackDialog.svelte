@@ -10,7 +10,7 @@
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
 
   /**
-   * @typedef {import("@module/combat/PhysicAttack.svelte").PhysicAttack} PhysicAttack
+   * @typedef {import(".").PhysicAttack} PhysicAttack
    * @typedef props
    * @property {PhysicAttack} attack
    * @property {() => void} onAttack Function called when hitting

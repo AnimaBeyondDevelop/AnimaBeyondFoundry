@@ -1,8 +1,8 @@
-import { Attack } from './Attack.svelte';
+import { Attack } from '.';
 
 export class PhysicAttack extends Attack {
   /** @type {'physic'} */
-  type = 'physic';
+  static type = 'physic';
   /**
    * ID of the used weapon, set to "unarmed" if none used. Initialised to the last wapon used.
    * @type {string}
@@ -60,8 +60,8 @@ export class PhysicAttack extends Attack {
   };
 
   /**
-   * @param {Token} attacker The attacker token.
-   * @param {Token} defender The defender token.
+   * @param {TokenDocument} attacker The attacker token.
+   * @param {TokenDocument} defender The defender token.
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
   constructor(attacker, defender, counterattackBonus) {
@@ -130,9 +130,34 @@ export class PhysicAttack extends Attack {
       }`,
       {
         weapon: this.weapon?.name,
-        target: this._defenderToken.name
+        target: this.defenderToken.name
       }
     );
     super.toMessage(flavor);
   }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      weaponId: this.#weapon,
+      thrown: this.thrown
+    };
+  }
+
+  /** @param {ReturnType<PhysicAttack['toJSON']>} json */
+  loadJSON(json) {
+    super.loadJSON(json);
+    let { weaponId, thrown } = json;
+    this.thrown = thrown;
+    const weapon = this.availableWeapons.find(w => w.id === weaponId);
+    if (!weapon)
+      throw new Error(
+        `Weapon ${weaponId} not found in actor's (${this.attacker.id}) available weapons`
+      );
+    this.weapon = weapon;
+
+    return this;
+  }
 }
+
+Attack.registerAttackClass(PhysicAttack);

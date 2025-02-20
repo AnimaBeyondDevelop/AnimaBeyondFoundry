@@ -1,14 +1,10 @@
 <script>
   import CardTabbedCombat from '@svelte/ui/card/cardTabbedCombat.svelte';
-  import { MysticAttack } from './MysticAttack.svelte';
-  import MysticAttackDialog from './mysticAttackDialog.svelte';
-  import { PhysicAttack } from './PhysicAttack.svelte';
-  import PhysicAttackDialog from './physicAttackDialog.svelte';
-  import { PsychicAttack } from './PsychicAttack.svelte';
-  import PsychicAttackDialog from './psychicAttackDialog.svelte';
+  import { PhysicAttack, MysticAttack, PsychicAttack } from '.';
+  import { PhysicAttackDialog, MysticAttackDialog, PsychicAttackDialog } from '.';
 
   /**
-   * @import { Attack } from './Attack.svelte';
+   * @import { Attack } from '.';
    *
    * @typedef Props
    * @property {Token} attacker

@@ -53,6 +53,29 @@ export class ModifiedAbility {
   }
 
   /**
+   * Creates an instance from a JSON object.
+   * @param {ReturnType<ModifiedAbility['toJSON']>} json
+   */
+  static fromJSON(json) {
+    const { base, modifiers } = json;
+    const ability = new ModifiedAbility(base);
+    for (const label in modifiers) {
+      ability.addModifier(label, modifiers[label]);
+    }
+    return ability;
+  }
+
+  /**
+   * Export this instance to a JSON object.
+   */
+  toJSON() {
+    return {
+      base: $state.snapshot(this.base),
+      modifiers: $state.snapshot(this.modifiers)
+    };
+  }
+
+  /**
    * Add a new modifier to this ability.
    * @param {string} label String identifying the new modifier.
    * @param {ModifierSpec} specification Specification for initialising the modifier.

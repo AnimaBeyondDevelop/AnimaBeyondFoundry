@@ -1,4 +1,4 @@
-import { Attack } from './Attack.svelte';
+import { Attack } from '.';
 import { damageCheck } from '@module/combat/utils/damageCheck.js';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
@@ -10,7 +10,7 @@ import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 export class PsychicAttack extends Attack {
   /** @type {'psychic'} */
-  type = 'psychic';
+  static type = 'psychic';
   /**
    * ID of the used power. Initialised to the last power used.
    * @type {string}
@@ -53,8 +53,8 @@ export class PsychicAttack extends Attack {
   psychicFatigue;
 
   /**
-   * @param {Token} attacker The attacker token.
-   * @param {Token} defender The defender token.
+   * @param {TokenDocument} attacker The attacker token.
+   * @param {TokenDocument} defender The defender token.
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
   constructor(attacker, defender, counterattackBonus) {
@@ -85,7 +85,9 @@ export class PsychicAttack extends Attack {
 
   /** @type {ABFItem} */
   get power() {
-    return this.availablePowers.find(w => w.id === this.#power);
+    return (
+      this.availablePowers.find(w => w.id === this.#power) ?? this.availablePowers[0]
+    );
   }
 
   set power(power) {
@@ -123,7 +125,7 @@ export class PsychicAttack extends Attack {
     let flavor = game.i18n.format('macros.combat.dialog.psychicAttack.title', {
       power: this.power.name,
       potential: this.potential.final,
-      target: this._defenderToken.name
+      target: this.defenderToken.name
     });
     super.toMessage(flavor);
   }
@@ -173,4 +175,44 @@ export class PsychicAttack extends Attack {
     let powerEffect = this.power?.system.effects[this.#potentialRoll.total].value;
     return resistanceEffectCheck(powerEffect);
   }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      powerId: this.#power,
+      potential: this.potential.toJSON(),
+      preventFatigue: this.preventFatigue,
+      mentalPatternImbalance: this.mentalPatternImbalance,
+      psychicFatigue: this.psychicFatigue,
+      potentialRoll: this.#potentialRoll?.toJSON()
+    };
+  }
+
+  /** @param {ReturnType<PsychicAttack['toJSON']>} json */
+  loadJSON(json) {
+    super.loadJSON(json);
+
+    let {
+      powerId,
+      potential,
+      preventFatigue,
+      mentalPatternImbalance,
+      psychicFatigue,
+      potentialRoll
+    } = json;
+
+    const power = this.availablePowers.find(p => p.id === powerId);
+    if (!power)
+      throw new Error(
+        `Power ${powerId} not found in actor's (${this.attacker.id}) available powers`
+      );
+    this.potential = ModifiedAbility.fromJSON(potential);
+    this.preventFatigue = preventFatigue;
+    this.mentalPatternImbalance = mentalPatternImbalance;
+    this.psychicFatigue = psychicFatigue;
+    this.#potentialRoll = ABFFoundryRoll.fromData(potentialRoll);
+    return this;
+  }
 }
+
+Attack.registerAttackClass(PsychicAttack);

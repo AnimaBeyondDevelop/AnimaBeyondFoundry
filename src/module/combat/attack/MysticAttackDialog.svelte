@@ -10,7 +10,7 @@
   import IconSelect from '@svelte/ui/iconSelect.svelte';
 
   /**
-   * @typedef {import("@module/combat/MysticAttack.svelte").MysticAttack} MysticAttack
+   * @typedef {import(".").MysticAttack} MysticAttack
    * @typedef props
    * @property {MysticAttack} attack
    * @property {() => void} onAttack Function called when hitting

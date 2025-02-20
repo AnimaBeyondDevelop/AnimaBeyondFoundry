@@ -5,7 +5,7 @@
   import ContractibleCard from '@svelte/ui/card/contractibleCard.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
-  import { Attack } from './Attack.svelte';
+  import { Attack } from './attack';
 
   /**
    * @import { MouseEventHandler } from 'svelte/elements';
