@@ -15,16 +15,16 @@ export class Attack {
   static type;
   /** @type {AttackType} */
   get type() {
-    return this.constructor.type;
+    return /** @type {typeof Attack}*/ (this.constructor).type;
   }
   /** @type {TokenDocument} */
   #attackerToken;
   /** @type {TokenDocument} */
   #defenderToken;
   /** @type {ModifiedAbility} */
-  ability;
+  ability = new ModifiedAbility();
   /** @type {ModifiedAbility} */
-  damage;
+  damage = new ModifiedAbility();
   /** @type {string} */
   critic = $state('-');
   /** @type {boolean} Whether the attack is visible or not. Defaults to `true`. */
@@ -61,11 +61,9 @@ export class Attack {
   constructor(attacker, defender, counterattackBonus) {
     this.#attackerToken = attacker;
     this.#defenderToken = defender;
-    this.ability = new ModifiedAbility();
     if (counterattackBonus) {
       this.ability.addModifier('counterattackBonus', { value: counterattackBonus });
     }
-    this.damage = new ModifiedAbility();
   }
   /**
    * @type {ABFActor} The attacker actor.
@@ -133,17 +131,20 @@ export class Attack {
   }
 
   /** Function calculating the distance for the attack.
-   * @returns {number} The distance if automated distance calculation is enabled, otherwise `undefined`.
+   * @returns {number | undefined} The distance if automated distance calculation is enabled, otherwise `undefined`.
    */
   get distance() {
-    if (this.combatDistanceDefault) {
-      let measurePath = canvas.grid.measurePath([
-        { x: this.#attackerToken.x, y: this.#attackerToken.y },
-        { x: this.#defenderToken.x, y: this.#defenderToken.y }
-      ]);
-      return measurePath.distance / canvas.dimensions.distance;
-    }
-    return undefined;
+    if (!canvas || !canvas.grid) return;
+    if (!this.combatDistanceDefault) return;
+
+    let measurePath = canvas.grid.measurePath(
+      [
+        { x: this.attackerToken.x, y: this.attackerToken.y },
+        { x: this.defenderToken.x, y: this.defenderToken.y }
+      ],
+      {}
+    );
+    return measurePath.distance / (canvas.dimensions?.distance ?? 1);
   }
 
   /**
@@ -154,7 +155,7 @@ export class Attack {
    * `.isRanged` referes to the nature of the attack.
    */
   get meleeCombat() {
-    if (this.combatDistanceDefault) return this.distance <= 1;
+    if (this.combatDistanceDefault && this.distance) return this.distance <= 1;
     return this.#meleeCombat;
   }
 
@@ -192,7 +193,7 @@ export class Attack {
     }
 
     this.#roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ token: this.#attackerToken }),
+      speaker: ChatMessage.getSpeaker({ token: this.attackerToken }),
       flavor
     });
   }
@@ -201,8 +202,8 @@ export class Attack {
     let { type, ability, damage, critic, visible, withRoll } = this;
     return $state.snapshot({
       type,
-      attackerId: this.#attackerToken.id,
-      defenderId: this.#defenderToken.id,
+      attackerId: this.attackerToken.id,
+      defenderId: this.defenderToken.id,
       ability: ability.toJSON(),
       damage: damage.toJSON(),
       critic,
