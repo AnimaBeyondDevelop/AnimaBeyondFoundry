@@ -1,11 +1,6 @@
-import { SvelteMap } from 'svelte/reactivity';
 import SvelteApplicationMixin from './SvelteApplicationMixin.svelte';
 
 const { ApplicationV2 } = foundry.applications.api;
-
-/**
- * @import { ComponentProps } from 'svelte';
- */
 
 /**
  * Class definition for a simple Svelte Application.
