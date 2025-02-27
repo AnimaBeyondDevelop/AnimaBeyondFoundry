@@ -340,26 +340,22 @@ export class ABFActor extends Actor {
     }
   }
 
-  /**
-   * Updates the defenses counter for an actor based on the value of the `keepAccumulating` parameter.
-   *
-   * @param {boolean} keepAccumulating - A flag indicating whether to continue accumulating defenses or not.
-   */
-  accumulateDefenses(keepAccumulating) {
-    /** @type {{accumulated: number, keepAccumulating: boolean}} */
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter') || {
-      accumulated: 0,
-      keepAccumulating
-    };
-    const newDefensesCounter = defensesCounter.accumulated + 1;
-    if (keepAccumulating) {
-      this.setFlag('animabf', 'defensesCounter', {
-        accumulated: newDefensesCounter,
-        keepAccumulating
-      });
-    } else {
-      this.setFlag('animabf', 'defensesCounter.keepAccumulating', keepAccumulating);
-    }
+  /** @type {boolean} */
+  get autoAccumulateDefenses() {
+    return /** @type {boolean} */ (this.getFlag('animabf', 'accumulateDefenses')) ?? true;
+  }
+  set autoAccumulateDefenses(value) {
+    this.setFlag('animabf', 'accumulateDefenses', value);
+  }
+
+  /** @type {number} */
+  get accumulatedDefenses() {
+    if (!this.autoAccumulateDefenses) return 0;
+    return this.getFlag('animabf', 'defensesCounter') ?? 0;
+  }
+  set accumulatedDefenses(value) {
+    if (!this.autoAccumulateDefenses) return;
+    this.setFlag('animabf', 'defensesCounter', value);
   }
 
   /**
@@ -370,15 +366,7 @@ export class ABFActor extends Actor {
    * actor.resetDefensesCounter();
    */
   resetDefensesCounter() {
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter');
-    if (defensesCounter === undefined) {
-      this.setFlag('animabf', 'defensesCounter', {
-        accumulated: 0,
-        keepAccumulating: true
-      });
-    } else {
-      this.setFlag('animabf', 'defensesCounter.accumulated', 0);
-    }
+    this.accumulatedDefenses = 0;
   }
 
   /**
