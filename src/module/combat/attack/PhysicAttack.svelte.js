@@ -1,4 +1,4 @@
-import { Attack } from '.';
+import { Attack } from './Attack.svelte';
 
 export class PhysicAttack extends Attack {
   /** @type {'physic'} */

@@ -1,4 +1,4 @@
-import { Attack } from '.';
+import { Attack } from './Attack.svelte';
 import { damageCheck } from '@module/combat/utils/damageCheck.js';
 import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
 
