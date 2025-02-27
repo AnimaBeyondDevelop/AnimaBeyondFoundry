@@ -33,6 +33,11 @@
       title: i18n.localize('macros.combat.dialog.distance.title')
     }
   ];
+
+  function onAttackClick() {
+    attack.attacker.setLastSpellUsed(attack.spell, 'offensive');
+    onAttack();
+  }
 </script>
 
 <CombatCard>
@@ -59,7 +64,7 @@
       </div>
     {/if}
     <div id="main-button">
-      <CardButton shape="angled" onclick={() => onAttack()} style="light" class="main">
+      <CardButton shape="angled" onclick={onAttackClick} style="light" class="main">
         {i18n.localize('macros.combat.dialog.button.attack.title')}
       </CardButton>
 
