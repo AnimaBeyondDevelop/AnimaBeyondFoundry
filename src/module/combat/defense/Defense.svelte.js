@@ -56,7 +56,7 @@ export class Defense {
       (this.#attack.type === 'psychic' && !this.defenderPerceivePsychic);
 
     this.at = new ModifiedAbility(
-      this.defender.system.combat.totalArmor.at[attack.critic].value ?? 0
+      this.defender.system.combat.totalArmor.at[attack.critic]?.value ?? 0
     );
   }
 

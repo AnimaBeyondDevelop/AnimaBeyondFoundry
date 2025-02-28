@@ -8,7 +8,7 @@
   import { Attack } from './attack';
 
   /**
-   * @import { Defense } from './Defense';
+   * @import { Defense } from './defense';
    *
    * @typedef {Object} Props
    * @property {() => void} onClose Callback for hitting Close Button
@@ -27,7 +27,7 @@
   const i18n = game.i18n;
 </script>
 
-{#snippet overview(/** @type {Attack} */ dataObject)}
+{#snippet overview(/** @type {Attack | Defense} */ dataObject)}
   <!-- TODO: Check if type error disappears when merging @Daraguz changes to Attack. -->
   {@const actionType = dataObject instanceof Attack ? 'attack' : 'defense'}
   {@const actor = /** @type {ABFActor} */ (
