@@ -72,6 +72,10 @@ export class PsychicAttack extends Attack {
     this.power = this.attacker.getLastPowerUsed('offensive') ?? this.availablePowers[0];
   }
 
+  get displayName() {
+    return /** @type {string} */ (this.power.name);
+  }
+
   get projectionModifiers() {
     return this.#projectionModifiers;
   }
@@ -109,6 +113,10 @@ export class PsychicAttack extends Attack {
       (acc, val) => acc - val,
       this.attacker.system.psychic.psychicPoints.value
     );
+  }
+
+  get visible() {
+    return this.power?.system.visible;
   }
 
   get mastery() {
