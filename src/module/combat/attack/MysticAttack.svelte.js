@@ -37,6 +37,11 @@ export class MysticAttack extends Attack {
     this.ability.base =
       this.attacker.system.mystic.magicProjection.imbalance.offensive.final.value;
     this.zeonAccumulated = this.attacker.system.mystic.zeon.accumulated;
+    this.castMethod = this.attacker.getCastMethodOverride() ? 'override' : 'accumulated';
+  }
+
+  get displayName() {
+    return /** @type {string} */ (this.spell.name);
   }
 
   get availableSpells() {
@@ -90,6 +95,10 @@ export class MysticAttack extends Attack {
 
   get canCast() {
     return this.attacker.canCast(this.spell, this.spellGrade, this.castMethod);
+  }
+
+  get visible() {
+    return this.spell?.system.visible;
   }
 
   get mastery() {

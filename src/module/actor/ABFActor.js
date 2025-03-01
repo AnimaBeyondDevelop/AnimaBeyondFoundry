@@ -994,6 +994,10 @@ export class ABFActor extends Actor {
     return this.getPsychicPowers().find(w => w.id === lastPowerUsed);
   }
 
+  getCastMethodOverride() {
+    return this.getFlag('animabf', 'castMethodOverride');
+  }
+
   /**
    * Sets the last weapon used to a flag.
    * @param {import('../items/ABFItems').ABFItemsEnum} weapon
@@ -1023,5 +1027,11 @@ export class ABFActor extends Actor {
   setLastPowerUsed(power, usage) {
     usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
+  }
+  /**
+   * @param {"override" | "accumulated" | "innate" | "prepared"} castMethod
+   */
+  setCastMethodOverride(castMethod) {
+    this.setFlag('animabf', 'castMethodOverride', castMethod === 'override');
   }
 }
