@@ -22,19 +22,19 @@
       label: 'defense',
       component: PhysicDefenseDialog,
       Defense: PhysicDefense,
-      available: false
+      available: true
     },
     {
       label: 'mystic',
       component: MysticDefenseDialog,
       Defense: MysticDefense,
-      available: defender.system.mystic.spells.length > 0
+      available: defender.getKnownSpells('defense').length > 0
     },
     {
       label: 'psychic',
       component: PsychicDefenseDialog,
       Defense: PsychicDefense,
-      available: defender.system.psychic.psychicPowers.length > 0
+      available: defender.getPsychicPowers('defense').length > 0
     }
   ];
 
