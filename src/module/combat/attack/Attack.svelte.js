@@ -27,8 +27,6 @@ export class Attack {
   damage = new ModifiedAbility();
   /** @type {string} */
   critic = $state('-');
-  /** @type {boolean} Whether the attack is visible or not. Defaults to `true`. */
-  visible = $state(true);
   /**
    * @type {boolean} Whether the combat is melee or not, used when combat distance is not automated.
    * Defaults to `false`.
@@ -87,7 +85,10 @@ export class Attack {
   get displayName() {
     return '';
   }
-
+  /** @type {boolean} Whether the attack is visible or not. Defaults to `true`. */
+  get visible() {
+    return true;
+  }
   get isCounterattack() {
     return 'counterattackBonus' in this.ability.modifiers;
   }

@@ -51,9 +51,10 @@ export class Defense {
     this.#attack = attack;
 
     this.ability.registerModTable(this.modifiers);
-    this.ability.modifiers.blindness.active =
-      (this.#attack.type === 'mystic' && !this.defenderPerceiveMystic) ||
-      (this.#attack.type === 'psychic' && !this.defenderPerceivePsychic);
+    this.ability.modifiers.blindness.active = this.#attack.visible
+      ? false
+      : (this.#attack.type === 'mystic' && !this.defenderPerceiveMystic) ||
+        (this.#attack.type === 'psychic' && !this.defenderPerceivePsychic);
 
     this.at = new ModifiedAbility(
       this.defender.system.combat.totalArmor.at[attack.critic]?.value ?? 0
