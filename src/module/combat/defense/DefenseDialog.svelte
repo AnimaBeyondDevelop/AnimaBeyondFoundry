@@ -1,7 +1,13 @@
 <script>
   import CardTabbedCombat from '@svelte/ui/card/cardTabbedCombat.svelte';
-  import { PhysicDefense, MysticDefense, PsychicDefense } from '.';
-  import { PhysicDefenseDialog, MysticDefenseDialog, PsychicDefenseDialog } from '.';
+  import {
+    PhysicDefense,
+    MysticDefense,
+    PsychicDefense,
+    PhysicDefenseDialog,
+    MysticDefenseDialog,
+    PsychicDefenseDialog
+  } from '.';
 
   /**
    * @import { Attack } from '../attack';
@@ -15,7 +21,6 @@
 
   /** @type {Props} */
   let { attack, onDefend } = $props();
-  let { attacker, defender } = attack;
 
   let allTabs = [
     {
@@ -28,13 +33,13 @@
       label: 'mystic',
       component: MysticDefenseDialog,
       Defense: MysticDefense,
-      available: defender.getKnownSpells('defense').length > 0
+      available: attack.defender.getKnownSpells('defense').length > 0
     },
     {
       label: 'psychic',
       component: PsychicDefenseDialog,
       Defense: PsychicDefense,
-      available: defender.getPsychicPowers('defense').length > 0
+      available: attack.defender.getPsychicPowers('defense').length > 0
     }
   ];
 

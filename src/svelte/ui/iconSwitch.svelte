@@ -29,15 +29,12 @@
     ...rest
   } = $props();
 
-  let index = $state(options.findIndex(o => o.value === value));
-
   let iconIterator = {
     get index() {
-      return index;
+      return options.findIndex(o => o.value === value);
     },
     set index(n) {
-      index = n % options.length;
-      value = this.current.value;
+      value = options[n % options.length].value;
     },
     get current() {
       return options[this.index];

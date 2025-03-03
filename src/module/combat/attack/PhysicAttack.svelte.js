@@ -1,5 +1,9 @@
-import { Attack } from '.';
+import { Attack } from './Attack.svelte';
 
+/**
+ * @class
+ * @extends {Attack}
+ */
 export class PhysicAttack extends Attack {
   /** @type {'physic'} */
   static type = 'physic';
@@ -123,8 +127,8 @@ export class PhysicAttack extends Attack {
     return this.attacker.system.combat.attack.base.value >= 200;
   }
 
-  toMessage() {
-    let flavor = game.i18n.format(
+  get messageFlavor() {
+    return game.i18n.format(
       `macros.combat.dialog.physicalAttack.${
         this.#weapon === 'unarmed' ? 'unarmed.title' : 'title'
       }`,
@@ -133,7 +137,6 @@ export class PhysicAttack extends Attack {
         target: this.defenderToken.name
       }
     );
-    super.toMessage(flavor);
   }
 
   toJSON() {

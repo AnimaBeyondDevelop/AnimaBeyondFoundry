@@ -22,6 +22,7 @@ $icon-size: var(--icon-size, 35px);
 
 .buttonlike {
   cursor: pointer;
+  @extend .text;
 
   &:hover {
     --background-color: #{$background-active};
@@ -50,13 +51,17 @@ button {
   }
 }
 
-@mixin text($theme: dark) {
+.text {
   font-size: $font-size;
-  @if $theme == light {
-    color: $text-color-light;
-  } @else {
-    color: $text-color;
-  }
+  color: inherit;
+}
+.text-light {
+  @extend .text;
+  color: $text-color-light;
+}
+.text-dark {
+  @extend .text;
+  color: $text-color;
 }
 
 .card-input {

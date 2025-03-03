@@ -179,14 +179,15 @@ export class Attack {
     return !game.user?.isGM || this.showRollDefault;
   }
 
-  /**
-   * @param {string} flavor
-   */
-  toMessage(flavor) {
-    if (!this.showRoll) {
-      return;
-    }
+  /** @return {string} */
+  get messageFlavor() {
+    throw new Error(`${this.constructor.name} must implement messageFlavor getter.`);
+  }
 
+  toMessage() {
+    if (!this.showRoll) return;
+
+    let flavor = this.messageFlavor;
     if (this.openRoll) {
       flavor = flavor.replace('<b>', '<b style="color:green">');
     } else if (this.fumbled) {

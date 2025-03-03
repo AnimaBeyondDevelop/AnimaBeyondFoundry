@@ -49,6 +49,11 @@
       title: i18n.localize('macros.combat.dialog.throw.title')
     }
   ];
+
+  function onAttackClick() {
+    attack.attacker.setLastWeaponUsed(attack.weapon, 'offensive');
+    onAttack();
+  }
 </script>
 
 <CombatCard>
@@ -75,7 +80,7 @@
       </div>
     {/if}
     <div id="main-button">
-      <CardButton shape="angled" onclick={() => onAttack()} style="light" class="main">
+      <CardButton shape="angled" onclick={onAttackClick} style="light" class="main">
         {i18n.localize('macros.combat.dialog.button.attack.title')}
       </CardButton>
       {#if attack.isThrownable}

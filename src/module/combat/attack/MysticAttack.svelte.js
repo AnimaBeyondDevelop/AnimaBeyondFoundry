@@ -1,4 +1,4 @@
-import { Attack } from '.';
+import { Attack } from './Attack.svelte';
 import { damageCheck } from '@module/combat/utils/damageCheck.js';
 import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
 
@@ -6,6 +6,10 @@ import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectChec
  * @import ABFItem from '@module/items/ABFItem.js';
  */
 
+/**
+ * @class
+ * @extends {Attack}
+ */
 export class MysticAttack extends Attack {
   /** @type {'mystic'} */
   static type = 'mystic';
@@ -107,12 +111,11 @@ export class MysticAttack extends Attack {
     );
   }
 
-  toMessage() {
-    let flavor = game.i18n.format('macros.combat.dialog.magicAttack.title', {
+  get messageFlavor() {
+    return game.i18n.format('macros.combat.dialog.magicAttack.title', {
       spell: this.spell?.name,
       target: this.defenderToken.name
     });
-    super.toMessage(flavor);
   }
 
   get resistanceEffect() {

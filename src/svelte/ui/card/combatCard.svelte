@@ -61,7 +61,7 @@ to this component:
   </CombatCard>
 ```
 -->
-<div class="card-container">
+<div class="card-container text-dark">
   <Card {sidebar}>
     {#snippet body()}
       <div class="body">
@@ -112,8 +112,6 @@ to this component:
     width: fit-content;
     height: fit-content;
     position: relative;
-
-    @include card.text();
 
     .content {
       .body {

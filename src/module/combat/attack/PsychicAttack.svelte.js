@@ -1,4 +1,4 @@
-import { Attack } from '.';
+import { Attack } from './Attack.svelte';
 import { damageCheck } from '@module/combat/utils/damageCheck.js';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import { resistanceEffectCheck } from '@module/combat/utils/resistanceEffectCheck.js';
@@ -8,6 +8,10 @@ import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
  * @import ABFItem from "@module/items/ABFItem";
  */
 
+/**
+ * @class
+ * @extends {Attack}
+ */
 export class PsychicAttack extends Attack {
   /** @type {'psychic'} */
   static type = 'psychic';
@@ -125,17 +129,14 @@ export class PsychicAttack extends Attack {
     );
   }
 
-  toMessage() {
-    if (this.psychicFatigue) {
-      return;
-    }
+  get messageFlavor() {
+    if (this.psychicFatigue) return '';
 
-    let flavor = game.i18n.format('macros.combat.dialog.psychicAttack.title', {
+    return game.i18n.format('macros.combat.dialog.psychicAttack.title', {
       power: this.power.name,
       potential: this.potential.final,
       target: this.defenderToken.name
     });
-    super.toMessage(flavor);
   }
 
   get isPotentialRolled() {

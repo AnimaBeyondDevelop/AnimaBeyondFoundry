@@ -54,9 +54,9 @@ to this component:
   </Card>
 ```
 -->
-<div class="card-border {cssClass}" style={cssCorners}>
+<div class="card-border text-dark {cssClass}" style={cssCorners}>
   <div class="content">
-    <div class="sidebar">
+    <div class="sidebar text-light">
       {@render sidebar?.()}
     </div>
     <div class="separator"></div>
@@ -115,13 +115,11 @@ to this component:
       var(--slanted0) var(--slanted1) var(--slanted2) var(--slanted3),
       $bg-color: card.$sidebar-color
     );
-    @include card.text(dark);
 
     .content {
       display: flex;
 
       .sidebar {
-        @include card.text(light);
         flex-shrink: 0;
         place-items: center;
         justify-content: end;

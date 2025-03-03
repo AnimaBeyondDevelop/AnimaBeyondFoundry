@@ -28,6 +28,7 @@ export class Defense {
   /** @type {ABFFoundryRoll} */
   #roll;
 
+  /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
     return {
       blindness: { value: 1, spec: -80, active: false },
@@ -131,14 +132,15 @@ export class Defense {
     return !game.user?.isGM || this.showRollDefault;
   }
 
-  /**
-   * @param {string} flavor
-   */
-  toMessage(flavor) {
-    if (!this.showRoll) {
-      return;
-    }
+  /** @return {string} */
+  get messageFlavor() {
+    throw new Error(`${this.constructor.name} must implement messageFlavor getter.`);
+  }
 
+  toMessage() {
+    if (!this.showRoll) return;
+
+    let flavor = this.messageFlavor;
     if (this.openRoll) {
       flavor = flavor.replace('<b>', '<b style="color:green">');
     } else if (this.fumbled) {

@@ -22,7 +22,7 @@ to this component:
 ```
 -->
 <div class="marker">
-  <div class="content">
+  <div class="content text-light">
     {@render children?.()}
   </div>
 </div>
@@ -31,15 +31,16 @@ to this component:
   @use 'card';
   @use 'borders';
 
-  $height: var(--height, 70px);
-  $width: var(--width, fit-content);
+  $height: 70px;
   $border: card.$border-size;
 
   .marker {
     width: fit-content;
+    min-width: 140px;
+    place-content: center;
     @include borders.arrow-shape($height, 'left', $bg-color: card.$sidebar-color);
     .content {
-      @include card.text(light);
+      height: calc($height / 2);
       display: flex;
       place-items: center;
       gap: 2px;

@@ -21,12 +21,17 @@
   let { attack, onAttack } = $props();
   const i18n = game.i18n;
 
-  async function onPsychicPotential() {
+  async function onPsychicPotentialClick() {
     await attack.rollPotential();
     attack.potentialToMessage();
   }
 
   let togglePanel = $state(false);
+
+  function onAttackClick() {
+    attack.attacker.setLastPowerUsed(attack.power, 'offensive');
+    onAttack();
+  }
 </script>
 
 <CombatCard>
@@ -157,12 +162,12 @@
     {/if}
     <div id="main-button">
       {#if attack.isPotentialRolled}
-        <CardButton onclick={() => onAttack()} class="main" style="light" shape="angled">
+        <CardButton onclick={onAttackClick} class="main" style="light" shape="angled">
           {i18n.localize('macros.combat.dialog.button.attack.title')}
         </CardButton>
       {:else}
         <CardButton
-          onclick={onPsychicPotential}
+          onclick={onPsychicPotentialClick}
           class="main"
           style="light"
           shape="angled"
