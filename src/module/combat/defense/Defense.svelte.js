@@ -28,6 +28,7 @@ export class Defense {
   /** @type {ABFFoundryRoll} */
   #roll;
 
+  /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
     return {
       blindness: { value: 1, spec: -80, active: false },

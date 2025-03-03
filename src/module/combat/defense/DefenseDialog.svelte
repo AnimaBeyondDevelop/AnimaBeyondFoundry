@@ -1,15 +1,15 @@
 <script>
   import CardTabbedCombat from '@svelte/ui/card/cardTabbedCombat.svelte';
   import { MysticDefense } from './MysticDefense.svelte';
-  import MysticDefenseDialog from './mysticDefenseDialog.svelte';
+  import MysticDefenseDialog from './MysticDefenseDialog.svelte';
   import { PhysicDefense } from './PhysicDefense.svelte';
-  import PhysicDefenseDialog from './physicDefenseDialog.svelte';
+  import PhysicDefenseDialog from './PhysicDefenseDialog.svelte';
   import { PsychicDefense } from './PsychicDefense.svelte';
-  import PsychicDefenseDialog from './psychicDefenseDialog.svelte';
+  import PsychicDefenseDialog from './PsychicDefenseDialog.svelte';
 
   /**
    * @import { Attack } from '../attack';
-   * @import { Defense } from './Defense';
+   * @import { Defense } from './Defense.svelte';
    *
    * @typedef Props
    * @property {Attack} attack
@@ -19,7 +19,6 @@
 
   /** @type {Props} */
   let { attack, onDefend } = $props();
-  let { attacker, defender } = attack;
 
   let allTabs = [
     {
@@ -32,28 +31,28 @@
       label: 'mystic',
       component: MysticDefenseDialog,
       Defense: MysticDefense,
-      available: attacker.actor.system.mystic.spells.length > 0
+      available: attack.defender.actor.system.mystic.spells.length > 0
     },
     {
       label: 'psychic',
       component: PsychicDefenseDialog,
       Defense: PsychicDefense,
-      available: attacker.actor.system.psychic.psychicPowers.length > 0
+      available: attack.defender.actor.system.psychic.psychicPowers.length > 0
     }
   ];
 
   let tabs = allTabs
     .filter(tab => tab.available)
-    .map(({ label, component, Attack }) => {
+    .map(({ label, component, Defense }) => {
       return {
         label,
         component,
         props: {
-          attack: new Attack(attacker, defender),
-          onAttack() {
-            this.attack.roll().then(() => {
+          defense: new Defense(attack),
+          onDefend() {
+            this.defense.roll().then(() => {
               this.defense.toMessage();
-              onDefense(this.defense);
+              onDefend(this.defense);
             });
           }
         }

@@ -1,18 +1,19 @@
 <script>
-  import { PhysicAttack, AttackDialog } from '@module/combat/attack';
-  import CardMarker from '@svelte/ui/card/cardMarker.svelte';
-  import CardMarkerCritic from '@svelte/ui/card/cardMarkerCritic.svelte';
-  import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import { AttackDialog, PhysicAttack } from '@module/combat/attack';
+  import { PhysicDefense } from '@module/combat/defense';
+  import PhysicDefenseDialog from '@module/combat/defense/PhysicDefenseDialog.svelte';
   let { data, document } = $props();
 
   let attacker = game.scenes.active.tokens.getName('Mentalista');
   let defender = game.scenes.active.tokens.getName('Killiam');
-  let attack = new PhysicAttack(attacker, defender);
+  let defense = new PhysicDefense(new PhysicAttack(attacker, defender));
 
   let expanded = $state(true);
 </script>
 
 <AttackDialog {attacker} {defender} />
+<div style="height:35px;"></div>
+<PhysicDefenseDialog {defense} onDefend={v => console.log(v)} />
 
 <style lang="scss">
 </style>
