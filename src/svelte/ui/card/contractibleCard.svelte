@@ -61,7 +61,7 @@ to this component:
     </div>
   {/if}
   <button
-    class="title"
+    class="title text-dark"
     onclick={() => (expanded = !expanded)}
     bind:offsetHeight={titleHeight}
   >
@@ -83,8 +83,6 @@ to this component:
     min-height: $title-height;
     position: relative;
     .title {
-      @include card.text(dark);
-
       width: card.$card-width;
       min-height: $title-height;
       text-align: center;

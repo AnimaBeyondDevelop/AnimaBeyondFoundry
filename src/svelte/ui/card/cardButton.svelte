@@ -49,6 +49,7 @@ to this component:
 -->
 <button
   class={[cssClass, shape, style].join(' ')}
+  class:noninteractive={rest.disabled}
   style={cssCustomProps}
   {onclick}
   {...rest}
@@ -62,7 +63,7 @@ to this component:
 <style lang="scss">
   @use 'variable';
   @use 'borders';
-  @use 'card' as *;
+  @use 'card';
 
   $height: var(--height, 100%);
   $width: var(--width, fit-content);
@@ -78,14 +79,13 @@ to this component:
     align-items: center;
     justify-content: center;
 
-    @include text();
-
     &.light {
       --background-color: #{variable.$background-light};
+      color: card.$text-color;
     }
     &.dark {
       --background-color: #{variable.$background-secondary};
-      @include text(light);
+      color: card.$text-color-light;
     }
 
     &.angled {
