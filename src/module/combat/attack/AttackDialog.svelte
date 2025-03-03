@@ -7,8 +7,8 @@
    * @import { Attack } from '.';
    *
    * @typedef Props
-   * @property {Token} attacker
-   * @property {Token} defender
+   * @property {TokenDocument} attacker
+   * @property {TokenDocument} defender
    * @property {(attack: Attack) => void} onAttack Function called when hitting
    * @property {number} [counterAttackBonus]
    * the attack button.
