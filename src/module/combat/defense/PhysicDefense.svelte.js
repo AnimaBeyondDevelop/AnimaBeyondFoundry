@@ -56,7 +56,7 @@ export class PhysicDefense extends Defense {
   }
 
   get availableWeapons() {
-    return [...this.attacker.getWeapons(), this.#unarmed];
+    return [...this.defender.getWeapons(), this.#unarmed];
   }
 
   get weapon() {
