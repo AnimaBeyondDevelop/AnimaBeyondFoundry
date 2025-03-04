@@ -29,10 +29,10 @@ export class TestAppV2 extends SvelteApplicationMixin(ApplicationV2) {
   }
 }
 
-Hooks.once('ready', () => {
-  new TestAppV2({
-    document: game.actors.getName('Killiam')
-  })
-    .render(true)
-    .then(app => (window.a = app));
-});
+// Hooks.once('ready', () => {
+//   new TestAppV2({
+//     document: game.actors.getName('Killiam')
+//   })
+//     .render(true)
+//     .then(app => (window.a = app));
+// });
