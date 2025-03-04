@@ -2,6 +2,7 @@ import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '@utils/registerSettings';
 import { Attack } from '../attack';
+import { Logger } from '@utils/log';
 
 /**
  * @typedef {"physic"|"mystic"|"psychic"} DefenseType
@@ -88,7 +89,7 @@ export class Defense {
   }
 
   get displayName() {
-    return '';
+    return '...';
   }
 
   get mastery() {
@@ -180,15 +181,19 @@ export class Defense {
 
   /** @param {ReturnType<Defense['toJSON']>} json */
   static fromJSON(json) {
-    const { type } = json;
-    const attack = Attack.fromJSON(json.attack);
+    try {
+      const { type } = json;
+      const attack = Attack.fromJSON(json.attack);
 
-    if (!attack)
-      throw new Error('Defense cannot be recovered from JSON: no attack given');
-    const Subclass = this.#defenseClasses.get(type);
-    if (!Subclass) throw new Error('Defense subclass not found for type: ' + type);
-    let defense = new Subclass(attack);
-    return defense.loadJSON(json);
+      if (!attack)
+        throw new Error('Defense cannot be recovered from JSON: no attack given');
+      const Subclass = this.#defenseClasses.get(type);
+      if (!Subclass) throw new Error('Defense subclass not found for type: ' + type);
+      let defense = new Subclass(attack);
+      return defense.loadJSON(json);
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 
   /** @type {Map<DefenseType, typeof Defense>} */

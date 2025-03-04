@@ -1,6 +1,7 @@
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
+import { Logger } from '@utils/log';
 
 /**
  * @import { ABFActor } from '@module/actor/ABFActor';
@@ -83,7 +84,7 @@ export class Attack {
   }
 
   get displayName() {
-    return '';
+    return '...';
   }
   /** @type {boolean} Whether the attack is visible or not. Defaults to `true`. */
   get visible() {
@@ -232,21 +233,25 @@ export class Attack {
 
   /** @param {ReturnType<Attack['toJSON']>} json */
   static fromJSON(json) {
-    let { attackerId, defenderId, type } = json;
-    const attacker = game.scenes?.active?.tokens.get(attackerId);
-    const defender = game.scenes?.active?.tokens.get(defenderId);
+    try {
+      let { attackerId, defenderId, type } = json;
+      const attacker = game.scenes?.active?.tokens.get(attackerId);
+      const defender = game.scenes?.active?.tokens.get(defenderId);
 
-    if (!attacker || !defender)
-      throw new Error(
-        'Attack cannot be recovered from JSON: Tokens not found for attackerId:' +
-          attackerId +
-          'and defenderId:' +
-          defenderId
-      );
-    const Subclass = this.#attackClasses.get(type);
-    if (!Subclass) throw new Error('Attack subclass not found for type: ' + type);
-    let attack = new Subclass(attacker, defender);
-    return attack.loadJSON(json);
+      if (!attacker || !defender)
+        throw new Error(
+          'Attack cannot be recovered from JSON: Tokens not found for attackerId:' +
+            attackerId +
+            'and defenderId:' +
+            defenderId
+        );
+      const Subclass = this.#attackClasses.get(type);
+      if (!Subclass) throw new Error('Attack subclass not found for type: ' + type);
+      let attack = new Subclass(attacker, defender);
+      return attack.loadJSON(json);
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 
   /** @type {Map<AttackType, typeof Attack>} */
