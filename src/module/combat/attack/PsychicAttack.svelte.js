@@ -129,9 +129,12 @@ export class PsychicAttack extends Attack {
     );
   }
 
-  get messageFlavor() {
-    if (this.psychicFatigue) return '';
+  toMessage() {
+    if (this.psychicFatigue) return;
+    return super.toMessage();
+  }
 
+  get messageFlavor() {
     return game.i18n.format('macros.combat.dialog.psychicAttack.title', {
       power: this.power.name,
       potential: this.potential.final,

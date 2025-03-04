@@ -2,6 +2,10 @@ import { Defense } from './Defense.svelte';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import { shieldValueCheck } from '@module/combat/utils/shieldValueCheck.js';
 
+/**
+ * @class
+ * @extends Defense
+ */
 export class PsychicDefense extends Defense {
   /** @type {'psychic'} */
   static type = 'psychic';
@@ -161,12 +165,13 @@ export class PsychicDefense extends Defense {
     if (this.psychicFatigue) {
       return;
     }
-
-    let flavor = game.i18n.format('macros.combat.dialog.psychicDefense.title', {
+    super.toMessage();
+  }
+  get messageFlavor() {
+    return game.i18n.format('macros.combat.dialog.psychicDefense.title', {
       power: this.supernaturalShield.name,
       target: this.attackerToken.name
     });
-    super.toMessage(flavor);
   }
 
   get isPotentialRolled() {

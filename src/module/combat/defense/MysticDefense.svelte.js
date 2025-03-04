@@ -5,6 +5,10 @@ import { shieldValueCheck } from '@module/combat/utils/shieldValueCheck.js';
  * @import ABFItem from '@module/items/ABFItem.js';
  */
 
+/**
+ * @class
+ * @extends Defense
+ */
 export class MysticDefense extends Defense {
   /** @type {'mystic'} */
   static type = 'mystic';
@@ -144,12 +148,11 @@ export class MysticDefense extends Defense {
     return this.supernaturalShield?.system.shieldPoints;
   }
 
-  toMessage() {
-    let flavor = game.i18n.format('macros.combat.dialog.magicDefense.title', {
+  get messageFlavor() {
+    return game.i18n.format('macros.combat.dialog.magicDefense.title', {
       spell: this.supernaturalShield?.name,
       target: this.attackerToken.name
     });
-    super.toMessage(flavor);
   }
 
   toJSON() {
