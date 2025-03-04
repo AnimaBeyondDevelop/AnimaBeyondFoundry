@@ -6,6 +6,7 @@
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import IconRange from '@svelte/ui/iconRange.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import Input from '@svelte/ui/Input.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
 
@@ -113,7 +114,7 @@
           label={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
           useIcon
         >
-          <input class="card-input" value={defense.shieldPoints || 0} disabled />
+          <Input value={defense.shieldPoints || 0} disabled />
         </InputLabel>
       </div>
     </CardMarker>

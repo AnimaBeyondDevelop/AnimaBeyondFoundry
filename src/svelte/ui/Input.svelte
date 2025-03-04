@@ -1,47 +1,18 @@
 <script>
-  // @ts-nocheck
-  let { value, modifier = $bindable(0), title, disabled } = $props();
+  /**
+   * @typedef {object} Props
+   */
 
-  function onchange(e) {
-    e.target.blur();
-    const input = e.target.value;
-    if (['+', '-'].includes(input.slice(0, 1))) {
-      modifier += parseInt(input);
-    } else if (input === '') {
-      modifier = 0;
-    } else {
-      modifier = parseInt(input) - value;
-    }
-  }
+  /** @type {Props&import('svelte/elements').HTMLInputAttributes} */
+  let { value = $bindable(0), class: cssClass, ...rest } = $props();
+  let size = $derived(`${value}`.length);
 </script>
 
-<input
-  class="input"
-  {title}
-  {value}
-  type="text"
-  onfocus={e => e.target.select()}
-  {onchange}
-  {disabled}
-/>
+<input class="card-input {cssClass}" bind:value {size} {...rest} />
 
 <style lang="scss">
-  .input {
-    all: unset;
-    width: var(--input-width, 85px);
-    color: white;
-    font-size: var(--font-size, 40px);
-    -webkit-text-stroke: 4px black;
-    paint-order: stroke fill;
-    text-align: center;
-    &:focus {
-      all: unset;
-      width: var(--input-width, 85px);
-      color: white;
-      font-size: var(--font-size, 40px);
-      -webkit-text-stroke: 4px black;
-      paint-order: stroke fill;
-      text-align: center;
-    }
+  @use 'card';
+  .card-input {
+    width: strech;
   }
 </style>
