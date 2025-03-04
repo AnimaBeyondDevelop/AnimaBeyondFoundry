@@ -26,30 +26,29 @@ export class MysticDefense extends Defense {
    * Indicates how the spell will be casted. Initialised to "accumulated".
    * @type {string}
    */
-  castMethod = $state('accumulated');
+  castMethod = $state(this.defender.getCastMethodOverride() ? 'override' : 'accumulated');
   /**
    * ID of the used supernatural Shield.
    * @type {string}
    */
   #supernaturalShield = $state('');
-  /**
-   * @type {boolean}
-   */
-  newShield = $state(false);
+  /** @type {boolean} */
+  newShield = $state(this.availableSupernaturalShields.length === 0);
+  /** @type {number} */
+  zeonAccumulated = $derived(this.defender.system.mystic.zeon.accumulated);
 
   /**
-   * @param {Attack} attack The attack to defend against
+   * @param {import('../attack').Attack} attack The attack to defend against
    */
   constructor(attack) {
     super(attack);
 
     this.spell = this.defender.getLastSpellUsed('defensive') ?? this.availableSpells[0];
-    this.supernaturalShield = this.defender.system.combat.supernaturalShields[0];
+    if (!this.newShield) {
+      this.supernaturalShield = this.defender.system.combat.supernaturalShields[0];
+    }
     this.ability.base =
       this.defender.system.mystic.magicProjection.imbalance.defensive.final.value;
-    this.zeonAccumulated = this.defender.system.mystic.zeon.accumulated;
-    this.castMethod = this.defender.getCastMethodOverride() ? 'override' : 'accumulated';
-    this.newShield = this.availableSupernaturalShields.length == 0;
   }
 
   get displayName() {
@@ -170,15 +169,32 @@ export class MysticDefense extends Defense {
     super.loadJSON(json);
 
     let { spellId, spellGrade, castMethod, supernaturalShieldId } = json;
-    this.spell = this.availableSpells.find(s => s.id === spellId);
+    this.newShield = spellId !== undefined;
+
+    const spell = this.availableSpells.find(s => s.id === spellId);
+    if (spell) {
+      this.spell = spell;
+    }
+
+    const supernaturalShield = this.availableSupernaturalShields.find(
+      s => s.id === supernaturalShieldId
+    );
+    if (supernaturalShield) {
+      this.supernaturalShield = supernaturalShield;
+    }
+
+    if (!supernaturalShield && !spell) {
+      throw new Error(
+        `Either spell or supernaturalSield must be specified for a MysticDefense.`
+      );
+    }
+
     this.castMethod = castMethod;
     if (!(spellGrade in this.availableSpellGrades))
       throw new Error(
         `Spell ${spellId} cannot be casted by actor (${this.defender.id}) at grade ${spellGrade}`
       );
     this.spellGrade = spellGrade;
-    this.supernaturalShield = supernaturalShield;
-    this.newShield = spellId != undefined;
     return this;
   }
 }
