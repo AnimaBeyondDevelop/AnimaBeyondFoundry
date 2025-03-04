@@ -2,7 +2,6 @@ import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
-import { SvelteDefenseDialog } from '../../../../dialogs/combat/SvelteDefenseDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { getTargetToken } from '../util/getTargetToken';
@@ -11,6 +10,7 @@ import { assertGMActive } from '../util/assertGMActive';
 import { getSelectedToken } from '../util/getSelectedToken';
 import { SvelteApplication } from '@svelte/SvelteApplication.svelte';
 import { Attack, AttackDialog } from '@module/combat/attack';
+import { DefenseDialog } from '@module/combat/defense';
 
 export class WSUserCombatManager extends WSCombatManager {
   receive(msg) {
@@ -162,32 +162,23 @@ export class WSUserCombatManager extends WSCombatManager {
   }
 
   async manageDefend(msg) {
-    const { result, attackerTokenId, defenderTokenId } = msg.payload;
-
-    if (!this.isMyToken(defenderTokenId)) {
-      return;
-    }
-
-    const attacker = this.findTokenById(attackerTokenId);
-    const defender = this.findTokenById(defenderTokenId);
-
     try {
-      this.defenseDialog = new SvelteDefenseDialog(
+      const attack = Attack.fromJSON(msg.payload);
+
+      this.defenseDialog = new SvelteApplication(
+        DefenseDialog,
         {
-          token: attacker,
-          ...result
-        },
-        defender,
-        {
-          onDefense: res => {
+          attack,
+          onDefend: defense => {
             const newMsg = {
               type: UserMessageTypes.Defend,
-              payload: res
+              payload: defense
             };
 
             this.emit(newMsg);
           }
-        }
+        },
+        { frameless: true }
       );
     } catch (err) {
       if (err) {
