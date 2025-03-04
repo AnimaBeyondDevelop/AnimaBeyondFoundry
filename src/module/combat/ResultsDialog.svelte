@@ -6,6 +6,7 @@
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import { Attack } from './attack';
+  import Input from '@svelte/ui/Input.svelte';
 
   /**
    * @import { Defense } from './defense';
@@ -28,7 +29,6 @@
 </script>
 
 {#snippet overview(/** @type {Attack | Defense} */ dataObject)}
-  <!-- TODO: Check if type error disappears when merging @Daraguz changes to Attack. -->
   {@const actionType = dataObject instanceof Attack ? 'attack' : 'defense'}
   {@const actor = /** @type {ABFActor} */ (
     dataObject[actionType === 'attack' ? 'attacker' : 'defender']
@@ -47,7 +47,7 @@
       >
         <ModifiedAbilityInput bind:ability={dataObject.ability} />
       </InputLabel>
-      {#if actionType === 'attack'}
+      {#if dataObject instanceof Attack}
         <InputLabel
           icon="critic/{dataObject.critic}"
           label={i18n?.localize('macros.combat.dialog.damage')}
@@ -74,17 +74,18 @@
         label={i18n?.localize('macros.combat.dialog.rolled.title')}
         useIcon
       >
-        <input
+        <Input
           value={dataObject.rolled}
-          class="card-input"
-          class:fumbled={dataObject.fumbled}
-          class:open-roll={dataObject.openRoll}
+          class={[
+            dataObject.fumbled ? 'fumbled' : '',
+            dataObject.openRoll ? 'open-roll' : ''
+          ].join(' ')}
           disabled
         />
       </InputLabel>
     </div>
     <div class="total">
-      <input type="text" class="card-input" value={dataObject.total} disabled />
+      <Input type="text" value={dataObject.total} disabled />
     </div>
   {:else}
     Loading...
