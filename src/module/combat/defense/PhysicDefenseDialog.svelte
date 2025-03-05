@@ -6,6 +6,7 @@
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import IconRange from '@svelte/ui/iconRange.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import Input from '@svelte/ui/Input.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
 
@@ -119,8 +120,7 @@
         height="100%"
         disabled={defense.autoAccumulateDefenses}
       />
-      <input
-        class="card-input"
+      <Input
         value={`${defense.ability.modifiers.cumulativeDefenses.value + 1}ª`}
         disabled
         title={i18n.localize('macros.combat.dialog.defenseCount.title')}

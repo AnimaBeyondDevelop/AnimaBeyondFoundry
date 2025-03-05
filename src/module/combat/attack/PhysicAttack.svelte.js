@@ -139,6 +139,11 @@ export class PhysicAttack extends Attack {
     );
   }
 
+  onAttack() {
+    this.attacker.setLastWeaponUsed(this.weapon, 'offensive');
+    return super.onAttack();
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),

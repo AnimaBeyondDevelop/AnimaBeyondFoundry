@@ -2,6 +2,10 @@ import { Defense } from './Defense.svelte';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import { shieldValueCheck } from '@module/combat/utils/shieldValueCheck.js';
 
+/**
+ * @class
+ * @extends Defense
+ */
 export class PsychicDefense extends Defense {
   /** @type {'psychic'} */
   static type = 'psychic';
@@ -11,36 +15,16 @@ export class PsychicDefense extends Defense {
    */
   #power = $state('');
 
-  /**
-   * @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>}
-   */
-  #projectionModifiers = {
-    cvs: { value: 0, spec: 10, active: true }
-  };
-
   /** @type {ModifiedAbility} */
   potential;
-
-  /**
-   * @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>}
-   */
-  #potentialModifiers = {
-    cvs: { value: 0, spec: 20, active: true },
-    // TODO: maybe is a good idea to have the roll inside the modified ability also in combat abiliy?
-    roll: { value: 0, spec: 1, active: true }
-  };
 
   /** @type {ABFFoundryRoll} */
   #potentialRoll = $state.raw();
 
-  /**
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   preventFatigue = $state(false);
 
-  /**
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   mentalPatternImbalance = $state(false);
 
   /** @type {number} */
@@ -52,10 +36,8 @@ export class PsychicDefense extends Defense {
    */
   #supernaturalShield = $state('');
 
-  /**
-   * @type {boolean}
-   */
-  newShield = $state(false);
+  /** @type {boolean} */
+  newShield = $state(this.availableSupernaturalShields.length === 0);
 
   /**
    * @param {Attack} attack The attack to defend against
@@ -64,7 +46,6 @@ export class PsychicDefense extends Defense {
     super(attack);
     this.ability.base =
       this.defender.system.psychic.psychicProjection.imbalance.defensive.final.value;
-    this.ability.registerModTable(this.projectionModifiers);
 
     this.potential = new ModifiedAbility(
       this.defender.system.psychic.psychicPotential.final.value
@@ -72,23 +53,29 @@ export class PsychicDefense extends Defense {
     this.potential.registerModTable(this.potentialModifiers);
 
     this.power = this.defender.getLastPowerUsed('defensive') ?? this.availablePowers[0];
-    this.newShield = this.availableSupernaturalShields.length == 0;
   }
   get displayName() {
     return /** @type {string} */ (this.supernaturalShield.name);
   }
-  get projectionModifiers() {
-    return this.#projectionModifiers;
+  /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
+  get modifiers() {
+    return {
+      ...super.modifiers,
+      cvs: { value: 0, spec: 20, active: true },
+      roll: { value: 0, spec: 1, active: true }
+    };
   }
+  /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get potentialModifiers() {
-    return this.#potentialModifiers;
+    return {
+      cvs: { value: 0, spec: 10, active: true }
+    };
   }
 
   get availablePowers() {
     return this.defender.getPsychicPowers('defense');
   }
 
-  /** @type {ABFItem} */
   get power() {
     return (
       this.availablePowers.find(w => w.id === this.#power) ?? this.availablePowers[0]
@@ -161,12 +148,13 @@ export class PsychicDefense extends Defense {
     if (this.psychicFatigue) {
       return;
     }
-
-    let flavor = game.i18n.format('macros.combat.dialog.psychicDefense.title', {
+    super.toMessage();
+  }
+  get messageFlavor() {
+    return game.i18n.format('macros.combat.dialog.psychicDefense.title', {
       power: this.supernaturalShield.name,
       target: this.attackerToken.name
     });
-    super.toMessage(flavor);
   }
 
   get isPotentialRolled() {
@@ -205,6 +193,11 @@ export class PsychicDefense extends Defense {
     });
   }
 
+  onDefend() {
+    this.defender.setLastPowerUsed(this.power, 'defensive');
+    return super.onDefend();
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),
@@ -229,17 +222,33 @@ export class PsychicDefense extends Defense {
       mentalPatternImbalance,
       psychicFatigue,
       potentialRoll,
-      supernaturalShield
+      supernaturalShieldId
     } = json;
+    this.newShield = powerId != undefined;
 
     const power = this.availablePowers.find(p => p.id === powerId);
+    if (power) {
+      this.power = power;
+    }
+
+    const supernaturalShield = this.availableSupernaturalShields.find(
+      s => s.id === supernaturalShieldId
+    );
+    if (supernaturalShield) {
+      this.supernaturalShield = supernaturalShield;
+    }
+
+    if (!supernaturalShield && !power) {
+      throw new Error(
+        `Either power or supernaturalSield must be specified for a PsychicDefense.`
+      );
+    }
+
     this.potential = ModifiedAbility.fromJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
     this.psychicFatigue = psychicFatigue;
     this.#potentialRoll = ABFFoundryRoll.fromData(potentialRoll);
-    this.supernaturalShield = supernaturalShield;
-    this.newShield = powerId != undefined;
     return this;
   }
 }

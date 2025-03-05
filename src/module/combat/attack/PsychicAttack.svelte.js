@@ -120,7 +120,7 @@ export class PsychicAttack extends Attack {
   }
 
   get visible() {
-    return this.power?.system.visible;
+    return this.power?.system.visible ?? true;
   }
 
   get mastery() {
@@ -129,9 +129,12 @@ export class PsychicAttack extends Attack {
     );
   }
 
-  get messageFlavor() {
-    if (this.psychicFatigue) return '';
+  toMessage() {
+    if (this.psychicFatigue) return;
+    return super.toMessage();
+  }
 
+  get messageFlavor() {
     return game.i18n.format('macros.combat.dialog.psychicAttack.title', {
       power: this.power.name,
       potential: this.potential.final,
@@ -183,6 +186,11 @@ export class PsychicAttack extends Attack {
 
     let powerEffect = this.power?.system.effects[this.#potentialRoll.total].value;
     return resistanceEffectCheck(powerEffect);
+  }
+
+  onAttack() {
+    this.attacker.setLastPowerUsed(this.power, 'offensive');
+    return super.onAttack();
   }
 
   toJSON() {

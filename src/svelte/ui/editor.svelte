@@ -4,38 +4,36 @@
   import { createEventDispatcher } from 'svelte';
 
   /**
-   * @type {string}
-   * Plain text on the editor.
+   * @typedef {Object} props Properties for the Editor component
+   * @property {string} value Plain text on the editor.
+   * @property {boolean} button Whether to show the edit button or not. Defaults to `true`.
+   * @property {boolean} editable Whether the text is editable or not. Defaults to `true`.
+   * @property {boolean} owner Include unrevealed secret tags in the final HTML? If `false`,
+   * unrevealed secret blocks will be removed. Defaults to `false`.
+   * @property {boolean} documents Replace dynamic document links? defaults to `true`.
+   * @property {boolean} links Replace hyperlink content? defaults to `true`.
+   * @property {boolean} rolls Replace inline dice rolls? Defaults to `true`.
+   * @property {object | Function} The data object providing context for inline rolls,
+   * or a function that produces it. Defaults to `{}`.
+   * @property {boolean} async Perform the operation asynchronously returning a Promise
+   * @property {() => void} onsave Callback executed when saving the editor.
    */
-  export let value;
-  /**
-   */
-  export let button = true;
-  export let editable = true;
 
-  /**
-   * Include unrevealed secret tags in the final HTML? If false, unrevealed secret blocks
-   * will be removed. Defaults to `false`.
-   */
-  export let owner = false;
-  /** Replace dynamic document links? */
-  export let documents = true;
-  /** Replace hyperlink content? */
-  export let links = true;
-  /** Replace inline dice rolls? */
-  export let rolls = true;
-  /**
-   * @type {object|Function}
-   * The data object providing context for inline rolls, or a function that produces it.
-   */
-  export let rollData = {};
-  /**
-   * Perform the operation asynchronously returning a Promise
-   */
-  export let async = false;
+  /** @type {props} */
+  let {
+    value,
+    button = true,
+    editable = true,
+    owner = false,
+    documents = true,
+    links = true,
+    rolls = true,
+    rollData = {},
+    async = false,
+    onsave
+  } = $props();
 
-  let editing = false;
-  const dispatch = createEventDispatcher();
+  let editing = $state(false);
 
   const config = {
     ...CONFIG.TinyMCE,
@@ -58,30 +56,33 @@
     },
     save_enablewhendirty: false,
     save_onsavecallback: async () => {
-      dispatch('save');
+      onsave?.();
       editing = false;
     }
   };
-  $: enrichedHTML = TextEditor.enrichHTML(value, {
-    secrets: owner,
-    documents,
-    links,
-    rolls,
-    rollData,
-    async
-  });
+
+  let enrichedHTML = $derived(
+    TextEditor.enrichHTML(value, {
+      secrets: owner,
+      documents,
+      links,
+      rolls,
+      rollData,
+      async
+    })
+  );
 </script>
 
 {#if editing}
   <Editor cssClass="editor" bind:value conf={config} />
 {:else}
   <div class="editor">
-    <div class="editor-content">{@html enrichedHTML}</div>
+    {#await enrichedHTML then content}
+      <div class="editor-content">{@html content}</div>
+    {/await}
     {#if button && editable}
-      <!-- svelte-ignore a11y-missing-attribute -->
-      <a class="editor-edit">
-        <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-        <i class="fas fa-edit" on:click={() => (editing = true)}></i>
+      <a class="editor-edit" onclick={() => (editing = true)}>
+        <i class="fas fa-edit"></i>
       </a>
     {/if}
   </div>

@@ -45,11 +45,7 @@ export class WSGMCombatManager extends WSCombatManager {
       if (canOwnerReceiveMessage(defender)) {
         const newMsg = {
           type: GMMessageTypes.Attack,
-          payload: {
-            attackerTokenId: attackerToken.id,
-            defenderTokenId: defenderToken.id,
-            result: attack
-          }
+          payload: attack
         };
 
         this.emit(newMsg);
@@ -247,7 +243,8 @@ export class WSGMCombatManager extends WSCombatManager {
                 this.manageGMAttack(defender, attacker, bonus);
               }
             }
-          : undefined
+          : undefined,
+        opacity: 1
       },
       { frameless: true }
     );
@@ -256,6 +253,10 @@ export class WSGMCombatManager extends WSCombatManager {
   }
 
   manageGMAttack(attacker, defender, bonus) {
+    if (!this.combat) {
+      Logger.warn('No combat is running');
+      return;
+    }
     this.attackDialog = new SvelteApplication(
       AttackDialog,
       {
@@ -265,12 +266,14 @@ export class WSGMCombatManager extends WSCombatManager {
           this.attackDialog?.close({ force: true });
 
           this.attackDialog = undefined;
+          this.combat.props.opacity = 1;
           this.manageAttack(attack);
         },
         counterAttackBonus: bonus
       },
       { frameless: true }
     );
+    this.combat.props.opacity = 0.5;
     this.attackDialog.render(true);
   }
 
@@ -283,6 +286,7 @@ export class WSGMCombatManager extends WSCombatManager {
           this.defendDialog?.close({ force: true });
 
           this.defendDialog = undefined;
+          this.combat.props.opacity = 1;
 
           if (this.combat) {
             this.combat.props.defense = defense;
@@ -291,6 +295,7 @@ export class WSGMCombatManager extends WSCombatManager {
       },
       { frameless: true }
     );
+    this.combat.props.opacity = 0.5;
     this.defendDialog.render(true);
   }
 }

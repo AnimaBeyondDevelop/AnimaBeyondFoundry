@@ -1,6 +1,7 @@
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
+import { Logger } from '@utils/log';
 
 /**
  * @import { ABFActor } from '@module/actor/ABFActor';
@@ -83,7 +84,7 @@ export class Attack {
   }
 
   get displayName() {
-    return '';
+    return '...';
   }
   /** @type {boolean} Whether the attack is visible or not. Defaults to `true`. */
   get visible() {
@@ -102,6 +103,7 @@ export class Attack {
     const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.attacker.system);
     await this.#roll.roll();
+    this.toMessage();
     return this;
   }
 
@@ -200,8 +202,18 @@ export class Attack {
     });
   }
 
+  /**
+   * Hook that will be run before the attack is performed.
+   * Subclasses must call its parent method, and implement any particular logic for validating the attack
+   * before performing it.
+   * @returns Promise that resolves to this instance once the attack is ready to be performed.
+   */
+  onAttack() {
+    return this.roll();
+  }
+
   toJSON() {
-    let { type, ability, damage, critic, visible, withRoll } = this;
+    let { type, ability, damage, critic, withRoll } = this;
     return $state.snapshot({
       type,
       attackerId: this.attackerToken.id,
@@ -209,7 +221,6 @@ export class Attack {
       ability: ability.toJSON(),
       damage: damage.toJSON(),
       critic,
-      visible,
       meleeCombat: this.meleeCombat,
       withRoll,
       roll: this.#roll?.toJSON()
@@ -218,11 +229,10 @@ export class Attack {
 
   /** @param {ReturnType<Attack['toJSON']>} json */
   loadJSON(json) {
-    let { ability, damage, critic, visible, meleeCombat, withRoll } = json;
+    let { ability, damage, critic, meleeCombat, withRoll } = json;
     this.ability = ModifiedAbility.fromJSON(ability);
     this.damage = ModifiedAbility.fromJSON(damage);
     this.critic = critic;
-    this.visible = visible;
     this.meleeCombat = meleeCombat;
     this.withRoll = withRoll;
     this.#roll = ABFFoundryRoll.fromData(json.roll);
@@ -232,21 +242,25 @@ export class Attack {
 
   /** @param {ReturnType<Attack['toJSON']>} json */
   static fromJSON(json) {
-    let { attackerId, defenderId, type } = json;
-    const attacker = game.scenes?.active?.tokens.get(attackerId);
-    const defender = game.scenes?.active?.tokens.get(defenderId);
+    try {
+      let { attackerId, defenderId, type } = json;
+      const attacker = game.scenes?.active?.tokens.get(attackerId);
+      const defender = game.scenes?.active?.tokens.get(defenderId);
 
-    if (!attacker || !defender)
-      throw new Error(
-        'Attack cannot be recovered from JSON: Tokens not found for attackerId:' +
-          attackerId +
-          'and defenderId:' +
-          defenderId
-      );
-    const Subclass = this.#attackClasses.get(type);
-    if (!Subclass) throw new Error('Attack subclass not found for type: ' + type);
-    let attack = new Subclass(attacker, defender);
-    return attack.loadJSON(json);
+      if (!attacker || !defender)
+        throw new Error(
+          'Attack cannot be recovered from JSON: Tokens not found for attackerId: ' +
+            attackerId +
+            'and defenderId: ' +
+            defenderId
+        );
+      const Subclass = this.#attackClasses.get(type);
+      if (!Subclass) throw new Error('Attack subclass not found for type: ' + type);
+      let attack = new Subclass(attacker, defender);
+      return attack.loadJSON(json);
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 
   /** @type {Map<AttackType, typeof Attack>} */

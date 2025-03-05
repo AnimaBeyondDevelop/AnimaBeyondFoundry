@@ -8,6 +8,7 @@
   import CombatCard from '@svelte/ui/card/combatCard.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import IconSelect from '@svelte/ui/iconSelect.svelte';
+  import Input from '@svelte/ui/Input.svelte';
 
   /**
    * @typedef {import(".").MysticAttack} MysticAttack
@@ -88,7 +89,7 @@
         icon="zeon-accumulated"
         useIcon
       >
-        <input class="card-input" value={attack.zeonAccumulated || 0} disabled />
+        <Input value={attack.zeonAccumulated || 0} disabled />
       </InputLabel>
     </div>
     <div class="row pull-left">
@@ -104,7 +105,7 @@
         icon="zeon-cost"
         useIcon
       >
-        <input class="card-input" value={attack.zeonCost} disabled />
+        <Input value={attack.zeonCost} disabled />
       </InputLabel>
     </div>
   {/snippet}

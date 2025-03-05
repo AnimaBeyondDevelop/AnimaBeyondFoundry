@@ -1,4 +1,6 @@
 <script>
+  import Input from './Input.svelte';
+
   /**
    * @typedef {Object} props
    * @property {import("@module/common/ModifiedAbility.svelte").ModifiedAbility} ability
@@ -30,8 +32,8 @@
   }
 </script>
 
-<input
-  class="card-input {cssClass}"
+<Input
+  class={cssClass}
   value={ability.final}
   type="text"
   onfocus={e => e.currentTarget.select()}

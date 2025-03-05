@@ -2,6 +2,7 @@ import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '@utils/registerSettings';
 import { Attack } from '../attack';
+import { Logger } from '@utils/log';
 
 /**
  * @typedef {"physic"|"mystic"|"psychic"} DefenseType
@@ -88,7 +89,7 @@ export class Defense {
   }
 
   get displayName() {
-    return '';
+    return '...';
   }
 
   get mastery() {
@@ -100,6 +101,7 @@ export class Defense {
     const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.defender.system);
     await this.#roll.roll();
+    this.toMessage();
     return this;
   }
 
@@ -153,6 +155,16 @@ export class Defense {
     });
   }
 
+  /**
+   * Hook that will be run before the defense is performed.
+   * Subclasses must call its parent method, and implement any particular logic for validating the defense
+   * before performing it.
+   * @returns Promise that resolves to this instance once the defense is ready to be performed.
+   */
+  onDefend() {
+    return this.roll();
+  }
+
   toJSON() {
     let { type, ability, at, withRoll } = this;
     return {
@@ -180,15 +192,19 @@ export class Defense {
 
   /** @param {ReturnType<Defense['toJSON']>} json */
   static fromJSON(json) {
-    const { type } = json;
-    const attack = Attack.fromJSON(json.attack);
+    try {
+      const { type } = json;
+      const attack = Attack.fromJSON(json.attack);
 
-    if (!attack)
-      throw new Error('Defense cannot be recovered from JSON: no attack given');
-    const Subclass = this.#defenseClasses.get(type);
-    if (!Subclass) throw new Error('Defense subclass not found for type: ' + type);
-    let defense = new Subclass(attack);
-    return defense.loadJSON(json);
+      if (!attack)
+        throw new Error('Defense cannot be recovered from JSON: no attack given');
+      const Subclass = this.#defenseClasses.get(type);
+      if (!Subclass) throw new Error('Defense subclass not found for type: ' + type);
+      let defense = new Subclass(attack);
+      return defense.loadJSON(json);
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 
   /** @type {Map<DefenseType, typeof Defense>} */

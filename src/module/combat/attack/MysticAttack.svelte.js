@@ -25,7 +25,7 @@ export class MysticAttack extends Attack {
   #spellGrade = $state('base');
   /**
    * Indicates how the spell will be casted. Initialised to "accumulated".
-   * @type {string}
+   * @type {"override" | "accumulated" | "innate" | "prepared"}
    */
   castMethod = $state('accumulated');
 
@@ -68,6 +68,10 @@ export class MysticAttack extends Attack {
   }
 
   set spellGrade(spellGrade) {
+    if (!this.availableSpellGrades.includes(spellGrade))
+      throw new Error(
+        `Spell ${this.spell.id} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
+      );
     this.#spellGrade = spellGrade;
     let spellEffect = this.spell?.system.grades[this.#spellGrade].description.value ?? '';
     this.damage.base = damageCheck(spellEffect);
@@ -98,11 +102,11 @@ export class MysticAttack extends Attack {
   }
 
   get canCast() {
-    return this.attacker.canCast(this.spell, this.spellGrade, this.castMethod);
+    return this.attacker.canCastSpell(this.spell, this.spellGrade, this.castMethod);
   }
 
   get visible() {
-    return this.spell?.system.visible;
+    return this.spell?.system.visible ?? true;
   }
 
   get mastery() {
@@ -121,6 +125,19 @@ export class MysticAttack extends Attack {
   get resistanceEffect() {
     let spellEffect = this.spell?.system.grades[this.spellGrade].description.value;
     return resistanceEffectCheck(spellEffect);
+  }
+
+  onAttack() {
+    this.attacker.setLastSpellUsed(this.spell, 'offensive');
+    this.attacker.setCastMethodOverride(this.castMethod);
+    if (!this.attacker.canCastSpell(this.spell, this.spellGrade, this.castMethod)) {
+      this.castMethod = 'override';
+      throw new Error(
+        `Spell ${this.spell.id} cannot be casted by actor (${this.defender.id}) ` +
+          `at grade ${this.spellGrade}`
+      );
+    }
+    return super.onAttack();
   }
 
   toJSON() {
@@ -144,10 +161,6 @@ export class MysticAttack extends Attack {
       );
     this.spell = spell;
     this.castMethod = castMethod;
-    if (!(spellGrade in this.availableSpellGrades))
-      throw new Error(
-        `Spell ${spellId} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
-      );
     this.spellGrade = spellGrade;
     return this;
   }

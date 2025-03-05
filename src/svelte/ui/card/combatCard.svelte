@@ -166,6 +166,7 @@ to this component:
         }
         .bottom {
           flex: 1;
+          max-height: 66px;
         }
       }
     }

@@ -3,6 +3,7 @@
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import Input from '@svelte/ui/Input.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import CombatCard from '@svelte/ui/card/combatCard.svelte';
@@ -71,7 +72,7 @@
           icon="zeon-accumulated"
           useIcon
         >
-          <input class="card-input" value={defense.zeonAccumulated || 0} disabled />
+          <Input value={defense.zeonAccumulated || 0} disabled />
         </InputLabel>
       </div>
     {/if}
@@ -89,7 +90,7 @@
           icon="zeon-cost"
           useIcon
         >
-          <input class="card-input" value={defense.zeonCost} disabled />
+          <Input value={defense.zeonCost} disabled />
         </InputLabel>
       {/if}
     </div>
@@ -112,7 +113,7 @@
           label={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
           useIcon
         >
-          <input class="card-input" value={defense.shieldPoints || 0} disabled />
+          <Input value={defense.shieldPoints || 0} disabled />
         </InputLabel>
       </div>
     </CardMarker>
