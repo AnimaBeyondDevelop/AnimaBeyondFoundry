@@ -144,11 +144,12 @@ export class MysticDefense extends Defense {
     return this.supernaturalShield?.system.shieldPoints;
   }
 
-  get messageFlavor() {
-    return game.i18n.format('macros.combat.dialog.magicDefense.title', {
+  toMessage() {
+    let flavor = game.i18n.format('macros.combat.dialog.magicDefense.title', {
       spell: this.supernaturalShield?.name,
       target: this.attackerToken.name
     });
+    super.toMessage(flavor);
   }
 
   toJSON() {
