@@ -103,6 +103,7 @@ export class Attack {
     const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.attacker.system);
     await this.#roll.roll();
+    this.toMessage();
     return this;
   }
 
@@ -199,6 +200,16 @@ export class Attack {
       speaker: ChatMessage.getSpeaker({ token: this.attackerToken }),
       flavor
     });
+  }
+
+  /**
+   * Hook that will be run before the attack is performed.
+   * Subclasses must call its parent method, and implement any particular logic for validating the attack
+   * before performing it.
+   * @returns Promise that resolves to this instance once the attack is ready to be performed.
+   */
+  onAttack() {
+    return this.roll();
   }
 
   toJSON() {

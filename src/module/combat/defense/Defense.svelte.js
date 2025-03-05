@@ -101,6 +101,7 @@ export class Defense {
     const formula = (this.withRoll ? `1d100${mod} + ` : '') + `${this.ability.final}`;
     this.#roll = new ABFFoundryRoll(formula, this.defender.system);
     await this.#roll.roll();
+    this.toMessage();
     return this;
   }
 
@@ -152,6 +153,16 @@ export class Defense {
       speaker: ChatMessage.getSpeaker({ token: this.defenderToken }),
       flavor
     });
+  }
+
+  /**
+   * Hook that will be run before the defense is performed.
+   * Subclasses must call its parent method, and implement any particular logic for validating the defense
+   * before performing it.
+   * @returns Promise that resolves to this instance once the defense is ready to be performed.
+   */
+  onDefend() {
+    return this.roll();
   }
 
   toJSON() {

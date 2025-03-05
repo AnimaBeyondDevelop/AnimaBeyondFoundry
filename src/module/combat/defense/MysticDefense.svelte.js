@@ -158,6 +158,21 @@ export class MysticDefense extends Defense {
     });
   }
 
+  onDefend() {
+    if (this.newShield) {
+      if (!this.defender.canCastSpell(this.spell, this.spellGrade, this.castMethod)) {
+        this.castMethod = 'override';
+        throw new Error(
+          `Spell ${this.spell.id} cannot be casted by actor (${this.defender.id}) ` +
+            `at grade ${this.spellGrade}`
+        );
+      }
+      this.defender.setCastMethodOverride(this.castMethod);
+      this.defender.setLastSpellUsed(this.spell, 'defensive');
+    }
+    return super.onDefend();
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),

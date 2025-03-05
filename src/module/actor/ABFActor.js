@@ -959,7 +959,7 @@ export class ABFActor extends Actor {
 
   /**
    * Sets the last weapon used to a flag.
-   * @param {import('../items/ABFItems').ABFItemsEnum} weapon
+   * @param {ABFItem} weapon
    * @param {"offensive" | "defensive"} usage Whether to save the last weapon used for attacking
    * or defending
    */
@@ -969,7 +969,7 @@ export class ABFActor extends Actor {
   }
   /**
    * Sets the last spell used to a flag.
-   * @param {import('../items/ABFItems').ABFItemsEnum} spell
+   * @param {ABFItem} spell
    * @param {"offensive" | "defensive"} usage Whether to save the last spell used for attacking
    * or defending
    */
@@ -979,7 +979,7 @@ export class ABFActor extends Actor {
   }
   /**
    * Sets the last psychic power used to a flag.
-   * @param {import('../items/ABFItems').ABFItemsEnum} psychic power
+   * @param {ABFItem} power
    * @param {"offensive" | "defensive"} usage Whether to save the last psychic power used for attacking
    * or defending
    */
@@ -994,4 +994,3 @@ export class ABFActor extends Actor {
     this.setFlag('animabf', 'castMethodOverride', castMethod === 'override');
   }
 }
-

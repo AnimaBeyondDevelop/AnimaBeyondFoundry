@@ -112,6 +112,10 @@ export class PhysicDefense extends Defense {
     );
   }
 
+  onDefend() {
+    this.defender.setLastWeaponUsed(this.weapon, 'defensive');
+    return super.onDefend();
+  }
 
   toJSON() {
     return {

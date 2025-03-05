@@ -193,6 +193,11 @@ export class PsychicDefense extends Defense {
     });
   }
 
+  onDefend() {
+    this.defender.setLastPowerUsed(this.power, 'defensive');
+    return super.onDefend();
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),

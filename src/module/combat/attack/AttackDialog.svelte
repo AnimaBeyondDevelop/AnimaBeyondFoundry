@@ -47,9 +47,8 @@
         props: {
           attack: new Attack(attacker, defender),
           onAttack() {
-            this.attack.roll().then(() => {
-              this.attack.toMessage();
-              onAttack(this.attack);
+            this.attack.onAttack().then(a => {
+              onAttack(a);
             });
           },
           counterAttackBonus

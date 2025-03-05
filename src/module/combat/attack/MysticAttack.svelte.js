@@ -127,6 +127,19 @@ export class MysticAttack extends Attack {
     return resistanceEffectCheck(spellEffect);
   }
 
+  onAttack() {
+    this.attacker.setLastSpellUsed(this.spell, 'offensive');
+    this.attacker.setCastMethodOverride(this.castMethod);
+    if (!this.attacker.canCastSpell(this.spell, this.spellGrade, this.castMethod)) {
+      this.castMethod = 'override';
+      throw new Error(
+        `Spell ${this.spell.id} cannot be casted by actor (${this.defender.id}) ` +
+          `at grade ${this.spellGrade}`
+      );
+    }
+    return super.onAttack();
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),

@@ -52,9 +52,8 @@
         props: {
           defense: new Defense(attack),
           onDefend() {
-            this.defense.roll().then(() => {
-              this.defense.toMessage();
-              onDefend(this.defense);
+            this.defense.onDefend().then(d => {
+              onDefend(d);
             });
           }
         }

@@ -188,6 +188,11 @@ export class PsychicAttack extends Attack {
     return resistanceEffectCheck(powerEffect);
   }
 
+  onAttack() {
+    this.attacker.setLastPowerUsed(this.power, 'offensive');
+    return super.onAttack();
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),
