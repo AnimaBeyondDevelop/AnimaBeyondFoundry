@@ -20,11 +20,6 @@
   /** @type {props} */
   let { defense, onDefend } = $props();
   const i18n = game.i18n;
-
-  function onDefendClick() {
-    defense.defender.setLastSpellUsed(defense.spell, 'defensive');
-    onDefend();
-  }
 </script>
 
 <CombatCard>
@@ -50,7 +45,7 @@
       />
     </div>
     <div id="main-button">
-      <CardButton shape="angled" onclick={onDefendClick} style="light" class="main">
+      <CardButton shape="angled" onclick={() => onDefend()} style="light" class="main">
         {i18n.localize('macros.combat.dialog.button.defense.title')}
       </CardButton>
       {#if defense.newShield}

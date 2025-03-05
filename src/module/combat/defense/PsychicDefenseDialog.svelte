@@ -21,14 +21,9 @@
   let { defense, onDefend } = $props();
   const i18n = game.i18n;
 
-  async function onPsychicPotentialClick() {
+  async function onPsychicPotential() {
     await defense.rollPotential();
     defense.potentialToMessage();
-  }
-
-  function onDefendClick() {
-    defense.defender.setLastPowerUsed(defense.power, 'defensive');
-    onDefend();
   }
 </script>
 
@@ -170,12 +165,12 @@
     {/if}
     <div id="main-button">
       {#if defense.isPotentialRolled || !defense.newShield}
-        <CardButton onclick={onDefendClick} class="main" style="light" shape="angled">
+        <CardButton onclick={() => onDefend()} class="main" style="light" shape="angled">
           {i18n.localize('macros.combat.dialog.button.defense.title')}
         </CardButton>
       {:else}
         <CardButton
-          onclick={onPsychicPotentialClick}
+          onclick={onPsychicPotential}
           class="main"
           style="light"
           shape="angled"
