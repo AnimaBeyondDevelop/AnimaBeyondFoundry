@@ -53,7 +53,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       const spell = actor.system.mystic.spells.find(i => i._id == spellID);
       if (!spell) return;
 
-      actor.setCastMethodOverride(castMethod);
+      actor.setCastMethodOverride(castMethod)
       actor.castSpell(spell, spellGrade, castMethod);
 
       actor.newSupernaturalShield('mystic', {}, 0, spell, spellGrade);
@@ -94,5 +94,5 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       await actor.newSupernaturalShield('psychic', power, powerDifficulty);
     }
   },
-  onUpdate(actor) {}
+  onUpdate(actor){};
 });
