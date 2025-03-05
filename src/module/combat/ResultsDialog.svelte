@@ -17,10 +17,11 @@
    * @property {() => void} onApply Callback for hitting Apply Button
    * @property {Attack} attack
    * @property {Defense} defense
+   * @property {number} [opacity=1]
    */
 
   /** @type {Props} */
-  let { attack, defense, onApply, onCounterAttack, onClose } = $props();
+  let { attack, defense, onApply, onCounterAttack, onClose, opacity = 1 } = $props();
 
   /** @type {number} */
   let titleHeight = $state(0);
@@ -99,6 +100,7 @@
   style:--height="300px"
   style:--edge="35px"
   style:--font-size="28px"
+  style:opacity
 >
   <Card slantedCorners="0 1 1 1" sidebarRight class="main-card">
     {#snippet body()}
