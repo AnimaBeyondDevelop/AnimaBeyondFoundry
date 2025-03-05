@@ -94,5 +94,5 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       actor.newSupernaturalShield('psychic', power, powerDifficulty);
     }
   },
-  onUpdate(actor){};
+  async onUpdate(actor, changes) {}
 });
