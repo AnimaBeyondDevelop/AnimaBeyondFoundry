@@ -100,6 +100,7 @@ export class WSUserCombatManager extends WSCombatManager {
                   };
                   this.emit(newMsg);
                   this.attackDialog.close();
+                  this.attackDialog = undefined;
                 }
               },
               { frameless: true }
@@ -132,11 +133,14 @@ export class WSUserCombatManager extends WSCombatManager {
           };
 
           this.emit(newMsg);
+          this.attackDialog.close();
+          this.attackDialog = undefined;
         },
         counterAttackBonus: msg.payload.counterAttackBonus
       },
       { frameless: true }
     );
+    this.attackDialog.render(true);
   }
 
   async manageAttackRequestResponse(msg) {
@@ -176,10 +180,13 @@ export class WSUserCombatManager extends WSCombatManager {
             };
 
             this.emit(newMsg);
+            this.defenseDialog.close();
+            this.defenseDialog = undefined;
           }
         },
         { frameless: true }
       );
+      this.defenseDialog.render(true);
     } catch (err) {
       if (err) {
         Logger.error(err);
