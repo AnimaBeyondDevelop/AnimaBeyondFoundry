@@ -17,7 +17,6 @@ import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.j
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
-import { INITIAL_SPELL_CASTING_DATA } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 import ABFItem from '../items/ABFItem';
@@ -370,89 +369,61 @@ export class ABFActor extends Actor {
   }
 
   /**
-   * Determines if a mystic character can cast a specific spell at a specific grade.
+   * Evaluates if this actor can cast a spell at a given spellgrade with certain casting method.
+   * This method is responsible for issuing notifications informing the user whenever casting
+   * is not possible.
    *
-   * @param spell - The spell object that contains information about the spell, including the
-   * zeon cost for each grade.
-   * @param {string} spellGrade - The grade of the spell that the character wants to cast.
-   * @param {{prepared: boolean, innate:boolean}} [casted] - An object that indicates whether the spell has been casted before,
-   * either as a prepared spell or an innate spell.
-   * Default is { prepared: false, innate: false }.
-   * @param {boolean} override - A flag that indicates whether to override the normal casting rules and
-   * allow the spell to be casted regardless of zeon points or previous casting.
-   * Default is false.
-   * @returns {import('../types/mystic/SpellItemConfig.js').SpellCasting} - An object that contains information about the zeon points,
-   * whether the spell can be cast (prepared or innate), if the spell has been casted, and
-   * whether the casting rules should be overridden.
+   * @param {ABFItem} spell
+   * @param {"base"|"intermediate"|"advanced"|"arcane"} spellGrade
+   * @param {"override"|"accumulated"|"innate"|"prepared"} castMethod
+   * @param {{zeon: number, pool: number}} [increasedCost={zeon: 0, pool: 0}]
+   * @returns {boolean} A boolean value indicating whether the spell can be cast or not.
    */
-  mysticCanCastEvaluate(
-    spell,
-    spellGrade,
-    casted = { prepared: false, innate: false },
-    override = false
-  ) {
-    const spellCasting = foundry.utils.deepClone(INITIAL_SPELL_CASTING_DATA);
-    spellCasting.casted = casted;
-    spellCasting.override = override;
-    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
+  canCastSpell(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
+    let canCast = false;
+    let warningMessage = '';
+    let zeonCost = spell?.system.grades[spellGrade].zeon.value + increasedCost.zeon;
+    let zeonPool = this.system.mystic.zeon.value;
 
-    if (override) {
-      return spellCasting;
+    switch (castMethod) {
+      case 'accumulated': {
+        let zeonAccumulated = this.system.mystic.zeon.accumulated;
+        canCast = zeonAccumulated >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.zeonAccumulated';
+        break;
+      }
+      case 'innate': {
+        let spellVia = spell?.system.via.value;
+        let innateMagic = this.system.mystic.innateMagic;
+        let innateVia = innateMagic.via.find(i => i.name == spellVia);
+        let innateMagicValue =
+          innateMagic.via.length !== 0 && innateVia
+            ? innateVia.system.final.value
+            : innateMagic.main.final.value;
+        canCast = innateMagicValue >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.innateMagic';
+        break;
+      }
+      case 'prepared': {
+        canCast =
+          this.getPreparedSpells().find(
+            ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+          )?.system.prepared.value ?? false;
+        warningMessage = 'dialogs.spellCasting.warning.preparedSpell';
+        break;
+      }
+      case 'override': {
+        return true;
+      }
     }
-
-    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-    spellCasting.canCast.prepared =
-      this.system.mystic.preparedSpells.find(
-        ps => ps.name == spell.name && ps.system.grade.value == spellGrade
-      )?.system.prepared.value ?? false;
-    const spellVia = spell?.system.via.value;
-    const innateMagic = this.system.mystic.innateMagic;
-    const innateVia = innateMagic.via.find(i => i.name == spellVia);
-    const innateMagicValue =
-      innateMagic.via.length !== 0 && innateVia
-        ? innateVia.system.final.value
-        : innateMagic.main.final.value;
-    spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
-
-    return spellCasting;
-  }
-
-  /**
-   * Evaluates the spell casting conditions and returns a boolean value indicating whether the
-   * spell can be cast or not.
-   *
-   * @param {import('../types/mystic/SpellItemConfig.js').SpellCasting} spellCasting - - An object that contains information about the zeon
-   * points, whether the spell can be cast (prepared or innate), if the spell has been casted,
-   * and whether the casting rules should be overridden.
-   * @returns {boolean} - A boolean value indicating whether the spell can be cast or not.
-   */
-  evaluateCast(spellCasting) {
-    const { i18n } = game;
-    const { canCast, casted, zeon, override } = spellCasting;
-    if (override) {
-      return false;
+    if (zeonPool < increasedCost.pool) {
+      canCast = false;
+      warningMessage = 'dialogs.spellCasting.warning.zeonPool';
     }
-    if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
-      ui.notifications.warn(i18n.localize('dialogs.spellCasting.warning.mustChoose'));
-      return true;
+    if (!canCast) {
+      ui.notifications.warn(game.i18n.localize(warningMessage));
     }
-    if (canCast.innate && casted.innate) {
-      return;
-    } else if (!canCast.innate && casted.innate) {
-      ui.notifications.warn(i18n.localize('dialogs.spellCasting.warning.innateMagic'));
-      return true;
-    } else if (canCast.prepared && casted.prepared) {
-      return false;
-    } else if (!canCast.prepared && casted.prepared) {
-      return ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.preparedSpell')
-      );
-    } else if (zeon.accumulated < zeon.cost) {
-      ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
-      );
-      return true;
-    } else return false;
+    return canCast;
   }
 
   canCast(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
@@ -504,23 +475,23 @@ export class ABFActor extends Actor {
 
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
+   * Calls this.canCastSpell() to check if the spell can be cast, this.consumeAccumulatedZeon()
+   * to update the accumulated zeon value and this.deletePreparedSpell() to update prepared spells.
    *
-   * @param {import('../types/mystic/SpellItemConfig.js').SpellCasting} spellCasting An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
-   * @param {string} spellName The name of the spell being casted.
-   * @param {string} spellGrade The grade of the spell being casted.
+   * @param {ABFItem} spell
+   * @param {"base"|"intermediate"|"advanced"|"arcane"} spellGrade
+   * @param {"override"|"accumulated"|"innate"|"prepared"} castMethod
+   * @param {{zeon: number, pool: number}} [increasedCost={zeon: 0, pool: 0}]
    */
-  mysticCast(spellCasting, spellName, spellGrade) {
-    const { zeon, casted, override } = spellCasting;
-    if (override) {
-      return;
-    }
-    if (casted.innate) {
-      return;
-    }
-    if (casted.prepared) {
+  castSpell(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
+    if (!this.canCastSpell(spell, spellGrade, castMethod, increasedCost)) return;
+    if (castMethod === 'prepared') {
       this.deletePreparedSpell(spellName, spellGrade);
-    } else {
-      this.consumeAccumulatedZeon(zeon.cost);
+      return;
+    }
+    if (castMethod === 'accumulated') {
+      const zeon = spell.system.grades[spellGrade].zeon.value;
+      this.consumeAccumulatedZeon(zeon);
     }
   }
 
@@ -1023,3 +994,4 @@ export class ABFActor extends Actor {
     this.setFlag('animabf', 'castMethodOverride', castMethod === 'override');
   }
 }
+
