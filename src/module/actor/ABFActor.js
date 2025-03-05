@@ -376,13 +376,24 @@ export class ABFActor extends Actor {
    * @param {ABFItem} spell
    * @param {"base"|"intermediate"|"advanced"|"arcane"} spellGrade
    * @param {"override"|"accumulated"|"innate"|"prepared"} castMethod
-   * @param {{zeon: number, pool: number}} [increasedCost={zeon: 0, pool: 0}]
+   * @param {Object} [increasedZeon] The increased zeon cost for the spell.
+   * @param {number} [increasedZeon.accumulated=0] - The part of the increased zeon cost that needs
+   * to be accumulated. Defaults to 0
+   * @param {number} [increasedZeon.pool=0] - The part of the increased zeon cost that is automatically
+   * deduced from the character's zeon pool, without accumulating. Used for instance in metamagic.
+   * Defaults to 0.
    * @returns {boolean} A boolean value indicating whether the spell can be cast or not.
    */
-  canCastSpell(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
+  canCastSpell(
+    spell,
+    spellGrade,
+    castMethod,
+    increasedZeon = { accumulated: 0, pool: 0 }
+  ) {
     let canCast = false;
     let warningMessage = '';
-    let zeonCost = spell?.system.grades[spellGrade].zeon.value + increasedCost.zeon;
+    let zeonCost =
+      spell?.system.grades[spellGrade].zeon.value + (increasedZeon.accumulated ?? 0);
     let zeonPool = this.system.mystic.zeon.value;
 
     switch (castMethod) {
@@ -416,7 +427,7 @@ export class ABFActor extends Actor {
         return true;
       }
     }
-    if (zeonPool < increasedCost.pool) {
+    if (zeonPool < (increasedZeon.pool ?? 0)) {
       canCast = false;
       warningMessage = 'dialogs.spellCasting.warning.zeonPool';
     }
@@ -481,18 +492,42 @@ export class ABFActor extends Actor {
    * @param {ABFItem} spell
    * @param {"base"|"intermediate"|"advanced"|"arcane"} spellGrade
    * @param {"override"|"accumulated"|"innate"|"prepared"} castMethod
-   * @param {{zeon: number, pool: number}} [increasedCost={zeon: 0, pool: 0}]
+   * @param {Object} [increasedZeon] The increased zeon cost for the spell.
+   * @param {number} [increasedZeon.accumulated=0] - The part of the increased zeon cost that needs
+   * to be accumulated. Defaults to 0
+   * @param {number} [increasedZeon.pool=0] - The part of the increased zeon cost that is automatically
+   * deduced from the character's zeon pool, without accumulating. Used for instance in metamagic.
+   * Defaults to 0.
    */
-  castSpell(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
-    if (!this.canCastSpell(spell, spellGrade, castMethod, increasedCost)) return;
+  castSpell(spell, spellGrade, castMethod, increasedZeon = { accumulated: 0, pool: 0 }) {
+    if (!this.canCastSpell(spell, spellGrade, castMethod, increasedZeon)) return;
+    if (castMethod !== 'override') {
+      this.consumeZeon(increasedZeon.pool);
+    }
     if (castMethod === 'prepared') {
-      this.deletePreparedSpell(spellName, spellGrade);
+      this.deletePreparedSpell(spell.name, spellGrade);
       return;
     }
     if (castMethod === 'accumulated') {
-      const zeon = spell.system.grades[spellGrade].zeon.value;
+      const zeon =
+        spell?.system.grades[spellGrade].zeon.value + increasedZeon.accumulated;
       this.consumeAccumulatedZeon(zeon);
     }
+  }
+
+  /**
+   * Consumes zeon from an actor's zeon pool.
+   * @param {number} zeon - The amount of zeon to be consumed.
+   */
+  consumeZeon(zeon) {
+    const newZeon = this.system.mystic.zeon.value - zeon;
+    this.update({
+      system: {
+        mystic: {
+          zeon: { value: newZeon }
+        }
+      }
+    });
   }
 
   /**
