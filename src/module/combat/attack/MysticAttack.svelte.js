@@ -98,7 +98,7 @@ export class MysticAttack extends Attack {
   }
 
   get canCast() {
-    return this.attacker.canCast(this.spell, this.spellGrade, this.castMethod);
+    return this.attacker.canCastSpell(this.spell, this.spellGrade, this.castMethod);
   }
 
   get visible() {

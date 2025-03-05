@@ -102,7 +102,7 @@ export class MysticDefense extends Defense {
   }
 
   get canCast() {
-    return this.defender.canCast(this.spell, this.spellGrade, this.castMethod);
+    return this.defender.canCastSpell(this.spell, this.spellGrade, this.castMethod);
   }
 
   get mastery() {
