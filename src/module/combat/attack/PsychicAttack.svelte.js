@@ -120,7 +120,7 @@ export class PsychicAttack extends Attack {
   }
 
   get visible() {
-    return this.power?.system.visible;
+    return this.power?.system.visible ?? true;
   }
 
   get mastery() {

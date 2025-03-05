@@ -112,6 +112,32 @@ export class PhysicDefense extends Defense {
     );
   }
 
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      physicDefenseType: this.#physicDefenseType,
+      weaponId: this.#weapon,
+      autoAccumulateDefenses: this.#autoAccumulateDefenses
+    };
+  }
+
+  /** @param {ReturnType<PhysicDefense['toJSON']>} json */
+  loadJSON(json) {
+    super.loadJSON(json);
+    let { weaponId, physicDefenseType, autoAccumulateDefenses } = json;
+    this.physicDefenseType = physicDefenseType;
+    const weapon = this.availableWeapons.find(w => w.id === weaponId) ?? this.#unarmed;
+    if (!weapon)
+      throw new Error(
+        `Weapon ${weaponId} not found in actor's (${this.attacker.id}) available weapons`
+      );
+    this.weapon = weapon;
+    this.autoAccumulateDefenses = autoAccumulateDefenses;
+
+    return this;
+  }
+
   /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
     return {

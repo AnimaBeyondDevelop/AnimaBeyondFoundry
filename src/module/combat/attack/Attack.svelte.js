@@ -202,7 +202,7 @@ export class Attack {
   }
 
   toJSON() {
-    let { type, ability, damage, critic, visible, withRoll } = this;
+    let { type, ability, damage, critic, withRoll } = this;
     return $state.snapshot({
       type,
       attackerId: this.attackerToken.id,
@@ -210,7 +210,6 @@ export class Attack {
       ability: ability.toJSON(),
       damage: damage.toJSON(),
       critic,
-      visible,
       meleeCombat: this.meleeCombat,
       withRoll,
       roll: this.#roll?.toJSON()
@@ -219,11 +218,10 @@ export class Attack {
 
   /** @param {ReturnType<Attack['toJSON']>} json */
   loadJSON(json) {
-    let { ability, damage, critic, visible, meleeCombat, withRoll } = json;
+    let { ability, damage, critic, meleeCombat, withRoll } = json;
     this.ability = ModifiedAbility.fromJSON(ability);
     this.damage = ModifiedAbility.fromJSON(damage);
     this.critic = critic;
-    this.visible = visible;
     this.meleeCombat = meleeCombat;
     this.withRoll = withRoll;
     this.#roll = ABFFoundryRoll.fromData(json.roll);
@@ -240,9 +238,9 @@ export class Attack {
 
       if (!attacker || !defender)
         throw new Error(
-          'Attack cannot be recovered from JSON: Tokens not found for attackerId:' +
+          'Attack cannot be recovered from JSON: Tokens not found for attackerId: ' +
             attackerId +
-            'and defenderId:' +
+            'and defenderId: ' +
             defenderId
         );
       const Subclass = this.#attackClasses.get(type);

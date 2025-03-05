@@ -24,7 +24,7 @@ export class MysticDefense extends Defense {
   #spellGrade = $state('base');
   /**
    * Indicates how the spell will be casted. Initialised to "accumulated".
-   * @type {string}
+   * @type {"override" | "accumulated" | "innate" | "prepared"}
    */
   castMethod = $state(this.defender.getCastMethodOverride() ? 'override' : 'accumulated');
   /**
@@ -74,6 +74,10 @@ export class MysticDefense extends Defense {
   }
 
   set spellGrade(spellGrade) {
+    if (!this.availableSpellGrades.includes(spellGrade))
+      throw new Error(
+        `Spell ${this.spell.id} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
+      );
     this.#spellGrade = spellGrade;
   }
 
@@ -174,6 +178,9 @@ export class MysticDefense extends Defense {
     const spell = this.availableSpells.find(s => s.id === spellId);
     if (spell) {
       this.spell = spell;
+
+      this.castMethod = castMethod;
+      this.spellGrade = spellGrade;
     }
 
     const supernaturalShield = this.availableSupernaturalShields.find(
@@ -189,12 +196,6 @@ export class MysticDefense extends Defense {
       );
     }
 
-    this.castMethod = castMethod;
-    if (!(spellGrade in this.availableSpellGrades))
-      throw new Error(
-        `Spell ${spellId} cannot be casted by actor (${this.defender.id}) at grade ${spellGrade}`
-      );
-    this.spellGrade = spellGrade;
     return this;
   }
 }
