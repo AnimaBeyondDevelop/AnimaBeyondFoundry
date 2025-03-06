@@ -4,6 +4,7 @@
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import ContractibleCard from '@svelte/ui/card/contractibleCard.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
+  import AbilityModifierRow from '@svelte/ui/abilityModifierRow.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import { Attack } from './attack';
   import Input from '@svelte/ui/input.svelte';
@@ -113,7 +114,10 @@
   <div class="modifiers">
     <ContractibleCard title="Modificadores" bind:titleHeight>
       {#snippet body()}
-        <div class="placeholder"></div>
+        <div class="modifiers-container">
+          <AbilityModifierRow ability={attack.ability} />
+          <AbilityModifierRow ability={defense.ability} />
+        </div>
       {/snippet}
     </ContractibleCard>
   </div>
@@ -163,12 +167,20 @@
       --edge: calc(#{$main-sidebar-size} - #{$main-edge-size} + #{card.$border-size});
       --sidebar-size: calc(#{$main-sidebar-size} - #{$main-edge-size});
       --font-size: 28px;
-      --height: 150px;
+      --height: 100%;
       --width: calc(100% - 2 * #{$main-edge-size});
 
       position: relative;
       left: $main-edge-size;
       top: calc(-1 * card.$title-height);
+      & .modifiers-container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        padding-left: 20px;
+        padding-top: 5px;
+        gap: 20px;
+      }
     }
     :global {
       .main-card {
