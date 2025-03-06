@@ -2,7 +2,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { canCounterAttack } from './canCounterAttack';
 import { calculateCounterAttackBonus } from './calculateCounterAttackBonus';
 import { calculateDamage } from './calculateDamage';
-import { roundTo5Multiples } from './roundTo5Multiples';
+import { floorTo5Multiple } from '@utils/rounding';
 
 /**
  *
@@ -36,6 +36,6 @@ export const calculateCombatResult = (
 
   return {
     canCounterAttack: false,
-    damage: needToRound ? roundTo5Multiples(result) : result
+    damage: needToRound ? floorTo5Multiple(result) : result
   };
 };

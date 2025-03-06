@@ -12,7 +12,7 @@ import { migrateItem } from '../items/migrations/migrateItem';
 import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
-import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
+import { floorTo5Multiple } from '@utils/rounding';
 import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.js';
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
@@ -244,7 +244,7 @@ export class ABFActor extends Actor {
           Math.abs(newShieldPoints),
           newCombatResult.halvedAbsorption
         );
-        const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
+        const breakingDamage = needToRound ? floorTo5Multiple(result) : result;
         this.applyDamage(breakingDamage);
       }
     }
