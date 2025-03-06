@@ -3,7 +3,7 @@
   import CardMarker from '@svelte/ui/card/cardMarker.svelte';
   import IconCheckBox from '@svelte/ui/iconCheckBox.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
-  import Input from '@svelte/ui/Input.svelte';
+  import Input from '@svelte/ui/input.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import CombatCard from '@svelte/ui/card/combatCard.svelte';

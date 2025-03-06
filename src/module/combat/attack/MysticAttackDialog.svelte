@@ -8,7 +8,7 @@
   import CombatCard from '@svelte/ui/card/combatCard.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import IconSelect from '@svelte/ui/iconSelect.svelte';
-  import Input from '@svelte/ui/Input.svelte';
+  import Input from '@svelte/ui/input.svelte';
 
   /**
    * @typedef {import(".").MysticAttack} MysticAttack

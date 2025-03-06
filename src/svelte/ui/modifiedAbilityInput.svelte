@@ -1,5 +1,5 @@
 <script>
-  import Input from './Input.svelte';
+  import Input from './input.svelte';
 
   /**
    * @typedef {Object} props
