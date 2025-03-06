@@ -5,12 +5,11 @@
   import ContractibleCard from '@svelte/ui/card/contractibleCard.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
-  import { Attack } from './attack';
+  import { Attack } from '../attack';
+  import { Defense } from '../defense';
   import Input from '@svelte/ui/Input.svelte';
 
   /**
-   * @import { Defense } from './defense';
-   *
    * @typedef {Object} Props
    * @property {() => void} onClose Callback for hitting Close Button
    * @property {(bonus: number) => void} onCounterAttack Callback for hitting Counter Attack Button
