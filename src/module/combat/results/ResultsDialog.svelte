@@ -8,7 +8,7 @@
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import { Attack } from '../attack';
   import { Defense } from '../defense';
-  import Input from '@svelte/ui/Input.svelte';
+  import Input from '@svelte/ui/input.svelte';
   import { CombatResults } from './CombatResults.svelte';
 
   /**
