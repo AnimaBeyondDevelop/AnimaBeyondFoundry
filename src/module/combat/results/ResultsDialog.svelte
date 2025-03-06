@@ -251,6 +251,7 @@
         .card-body {
           display: flex;
           height: calc(100% - card.$title-height + card.$border-size);
+          min-width: 0;
           & > div {
             min-width: 40%;
             position: relative;
