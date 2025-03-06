@@ -8,6 +8,7 @@
   import { Attack } from '../attack';
   import { Defense } from '../defense';
   import Input from '@svelte/ui/Input.svelte';
+  import { CombatResults } from './CombatResults.svelte';
 
   /**
    * @typedef {Object} Props
@@ -22,10 +23,18 @@
   /** @type {Props} */
   let { attack, defense, onApply, onCounterAttack, onClose, opacity = 1 } = $props();
 
+  /** @type {CombatResults|undefined} */
+  let combatResults = $state.raw();
+  $effect(() => {
+    if (attack.isRolled && defense.isRolled) {
+      combatResults = new CombatResults(attack, defense);
+    }
+  });
+
   /** @type {number} */
   let titleHeight = $state(0);
 
-  const i18n = game.i18n;
+  const i18n = /** @type {ReadyGame} */ (game).i18n;
 </script>
 
 {#snippet overview(/** @type {Attack | Defense} */ dataObject)}
@@ -34,7 +43,7 @@
     dataObject[actionType === 'attack' ? 'attacker' : 'defender']
   )}
   <h4>{actor.name}</h4>
-  <div class="option-name">{dataObject.displayName}</div>
+  <div class="option-name" title={dataObject.displayName}>{dataObject.displayName}</div>
   {#await actor.getTokenImages() then images}
     <img src={images[0]} alt={actor.name} />
   {/await}
@@ -42,7 +51,7 @@
     <div class="row">
       <InputLabel
         icon={dataObject.type === 'physic' ? actionType : dataObject.type}
-        label={i18n?.localize(`macros.combat.dialog.gm.ability.${dataObject.type}.title`)}
+        label={i18n.localize(`macros.combat.dialog.gm.ability.${dataObject.type}.title`)}
         useIcon
       >
         <ModifiedAbilityInput bind:ability={dataObject.ability} />
@@ -50,8 +59,8 @@
       {#if dataObject instanceof Attack}
         <InputLabel
           icon="critic/{dataObject.critic}"
-          label={i18n?.localize('macros.combat.dialog.damage')}
-          iconLabel={i18n?.localize(
+          label={i18n.localize('macros.combat.dialog.damage')}
+          iconLabel={i18n.localize(
             `anima.ui.combat.armors.at.${dataObject.critic}.title`
           )}
           useIcon
@@ -61,7 +70,7 @@
       {:else}
         <InputLabel
           icon="armor"
-          label={i18n?.localize('macros.combat.dialog.at.title')}
+          label={i18n.localize('macros.combat.dialog.at.title')}
           useIcon
         >
           <ModifiedAbilityInput bind:ability={dataObject.at} />
@@ -71,7 +80,7 @@
     <div class="row">
       <InputLabel
         icon="dice"
-        label={i18n?.localize('macros.combat.dialog.rolled.title')}
+        label={i18n.localize('macros.combat.dialog.rolled.title')}
         useIcon
       >
         <Input
@@ -117,9 +126,62 @@
     </ContractibleCard>
   </div>
 
-  <Card slantedCorners="1 1 1 1" sidebarRight header="Resultado" --height="200px">
+  <Card
+    slantedCorners="1 1 1 1"
+    sidebarRight
+    header="Resultado"
+    --height="fit-content"
+    class="result-card"
+  >
     {#snippet body()}
-      <div class="placeholder"></div>
+      {#if combatResults}
+        <h4>
+          {combatResults.winner +
+            ' ' +
+            i18n.localize('macros.combat.dialog.winner.title')}
+        </h4>
+        {#if combatResults.totalDifference > 0}
+          <div class="row">
+            <InputLabel
+              icon="attack"
+              label={i18n.localize('macros.combat.dialog.difference.title')}
+              useIcon
+            >
+              <Input value={combatResults.totalDifference} disabled />
+            </InputLabel>
+
+            <InputLabel
+              icon="critic/{attack.critic}"
+              label={i18n.localize('macros.combat.dialog.damage.title')}
+              useIcon
+            >
+              <Input value={combatResults.totalDifference} disabled />
+            </InputLabel>
+          </div>
+        {:else}
+          <div class="row">
+            <InputLabel
+              icon="defense"
+              label={i18n.localize('macros.combat.dialog.difference.title')}
+              useIcon
+            >
+              <Input value={-combatResults.totalDifference} disabled />
+            </InputLabel>
+
+            {#if combatResults.canCounterAttack}
+              <InputLabel
+                icon="attack-bonus"
+                label={i18n.localize('macros.combat.dialog.counterAttackBonus.title')}
+                useIcon
+              >
+                <Input value={combatResults.counterAttackBonus} disabled />
+              </InputLabel>
+            {/if}
+          </div>
+        {/if}
+      {:else}
+        Loading...
+      {/if}
     {/snippet}
   </Card>
 
@@ -169,13 +231,16 @@
       left: $main-edge-size;
       top: calc(-1 * card.$title-height);
     }
+    .result.row {
+      display: flex;
+    }
     :global {
       .main-card {
         .card-body {
           display: flex;
           height: calc(100% - card.$title-height + card.$border-size);
           & > div {
-            width: 50%;
+            min-width: 40%;
             position: relative;
             background-color: card.$background-color;
             display: flex;
@@ -198,6 +263,7 @@
               width: calc(100% - 40px);
               overflow: hidden;
               text-overflow: ellipsis;
+              white-space: nowrap;
               place-content: center;
             }
             .row {
@@ -218,12 +284,12 @@
                 top: calc(0.2 * $img-height);
               }
               .option-name {
-                padding-left: 40px;
-                padding-right: 25px;
                 @include borders.slanted-edges(
                   0 0 1 0,
                   $bg-color: card.$background-light
                 );
+                padding-left: 40px;
+                padding-right: 25px;
               }
             }
             &.defense {
@@ -232,12 +298,12 @@
                 top: calc(0.2 * $img-height);
               }
               .option-name {
-                padding-right: 40px;
-                padding-left: 25px;
                 @include borders.slanted-edges(
                   0 0 0 1,
                   $bg-color: card.$background-light
                 );
+                padding-right: 40px;
+                padding-left: 25px;
               }
             }
           }
@@ -257,6 +323,22 @@
         position: absolute;
         right: calc(-1 * $height/2);
         top: calc(-1 * $height/2);
+      }
+
+      .result-card {
+        .card-body {
+          padding-bottom: 10px;
+          display: flex;
+          flex-direction: column;
+          place-items: center;
+
+          .row {
+            width: 85%;
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: row;
+          }
+        }
       }
     }
   }

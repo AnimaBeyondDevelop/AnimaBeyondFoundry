@@ -9,6 +9,15 @@ export function roundToMultiple(number, multiple, roundingFunction) {
 }
 
 /**
+ * Ceils a number to a multiple.
+ * @param {number} number - The number to be rounded.
+ * @param {number} multiple - The multiple which the number will be rounded to.
+ */
+export function ceilToMultiple(number, multiple) {
+  return roundToMultiple(number, multiple, Math.ceil);
+}
+
+/**
  * Floors a number to a multiple.
  * @param {number} number - The number to be rounded.
  * @param {number} multiple - The multiple which the number will be rounded to.

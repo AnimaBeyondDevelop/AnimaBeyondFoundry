@@ -1,9 +1,9 @@
-import { floorToMultiple } from '@utils/rounding';
+import { floorTo5Multiple } from '@utils/rounding';
 
 /**
  * @param {number} attack
  * @param {number} defense
  */
 export const calculateCounterAttackBonus = (attack, defense) => {
-  return Math.min(floorToMultiple((defense - attack) / 2, 5), 150);
+  return Math.min(floorTo5Multiple((defense - attack) / 2), 150);
 };

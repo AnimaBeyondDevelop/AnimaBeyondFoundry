@@ -4,8 +4,9 @@ import { calculateCounterAttackBonus } from './calculateCounterAttackBonus';
 import { calculateDamage } from './calculateDamage';
 import { floorTo5Multiple } from '@utils/rounding';
 
+// TODO: Relplace this with the new implementation in CombatResultsCalculator, and remove this
+// and required files
 /**
- *
  * @param {number} attack
  * @param {number} defense
  * @param {number} at
