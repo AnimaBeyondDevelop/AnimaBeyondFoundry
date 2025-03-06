@@ -1,4 +1,4 @@
-import { roundTo5Multiples } from '../../../../../../combat/utils/roundTo5Multiples';
+import { floorTo5Multiple } from '@utils/rounding';
 import { calculateInnateMagic } from './calculations/calculateInnateMagic';
 
 /**
@@ -10,13 +10,13 @@ export const mutateMysticData = data => {
   const { mystic } = data;
 
   mystic.act.main.final.value = Math.max(
-    mystic.act.main.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
+    mystic.act.main.base.value + Math.min(0, -floorTo5Multiple(-allActionsPenalty / 2)),
     0
   );
   if (mystic.act.via.length !== 0) {
     for (const actVia of mystic.act.via) {
       actVia.system.final.value = Math.max(
-        actVia.system.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
+        actVia.system.base.value + Math.min(0, -floorTo5Multiple(-allActionsPenalty / 2)),
         0
       );
     }
@@ -40,20 +40,17 @@ export const mutateMysticData = data => {
     0
   );
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.offensive.base.value +
-    allActionsPenalty,
+    mystic.magicProjection.imbalance.offensive.base.value + allActionsPenalty,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.defensive.base.value +
-    allActionsPenalty,
+    mystic.magicProjection.imbalance.defensive.base.value + allActionsPenalty,
     0
   );
 
   const dailyZeon = mystic.spellMaintenances.reduce(
-    (acc, currentValue) =>
-      acc + currentValue.system.cost.value,
+    (acc, currentValue) => acc + currentValue.system.cost.value,
     0
   );
   mystic.zeonRegeneration.final.value = Math.max(

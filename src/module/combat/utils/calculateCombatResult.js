@@ -2,10 +2,11 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { canCounterAttack } from './canCounterAttack';
 import { calculateCounterAttackBonus } from './calculateCounterAttackBonus';
 import { calculateDamage } from './calculateDamage';
-import { roundTo5Multiples } from './roundTo5Multiples';
+import { floorTo5Multiple } from '@utils/rounding';
 
+// TODO: Relplace this with the new implementation in CombatResultsCalculator, and remove this
+// and required files
 /**
- *
  * @param {number} attack
  * @param {number} defense
  * @param {number} at
@@ -36,6 +37,6 @@ export const calculateCombatResult = (
 
   return {
     canCounterAttack: false,
-    damage: needToRound ? roundTo5Multiples(result) : result
+    damage: needToRound ? floorTo5Multiple(result) : result
   };
 };

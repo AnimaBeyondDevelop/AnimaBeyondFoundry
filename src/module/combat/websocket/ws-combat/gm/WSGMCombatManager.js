@@ -8,7 +8,7 @@ import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
 import { getTargetToken } from '../util/getTargetToken';
 import { assertCurrentScene } from '../util/assertCurrentScene';
 import { ABFSettingsKeys } from '../../../../../utils/registerSettings';
-import ResultsDialog from '@module/combat/ResultsDialog.svelte';
+import { ResultsDialog } from '@module/combat/results';
 import { SvelteApplication } from '@svelte/SvelteApplication.svelte';
 import { Attack, AttackDialog } from '@module/combat/attack';
 import { Defense, DefenseDialog } from '@module/combat/defense';

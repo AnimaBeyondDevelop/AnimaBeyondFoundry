@@ -13,6 +13,7 @@
 <style lang="scss">
   @use 'card';
   .card-input {
+    width: auto;
     width: strech;
   }
 </style>
