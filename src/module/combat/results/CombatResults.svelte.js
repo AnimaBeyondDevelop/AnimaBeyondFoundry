@@ -10,7 +10,7 @@ export class CombatResults extends CombatResultsCalculator {
    * @param {import('../defense').Defense} defense
    */
   constructor(attack, defense) {
-    super(attack.ability, attack.damage, defense.ability, defense.at);
+    super(attack, defense);
 
     this.attack = attack;
     this.defense = defense;

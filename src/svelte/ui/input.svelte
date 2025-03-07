@@ -5,7 +5,7 @@
 
   /** @type {Props&import('svelte/elements').HTMLInputAttributes} */
   let { value = $bindable(0), class: cssClass, ...rest } = $props();
-  let size = $derived(`${value}`.length);
+  let size = $derived(Math.max(`${value}`.length, 1));
 </script>
 
 <input class="card-input {cssClass}" bind:value {size} {...rest} />

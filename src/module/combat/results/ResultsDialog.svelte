@@ -7,7 +7,7 @@
   import AbilityModifierRow from '@svelte/ui/abilityModifierRow.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import { Attack } from '../attack';
-  import { Defense } from '../defense';
+  import { Defense, PhysicDefense } from '../defense';
   import Input from '@svelte/ui/input.svelte';
   import { CombatResults } from './CombatResults.svelte';
 
@@ -49,10 +49,14 @@
     <img src={images[0]} alt={actor.name} />
   {/await}
   {#if dataObject.rolled}
+    {@const abilityName =
+      dataObject instanceof PhysicDefense
+        ? dataObject.physicDefenseType
+        : dataObject.type + '.title'}
     <div class="row">
       <InputLabel
         icon={dataObject.type === 'physic' ? actionType : dataObject.type}
-        label={i18n.localize(`macros.combat.dialog.gm.ability.${dataObject.type}.title`)}
+        label={i18n.localize(`macros.combat.dialog.gm.ability.${abilityName}.title`)}
         useIcon
       >
         <ModifiedAbilityInput bind:ability={dataObject.ability} />
@@ -95,7 +99,7 @@
       </InputLabel>
     </div>
     <div class="total">
-      <Input type="text" value={dataObject.total} disabled />
+      <Input type="text" value={dataObject.finalAbility} disabled />
     </div>
   {:else}
     Loading...
@@ -120,7 +124,10 @@
   </Card>
 
   <div class="modifiers">
-    <ContractibleCard title="Modificadores" bind:titleHeight>
+    <ContractibleCard
+      title={i18n.localize('macros.combat.dialog.gm.modifiers.title')}
+      bind:titleHeight
+    >
       {#snippet body()}
         <div class="modifiers-container">
           <AbilityModifierRow ability={attack.ability} />
@@ -133,7 +140,7 @@
   <Card
     slantedCorners="1 1 1 1"
     sidebarRight
-    header="Resultado"
+    header={i18n.localize('macros.combat.dialog.gm.results.title')}
     --height="fit-content"
     class="result-card"
   >
@@ -149,6 +156,7 @@
             <InputLabel
               icon="attack"
               label={i18n.localize('macros.combat.dialog.difference.title')}
+              showTitle="top"
               useIcon
             >
               <Input value={combatResults.totalDifference} disabled />
@@ -157,9 +165,10 @@
             <InputLabel
               icon="critic/{attack.critic}"
               label={i18n.localize('macros.combat.dialog.damage.title')}
+              showTitle="top"
               useIcon
             >
-              <Input value={combatResults.totalDifference} disabled />
+              <Input value={combatResults.damage} disabled />
             </InputLabel>
           </div>
         {:else}
@@ -167,6 +176,7 @@
             <InputLabel
               icon="defense"
               label={i18n.localize('macros.combat.dialog.difference.title')}
+              showTitle="top"
               useIcon
             >
               <Input value={-combatResults.totalDifference} disabled />
@@ -176,6 +186,7 @@
               <InputLabel
                 icon="attack-bonus"
                 label={i18n.localize('macros.combat.dialog.counterAttackBonus.title')}
+                showTitle="top"
                 useIcon
               >
                 <Input value={combatResults.counterAttackBonus} disabled />
@@ -251,9 +262,7 @@
         .card-body {
           display: flex;
           height: calc(100% - card.$title-height + card.$border-size);
-          min-width: 0;
           & > div {
-            min-width: 40%;
             position: relative;
             background-color: card.$background-color;
             display: flex;
@@ -262,6 +271,7 @@
             text-align: center;
             flex-direction: column;
             place-items: center;
+            min-width: 0;
 
             h4 {
               margin: 0;
