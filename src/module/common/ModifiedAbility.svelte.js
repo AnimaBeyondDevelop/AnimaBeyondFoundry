@@ -90,12 +90,7 @@ export class ModifiedAbility {
     }
 
     let mod = {
-      value:
-        typeof value === 'boolean'
-          ? Number(value)
-          : typeof value === 'number'
-          ? value
-          : 0,
+      value,
       active,
       /** @type {number} */
       get modifier() {
