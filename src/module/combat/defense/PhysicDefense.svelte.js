@@ -146,9 +146,9 @@ export class PhysicDefense extends Defense {
     return {
       ...super.modifiers,
       partialBlindness: {
-        value: 0,
+        value: 1,
         spec: v => v * (this.physicDefenseType === 'dodge' ? -15 : -30),
-        active: true
+        active: false
       },
       fatigue: { value: 0, spec: 15, active: true },
       blockProjectile: {

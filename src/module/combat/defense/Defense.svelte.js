@@ -32,8 +32,8 @@ export class Defense {
   /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
     return {
-      blindness: { value: 0, spec: -80, active: true },
-      partialBlindness: { value: 0, spec: -30, active: true }
+      blindness: { value: 1, spec: -80, active: false },
+      partialBlindness: { value: 1, spec: -30, active: false }
     };
   }
 
@@ -53,7 +53,7 @@ export class Defense {
     this.#attack = attack;
 
     this.ability.registerModTable(this.modifiers);
-    this.ability.modifiers.blindness.value = this.#attack.visible
+    this.ability.modifiers.blindness.active = this.#attack.visible
       ? false
       : (this.#attack.type === 'mystic' && !this.defenderPerceiveMystic) ||
         (this.#attack.type === 'psychic' && !this.defenderPerceivePsychic);

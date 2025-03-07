@@ -24,21 +24,21 @@ export class PhysicAttack extends Attack {
    */
   #modifiers = {
     fatigue: { value: 0, spec: 15, active: true },
-    highGround: { value: 0, spec: 20, active: true },
+    highGround: { value: 1, spec: 20, active: false },
     secondaryCritic: {
       value: () => (this.critic === this.weapon.system.critic.secondary.value ? 1 : 0),
       spec: -10,
       active: true
     },
     poorVisibility: {
-      value: 0,
-      spec: v => (this.isRanged && !this.meleeCombat ? -20 * v : 0),
-      active: true
+      value: () => (this.isRanged && !this.meleeCombat ? 1 : 0),
+      spec: -20,
+      active: false
     },
     targetInCover: {
-      value: 0,
-      spec: v => (this.isRanged && !this.meleeCombat ? -40 * v : 0),
-      active: true
+      value: () => (this.isRanged && !this.meleeCombat ? 1 : 0),
+      spec: -40,
+      active: false
     },
     pointBlank: {
       value: () => (this.isRanged && this.meleeCombat ? 1 : 0),

@@ -10,10 +10,9 @@ import { Logger } from '@utils/log';
  *
  * @typedef ModifierSpec A full spec for initialising a modifier.
  *
- * @property {number | (() => number) | boolean } [value] Initial value for the modifier.
+ * @property {number | (() => number)} [value] Initial value for the modifier.
  * It can be a (modifiable) number or a function returning the value for the modifier.
  * When a function is provided, `value` is readonly.
- * When a boolean is provided its gets converter to a number 0 | 1.
  *
  * Defaults to 0.
  *
@@ -90,14 +89,14 @@ export class ModifiedAbility {
     }
 
     let mod = {
-      value: Number(value),
+      value: typeof value === 'number' ? value : 0,
       active,
       /** @type {number} */
       get modifier() {
         if (typeof spec === 'number') {
-          return Number(this.value) * spec;
+          return this.value * spec;
         }
-        return spec(Number(this.value));
+        return spec(this.value);
       }
     };
     if (typeof value === 'function') {
