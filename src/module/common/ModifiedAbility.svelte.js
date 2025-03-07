@@ -90,14 +90,14 @@ export class ModifiedAbility {
     }
 
     let mod = {
-      value,
+      value: Number(value),
       active,
       /** @type {number} */
       get modifier() {
         if (typeof spec === 'number') {
-          return this.value * spec;
+          return Number(this.value) * spec;
         }
-        return spec(this.value);
+        return spec(Number(this.value));
       }
     };
     if (typeof value === 'function') {
