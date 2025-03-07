@@ -90,9 +90,8 @@ export class PhysicDefense extends Defense {
   }
   get againstProjectile() {
     return (
-      this.attack instanceof PhysicAttack &&
-      this.attack.isRanged &&
-      this.attack.isProjectile
+      !(this.attack instanceof PhysicAttack) ||
+      (this.attack.isRanged && this.attack.isProjectile)
     );
   }
   get againstThrown() {
