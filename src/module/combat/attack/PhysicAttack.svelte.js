@@ -32,13 +32,13 @@ export class PhysicAttack extends Attack {
     },
     poorVisibility: {
       value: 0,
-      spec: -20,
-      active: () => this.isRanged && !this.meleeCombat
+      spec: v => (this.isRanged && !this.meleeCombat ? -20 * v : 0),
+      active: true
     },
     targetInCover: {
       value: 0,
-      spec: -40,
-      active: () => this.isRanged && !this.meleeCombat
+      spec: v => (this.isRanged && !this.meleeCombat ? -40 * v : 0),
+      active: true
     },
     pointBlank: {
       value: () => (this.isRanged && this.meleeCombat ? 1 : 0),
