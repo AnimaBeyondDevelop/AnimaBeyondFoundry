@@ -48,7 +48,7 @@ export class ModifiedAbility {
   get totalModifier() {
     let total = 0;
     for (const mod of Object.values(this.modifiers)) {
-      total += mod.modifier;
+      total += mod.active ? mod.modifier : 0;
     }
     return total;
   }
@@ -89,14 +89,6 @@ export class ModifiedAbility {
       return;
     }
 
-    /** @param {number} val */
-    const calculateMod = val => {
-      if (typeof spec === 'number') {
-        return val * spec;
-      }
-      return spec(val);
-    };
-
     let mod = {
       value:
         typeof value === 'boolean'
@@ -107,7 +99,10 @@ export class ModifiedAbility {
       active,
       /** @type {number} */
       get modifier() {
-        return this.active ? calculateMod(this.value) : 0;
+        if (typeof spec === 'number') {
+          return this.value * spec;
+        }
+        return spec(this.value);
       }
     };
     if (typeof value === 'function') {
