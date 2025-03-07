@@ -32,7 +32,7 @@ export class Attack {
    * @type {boolean} Whether the combat is melee or not, used when combat distance is not automated.
    * Defaults to `false`.
    */
-  #meleeCombat = $state(false);
+  #meleeCombat = $state(true);
   /** @type {ABFFoundryRoll} */
   #roll;
   /** @type {boolean} Wether to roll a die for combat or not. Defaults to `true`. */
