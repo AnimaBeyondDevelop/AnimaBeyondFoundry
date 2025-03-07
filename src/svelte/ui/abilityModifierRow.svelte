@@ -15,7 +15,7 @@
 </script>
 
 <div>
-  {#each Object.entries(ability.modifiers).filter(([_, modifier]) => Number(modifier.value) !== 0) as [key, modifier]}
+  {#each Object.entries(ability.modifiers).filter(([_, modifier]) => modifier.modifier !== 0) as [key, modifier]}
     <div class={['modifier-row', cssClass].join(' ')}>
       <IconCheckBox
         icon={modifier.active ? 'checkbox_active' : 'checkbox_inactive'}
