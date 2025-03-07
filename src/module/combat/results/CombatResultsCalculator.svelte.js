@@ -2,21 +2,27 @@ import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import { ceilToMultiple, floorTo5Multiple, floorToMultiple } from '@utils/rounding';
 import { calculateDamage } from '../utils/calculateDamage';
 import { ABFSettingsKeys } from '@utils/registerSettings';
+/**
+ * @typedef {Object} Attack Object wrapping the attack-related properties.
+ * @property {number} finalAbility Total attack ability.
+ * @property {number} finalDamage The base damage of the attack.
+ * @property {boolean} [halvedAbsorption] Whether the defender's absorption should be halved or not.
+ *
+ * @typedef {Object} Defense Object wrapping the defense-related properties.
+ * @property {number} finalAbility Total attack ability.
+ * @property {number} finalAt The AT of the defense.
+ * @property {boolean} [halvedAbsorption] Whether the defender's absorption should be halved or not.
+ */
 
 /**
  * Class to calculate the results of a combat.
  * @class
  */
 export class CombatResultsCalculator {
-  /** @type {number | ModifiedAbility} */
-  #attackAbility;
-  /** @type {number | ModifiedAbility} */
-  #defenseAbility;
-  /** @type {number | ModifiedAbility} */
-  #at;
-  /** @type {number | ModifiedAbility} */
-  #baseDamage;
-  halvedAbsorption = false;
+  /** @type {Attack} */
+  #attack;
+  /** @type {Defense} */
+  #defense;
 
   needToRoundDamage = game.settings.get(
     'animabf',
@@ -25,39 +31,32 @@ export class CombatResultsCalculator {
   useCombatTable = game.settings.get('animabf', ABFSettingsKeys.USE_DAMAGE_TABLE);
 
   /**
-   * @param {number | ModifiedAbility} attackAbility
-   * @param {number | ModifiedAbility} defenseAbility
-   * @param {number | ModifiedAbility} at
-   * @param {number | ModifiedAbility} baseDamage
-   * @param {boolean} [halvedAbsorption=false]
+   * @param {Attack} attack
+   * @param {Defense} defense
    */
-  constructor(attackAbility, baseDamage, defenseAbility, at, halvedAbsorption) {
-    this.#attackAbility = attackAbility;
-    this.#baseDamage = baseDamage;
-    this.#defenseAbility = defenseAbility;
-    this.#at = at;
-    if (halvedAbsorption !== undefined) this.halvedAbsorption = halvedAbsorption;
+  constructor(attack, defense) {
+    this.#attack = attack;
+    this.#defense = defense;
   }
 
   get attackAbility() {
-    if (this.#attackAbility instanceof ModifiedAbility) return this.#attackAbility.final;
-    return this.#attackAbility;
+    return this.#attack.finalAbility;
   }
 
   get defenseAbility() {
-    if (this.#defenseAbility instanceof ModifiedAbility)
-      return this.#defenseAbility.final;
-    return this.#defenseAbility;
+    return this.#defense.finalAbility;
   }
 
   get at() {
-    if (this.#at instanceof ModifiedAbility) return this.#at.final;
-    return this.#at;
+    return this.#defense.finalAt;
   }
 
   get baseDamage() {
-    if (this.#baseDamage instanceof ModifiedAbility) return this.#baseDamage.final;
-    return this.#baseDamage;
+    return this.#attack.finalDamage;
+  }
+
+  get halvedAbsorption() {
+    return this.#attack.halvedAbsorption || this.#defense.halvedAbsorption;
   }
 
   /** @type {number} */
@@ -88,10 +87,10 @@ export class CombatResultsCalculator {
     } else {
       let absorption = this.at * 10 + 20;
       if (this.halvedAbsorption) absorption = absorption / 2;
-      percent = floorToMultiple(this.totalDifference - absorption, 10) * 10;
+      percent = floorToMultiple(this.totalDifference - absorption, 10);
     }
 
-    if (percent < 0) throw new Error('Negative damage percentage');
+    if (percent < 0) return 0;
 
     return percent;
   }
@@ -103,7 +102,7 @@ export class CombatResultsCalculator {
     // TODO: remove checking when sure it works
     const result = this.needToRoundDamage ? floorTo5Multiple(dealtDamage) : dealtDamage;
     if (
-      result !==
+      dealtDamage !==
       calculateDamage(
         this.attackAbility,
         this.defenseAbility,

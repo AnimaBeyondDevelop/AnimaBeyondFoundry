@@ -123,13 +123,19 @@ export class Defense {
   }
 
   /**
-   * @type {number|undefined} Value of the total attack ability.
-   * When not rolled, this is undefined; otherwise is the ability.final plus roll.
+   * @type {number} Value of the final defense ability.
+   * When not rolled, this is this.ability.final; otherwise it adds the roll.
    */
-  get total() {
-    if (!this.rolled) return undefined;
-    return this.ability.final + this.rolled;
+  get finalAbility() {
+    return Math.max(this.ability.final + (this.rolled ?? 0), 0);
   }
+  /**
+   * @type {number} Value of the final AT for the defense.
+   */
+  get finalAt() {
+    return this.at.final;
+  }
+
   get showRoll() {
     return !game.user?.isGM || this.showRollDefault;
   }

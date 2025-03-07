@@ -125,12 +125,17 @@ export class Attack {
   }
 
   /**
-   * @type {number|undefined} Value of the total attack ability.
-   * When not rolled, this is undefined; otherwise is the ability.final plus roll.
+   * @type {number} Value of the final attack ability.
+   * When not rolled, this is ability.final; otherwise adds the roll.
    */
-  get total() {
-    if (!this.rolled) return undefined;
-    return this.ability.final + this.rolled;
+  get finalAbility() {
+    return Math.max(this.ability.final + (this.rolled ?? 0), 0);
+  }
+  /**
+   * @type {number} Value of the final attack (base) damage.
+   */
+  get finalDamage() {
+    return this.damage.final;
   }
 
   /** Function calculating the distance for the attack.
