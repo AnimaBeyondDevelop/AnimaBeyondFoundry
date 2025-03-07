@@ -134,8 +134,9 @@ to this component:
       }
 
       .card-body {
-        width: 100%;
         background: card.$background-color;
+        flex: 1;
+        min-width: 0;
       }
     }
 
