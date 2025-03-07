@@ -134,18 +134,18 @@
       <div class="right-icons">
         <IconCheckBox
           icon="high-ground"
-          bind:value={attack.ability.modifiers.highGround.active}
+          bind:value={attack.ability.modifiers.highGround.value}
           title={i18n.localize('macros.combat.dialog.highGround.title')}
         />
         {#if !attack.meleeCombat && attack.isRanged}
           <IconCheckBox
             icon="target-in-cover"
-            bind:value={attack.ability.modifiers.targetInCover.active}
+            bind:value={attack.ability.modifiers.targetInCover.value}
             title={i18n.localize('macros.combat.dialog.targetInCover.title')}
           />
           <IconCheckBox
             icon="poor-visibility"
-            bind:value={attack.ability.modifiers.poorVisibility.active}
+            bind:value={attack.ability.modifiers.poorVisibility.value}
             title={i18n.localize('macros.combat.dialog.poorVisibility.title')}
           />
         {/if}
