@@ -248,7 +248,7 @@ export class WSGMCombatManager extends WSCombatManager {
       },
       { frameless: true }
     );
-    resultsApp.render(true);
+    resultsApp.render(true).then(app => (app.element.style.top = '20vh'));
     return resultsApp;
   }
 
