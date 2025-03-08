@@ -11,11 +11,14 @@
 
   /** @type {props} */
   let { ability = $bindable(), disabled = false, class: cssClass = '' } = $props();
+  const modifiers = Object.entries(ability.modifiers).filter(
+    ([_, modifier]) => modifier.modifier !== 0 && modifier.active
+  );
   const i18n = game.i18n;
 </script>
 
 <div>
-  {#each Object.entries(ability.modifiers).filter(([_, modifier]) => modifier.modifier !== 0) as [key, modifier]}
+  {#each modifiers as [key, modifier]}
     <div class={['modifier-row', cssClass].join(' ')}>
       <IconCheckBox
         icon={modifier.active ? 'checkbox_active' : 'checkbox_inactive'}
