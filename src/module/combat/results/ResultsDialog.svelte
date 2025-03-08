@@ -91,9 +91,9 @@
         <Input
           value={dataObject.rolled}
           class={[
-            dataObject.fumbled ? 'fumbled' : '',
+            dataObject.fumbled ? 'fumbled ' : '',
             dataObject.openRoll ? 'open-roll' : ''
-          ].join(' ')}
+          ].join('')}
           disabled
         />
       </InputLabel>
@@ -220,17 +220,6 @@
   $main-sidebar-size: calc($main-width / 12);
   $main-edge-size: 35px;
 
-  .placeholder {
-    height: 150px;
-  }
-
-  .fumbled {
-    color: #f38ba8;
-  }
-  .open-roll {
-    color: #a6e3a1;
-  }
-
   .results {
     display: flex;
     flex-direction: column;
@@ -258,6 +247,13 @@
       display: flex;
     }
     :global {
+      .fumbled {
+        color: #f38ba8;
+      }
+      .open-roll {
+        color: #a6e3a1;
+      }
+
       .main-card {
         .card-body {
           display: flex;
