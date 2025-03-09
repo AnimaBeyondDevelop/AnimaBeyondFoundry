@@ -19,7 +19,7 @@
 
   /** @type {props} */
   let { attack, onAttack } = $props();
-  const i18n = game.i18n;
+  const i18n = /** @type {ReadyGame} */ (game).i18n;
 
   let fatigueAvailable = attack.attacker.system.characteristics.secondaries.fatigue.value;
   let togglePanel = $state(false);
