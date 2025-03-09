@@ -10,7 +10,9 @@
    * @property {import('svelte/elements').MouseEventHandler<HTMLButtonElement>} [oniconClick]
    * @property {"top"|"left"} [showTitle] Whether to show the label a tooltip on the top or left.
    * If undefined, no title will be showed.
-   * @property {import('svelte').Snippet} [children]
+   * @property {import('svelte').Snippet} [children] Input snippet to wrap.
+   * @property {import('svelte').Snippet} [iconSnippet] Snippet defining an alternative icon to override
+   * the default icon implementation.
    * @property {boolean} [useIcon] If set, forces the label to be an icon (when `true`) or a text
    * label (when `false`). When unset, it reads the value set in system settings.
    * @property {boolean} [dimOnDisabled] Wether to dim the label when input is disabled.
@@ -25,6 +27,7 @@
     oniconClick,
     showTitle,
     children,
+    iconSnippet,
     useIcon,
     dimOnDisabled,
     class: cssClass
@@ -56,18 +59,22 @@ Allows onclick bindings for the icon with the `onIconClick` prop.
     </span>
   {/if}
   <div class="label-container">
-    <button
-      class="label"
-      onclick={oniconClick}
-      class:noninteractive={!oniconClick}
-      title={iconLabel}
-    >
-      {#if useIcon && icon}
-        <Icon name={icon} class="icon" />
-      {:else}
-        {iconLabel}
-      {/if}
-    </button>
+    {#if iconSnippet}
+      {@render iconSnippet()}
+    {:else}
+      <button
+        class="label"
+        onclick={oniconClick}
+        class:noninteractive={!oniconClick}
+        title={iconLabel}
+      >
+        {#if useIcon && icon}
+          <Icon name={icon} class="icon" />
+        {:else}
+          {iconLabel}
+        {/if}
+      </button>
+    {/if}
     {@render children?.()}
   </div>
 </div>
