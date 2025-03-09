@@ -4,7 +4,7 @@
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import ContractibleCard from '@svelte/ui/card/contractibleCard.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
-  import ModifiedAbilityModifiers from '@svelte/ui/modifiedAbilityModifiers.svelte';
+  import ModifiersList from '@svelte/ui/modifiersList.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import { Attack } from '../attack';
   import { Defense, PhysicDefense } from '../defense';
@@ -130,8 +130,8 @@
     >
       {#snippet body()}
         <div class="modifiers-container">
-          <ModifiedAbilityModifiers ability={attack.ability} />
-          <ModifiedAbilityModifiers ability={defense.ability} />
+          <ModifiersList ability={attack.ability} />
+          <ModifiersList ability={defense.ability} />
         </div>
       {/snippet}
     </ContractibleCard>
