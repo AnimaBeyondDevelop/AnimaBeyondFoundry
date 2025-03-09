@@ -7,9 +7,10 @@
   import ModifiersList from '@svelte/ui/modifiersList.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
   import { Attack } from '../attack';
-  import { Defense, PhysicDefense } from '../defense';
+  import { Defense, MysticDefense, PhysicDefense, PsychicDefense } from '../defense';
   import Input from '@svelte/ui/input.svelte';
   import { CombatResults } from './CombatResults.svelte';
+  import IconSwitch from '@svelte/ui/iconSwitch.svelte';
 
   /**
    * @typedef {Object} Props
@@ -152,6 +153,7 @@
             i18n.localize('macros.combat.dialog.winner.title')}
         </h4>
         {#if combatResults.totalDifference > 0}
+          <!-- Results: attacker wins -->
           <div class="row">
             <InputLabel
               icon="attack"
@@ -172,6 +174,7 @@
             </InputLabel>
           </div>
         {:else}
+          <!-- Results: defender wins -->
           <div class="row">
             <InputLabel
               icon="defense"
@@ -182,6 +185,7 @@
               <Input value={-combatResults.totalDifference} disabled />
             </InputLabel>
 
+            <!-- Results: counterattack -->
             {#if combatResults.canCounterAttack}
               <InputLabel
                 icon="attack-bonus"
@@ -190,6 +194,39 @@
                 useIcon
               >
                 <Input value={combatResults.counterAttackBonus} disabled />
+              </InputLabel>
+            {/if}
+
+            <!-- Results: supernatural shields -->
+            {#if defense instanceof MysticDefense || defense instanceof PsychicDefense}
+              <InputLabel
+                label={i18n.localize(
+                  'macros.combat.dialog.supernaturalShield.damage.title'
+                )}
+                showTitle="top"
+              >
+                {#snippet iconSnippet()}
+                  <IconSwitch
+                    bind:value={combatResults.supernaturalShieldDamageMultiplier}
+                    options={['immune', 'normal', 'double'].map((name, value) => ({
+                      value,
+                      icon:
+                        name === 'immune'
+                          ? 'supernatural-shield'
+                          : `supernatural-shield-${name}-damage`,
+                      title: i18n.localize(
+                        `macros.combat.dialog.supernaturalShield.${name}Damage.title`
+                      )
+                    }))}
+                  />
+                {/snippet}
+                <Input
+                  class={defense.shieldPoints <= combatResults.supernaturalShieldDamage
+                    ? 'card-danger'
+                    : ''}
+                  value={combatResults.supernaturalShieldDamage}
+                  disabled
+                />
               </InputLabel>
             {/if}
           </div>

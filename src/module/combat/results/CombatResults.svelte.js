@@ -1,3 +1,4 @@
+import { PhysicDefense } from '../defense';
 import { CombatResultsCalculator } from './CombatResultsCalculator.svelte';
 
 /**
@@ -5,6 +6,8 @@ import { CombatResultsCalculator } from './CombatResultsCalculator.svelte';
  * @extends CombatResultsCalculator
  */
 export class CombatResults extends CombatResultsCalculator {
+  supernaturalShieldDamageMultiplier = $state(1);
+
   /**
    * @param {import('../attack').Attack} attack
    * @param {import('../defense').Defense} defense
@@ -24,5 +27,10 @@ export class CombatResults extends CombatResultsCalculator {
     return this.totalDifference > 0
       ? this.attack.attackerToken.name
       : this.defense.defenderToken.name;
+  }
+
+  get supernaturalShieldDamage() {
+    if (this.defense instanceof PhysicDefense) return;
+    return this.baseDamage * this.supernaturalShieldDamageMultiplier;
   }
 }

@@ -51,6 +51,7 @@ export class CombatResultsCalculator {
     return this.#defense.finalAt;
   }
 
+  /** Base damage of the attack */
   get baseDamage() {
     return this.#attack.finalDamage;
   }
@@ -95,6 +96,7 @@ export class CombatResultsCalculator {
     return percent;
   }
 
+  /** Final damage dealt by the attacker to the defender. */
   get damage() {
     const dealtDamage =
       (ceilToMultiple(this.baseDamage, 10) * this.damagePercentage) / 100;
