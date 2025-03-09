@@ -91,8 +91,8 @@
         <Input
           value={dataObject.rolled}
           class={[
-            dataObject.fumbled ? 'fumbled ' : '',
-            dataObject.openRoll ? 'open-roll' : ''
+            dataObject.fumbled ? 'card-danger ' : '',
+            dataObject.openRoll ? 'card-success' : ''
           ].join('')}
           disabled
         />
@@ -247,13 +247,6 @@
       display: flex;
     }
     :global {
-      .fumbled {
-        color: #f38ba8;
-      }
-      .open-roll {
-        color: #a6e3a1;
-      }
-
       .main-card {
         .card-body {
           display: flex;

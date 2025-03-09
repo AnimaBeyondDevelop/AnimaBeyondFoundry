@@ -76,3 +76,10 @@ button {
     @extend .card-input;
   }
 }
+
+.card-danger {
+  color: #f38ba8;
+}
+.card-success {
+  color: #a6e3a1;
+}
