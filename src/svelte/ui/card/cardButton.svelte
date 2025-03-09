@@ -29,7 +29,10 @@
     ...rest
   } = $props();
 
-  let cssCustomProps = parseCssCustomProperties({ height, width });
+  let cssCustomProps = parseCssCustomProperties({
+    'cardbutton-height': height,
+    'cardbutton-width': width
+  });
 </script>
 
 <!--
@@ -49,7 +52,7 @@ to this component:
 -->
 <button
   class={[cssClass, shape, style].join(' ')}
-  class:noninteractive={rest.disabled}
+  class:noninteractive={rest.disabled || !onclick}
   style={cssCustomProps}
   {onclick}
   {...rest}
@@ -65,8 +68,8 @@ to this component:
   @use 'borders';
   @use 'card';
 
-  $height: var(--height, 100%);
-  $width: var(--width, fit-content);
+  $height: var(--cardbutton-height, 100%);
+  $width: var(--cardbutton-width, fit-content);
 
   button {
     height: $height;

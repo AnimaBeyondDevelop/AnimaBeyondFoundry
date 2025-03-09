@@ -368,7 +368,7 @@
       }
 
       .close-button {
-        $height: var(--height, 50px);
+        $height: var(--cardbutton-height, 50px);
         position: absolute;
         right: calc(-1 * $height/2);
         top: calc(-1 * $height/2);

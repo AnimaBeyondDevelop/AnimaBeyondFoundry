@@ -78,7 +78,7 @@ to this component:
 
         li {
           padding: 0;
-          --height: #{card.$navbutton-size};
+          --cardbutton-height: #{card.$navbutton-size};
         }
         li.active {
           --background-color: #{card.$background-active};

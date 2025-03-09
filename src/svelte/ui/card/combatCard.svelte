@@ -98,14 +98,9 @@ to this component:
     justify-self: end;
     align-self: center;
 
-    --height: #{$height};
+    --cardbutton-height: #{$height};
     height: $height;
     width: fit-content;
-  }
-
-  .prueba {
-    position: absolute;
-    right: 0;
   }
 
   .card-container :global {
@@ -186,7 +181,7 @@ to this component:
     }
 
     .buttons :global {
-      $height: var(--height);
+      $height: var(--cardbutton-height);
 
       #sidebar-button {
         @include button-container(38px);
@@ -215,8 +210,8 @@ to this component:
         }
         .secondary {
           position: absolute;
-          --height: 48px;
-          left: calc(-0.2 * var(--height));
+          --cardbutton-height: 48px;
+          left: calc(-0.2 * var(--cardbutton-height));
         }
       }
     }
