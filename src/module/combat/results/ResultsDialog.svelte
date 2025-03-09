@@ -37,6 +37,16 @@
   let titleHeight = $state(0);
 
   const i18n = /** @type {ReadyGame} */ (game).i18n;
+
+  function onMainButton() {
+    if (!combatResults) return;
+    if (combatResults.canCounterAttack) {
+      onCounterAttack(combatResults.counterAttackBonus);
+    } else {
+      onApply();
+      onClose();
+    }
+  }
 </script>
 
 {#snippet overview(/** @type {Attack | Defense} */ dataObject)}
@@ -139,7 +149,7 @@
   </div>
 
   <Card
-    slantedCorners="1 1 1 1"
+    slantedCorners="1 1 0 1"
     sidebarRight
     header={i18n.localize('macros.combat.dialog.gm.results.title')}
     --height="fit-content"
@@ -238,12 +248,27 @@
   </Card>
 
   <CardButton
+    class="main-button"
+    shape="angled"
+    height="55px"
+    style="light"
+    title={combatResults?.canCounterAttack
+      ? i18n.localize('macros.combat.dialog.counterAttackButtonTooltip.title')
+      : i18n.localize('macros.combat.dialog.applyAndCloseButtonTooltip.title')}
+    onclick={onMainButton}
+  >
+    {combatResults?.canCounterAttack
+      ? i18n.localize('macros.combat.dialog.counterAttackButton.title')
+      : i18n.localize('macros.combat.dialog.applyAndCloseButton.title')}
+  </CardButton>
+
+  <CardButton
     icon="times"
     shape="circle"
     height="35px"
     class="close-button"
     style="light"
-    onclick={e => onClose(e)}
+    onclick={onClose}
   />
 </div>
 
@@ -374,12 +399,21 @@
         top: calc(-1 * $height/2);
       }
 
+      .main-button {
+        $height: var(--cardbutton-height, 55px);
+        position: absolute;
+        right: calc(-1 * $height/2);
+        bottom: calc(card.$border-size - $height/2);
+        min-width: 250px;
+      }
+
       .result-card {
         .card-body {
-          padding-bottom: 10px;
+          padding-bottom: card.$edge-size;
           display: flex;
           flex-direction: column;
           place-items: center;
+          min-height: 170px;
 
           .row {
             width: 85%;

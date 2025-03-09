@@ -222,28 +222,26 @@ export class WSGMCombatManager extends WSCombatManager {
         onClose: () => {
           this.endCombat();
         },
-        onCounterAttack: counterAttackBonus
-          ? (/** @type {number} */ bonus) => {
-              this.endCombat();
+        onCounterAttack: (/** @type {number} */ bonus) => {
+          this.endCombat();
 
-              this.combat = this.createNewCombat(defender, attacker, bonus);
+          this.combat = this.createNewCombat(defender, attacker, bonus);
 
-              if (canOwnerReceiveMessage(defender.actor)) {
-                const newMsg = {
-                  type: GMMessageTypes.CounterAttack,
-                  payload: {
-                    attackerTokenId: defender.id,
-                    defenderTokenId: attacker.id,
-                    counterAttackBonus: bonus
-                  }
-                };
-
-                this.emit(newMsg);
-              } else {
-                this.manageGMAttack(defender, attacker, bonus);
+          if (canOwnerReceiveMessage(defender.actor)) {
+            const newMsg = {
+              type: GMMessageTypes.CounterAttack,
+              payload: {
+                attackerTokenId: defender.id,
+                defenderTokenId: attacker.id,
+                counterAttackBonus: bonus
               }
-            }
-          : undefined,
+            };
+
+            this.emit(newMsg);
+          } else {
+            this.manageGMAttack(defender, attacker, bonus);
+          }
+        },
         opacity: 1
       },
       { frameless: true }

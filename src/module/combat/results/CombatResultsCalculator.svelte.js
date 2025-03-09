@@ -71,7 +71,7 @@ export class CombatResultsCalculator {
   }
 
   get counterAttackBonus() {
-    if (!this.canCounterAttack) return;
+    if (!this.canCounterAttack) return 0;
     return Math.min(floorTo5Multiple(-this.totalDifference / 2), 150);
   }
 
