@@ -51,7 +51,6 @@ export class PhysicDefense extends Defense {
     return this.#autoAccumulateDefenses;
   }
   set autoAccumulateDefenses(value) {
-    console.log(value);
     this.#autoAccumulateDefenses = value;
     this.defender.autoAccumulateDefenses = value;
 

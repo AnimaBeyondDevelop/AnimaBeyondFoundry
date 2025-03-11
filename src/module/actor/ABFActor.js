@@ -273,7 +273,6 @@ export class ABFActor extends Actor {
             halvedAbsorption: defense.halvedAbsorption
           }
         );
-        console.log(newCombatResult);
         this.applyDamage(newCombatResult.damage);
       }
     }
