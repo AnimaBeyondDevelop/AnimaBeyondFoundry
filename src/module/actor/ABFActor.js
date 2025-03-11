@@ -20,6 +20,7 @@ import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 import { CombatResults } from '../combat/results/CombatResults.svelte.js';
+import { CombatResultsCalculator } from '../combat/results/CombatResultsCalculator.svelte.js';
 import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
@@ -259,10 +260,20 @@ export class ABFActor extends Actor {
       this.deleteSupernaturalShield(supShieldId);
       // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && currentCombatResult) {
-        let newCombatResult = new CombatResults(currentCombatResult.attack, {
-          finalAbility: 0,
-          finalAt: currentCombatResult.defense.finalAt
-        });
+        const { attack, defense } = currentCombatResult;
+        let newCombatResult = new CombatResultsCalculator(
+          {
+            finalAbility: attack.finalAbility,
+            finalDamage: Math.abs(newShieldPoints),
+            halvedAbsorption: attack.halvedAbsorption
+          },
+          {
+            finalAbility: 0,
+            finalAt: defense.finalAt,
+            halvedAbsorption: defense.halvedAbsorption
+          }
+        );
+        console.log(newCombatResult);
         this.applyDamage(newCombatResult.damage);
       }
     }

@@ -53,8 +53,8 @@ export class MysticDefense extends Defense {
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
   async onApply(results) {
-    this.defender.castSpell(this.spell, this.spellGrade, this.castMethod);
     if (this.newShield) {
+      this.defender.castSpell(this.spell, this.spellGrade, this.castMethod);
       this.newShield = false;
       this.#supernaturalShield = await this.defender.newSupernaturalShield(
         'mystic',

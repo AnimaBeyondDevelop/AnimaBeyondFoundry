@@ -53,6 +53,9 @@ export class PsychicDefense extends Defense {
     this.potential.registerModTable(this.potentialModifiers);
 
     this.power = this.defender.getLastPowerUsed('defensive') ?? this.availablePowers[0];
+    if (!this.newShield) {
+      this.supernaturalShield = this.defender.system.combat.supernaturalShields[0];
+    }
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
