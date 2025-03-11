@@ -62,6 +62,13 @@ export class Defense {
       this.defender.system.combat.totalArmor.at[attack.critic]?.value ?? 0
     );
   }
+  /**
+   * @abstract
+   * @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results
+   */
+  onApply(results) {
+    throw new Error(`${this.constructor.name} must implement onApply method.`);
+  }
 
   get attack() {
     return this.#attack;

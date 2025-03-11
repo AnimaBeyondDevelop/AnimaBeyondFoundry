@@ -40,6 +40,11 @@ export class PhysicDefense extends Defense {
     this.#autoAccumulateDefenses = this.defender.autoAccumulateDefenses;
   }
 
+  /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
+  onApply(results) {
+    this.defender.applyFatigue(this.ability.modifiers.fatigue.value);
+  }
+
   get autoAccumulateDefenses() {
     return this.#autoAccumulateDefenses;
   }

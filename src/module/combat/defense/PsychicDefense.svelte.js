@@ -54,6 +54,30 @@ export class PsychicDefense extends Defense {
 
     this.power = this.defender.getLastPowerUsed('defensive') ?? this.availablePowers[0];
   }
+
+  /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
+  async onApply(results) {
+    this.defender.consumePsychicPoints(
+      Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
+    );
+    this.defender.applyPsychicFatigue(this.psychicFatigue);
+    if (this.newShield) {
+      this.newShield = false;
+      this.#supernaturalShield = await this.defender.newSupernaturalShield(
+        'psychic',
+        this.power,
+        this.potential.final
+      );
+    }
+    if (results.supernaturalShieldDamage) {
+      this.defender.applyDamageSupernaturalShield(
+        this.#supernaturalShield,
+        results.supernaturalShieldDamage,
+        results
+      );
+    }
+  }
+
   get displayName() {
     return /** @type {string} */ (this.supernaturalShield.name);
   }
@@ -179,7 +203,8 @@ export class PsychicDefense extends Defense {
       this.power,
       this.potential.final,
       this.preventFatigue,
-      this.showRoll
+      this.showRoll,
+      false
     );
   }
 

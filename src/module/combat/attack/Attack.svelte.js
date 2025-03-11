@@ -55,14 +55,17 @@ export class Attack {
   /**
    * @param {TokenDocument} attacker The attacker token.
    * @param {TokenDocument} defender The defender token.
-   * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
-  constructor(attacker, defender, counterattackBonus) {
+  constructor(attacker, defender) {
     this.#attackerToken = attacker;
     this.#defenderToken = defender;
-    if (counterattackBonus) {
-      this.ability.addModifier('counterattackBonus', { value: counterattackBonus });
-    }
+  }
+  /**
+   * @abstract
+   * @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results
+   */
+  onApply(results) {
+    throw new Error(`${this.constructor.name} must implement onApply method.`);
   }
   /**
    * @type {ABFActor} The attacker actor.

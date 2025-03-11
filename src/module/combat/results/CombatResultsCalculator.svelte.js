@@ -1,4 +1,3 @@
-import { ModifiedAbility } from '@module/common/ModifiedAbility.svelte';
 import { ceilToMultiple, floorTo5Multiple, floorToMultiple } from '@utils/rounding';
 import { calculateDamage } from '../utils/calculateDamage';
 import { ABFSettingsKeys } from '@utils/registerSettings';

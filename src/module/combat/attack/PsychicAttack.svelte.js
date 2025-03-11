@@ -59,10 +59,9 @@ export class PsychicAttack extends Attack {
   /**
    * @param {TokenDocument} attacker The attacker token.
    * @param {TokenDocument} defender The defender token.
-   * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
-  constructor(attacker, defender, counterattackBonus) {
-    super(attacker, defender, counterattackBonus);
+  constructor(attacker, defender) {
+    super(attacker, defender);
 
     this.ability.base =
       this.attacker.system.psychic.psychicProjection.imbalance.offensive.final.value;
@@ -74,6 +73,14 @@ export class PsychicAttack extends Attack {
     this.potential.registerModTable(this.potentialModifiers);
 
     this.power = this.attacker.getLastPowerUsed('offensive') ?? this.availablePowers[0];
+  }
+
+  /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
+  onApply(results) {
+    this.attacker.consumePsychicPoints(
+      Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
+    );
+    this.attacker.applyPsychicFatigue(this.psychicFatigue);
   }
 
   get displayName() {
@@ -164,7 +171,8 @@ export class PsychicAttack extends Attack {
       this.power,
       this.potential.final,
       this.preventFatigue,
-      this.showRoll
+      this.showRoll,
+      false
     );
 
     let powerEffect = this.power?.system.effects[this.potential.final].value;

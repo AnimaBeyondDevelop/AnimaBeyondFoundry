@@ -23,6 +23,7 @@
       <IconCheckBox
         icon={modifier.active ? 'checkbox_active' : 'checkbox_inactive'}
         bind:value={modifier.active}
+        height="15px"
         {disabled}
       />
       <div class="modifier-label">
@@ -36,7 +37,6 @@
 <style lang="scss">
   @use 'card';
   .modifier-row {
-    --height: 15px;
     --font-size: 16px;
     --icon-size: 100%;
     width: 100%;

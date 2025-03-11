@@ -41,17 +41,17 @@
   let tabs = allTabs
     .filter(tab => tab.available)
     .map(({ label, component, Attack }) => {
+      const attack = new Attack(attacker, defender, counterAttackBonus);
       return {
         label,
         component,
         props: {
-          attack: new Attack(attacker, defender),
+          attack,
           onAttack() {
             this.attack.onAttack().then(a => {
               onAttack(a);
             });
-          },
-          counterAttackBonus
+          }
         }
       };
     });

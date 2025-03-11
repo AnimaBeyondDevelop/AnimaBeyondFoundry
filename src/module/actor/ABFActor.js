@@ -19,6 +19,7 @@ import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { CombatResults } from '../combat/results/CombatResults.svelte.js';
 import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
@@ -57,6 +58,7 @@ export class ABFActor extends Actor {
    * @returns {void}
    */
   applyFatigue(fatigueUsed) {
+    if (fatigueUsed === 0) return;
     const newFatigue =
       this.system.characteristics.secondaries.fatigue.value - fatigueUsed;
 
@@ -64,6 +66,31 @@ export class ABFActor extends Actor {
       system: {
         characteristics: {
           secondaries: { fatigue: { value: newFatigue } }
+        }
+      }
+    });
+  }
+
+  applyPsychicFatigue(psychicFatigue) {
+    if (psychicFatigue === 0) return;
+    const cvs = this.system.psychic.psychicPoints.value;
+
+    this.consumePsychicPoints(psychicFatigue);
+    if (cvs < psychicFatigue) {
+      this.applyFatigue(psychicFatigue - cvs);
+    }
+  }
+
+  consumePsychicPoints(psychicPoints) {
+    if (psychicPoints === 0) return;
+    const cvs = this.system.psychic.psychicPoints.value;
+
+    this.update({
+      system: {
+        psychic: {
+          psychicPoints: {
+            value: Math.max(cvs - psychicPoints, 0)
+          }
         }
       }
     });
@@ -216,14 +243,13 @@ export class ABFActor extends Actor {
    * @param {string} supShieldId - The ID of the supernatural shield to apply damage to.
    * @param {number} damage - The amount of damage to apply to the shield.
    * @param {boolean} [dobleDamage] - Whether to apply double damage or not. Default is `false`.
-   * @param {object} [newCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
+   * @param {CombatResults} [currentCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
    *
    * @returns {void}
    */
-  async applyDamageSupernaturalShield(supShieldId, damage, dobleDamage, newCombatResult) {
+  async applyDamageSupernaturalShield(supShieldId, damage, currentCombatResult) {
     const supShield = this.getItem(supShieldId);
-    const shieldValue = supShield?.system.shieldPoints;
-    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
+    const newShieldPoints = supShield?.system.shieldPoints - damage;
     if (newShieldPoints > 0) {
       this.updateItem({
         id: supShieldId,
@@ -232,20 +258,12 @@ export class ABFActor extends Actor {
     } else {
       this.deleteSupernaturalShield(supShieldId);
       // If shield breaks, apply damage to actor
-      if (newShieldPoints < 0 && newCombatResult) {
-        const needToRound = game.settings.get(
-          'animabf',
-          ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
-        );
-        const result = calculateDamage(
-          newCombatResult.attack,
-          0,
-          newCombatResult.at,
-          Math.abs(newShieldPoints),
-          newCombatResult.halvedAbsorption
-        );
-        const breakingDamage = needToRound ? floorTo5Multiple(result) : result;
-        this.applyDamage(breakingDamage);
+      if (newShieldPoints < 0 && currentCombatResult) {
+        let newCombatResult = new CombatResults(currentCombatResult.attack, {
+          finalAbility: 0,
+          finalAt: currentCombatResult.defense.finalAt
+        });
+        this.applyDamage(newCombatResult.damage);
       }
     }
   }
@@ -259,10 +277,17 @@ export class ABFActor extends Actor {
    * @param {number} psychicDifficulty - The difficulty level of the psychic power.
    * @param {boolean} eliminateFatigue - Whether to apply the fatigue value or not to the actor's characteristics.
    * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
+   * @param {boolean} applyPsychicFatigue - Whether to apply the PsychicFatigue or spent psychic Points. Default is `true`.
    *
    * @returns {number} The calculated psychic fatigue value.
    */
-  evaluatePsychicFatigue(power, psychicDifficulty, eliminateFatigue, sendToChat = true) {
+  evaluatePsychicFatigue(
+    power,
+    psychicDifficulty,
+    eliminateFatigue,
+    sendToChat = true,
+    applyPsychicFatigue = true
+  ) {
     const {
       psychic: {
         psychicSettings: { fatigueResistance },
@@ -284,27 +309,12 @@ export class ABFActor extends Actor {
           })
         });
       }
-      if (!psychicFatigue.inmune && !eliminateFatigue) {
-        this.applyFatigue(psychicFatigue.value - psychicPoints.value);
-        this.update({
-          system: {
-            psychic: {
-              psychicPoints: {
-                value: Math.max(psychicPoints.value - psychicFatigue.value, 0)
-              }
-            }
-          }
-        });
+      if (!psychicFatigue.inmune && !eliminateFatigue && applyPsychicFatigue) {
+        this.applyPsychicFatigue(psychicFatigue.value);
       }
     }
-    if (eliminateFatigue) {
-      this.update({
-        system: {
-          psychic: {
-            psychicPoints: { value: psychicPoints.value - 1 }
-          }
-        }
-      });
+    if (eliminateFatigue && applyPsychicFatigue) {
+      this.consumePsychicPoints(1);
     }
 
     return psychicFatigue.value;

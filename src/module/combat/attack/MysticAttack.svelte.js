@@ -32,16 +32,20 @@ export class MysticAttack extends Attack {
   /**
    * @param {TokenDocument} attacker The attacker token.
    * @param {TokenDocument} defender The defender token.
-   * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
-  constructor(attacker, defender, counterattackBonus) {
-    super(attacker, defender, counterattackBonus);
+  constructor(attacker, defender) {
+    super(attacker, defender);
 
     this.spell = this.attacker.getLastSpellUsed('offensive') ?? this.availableSpells[0];
     this.ability.base =
       this.attacker.system.mystic.magicProjection.imbalance.offensive.final.value;
     this.zeonAccumulated = this.attacker.system.mystic.zeon.accumulated;
     this.castMethod = this.attacker.getCastMethodOverride() ? 'override' : 'accumulated';
+  }
+
+  /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
+  onApply(results) {
+    this.attacker.castSpell(this.spell, this.spellGrade, this.castMethod);
   }
 
   get displayName() {

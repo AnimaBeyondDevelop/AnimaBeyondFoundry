@@ -69,12 +69,21 @@ export class PhysicAttack extends Attack {
    * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
   constructor(attacker, defender, counterattackBonus) {
-    super(attacker, defender, counterattackBonus);
+    super(attacker, defender);
+
+    if (counterattackBonus) {
+      this.ability.addModifier('counterattackBonus', { value: counterattackBonus });
+    }
 
     this.weapon =
       this.attacker.getLastWeaponUsed('offensive') ?? this.availableWeapons[0];
 
     this.ability.registerModTable(this.#modifiers);
+  }
+
+  /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
+  onApply(results) {
+    this.attacker.applyFatigue(this.ability.modifiers.fatigue.value);
   }
 
   get displayName() {

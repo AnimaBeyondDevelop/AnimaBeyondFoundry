@@ -16,14 +16,13 @@
    * @typedef {Object} Props
    * @property {() => void} onClose Callback for hitting Close Button
    * @property {(bonus: number) => void} onCounterAttack Callback for hitting Counter Attack Button
-   * @property {() => void} onApply Callback for hitting Apply Button
    * @property {Attack} attack
    * @property {Defense} defense
    * @property {number} [opacity=1]
    */
 
   /** @type {Props} */
-  let { attack, defense, onApply, onCounterAttack, onClose, opacity = 1 } = $props();
+  let { attack, defense, onCounterAttack, onClose, opacity = 1 } = $props();
 
   /** @type {CombatResults|undefined} */
   let combatResults = $state.raw();
@@ -43,7 +42,7 @@
     if (combatResults.canCounterAttack) {
       onCounterAttack(combatResults.counterAttackBonus);
     } else {
-      onApply();
+      combatResults.apply();
       onClose();
     }
   }

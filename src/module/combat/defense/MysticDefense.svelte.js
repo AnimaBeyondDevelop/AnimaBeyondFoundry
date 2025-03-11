@@ -51,6 +51,28 @@ export class MysticDefense extends Defense {
       this.defender.system.mystic.magicProjection.imbalance.defensive.final.value;
   }
 
+  /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
+  async onApply(results) {
+    this.defender.castSpell(this.spell, this.spellGrade, this.castMethod);
+    if (this.newShield) {
+      this.newShield = false;
+      this.#supernaturalShield = await this.defender.newSupernaturalShield(
+        'mystic',
+        undefined,
+        undefined,
+        this.spell,
+        this.spellGrade
+      );
+    }
+    if (results.supernaturalShieldDamage) {
+      this.defender.applyDamageSupernaturalShield(
+        this.#supernaturalShield,
+        results.supernaturalShieldDamage,
+        results
+      );
+    }
+  }
+
   get displayName() {
     return /** @type {string} */ (this.supernaturalShield.name);
   }
