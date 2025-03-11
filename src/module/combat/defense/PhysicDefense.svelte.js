@@ -54,12 +54,10 @@ export class PhysicDefense extends Defense {
     this.#autoAccumulateDefenses = value;
     this.defender.autoAccumulateDefenses = value;
 
-    if (value) {
-      this.ability.modifiers.cumulativeDefenses.value = Math.min(
-        this.defender.accumulatedDefenses,
-        4
-      );
-    }
+    this.ability.modifiers.cumulativeDefenses.value = Math.min(
+      value ? this.defender.accumulatedDefenses : 0,
+      4
+    );
   }
 
   get availableWeapons() {
