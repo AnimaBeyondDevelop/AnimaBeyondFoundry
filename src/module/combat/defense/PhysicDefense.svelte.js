@@ -22,7 +22,7 @@ export class PhysicDefense extends Defense {
     id: 'unarmed',
     name: game.i18n?.localize('macros.combat.dialog.unarmed.title'),
     system: {
-      block: this.attacker.system.combat.block,
+      block: this.defender.system.combat.block,
       isShield: { value: false }
     }
   };
@@ -36,7 +36,7 @@ export class PhysicDefense extends Defense {
     this.physicDefenseType = block.final.value > dodge.final.value ? 'block' : 'dodge';
 
     this.weapon =
-      this.attacker.getLastWeaponUsed('defensive') ?? this.availableWeapons[0];
+      this.defender.getLastWeaponUsed('defensive') ?? this.availableWeapons[0];
 
     this.#autoAccumulateDefenses = this.defender.autoAccumulateDefenses;
   }
@@ -139,7 +139,7 @@ export class PhysicDefense extends Defense {
     const weapon = this.availableWeapons.find(w => w.id === weaponId) ?? this.#unarmed;
     if (!weapon)
       throw new Error(
-        `Weapon ${weaponId} not found in actor's (${this.attacker.id}) available weapons`
+        `Weapon ${weaponId} not found in actor's (${this.defender.id}) available weapons`
       );
     this.weapon = weapon;
     this.autoAccumulateDefenses = autoAccumulateDefenses;
