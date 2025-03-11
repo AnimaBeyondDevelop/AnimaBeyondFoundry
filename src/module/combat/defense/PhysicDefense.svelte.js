@@ -22,7 +22,8 @@ export class PhysicDefense extends Defense {
     id: 'unarmed',
     name: game.i18n?.localize('macros.combat.dialog.unarmed.title'),
     system: {
-      block: this.attacker.system.combat.block
+      block: this.attacker.system.combat.block,
+      isShield: { value: false }
     }
   };
   /** @type {boolean} */
