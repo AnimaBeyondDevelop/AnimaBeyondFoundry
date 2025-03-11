@@ -38,18 +38,20 @@ export class PhysicDefense extends Defense {
     this.weapon =
       this.defender.getLastWeaponUsed('defensive') ?? this.availableWeapons[0];
 
-    this.#autoAccumulateDefenses = this.defender.autoAccumulateDefenses;
+    this.autoAccumulateDefenses = this.defender.autoAccumulateDefenses;
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
   onApply(results) {
     this.defender.applyFatigue(this.ability.modifiers.fatigue.value);
+    this.defender.accumulatedDefenses = this.defender.accumulatedDefenses + 1;
   }
 
   get autoAccumulateDefenses() {
     return this.#autoAccumulateDefenses;
   }
   set autoAccumulateDefenses(value) {
+    console.log(value);
     this.#autoAccumulateDefenses = value;
     this.defender.autoAccumulateDefenses = value;
 
