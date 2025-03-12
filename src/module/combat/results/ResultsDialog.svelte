@@ -213,6 +213,7 @@
                   'macros.combat.dialog.supernaturalShield.damage.title'
                 )}
                 showTitle="top"
+                class="shield-damage"
               >
                 {#snippet iconSnippet()}
                   <IconSwitch
@@ -419,6 +420,11 @@
             display: flex;
             justify-content: space-evenly;
             flex-direction: row;
+
+            .shield-damage > * {
+              min-width: 90px;
+              justify-content: space-between;
+            }
           }
         }
       }
