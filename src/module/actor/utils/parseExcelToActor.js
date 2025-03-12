@@ -1140,6 +1140,9 @@ function separarHabilidadesKi(habilidades) {
   if (indexSellos !== -1) {
     habilidadesSinSellos = habilidades.slice(0, indexSellos).trim();
   }
+  else{
+    habilidadesSinSellos=habilidades;
+  }
 
   const indexNemesis = habilidadesSinSellos.indexOf('Uso del Némesis');
 
