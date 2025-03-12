@@ -107,15 +107,16 @@
   {/snippet}
   {#snippet marker()}
     <CardMarker>
-      <div>
-        <InputLabel
-          icon="supernatural-shield"
-          label={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
-          useIcon
-        >
-          <Input value={defense.shieldPoints || 0} disabled />
-        </InputLabel>
-      </div>
+      <InputLabel
+        icon="supernatural-shield"
+        label={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
+      >
+        <Input
+          value={defense.shieldPoints || 0}
+          disabled
+          title={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
+        />
+      </InputLabel>
     </CardMarker>
   {/snippet}
   {#snippet bottom()}
