@@ -618,6 +618,7 @@ export class ABFActor extends Actor {
    * @param {number} damage - The amount of damage to be subtracted from the `lifePoints` attribute.
    */
   applyDamage(damage) {
+    if (damage === 0) return;
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
 
