@@ -693,7 +693,7 @@
   "macros.combat.dialog.combatMod.secondaryCritic.title": "Usar crítico secundario",
   "macros.combat.dialog.combatMod.cumulativeDefenses.title": "Penalizador por defensa continua",
   "macros.combat.dialog.combatMod.fatigue.title": "Fatiga usada",
-  "macros.combat.dialog.counterAttackBonus.title": "Bono al contraataque",
+  "macros.combat.dialog.combatMod.counterattackBonus.title": "Bono al contraataque",
   "macros.combat.dialog.counterAttackButton.title": "Contraatacar",
   "macros.combat.dialog.rollResistanceButton.title": "Tirada de Resistencia",
   "macros.combat.dialog.counterAttackButtonTooltip.title": "Esta opción permitirá al defensor realizar un contraataque directamente",

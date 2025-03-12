@@ -692,7 +692,7 @@
   "macros.combat.dialog.combatMod.secondaryCritic.title": "Secondary critic used",
   "macros.combat.dialog.combatMod.cumulativeDefenses.title": "Defense penalty",
   "macros.combat.dialog.combatMod.fatigue.title": "Used fatigue",
-  "macros.combat.dialog.counterAttackBonus.title": "Counterattack bonus",
+  "macros.combat.dialog.combatMod.counterattackBonus.title": "Counterattack bonus",
   "macros.combat.dialog.counterAttackButton.title": "Counterattack",
   "macros.combat.dialog.rollResistanceButton.title": "Roll Resistance",
   "macros.combat.dialog.counterAttackButtonTooltip.title": "This option will execute a new attack from the defender",

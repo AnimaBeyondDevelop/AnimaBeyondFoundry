@@ -62,7 +62,7 @@
     {@const abilityName =
       dataObject instanceof PhysicDefense
         ? dataObject.physicDefenseType
-        : dataObject.type + '.title'}
+        : dataObject.type}
     <div class="row">
       <InputLabel
         icon={dataObject.type === 'physic' ? actionType : dataObject.type}
@@ -74,7 +74,7 @@
       {#if dataObject instanceof Attack}
         <InputLabel
           icon="critic/{dataObject.critic}"
-          label={i18n.localize('macros.combat.dialog.damage')}
+          label={i18n.localize('macros.combat.dialog.damage.title')}
           iconLabel={i18n.localize(
             `anima.ui.combat.armors.at.${dataObject.critic}.title`
           )}
