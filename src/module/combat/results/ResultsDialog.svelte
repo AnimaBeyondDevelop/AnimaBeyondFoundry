@@ -39,12 +39,12 @@
 
   function onMainButton() {
     if (!combatResults) return;
-    if (combatResults.canCounterAttack) {
-      onCounterAttack(combatResults.counterAttackBonus);
-    } else {
-      combatResults.apply();
-      onClose();
-    }
+    combatResults.apply();
+    onClose();
+  }
+  function onCounterAttackButton() {
+    if (!combatResults || !combatResults.canCounterAttack) return;
+    onCounterAttack(combatResults.counterAttackBonus);
   }
 </script>
 
@@ -247,20 +247,29 @@
     {/snippet}
   </Card>
 
-  <CardButton
-    class="main-button"
-    shape="angled"
-    height="55px"
-    style="light"
-    title={combatResults?.canCounterAttack
-      ? i18n.localize('macros.combat.dialog.counterAttackButtonTooltip.title')
-      : i18n.localize('macros.combat.dialog.applyAndCloseButtonTooltip.title')}
-    onclick={onMainButton}
-  >
-    {combatResults?.canCounterAttack
-      ? i18n.localize('macros.combat.dialog.counterAttackButton.title')
-      : i18n.localize('macros.combat.dialog.applyAndCloseButton.title')}
-  </CardButton>
+  <div class="main-buttons">
+    {#if combatResults?.canCounterAttack}
+      <CardButton
+        shape="angled"
+        height="55px"
+        style="light"
+        title={i18n.localize('macros.combat.dialog.counterAttackButtonTooltip.title')}
+        onclick={onCounterAttackButton}
+      >
+        {i18n.localize('macros.combat.dialog.counterAttackButton.title')}
+      </CardButton>
+    {/if}
+
+    <CardButton
+      shape="angled"
+      height="55px"
+      style="light"
+      title={i18n.localize('macros.combat.dialog.applyAndCloseButtonTooltip.title')}
+      onclick={onMainButton}
+    >
+      {i18n.localize('macros.combat.dialog.applyAndCloseButton.title')}
+    </CardButton>
+  </div>
 
   <CardButton
     icon="times"
@@ -399,8 +408,10 @@
         top: calc(-1 * $height/2);
       }
 
-      .main-button {
+      .main-buttons {
         $height: var(--cardbutton-height, 55px);
+        display: flex;
+        gap: 30px;
         position: absolute;
         right: calc(-1 * $height/2);
         bottom: calc(card.$border-size - $height/2);

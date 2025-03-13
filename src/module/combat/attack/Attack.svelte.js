@@ -94,7 +94,7 @@ export class Attack {
     return true;
   }
   get isCounterattack() {
-    return 'counterattackBonus' in this.ability.modifiers;
+    return 'counterAttackBonus' in this.ability.modifiers;
   }
 
   get mastery() {

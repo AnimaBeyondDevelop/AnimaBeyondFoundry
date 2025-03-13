@@ -66,13 +66,13 @@ export class PhysicAttack extends Attack {
   /**
    * @param {TokenDocument} attacker The attacker token.
    * @param {TokenDocument} defender The defender token.
-   * @param {number} [counterattackBonus] Counterattack bonus or undefined if this is not a counterattack.
+   * @param {number} [counterAttackBonus] Counterattack bonus or undefined if this is not a counterattack.
    */
-  constructor(attacker, defender, counterattackBonus) {
+  constructor(attacker, defender, counterAttackBonus) {
     super(attacker, defender);
 
-    if (counterattackBonus) {
-      this.ability.addModifier('counterattackBonus', { value: counterattackBonus });
+    if (counterAttackBonus) {
+      this.ability.addModifier('counterAttackBonus', { value: counterAttackBonus });
     }
 
     this.weapon =
