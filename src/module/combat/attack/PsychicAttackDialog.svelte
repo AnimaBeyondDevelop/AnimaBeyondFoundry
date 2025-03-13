@@ -110,13 +110,15 @@
 
   {#snippet bottom()}
     <div class="bottom-icons">
-      <IconCheckBox
-        icon="avoid-psychic-fatigue"
-        bind:value={attack.preventFatigue}
-        title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
-        disabled={attack.isPotentialRolled ||
-          (!attack.preventFatigue && attack.availablePsychicPoints < 1)}
-      />
+      {#if !attack.attacker.system.psychic.psychicSettings.fatigueResistance}
+        <IconCheckBox
+          icon="avoid-psychic-fatigue"
+          bind:value={attack.preventFatigue}
+          title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
+          disabled={attack.isPotentialRolled ||
+            (!attack.preventFatigue && attack.availablePsychicPoints < 1)}
+        />
+      {/if}
       {#if attack.attacker.system.psychic.mentalPatterns.length > 0}
         <IconCheckBox
           icon="mental-pattern-imbalance"

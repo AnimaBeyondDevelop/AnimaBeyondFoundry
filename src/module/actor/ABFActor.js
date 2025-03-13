@@ -59,7 +59,7 @@ export class ABFActor extends Actor {
    * @returns {void}
    */
   applyFatigue(fatigueUsed) {
-    if (fatigueUsed === 0) return;
+    if (!fatigueUsed) return;
     const newFatigue =
       this.system.characteristics.secondaries.fatigue.value - fatigueUsed;
 
@@ -73,7 +73,7 @@ export class ABFActor extends Actor {
   }
 
   applyPsychicFatigue(psychicFatigue) {
-    if (psychicFatigue === 0) return;
+    if (!psychicFatigue) return;
     const cvs = this.system.psychic.psychicPoints.value;
 
     this.consumePsychicPoints(psychicFatigue);
@@ -83,7 +83,7 @@ export class ABFActor extends Actor {
   }
 
   consumePsychicPoints(psychicPoints) {
-    if (psychicPoints === 0) return;
+    if (!psychicPoints) return;
     const cvs = this.system.psychic.psychicPoints.value;
 
     this.update({
@@ -249,6 +249,7 @@ export class ABFActor extends Actor {
    * @returns {void}
    */
   async applyDamageSupernaturalShield(supShieldId, damage, currentCombatResult) {
+    if (!damage) return;
     const supShield = this.getItem(supShieldId);
     const newShieldPoints = supShield?.system.shieldPoints - damage;
     if (newShieldPoints > 0) {
@@ -618,7 +619,7 @@ export class ABFActor extends Actor {
    * @param {number} damage - The amount of damage to be subtracted from the `lifePoints` attribute.
    */
   applyDamage(damage) {
-    if (damage === 0) return;
+    if (!damage) return;
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
 

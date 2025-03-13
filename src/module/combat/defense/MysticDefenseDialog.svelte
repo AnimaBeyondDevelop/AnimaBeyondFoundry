@@ -36,15 +36,17 @@
         )}
       />
     </div>
-    <div id="separator-button">
-      <IconCheckBox
-        icon="plus"
-        bind:value={defense.newShield}
-        shape="circle"
-        style="light"
-        title={i18n.localize(`macros.combat.dialog.newShield.title`)}
-      />
-    </div>
+    {#if defense.availableSupernaturalShields.length > 0}
+      <div id="separator-button">
+        <IconCheckBox
+          icon="plus"
+          bind:value={defense.newShield}
+          shape="circle"
+          style="light"
+          title={i18n.localize(`macros.combat.dialog.newShield.title`)}
+        />
+      </div>
+    {/if}
     <div id="main-button">
       <CardButton shape="angled" onclick={() => onDefend()} style="light" class="main">
         {i18n.localize('macros.combat.dialog.button.defense.title')}

@@ -125,13 +125,15 @@
   {#snippet bottom()}
     {#if defense.newShield}
       <div class="bottom-icons">
-        <IconCheckBox
-          icon="avoid-psychic-fatigue"
-          bind:value={defense.preventFatigue}
-          title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
-          disabled={defense.isPotentialRolled ||
-            (!defense.preventFatigue && defense.availablePsychicPoints < 1)}
-        />
+        {#if !defense.defender.system.psychic.psychicSettings.fatigueResistance}
+          <IconCheckBox
+            icon="avoid-psychic-fatigue"
+            bind:value={defense.preventFatigue}
+            title={i18n.localize('macros.combat.dialog.eliminateFatigue.title')}
+            disabled={defense.isPotentialRolled ||
+              (!defense.preventFatigue && defense.availablePsychicPoints < 1)}
+          />
+        {/if}
         {#if defense.defender.system.psychic.mentalPatterns.length > 0}
           <IconCheckBox
             icon="mental-pattern-imbalance"
@@ -155,7 +157,7 @@
         )}
       />
     </div>
-    {#if !defense.isPotentialRolled}
+    {#if !defense.isPotentialRolled && defense.availableSupernaturalShields.length > 0}
       <div id="separator-button">
         <IconCheckBox
           icon="plus"
