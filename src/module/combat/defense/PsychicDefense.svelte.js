@@ -18,6 +18,11 @@ export class PsychicDefense extends Defense {
   /** @type {ModifiedAbility} */
   potential;
 
+  #potentialModifiers = {
+    cvs: { value: 0, spec: 20, active: true },
+    roll: { value: 0, spec: 1, active: true }
+  };
+
   /** @type {ABFFoundryRoll} */
   #potentialRoll = $state.raw();
 
@@ -94,9 +99,7 @@ export class PsychicDefense extends Defense {
   }
   /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get potentialModifiers() {
-    return {
-      cvs: { value: 0, spec: 10, active: true }
-    };
+    return this.#potentialModifiers;
   }
 
   get availablePowers() {
