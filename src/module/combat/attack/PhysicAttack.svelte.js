@@ -42,7 +42,7 @@ export class PhysicAttack extends Attack {
     },
     pointBlank: {
       value: () => (this.isRanged && this.meleeCombat ? 1 : 0),
-      spec: -30,
+      spec: 30,
       active: true
     }
   };

@@ -107,6 +107,10 @@ export class PhysicDefense extends Defense {
     );
   }
 
+  get mastery() {
+    return this.defender.system.combat[this.physicDefenseType].base.value >= 200;
+  }
+
   get messageFlavor() {
     return game.i18n.format(
       `macros.combat.dialog.physicalDefense.${this.physicDefenseType}.title`,
@@ -152,20 +156,17 @@ export class PhysicDefense extends Defense {
       ...super.modifiers,
       partialBlindness: {
         value: 1,
-        spec: v => v * (this.physicDefenseType === 'dodge' ? -15 : -30),
+        spec: v => v * (this.isDodge ? -15 : -30),
         active: false
       },
       fatigue: { value: 0, spec: 15, active: true },
       blockProjectile: {
-        value: () => (this.isBlock && this.againstProjectile ? 1 : 0),
-        spec: v => {
-          if (v === 0) return 0;
-          if (this.shieldUsed && this.mastery) return 0;
-          if (this.shieldUsed) return -30;
-          if (this.mastery) return -20;
-          return -80;
-        },
-        active: true
+        value: () =>
+          this.isBlock && this.againstProjectile && !this.mastery && !this.shieldUsed
+            ? 1
+            : 0,
+        spec: -80,
+        active: !this.attack.meleeCombat
       },
       maestryBlockProjectile: {
         value: () =>
@@ -173,7 +174,7 @@ export class PhysicDefense extends Defense {
             ? 1
             : 0,
         spec: -20,
-        active: true
+        active: !this.attack.meleeCombat
       },
       shieldBlockProjectile: {
         value: () =>
@@ -181,7 +182,7 @@ export class PhysicDefense extends Defense {
             ? 1
             : 0,
         spec: -30,
-        active: true
+        active: !this.attack.meleeCombat
       },
       blockThrown: {
         value: () =>
@@ -189,12 +190,12 @@ export class PhysicDefense extends Defense {
             ? 1
             : 0,
         spec: -50,
-        active: true
+        active: !this.attack.meleeCombat
       },
       dodgeProjectile: {
         value: () => (this.isDodge && this.againstProjectile && !this.mastery ? 1 : 0),
         spec: -30,
-        active: true
+        active: !this.attack.meleeCombat
       },
       cumulativeDefenses: {
         value: 0,
