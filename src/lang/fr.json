@@ -611,6 +611,7 @@
   "macros.combat.dialog.combatMod.secondaryCritic.title": "Critique 2",
   "macros.combat.dialog.combatMod.cumulativeDefenses.title": "Defense penalty",
   "macros.combat.dialog.combatMod.fatigue.title": "Fatigue utilisée",
+  "macros.combat.dialog.combatMod.cvs.title": "PP utilisée",
   "macros.combat.dialog.combatMod.counterAttackBonus.title": "Bonus de Contre-attaque",
   "macros.combat.dialog.counterAttackBonus.title": "Bonus de Contre-attaque",
   "macros.combat.dialog.counterAttackButton.title": "Contre-attaque",

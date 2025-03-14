@@ -692,6 +692,7 @@
   "macros.combat.dialog.combatMod.secondaryCritic.title": "Secondary critic used",
   "macros.combat.dialog.combatMod.cumulativeDefenses.title": "Defense penalty",
   "macros.combat.dialog.combatMod.fatigue.title": "Used fatigue",
+  "macros.combat.dialog.combatMod.cvs.title": "Used psychic points",
   "macros.combat.dialog.combatMod.counterAttackBonus.title": "Counterattack bonus",
   "macros.combat.dialog.counterAttackBonus.title": "Counterattack bonus",
   "macros.combat.dialog.counterAttackButton.title": "Counterattack",

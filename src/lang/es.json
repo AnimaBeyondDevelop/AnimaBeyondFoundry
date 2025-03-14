@@ -693,6 +693,7 @@
   "macros.combat.dialog.combatMod.secondaryCritic.title": "Usar crítico secundario",
   "macros.combat.dialog.combatMod.cumulativeDefenses.title": "Defensa adicional",
   "macros.combat.dialog.combatMod.fatigue.title": "Fatiga usada",
+  "macros.combat.dialog.combatMod.cvs.title": "CV invertido",
   "macros.combat.dialog.combatMod.counterAttackBonus.title": "Bono al contraataque",
   "macros.combat.dialog.counterAttackBonus.title": "Bono al contraataque",
   "macros.combat.dialog.counterAttackButton.title": "Contraatacar",
