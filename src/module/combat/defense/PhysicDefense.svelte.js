@@ -186,9 +186,7 @@ export class PhysicDefense extends Defense {
       },
       blockThrown: {
         value: () =>
-          this.isBlock && this.againstThrown && (!this.mastery || !this.shieldUsed)
-            ? 1
-            : 0,
+          this.isBlock && this.againstThrown && !this.mastery && !this.shieldUsed ? 1 : 0,
         spec: -50,
         active: !this.attack.meleeCombat
       },
