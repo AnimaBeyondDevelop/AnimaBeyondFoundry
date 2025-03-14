@@ -112,6 +112,7 @@
       <InputLabel
         icon="supernatural-shield"
         label={i18n.localize('anima.ui.combat.supernaturalShields.shieldPoints.title')}
+        useIcon
       >
         <Input
           value={defense.shieldPoints || 0}
