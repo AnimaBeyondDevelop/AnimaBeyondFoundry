@@ -44,6 +44,7 @@
   }
   function onCounterAttackButton() {
     if (!combatResults || !combatResults.canCounterAttack) return;
+    combatResults.apply();
     onCounterAttack(combatResults.counterAttackBonus);
   }
 </script>
