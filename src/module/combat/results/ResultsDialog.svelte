@@ -59,7 +59,7 @@
   {#await actor.getTokenImages() then images}
     <img src={images[0]} alt={actor.name} />
   {/await}
-  {#if dataObject.rolled}
+  {#if dataObject.rolled !== undefined}
     {@const abilityName =
       dataObject instanceof PhysicDefense
         ? dataObject.physicDefenseType

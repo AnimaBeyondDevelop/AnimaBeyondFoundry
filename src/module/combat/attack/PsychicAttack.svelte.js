@@ -53,7 +53,7 @@ export class PsychicAttack extends Attack {
    */
   mentalPatternImbalance = $state(false);
 
-  /** @type {number} */
+  /** @type {{ value: number, immune: boolean }} */
   psychicFatigue;
 
   /**
@@ -80,10 +80,14 @@ export class PsychicAttack extends Attack {
     this.attacker.consumePsychicPoints(
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
-    this.attacker.applyPsychicFatigue(this.psychicFatigue);
+    this.attacker.applyPsychicFatigue(
+      this.psychicFatigue.immune ? 0 : this.psychicFatigue.value
+    );
   }
 
   get displayName() {
+    if (this.psychicFatigue.value)
+      return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
     return /** @type {string} */ (this.power.name);
   }
 
@@ -137,7 +141,7 @@ export class PsychicAttack extends Attack {
   }
 
   toMessage() {
-    if (this.psychicFatigue) return;
+    if (this.psychicFatigue.value) return;
     return super.toMessage();
   }
 
@@ -177,6 +181,10 @@ export class PsychicAttack extends Attack {
 
     let powerEffect = this.power?.system.effects[this.potential.final].value;
     this.damage.base = damageCheck(powerEffect);
+
+    if (this.psychicFatigue.value) {
+      this.ability.base = 0;
+    }
   }
 
   potentialToMessage() {
@@ -196,6 +204,13 @@ export class PsychicAttack extends Attack {
     return resistanceEffectCheck(powerEffect);
   }
 
+  get rolled() {
+    if (this.psychicFatigue.value) {
+      return 0;
+    }
+    return super.rolled;
+  }
+
   onAttack() {
     this.attacker.setLastPowerUsed(this.power, 'offensive');
     return super.onAttack();
@@ -208,7 +223,7 @@ export class PsychicAttack extends Attack {
       potential: this.potential.toJSON(),
       preventFatigue: this.preventFatigue,
       mentalPatternImbalance: this.mentalPatternImbalance,
-      psychicFatigue: this.psychicFatigue,
+      psychicFatigue: JSON.stringify(this.psychicFatigue),
       potentialRoll: this.#potentialRoll?.toJSON()
     };
   }
@@ -234,7 +249,7 @@ export class PsychicAttack extends Attack {
     this.potential = ModifiedAbility.fromJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
-    this.psychicFatigue = psychicFatigue;
+    this.psychicFatigue = JSON.parse(psychicFatigue);
     this.#potentialRoll = ABFFoundryRoll.fromData(potentialRoll);
     return this;
   }
