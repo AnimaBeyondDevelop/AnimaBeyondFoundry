@@ -290,9 +290,7 @@ export class ABFActor extends Actor {
    * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
    * @param {boolean} applyPsychicFatigue - Whether to apply the PsychicFatigue or spent psychic Points. Default is `true`.
    *
-   * @returns {{ value: number, inmune: boolean }} An object containing:
-   *   - `value` (number): The computed psychic fatigue value.
-   *   - `inmune` (boolean): Whether the entity is immune to psychic fatigue.
+   * @returns {number} The calculated psychic fatigue value.
    */
   evaluatePsychicFatigue(
     power,
@@ -322,7 +320,7 @@ export class ABFActor extends Actor {
           })
         });
       }
-      if (!psychicFatigue.inmune && applyPsychicFatigue) {
+      if (!psychicFatigue.inmune && !eliminateFatigue && applyPsychicFatigue) {
         this.applyPsychicFatigue(psychicFatigue.value);
       }
     }
@@ -330,7 +328,7 @@ export class ABFActor extends Actor {
       this.consumePsychicPoints(1);
     }
 
-    return psychicFatigue;
+    return psychicFatigue.value;
   }
 
   /**

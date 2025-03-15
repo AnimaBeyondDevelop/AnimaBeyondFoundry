@@ -53,7 +53,7 @@ export class PsychicAttack extends Attack {
    */
   mentalPatternImbalance = $state(false);
 
-  /** @type {{ value: number, immune: boolean }} */
+  /** @type {number} */
   psychicFatigue;
 
   /**
@@ -73,6 +73,8 @@ export class PsychicAttack extends Attack {
     this.potential.registerModTable(this.potentialModifiers);
 
     this.power = this.attacker.getLastPowerUsed('offensive') ?? this.availablePowers[0];
+
+    this.preventFatigue = this.defender.system.psychic.psychicSettings.fatigueResistance;
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
@@ -80,14 +82,10 @@ export class PsychicAttack extends Attack {
     this.attacker.consumePsychicPoints(
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
-    this.attacker.applyPsychicFatigue(
-      this.psychicFatigue.immune ? 0 : this.psychicFatigue.value
-    );
+    this.attacker.applyPsychicFatigue(this.psychicFatigue);
   }
 
   get displayName() {
-    if (this.psychicFatigue.value)
-      return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
     return /** @type {string} */ (this.power.name);
   }
 
@@ -141,7 +139,7 @@ export class PsychicAttack extends Attack {
   }
 
   toMessage() {
-    if (this.psychicFatigue.value) return;
+    if (this.psychicFatigue) return;
     return super.toMessage();
   }
 
@@ -181,10 +179,6 @@ export class PsychicAttack extends Attack {
 
     let powerEffect = this.power?.system.effects[this.potential.final].value;
     this.damage.base = damageCheck(powerEffect);
-
-    if (this.psychicFatigue.value) {
-      this.ability.base = 0;
-    }
   }
 
   potentialToMessage() {
@@ -204,13 +198,6 @@ export class PsychicAttack extends Attack {
     return resistanceEffectCheck(powerEffect);
   }
 
-  get rolled() {
-    if (this.psychicFatigue.value) {
-      return 0;
-    }
-    return super.rolled;
-  }
-
   onAttack() {
     this.attacker.setLastPowerUsed(this.power, 'offensive');
     return super.onAttack();
@@ -223,7 +210,7 @@ export class PsychicAttack extends Attack {
       potential: this.potential.toJSON(),
       preventFatigue: this.preventFatigue,
       mentalPatternImbalance: this.mentalPatternImbalance,
-      psychicFatigue: JSON.stringify(this.psychicFatigue),
+      psychicFatigue: this.psychicFatigue,
       potentialRoll: this.#potentialRoll?.toJSON()
     };
   }
@@ -249,7 +236,7 @@ export class PsychicAttack extends Attack {
     this.potential = ModifiedAbility.fromJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
-    this.psychicFatigue = JSON.parse(psychicFatigue);
+    this.psychicFatigue = psychicFatigue;
     this.#potentialRoll = ABFFoundryRoll.fromData(potentialRoll);
     return this;
   }
