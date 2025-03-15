@@ -8,6 +8,8 @@ export default defineConfig({
     alias: {
       '@svelte': path.resolve(__dirname, './src/svelte'),
       '@module': path.resolve(__dirname, './src/module'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@scss': path.resolve(__dirname, './src/scss'),
       '@assets': path.resolve(__dirname, './src/assets')
     }
   },
@@ -29,6 +31,14 @@ export default defineConfig({
           return `${fileName}.js`;
         },
         assetFileNames: 'animabf.[ext]'
+      }
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        loadPaths: ['src/scss']
       }
     }
   },

@@ -15,6 +15,7 @@ import { INITIAL_PSYCHIC_DISCIPLINE_DATA } from './psychic/PsychicDisciplineItem
 import { INITIAL_MENTAL_PATTERN_DATA } from './psychic/MentalPatternItemConfig';
 import { INITIAL_PSYCHIC_POWER_DATA } from './psychic/PsychicPowerItemConfig';
 import { INITIAL_TECHNIQUE_DATA } from './domine/TechniqueItemConfig';
+import { CriticType } from './combat/CriticType';
 
 /**
  * @template TData - Type of the data inside the item's system attribute.
@@ -222,7 +223,7 @@ export type SpecialField = {
 export type AmmoItemData = {
   amount: { value: number };
   damage: DerivedField;
-  critic: { value: WeaponCritic };
+  critic: { value: CriticType };
   integrity: DerivedField;
   breaking: DerivedField;
   presence: DerivedField;

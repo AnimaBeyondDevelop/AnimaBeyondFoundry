@@ -67,6 +67,11 @@ export default class ABFFoundryRoll extends Roll {
     return false;
   }
 
+  get openRoll() {
+    if (this.abfRoll instanceof ABFExploderRoll) return this.abfRoll?.success || false;
+    return false;
+  }
+
   recalculateTotal(mod = 0) {
     this._total = this._evaluateTotal() + mod;
   }

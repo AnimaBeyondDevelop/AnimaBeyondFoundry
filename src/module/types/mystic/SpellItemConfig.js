@@ -1,32 +1,17 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
+import { NoneCriticType } from '../combat/CriticType';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
- * An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if and how the spell has been casted, and whether the casting rules should be overridden.
- * @typedef {object} SpellCasting
- * @property {{ accumulated: number, cost: number }} zeon - An object with properties `accumulated` (chacater accumulated zeon) and `cost` (zeon spell cost).
- * @property {{ prepared: boolean, innate: boolean }} canCast - An object that indicates whether the spell can be cast, either as a prepared spell or an innate spell.
- * @property {{ prepared: boolean, innate: boolean }} casted - An object that indicates whether the spell has been casted before, either as a prepared spell or an innate spell.
- * @property {boolean} override - A flag that indicates whether to override the normal casting rules and allow the spell to be casted regardless of zeon points or previous casting.
- */
-export const INITIAL_SPELL_CASTING_DATA = {
-  zeon: { accumulated: 0, cost: 0 },
-  canCast: { prepared: false, innate: false },
-  casted: { prepared: false, innate: false },
-  override: false
-};
-/**
- * @readonly
  * @enum {string}
  */
-export const SpellGrades = {
+export const SpellGrades = /** @type {const} */ ({
   BASE: 'base',
   INTERMEDIATE: 'intermediate',
   ADVANCED: 'advanced',
   ARCANE: 'arcane'
-};
+});
 /**
  * @readonly
  * @enum {string}
@@ -43,7 +28,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
   via: { value: '' },
   hasDailyMaintenance: { value: false },
   visible: false,
-  critic: { value: NoneWeaponCritic.NONE },
+  critic: { value: NoneCriticType.NONE },
   spellType: { value: '' },
   actionType: { value: '' },
   combatType: { value: '' },

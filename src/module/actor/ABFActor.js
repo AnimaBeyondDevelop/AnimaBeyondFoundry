@@ -12,14 +12,15 @@ import { migrateItem } from '../items/migrations/migrateItem';
 import { executeMacro } from '../utils/functions/executeMacro';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { calculateDamage } from '../combat/utils/calculateDamage';
-import { roundTo5Multiples } from '../combat/utils/roundTo5Multiples';
+import { floorTo5Multiple } from '@utils/rounding';
 import { psychicPotentialEffect } from '../combat/utils/psychicPotentialEffect.js';
 import { psychicFatigueCheck } from '../combat/utils/psychicFatigueCheck.js';
 import { shieldBaseValueCheck } from '../combat/utils/shieldBaseValueCheck.js';
 import { shieldValueCheck } from '../combat/utils/shieldValueCheck.js';
-import { INITIAL_SPELL_CASTING_DATA } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { CombatResults } from '../combat/results/CombatResults.svelte.js';
+import { CombatResultsCalculator } from '../combat/results/CombatResultsCalculator.svelte.js';
 import ABFItem from '../items/ABFItem';
 
 export class ABFActor extends Actor {
@@ -58,6 +59,7 @@ export class ABFActor extends Actor {
    * @returns {void}
    */
   applyFatigue(fatigueUsed) {
+    if (!fatigueUsed) return;
     const newFatigue =
       this.system.characteristics.secondaries.fatigue.value - fatigueUsed;
 
@@ -65,6 +67,31 @@ export class ABFActor extends Actor {
       system: {
         characteristics: {
           secondaries: { fatigue: { value: newFatigue } }
+        }
+      }
+    });
+  }
+
+  applyPsychicFatigue(psychicFatigue) {
+    if (!psychicFatigue) return;
+    const cvs = this.system.psychic.psychicPoints.value;
+
+    this.consumePsychicPoints(psychicFatigue);
+    if (cvs < psychicFatigue) {
+      this.applyFatigue(psychicFatigue - cvs);
+    }
+  }
+
+  consumePsychicPoints(psychicPoints) {
+    if (!psychicPoints) return;
+    const cvs = this.system.psychic.psychicPoints.value;
+
+    this.update({
+      system: {
+        psychic: {
+          psychicPoints: {
+            value: Math.max(cvs - psychicPoints, 0)
+          }
         }
       }
     });
@@ -197,6 +224,10 @@ export class ABFActor extends Actor {
     const supShield = this.getItem(supShieldId);
     if (supShield) {
       await this.deleteItem(supShieldId);
+      let items = this.getSupernaturalShields();
+      items = items.filter(item => item._id !== supShieldId);
+      const fieldPath = ['combat', 'supernaturalShields'];
+      await this.update({ system: getUpdateObjectFromPath(items, fieldPath) });
       let args = {
         thisActor: this,
         newShield: false,
@@ -213,14 +244,14 @@ export class ABFActor extends Actor {
    * @param {string} supShieldId - The ID of the supernatural shield to apply damage to.
    * @param {number} damage - The amount of damage to apply to the shield.
    * @param {boolean} [dobleDamage] - Whether to apply double damage or not. Default is `false`.
-   * @param {object} [newCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
+   * @param {CombatResults} [currentCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
    *
    * @returns {void}
    */
-  async applyDamageSupernaturalShield(supShieldId, damage, dobleDamage, newCombatResult) {
+  async applyDamageSupernaturalShield(supShieldId, damage, currentCombatResult) {
+    if (!damage) return;
     const supShield = this.getItem(supShieldId);
-    const shieldValue = supShield?.system.shieldPoints;
-    const newShieldPoints = dobleDamage ? shieldValue - damage * 2 : shieldValue - damage;
+    const newShieldPoints = supShield?.system.shieldPoints - damage;
     if (newShieldPoints > 0) {
       this.updateItem({
         id: supShieldId,
@@ -229,20 +260,21 @@ export class ABFActor extends Actor {
     } else {
       this.deleteSupernaturalShield(supShieldId);
       // If shield breaks, apply damage to actor
-      if (newShieldPoints < 0 && newCombatResult) {
-        const needToRound = game.settings.get(
-          'animabf',
-          ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
+      if (newShieldPoints < 0 && currentCombatResult) {
+        const { attack, defense } = currentCombatResult;
+        let newCombatResult = new CombatResultsCalculator(
+          {
+            finalAbility: attack.finalAbility,
+            finalDamage: Math.abs(newShieldPoints),
+            halvedAbsorption: attack.halvedAbsorption
+          },
+          {
+            finalAbility: 0,
+            finalAt: defense.finalAt,
+            halvedAbsorption: defense.halvedAbsorption
+          }
         );
-        const result = calculateDamage(
-          newCombatResult.attack,
-          0,
-          newCombatResult.at,
-          Math.abs(newShieldPoints),
-          newCombatResult.halvedAbsorption
-        );
-        const breakingDamage = needToRound ? roundTo5Multiples(result) : result;
-        this.applyDamage(breakingDamage);
+        this.applyDamage(newCombatResult.damage);
       }
     }
   }
@@ -256,14 +288,16 @@ export class ABFActor extends Actor {
    * @param {number} psychicDifficulty - The difficulty level of the psychic power.
    * @param {boolean} eliminateFatigue - Whether to apply the fatigue value or not to the actor's characteristics.
    * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
+   * @param {boolean} applyPsychicFatigue - Whether to apply the PsychicFatigue or spent psychic Points. Default is `true`.
    *
    * @returns {number} The calculated psychic fatigue value.
    */
-  async evaluatePsychicFatigue(
+  evaluatePsychicFatigue(
     power,
     psychicDifficulty,
     eliminateFatigue,
-    sendToChat = true
+    sendToChat = true,
+    applyPsychicFatigue = true
   ) {
     const {
       psychic: {
@@ -286,27 +320,12 @@ export class ABFActor extends Actor {
           })
         });
       }
-      if (!psychicFatigue.inmune && !eliminateFatigue) {
-        this.applyFatigue(psychicFatigue.value - psychicPoints.value);
-        this.update({
-          system: {
-            psychic: {
-              psychicPoints: {
-                value: Math.max(psychicPoints.value - psychicFatigue.value, 0)
-              }
-            }
-          }
-        });
+      if (!psychicFatigue.inmune && !eliminateFatigue && applyPsychicFatigue) {
+        this.applyPsychicFatigue(psychicFatigue.value);
       }
     }
-    if (eliminateFatigue) {
-      this.update({
-        system: {
-          psychic: {
-            psychicPoints: { value: psychicPoints.value - 1 }
-          }
-        }
-      });
+    if (eliminateFatigue && applyPsychicFatigue) {
+      this.consumePsychicPoints(1);
     }
 
     return psychicFatigue.value;
@@ -341,26 +360,21 @@ export class ABFActor extends Actor {
     }
   }
 
-  /**
-   * Updates the defenses counter for an actor based on the value of the `keepAccumulating` parameter.
-   *
-   * @param {boolean} keepAccumulating - A flag indicating whether to continue accumulating defenses or not.
-   */
-  accumulateDefenses(keepAccumulating) {
-    /** @type {{accumulated: number, keepAccumulating: boolean}} */
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter') || {
-      accumulated: 0,
-      keepAccumulating
-    };
-    const newDefensesCounter = defensesCounter.accumulated + 1;
-    if (keepAccumulating) {
-      this.setFlag('animabf', 'defensesCounter', {
-        accumulated: newDefensesCounter,
-        keepAccumulating
-      });
-    } else {
-      this.setFlag('animabf', 'defensesCounter.keepAccumulating', keepAccumulating);
-    }
+  /** @type {boolean} */
+  get autoAccumulateDefenses() {
+    return /** @type {boolean} */ (this.getFlag('animabf', 'accumulateDefenses')) ?? true;
+  }
+  set autoAccumulateDefenses(value) {
+    this.setFlag('animabf', 'accumulateDefenses', value);
+  }
+
+  /** @type {number} */
+  get accumulatedDefenses() {
+    return this.getFlag('animabf', 'defensesCounter') ?? 0;
+  }
+  set accumulatedDefenses(value) {
+    if (!this.autoAccumulateDefenses) return;
+    this.setFlag('animabf', 'defensesCounter', value);
   }
 
   /**
@@ -371,129 +385,169 @@ export class ABFActor extends Actor {
    * actor.resetDefensesCounter();
    */
   resetDefensesCounter() {
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter');
-    if (defensesCounter === undefined) {
-      this.setFlag('animabf', 'defensesCounter', {
-        accumulated: 0,
-        keepAccumulating: true
-      });
-    } else {
-      this.setFlag('animabf', 'defensesCounter.accumulated', 0);
-    }
+    this.accumulatedDefenses = 0;
   }
 
   /**
-   * Determines if a mystic character can cast a specific spell at a specific grade.
+   * Evaluates if this actor can cast a spell at a given spellgrade with certain casting method.
+   * This method is responsible for issuing notifications informing the user whenever casting
+   * is not possible.
    *
-   * @param spell - The spell object that contains information about the spell, including the
-   * zeon cost for each grade.
-   * @param {string} spellGrade - The grade of the spell that the character wants to cast.
-   * @param {{prepared: boolean, innate:boolean}} [casted] - An object that indicates whether the spell has been casted before,
-   * either as a prepared spell or an innate spell.
-   * Default is { prepared: false, innate: false }.
-   * @param {boolean} override - A flag that indicates whether to override the normal casting rules and
-   * allow the spell to be casted regardless of zeon points or previous casting.
-   * Default is false.
-   * @returns {import('../types/mystic/SpellItemConfig.js').SpellCasting} - An object that contains information about the zeon points,
-   * whether the spell can be cast (prepared or innate), if the spell has been casted, and
-   * whether the casting rules should be overridden.
+   * @param {ABFItem} spell
+   * @param {"base"|"intermediate"|"advanced"|"arcane"} spellGrade
+   * @param {"override"|"accumulated"|"innate"|"prepared"} castMethod
+   * @param {Object} [increasedZeon] The increased zeon cost for the spell.
+   * @param {number} [increasedZeon.accumulated=0] - The part of the increased zeon cost that needs
+   * to be accumulated. Defaults to 0
+   * @param {number} [increasedZeon.pool=0] - The part of the increased zeon cost that is automatically
+   * deduced from the character's zeon pool, without accumulating. Used for instance in metamagic.
+   * Defaults to 0.
+   * @returns {boolean} A boolean value indicating whether the spell can be cast or not.
    */
-  mysticCanCastEvaluate(
+  canCastSpell(
     spell,
     spellGrade,
-    casted = { prepared: false, innate: false },
-    override = false
+    castMethod,
+    increasedZeon = { accumulated: 0, pool: 0 }
   ) {
-    const spellCasting = INITIAL_SPELL_CASTING_DATA;
-    spellCasting.casted = casted;
-    spellCasting.override = override;
-    spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
+    let canCast = false;
+    let warningMessage = '';
+    let zeonCost =
+      spell?.system.grades[spellGrade].zeon.value + (increasedZeon.accumulated ?? 0);
+    let zeonPool = this.system.mystic.zeon.value;
 
-    if (override) {
-      return spellCasting;
+    switch (castMethod) {
+      case 'accumulated': {
+        let zeonAccumulated = this.system.mystic.zeon.accumulated;
+        canCast = zeonAccumulated >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.zeonAccumulated';
+        break;
+      }
+      case 'innate': {
+        let spellVia = spell?.system.via.value;
+        let innateMagic = this.system.mystic.innateMagic;
+        let innateVia = innateMagic.via.find(i => i.name == spellVia);
+        let innateMagicValue =
+          innateMagic.via.length !== 0 && innateVia
+            ? innateVia.system.final.value
+            : innateMagic.main.final.value;
+        canCast = innateMagicValue >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.innateMagic';
+        break;
+      }
+      case 'prepared': {
+        canCast =
+          this.getPreparedSpells().find(
+            ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+          )?.system.prepared.value ?? false;
+        warningMessage = 'dialogs.spellCasting.warning.preparedSpell';
+        break;
+      }
+      case 'override': {
+        return true;
+      }
     }
-
-    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
-    spellCasting.canCast.prepared =
-      this.system.mystic.preparedSpells.find(
-        ps => ps.name == spell.name && ps.system.grade.value == spellGrade
-      )?.system.prepared.value ?? false;
-    const spellVia = spell?.system.via.value;
-    const innateMagic = this.system.mystic.innateMagic;
-    const innateVia = innateMagic.via.find(i => i.name == spellVia);
-    const innateMagicValue =
-      innateMagic.via.length !== 0 && innateVia
-        ? innateVia.system.final.value
-        : innateMagic.main.final.value;
-    spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
-
-    if (!spellCasting.canCast.innate) {
-      spellCasting.casted.innate = false;
+    if (zeonPool < (increasedZeon.pool ?? 0)) {
+      canCast = false;
+      warningMessage = 'dialogs.spellCasting.warning.zeonPool';
     }
-    if (!spellCasting.canCast.prepared) {
-      spellCasting.casted.prepared = false;
+    if (!canCast) {
+      ui.notifications.warn(game.i18n.localize(warningMessage));
     }
-    return spellCasting;
+    return canCast;
   }
 
-  /**
-   * Evaluates the spell casting conditions and returns a boolean value indicating whether the
-   * spell can be cast or not.
-   *
-   * @param {import('../types/mystic/SpellItemConfig.js').SpellCasting} spellCasting - - An object that contains information about the zeon
-   * points, whether the spell can be cast (prepared or innate), if the spell has been casted,
-   * and whether the casting rules should be overridden.
-   * @returns {boolean} - A boolean value indicating whether the spell can be cast or not.
-   */
-  evaluateCast(spellCasting) {
-    const { i18n } = game;
-    const { canCast, casted, zeon, override } = spellCasting;
-    if (override) {
-      return false;
+  canCast(spell, spellGrade, castMethod, increasedCost = { zeon: 0, pool: 0 }) {
+    let canCast = false;
+    let warningMessage = '';
+    let zeonCost = spell?.system.grades[spellGrade].zeon.value + increasedCost.zeon;
+    let zeonPool = this.system.mystic.zeon.value;
+
+    switch (castMethod) {
+      case 'accumulated': {
+        let zeonAccumulated = this.system.mystic.zeon.accumulated;
+        canCast = zeonAccumulated >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.zeonAccumulated';
+        break;
+      }
+      case 'innate': {
+        let spellVia = spell?.system.via.value;
+        let innateMagic = this.system.mystic.innateMagic;
+        let innateVia = innateMagic.via.find(i => i.name == spellVia);
+        let innateMagicValue =
+          innateMagic.via.length !== 0 && innateVia
+            ? innateVia.system.final.value
+            : innateMagic.main.final.value;
+        canCast = innateMagicValue >= zeonCost;
+        warningMessage = 'dialogs.spellCasting.warning.innateMagic';
+        break;
+      }
+      case 'prepared': {
+        canCast =
+          this.getPreparedSpells().find(
+            ps => ps.name == spell.name && ps.system.grade.value == spellGrade
+          )?.system.prepared.value ?? false;
+        warningMessage = 'dialogs.spellCasting.warning.preparedSpell';
+        break;
+      }
+      case 'override': {
+        return true;
+      }
     }
-    if (canCast.innate && casted.innate && canCast.prepared && casted.prepared) {
-      ui.notifications.warn(i18n.localize('dialogs.spellCasting.warning.mustChoose'));
-      return true;
+    if (zeonPool < increasedCost.pool) {
+      canCast = false;
+      warningMessage = 'dialogs.spellCasting.warning.zeonPool';
     }
-    if (canCast.innate && casted.innate) {
-      return;
-    } else if (!canCast.innate && casted.innate) {
-      ui.notifications.warn(i18n.localize('dialogs.spellCasting.warning.innateMagic'));
-      return true;
-    } else if (canCast.prepared && casted.prepared) {
-      return false;
-    } else if (!canCast.prepared && casted.prepared) {
-      return ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.preparedSpell')
-      );
-    } else if (zeon.accumulated < zeon.cost) {
-      ui.notifications.warn(
-        i18n.localize('dialogs.spellCasting.warning.zeonAccumulated')
-      );
-      return true;
-    } else return false;
+    if (!canCast) {
+      ui.notifications.warn(game.i18n.localize(warningMessage));
+    }
+    return canCast;
   }
 
   /**
    * Handles the casting of mystic spells by an actor in the ABFActor class.
+   * Calls this.canCastSpell() to check if the spell can be cast, this.consumeAccumulatedZeon()
+   * to update the accumulated zeon value and this.deletePreparedSpell() to update prepared spells.
    *
-   * @param {import('../types/mystic/SpellItemConfig.js').SpellCasting} spellCasting An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if the spell has been casted, and whether the casting rules should be overridden.
-   * @param {string} spellName The name of the spell being casted.
-   * @param {string} spellGrade The grade of the spell being casted.
+   * @param {ABFItem} spell
+   * @param {"base"|"intermediate"|"advanced"|"arcane"} spellGrade
+   * @param {"override"|"accumulated"|"innate"|"prepared"} castMethod
+   * @param {Object} [increasedZeon] The increased zeon cost for the spell.
+   * @param {number} [increasedZeon.accumulated=0] - The part of the increased zeon cost that needs
+   * to be accumulated. Defaults to 0
+   * @param {number} [increasedZeon.pool=0] - The part of the increased zeon cost that is automatically
+   * deduced from the character's zeon pool, without accumulating. Used for instance in metamagic.
+   * Defaults to 0.
    */
-  mysticCast(spellCasting, spellName, spellGrade) {
-    const { zeon, casted, override } = spellCasting;
-    if (override) {
+  castSpell(spell, spellGrade, castMethod, increasedZeon = { accumulated: 0, pool: 0 }) {
+    if (!this.canCastSpell(spell, spellGrade, castMethod, increasedZeon)) return;
+    if (castMethod !== 'override') {
+      this.consumeZeon(increasedZeon.pool);
+    }
+    if (castMethod === 'prepared') {
+      this.deletePreparedSpell(spell.name, spellGrade);
       return;
     }
-    if (casted.innate) {
-      return;
+    if (castMethod === 'accumulated') {
+      const zeon =
+        spell?.system.grades[spellGrade].zeon.value + increasedZeon.accumulated;
+      this.consumeAccumulatedZeon(zeon);
     }
-    if (casted.prepared) {
-      this.deletePreparedSpell(spellName, spellGrade);
-    } else {
-      this.consumeAccumulatedZeon(zeon.cost);
-    }
+  }
+
+  /**
+   * Consumes zeon from an actor's zeon pool.
+   * @param {number} zeon - The amount of zeon to be consumed.
+   */
+  consumeZeon(zeon) {
+    const newZeon = this.system.mystic.zeon.value - zeon;
+    this.update({
+      system: {
+        mystic: {
+          zeon: { value: newZeon }
+        }
+      }
+    });
   }
 
   /**
@@ -565,6 +619,7 @@ export class ABFActor extends Actor {
    * @param {number} damage - The amount of damage to be subtracted from the `lifePoints` attribute.
    */
   applyDamage(damage) {
+    if (!damage) return;
     const newLifePoints =
       this.system.characteristics.secondaries.lifePoints.value - damage;
 
@@ -686,7 +741,7 @@ export class ABFActor extends Actor {
         }
 
         if (system) {
-          item.system = mergeObject(item.system, system);
+          item.system = foundry.utils.mergeObject(item.system, system);
         }
 
         await this.update({
@@ -708,7 +763,12 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.SECONDARY_SPECIAL_SKILL);
   }
 
-  getKnownSpells() {
+  getKnownSpells(combatType) {
+    if (combatType) {
+      return this.getItemsOf(ABFItems.SPELL).filter(
+        w => w.system.combatType.value === combatType
+      );
+    }
     return this.getItemsOf(ABFItems.SPELL);
   }
 
@@ -792,7 +852,12 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.INNATE_PSYCHIC_POWER);
   }
 
-  getPsychicPowers() {
+  getPsychicPowers(combatType) {
+    if (combatType) {
+      return this.getItemsOf(ABFItems.PSYCHIC_POWER).filter(
+        w => w.system.combatType.value === combatType
+      );
+    }
     return this.getItemsOf(ABFItems.PSYCHIC_POWER);
   }
 
@@ -909,5 +974,79 @@ export class ABFActor extends Actor {
   getItem(itemId) {
     return this.getEmbeddedDocument('Item', itemId);
   }
-}
 
+  /**
+   * Returns the last weapon used if still available, otherwise undefined.
+   * @param {"offensive" | "defensive"} usage Whether to retrieve the last weapon used for attacking
+   * or defending
+   */
+  getLastWeaponUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastWeaponUsed = this.getFlag('animabf', `last${usage}WeaponUsed`);
+
+    return this.getWeapons().find(w => w.id === lastWeaponUsed);
+  }
+  /**
+   * Returns the last spell used if still available, otherwise undefined.
+   * @param {"offensive" | "defensive"} usage Whether to retrieve the last spell used for attacking
+   * or defending
+   */
+  getLastSpellUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastSpellUsed = this.getFlag('animabf', `last${usage}SpellUsed`);
+
+    return this.getKnownSpells().find(w => w.id === lastSpellUsed);
+  }
+  /**
+   * Returns the last psychic power used if still available, otherwise undefined.
+   * @param {"offensive" | "defensive"} usage Whether to retrieve the last psychic power used for attacking
+   * or defending
+   */
+  getLastPowerUsed(usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    const lastPowerUsed = this.getFlag('animabf', `last${usage}PowerUsed`);
+
+    return this.getPsychicPowers().find(w => w.id === lastPowerUsed);
+  }
+
+  getCastMethodOverride() {
+    return this.getFlag('animabf', 'castMethodOverride');
+  }
+
+  /**
+   * Sets the last weapon used to a flag.
+   * @param {ABFItem} weapon
+   * @param {"offensive" | "defensive"} usage Whether to save the last weapon used for attacking
+   * or defending
+   */
+  setLastWeaponUsed(weapon, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}WeaponUsed`, weapon.id);
+  }
+  /**
+   * Sets the last spell used to a flag.
+   * @param {ABFItem} spell
+   * @param {"offensive" | "defensive"} usage Whether to save the last spell used for attacking
+   * or defending
+   */
+  setLastSpellUsed(spell, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}SpellUsed`, spell.id);
+  }
+  /**
+   * Sets the last psychic power used to a flag.
+   * @param {ABFItem} power
+   * @param {"offensive" | "defensive"} usage Whether to save the last psychic power used for attacking
+   * or defending
+   */
+  setLastPowerUsed(power, usage) {
+    usage = usage[0].toUpperCase() + usage.slice(1);
+    this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
+  }
+  /**
+   * @param {"override" | "accumulated" | "innate" | "prepared"} castMethod
+   */
+  setCastMethodOverride(castMethod) {
+    this.setFlag('animabf', 'castMethodOverride', castMethod === 'override');
+  }
+}

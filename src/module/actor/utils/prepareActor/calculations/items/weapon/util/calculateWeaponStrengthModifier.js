@@ -10,11 +10,12 @@ export const calculateWeaponStrengthModifier = (weapon, data) => {
   const hasOnlyOneEquippedHandMultiplier =
     getCurrentEquippedHand(weapon) === WeaponEquippedHandType.ONE_HANDED;
 
-  const equippedHandMultiplier = hasOnlyOneEquippedHandMultiplier ? 1 : 2;
+  const StrengthModifier = data.characteristics.primaries.strength.mod;
+  const equippedHandMultiplier =
+    hasOnlyOneEquippedHandMultiplier || StrengthModifier < 0 ? 1 : 2;
 
   if (weapon.system.hasOwnStr?.value) {
     return calculateAttributeModifier(weapon.system.weaponStrength.final.value);
   }
-
-  return data.characteristics.primaries.strength.mod * equippedHandMultiplier;
+  return StrengthModifier * equippedHandMultiplier;
 };

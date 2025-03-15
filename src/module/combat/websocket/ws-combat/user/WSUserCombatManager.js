@@ -2,14 +2,15 @@ import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from '../gm/WSGMCombatMessageTypes';
 import { UserMessageTypes } from './WSUserCombatMessageTypes';
-import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
-import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
 import { PromptDialog } from '../../../../dialogs/PromptDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { getTargetToken } from '../util/getTargetToken';
 import { assertCurrentScene } from '../util/assertCurrentScene';
 import { assertGMActive } from '../util/assertGMActive';
 import { getSelectedToken } from '../util/getSelectedToken';
+import { SvelteApplication } from '@svelte/SvelteApplication.svelte';
+import { Attack, AttackDialog } from '@module/combat/attack';
+import { DefenseDialog } from '@module/combat/defense';
 
 export class WSUserCombatManager extends WSCombatManager {
   receive(msg) {
@@ -87,15 +88,23 @@ export class WSUserCombatManager extends WSCombatManager {
               }
             };
             this.emit(msg);
-            this.attackDialog = new CombatAttackDialog(attackerToken, targetToken, {
-              onAttack: result => {
-                const newMsg = {
-                  type: UserMessageTypes.Attack,
-                  payload: result
-                };
-                this.emit(newMsg);
-              }
-            });
+            this.attackDialog = new SvelteApplication(
+              AttackDialog,
+              {
+                attacker: attackerToken,
+                defender: targetToken,
+                onAttack: result => {
+                  const newMsg = {
+                    type: UserMessageTypes.Attack,
+                    payload: result
+                  };
+                  this.emit(newMsg);
+                  this.attackDialog.close();
+                  this.attackDialog = undefined;
+                }
+              },
+              { frameless: true }
+            );
           }
         }
       }
@@ -112,10 +121,11 @@ export class WSUserCombatManager extends WSCombatManager {
     const attacker = this.findTokenById(attackerTokenId);
     const defender = this.findTokenById(defenderTokenId);
 
-    this.attackDialog = new CombatAttackDialog(
-      attacker,
-      defender,
+    this.attackDialog = new SvelteApplication(
+      AttackDialog,
       {
+        attacker,
+        defender,
         onAttack: result => {
           const newMsg = {
             type: UserMessageTypes.Attack,
@@ -123,13 +133,14 @@ export class WSUserCombatManager extends WSCombatManager {
           };
 
           this.emit(newMsg);
-        }
-      },
-      {
-        allowed: true,
+          this.attackDialog.close();
+          this.attackDialog = undefined;
+        },
         counterAttackBonus: msg.payload.counterAttackBonus
-      }
+      },
+      { frameless: true }
     );
+    this.attackDialog.render(true);
   }
 
   async manageAttackRequestResponse(msg) {
@@ -138,7 +149,7 @@ export class WSUserCombatManager extends WSCombatManager {
     if (!this.attackDialog) return;
 
     if (msg.payload.allowed) {
-      this.attackDialog.updatePermissions(msg.payload.allowed);
+      this.attackDialog.render(true);
     } else {
       this.endCombat();
 
@@ -155,38 +166,27 @@ export class WSUserCombatManager extends WSCombatManager {
   }
 
   async manageDefend(msg) {
-    const { result, attackerTokenId, defenderTokenId } = msg.payload;
-
-    if (!this.isMyToken(defenderTokenId)) {
-      return;
-    }
-
-    const attacker = this.findTokenById(attackerTokenId);
-    const defender = this.findTokenById(defenderTokenId);
-
     try {
-      this.defenseDialog = new CombatDefenseDialog(
+      const attack = Attack.fromJSON(msg.payload);
+
+      this.defenseDialog = new SvelteApplication(
+        DefenseDialog,
         {
-          token: attacker,
-          attackType: result.type,
-          critic: result.values.critic,
-          visible: result.values.visible,
-          projectile: result.values.projectile,
-          damage: result.values.damage,
-          distance: result.values.distance
-        },
-        defender,
-        {
-          onDefense: res => {
+          attack,
+          onDefend: defense => {
             const newMsg = {
               type: UserMessageTypes.Defend,
-              payload: res
+              payload: defense
             };
 
             this.emit(newMsg);
+            this.defenseDialog.close();
+            this.defenseDialog = undefined;
           }
-        }
+        },
+        { frameless: true }
       );
+      this.defenseDialog.render(true);
     } catch (err) {
       if (err) {
         Logger.error(err);

@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { WeaponCritic } from './WeaponItemConfig';
+import { CriticType } from './CriticType';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /** @type {import("../Items").AmmoItemData} */
@@ -10,7 +10,7 @@ export const INITIAL_AMMO_DATA = {
     base: { value: 0 },
     final: { value: 0 }
   },
-  critic: { value: WeaponCritic.CUT },
+  critic: { value: CriticType.CUT },
   quality: { value: 0 },
   integrity: {
     base: { value: 0 },

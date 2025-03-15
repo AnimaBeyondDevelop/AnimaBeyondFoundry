@@ -1,0 +1,85 @@
+@use "variable";
+
+$card-height: var(--height, 260px);
+$card-width: var(--width, 500px);
+$border-size: var(--border-size, 5px);
+$edge-size: var(--edge, 40px);
+$sidebar-size: var(--sidebar-size, 60px);
+$title-height: var(--title-height, calc($sidebar-size - $edge-size + 20px));
+
+$navbutton-size: var(--nav-size, 50px);
+
+$border-color: var(--border-color, variable.$border-color);
+$background-color: var(--background-color, variable.$background-main);
+$background-light: var(--background-light, variable.$background-light);
+$background-active: var(--background-active, #{$background-light});
+$sidebar-color: var(--sidebar-color, variable.$background-secondary);
+$text-color: var(--text-color, variable.$text-color);
+$text-color-light: var(--text-color-light, variable.$background-light);
+
+$font-size: var(--font-size, 34px);
+$icon-size: var(--icon-size, 35px);
+
+.buttonlike {
+  cursor: pointer;
+  @extend .text;
+
+  &:hover {
+    --background-color: #{$background-active};
+    transform: scale(1.02);
+  }
+}
+
+button {
+  border: unset;
+  background: unset;
+
+  &:hover {
+    box-shadow: unset;
+  }
+  &:focus {
+    box-shadow: unset;
+  }
+  @extend .buttonlike;
+}
+
+.noninteractive {
+  cursor: default;
+
+  &:hover {
+    transform: unset;
+  }
+}
+
+.text {
+  font-size: $font-size;
+  color: inherit;
+}
+.text-light {
+  @extend .text;
+  color: $text-color-light;
+}
+.text-dark {
+  @extend .text;
+  color: $text-color;
+}
+
+.card-input {
+  all: unset;
+  width: 60px;
+  color: white;
+  font-size: $font-size;
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
+  text-align: center;
+  &:focus {
+    @extend .card-input;
+  }
+}
+
+.card-danger {
+  color: #f38ba8;
+}
+.card-success {
+  color: #a6e3a1;
+}
