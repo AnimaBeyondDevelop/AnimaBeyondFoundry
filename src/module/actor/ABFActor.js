@@ -371,11 +371,11 @@ export class ABFActor extends Actor {
 
   /** @type {number} */
   get accumulatedDefenses() {
-    return this.getFlag('animabf', 'defensesCounter') ?? 0;
+    return this.getFlag('animabf', 'defenseCount') ?? 0;
   }
   set accumulatedDefenses(value) {
     if (!this.autoAccumulateDefenses) return;
-    this.setFlag('animabf', 'defensesCounter', value);
+    this.setFlag('animabf', 'defenseCount', value);
   }
 
   /**
