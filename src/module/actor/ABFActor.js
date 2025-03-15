@@ -290,7 +290,7 @@ export class ABFActor extends Actor {
    * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
    * @param {boolean} applyPsychicFatigue - Whether to apply the PsychicFatigue or spent psychic Points. Default is `true`.
    *
-   * @returns {number} The calculated psychic fatigue value.
+   * @returns {number | undefined} The calculated psychic fatigue value. Returns undefines if the power difficulty is reach.
    */
   evaluatePsychicFatigue(
     power,
@@ -305,30 +305,31 @@ export class ABFActor extends Actor {
         psychicPoints
       }
     } = this.system;
-    const psychicFatigue = {
-      value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
-      inmune: fatigueResistance || eliminateFatigue
-    };
+    const psychicFatigue = psychicFatigueCheck(
+      power?.system.effects[psychicDifficulty].value
+    );
+    const isImmune = fatigueResistance || eliminateFatigue;
 
-    if (psychicFatigue.value) {
+    if (psychicFatigue) {
+      if (isImmune) psychicFatigue = 0;
       if (sendToChat) {
         const { i18n } = game;
         ChatMessage.create({
           speaker: ChatMessage.getSpeaker({ actor: this }),
           flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
-            fatiguePen: psychicFatigue.inmune ? 0 : psychicFatigue.value
+            fatiguePen: psychicFatigue
           })
         });
       }
-      if (!psychicFatigue.inmune && !eliminateFatigue && applyPsychicFatigue) {
-        this.applyPsychicFatigue(psychicFatigue.value);
+      if (applyPsychicFatigue) {
+        this.applyPsychicFatigue(psychicFatigue);
       }
     }
     if (eliminateFatigue && applyPsychicFatigue) {
       this.consumePsychicPoints(1);
     }
 
-    return psychicFatigue.value;
+    return psychicFatigue;
   }
 
   /**

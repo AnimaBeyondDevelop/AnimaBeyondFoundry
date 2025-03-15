@@ -61,8 +61,6 @@ export class PsychicDefense extends Defense {
     if (!this.newShield) {
       this.supernaturalShield = this.defender.system.combat.supernaturalShields[0];
     }
-
-    this.preventFatigue = this.defender.system.psychic.psychicSettings.fatigueResistance;
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
@@ -71,6 +69,7 @@ export class PsychicDefense extends Defense {
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
     this.defender.applyPsychicFatigue(this.psychicFatigue);
+    if (this.psychicFatigue !== undefined) return;
     if (this.newShield) {
       this.newShield = false;
       this.#supernaturalShield = await this.defender.newSupernaturalShield(
@@ -88,8 +87,11 @@ export class PsychicDefense extends Defense {
     }
   }
 
+  /** @type {string} */
   get displayName() {
-    return /** @type {string} */ (this.supernaturalShield.name);
+    if (this.psychicFatigue !== undefined)
+      return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
+    return this.supernaturalShield.name;
   }
   /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
@@ -177,7 +179,7 @@ export class PsychicDefense extends Defense {
   }
 
   toMessage() {
-    if (this.psychicFatigue) {
+    if (this.psychicFatigue !== undefined) {
       return;
     }
     super.toMessage();

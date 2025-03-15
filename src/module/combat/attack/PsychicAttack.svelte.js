@@ -73,8 +73,6 @@ export class PsychicAttack extends Attack {
     this.potential.registerModTable(this.potentialModifiers);
 
     this.power = this.attacker.getLastPowerUsed('offensive') ?? this.availablePowers[0];
-
-    this.preventFatigue = this.defender.system.psychic.psychicSettings.fatigueResistance;
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
@@ -85,8 +83,11 @@ export class PsychicAttack extends Attack {
     this.attacker.applyPsychicFatigue(this.psychicFatigue);
   }
 
+  /** @type {string} */
   get displayName() {
-    return /** @type {string} */ (this.power.name);
+    if (this.psychicFatigue !== undefined)
+      return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
+    return this.power.name;
   }
 
   get projectionModifiers() {
@@ -139,7 +140,7 @@ export class PsychicAttack extends Attack {
   }
 
   toMessage() {
-    if (this.psychicFatigue) return;
+    if (this.psychicFatigue !== undefined) return;
     return super.toMessage();
   }
 
