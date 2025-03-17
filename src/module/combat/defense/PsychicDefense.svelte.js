@@ -33,7 +33,7 @@ export class PsychicDefense extends Defense {
   mentalPatternImbalance = $state(false);
 
   /** @type {number} */
-  psychicFatigue;
+  psychicFatigue = $state(undefined);
 
   /**
    * ID of the used supernatural Shield.

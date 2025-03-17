@@ -31,7 +31,7 @@
 <CombatCard>
   {#snippet top()}
     <div class="row pull-right">
-      {#if defense.isPotentialRolled || !defense.newShield}
+      {#if (defense.isPotentialRolled || !defense.newShield) && defense.psychicFatigue === undefined}
         <InputLabel
           icon="psychic"
           label={i18n.localize('anima.ui.psychic.psychicPoints.title') +
@@ -59,6 +59,7 @@
             bind:value={defense.potential.modifiers.cvs.value}
             maxValue={Math.min(defense.availablePsychicPoints, 5)}
             title={i18n.localize('anima.ui.psychic.psychicPoints.title')}
+            disabled={defense.isPotentialRolled}
           />
         </InputLabel>
       {/if}
@@ -73,7 +74,8 @@
       >
         <ModifiedAbilityInput
           bind:ability={defense.ability}
-          disabled={!defense.isPotentialRolled && defense.newShield}
+          disabled={(!defense.isPotentialRolled && defense.newShield) ||
+            defense.psychicFatigue !== undefined}
         />
       </InputLabel>
       {#if defense.newShield}

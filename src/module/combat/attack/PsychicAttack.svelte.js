@@ -54,7 +54,7 @@ export class PsychicAttack extends Attack {
   mentalPatternImbalance = $state(false);
 
   /** @type {number} */
-  psychicFatigue;
+  psychicFatigue = $state(undefined);
 
   /**
    * @param {TokenDocument} attacker The attacker token.
