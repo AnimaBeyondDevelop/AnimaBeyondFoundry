@@ -158,18 +158,10 @@ export class ABFActor extends Actor {
       psychic: { overmantained: false, maintainMax: 0 }
     };
     if (type === 'psychic') {
-      const {
-        general: {
-          settings: { inhuman, zen }
-        },
-        psychic
-      } = this.system;
+      const { psychic } = this.system;
 
       const potentialBaseDifficulty = psychicPotentialEffect(
-        psychic.psychicPotential.base.value,
-        0,
-        inhuman.value,
-        zen.value
+        psychic.psychicPotential.base.value
       );
       const baseEffect =
         shieldBaseValueCheck(potentialBaseDifficulty, power?.system.effects) ?? 0;
