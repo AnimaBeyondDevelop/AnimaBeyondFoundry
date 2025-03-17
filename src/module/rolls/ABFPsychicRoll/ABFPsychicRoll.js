@@ -14,9 +14,8 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
     } = this.foundryRoll.data;
     const powerDiscipline = power?.system.discipline.value;
     // @ts-ignore
-    const { imbalance } = psychicDisciplines.find(
-      i => i.name === powerDiscipline
-    )?.system;
+    const { imbalance } =
+      psychicDisciplines.find(i => i.name === powerDiscipline)?.system || {};
     let newPotentialTotal = psychicPotentialEffect(
       this.foundryRoll.total ?? 0,
       imbalance
