@@ -76,8 +76,8 @@ export class PsychicAttack extends Attack {
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
-  onApply(results) {
-    this.attacker.consumePsychicPoints(
+  async onApply(results) {
+    await this.attacker.consumePsychicPoints(
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
     this.attacker.applyPsychicFatigue(this.psychicFatigue);
@@ -88,6 +88,16 @@ export class PsychicAttack extends Attack {
     if (this.psychicFatigue !== undefined)
       return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
     return this.power.name;
+  }
+
+  get finalAbility() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.finalAbility;
+  }
+
+  get rolled() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.rolled;
   }
 
   get projectionModifiers() {
@@ -180,6 +190,10 @@ export class PsychicAttack extends Attack {
 
     let powerEffect = this.power?.system.effects[this.potential.final].value;
     this.damage.base = damageCheck(powerEffect);
+
+    if (this.psychicFatigue !== undefined) {
+      this.ability.base = 0;
+    }
   }
 
   potentialToMessage() {

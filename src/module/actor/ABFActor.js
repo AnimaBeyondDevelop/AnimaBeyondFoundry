@@ -86,7 +86,7 @@ export class ABFActor extends Actor {
     if (!psychicPoints) return;
     const cvs = this.system.psychic.psychicPoints.value;
 
-    this.update({
+    return this.update({
       system: {
         psychic: {
           psychicPoints: {

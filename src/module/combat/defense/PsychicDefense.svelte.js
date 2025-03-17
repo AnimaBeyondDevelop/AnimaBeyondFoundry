@@ -65,7 +65,7 @@ export class PsychicDefense extends Defense {
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
   async onApply(results) {
-    this.defender.consumePsychicPoints(
+    await this.defender.consumePsychicPoints(
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
     this.defender.applyPsychicFatigue(this.psychicFatigue);
@@ -93,6 +93,17 @@ export class PsychicDefense extends Defense {
       return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
     return this.supernaturalShield.name;
   }
+
+  get finalAbility() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.finalAbility;
+  }
+
+  get rolled() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.rolled;
+  }
+
   /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
     return {
@@ -216,6 +227,10 @@ export class PsychicDefense extends Defense {
       this.showRoll,
       false
     );
+
+    if (this.psychicFatigue !== undefined) {
+      this.ability.base = 0;
+    }
   }
 
   potentialToMessage() {
