@@ -3,6 +3,7 @@ import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import { WSUserCombatManager } from './module/combat/websocket/ws-combat/user/WSUserCombatManager';
 import { WSGMCombatManager } from './module/combat/websocket/ws-combat/gm/WSGMCombatManager';
 import { ABFItemsEnum } from './module/items/ABFItems';
+import { ABFSocketHandler } from '@module/ABFSocketHandler';
 
 export type ABFItemBaseDataSource<
   D extends Record<string, any>,
@@ -21,6 +22,11 @@ export type ABFItemBaseDataSource<
 };
 
 declare global {
+  interface Game {
+    animabf: {
+      socket: ABFSocketHandler;
+    };
+  }
   interface Window {
     ABFFoundryRoll: typeof ABFFoundryRoll;
 

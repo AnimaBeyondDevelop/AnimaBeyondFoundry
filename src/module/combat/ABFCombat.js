@@ -1,9 +1,25 @@
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
+import { SvelteApplication } from '@svelte/SvelteApplication.svelte';
+import ResultsDialog from './ResultsDialog.svelte';
+import { Attack, AttackDialog } from './attack';
+import { Defense, DefenseDialog } from './defense';
+import { Logger } from '@utils/log';
+
+/**
+ * @import { DocumentConstructionContext } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/types.mjs';
+ * @import { CombatDataConstructorData } from '@league-of-foundry-developers/foundry-vtt-types/src/types/documentConfiguration.mjs';
+ */
 
 export default class ABFCombat extends Combat {
+  /** @type {SvelteApplication<typeof ResultsDialog>?} */
+  gmResultsDialog;
+  /** @type {SvelteApplication<typeof AttackDialog>?} */
+  attackDialog;
+  /** @type {SvelteApplication<typeof DefenseDialog>?} */
+  defenseDialog;
   /**
-   *  @param {import('../../types/foundry-vtt-types/src/foundry/common/data/data.mjs/combatData').CombatDataConstructorData} data
-   *  @param {Context<null>} [context]
+   *  @param {CombatDataConstructorData} data
+   *  @param {DocumentConstructionContext} [context]
    */
   constructor(data, context) {
     super(data, context);
@@ -108,5 +124,128 @@ export default class ABFCombat extends Combat {
     )
       initiativeB -= 2000;
     return initiativeB - initiativeA;
+  }
+
+  /**
+   * @param {TokenDocument} attackerToken
+   * @param {TokenDocument} defenderToken
+   * @param {number} [counterAttackBonus]
+   */
+  newCombatDialog(attackerToken, defenderToken, counterAttackBonus) {
+    if (!game.ready) return;
+    if (!game.animabf.socket) return;
+    if (!game.user?.isGM) return;
+
+    if (this.gmResultsDialog) {
+      throw new Error('macros.combat.dialog.error.alreadyInCombat.title');
+    }
+
+    let attackPromise = game.animabf.socket
+      .requestAttack(attackerToken, defenderToken, counterAttackBonus)
+      .then(payload => Attack.fromJSON(payload.attack));
+    let defensePromise = attackPromise.then(attack => {
+      if (!attack) {
+        Logger.error('No attack was returned from the server');
+        return;
+      }
+
+      return game.animabf.socket
+        .requestDefense(attack)
+        .then(payload => Defense.fromJSON(payload.defense));
+    });
+
+    this.gmResultsDialog = new SvelteApplication(
+      ResultsDialog,
+      {
+        attack: attackPromise,
+        defense: defensePromise,
+        onClose: () => this.cancelCombatDialogs(),
+        onCounterAttack: (/** @type {number} */ bonus) => {
+          this.cancelCombatDialogs();
+
+          this.newCombatDialog(defenderToken, attackerToken, bonus);
+        }
+      },
+      { frameless: true }
+    );
+    this.gmResultsDialog.render(true);
+  }
+
+  /**
+   * @param {TokenDocument} attackerToken
+   * @param {TokenDocument} defenderToken
+   * @param {number} [counterAttackBonus]
+   *
+   * @returns {Promise<Attack>}
+   */
+  newAttack(attackerToken, defenderToken, counterAttackBonus) {
+    return new Promise(resolve => {
+      this.attackDialog = new SvelteApplication(
+        AttackDialog,
+        {
+          attacker: attackerToken,
+          defender: defenderToken,
+          onAttack: (/** @type {Attack} */ attack) => {
+            resolve(attack);
+            this.closeAttackDialog();
+          },
+          counterAttackBonus
+        },
+        { frameless: true }
+      );
+      this.attackDialog.render(true);
+    });
+  }
+
+  /**
+   * @param {Attack} attack
+   *
+   * @returns {Promise<Defense>}
+   */
+  newDefense(attack) {
+    return new Promise(resolve => {
+      this.defenseDialog = new SvelteApplication(
+        DefenseDialog,
+        {
+          attack,
+          onDefend: (/** @type {Defense} */ defense) => {
+            resolve(defense);
+            this.closeDefenseDialog();
+          }
+        },
+        { frameless: true }
+      );
+      this.defenseDialog.render(true);
+    });
+  }
+
+  closeAttackDialog() {
+    if (!this.attackDialog) return;
+
+    // TODO: check if this works without the options in close
+    this.attackDialog.close({ force: true });
+    this.attackDialog = null;
+  }
+
+  closeDefenseDialog() {
+    if (!this.defenseDialog) return;
+    // TODO: check if this works without the options in close
+    this.defenseDialog.close({ force: true });
+    this.defenseDialog = null;
+  }
+
+  closeResultsDialog() {
+    if (!this.gmResultsDialog) return;
+
+    // TODO: check if this works without the options in close
+    this.gmResultsDialog?.close({ executeHook: false, force: true });
+    this.gmResultsDialog = null;
+  }
+
+  cancelCombatDialogs() {
+    game.animabf?.socket.cancelCombat();
+    this.closeResultsDialog();
+    this.closeAttackDialog();
+    this.closeDefenseDialog();
   }
 }

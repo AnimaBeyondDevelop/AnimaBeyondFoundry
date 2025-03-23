@@ -15,6 +15,7 @@ import { applyMigrations } from './module/migration/migrate';
 import { TestAppV2 } from '@svelte/test/TestAppV2';
 
 import './scss/animabf.scss';
+import { ABFSocketHandler } from '@module/ABFSocketHandler';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -75,6 +76,10 @@ Hooks.once('ready', () => {
   attachCustomMacroBar();
 
   applyMigrations();
+
+  game.animabf = {
+    socket: new ABFSocketHandler()
+  };
 });
 
 // Add any additional hooks if necessary
