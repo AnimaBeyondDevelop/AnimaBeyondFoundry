@@ -140,6 +140,12 @@ export class Attack {
   get finalDamage() {
     return this.damage.final;
   }
+  /**
+   * @type {number} Value of the defender armor reduction.
+   */
+  get atReduction() {
+    return 0;
+  }
 
   /** Function calculating the distance for the attack.
    * @returns {number | undefined} The distance if automated distance calculation is enabled, otherwise `undefined`.

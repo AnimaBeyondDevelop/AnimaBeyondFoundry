@@ -132,6 +132,16 @@ export class PhysicAttack extends Attack {
     return this.rangedType === 'throw';
   }
 
+  get atReduction() {
+    if (this.weapon.id === 'unarmed') return 0;
+
+    let quality = this.isProjectile
+      ? this.weapon.system.ammo?.system.quality.value ?? 0
+      : this.weapon.system.quality.value;
+
+    return Math.max(Math.round(quality / 5), 0);
+  }
+
   get mastery() {
     return this.attacker.system.combat.attack.base.value >= 200;
   }
