@@ -91,6 +91,13 @@
           />
         </InputLabel>
       {/if}
+      <InputLabel
+        label={i18n?.localize('macros.combat.finalArmor.title')}
+        icon="armor"
+        useIcon
+      >
+        <ModifiedAbilityInput bind:ability={defense.at} />
+      </InputLabel>
     </div>
   {/snippet}
 
