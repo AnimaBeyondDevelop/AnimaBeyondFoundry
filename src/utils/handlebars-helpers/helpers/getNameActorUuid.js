@@ -2,7 +2,7 @@ export const getNameActorUuid = {
   name: 'getNameActorUuid',
   fn: (actorUuid, thisActor) => {
     if (actorUuid) {
-      if (actorUuid === thisActor.uuid) {
+      if (actorUuid === thisActor?.uuid) {
         return '-';
       }
       const actorId = actorUuid.split('.')[1];
