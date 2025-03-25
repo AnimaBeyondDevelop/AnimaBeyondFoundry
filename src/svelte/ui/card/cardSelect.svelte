@@ -73,9 +73,12 @@ to this component:
       box-shadow: unset;
       border: none;
       appearance: none;
-      height: calc(100% - 2 * card.$border-size);
+      height: calc(100% - 2 * card.$border-size - 2px);
       width: 100%;
       background: card.$background-light;
+      color: black;
+      outline: none;
+      line-height: unset;
     }
 
     option {
