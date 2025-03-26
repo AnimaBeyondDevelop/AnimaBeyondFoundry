@@ -161,7 +161,7 @@ export class Attack {
       ],
       {}
     );
-    return measurePath.distance / (canvas.dimensions?.distance ?? 1);
+    return Math.floor(measurePath.distance / (canvas.dimensions?.distance ?? 1));
   }
 
   /**
