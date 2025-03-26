@@ -28,13 +28,17 @@
       label: 'mystic',
       component: MysticAttackDialog,
       Attack: MysticAttack,
-      available: attacker.actor.getKnownSpells('attack').length > 0
+      available:
+        attacker.actor.getKnownSpells('attack').length > 0 &&
+        counterAttackBonus === undefined
     },
     {
       label: 'psychic',
       component: PsychicAttackDialog,
       Attack: PsychicAttack,
-      available: attacker.actor.getPsychicPowers('attack').length > 0
+      available:
+        attacker.actor.getPsychicPowers('attack').length > 0 &&
+        counterAttackBonus === undefined
     }
   ];
 
