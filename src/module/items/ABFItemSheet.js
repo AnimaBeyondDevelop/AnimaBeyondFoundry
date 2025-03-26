@@ -47,9 +47,11 @@ export default class ABFItemSheet extends ItemSheet {
       case ABFItems.ARMOR:
         return 235;
       case ABFItems.AMMO:
-        return 144;
+        return 160;
       case ABFItems.PSYCHIC_POWER:
         return 540;
+      case ABFItems.SUPERNATURAL_SHIELD:
+        return 160;
       default:
         return 450;
     }

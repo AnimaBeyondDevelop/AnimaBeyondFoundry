@@ -1,0 +1,56 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="supernatural-shield-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+      <div class='supernatural-shield-header'>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="name"
+          hideTitle=true
+          inputType="text"
+          inputName=(concat "name")
+          inputValue=item.name
+        }}
+      </div>
+    {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="supernatural-shield-item-dialog"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="type"
+        title=(localize "anima.ui.combat.supernaturalShields.type.title")
+        disabled=true
+        inputType="text"
+        inputName="system.type"
+        inputValue=(localize (concat 'anima.ui.combat.supernaturalShields.type.' system.type '.title'))
+      }}
+      {{#if (is 'eq' system.type 'mystic')}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="spell-grade"
+          title=(localize "dialogs.spellGrade.title")
+          disabled=true
+          inputType="text"
+          inputName="system.spellGrade"
+          inputValue=(localize (concat 'dialogs.spellGrade.' system.spellGrade '.title'))
+        }}      
+      {{/if}}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="damage-barrier"
+        title=(localize "anima.ui.combat.supernaturalShields.damageBarrier.title")
+        inputName="system.damageBarrier"
+        inputValue=system.damageBarrier
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="shieldPoints"
+        title=(localize "anima.ui.combat.supernaturalShields.shieldPoints.title")
+        inputName="system.shieldPoints"
+        inputValue=system.shieldPoints
+      }}
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

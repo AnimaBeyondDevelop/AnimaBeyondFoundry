@@ -21,6 +21,8 @@ export const INITIAL_SUPERNATURAL_SHIELD_DATA = {
 export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
   type: ABFItems.SUPERNATURAL_SHIELD,
   isInternal: false,
+  defaultValue: INITIAL_SUPERNATURAL_SHIELD_DATA,
+  hasSheet: true,
   fieldPath: ['combat', 'supernaturalShields'],
   selectors: {
     addItemButtonSelector: 'add-supernatural-shield',
@@ -53,7 +55,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       const spell = actor.system.mystic.spells.find(i => i._id == spellID);
       if (!spell) return;
 
-      actor.setCastMethodOverride(castMethod)
+      actor.setCastMethodOverride(castMethod);
       actor.castSpell(spell, spellGrade, castMethod);
 
       actor.newSupernaturalShield('mystic', {}, 0, spell, spellGrade);
