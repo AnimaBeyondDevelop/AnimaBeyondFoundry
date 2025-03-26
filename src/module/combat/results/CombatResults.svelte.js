@@ -34,7 +34,10 @@ export class CombatResults extends CombatResultsCalculator {
 
   get supernaturalShieldDamage() {
     if (this.defense instanceof PhysicDefense || this.totalDifference > 0) return;
-    return this.baseDamage * this.supernaturalShieldDamageMultiplier;
+    return (
+      (this.baseDamage + this.attack.atReduction * 10) *
+      this.supernaturalShieldDamageMultiplier
+    );
   }
 
   apply() {
