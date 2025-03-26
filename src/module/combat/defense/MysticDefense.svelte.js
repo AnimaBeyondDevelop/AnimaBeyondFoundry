@@ -96,10 +96,6 @@ export class MysticDefense extends Defense {
   }
 
   set spellGrade(spellGrade) {
-    if (!this.availableSpellGrades.includes(spellGrade))
-      throw new Error(
-        `Spell ${this.spell.id} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
-      );
     this.#spellGrade = spellGrade;
   }
 

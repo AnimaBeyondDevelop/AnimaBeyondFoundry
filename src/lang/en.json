@@ -656,6 +656,7 @@
   "dialogs.spellCasting.warning.preparedSpell": "You do not have this Spell Prepared",
   "dialogs.spellCasting.warning.zeonAccumulated": "You don't have enough Accumulated Zeon",
   "dialogs.spellCasting.warning.zeonPool": "You don't have enough Zeon in your Pool",
+  "dialogs.spellCasting.warning.intRequired": "You don't have enough Intellect",
   "macros.combat.dialog.closeButton.title": "Close",
   "macros.combat.dialog.confirmButton.title": "Confirm",
   "macros.combat.dialog.applyAndCloseButton.title": "Apply and close",

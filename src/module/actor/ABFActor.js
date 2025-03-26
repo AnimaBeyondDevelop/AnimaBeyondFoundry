@@ -408,6 +408,9 @@ export class ABFActor extends Actor {
     let zeonCost =
       spell?.system.grades[spellGrade].zeon.value + (increasedZeon.accumulated ?? 0);
     let zeonPool = this.system.mystic.zeon.value;
+    let intelligence =
+      this.system.characteristics.primaries.intelligence.value +
+      (this.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? 3 : 0);
 
     switch (castMethod) {
       case 'accumulated': {
@@ -443,6 +446,10 @@ export class ABFActor extends Actor {
     if (zeonPool < (increasedZeon.pool ?? 0)) {
       canCast = false;
       warningMessage = 'dialogs.spellCasting.warning.zeonPool';
+    }
+    if (intelligence < spell.system.grades[spellGrade].intRequired.value) {
+      canCast = false;
+      warningMessage = 'dialogs.spellCasting.warning.intRequired';
     }
     if (!canCast) {
       ui.notifications.warn(game.i18n.localize(warningMessage));
