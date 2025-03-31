@@ -2,7 +2,7 @@
   "id": "animabf",
   "title": "Anima Beyond Fantasy",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
-  "version": "2.0.0-beta2",
+  "version": "2.0.0-beta10",
   "compatibility": { "minimum": "12", "verified": "12.331" },
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
