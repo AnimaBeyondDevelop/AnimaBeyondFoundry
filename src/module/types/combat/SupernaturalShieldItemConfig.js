@@ -3,6 +3,7 @@ import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDial
 import { openModDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { SpellGrades } from '../mystic/SpellItemConfig';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
 
 /**
  * Initial data for a new supernatural shield. Used to infer the type of the data inside `supernaturalShield.system`
@@ -48,26 +49,13 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
     if (tab === 'mystic') {
       const spellID = results['new.mysticShield.id'];
       const spellGrade = results['new.mysticShield.grade'];
-      const castSpell = results['new.mysticShield.castSpell'];
-      const innate = castSpell == 'innate';
-      const prepared = castSpell == 'prepared';
-      const override = castSpell == 'override';
+      const castMethod = results['new.mysticShield.castSpell'];
       const spell = actor.system.mystic.spells.find(i => i._id == spellID);
-      if (!spell) {
-        return;
-      }
-      actor.setFlag('animabf', 'spellCastingOverride', override);
-      const spellCasting = actor.mysticCanCastEvaluate(
-        spell,
-        spellGrade,
-        { innate, prepared },
-        override
-      );
-      spellCasting.casted = { innate, prepared };
-      if (actor.evaluateCast(spellCasting)) {
-        return;
-      }
-      actor.mysticCast(spellCasting, spell.name, spellGrade);
+      if (!spell) return;
+
+      actor.setCastMethodOverride(castMethod)
+      actor.castSpell(spell, spellGrade, castMethod);
+
       actor.newSupernaturalShield('mystic', {}, 0, spell, spellGrade);
     } else if (tab === 'psychic') {
       const powerID = results['new.psychicShield.id'];
@@ -105,5 +93,6 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
       }
       actor.newSupernaturalShield('psychic', power, powerDifficulty);
     }
-  }
+  },
+  async onUpdate(actor, changes) {}
 });
