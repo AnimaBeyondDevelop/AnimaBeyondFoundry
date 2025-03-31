@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "anima-beyond-foundry",
-  "version": "1.19.5",
+  "version": "2.0.0-beta10",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "type": "module",
   "scripts": {
@@ -12,6 +12,8 @@
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.cjs",
     "release:dry": "node scripts/release/release.cjs --dry",
+    "beta": "node scripts/release/beta.cjs",
+    "beta:dry": "node scripts/release/beta.cjs --dry",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest src",
     "hook:pre-commit": "lint-staged",
     "cypress:open": "cd integration && cypress open",
