@@ -258,7 +258,8 @@ export class ABFActor extends Actor {
           {
             finalAbility: attack.finalAbility,
             finalDamage: Math.abs(newShieldPoints),
-            halvedAbsorption: attack.halvedAbsorption
+            halvedAbsorption: attack.halvedAbsorption,
+            atReduction: attack.atReduction
           },
           {
             finalAbility: 0,

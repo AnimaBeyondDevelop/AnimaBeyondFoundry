@@ -47,7 +47,7 @@ export class CombatResultsCalculator {
   }
 
   get at() {
-    return Math.clamp(this.#defense.finalAt - this.#attack.atReduction, 0, 10);
+    return Math.clamp(this.#defense.finalAt - (this.#attack.atReduction ?? 0), 0, 10);
   }
 
   /** Base damage of the attack */
