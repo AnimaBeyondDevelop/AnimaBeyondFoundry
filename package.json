@@ -26,7 +26,7 @@
   "devDependencies": {
     "@digitak/tsc-esm": "^3.1.4",
     "@foundryvtt/foundryvtt-cli": "^1.0.3",
-    "@league-of-foundry-developers/foundry-vtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#v12/main",
+    "@league-of-foundry-developers/foundry-vtt-types": "^12.331.3-beta",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
     "@tinymce/tinymce-svelte": "^2.0.1",
     "@types/faker": "^5.5.6",
@@ -55,7 +55,7 @@
     "readline-sync": "^1.4.10",
     "rimraf": "^3.0.2",
     "rollup-plugin-copy": "^3.5.0",
-    "sass": "^1.32.8",
+    "sass": "^1.80.6",
     "sass-lint": "^1.13.1",
     "svelte": "^5.0.0-next.262",
     "svelte-check": "^4.0.4",

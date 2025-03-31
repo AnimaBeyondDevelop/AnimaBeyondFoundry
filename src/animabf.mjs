@@ -12,6 +12,7 @@ import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
+import { TestAppV2 } from '@svelte/test/TestAppV2';
 
 import './scss/animabf.scss';
 

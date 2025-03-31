@@ -129,7 +129,7 @@
       <CustomSelect
         cssClass="critic"
         title={i18n.localize('anima.ui.mystic.spell.critic.title')}
-        choices={iterables.combat.weapon.criticTypesWithNone}
+        choices={iterables.combat.criticTypesWithNone}
         bind:value={spell.system.critic.value}
       />
       <TitledInput

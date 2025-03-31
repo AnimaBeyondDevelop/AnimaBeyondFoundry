@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
+import { NoneCriticType } from '../combat/CriticType';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /**
@@ -63,7 +63,7 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   actionType: { value: PsychicPowerActionTypes.ACTIVE },
   combatType: { value: PsychicPowerCombatTypes.ATTACK },
   discipline: { value: PsychicPowerDisciplines.MATRIX_POWERS },
-  critic: { value: NoneWeaponCritic.NONE },
+  critic: { value: NoneCriticType.NONE },
   hasMaintenance: { value: false },
   visible: false,
   macro: '',

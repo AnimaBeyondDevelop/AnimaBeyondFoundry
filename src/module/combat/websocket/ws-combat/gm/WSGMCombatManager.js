@@ -2,15 +2,16 @@ import { Logger } from '../../../../../utils';
 import { WSCombatManager } from '../WSCombatManager';
 import { GMMessageTypes } from './WSGMCombatMessageTypes';
 import { UserMessageTypes } from '../user/WSUserCombatMessageTypes';
-import { GMCombatDialog } from '../../../../dialogs/combat/GMCombatDialog';
 import { CombatDialogs } from '../../dialogs/CombatDialogs';
-import { CombatDefenseDialog } from '../../../../dialogs/combat/CombatDefenseDialog';
-import { CombatAttackDialog } from '../../../../dialogs/combat/CombatAttackDialog';
 import { ABFDialogs } from '../../../../dialogs/ABFDialogs';
 import { canOwnerReceiveMessage } from '../util/canOwnerReceiveMessage';
 import { getTargetToken } from '../util/getTargetToken';
 import { assertCurrentScene } from '../util/assertCurrentScene';
 import { ABFSettingsKeys } from '../../../../../utils/registerSettings';
+import { ResultsDialog } from '@module/combat/results';
+import { SvelteApplication } from '@svelte/SvelteApplication.svelte';
+import { Attack, AttackDialog } from '@module/combat/attack';
+import { Defense, DefenseDialog } from '@module/combat/defense';
 
 export class WSGMCombatManager extends WSCombatManager {
   receive(msg) {
@@ -30,40 +31,27 @@ export class WSGMCombatManager extends WSCombatManager {
   }
 
   async manageUserAttack(msg) {
+    let attack = Attack.fromJSON(msg.payload);
+    this.manageAttack(attack, msg);
+  }
+
+  /** @param {Attack} attack */
+  manageAttack(attack) {
     if (this.combat) {
-      this.combat.updateAttackerData(msg.payload);
+      this.combat.props.attack = attack;
 
-      const { attackerToken, defenderToken, defenderActor } = this.combat;
+      const { attackerToken, defenderToken, defender } = attack;
 
-      const { critic } = msg.payload.values;
-      const { visible } = msg.payload.values;
-      const { projectile } = msg.payload.values;
-      const { damage } = msg.payload.values;
-      const { distance } = msg.payload.values;
-
-      if (canOwnerReceiveMessage(defenderActor)) {
+      if (canOwnerReceiveMessage(defender)) {
         const newMsg = {
           type: GMMessageTypes.Attack,
-          payload: {
-            attackerTokenId: attackerToken.id,
-            defenderTokenId: defenderToken.id,
-            result: msg.payload
-          }
+          payload: attack
         };
 
         this.emit(newMsg);
       } else {
         try {
-          this.manageDefense(
-            attackerToken,
-            defenderToken,
-            msg.payload.type,
-            critic,
-            visible,
-            projectile,
-            damage,
-            distance
-          );
+          this.manageDefense(attackerToken, defenderToken, attack);
         } catch (err) {
           if (err) {
             Logger.error(err);
@@ -79,7 +67,8 @@ export class WSGMCombatManager extends WSCombatManager {
 
   manageUserDefense(msg) {
     if (this.combat) {
-      this.combat.updateDefenderData(msg.payload);
+      let defense = Defense.fromJSON(msg.payload);
+      this.combat.props.defense = defense;
     } else {
       Logger.warn('User attack received but none combat is running');
     }
@@ -145,7 +134,7 @@ export class WSGMCombatManager extends WSCombatManager {
             if (selectedToken?.id && targetToken?.id) {
               this.combat = this.createNewCombat(selectedToken, targetToken);
 
-              this.manageAttack(selectedToken, targetToken);
+              this.manageGMAttack(selectedToken, targetToken);
             }
           }
         }
@@ -218,140 +207,93 @@ export class WSGMCombatManager extends WSCombatManager {
     }
   }
 
-  createNewCombat(attacker, defender) {
-    return new GMCombatDialog(attacker, defender, {
-      onClose: () => {
-        this.endCombat();
-      },
-      onCounterAttack: bonus => {
-        this.endCombat();
+  /**
+   * @param {TokenDocument} attacker
+   * @param {TokenDocument} defender
+   * @param {number} [counterAttackBonus]
+   */
+  createNewCombat(attacker, defender, counterAttackBonus) {
+    const attack = new Attack(attacker, defender, counterAttackBonus);
+    let resultsApp = new SvelteApplication(
+      ResultsDialog,
+      {
+        attack,
+        defense: new Defense(attack),
+        onClose: () => {
+          this.endCombat();
+        },
+        onCounterAttack: (/** @type {number} */ bonus) => {
+          this.endCombat();
 
-        this.combat = new GMCombatDialog(
-          defender,
-          attacker,
-          {
-            onClose: () => {
-              this.endCombat();
-            },
-            onCounterAttack: () => {
-              this.endCombat();
-            }
-          },
-          {
-            isCounter: true,
-            counterAttackBonus: bonus
+          this.combat = this.createNewCombat(defender, attacker, bonus);
+
+          if (canOwnerReceiveMessage(defender.actor)) {
+            const newMsg = {
+              type: GMMessageTypes.CounterAttack,
+              payload: {
+                attackerTokenId: defender.id,
+                defenderTokenId: attacker.id,
+                counterAttackBonus: bonus
+              }
+            };
+
+            this.emit(newMsg);
+          } else {
+            this.manageGMAttack(defender, attacker, bonus);
           }
-        );
-
-        if (canOwnerReceiveMessage(defender.actor)) {
-          const newMsg = {
-            type: GMMessageTypes.CounterAttack,
-            payload: {
-              attackerTokenId: defender.id,
-              defenderTokenId: attacker.id,
-              counterAttackBonus: bonus
-            }
-          };
-
-          this.emit(newMsg);
-        } else {
-          this.manageAttack(defender, attacker, bonus);
-        }
-      }
-    });
+        },
+        opacity: 1
+      },
+      { frameless: true }
+    );
+    resultsApp.render(true).then(app => (app.element.style.top = '20vh'));
+    return resultsApp;
   }
 
-  manageAttack(attacker, defender, bonus) {
-    this.attackDialog = new CombatAttackDialog(
-      attacker,
-      defender,
+  manageGMAttack(attacker, defender, bonus) {
+    if (!this.combat) {
+      Logger.warn('No combat is running');
+      return;
+    }
+    this.attackDialog = new SvelteApplication(
+      AttackDialog,
       {
-        onAttack: result => {
+        attacker,
+        defender,
+        onAttack: attack => {
           this.attackDialog?.close({ force: true });
 
           this.attackDialog = undefined;
-
-          if (this.combat) {
-            this.combat.updateAttackerData(result);
-
-            if (canOwnerReceiveMessage(defender.actor)) {
-              const newMsg = {
-                type: GMMessageTypes.Attack,
-                payload: {
-                  attackerTokenId: attacker.id,
-                  defenderTokenId: defender.id,
-                  result
-                }
-              };
-
-              this.emit(newMsg);
-            } else {
-              const { critic } = result.values;
-              const { visible } = result.values;
-              const { projectile } = result.values;
-              const { damage } = result.values;
-              const { distance } = result.values;
-
-              try {
-                this.manageDefense(
-                  attacker,
-                  defender,
-                  result.type,
-                  critic,
-                  visible,
-                  projectile,
-                  damage,
-                  distance
-                );
-              } catch (err) {
-                if (err) {
-                  Logger.error(err);
-                }
-
-                this.endCombat();
-              }
-            }
-          }
-        }
+          this.combat.props.opacity = 1;
+          this.manageAttack(attack);
+        },
+        counterAttackBonus: bonus
       },
-      { counterAttackBonus: bonus }
+      { frameless: true }
     );
+    this.combat.props.opacity = 0.5;
+    this.attackDialog.render(true);
   }
 
-  manageDefense(
-    attacker,
-    defender,
-    attackType,
-    critic,
-    visible,
-    projectile,
-    damage,
-    distance
-  ) {
-    this.defendDialog = new CombatDefenseDialog(
+  manageDefense(attacker, defender, attack) {
+    this.defendDialog = new SvelteApplication(
+      DefenseDialog,
       {
-        token: attacker,
-        attackType,
-        critic,
-        visible,
-        projectile,
-        damage,
-        distance
-      },
-      defender,
-      {
-        onDefense: result => {
-          if (this.defendDialog) {
-            this.defendDialog.close({ force: true });
+        attack,
+        onDefend: defense => {
+          this.defendDialog?.close({ force: true });
 
-            this.defendDialog = undefined;
+          this.defendDialog = undefined;
+          this.combat.props.opacity = 1;
 
-            if (this.combat) {
-              this.combat.updateDefenderData(result);
-            }
+          if (this.combat) {
+            this.combat.props.defense = defense;
           }
         }
-      }
+      },
+      { frameless: true }
     );
+    this.combat.props.opacity = 0.5;
+    this.defendDialog.render(true);
   }
 }

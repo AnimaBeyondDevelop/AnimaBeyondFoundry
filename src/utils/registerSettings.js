@@ -10,7 +10,8 @@ export const ABFSettingsKeys = {
   MACRO_PROJECTILE_DEFAULT: 'MACRO_PROJECTILE_DEFAULT',
   MACRO_SHIELD_DEFAULT: 'MACRO_SHIELD_DEFAULT',
   MACRO_MISS_ATTACK_VALUE: 'MACRO_MISS_ATTACK_VALUE',
-  SYSTEM_MIGRATION_VERSION: 'SYSTEM_MIGRATION_VERSION'
+  SYSTEM_MIGRATION_VERSION: 'SYSTEM_MIGRATION_VERSION',
+  USE_ICON_LABELS: 'USE_ICON_LABELS'
 };
 
 export const registerSettings = () => {
@@ -123,5 +124,14 @@ export const registerSettings = () => {
     scope: 'world',
     type: Number,
     default: 0
+  });
+  // This is for migration purposes, it stores the last migration version runned for the world.
+  game.settings.register('animabf', ABFSettingsKeys.USE_ICON_LABELS, {
+    name: 'anima.ui.systemSettings.useIconLabels.title',
+    hint: 'anima.ui.systemSettings.useIconLabels.hint.title',
+    config: true,
+    scope: 'world',
+    type: Boolean,
+    default: false
   });
 };
