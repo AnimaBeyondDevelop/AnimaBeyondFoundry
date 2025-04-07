@@ -257,7 +257,7 @@ export class ABFActor extends Actor {
         let newCombatResult = new CombatResultsCalculator(
           {
             finalAbility: attack.finalAbility,
-            finalDamage: Math.abs(newShieldPoints),
+            finalDamage: Math.max(Math.abs(newShieldPoints) - attack.atReduction * 10, 0),
             halvedAbsorption: attack.halvedAbsorption,
             atReduction: attack.atReduction
           },
