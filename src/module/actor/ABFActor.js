@@ -1009,6 +1009,20 @@ export class ABFActor extends Actor {
 
     return this.getPsychicPowers().find(w => w.id === lastPowerUsed);
   }
+  /**
+   * Returns the last type of Attack used.
+   * @returns {"physical" | "mystic" | "psychic"} if undefined defaults to physical.
+   */
+  getLastTypeOfAttackUsed() {
+    return this.getFlag('animabf', `lastTypeOfAttackUsed`) ?? 'physical';
+  }
+  /**
+   * Returns the last type of Defense used.
+   * @returns {"physical" | "mystic" | "psychic"} if undefined defaults to physical.
+   */
+  getLastTypeOfDefenseUsed() {
+    return this.getFlag('animabf', `lastTypeOfDefenseUsed`) ?? 'physical';
+  }
 
   getCastMethodOverride() {
     return this.getFlag('animabf', 'castMethodOverride');
@@ -1044,6 +1058,33 @@ export class ABFActor extends Actor {
     usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
   }
+  /**
+   * Sets the last type of Attack used to a flag.
+   * @param {"physic" | "mystic" | "psychic"} usage type of Attack
+   * @throws {Error} If the provided usage is not one of the allowed values.
+   */
+  setLastTypeOfAttackUsed(usage) {
+    if (!['physic', 'mystic', 'psychic'].includes(usage)) {
+      throw Error(
+        `Invalid attack type: "${usage}". Expected one of "physic", "mystic", or "psychic".`
+      );
+    }
+    this.setFlag('animabf', `lastTypeOfAttackUsed`, usage);
+  }
+  /**
+   * Sets the last type of Defense used to a flag.
+   * @param {"physic" | "mystic" | "psychic"} usage type of Defense
+   * @throws {Error} If the provided usage is not one of the allowed values.
+   */
+  setLastTypeOfDefenseUsed(usage) {
+    if (!['physic', 'mystic', 'psychic'].includes(usage)) {
+      throw Error(
+        `Invalid defense type: "${usage}". Expected one of "physic", "mystic", or "psychic".`
+      );
+    }
+    this.setFlag('animabf', `lastTypeOfDefenseUsed`, usage);
+  }
+
   /**
    * @param {"override" | "accumulated" | "innate" | "prepared"} castMethod
    */

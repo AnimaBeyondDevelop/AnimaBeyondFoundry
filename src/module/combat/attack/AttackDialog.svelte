@@ -59,6 +59,8 @@
         }
       };
     });
+  let activeTab =
+    tabs.find(tab => tab.label === attacker.actor.getLastTypeOfAttackUsed()) ?? tabs[0];
 </script>
 
-<CardTabbedCombat {tabs} />
+<CardTabbedCombat {tabs} {activeTab} />

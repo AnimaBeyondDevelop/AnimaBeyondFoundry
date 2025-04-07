@@ -44,6 +44,8 @@ export class CombatResults extends CombatResultsCalculator {
     this.defense.defender.applyDamage(this.damage);
     this.attack.onApply(this);
     this.defense.onApply(this);
+    this.attack.attacker.setLastTypeOfAttackUsed(this.attack.type);
+    this.defense.defender.setLastTypeOfDefenseUsed(this.defense.type);
     this.executeCombatMacro();
   }
 
