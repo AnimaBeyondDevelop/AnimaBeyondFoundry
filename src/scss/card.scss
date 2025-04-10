@@ -91,7 +91,7 @@ h4 {
   font-size: $font-size;
   // -webkit-text-stroke: 4px black;
   // paint-order: stroke fill;
-  text-shadow: 2px 2px black;
+  text-shadow: 0.08em 0.08em black;
   text-align: center;
   margin-bottom: 2.5px;
   &:focus {
