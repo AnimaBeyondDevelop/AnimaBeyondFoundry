@@ -110,7 +110,12 @@
       </InputLabel>
     </div>
     <div class="total">
-      <Input type="text" value={dataObject.finalAbility} disabled />
+      <Input
+        type="text"
+        value={dataObject.finalAbility}
+        disabled
+        style="filter: invert(1)"
+      />
     </div>
   {:else}
     Loading...

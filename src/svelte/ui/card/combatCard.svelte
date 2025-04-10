@@ -157,6 +157,8 @@ to this component:
           display: flex;
           .card-select {
             padding-right: 115px;
+            display: flex;
+            align-items: center;
           }
         }
         .bottom {
