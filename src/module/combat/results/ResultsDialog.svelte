@@ -54,10 +54,11 @@
   {@const actor = /** @type {ABFActor} */ (
     dataObject[actionType === 'attack' ? 'attacker' : 'defender']
   )}
-  <h4>{actor.name}</h4>
+  {@const token = dataObject[actionType === 'attack' ? 'attackerToken' : 'defenderToken']}
+  <h4>{token.name}</h4>
   <div class="option-name" title={dataObject.displayName}>{dataObject.displayName}</div>
   {#await actor.getTokenImages() then images}
-    <img src={images[0]} alt={actor.name} />
+    <img src={images[0]} alt={token.name} />
   {/await}
   {#if dataObject.rolled !== undefined}
     {@const abilityName =

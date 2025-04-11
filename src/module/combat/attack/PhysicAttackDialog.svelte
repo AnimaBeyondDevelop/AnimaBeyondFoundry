@@ -8,6 +8,7 @@
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import CombatCard from '@svelte/ui/card/combatCard.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import ModifiersList from '@svelte/ui/modifiersList.svelte';
 
   /**
    * @typedef {import(".").PhysicAttack} PhysicAttack
@@ -161,5 +162,8 @@
       bind:selectedCritic={attack.critic}
       critics={attack.weapon.system.critic}
     />
+  {/snippet}
+  {#snippet modifiers()}
+    <ModifiersList ability={attack.ability} />
   {/snippet}
 </CombatCard>

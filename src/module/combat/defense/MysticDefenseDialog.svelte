@@ -9,6 +9,7 @@
   import CombatCard from '@svelte/ui/card/combatCard.svelte';
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import IconSelect from '@svelte/ui/iconSelect.svelte';
+  import ModifiersList from '@svelte/ui/modifiersList.svelte';
 
   /**
    * @typedef {import(".").MysticDefense} MysticDefense
@@ -142,6 +143,9 @@
         }))}
       />
     {/if}
+  {/snippet}
+  {#snippet modifiers()}
+    <ModifiersList ability={defense.ability} />
   {/snippet}
 </CombatCard>
 
