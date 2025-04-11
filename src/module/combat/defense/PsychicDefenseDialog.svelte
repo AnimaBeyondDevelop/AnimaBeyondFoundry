@@ -9,6 +9,7 @@
   import Input from '@svelte/ui/input.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import ModifiersList from '@svelte/ui/modifiersList.svelte';
 
   /**
    * @typedef {import(".").PsychicDefense} PsychicDefense
@@ -193,6 +194,9 @@
         </CardButton>
       {/if}
     </div>
+  {/snippet}
+  {#snippet modifiers()}
+    <ModifiersList ability={defense.ability} />
   {/snippet}
 </CombatCard>
 

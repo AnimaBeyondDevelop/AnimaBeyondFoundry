@@ -37,17 +37,18 @@
 <style lang="scss">
   @use 'card';
   .modifier-row {
-    --font-size: 16px;
+    --font-size: 22px;
     --icon-size: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     margin-top: -10px;
-    font-size: var(--font-size);
+    font-size: 16px;
     & .modifier-label {
       display: flex;
       width: 100%;
       justify-content: space-between;
+      padding-left: 5px;
     }
   }
 </style>

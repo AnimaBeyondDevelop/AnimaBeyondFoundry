@@ -81,7 +81,8 @@ to this component:
 
   .contractible-card {
     min-height: $title-height;
-    position: relative;
+    height: 100%;
+    // position: relative;
     .title {
       width: card.$card-width;
       min-height: $title-height;

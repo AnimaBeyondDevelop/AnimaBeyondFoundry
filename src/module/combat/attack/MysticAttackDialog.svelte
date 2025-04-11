@@ -9,6 +9,7 @@
   import CardButton from '@svelte/ui/card/cardButton.svelte';
   import IconSelect from '@svelte/ui/iconSelect.svelte';
   import Input from '@svelte/ui/input.svelte';
+  import ModifiersList from '@svelte/ui/modifiersList.svelte';
 
   /**
    * @typedef {import(".").MysticAttack} MysticAttack
@@ -130,6 +131,9 @@
         value: grade
       }))}
     />
+  {/snippet}
+  {#snippet modifiers()}
+    <ModifiersList ability={attack.ability} />
   {/snippet}
 </CombatCard>
 
