@@ -12,7 +12,4 @@
 
 <style lang="scss">
   @use 'card';
-  .card-input {
-    width: auto;
-  }
 </style>
