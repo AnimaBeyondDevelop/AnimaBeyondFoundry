@@ -11,6 +11,9 @@
   /** @type {props} */
   let { ability = $bindable(), disabled = false, class: cssClass = '' } = $props();
 
+  let showSpecial = $state(false);
+  let operationSign = $state('+');
+
   $effect(() => {
     if (!ability.modifiers.special) {
       ability.addModifier('special', { value: 0 });
@@ -22,25 +25,60 @@
   function onchange(e) {
     e.currentTarget.blur();
     const input = e.currentTarget.value;
-    if (['+', '-'].includes(input.slice(0, 1))) {
-      ability.modifiers.special.value += parseInt(input);
-    } else if (input === '') {
+    if (input === '') {
       ability.modifiers.special.value = 0;
+    } else if (['+', '-'].includes(operationSign)) {
+      ability.modifiers.special.value = parseInt(operationSign + input);
     } else {
       ability.modifiers.special.value += parseInt(input) - ability.final;
+    }
+    operationSign = ability.modifiers.special.value < 0 ? '-' : '+';
+    showSpecial = false;
+  }
+  /**
+   * @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}
+   */
+  function onkeydown(e) {
+    let valueBeforeKey = e.currentTarget.value;
+
+    if (e.key === 'Backspace' && valueBeforeKey === '') {
+      operationSign = '';
+    }
+
+    if (e.key === '+' || e.key === '-') {
+      e.preventDefault();
+      operationSign = e.key;
     }
   }
 </script>
 
 <Input
-  class={cssClass}
-  value={ability.final}
+  class={`${cssClass} final`}
+  value={showSpecial ? ability.base : ability.final}
   type="text"
-  onfocus={e => e.currentTarget.select()}
-  {onchange}
+  readonly
   {disabled}
+  onclick={e => {
+    e.currentTarget.blur();
+    showSpecial = !showSpecial;
+  }}
 />
+{#if showSpecial}
+  <Input class={cssClass} value={operationSign} type="text" disabled />
+  <Input
+    class={`${cssClass} special`}
+    value={Math.abs(ability.modifiers.special?.value) ?? 0}
+    type="text"
+    onfocus={e => e.currentTarget.select()}
+    {onchange}
+    {onkeydown}
+    autofocus
+  />
+{/if}
 
 <style lang="scss">
   @use 'card';
+  :global(.card-input.final) {
+    cursor: pointer;
+  }
 </style>
