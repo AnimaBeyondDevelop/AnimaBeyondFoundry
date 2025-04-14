@@ -254,6 +254,7 @@ to this component:
         min-height: 50px;
         padding-top: 35px;
         padding-left: 5px;
+        padding-right: 10px;
       }
     }
   }
