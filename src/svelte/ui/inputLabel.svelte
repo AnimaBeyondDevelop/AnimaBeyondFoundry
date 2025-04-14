@@ -95,6 +95,7 @@ Allows onclick bindings for the icon with the `onIconClick` prop.
     display: inline-flex;
     flex-direction: row;
     align-items: center;
+    padding-right: 0.2em;
     .label {
       height: 100%;
 
