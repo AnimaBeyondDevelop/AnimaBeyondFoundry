@@ -9,6 +9,7 @@
    * @property {Snippet} [marker]
    * @property {Snippet} [bottom]
    * @property {Snippet} [buttons]
+   * @property {Snippet} [modifiers]
    */
 
   import Card from '@svelte/ui/card/card.svelte';
