@@ -53,7 +53,7 @@
 </script>
 
 <Input
-  class={`${cssClass} final`}
+  class={`${cssClass} ability final`}
   value={showSpecial ? ability.base : ability.final}
   type="text"
   readonly
@@ -64,21 +64,34 @@
   }}
 />
 {#if showSpecial}
-  <Input class={cssClass} value={operationSign} type="text" disabled />
   <Input
-    class={`${cssClass} special`}
+    class={`${cssClass} ability operator`}
+    value={operationSign}
+    type="text"
+    readonly
+    {disabled}
+  />
+  <Input
+    class={`${cssClass} ability special`}
     value={Math.abs(ability.modifiers.special?.value) ?? 0}
     type="text"
     onfocus={e => e.currentTarget.select()}
     {onchange}
     {onkeydown}
+    {disabled}
     autofocus
   />
 {/if}
 
 <style lang="scss">
   @use 'card';
-  :global(.card-input.final) {
+  :global(.card-input.ability.final) {
     cursor: pointer;
+  }
+  :global(.card-input.ability.final:disabled) {
+    cursor: auto;
+  }
+  :global(.card-input.ability) {
+    margin-right: -0.8em;
   }
 </style>
