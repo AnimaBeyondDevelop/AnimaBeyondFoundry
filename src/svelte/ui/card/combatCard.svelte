@@ -246,9 +246,12 @@ to this component:
       --font-size: 20px;
       .modifiers {
         position: absolute;
-        margin-top: -5px;
         left: 36px;
+        bottom: -27px;
         height: 33px;
+        .title {
+          line-height: 24px;
+        }
       }
       & .modifiers-container {
         min-height: 50px;
