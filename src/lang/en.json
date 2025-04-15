@@ -790,6 +790,7 @@
   "macros.combat.dialog.requestPermission.title": " requests permission to attack ",
   "macros.combat.dialog.rolled.title": "Dice rolled",
   "macros.combat.dialog.showResultsButton.title": "Send to chat the results",
+  "macros.combat.dialog.showResultsButton.button.title": "Send to chat",
   "macros.combat.dialog.showRoll.title": "Show roll",
   "macros.combat.dialog.combat.accumulateDefenses.title": "Accumulate defense",
   "macros.combat.dialog.surprised.title": "Surprised",
