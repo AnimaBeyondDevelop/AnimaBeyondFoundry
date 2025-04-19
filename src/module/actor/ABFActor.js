@@ -411,6 +411,7 @@ export class ABFActor extends Actor {
     let zeonPool = this.system.mystic.zeon.value;
     let intelligence =
       this.system.characteristics.primaries.intelligence.value +
+      // TODO: This shouldn't be hardcoded. We should move this into an active effect associated to the advantage once effects are implemented.
       (this.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? 3 : 0);
 
     switch (castMethod) {

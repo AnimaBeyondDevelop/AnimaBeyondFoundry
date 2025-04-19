@@ -131,7 +131,7 @@ export class PhysicAttack extends Attack {
   get isThrownable() {
     return this.rangedType === 'throw';
   }
-
+  // TODO: this should be a getter/property on the attacking item (e.g. the weapons). Move there when refactoring to specialized item classes
   get atReduction() {
     if (this.weapon.id === 'unarmed') return 0;
 
