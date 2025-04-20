@@ -73,9 +73,9 @@ to this component:
       box-shadow: unset;
       border: none;
       appearance: none;
-      height: calc(100% - 2 * card.$border-size - 2px);
+      height: calc(100% - 2 * card.$border-size);
       width: 100%;
-      background: card.$background-light;
+      background: transparent;
       outline: none;
       line-height: unset;
     }
