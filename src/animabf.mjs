@@ -7,7 +7,7 @@ import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
-import ABFItem from './module/items/ABFItem';
+import { ABFItemProxy } from './module/items/ABFItemProxy';
 import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
@@ -37,7 +37,7 @@ Hooks.once('init', async () => {
     decimals: 2
   };
 
-  CONFIG.Item.documentClass = ABFItem;
+  CONFIG.Item.documentClass = ABFItemProxy;
   CONFIG.ui.actors = ABFActorDirectory;
 
   // Register custom sheets (if any)
