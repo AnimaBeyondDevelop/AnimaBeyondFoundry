@@ -42,11 +42,10 @@ export class CombatResults extends CombatResultsCalculator {
 
   get postShieldDamage() {
     if (this.defense instanceof PhysicDefense || this.totalDifference > 0) return;
-    let newShieldPoints =
-      this.defense.supernaturalShield.system.shieldPoints - this.supernaturalShieldDamage;
-    if (newShieldPoints > 0) return;
+    let remainingShieldPoints = this.defense.shieldPoints - this.supernaturalShieldDamage;
+    if (remainingShieldPoints > 0) return;
     return Math.max(
-      (Math.abs(newShieldPoints) - this.attack.atReduction * 10) /
+      (Math.abs(remainingShieldPoints) - this.attack.atReduction * 10) /
         this.supernaturalShieldDamageMultiplier,
       0
     );
