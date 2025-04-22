@@ -1,5 +1,6 @@
 <script>
   import Input from './input.svelte';
+  import { ABFSettingsKeys } from '@utils/registerSettings';
 
   /**
    * @typedef {Object} props
@@ -9,10 +10,18 @@
    */
 
   /** @type {props} */
-  let { ability = $bindable(), disabled = false, class: cssClass = '' } = $props();
+  let {
+    ability = $bindable(),
+    expanded = $bindable(false),
+    disabled = false,
+    class: cssClass = ''
+  } = $props();
 
-  let showSpecial = $state(false);
   let operationSign = $state('+');
+  const alwaysExpanded = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.EXPAND_ABILITY_INPUTS
+  );
 
   $effect(() => {
     if (!ability.modifiers.special) {
@@ -33,7 +42,7 @@
       ability.modifiers.special.value += parseInt(input) - ability.final;
     }
     operationSign = ability.modifiers.special.value < 0 ? '-' : '+';
-    showSpecial = false;
+    expanded = false;
   }
   /**
    * @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}
@@ -54,16 +63,16 @@
 
 <Input
   class={`${cssClass} ability final`}
-  value={showSpecial ? ability.base : ability.final}
+  value={alwaysExpanded || expanded ? ability.base : ability.final}
   type="text"
   readonly
   {disabled}
   onclick={e => {
     e.currentTarget.blur();
-    showSpecial = !showSpecial;
+    expanded = !expanded;
   }}
 />
-{#if showSpecial}
+{#if alwaysExpanded || expanded}
   <Input
     class={`${cssClass} ability operator`}
     value={operationSign}

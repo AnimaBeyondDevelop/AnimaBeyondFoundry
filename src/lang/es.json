@@ -564,6 +564,8 @@
   "anima.ui.systemSettings.missValueAttackMacro.hint.title": "Al momento de ejecutar un macro en el combate se envía un argumento de fallo, si el valor de la HA es menor que el valor de Fallo y el defensor ganó el combate se considera que falló el ataque (se usa en animaciones)",
   "anima.ui.systemSettings.useIconLabels.title": "Usar iconos como labels",
   "anima.ui.systemSettings.useIconLabels.hint.title": "Indica si usar iconos (por defecto) o títulos como labels para ciertos campos en diálogos y fichas.",
+  "anima.ui.systemSettings.expandAbilityInputs.title": "Expandir entradas de habilidades",
+  "anima.ui.systemSettings.expandAbilityInputs.hint.title": "Si está activado, las secciones de entrada de habilidades en el diálogo de combate se mostrarán siempre expandidas.",
   "anima.ui.tabs.combat": "Combate",
   "anima.ui.tabs.damageResistance": "Acumulación",
   "anima.ui.tabs.domine": "Domine",

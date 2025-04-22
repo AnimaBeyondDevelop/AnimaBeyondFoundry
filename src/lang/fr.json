@@ -511,6 +511,8 @@
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calculez les dégâts en utilisant la table de combat dans le Core Exxet pg. 334-335",
   "anima.ui.systemSettings.useIconLabels.title": "Use icons as labels",
   "anima.ui.systemSettings.useIconLabels.hint.title": "Whether to use icons (default) or titles for labels inside dialogs and sheets.",
+  "anima.ui.systemSettings.expandAbilityInputs.title": "Développer les entrées de compétences",
+  "anima.ui.systemSettings.expandAbilityInputs.hint.title": "Si activé, les sections d'entrée de compétences dans le dialogue de combat seront toujours développées par défaut.",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Encaissement",
   "anima.ui.tabs.domine": "Domaine",
