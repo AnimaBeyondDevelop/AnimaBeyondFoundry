@@ -23,7 +23,7 @@ export class CombatResults extends CombatResultsCalculator {
   }
 
   get canCounterAttack() {
-    return super.canCounterAttack && this.attack.meleeCombat;
+    return super.canCounterAttack && this.attack.meleeCombat && !this.postShieldDamage;
   }
 
   get winner() {
