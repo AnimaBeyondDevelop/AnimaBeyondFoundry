@@ -14,11 +14,16 @@
 
   import Card from '@svelte/ui/card/card.svelte';
   import ContractibleCard from '@svelte/ui/card/contractibleCard.svelte';
+  import { ABFSettingsKeys } from '@utils/registerSettings';
 
   /** @type {Props} */
   let { sidebar, top, selector, marker, bottom, buttons, modifiers } = $props();
   let topHeight = $state();
   let titleHeight = $state(33);
+  let combatModifiersExpanded = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.COMBAT_MODIFIERS_EXPANDED
+  );
   const i18n = game.i18n;
 </script>
 
@@ -83,6 +88,7 @@ to this component:
       <ContractibleCard
         title={i18n.localize('macros.combat.dialog.gm.modifiers.title')}
         direction={'up'}
+        expanded={combatModifiersExpanded}
         bind:titleHeight
       >
         {#snippet body()}

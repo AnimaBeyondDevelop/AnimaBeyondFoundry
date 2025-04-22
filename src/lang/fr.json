@@ -511,6 +511,8 @@
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calculez les dégâts en utilisant la table de combat dans le Core Exxet pg. 334-335",
   "anima.ui.systemSettings.useIconLabels.title": "Use icons as labels",
   "anima.ui.systemSettings.useIconLabels.hint.title": "Whether to use icons (default) or titles for labels inside dialogs and sheets.",
+  "anima.ui.systemSettings.combatModifiersExpanded.title": "Développer les modificateurs de combat",
+  "anima.ui.systemSettings.combatModifiersExpanded.hint.title": "Si activé, la section des modificateurs de combat dans l'interface de combat sera développée par défaut.",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Encaissement",
   "anima.ui.tabs.domine": "Domaine",

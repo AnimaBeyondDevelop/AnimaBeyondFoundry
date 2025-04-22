@@ -11,6 +11,7 @@
   import Input from '@svelte/ui/input.svelte';
   import { CombatResults } from './CombatResults.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import { ABFSettingsKeys } from '@utils/registerSettings';
 
   /**
    * @typedef {Object} Props
@@ -47,6 +48,11 @@
     combatResults.apply();
     onCounterAttack(combatResults.counterAttackBonus);
   }
+
+  let combatModifiersExpanded = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.COMBAT_MODIFIERS_EXPANDED
+  );
 </script>
 
 {#snippet overview(/** @type {Attack | Defense} */ dataObject)}
@@ -143,6 +149,7 @@
   <div class="modifiers">
     <ContractibleCard
       title={i18n.localize('macros.combat.dialog.gm.modifiers.title')}
+      expanded={combatModifiersExpanded}
       bind:titleHeight
     >
       {#snippet body()}
