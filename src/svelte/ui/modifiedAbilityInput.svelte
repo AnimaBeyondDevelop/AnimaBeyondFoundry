@@ -91,6 +91,9 @@
   :global(.card-input.ability.final:disabled) {
     cursor: auto;
   }
+  :global(.card-input.ability.special) {
+    padding-right: 0.3em;
+  }
   :global(.card-input.ability) {
     margin-right: -0.8em;
   }
