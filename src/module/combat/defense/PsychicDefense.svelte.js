@@ -81,8 +81,7 @@ export class PsychicDefense extends Defense {
     if (results.supernaturalShieldDamage) {
       this.defender.applyDamageSupernaturalShield(
         this.#supernaturalShield,
-        results.supernaturalShieldDamage,
-        results
+        results.supernaturalShieldDamage
       );
     }
   }

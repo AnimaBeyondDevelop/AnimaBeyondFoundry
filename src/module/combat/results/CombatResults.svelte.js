@@ -34,10 +34,41 @@ export class CombatResults extends CombatResultsCalculator {
 
   get supernaturalShieldDamage() {
     if (this.defense instanceof PhysicDefense || this.totalDifference > 0) return;
-    return (
-      (this.baseDamage + this.attack.atReduction * 10) *
-      this.supernaturalShieldDamageMultiplier
+    return this.supernaturalShieldDamageMultiplier === 0
+      ? 0
+      : this.baseDamage * this.supernaturalShieldDamageMultiplier +
+          this.attack.atReduction * 10;
+  }
+
+  get postShieldDamage() {
+    if (this.defense instanceof PhysicDefense || this.totalDifference > 0) return;
+    let newShieldPoints =
+      this.defense.supernaturalShield.system.shieldPoints - this.supernaturalShieldDamage;
+    if (newShieldPoints > 0) return;
+    return Math.max(
+      (Math.abs(newShieldPoints) - this.attack.atReduction * 10) /
+        this.supernaturalShieldDamageMultiplier,
+      0
     );
+  }
+
+  get damage() {
+    if (!this.postShieldDamage) {
+      return super.damage;
+    }
+    return new CombatResultsCalculator(
+      {
+        finalAbility: this.attack.finalAbility,
+        finalDamage: this.postShieldDamage,
+        halvedAbsorption: this.attack.halvedAbsorption,
+        atReduction: this.attack.atReduction
+      },
+      {
+        finalAbility: 0,
+        finalAt: this.defense.finalAt,
+        halvedAbsorption: this.defense.halvedAbsorption
+      }
+    ).damage;
   }
 
   apply() {
