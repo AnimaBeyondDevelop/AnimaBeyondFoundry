@@ -11,6 +11,7 @@ import { PsychicDiscipline } from '@module/data/items/enums/PsychicPowerEnums';
 import { SpellGrade, SpellType, Via } from '@module/data/items/enums/SpellEnums';
 import { ResistanceType } from '@module/data/items/enums/ResistanceTypeEnum';
 import { CombatType, ActionType } from '@module/data/items/enums/CombatEnums';
+import { ArmorLocation, ArmorType } from './data/items/enums/ArmorEnums';
 
 const criticTypes = /** @type {const} */ ({
   [CriticType.CUT]: 'anima.ui.combat.armors.at.cut.title',
@@ -85,6 +86,21 @@ export const ABFConfig = /** @type {const} */ ({
         shotTypes: {
           [WeaponShotType.SHOT]: 'anima.ui.combat.weapon.shotType.shot.title',
           [WeaponShotType.THROW]: 'anima.ui.combat.weapon.shotType.throw.title'
+        }
+      },
+      armor: {
+        armorTypes: {
+          [ArmorType.HARD]: 'anima.ui.combat.armors.type.hard.title',
+          [ArmorType.NATURAL]: 'anima.ui.combat.armors.type.natural.title',
+          [ArmorType.SOFT]: 'anima.ui.combat.armors.type.soft.title'
+        },
+        armorLocations: {
+          [ArmorLocation.BREASTPLATE]:
+            'anima.ui.combat.armors.localization.breastplate.title',
+          [ArmorLocation.COMPLETE]: 'anima.ui.combat.armors.localization.complete.title',
+          [ArmorLocation.HEAD]: 'anima.ui.combat.armors.localization.head.title',
+          [ArmorLocation.NIGHTDRESS]:
+            'anima.ui.combat.armors.localization.nightdress.title'
         }
       }
     },
