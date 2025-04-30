@@ -88,11 +88,11 @@ export const SpellItemConfig = ABFItemConfigFactory({
       type: ABFItems.SPELL,
       system: INITIAL_MYSTIC_SPELL_DATA
     });
-  },
-  prepareItem: async item => {
-    item.system.enrichedDescription = await TextEditor.enrichHTML(
-      item.system.description?.value ?? '',
-      { async: true }
-    );
   }
+  // prepareItem: async item => {
+  //   item.system.enrichedDescription = await TextEditor.enrichHTML(
+  //     item.system.description?.value ?? '',
+  //     { async: true }
+  //   );
+  // }
 });

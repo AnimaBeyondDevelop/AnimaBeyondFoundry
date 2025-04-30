@@ -15,6 +15,7 @@ import { applyMigrations } from './module/migration/migrate';
 import { TestAppV2 } from '@svelte/test/TestAppV2';
 import { WeaponData } from '@module/data/items/WeaponData.js';
 import { PsychicPowerData } from '@module/data/items/PsychicPowerData.js';
+import { SpellData } from '@module/data/items/SpellData';
 
 import './scss/animabf.scss';
 
@@ -53,6 +54,7 @@ Hooks.once('init', async () => {
 
   CONFIG.Item.dataModels.weapon = WeaponData;
   CONFIG.Item.dataModels.psychicPower = PsychicPowerData;
+  CONFIG.Item.dataModels.spell = SpellData;
   
   // Register custom system settings
   registerSettings();
