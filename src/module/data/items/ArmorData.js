@@ -1,5 +1,4 @@
 import ItemDataModel from './itemDataModel.js';
-import { SpellGrade } from './enums/SpellEnums.js';
 import { ABFConfig } from '@module/ABFConfig.js';
 import { ArmorLocation, ArmorType } from './enums/ArmorEnums.js';
 
