@@ -2,7 +2,6 @@ import { ABFActor } from '../ABFActor';
 import { ABFItems } from '../../items/ABFItems';
 import { calculateRegenerationTypeFromConstitution } from './prepareActor/calculations/actor/general/calculations/calculateRegenerationTypeFromConstitution';
 import { calculateAttributeModifier } from './prepareActor/calculations/util/calculateAttributeModifier';
-import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternItemConfig';
 
 /**
  * Parses excel data to actor data
@@ -1118,8 +1117,7 @@ export const parseExcelToActor = async (excelData, actor) => {
     let patternName = patternsDictionary[patrones_psi[i]];
     await actor.createItem({
       name: patternName,
-      type: ABFItems.MENTAL_PATTERN,
-      system: INITIAL_MENTAL_PATTERN_DATA
+      type: ABFItems.MENTAL_PATTERN
     });
   }
 };

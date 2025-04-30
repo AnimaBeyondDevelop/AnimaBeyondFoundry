@@ -20,6 +20,8 @@ import { SupernaturalShieldData } from '@module/data/items/SupernaturalShieldDat
 import { TechniqueData } from '@module/data/items/TechniqueData';
 import { ArmorData } from '@module/data/items/ArmorData';
 import { AmmoData } from '@module/data/items/AmmoData';
+import { PsychicDisciplineData } from '@module/data/items/PsychicDisciplineData';
+import { MentalPatternData } from '@module/data/items/MentalPatternData';
 
 import './scss/animabf.scss';
 
@@ -63,6 +65,8 @@ Hooks.once('init', async () => {
   CONFIG.Item.dataModels.technique = TechniqueData;
   CONFIG.Item.dataModels.armor = ArmorData;
   CONFIG.Item.dataModels.ammo = AmmoData;
+  CONFIG.Item.dataModels.psychicDiscipline = PsychicDisciplineData;
+  CONFIG.Item.dataModels.mentalPattern = MentalPatternData;
 
   // Register custom system settings
   registerSettings();

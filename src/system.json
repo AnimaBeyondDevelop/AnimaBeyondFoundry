@@ -17,8 +17,10 @@
     "Item": {
       "ammo": {},
       "armor": {},
+      "mentalPattern": {},
       "supernaturalShield": {},
       "spell": {},
+      "psychicDiscipline": {},
       "psychicPower": {},
       "technique": {},
       "weapon": {}
