@@ -1,4 +1,4 @@
-import { ArmorLocation } from '../../../../../types/combat/ArmorItemConfig';
+import { ArmorLocation } from '@module/data/items/enums/ArmorEnums';
 
 /**
  * @param {number[]} tas

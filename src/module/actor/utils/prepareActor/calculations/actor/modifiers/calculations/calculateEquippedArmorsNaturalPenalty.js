@@ -1,7 +1,4 @@
-import {
-  ArmorType,
-  ArmorLocation
-} from '../../../../../../../types/combat/ArmorItemConfig';
+import { ArmorType, ArmorLocation } from '@module/data/items/enums/ArmorEnums';
 
 /**
  * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
