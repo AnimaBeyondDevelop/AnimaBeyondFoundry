@@ -1,7 +1,6 @@
 import ItemDataModel from './itemDataModel.js';
 import { SpellGrade } from './enums/SpellEnums.js';
 import { ABFConfig } from '@module/ABFConfig.js';
-import { choices } from 'yargs';
 
 const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } =
   foundry.data.fields;
