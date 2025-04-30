@@ -15,9 +15,12 @@
   "styles": ["animabf.css"],
   "documentTypes": {
     "Item": {
+      "advantage": {},
       "ammo": {},
       "armor": {},
+      "disadvantage": {},
       "mentalPattern": {},
+      "note": {},
       "supernaturalShield": {},
       "spell": {},
       "psychicDiscipline": {},

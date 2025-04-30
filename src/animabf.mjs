@@ -22,6 +22,9 @@ import { ArmorData } from '@module/data/items/ArmorData';
 import { AmmoData } from '@module/data/items/AmmoData';
 import { PsychicDisciplineData } from '@module/data/items/PsychicDisciplineData';
 import { MentalPatternData } from '@module/data/items/MentalPatternData';
+import { NoteData } from '@module/data/items/NoteData';
+import { AdvantageData } from '@module/data/items/AdvantageData';
+import { DisadvantageData } from '@module/data/items/DisadvantageData';
 
 import './scss/animabf.scss';
 
@@ -67,6 +70,9 @@ Hooks.once('init', async () => {
   CONFIG.Item.dataModels.ammo = AmmoData;
   CONFIG.Item.dataModels.psychicDiscipline = PsychicDisciplineData;
   CONFIG.Item.dataModels.mentalPattern = MentalPatternData;
+  CONFIG.Item.dataModels.note = NoteData;
+  CONFIG.Item.dataModels.advantage = AdvantageData;
+  CONFIG.Item.dataModels.disadvantage = DisadvantageData;
 
   // Register custom system settings
   registerSettings();
