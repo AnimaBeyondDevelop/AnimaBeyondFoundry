@@ -1,4 +1,5 @@
 import ItemDataModel from './itemDataModel.js';
+import { mutateEnrichedDescription } from './mutations/mutateEnrichedDescription.js';
 
 const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } =
   foundry.data.fields;
