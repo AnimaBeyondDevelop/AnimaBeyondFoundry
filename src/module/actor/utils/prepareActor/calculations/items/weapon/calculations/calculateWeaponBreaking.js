@@ -1,4 +1,4 @@
-import { WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSizeProportion } from '@module/data/items/enums/WeaponEnums';
 import { getWeaponBreakingFromStrength } from '../util/getWeaponBreakingFromStrength';
 
 /**

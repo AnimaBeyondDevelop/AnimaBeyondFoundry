@@ -1,7 +1,7 @@
 import {
   WeaponShotType,
   WeaponSizeProportion
-} from '../../../../../../../types/combat/WeaponItemConfig';
+} from '@module/data/items/enums/WeaponEnums';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
 
 /**

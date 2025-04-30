@@ -1,4 +1,4 @@
-import { WeaponEquippedHandType } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponEquippedHandType } from '@module/data/items/enums/WeaponEnums';
 import { getCurrentEquippedHand } from './getCurrentEquippedHand';
 import { calculateAttributeModifier } from '../../../util/calculateAttributeModifier';
 

@@ -12,6 +12,4 @@ export const prepareItem = async item => {
   if (configuration?.defaultValue) {
     item = await normalizeItem(item, configuration.defaultValue);
   }
-
-  ALL_ITEM_CONFIGURATIONS[item.type]?.prepareItem?.(item);
 };

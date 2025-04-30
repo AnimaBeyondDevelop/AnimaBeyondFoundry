@@ -1,4 +1,4 @@
-import { WeaponSize } from '../../../../../types/combat/WeaponItemConfig';
+import { WeaponSize } from '@module/data/items/enums/WeaponEnums';
 
 /** @param {import('../../../../../types/Actor').ABFActorDataSourceData} data */
 export const mutateInitiative = data => {

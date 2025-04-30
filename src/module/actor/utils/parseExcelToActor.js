@@ -2,7 +2,6 @@ import { ABFActor } from '../ABFActor';
 import { ABFItems } from '../../items/ABFItems';
 import { calculateRegenerationTypeFromConstitution } from './prepareActor/calculations/actor/general/calculations/calculateRegenerationTypeFromConstitution';
 import { calculateAttributeModifier } from './prepareActor/calculations/util/calculateAttributeModifier';
-import { INITIAL_TECHNIQUE_DATA } from '../../types/domine/TechniqueItemConfig';
 import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternItemConfig';
 
 /**
@@ -22,7 +21,7 @@ export const parseExcelToActor = async (excelData, actor) => {
     let excelVersion = excelVersionSplitted.pop();
     if (!requiredExcelVersions.some(item => item === excelVersion)) {
       const versionWarning =
-        game.i18n.localize("anima.ui.importDataFromExcelWarning") +
+        game.i18n.localize('anima.ui.importDataFromExcelWarning') +
         requiredExcelVersions.join(', ');
       ui.notifications.warn(versionWarning);
       return;
@@ -1002,16 +1001,13 @@ export const parseExcelToActor = async (excelData, actor) => {
     });
   }
 
-  
-
   for (var i = 0; i < artesMarciales.length; i++) {
-    if (artesMarciales[i].includes("Tabla de Armas:")) {
+    if (artesMarciales[i].includes('Tabla de Armas:')) {
       await actor.createInnerItem({
         name: artesMarciales[i],
         type: ABFItems.COMBAT_TABLE
       });
-    }
-    else {
+    } else {
       const arteMarcialSeparada = artesMarciales[i]
         .split('(')
         .map(value => value.trim())
@@ -1030,8 +1026,7 @@ export const parseExcelToActor = async (excelData, actor) => {
   // for (var i = 0; i < tecnicasKi.length; i++) {
   //     await actor.createItem({
   //         name: tecnicasKi[i],
-  //         type: ABFItems.TECHNIQUE,
-  //         system: INITIAL_TECHNIQUE_DATA
+  //         type: ABFItems.TECHNIQUE
   //     });
   // };
 
@@ -1139,9 +1134,8 @@ function separarHabilidadesKi(habilidades) {
   let habilidadesSinSellos = '';
   if (indexSellos !== -1) {
     habilidadesSinSellos = habilidades.slice(0, indexSellos).trim();
-  }
-  else{
-    habilidadesSinSellos=habilidades;
+  } else {
+    habilidadesSinSellos = habilidades;
   }
 
   const indexNemesis = habilidadesSinSellos.indexOf('Uso del Némesis');
@@ -1258,4 +1252,3 @@ function SetEmptyIfUndefined(data) {
   }
   return data;
 }
-

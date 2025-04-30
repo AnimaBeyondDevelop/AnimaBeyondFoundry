@@ -1,4 +1,4 @@
-import { WeaponSizeProportion } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSizeProportion } from '@module/data/items/enums/WeaponEnums';
 
 /**
  * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon

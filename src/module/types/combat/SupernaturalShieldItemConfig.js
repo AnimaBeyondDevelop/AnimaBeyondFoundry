@@ -1,27 +1,13 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { openModDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { SpellGrades } from '../mystic/SpellItemConfig';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 import ABFFoundryRoll from '@module/rolls/ABFFoundryRoll';
-
-/**
- * Initial data for a new supernatural shield. Used to infer the type of the data inside `supernaturalShield.system`
- * @readonly
- */
-export const INITIAL_SUPERNATURAL_SHIELD_DATA = {
-  type: 'none',
-  spellGrade: SpellGrades.BASE,
-  damageBarrier: 0,
-  shieldPoints: 0,
-  origin: ''
-};
 
 /** @type {import("../Items").SupernaturalShieldItemConfig} */
 export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
   type: ABFItems.SUPERNATURAL_SHIELD,
   isInternal: false,
-  defaultValue: INITIAL_SUPERNATURAL_SHIELD_DATA,
   hasSheet: true,
   fieldPath: ['combat', 'supernaturalShields'],
   selectors: {

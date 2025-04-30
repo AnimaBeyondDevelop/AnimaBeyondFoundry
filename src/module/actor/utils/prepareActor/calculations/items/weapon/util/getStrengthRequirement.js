@@ -1,7 +1,7 @@
 import {
   WeaponEquippedHandType,
   WeaponManageabilityType
-} from '../../../../../../../types/combat/WeaponItemConfig';
+} from '@module/data/items/enums/WeaponEnums';
 
 /**
  * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon

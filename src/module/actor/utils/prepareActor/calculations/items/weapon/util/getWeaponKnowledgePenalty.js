@@ -1,4 +1,4 @@
-import { WeaponKnowledgeType } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponKnowledgeType } from '@module/data/items/enums/WeaponEnums';
 
 /** @param {WeaponDataSource} weapon */
 export const getWeaponKnowledgePenalty = weapon => {

@@ -1,4 +1,4 @@
-import { WeaponSize } from '../../../../../../../types/combat/WeaponItemConfig';
+import { WeaponSize } from '@module/data/items/enums/WeaponEnums';
 
 export const calculateShieldBlockBonus = shield => {
   switch (shield.system.size.value) {

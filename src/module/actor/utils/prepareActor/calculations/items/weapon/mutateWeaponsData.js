@@ -1,4 +1,4 @@
-import { WeaponShotType } from '../../../../../../types/combat/WeaponItemConfig';
+import { WeaponShotType } from '@module/data/items/enums/WeaponEnums';
 import { calculateWeaponAttack } from './calculations/calculateWeaponAttack';
 import { calculateWeaponBlock } from './calculations/calculateWeaponBlock';
 import { calculateWeaponDamage } from './calculations/calculateWeaponDamage';

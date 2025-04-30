@@ -13,10 +13,10 @@ import { registerCombatWebsocketRoutes } from './module/combat/websocket/registe
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
 import { TestAppV2 } from '@svelte/test/TestAppV2';
-import { WeaponData } from '@module/data/items/WeaponData.js';
-import { PsychicPowerData } from '@module/data/items/PsychicPowerData.js';
+import { WeaponData } from '@module/data/items/WeaponData';
+import { PsychicPowerData } from '@module/data/items/PsychicPowerData';
 import { SpellData } from '@module/data/items/SpellData';
-import { SupernaturalShieldData } from '@module/data/items/SupernaturalShieldData.js';
+import { SupernaturalShieldData } from '@module/data/items/SupernaturalShieldData';
 import { TechniqueData } from '@module/data/items/TechniqueData';
 
 import './scss/animabf.scss';

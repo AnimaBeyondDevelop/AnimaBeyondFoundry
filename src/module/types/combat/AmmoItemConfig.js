@@ -1,6 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
-import { CriticType } from './CriticType';
+import { CriticType } from '@module/data/items/enums/CriticEnums';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /** @type {import("../Items").AmmoItemData} */

@@ -1,4 +1,4 @@
-import { WeaponShotType } from '../../types/combat/WeaponItemConfig';
+import { WeaponShotType } from '@module/data/items/enums/WeaponEnums';
 
 export const calculateATReductionByQuality = result => {
   let quality = 0;

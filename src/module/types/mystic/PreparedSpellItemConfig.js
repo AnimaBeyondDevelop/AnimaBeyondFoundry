@@ -1,5 +1,5 @@
 import { ABFItems } from '../../items/ABFItems';
-import { SpellGrades } from './SpellItemConfig';
+import { SpellGrade } from '@module/data/items/enums/SpellEnums';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
@@ -8,7 +8,7 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @readonly
  */
 export const INITIAL_PREPARED_SPELL_DATA = {
-  grade: { value: SpellGrades.BASE },
+  grade: { value: SpellGrade.BASE },
   zeonAcc: { value: 0, max: 0 },
   prepared: { value: false }
 };
