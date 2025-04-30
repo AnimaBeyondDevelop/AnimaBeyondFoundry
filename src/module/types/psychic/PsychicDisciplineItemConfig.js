@@ -2,14 +2,6 @@ import { ABFItems } from '../../items/ABFItems';
 import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
-/**
- * Initial data, used to infer the type of the data inside an item's `system`
- * @readonly
- */
-export const INITIAL_PSYCHIC_DISCIPLINE_DATA = {
-  imbalance: false
-};
-
 /** @type {import("../Items").PsychicDisciplineItemConfig} */
 export const PsychicDisciplineItemConfig = ABFItemConfigFactory({
   type: ABFItems.PSYCHIC_DISCIPLINE,
