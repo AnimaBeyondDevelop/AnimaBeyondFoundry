@@ -18,6 +18,8 @@ import { PsychicPowerData } from '@module/data/items/PsychicPowerData';
 import { SpellData } from '@module/data/items/SpellData';
 import { SupernaturalShieldData } from '@module/data/items/SupernaturalShieldData';
 import { TechniqueData } from '@module/data/items/TechniqueData';
+import { ArmorData } from '@module/data/items/ArmorData';
+import { AmmoData } from '@module/data/items/AmmoData';
 
 import './scss/animabf.scss';
 
@@ -59,6 +61,8 @@ Hooks.once('init', async () => {
   CONFIG.Item.dataModels.spell = SpellData;
   CONFIG.Item.dataModels.supernaturalShield = SupernaturalShieldData;
   CONFIG.Item.dataModels.technique = TechniqueData;
+  CONFIG.Item.dataModels.armor = ArmorData;
+  CONFIG.Item.dataModels.ammo = AmmoData;
 
   // Register custom system settings
   registerSettings();
