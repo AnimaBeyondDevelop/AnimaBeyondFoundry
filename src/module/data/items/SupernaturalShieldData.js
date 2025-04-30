@@ -1,11 +1,11 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 import { SpellGrade } from './enums/SpellEnums.js';
 import { ABFConfig } from '@module/ABFConfig.js';
 
 const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } =
   foundry.data.fields;
 
-export class SupernaturalShieldData extends ItemDataModel {
+export class SupernaturalShieldData extends AbstractDataModel {
   static defineSchema() {
     const commonData = super.defineSchema();
     return {

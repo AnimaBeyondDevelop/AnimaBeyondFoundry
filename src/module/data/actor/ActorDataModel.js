@@ -1,3 +1,5 @@
+import AbstractDataModel from '../AbstractDataModel.js';
+
 const {
   HTMLField,
   SchemaField,
@@ -8,17 +10,11 @@ const {
   ArrayField
 } = foundry.data.fields;
 
-class ActorDataModel extends foundry.abstract.TypeDataModel {
+class ActorDataModel extends AbstractDataModel {
   static defineSchema() {
-    return {
-      //TODO: Define schema for Actor, this is a placeholder
-      resources: new fields.SchemaField({
-        health: new SchemaField(resourceField(10, 10)),
-        power: new SchemaField(resourceField(1, 3))
-      })
-    };
+    return {};
   }
-  migrateData(source) {
+  static async migrateData(source) {
     const update = super.migrateData(source);
 
     const embeddedUpdates = foundry.abstract.Document.migrateEmbeddedDocuments(

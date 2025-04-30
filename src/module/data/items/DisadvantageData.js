@@ -1,9 +1,9 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 
 const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } =
   foundry.data.fields;
 
-export class DisadvantageData extends ItemDataModel {
+export class DisadvantageData extends AbstractDataModel {
   static defineSchema() {
     const commonData = super.defineSchema();
     return {

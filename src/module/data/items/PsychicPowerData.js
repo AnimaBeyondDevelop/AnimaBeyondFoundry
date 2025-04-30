@@ -1,4 +1,4 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 import { ABFConfig } from '@module/ABFConfig';
 import { CombatType, ActionType } from './enums/CombatEnums.js';
 import { PsychicDiscipline } from './enums/PsychicPowerEnums.js';
@@ -17,7 +17,7 @@ const {
   BooleanField
 } = foundry.data.fields;
 
-export class PsychicPowerData extends ItemDataModel {
+export class PsychicPowerData extends AbstractDataModel {
   static version = 3;
 
   static mutations = [mutateEnrichedDescription];

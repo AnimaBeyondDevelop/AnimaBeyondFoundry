@@ -1,11 +1,11 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 import { NoneCriticType } from './enums/CriticEnums.js';
 import { ABFConfig } from '@module/ABFConfig.js';
 
 const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } =
   foundry.data.fields;
 
-export class AmmoData extends ItemDataModel {
+export class AmmoData extends AbstractDataModel {
   static defineSchema() {
     const commonData = super.defineSchema();
     return {

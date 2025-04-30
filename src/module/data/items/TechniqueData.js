@@ -1,10 +1,10 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 import { mutateEnrichedDescription } from './mutations/mutateEnrichedDescription.js';
 
 const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } =
   foundry.data.fields;
 
-export class TechniqueData extends ItemDataModel {
+export class TechniqueData extends AbstractDataModel {
   static mutations = [mutateEnrichedDescription];
 
   static defineSchema() {

@@ -1,4 +1,4 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 import { ABFConfig } from '@module/ABFConfig';
 import { CombatType, ActionType } from './enums/CombatEnums.js';
 import { NoneCriticType } from './enums/CriticEnums.js';
@@ -18,7 +18,7 @@ const {
   AnyField
 } = foundry.data.fields;
 
-export class SpellData extends ItemDataModel {
+export class SpellData extends AbstractDataModel {
   static version = 3;
 
   static mutations = [mutateEnrichedDescription];

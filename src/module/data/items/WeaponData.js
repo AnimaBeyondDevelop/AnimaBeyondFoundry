@@ -1,4 +1,4 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 import { CriticType, NoneCriticType } from './enums/CriticEnums.js';
 import {
   WeaponEquippedHandType,
@@ -23,7 +23,7 @@ const {
   DocumentIdField
 } = foundry.data.fields;
 
-export class WeaponData extends ItemDataModel {
+export class WeaponData extends AbstractDataModel {
   static version = 2;
 
   static mutations = [mutateStrRequired, mutateWeaponStrength];

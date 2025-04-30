@@ -1,4 +1,4 @@
-import ItemDataModel from './itemDataModel.js';
+import AbstractDataModel from '../AbstractDataModel.js';
 
 const {
   HTMLField,
@@ -10,7 +10,7 @@ const {
   BooleanField
 } = foundry.data.fields;
 
-export class PsychicDisciplineData extends ItemDataModel {
+export class PsychicDisciplineData extends AbstractDataModel {
   static defineSchema() {
     const commonData = super.defineSchema();
     return {

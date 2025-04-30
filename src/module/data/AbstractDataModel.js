@@ -1,7 +1,3 @@
-import { INITIAL_ACTOR_DATA } from '@module/actor/constants';
-import { ResistanceType } from './enums/ResistanceTypeEnum.js';
-import { ABFConfig } from '@module/ABFConfig';
-
 const {
   HTMLField,
   SchemaField,
@@ -12,11 +8,10 @@ const {
   ArrayField
 } = foundry.data.fields;
 
-export default class ItemDataModel extends foundry.abstract.TypeDataModel {
+class AbstractDataModel extends foundry.abstract.TypeDataModel {
   static version = 1;
   static mutations = [];
   static migrations = {};
-
   static defineSchema() {
     return {};
   }
@@ -72,16 +67,6 @@ export default class ItemDataModel extends foundry.abstract.TypeDataModel {
       base: this.numberValueField(),
       special: this.numberValueField(),
       final: this.numberValueField()
-    });
-  }
-
-  static resistanceField() {
-    return new SchemaField({
-      type: new StringField({
-        initial: ResistanceType.NONE,
-        choices: ABFConfig.iterables.combat.resistances
-      }),
-      value: new NumberField({ initial: 0, min: 0 })
     });
   }
 }
