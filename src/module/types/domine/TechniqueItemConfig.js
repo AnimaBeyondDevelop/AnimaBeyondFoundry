@@ -40,15 +40,13 @@ export const TechniqueItemConfig = ABFItemConfigFactory({
       type: ABFItems.TECHNIQUE,
       system: INITIAL_TECHNIQUE_DATA
     });
-  },
-  // TODO: This should go inside prepareItem, as in spellItemConfig. Same for other TextEditors
-  // That it's called also when opening the standalone sheet.
-  onAttach: async (actor, technique) => {
-    technique.system.enrichedDescription = await TextEditor.enrichHTML(
-      technique.system.description?.value ?? '',
-      {
-        async: true
-      }
-    );
   }
+  // onAttach: async (actor, technique) => {
+  //   technique.system.enrichedDescription = await TextEditor.enrichHTML(
+  //     technique.system.description?.value ?? '',
+  //     {
+  //       async: true
+  //     }
+  //   );
+  // }
 });
