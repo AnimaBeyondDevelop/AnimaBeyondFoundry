@@ -94,11 +94,11 @@ export const PsychicPowerItemConfig = ABFItemConfigFactory({
       type: ABFItems.PSYCHIC_POWER,
       system: INITIAL_PSYCHIC_POWER_DATA
     });
-  },
-  prepareItem: async psychicPower => {
-    psychicPower.system.enrichedDescription = await TextEditor.enrichHTML(
-      psychicPower.system.description?.value ?? '',
-      { async: true }
-    );
   }
+  // prepareItem: async psychicPower => {
+  //   psychicPower.system.enrichedDescription = await TextEditor.enrichHTML(
+  //     psychicPower.system.description?.value ?? '',
+  //     { async: true }
+  //   );
+  // }
 });

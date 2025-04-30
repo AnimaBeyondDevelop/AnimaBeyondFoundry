@@ -416,6 +416,7 @@
   "anima.ui.psychic.psychicFatigue.title": "Fatigue",
   "anima.ui.psychic.tabs.main": "Principal",
   "anima.ui.psychic.tabs.secondaries": "Pouvoirs",
+  "anima.ui.resistances.none": "-",
   "anima.ui.resistances.disease": "Maladies",
   "anima.ui.resistances.magic": "Mystique",
   "anima.ui.resistances.physical": "Physique",

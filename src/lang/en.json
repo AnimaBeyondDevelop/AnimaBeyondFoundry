@@ -450,6 +450,7 @@
   "anima.ui.psychic.psychicFatigue.title": "Fatigue",
   "anima.ui.psychic.tabs.main": "Main",
   "anima.ui.psychic.tabs.secondaries": "Powers",
+  "anima.ui.resistances.none": "-",
   "anima.ui.resistances.disease": "Disease",
   "anima.ui.resistances.magic": "Magic",
   "anima.ui.resistances.physical": "Physical",

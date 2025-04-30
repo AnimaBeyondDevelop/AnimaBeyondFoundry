@@ -15,6 +15,7 @@
   "styles": ["animabf.css"],
   "documentTypes": {
     "Item": {
+      "psychicPower": {},
       "weapon": {}
     }
   },

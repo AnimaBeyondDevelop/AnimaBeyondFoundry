@@ -452,6 +452,7 @@
   "anima.ui.psychic.psychicFatigue.title": "Fatiga",
   "anima.ui.psychic.tabs.main": "Principal",
   "anima.ui.psychic.tabs.secondaries": "Poderes",
+  "anima.ui.resistances.none": "-",
   "anima.ui.resistances.disease": "Enfermedades",
   "anima.ui.resistances.magic": "Mágica",
   "anima.ui.resistances.physical": "Física",
