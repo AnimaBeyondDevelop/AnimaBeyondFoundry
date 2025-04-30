@@ -13,6 +13,11 @@
   "scripts": [],
   "esmodules": ["animabf.js"],
   "styles": ["animabf.css"],
+  "documentTypes": {
+    "Item": {
+      "weapon": {}
+    }
+  },
   "socket": true,
   "packs": [
     {
