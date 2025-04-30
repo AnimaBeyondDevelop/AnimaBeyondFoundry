@@ -178,8 +178,8 @@ export const WeaponItemConfig = ABFItemConfigFactory({
 
       weapon.system.ammo = ammo.find(i => i._id === weapon.system.ammoId);
     }
-  },
-  prepareItem(data) {
-    mutateWeapon(data);
   }
+  // prepareItem(data) {
+  //   mutateWeapon(data);
+  // }
 });

@@ -13,6 +13,7 @@ import { registerCombatWebsocketRoutes } from './module/combat/websocket/registe
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
 import { TestAppV2 } from '@svelte/test/TestAppV2';
+import { WeaponData } from '@module/data/items/WeaponData.js';
 
 import './scss/animabf.scss';
 
@@ -49,6 +50,8 @@ Hooks.once('init', async () => {
     makeDefault: true
   });
 
+  CONFIG.Item.dataModels.weapon = WeaponData;
+  
   // Register custom system settings
   registerSettings();
 
