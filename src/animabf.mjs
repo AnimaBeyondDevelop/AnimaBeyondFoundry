@@ -25,6 +25,7 @@ import { MentalPatternData } from '@module/data/items/MentalPatternData';
 import { NoteData } from '@module/data/items/NoteData';
 import { AdvantageData } from '@module/data/items/AdvantageData';
 import { DisadvantageData } from '@module/data/items/DisadvantageData';
+import { ActorDataModel } from '@module/data/actor/ActorDataModel';
 
 import './scss/animabf.scss';
 
@@ -60,6 +61,8 @@ Hooks.once('init', async () => {
   Items.registerSheet('abf', ABFItemSheet, {
     makeDefault: true
   });
+
+  CONFIG.Actor.dataModels.character = ActorDataModel;
 
   CONFIG.Item.dataModels.weapon = WeaponData;
   CONFIG.Item.dataModels.psychicPower = PsychicPowerData;
