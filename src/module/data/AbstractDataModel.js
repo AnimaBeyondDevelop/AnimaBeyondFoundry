@@ -1,3 +1,6 @@
+import { ABFConfig } from '@module/ABFConfig';
+import { ResistanceType } from './items/enums/ResistanceTypeEnum';
+
 const {
   HTMLField,
   SchemaField,
@@ -8,7 +11,7 @@ const {
   ArrayField
 } = foundry.data.fields;
 
-class AbstractDataModel extends foundry.abstract.TypeDataModel {
+export default class AbstractDataModel extends foundry.abstract.TypeDataModel {
   static version = 1;
   static mutations = [];
   static migrations = {};
@@ -55,6 +58,13 @@ class AbstractDataModel extends foundry.abstract.TypeDataModel {
     return new SchemaField({ value: new HTMLField({ ...options }) });
   }
 
+  static resourceField() {
+    return new SchemaField({
+      value: new NumberField({ initial: 0 }),
+      max: new NumberField({ initial: 0 })
+    });
+  }
+
   static basicAbilityField() {
     return new SchemaField({
       base: this.numberValueField(),
@@ -67,6 +77,45 @@ class AbstractDataModel extends foundry.abstract.TypeDataModel {
       base: this.numberValueField(),
       special: this.numberValueField(),
       final: this.numberValueField()
+    });
+  }
+
+  static resistanceField() {
+    return new SchemaField({
+      type: new StringField({
+        initial: ResistanceType.NONE,
+        choices: ABFConfig.iterables.combat.resistances
+      }),
+      value: new NumberField({ initial: 0 })
+    });
+  }
+
+  static characteristicField() {
+    return new SchemaField({
+      value: new NumberField({ initial: 0 }),
+      mod: new NumberField({ initial: 0 })
+    });
+  }
+
+  static secondarieField(attribute) {
+    return new SchemaField({
+      attribute: this.stringValueField({ initial: attribute }),
+      base: this.numberValueField(),
+      final: this.numberValueField()
+    });
+  }
+
+  static kiAccumulationField() {
+    return new SchemaField({
+      accumulated: this.numberValueField(),
+      base: this.numberValueField(),
+      final: this.numberValueField()
+    });
+  }
+
+  static sealField() {
+    return new SchemaField({
+      isActive: new BooleanField({ initial: false })
     });
   }
 }
