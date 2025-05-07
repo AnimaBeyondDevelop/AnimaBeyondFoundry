@@ -1,4 +1,21 @@
+import { mutatePrimaryModifiers } from '@module/actor/utils/prepareActor/calculations/actor/mutatePrimaryModifiers.js';
 import AbstractDataModel from '../AbstractDataModel.js';
+import { mutateRegenerationType } from '@module/actor/utils/prepareActor/calculations/actor/general/mutateRegenerationType.js';
+import { mutateAllActionsModifier } from '@module/actor/utils/prepareActor/calculations/actor/modifiers/mutateAllActionsModifier.js';
+import { mutateArmorsData } from '@module/actor/utils/prepareActor/calculations/items/armor/mutateArmorsData.js';
+import { mutateTotalArmor } from '@module/actor/utils/prepareActor/calculations/actor/mutateTotalArmor.js';
+import { mutateNaturalPenalty } from '@module/actor/utils/prepareActor/calculations/actor/modifiers/mutateNaturalPenalty.js';
+import { mutatePhysicalModifier } from '@module/actor/utils/prepareActor/calculations/actor/modifiers/mutatePhysicalModifier.js';
+import { mutatePerceptionPenalty } from '@module/actor/utils/prepareActor/calculations/actor/modifiers/mutatePerceptionPenalty.js';
+import { mutateCombatData } from '@module/actor/utils/prepareActor/calculations/actor/combat/mutateCombatData.js';
+import { mutateMovementType } from '@module/actor/utils/prepareActor/calculations/actor/general/mutateMovementType.js';
+import { mutateSecondariesData } from '@module/actor/utils/prepareActor/calculations/actor/secondaries/mutateSecondariesData.js';
+import { mutateAmmoData } from '@module/actor/utils/prepareActor/calculations/items/ammo/mutateAmmoData.js';
+import { mutateWeaponsData } from '@module/actor/utils/prepareActor/calculations/items/weapon/mutateWeaponsData.js';
+import { mutateInitiative } from '@module/actor/utils/prepareActor/calculations/actor/mutateInitiative.js';
+import { mutateMysticData } from '@module/actor/utils/prepareActor/calculations/actor/mystic/mutateMysticData.js';
+import { mutatePsychicData } from '@module/actor/utils/prepareActor/calculations/actor/psychic/mutatePsychicData.js';
+import { mutateDomineData } from '@module/actor/utils/prepareActor/calculations/actor/domine/mutateDomineData.js';
 
 const {
   HTMLField,
@@ -12,6 +29,25 @@ const {
 } = foundry.data.fields;
 
 export class ActorDataModel extends AbstractDataModel {
+  static mutations = [
+    mutatePrimaryModifiers,
+    mutateRegenerationType,
+    mutateAllActionsModifier,
+    mutateArmorsData,
+    mutateTotalArmor,
+    mutateNaturalPenalty,
+    mutatePhysicalModifier,
+    mutatePerceptionPenalty,
+    mutateCombatData,
+    mutateMovementType,
+    mutateSecondariesData,
+    // mutateAmmoData,
+    // mutateWeaponsData,
+    mutateInitiative,
+    mutateMysticData,
+    mutatePsychicData,
+    mutateDomineData
+  ];
   static defineSchema() {
     return {
       version: new NumberField({ initial: 0 }),
@@ -56,6 +92,7 @@ export class ActorDataModel extends AbstractDataModel {
         naturalPenalty: new SchemaField({
           unreduced: this.numberValueField(),
           reduction: this.numberValueField(),
+          base: this.numberValueField(),
           special: this.numberValueField(),
           final: this.numberValueField()
         }),
