@@ -10,7 +10,7 @@
         class="characteristic"
         title=(localize (concat 'anima.ui.characteristics.' key))
         rollable=true
-        rollableDice='1d10ControlRoll'
+        rollableDice=system.general.diceSettings.characteristicDie
         rollableMessage=(localize (concat 'anima.ui.characteristics.' key))
         inputName=(concat "system.characteristics.primaries." key ".value")
         inputValue=char.value

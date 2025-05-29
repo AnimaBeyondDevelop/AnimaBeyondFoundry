@@ -29,6 +29,13 @@ export const INITIAL_ACTOR_DATA = {
       perceivePsychic: { value: false },
       defenseType: { value: '' }
     },
+    diceSettings: {
+      characteristicDie: { value: '1d10ControlRoll' },
+      initiativeDie: { value: '1d100Initiative' },
+      resistanceDie: { value: '1d100' },
+      abilityDie: { value: '1d100xa' },
+      abilityMasteryDie: { value: '1d100xamastery' }
+    },
     modifiers: {
       physicalActions: {
         base: {

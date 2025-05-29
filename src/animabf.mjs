@@ -3,6 +3,7 @@ import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
+import ABFCombatant from './module/combat/ABFCombatant';
 import { ABFActor } from './module/actor/ABFActor';
 import { registerHelpers } from './utils/handlebars-helpers/registerHelpers';
 import ABFItemSheet from './module/items/ABFItemSheet';
@@ -30,12 +31,9 @@ Hooks.once('init', async () => {
   window.ABFFoundryRoll = ABFFoundryRoll;
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
 
-  CONFIG.Combat.documentClass = ABFCombat;
 
-  CONFIG.Combat.initiative = {
-    formula: '1d100Initiative',
-    decimals: 2
-  };
+  CONFIG.Combat.documentClass = ABFCombat;
+  CONFIG.Combatant.documentClass = ABFCombatant;
 
   CONFIG.Item.documentClass = ABFItem;
   CONFIG.ui.actors = ABFActorDirectory;

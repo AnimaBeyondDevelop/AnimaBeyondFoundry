@@ -128,7 +128,7 @@ export class ABFActor extends Actor {
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog();
     let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
-    if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
+    if (abilityValue >= 200) formula = formula.replace(this.system.general.diceSettings.abilityDie, this.system.general.diceSettings.abilityMasteryDie);
     const roll = new ABFFoundryRoll(formula, this.system);
     await roll.roll();
     if (sendToChat) {

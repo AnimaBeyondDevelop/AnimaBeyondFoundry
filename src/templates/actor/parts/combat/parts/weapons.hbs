@@ -63,7 +63,7 @@
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="breaking"
               rollable=true
-              rollableDice='1d10'
+              rollableDice=system.general.diceSettings.characteristicDie
               disabled=true
               title=(localize "anima.ui.combat.weapons.breaking.final.title")
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.breaking.final.value")
@@ -150,6 +150,7 @@
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.attack.roll.message") weapon.name)
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.attack.special.value")
                 inputValue=weapon.system.attack.special.value
+                rollableDice=system.general.diceSettings.abilityDie
                 rollable=true
                 rollSecondaryInput=true
                 hasSecondaryInput=true
@@ -164,6 +165,7 @@
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.block.roll.message") weapon.name)
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.block.special.value")
                 inputValue=weapon.system.block.special.value
+                rollableDice=system.general.diceSettings.abilityDie
                 rollable=true
                 rollSecondaryInput=true
                 hasSecondaryInput=true
@@ -187,6 +189,7 @@
                 title=(localize "anima.ui.combat.weapons.initiative.final.title")
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.final.value")
                 inputValue=weapon.system.initiative.final.value
+                rollableDice=system.general.diceSettings.initiativeDie
               }}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
