@@ -29,6 +29,11 @@ const DEFAULT_GM_MACROS = [
 /** @type {DefaultMacroConfig[]} */
 const DEFAULT_USER_MACROS = [
   {
+    macroSelectorId: '#custom-hotbar-damage-calculator',
+    hotkey: e => e.ctrlKey && e.key === '1',
+    fn: () => ABFMacros.damageCalculator()
+  },
+  {
     macroSelectorId: '#custom-hotbar-send-attack-request',
     hotkey: e => e.ctrlKey && e.key === '1',
     fn: () => window.Websocket.sendAttackRequest?.()
