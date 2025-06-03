@@ -244,8 +244,8 @@ export class Attack {
   /** @param {ReturnType<Attack['toJSON']>} json */
   loadJSON(json) {
     let { ability, damage, critic, meleeCombat, withRoll } = json;
-    this.ability = ModifiedAbility.fromJSON(ability);
-    this.damage = ModifiedAbility.fromJSON(damage);
+    this.ability.loadJSON(ability);
+    this.damage.loadJSON(damage);
     this.critic = critic;
     this.meleeCombat = meleeCombat;
     this.withRoll = withRoll;

@@ -53,16 +53,17 @@ export class ModifiedAbility {
   }
 
   /**
-   * Creates an instance from a JSON object.
+   * Imports data from a json object.
    * @param {ReturnType<ModifiedAbility['toJSON']>} json
    */
-  static fromJSON(json) {
+  loadJSON(json) {
     const { base, modifiers } = json;
-    const ability = new ModifiedAbility(base);
+    this.base = base;
     for (const label in modifiers) {
-      ability.addModifier(label, modifiers[label]);
+      const { value, active } = modifiers[label];
+      this.updateModifier(label, value, active);
     }
-    return ability;
+    return this;
   }
 
   /**
@@ -109,6 +110,40 @@ export class ModifiedAbility {
       });
     }
     this.modifiers[label] = mod;
+  }
+
+  /**
+   * Update the value and active status of an existing modifier.
+   * When trying to update an unregistered modifier, it will be reported as an error and ignored except
+   * for the 'special' modifier.
+   * If the modifier's value is read-only, only the active status will be updated and a debug message will be logged.
+   *
+   * @param {string} label String identifying the modifier to update.
+   * @param {number} value New value for the modifier.
+   * @param {boolean} active New active status for the modifier.
+   */
+  updateModifier(label, value, active) {
+    if (!(label in this.modifiers)) {
+      if (label === 'special') {
+        this.addModifier('special', { value, active });
+      } else {
+        Logger.error(`ModifiedAbility[${label}] does not exist: cannot update modifier.`);
+        return;
+      }
+    }
+
+    this.modifiers[label].active = active;
+    try {
+      this.modifiers[label].value = value;
+    } catch (e) {
+      if (e instanceof TypeError) {
+        Logger.debug(
+          `ModifiedAbility[${label}].value was not updated since it is read-only.`
+        );
+      } else {
+        throw e;
+      }
+    }
   }
 
   /**

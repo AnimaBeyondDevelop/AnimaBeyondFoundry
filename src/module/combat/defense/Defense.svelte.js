@@ -195,8 +195,8 @@ export class Defense {
   /** @param {ReturnType<Defense['toJSON']>} json */
   loadJSON(json) {
     let { ability, at, withRoll } = json;
-    this.ability = ModifiedAbility.fromJSON(ability);
-    this.at = ModifiedAbility.fromJSON(at);
+    this.ability.loadJSON(ability);
+    this.at.loadJSON(at);
     this.withRoll = withRoll;
     this.#roll = ABFFoundryRoll.fromData(json.roll);
 

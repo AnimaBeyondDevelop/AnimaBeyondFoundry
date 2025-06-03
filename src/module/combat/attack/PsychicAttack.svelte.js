@@ -248,7 +248,7 @@ export class PsychicAttack extends Attack {
       throw new Error(
         `Power ${powerId} not found in actor's (${this.attacker.id}) available powers`
       );
-    this.potential = ModifiedAbility.fromJSON(potential);
+    this.potential.loadJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
     this.psychicFatigue = psychicFatigue;
