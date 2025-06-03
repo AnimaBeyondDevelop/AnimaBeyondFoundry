@@ -59,7 +59,7 @@
   {#await actor.getTokenImages() then images}
     <img src={images[0]} alt={actor.name} />
   {/await}
-  {#if dataObject.rolled}
+  {#if dataObject.rolled !== undefined}
     {@const abilityName =
       dataObject instanceof PhysicDefense
         ? dataObject.physicDefenseType
@@ -209,6 +209,16 @@
 
             <!-- Results: supernatural shields -->
             {#if defense instanceof MysticDefense || defense instanceof PsychicDefense}
+              {#if combatResults.postShieldDamage}
+                <InputLabel
+                  icon="critic/{attack.critic}"
+                  label={i18n.localize('macros.combat.dialog.damage.title')}
+                  showTitle="top"
+                  useIcon
+                >
+                  <Input value={combatResults.damage} disabled />
+                </InputLabel>
+              {/if}
               <InputLabel
                 label={i18n.localize(
                   'macros.combat.dialog.supernaturalShield.damage.title'

@@ -72,10 +72,6 @@ export class MysticAttack extends Attack {
   }
 
   set spellGrade(spellGrade) {
-    if (!this.availableSpellGrades.includes(spellGrade))
-      throw new Error(
-        `Spell ${this.spell.id} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
-      );
     this.#spellGrade = spellGrade;
     let spellEffect = this.spell?.system.grades[this.#spellGrade].description.value ?? '';
     this.damage.base = damageCheck(spellEffect);
@@ -163,7 +159,7 @@ export class MysticAttack extends Attack {
       throw new Error(
         `Spell ${spellId} not found in actor's (${this.attacker.id}) available spells`
       );
-    this.spell = spell;
+    this.#spell = spellId;
     this.castMethod = castMethod;
     this.spellGrade = spellGrade;
     return this;

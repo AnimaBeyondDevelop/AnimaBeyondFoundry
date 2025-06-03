@@ -39,6 +39,7 @@ button {
   }
   &:focus {
     box-shadow: unset;
+    outline: none;
   }
   @extend .buttonlike;
 }
@@ -49,6 +50,14 @@ button {
   &:hover {
     transform: unset;
   }
+}
+
+h4 {
+  color: black;
+  font-family: var(--font-body);
+  font-weight: normal;
+  height: 34px;
+  font-size: 1.9rem;
 }
 
 .text {

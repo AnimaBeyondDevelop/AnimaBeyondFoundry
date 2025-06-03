@@ -47,7 +47,7 @@ export class CombatResultsCalculator {
   }
 
   get at() {
-    return this.#defense.finalAt;
+    return Math.clamp(this.#defense.finalAt - (this.#attack.atReduction ?? 0), 0, 10);
   }
 
   /** Base damage of the attack */
@@ -75,24 +75,24 @@ export class CombatResultsCalculator {
   }
 
   get damagePercentage() {
-    let percent = 0;
     if (this.totalDifference <= 0) return 0;
-    if (this.useCombatTable) {
-      let finalAt = this.halvedAbsorption ? Math.floor(this.at / 2) : this.at;
-      if (this.totalDifference < 30) percent = 0;
-      else if (this.totalDifference < 50 && finalAt <= 1) {
-        if (this.totalDifference < 40 && finalAt == 0) percent = 10;
-        else percent = floorToMultiple(this.totalDifference - (finalAt * 10 + 10), 10);
-      } else percent = floorToMultiple(this.totalDifference - finalAt * 10, 10);
-    } else {
-      let absorption = this.at * 10 + 20;
-      if (this.halvedAbsorption) absorption = absorption / 2;
-      percent = floorToMultiple(this.totalDifference - absorption, 10);
+
+    let finalAt = this.halvedAbsorption ? Math.floor(this.at / 2) : this.at;
+    let baseDifference =
+      this.totalDifference -
+      (this.useCombatTable
+        ? finalAt * 10
+        : (this.at * 10 + 20) / (this.halvedAbsorption ? 2 : 1));
+
+    if (this.useCombatTable && this.totalDifference < 50 && finalAt <= 1) {
+      return this.totalDifference < 30
+        ? 0
+        : this.totalDifference < 40
+        ? 10
+        : floorToMultiple(this.totalDifference - (finalAt * 10 + 10), 10);
     }
 
-    if (percent < 0) return 0;
-
-    return percent;
+    return Math.max(floorToMultiple(baseDifference, 10), 0);
   }
 
   /** Final damage dealt by the attacker to the defender. */

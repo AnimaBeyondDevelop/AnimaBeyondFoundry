@@ -86,7 +86,7 @@ export class ABFActor extends Actor {
     if (!psychicPoints) return;
     const cvs = this.system.psychic.psychicPoints.value;
 
-    this.update({
+    return this.update({
       system: {
         psychic: {
           psychicPoints: {
@@ -158,18 +158,10 @@ export class ABFActor extends Actor {
       psychic: { overmantained: false, maintainMax: 0 }
     };
     if (type === 'psychic') {
-      const {
-        general: {
-          settings: { inhuman, zen }
-        },
-        psychic
-      } = this.system;
+      const { psychic } = this.system;
 
       const potentialBaseDifficulty = psychicPotentialEffect(
-        psychic.psychicPotential.base.value,
-        0,
-        inhuman.value,
-        zen.value
+        psychic.psychicPotential.base.value
       );
       const baseEffect =
         shieldBaseValueCheck(potentialBaseDifficulty, power?.system.effects) ?? 0;
@@ -243,39 +235,20 @@ export class ABFActor extends Actor {
    *
    * @param {string} supShieldId - The ID of the supernatural shield to apply damage to.
    * @param {number} damage - The amount of damage to apply to the shield.
-   * @param {boolean} [dobleDamage] - Whether to apply double damage or not. Default is `false`.
-   * @param {CombatResults} [currentCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
    *
-   * @returns {void}
+   * @returns {Promise<void>} - Resolves once the shield has been updated or removed.
    */
-  async applyDamageSupernaturalShield(supShieldId, damage, currentCombatResult) {
+  async applyDamageSupernaturalShield(supShieldId, damage) {
     if (!damage) return;
     const supShield = this.getItem(supShieldId);
     const newShieldPoints = supShield?.system.shieldPoints - damage;
     if (newShieldPoints > 0) {
-      this.updateItem({
+      await this.updateItem({
         id: supShieldId,
         system: { shieldPoints: newShieldPoints }
       });
     } else {
-      this.deleteSupernaturalShield(supShieldId);
-      // If shield breaks, apply damage to actor
-      if (newShieldPoints < 0 && currentCombatResult) {
-        const { attack, defense } = currentCombatResult;
-        let newCombatResult = new CombatResultsCalculator(
-          {
-            finalAbility: attack.finalAbility,
-            finalDamage: Math.abs(newShieldPoints),
-            halvedAbsorption: attack.halvedAbsorption
-          },
-          {
-            finalAbility: 0,
-            finalAt: defense.finalAt,
-            halvedAbsorption: defense.halvedAbsorption
-          }
-        );
-        this.applyDamage(newCombatResult.damage);
-      }
+      await this.deleteSupernaturalShield(supShieldId);
     }
   }
 
@@ -290,7 +263,7 @@ export class ABFActor extends Actor {
    * @param {boolean} sendToChat - Whether to send a chat message or not. Default is `true`.
    * @param {boolean} applyPsychicFatigue - Whether to apply the PsychicFatigue or spent psychic Points. Default is `true`.
    *
-   * @returns {number} The calculated psychic fatigue value.
+   * @returns {number | undefined} The calculated psychic fatigue value. Returns undefines if the power difficulty is reach.
    */
   evaluatePsychicFatigue(
     power,
@@ -305,30 +278,31 @@ export class ABFActor extends Actor {
         psychicPoints
       }
     } = this.system;
-    const psychicFatigue = {
-      value: psychicFatigueCheck(power?.system.effects[psychicDifficulty].value),
-      inmune: fatigueResistance || eliminateFatigue
-    };
+    const psychicFatigue = psychicFatigueCheck(
+      power?.system.effects[psychicDifficulty].value
+    );
+    const isImmune = fatigueResistance || eliminateFatigue;
 
-    if (psychicFatigue.value) {
+    if (psychicFatigue) {
+      if (isImmune) psychicFatigue = 0;
       if (sendToChat) {
         const { i18n } = game;
         ChatMessage.create({
           speaker: ChatMessage.getSpeaker({ actor: this }),
           flavor: i18n.format('macros.combat.dialog.psychicPotentialFatigue.title', {
-            fatiguePen: psychicFatigue.inmune ? 0 : psychicFatigue.value
+            fatiguePen: psychicFatigue
           })
         });
       }
-      if (!psychicFatigue.inmune && !eliminateFatigue && applyPsychicFatigue) {
-        this.applyPsychicFatigue(psychicFatigue.value);
+      if (applyPsychicFatigue) {
+        this.applyPsychicFatigue(psychicFatigue);
       }
     }
     if (eliminateFatigue && applyPsychicFatigue) {
       this.consumePsychicPoints(1);
     }
 
-    return psychicFatigue.value;
+    return psychicFatigue;
   }
 
   /**
@@ -354,7 +328,7 @@ export class ABFActor extends Actor {
             id: psychicShield._id
           };
           const damage = revert ? -5 : 5;
-          this.applyDamageSupernaturalShield(supShield.id, damage, false, undefined);
+          await this.applyDamageSupernaturalShield(supShield.id, damage);
         }
       }
     }
@@ -370,11 +344,11 @@ export class ABFActor extends Actor {
 
   /** @type {number} */
   get accumulatedDefenses() {
-    return this.getFlag('animabf', 'defensesCounter') ?? 0;
+    return this.getFlag('animabf', 'defenseCount') ?? 0;
   }
   set accumulatedDefenses(value) {
     if (!this.autoAccumulateDefenses) return;
-    this.setFlag('animabf', 'defensesCounter', value);
+    this.setFlag('animabf', 'defenseCount', value);
   }
 
   /**
@@ -415,6 +389,10 @@ export class ABFActor extends Actor {
     let zeonCost =
       spell?.system.grades[spellGrade].zeon.value + (increasedZeon.accumulated ?? 0);
     let zeonPool = this.system.mystic.zeon.value;
+    let intelligence =
+      this.system.characteristics.primaries.intelligence.value +
+      // TODO: This shouldn't be hardcoded. We should move this into an active effect associated to the advantage once effects are implemented.
+      (this.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? 3 : 0);
 
     switch (castMethod) {
       case 'accumulated': {
@@ -450,6 +428,10 @@ export class ABFActor extends Actor {
     if (zeonPool < (increasedZeon.pool ?? 0)) {
       canCast = false;
       warningMessage = 'dialogs.spellCasting.warning.zeonPool';
+    }
+    if (intelligence < spell.system.grades[spellGrade].intRequired.value) {
+      canCast = false;
+      warningMessage = 'dialogs.spellCasting.warning.intRequired';
     }
     if (!canCast) {
       ui.notifications.warn(game.i18n.localize(warningMessage));
@@ -1008,6 +990,20 @@ export class ABFActor extends Actor {
 
     return this.getPsychicPowers().find(w => w.id === lastPowerUsed);
   }
+  /**
+   * Returns the last type of Attack used.
+   * @returns {"physical" | "mystic" | "psychic"} if undefined defaults to physical.
+   */
+  getLastTypeOfAttackUsed() {
+    return this.getFlag('animabf', `lastTypeOfAttackUsed`) ?? 'physical';
+  }
+  /**
+   * Returns the last type of Defense used.
+   * @returns {"physical" | "mystic" | "psychic"} if undefined defaults to physical.
+   */
+  getLastTypeOfDefenseUsed() {
+    return this.getFlag('animabf', `lastTypeOfDefenseUsed`) ?? 'physical';
+  }
 
   getCastMethodOverride() {
     return this.getFlag('animabf', 'castMethodOverride');
@@ -1043,6 +1039,33 @@ export class ABFActor extends Actor {
     usage = usage[0].toUpperCase() + usage.slice(1);
     this.setFlag('animabf', `last${usage}PowerUsed`, power.id);
   }
+  /**
+   * Sets the last type of Attack used to a flag.
+   * @param {"physic" | "mystic" | "psychic"} usage type of Attack
+   * @throws {Error} If the provided usage is not one of the allowed values.
+   */
+  setLastTypeOfAttackUsed(usage) {
+    if (!['physic', 'mystic', 'psychic'].includes(usage)) {
+      throw Error(
+        `Invalid attack type: "${usage}". Expected one of "physic", "mystic", or "psychic".`
+      );
+    }
+    this.setFlag('animabf', `lastTypeOfAttackUsed`, usage);
+  }
+  /**
+   * Sets the last type of Defense used to a flag.
+   * @param {"physic" | "mystic" | "psychic"} usage type of Defense
+   * @throws {Error} If the provided usage is not one of the allowed values.
+   */
+  setLastTypeOfDefenseUsed(usage) {
+    if (!['physic', 'mystic', 'psychic'].includes(usage)) {
+      throw Error(
+        `Invalid defense type: "${usage}". Expected one of "physic", "mystic", or "psychic".`
+      );
+    }
+    this.setFlag('animabf', `lastTypeOfDefenseUsed`, usage);
+  }
+
   /**
    * @param {"override" | "accumulated" | "innate" | "prepared"} castMethod
    */

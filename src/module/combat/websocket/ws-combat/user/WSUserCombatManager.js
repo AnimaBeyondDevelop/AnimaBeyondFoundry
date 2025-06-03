@@ -169,6 +169,10 @@ export class WSUserCombatManager extends WSCombatManager {
     try {
       const attack = Attack.fromJSON(msg.payload);
 
+      if (!this.isMyToken(attack.defenderToken._id)) {
+        return;
+      }
+
       this.defenseDialog = new SvelteApplication(
         DefenseDialog,
         {

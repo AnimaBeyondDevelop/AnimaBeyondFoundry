@@ -46,7 +46,7 @@ to this component:
   <CardSelect {options} bind:value --border-size=5px />
 ```
 -->
-<div class="card-select buttonlike" {style}>
+<div class="card-select buttonlike text-dark" {style}>
   <select disabled={disabled || options.length === 0} bind:value title={value.name}>
     {#each options as option}
       <option value={option}>{option.name}</option>
@@ -75,7 +75,9 @@ to this component:
       appearance: none;
       height: calc(100% - 2 * card.$border-size);
       width: 100%;
-      background: card.$background-light;
+      background: transparent;
+      outline: none;
+      line-height: unset;
     }
 
     option {

@@ -33,7 +33,7 @@ export class PsychicDefense extends Defense {
   mentalPatternImbalance = $state(false);
 
   /** @type {number} */
-  psychicFatigue;
+  psychicFatigue = $state(undefined);
 
   /**
    * ID of the used supernatural Shield.
@@ -61,16 +61,15 @@ export class PsychicDefense extends Defense {
     if (!this.newShield) {
       this.supernaturalShield = this.defender.system.combat.supernaturalShields[0];
     }
-
-    this.preventFatigue = this.defender.system.psychic.psychicSettings.fatigueResistance;
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
   async onApply(results) {
-    this.defender.consumePsychicPoints(
+    await this.defender.consumePsychicPoints(
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
     this.defender.applyPsychicFatigue(this.psychicFatigue);
+    if (this.psychicFatigue !== undefined) return;
     if (this.newShield) {
       this.newShield = false;
       this.#supernaturalShield = await this.defender.newSupernaturalShield(
@@ -82,15 +81,28 @@ export class PsychicDefense extends Defense {
     if (results.supernaturalShieldDamage) {
       this.defender.applyDamageSupernaturalShield(
         this.#supernaturalShield,
-        results.supernaturalShieldDamage,
-        results
+        results.supernaturalShieldDamage
       );
     }
   }
 
+  /** @type {string} */
   get displayName() {
-    return /** @type {string} */ (this.supernaturalShield.name);
+    if (this.psychicFatigue !== undefined)
+      return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
+    return this.supernaturalShield.name;
   }
+
+  get finalAbility() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.finalAbility;
+  }
+
+  get rolled() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.rolled;
+  }
+
   /** @type {Record<string,import('@module/common/ModifiedAbility.svelte').ModifierSpec>} */
   get modifiers() {
     return {
@@ -177,7 +189,7 @@ export class PsychicDefense extends Defense {
   }
 
   toMessage() {
-    if (this.psychicFatigue) {
+    if (this.psychicFatigue !== undefined) {
       return;
     }
     super.toMessage();
@@ -214,6 +226,10 @@ export class PsychicDefense extends Defense {
       this.showRoll,
       false
     );
+
+    if (this.psychicFatigue !== undefined) {
+      this.ability.base = 0;
+    }
   }
 
   potentialToMessage() {
@@ -277,7 +293,7 @@ export class PsychicDefense extends Defense {
       );
     }
 
-    this.potential = ModifiedAbility.fromJSON(potential);
+    this.potential.loadJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
     this.psychicFatigue = psychicFatigue;

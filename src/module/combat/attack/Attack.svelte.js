@@ -140,6 +140,12 @@ export class Attack {
   get finalDamage() {
     return this.damage.final;
   }
+  /**
+   * @type {number} Value of the defender armor reduction.
+   */
+  get atReduction() {
+    return 0;
+  }
 
   /** Function calculating the distance for the attack.
    * @returns {number | undefined} The distance if automated distance calculation is enabled, otherwise `undefined`.
@@ -155,7 +161,7 @@ export class Attack {
       ],
       {}
     );
-    return measurePath.distance / (canvas.dimensions?.distance ?? 1);
+    return Math.floor(measurePath.distance / (canvas.dimensions?.distance ?? 1));
   }
 
   /**
@@ -238,8 +244,8 @@ export class Attack {
   /** @param {ReturnType<Attack['toJSON']>} json */
   loadJSON(json) {
     let { ability, damage, critic, meleeCombat, withRoll } = json;
-    this.ability = ModifiedAbility.fromJSON(ability);
-    this.damage = ModifiedAbility.fromJSON(damage);
+    this.ability.loadJSON(ability);
+    this.damage.loadJSON(damage);
     this.critic = critic;
     this.meleeCombat = meleeCombat;
     this.withRoll = withRoll;

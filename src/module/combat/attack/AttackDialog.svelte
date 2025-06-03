@@ -28,13 +28,17 @@
       label: 'mystic',
       component: MysticAttackDialog,
       Attack: MysticAttack,
-      available: attacker.actor.getKnownSpells('attack').length > 0
+      available:
+        attacker.actor.getKnownSpells('attack').length > 0 &&
+        counterAttackBonus === undefined
     },
     {
       label: 'psychic',
       component: PsychicAttackDialog,
       Attack: PsychicAttack,
-      available: attacker.actor.getPsychicPowers('attack').length > 0
+      available:
+        attacker.actor.getPsychicPowers('attack').length > 0 &&
+        counterAttackBonus === undefined
     }
   ];
 
@@ -55,6 +59,8 @@
         }
       };
     });
+  let activeTab =
+    tabs.find(tab => tab.label === attacker.actor.getLastTypeOfAttackUsed()) ?? tabs[0];
 </script>
 
-<CardTabbedCombat {tabs} />
+<CardTabbedCombat {tabs} {activeTab} />

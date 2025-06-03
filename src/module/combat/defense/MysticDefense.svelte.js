@@ -67,8 +67,7 @@ export class MysticDefense extends Defense {
     if (results.supernaturalShieldDamage) {
       this.defender.applyDamageSupernaturalShield(
         this.#supernaturalShield,
-        results.supernaturalShieldDamage,
-        results
+        results.supernaturalShieldDamage
       );
     }
   }
@@ -96,10 +95,6 @@ export class MysticDefense extends Defense {
   }
 
   set spellGrade(spellGrade) {
-    if (!this.availableSpellGrades.includes(spellGrade))
-      throw new Error(
-        `Spell ${this.spell.id} cannot be casted by actor (${this.attacker.id}) at grade ${spellGrade}`
-      );
     this.#spellGrade = spellGrade;
   }
 
@@ -214,7 +209,7 @@ export class MysticDefense extends Defense {
 
     const spell = this.availableSpells.find(s => s.id === spellId);
     if (spell) {
-      this.spell = spell;
+      this.#spell = spell.id ?? '';
 
       this.castMethod = castMethod;
       this.spellGrade = spellGrade;

@@ -54,7 +54,7 @@ export class PsychicAttack extends Attack {
   mentalPatternImbalance = $state(false);
 
   /** @type {number} */
-  psychicFatigue;
+  psychicFatigue = $state(undefined);
 
   /**
    * @param {TokenDocument} attacker The attacker token.
@@ -73,20 +73,31 @@ export class PsychicAttack extends Attack {
     this.potential.registerModTable(this.potentialModifiers);
 
     this.power = this.attacker.getLastPowerUsed('offensive') ?? this.availablePowers[0];
-
-    this.preventFatigue = this.defender.system.psychic.psychicSettings.fatigueResistance;
   }
 
   /** @param {import("@module/combat/results/CombatResults.svelte").CombatResults} results */
-  onApply(results) {
-    this.attacker.consumePsychicPoints(
+  async onApply(results) {
+    await this.attacker.consumePsychicPoints(
       Object.values(this.usedPsychicPoints).reduce((acc, val) => acc + val, 0)
     );
     this.attacker.applyPsychicFatigue(this.psychicFatigue);
   }
 
+  /** @type {string} */
   get displayName() {
-    return /** @type {string} */ (this.power.name);
+    if (this.psychicFatigue !== undefined)
+      return game.i18n.format('anima.ui.psychic.psychicFatigue.title');
+    return this.power.name;
+  }
+
+  get finalAbility() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.finalAbility;
+  }
+
+  get rolled() {
+    if (this.psychicFatigue !== undefined) return 0;
+    return super.rolled;
   }
 
   get projectionModifiers() {
@@ -139,7 +150,7 @@ export class PsychicAttack extends Attack {
   }
 
   toMessage() {
-    if (this.psychicFatigue) return;
+    if (this.psychicFatigue !== undefined) return;
     return super.toMessage();
   }
 
@@ -179,6 +190,10 @@ export class PsychicAttack extends Attack {
 
     let powerEffect = this.power?.system.effects[this.potential.final].value;
     this.damage.base = damageCheck(powerEffect);
+
+    if (this.psychicFatigue !== undefined) {
+      this.ability.base = 0;
+    }
   }
 
   potentialToMessage() {
@@ -233,7 +248,8 @@ export class PsychicAttack extends Attack {
       throw new Error(
         `Power ${powerId} not found in actor's (${this.attacker.id}) available powers`
       );
-    this.potential = ModifiedAbility.fromJSON(potential);
+    this.#power = power.id;
+    this.potential.loadJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
     this.psychicFatigue = psychicFatigue;
