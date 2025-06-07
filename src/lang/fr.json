@@ -685,6 +685,7 @@
   "macros.combat.dialog.requestPermission.title": " permission d'attaquer ",
   "macros.combat.dialog.rolled.title": "Dés lancés",
   "macros.combat.dialog.showResultsButton.title": "Envoyer au chat les résultats",
+  "macros.combat.dialog.showResultsButton.button.title": "Envoyer au chat",
   "macros.combat.dialog.showRoll.title": "Montrer le jet",
   "macros.combat.dialog.surprised.title": "Surpris",
   "macros.combat.dialog.spell.title": "Sort",
