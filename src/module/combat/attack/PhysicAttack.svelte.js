@@ -131,7 +131,7 @@ export class PhysicAttack extends Attack {
   get isThrownable() {
     return this.rangedType === 'throw';
   }
-
+  // TODO: this should be a getter/property on the attacking item (e.g. the weapons). Move there when refactoring to specialized item classes
   get atReduction() {
     if (this.weapon.id === 'unarmed') return 0;
 
@@ -174,7 +174,7 @@ export class PhysicAttack extends Attack {
   /** @param {ReturnType<PhysicAttack['toJSON']>} json */
   loadJSON(json) {
     super.loadJSON(json);
-    let { weaponId, thrown } = json;
+    let { weaponId, thrown, critic } = json;
     this.thrown = thrown;
     const weapon = this.availableWeapons.find(w => w.id === weaponId);
     if (!weapon)
@@ -182,6 +182,7 @@ export class PhysicAttack extends Attack {
         `Weapon ${weaponId} not found in actor's (${this.attacker.id}) available weapons`
       );
     this.weapon = weapon;
+    this.critic = critic ?? this.critic;
 
     return this;
   }

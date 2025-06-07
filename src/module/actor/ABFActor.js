@@ -235,40 +235,20 @@ export class ABFActor extends Actor {
    *
    * @param {string} supShieldId - The ID of the supernatural shield to apply damage to.
    * @param {number} damage - The amount of damage to apply to the shield.
-   * @param {boolean} [dobleDamage] - Whether to apply double damage or not. Default is `false`.
-   * @param {CombatResults} [currentCombatResult] - Additional combat result data used to calculate damage to the actor if the shield breaks.
    *
-   * @returns {void}
+   * @returns {Promise<void>} - Resolves once the shield has been updated or removed.
    */
-  async applyDamageSupernaturalShield(supShieldId, damage, currentCombatResult) {
+  async applyDamageSupernaturalShield(supShieldId, damage) {
     if (!damage) return;
     const supShield = this.getItem(supShieldId);
     const newShieldPoints = supShield?.system.shieldPoints - damage;
     if (newShieldPoints > 0) {
-      this.updateItem({
+      await this.updateItem({
         id: supShieldId,
         system: { shieldPoints: newShieldPoints }
       });
     } else {
-      this.deleteSupernaturalShield(supShieldId);
-      // If shield breaks, apply damage to actor
-      if (newShieldPoints < 0 && currentCombatResult) {
-        const { attack, defense } = currentCombatResult;
-        let newCombatResult = new CombatResultsCalculator(
-          {
-            finalAbility: attack.finalAbility,
-            finalDamage: Math.max(Math.abs(newShieldPoints) - attack.atReduction * 10, 0),
-            halvedAbsorption: attack.halvedAbsorption,
-            atReduction: attack.atReduction
-          },
-          {
-            finalAbility: 0,
-            finalAt: defense.finalAt,
-            halvedAbsorption: defense.halvedAbsorption
-          }
-        );
-        this.applyDamage(newCombatResult.damage);
-      }
+      await this.deleteSupernaturalShield(supShieldId);
     }
   }
 
@@ -348,7 +328,7 @@ export class ABFActor extends Actor {
             id: psychicShield._id
           };
           const damage = revert ? -5 : 5;
-          this.applyDamageSupernaturalShield(supShield.id, damage, false, undefined);
+          await this.applyDamageSupernaturalShield(supShield.id, damage);
         }
       }
     }
@@ -411,6 +391,7 @@ export class ABFActor extends Actor {
     let zeonPool = this.system.mystic.zeon.value;
     let intelligence =
       this.system.characteristics.primaries.intelligence.value +
+      // TODO: This shouldn't be hardcoded. We should move this into an active effect associated to the advantage once effects are implemented.
       (this.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? 3 : 0);
 
     switch (castMethod) {

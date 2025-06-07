@@ -215,6 +215,16 @@
 
             <!-- Results: supernatural shields -->
             {#if defense instanceof MysticDefense || defense instanceof PsychicDefense}
+              {#if combatResults.postShieldDamage}
+                <InputLabel
+                  icon="critic/{attack.critic}"
+                  label={i18n.localize('macros.combat.dialog.damage.title')}
+                  showTitle="top"
+                  useIcon
+                >
+                  <Input value={combatResults.damage} disabled />
+                </InputLabel>
+              {/if}
               <InputLabel
                 label={i18n.localize(
                   'macros.combat.dialog.supernaturalShield.damage.title'

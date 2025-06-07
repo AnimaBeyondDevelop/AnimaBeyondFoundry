@@ -67,8 +67,7 @@ export class MysticDefense extends Defense {
     if (results.supernaturalShieldDamage) {
       this.defender.applyDamageSupernaturalShield(
         this.#supernaturalShield,
-        results.supernaturalShieldDamage,
-        results
+        results.supernaturalShieldDamage
       );
     }
   }
@@ -210,7 +209,7 @@ export class MysticDefense extends Defense {
 
     const spell = this.availableSpells.find(s => s.id === spellId);
     if (spell) {
-      this.spell = spell;
+      this.#spell = spell.id ?? '';
 
       this.castMethod = castMethod;
       this.spellGrade = spellGrade;
