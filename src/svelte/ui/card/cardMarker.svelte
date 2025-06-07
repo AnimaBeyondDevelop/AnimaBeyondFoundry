@@ -37,7 +37,9 @@ to this component:
   .marker {
     width: fit-content;
     min-width: 140px;
-    place-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     @include borders.arrow-shape($height, 'left', $bg-color: card.$sidebar-color);
     .content {
       height: calc($height / 2);

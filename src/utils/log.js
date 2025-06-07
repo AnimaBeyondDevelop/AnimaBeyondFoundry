@@ -1,7 +1,7 @@
 export const Logger = {
   debug(...args) {
     // eslint-disable-next-line no-console
-    console.debug('AnimaBF |', ...args);
+    console.debug('AnimaBF | (Debug info)', ...args);
   },
   log(...args) {
     // eslint-disable-next-line no-console

@@ -23,7 +23,7 @@ export class CombatResults extends CombatResultsCalculator {
   }
 
   get canCounterAttack() {
-    return super.canCounterAttack && this.attack.meleeCombat;
+    return super.canCounterAttack && this.attack.meleeCombat && !this.postShieldDamage;
   }
 
   get winner() {
@@ -34,19 +34,49 @@ export class CombatResults extends CombatResultsCalculator {
 
   get supernaturalShieldDamage() {
     if (this.defense instanceof PhysicDefense || this.totalDifference > 0) return;
-    return (
-      (this.baseDamage + this.attack.atReduction * 10) *
-      this.supernaturalShieldDamageMultiplier
+    return this.supernaturalShieldDamageMultiplier === 0
+      ? 0
+      : this.baseDamage * this.supernaturalShieldDamageMultiplier +
+          this.attack.atReduction * 10;
+  }
+
+  get postShieldDamage() {
+    if (this.defense instanceof PhysicDefense || this.totalDifference > 0) return;
+    let remainingShieldPoints = this.defense.shieldPoints - this.supernaturalShieldDamage;
+    if (remainingShieldPoints > 0) return;
+    return Math.max(
+      (Math.abs(remainingShieldPoints) - this.attack.atReduction * 10) /
+        this.supernaturalShieldDamageMultiplier,
+      0
     );
   }
 
+  get damage() {
+    if (!this.postShieldDamage) {
+      return super.damage;
+    }
+    return new CombatResultsCalculator(
+      {
+        finalAbility: this.attack.finalAbility,
+        finalDamage: this.postShieldDamage,
+        halvedAbsorption: this.attack.halvedAbsorption,
+        atReduction: this.attack.atReduction
+      },
+      {
+        finalAbility: 0,
+        finalAt: this.defense.finalAt,
+        halvedAbsorption: this.defense.halvedAbsorption
+      }
+    ).damage;
+  }
+
   apply() {
+    this.executeCombatMacro();
     this.defense.defender.applyDamage(this.damage);
     this.attack.onApply(this);
     this.defense.onApply(this);
     this.attack.attacker.setLastTypeOfAttackUsed(this.attack.type);
     this.defense.defender.setLastTypeOfDefenseUsed(this.defense.type);
-    this.executeCombatMacro();
   }
 
   executeCombatMacro() {

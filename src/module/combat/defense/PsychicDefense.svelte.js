@@ -81,8 +81,7 @@ export class PsychicDefense extends Defense {
     if (results.supernaturalShieldDamage) {
       this.defender.applyDamageSupernaturalShield(
         this.#supernaturalShield,
-        results.supernaturalShieldDamage,
-        results
+        results.supernaturalShieldDamage
       );
     }
   }
@@ -294,7 +293,7 @@ export class PsychicDefense extends Defense {
       );
     }
 
-    this.potential = ModifiedAbility.fromJSON(potential);
+    this.potential.loadJSON(potential);
     this.preventFatigue = preventFatigue;
     this.mentalPatternImbalance = mentalPatternImbalance;
     this.psychicFatigue = psychicFatigue;
