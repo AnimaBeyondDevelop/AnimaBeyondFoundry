@@ -11,6 +11,7 @@
   import Input from '@svelte/ui/input.svelte';
   import { CombatResults } from './CombatResults.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import { Templates } from '../../utils/constants';
 
   /**
    * @typedef {Object} Props
@@ -46,6 +47,32 @@
     if (!combatResults || !combatResults.canCounterAttack) return;
     combatResults.apply();
     onCounterAttack(combatResults.counterAttackBonus);
+  }
+  function onShowResultsButton() {
+    const data = {
+      attacker: {
+        name: attack.attackerToken.name,
+        img: attack.attackerToken.texture.src
+      },
+      defender: {
+        name: defense.defenderToken.name,
+        img: defense.defenderToken.texture.src
+      },
+      result: combatResults.totalDifference,
+      canCounter: combatResults.canCounterAttack
+    };
+
+    if (combatResults.canCounterAttack) {
+      data.bonus = combatResults.counterAttackBonus;
+    } else {
+      data.damage = combatResults.damage;
+    }
+
+    renderTemplate(Templates.Chat.CombatResult, data).then(content => {
+      ChatMessage.create({
+        content
+      });
+    });
   }
 </script>
 
@@ -264,6 +291,16 @@
   </Card>
 
   <div class="main-buttons">
+    <CardButton
+      shape="angled"
+      height="55px"
+      style="light"
+      title={i18n.localize('macros.combat.dialog.showResultsButton.title')}
+      onclick={onShowResultsButton}
+    >
+      {i18n.localize('macros.combat.dialog.showResultsButton.button.title')}
+    </CardButton>
+
     {#if combatResults?.canCounterAttack}
       <CardButton
         shape="angled"
