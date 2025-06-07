@@ -48,7 +48,7 @@
     combatResults.apply();
     onCounterAttack(combatResults.counterAttackBonus);
   }
-  async function onShowResultsButton() {
+  function onShowResultsButton() {
     const data = {
       attacker: {
         name: attack.attackerToken.name,
@@ -68,7 +68,7 @@
       data.damage = combatResults.damage;
     }
 
-    await renderTemplate(Templates.Chat.CombatResult, data).then(content => {
+    renderTemplate(Templates.Chat.CombatResult, data).then(content => {
       ChatMessage.create({
         content
       });
