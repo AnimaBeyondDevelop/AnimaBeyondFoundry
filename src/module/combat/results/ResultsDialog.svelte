@@ -110,7 +110,12 @@
       </InputLabel>
     </div>
     <div class="total">
-      <Input type="text" value={dataObject.finalAbility} disabled />
+      <Input
+        type="text"
+        value={dataObject.finalAbility}
+        disabled
+        style="filter: invert(1)"
+      />
     </div>
   {:else}
     Loading...
@@ -321,8 +326,9 @@
         width: 100%;
         grid-template-columns: 1fr 1fr;
         padding-left: 20px;
+        padding-right: 20px;
         padding-top: 5px;
-        gap: 20px;
+        gap: 40px;
       }
     }
     .result.row {

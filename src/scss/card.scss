@@ -19,6 +19,14 @@ $text-color-light: var(--text-color-light, variable.$background-light);
 
 $font-size: var(--font-size, 34px);
 $icon-size: var(--icon-size, 35px);
+$font-family: 'Barlow', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+
+@font-face {
+  font-family: 'Barlow';
+  src: url('/systems/animabf/assets/fonts/Barlow-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
 
 .buttonlike {
   cursor: pointer;
@@ -58,9 +66,11 @@ h4 {
   font-weight: normal;
   height: 34px;
   font-size: 1.9rem;
+  font-family: $font-family;
 }
 
 .text {
+  font-family: $font-family;
   font-size: $font-size;
   color: inherit;
 }
@@ -75,14 +85,23 @@ h4 {
 
 .card-input {
   all: unset;
-  width: 60px;
+  width: auto;
   color: white;
+  font-family: $font-family;
   font-size: $font-size;
-  -webkit-text-stroke: 4px black;
-  paint-order: stroke fill;
+  // -webkit-text-stroke: 4px black;
+  // paint-order: stroke fill;
+  text-shadow: 0.08em 0.08em black;
   text-align: center;
+  margin-bottom: 2.5px;
+  margin-left: -0.3em;
+  margin-right: -0.3em;
+  clip-path: inset(0 0.5em 0 0.5em);
   &:focus {
     @extend .card-input;
+  }
+  &[hidden] {
+    display: none !important;
   }
 }
 
