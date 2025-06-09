@@ -668,5 +668,7 @@
   "macros.damageCalculator.dialog.damage.title": "Dégâts",
   "macros.damageCalculator.dialog.defense.title": "Défense",
   "macros.damageCalculator.dialog.ta.title": "IP",
-  "macros.damageCalculator.dialog.title": "Calculateur de dégâts"
+  "macros.damageCalculator.dialog.title": "Calculateur de dégâts",
+  "customHotbar.damageCalculator": "Damage calculator",
+  "customHotbar.sendAttack": "Send attack"
 }
