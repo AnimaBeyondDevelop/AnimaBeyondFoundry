@@ -8,6 +8,7 @@ import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObje
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
 import { Logger } from '../../utils';
+import { ABFSettingsKeys } from '../../utils/registerSettings';
 
 export default class ABFActorSheet extends ActorSheet {
   i18n;
@@ -88,18 +89,19 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   async getData(options) {
-    const sheet = await super.getData(options);
+  const sheet = await super.getData(options);
 
-    if (this.actor.type === 'character') {
-      await sheet.actor.prepareDerivedData();
-
-      sheet.system = sheet.actor.system;
-    }
-
-    sheet.config = CONFIG.config;
-
-    return sheet;
+  if (this.actor.type === 'character') {
+    await sheet.actor.prepareDerivedData();
+    sheet.system = sheet.actor.system;
   }
+
+  sheet.config = CONFIG.config;
+  const permissions = game.settings.get("animabf", ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION);
+  sheet.canModifyDice = permissions?.[game.user.role] === true;
+
+  return sheet;
+}
 
   activateListeners(html) {
     super.activateListeners(html);

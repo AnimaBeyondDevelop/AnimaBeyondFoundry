@@ -48,6 +48,10 @@ export const Templates = {
     Icons: {
       Accept: 'systems/animabf/templates/dialog/parts/check-icon.hbs',
       Cancel: 'systems/animabf/templates/dialog/parts/cancel-icon.hbs'
+    },
+    Config:
+    {
+      ModifyDiceFormulas: 'systems/animabf/templates/dialog/config/modify-dice-formulas.hbs'
     }
   },
   CustomHotBar: 'systems/animabf/templates/custom-hotbar/custom-hotbar.hbs',

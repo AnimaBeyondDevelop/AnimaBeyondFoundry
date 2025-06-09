@@ -843,5 +843,7 @@
   "macros.damageCalculator.dialog.defense.title": "Defensa",
   "macros.damageCalculator.dialog.ta.title": "TA",
   "macros.damageCalculator.dialog.at.title": "TA",
-  "macros.damageCalculator.dialog.title": "Calculadora de daño"
+  "macros.damageCalculator.dialog.title": "Calculadora de daño",
+  "anima.permissions.modifyDiceFormulasPermission.title": "Modificar formulas de dados",
+  "anima.permissions.modifyDiceFormulasPermission.hint": "Permite al usuario cambiar las fórmulas de dados usadas por los actores."
 }

@@ -14,7 +14,7 @@
         class="offensive"
         title=(localize "anima.ui.mystic.magicProjection.offensive.title")
         rollable=true
-        rollableDice=system.general.diceSettings.abilityDie
+        rollableDice=@root.system.general.diceSettings.abilityDie.value
         rollableMessage=(localize "anima.ui.mystic.magicProjection.offensive.rollMessage")
         inputName="system.mystic.magicProjection.imbalance.offensive.base.value"
         inputValue=system.mystic.magicProjection.imbalance.offensive.base.value
@@ -30,7 +30,7 @@
         class="defensive"
         title=(localize "anima.ui.mystic.magicProjection.defensive.title")
         rollable=true
-        rollableDice=system.general.diceSettings.abilityDie
+        rollableDice=@root.system.general.diceSettings.abilityDie.value
         rollableMessage=(localize "anima.ui.mystic.magicProjection.defensive.rollMessage")
         inputName="system.mystic.magicProjection.imbalance.defensive.base.value"
         inputValue=system.mystic.magicProjection.imbalance.defensive.base.value

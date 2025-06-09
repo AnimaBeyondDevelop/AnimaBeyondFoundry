@@ -31,7 +31,7 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
         rollable=true
-        rollableDice=system.general.diceSettings.initiativeDie
+        rollableDice=@root.system.general.diceSettings.initiativeDie.value
         title=(localize 'anima.ui.general.initiative.base.title')
         inputName="system.characteristics.secondaries.initiative.base.value"
         inputValue=system.characteristics.secondaries.initiative.base.value
