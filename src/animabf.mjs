@@ -10,6 +10,8 @@ import ABFItemSheet from './module/items/ABFItemSheet';
 import { ABFConfig } from './module/ABFConfig';
 import ABFItem from './module/items/ABFItem';
 import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
+import ABFCanvasLayer from './module/CanvasLayers/ABFCanvasLayer';
+import ABFCanvas from './module/ABFCanvas';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
@@ -27,10 +29,11 @@ Hooks.once('init', async () => {
   CONFIG.Actor.documentClass = ABFActor;
 
   CONFIG.config = ABFConfig;
-
+  CONFIG.Canvas.layers["abfCanvasLayer"] = ABFCanvasLayer;
+  CONFIG.CanvasClass = ABFCanvas;
+  console.log("📦 CONFIG.CanvasClass:", CONFIG.CanvasClass?.name);
   window.ABFFoundryRoll = ABFFoundryRoll;
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
-
 
   CONFIG.Combat.documentClass = ABFCombat;
   CONFIG.Combatant.documentClass = ABFCombatant;
@@ -74,6 +77,73 @@ Hooks.once('ready', () => {
 
   applyMigrations();
 });
+
+
+Hooks.once("canvasReady", async () => {
+  console.log("🧪 canvasReady test");
+
+  const layer = new ABFCanvasLayer();
+  await layer.draw();
+
+  // Agrega al stage directamente
+  canvas.stage.addChild(layer);
+
+  // Opcional: guardar acceso directo
+  canvas.abfCanvasLayer = layer;
+});
+
+Hooks.once("canvasInit", () => {
+  console.log("🌀 canvasInit - Canvas class is", canvas.constructor.name);
+  Object.setPrototypeOf(game.canvas, ABFCanvas.prototype);
+});
+
+Hooks.on("getSceneControlButtons", (controls) => {
+  const tokenControls = controls.find(c => c.name === "token");
+  if (tokenControls) {
+    tokenControls.tools.push(
+      {
+        name: "opcion-uno",
+        title: "Opción Uno",
+        icon: "fas fa-star",
+        onClick: () => console.log("Se hizo clic en Opción Uno"),
+        button: true
+      },
+      {
+        name: "opcion-dos",
+        title: "Opción Dos",
+        icon: "fas fa-bolt",
+        onClick: () => console.log("Se hizo clic en Opción Dos"),
+        button: true
+      }
+    );
+  }
+
+  // Añadir un nuevo grupo con la capa personalizada
+  controls.push({
+    name: "abf-tools",
+    title: "Herramientas ABF",
+    icon: "fas fa-dragon",
+    layer: "abfCanvasLayer",     // Muy importante: debe coincidir con el nombre de la clase registrada
+    tools: [
+      {
+        name: "abf-opcion-uno",
+        title: "ABF Opción Uno",
+        icon: "fas fa-feather-alt",
+        onClick: () => console.log("Se hizo clic en ABF Opción Uno"),
+        button: true
+      },
+      {
+        name: "abf-opcion-dos",
+        title: "ABF Opción Dos",
+        icon: "fas fa-fire",
+        onClick: () => console.log("Se hizo clic en ABF Opción Dos"),
+        button: true
+      }
+    ]
+  });
+});
+
+
 
 // Add any additional hooks if necessary
 
