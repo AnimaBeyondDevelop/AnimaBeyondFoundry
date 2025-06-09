@@ -14,7 +14,7 @@
         class="offensive"
         title=(localize "anima.ui.psychic.psychicProjection.offensive.title")
         rollable=true
-        rollableDice=system.general.diceSettings.abilityDie
+        rollableDice=@root.system.general.diceSettings.abilityDie.value
         rollableMessage=(localize "anima.ui.psychic.psychicProjection.offensive.rollMessage")
         inputName="system.psychic.psychicProjection.imbalance.offensive.base.value"
         inputValue=system.psychic.psychicProjection.imbalance.offensive.base.value
@@ -30,7 +30,7 @@
         class="defensive"
         title=(localize "anima.ui.psychic.psychicProjection.defensive.title")
         rollable=true
-        rollableDice=system.general.diceSettings.abilityDie
+        rollableDice=@root.system.general.diceSettings.abilityDie.value
         rollableMessage=(localize "anima.ui.psychic.psychicProjection.defensive.rollMessage")
         inputName="system.psychic.psychicProjection.imbalance.defensive.base.value"
         inputValue=system.psychic.psychicProjection.imbalance.defensive.base.value

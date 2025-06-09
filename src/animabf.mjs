@@ -2,6 +2,7 @@ import { registerSettings } from './utils/registerSettings';
 import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
+import ABFDie from './module/rolls/ABFDie';
 import ABFCombat from './module/combat/ABFCombat';
 import ABFCombatant from './module/combat/ABFCombatant';
 import { ABFActor } from './module/actor/ABFActor';

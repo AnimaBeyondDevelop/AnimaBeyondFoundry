@@ -28,6 +28,7 @@
       inputName="system.general.settings.fumbles.value"
       inputValue= system.general.settings.fumbles.value
     }}
+    {{#if canModifyDice}}
     {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="die"
       inputType="text"
@@ -35,35 +36,35 @@
       inputName="system.general.diceSettings.characteristicDie.value"
       inputValue= system.general.diceSettings.characteristicDie.value
     }}
-    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="die"
-      inputType="text"
-      title=(localize "anima.ui.settings.advancedSettings.initiativeDie.title")
-      inputName="system.general.diceSettings.initiativeDie.value"
-      inputValue= system.general.diceSettings.initiativeDie.value
-    }}
-    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="die"
-      inputType="text"
-      title=(localize "anima.ui.settings.advancedSettings.resistanceDie.title")
-      inputName="system.general.diceSettings.resistanceDie.value"
-      inputValue= system.general.diceSettings.resistanceDie.value
-    }}
-    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="die"
-      inputType="text"
-      title=(localize "anima.ui.settings.advancedSettings.abilityDie.title")
-      inputName="system.general.diceSettings.abilityDie.value"
-      inputValue= system.general.diceSettings.abilityDie.value
-    }}
-    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="die"
-      inputType="text"
-      title=(localize "anima.ui.settings.advancedSettings.abilityMasteryDie.title")
-      inputName="system.general.diceSettings.abilityMasteryDie.value"
-      inputValue= system.general.diceSettings.abilityMasteryDie.value
-    }}
-
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="die"
+        inputType="text"
+        title=(localize "anima.ui.settings.advancedSettings.initiativeDie.title")
+        inputName="system.general.diceSettings.initiativeDie.value"
+        inputValue= system.general.diceSettings.initiativeDie.value
+      }}
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="die"
+        inputType="text"
+        title=(localize "anima.ui.settings.advancedSettings.resistanceDie.title")
+        inputName="system.general.diceSettings.resistanceDie.value"
+        inputValue= system.general.diceSettings.resistanceDie.value
+      }}
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="die"
+        inputType="text"
+        title=(localize "anima.ui.settings.advancedSettings.abilityDie.title")
+        inputName="system.general.diceSettings.abilityDie.value"
+        inputValue= system.general.diceSettings.abilityDie.value
+      }}
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="die"
+        inputType="text"
+        title=(localize "anima.ui.settings.advancedSettings.abilityMasteryDie.title")
+        inputName="system.general.diceSettings.abilityMasteryDie.value"
+        inputValue= system.general.diceSettings.abilityMasteryDie.value
+      }}
+    {{/if}}
     <div>
       {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
         class="defenseType"

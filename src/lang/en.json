@@ -836,5 +836,7 @@
   "macros.damageCalculator.dialog.ta.title": "AT",
   "macros.damageCalculator.dialog.at.title": "AT",
   "macros.combat.dialog.at.label": "AT",
-  "macros.damageCalculator.dialog.title": "Damage calculator"
+  "macros.damageCalculator.dialog.title": "Damage calculator",
+  "anima.permissions.modifyDiceFormulasPermission.title": "Modify dice formulas",
+  "anima.permissions.modifyDiceFormulasPermission.hint": "Allows the user to modify the dice settings used by the actors."
 }
