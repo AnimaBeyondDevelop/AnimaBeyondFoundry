@@ -14,6 +14,7 @@ import { isArrayEmpty } from './helpers/isArrayEmpty';
 import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
+import { injectFromHookHelper } from './helpers/injectFromHookHelper';
 
 export const registerHelpers = () => {
   const helpers = [
@@ -32,7 +33,8 @@ export const registerHelpers = () => {
     isArrayEmpty,
     logHBSHelper,
     calculateLanguagesHBSHelper,
-    calculateLevelsHBSHelper
+    calculateLevelsHBSHelper,
+    injectFromHookHelper
   ];
 
   for (const helper of helpers) {

@@ -187,6 +187,7 @@
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.final.value")
                 inputValue=weapon.system.initiative.final.value
               }}
+              {{{injectFromHook "abf.injectWeaponFooter" weapon._id}}}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}

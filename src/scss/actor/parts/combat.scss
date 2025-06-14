@@ -149,14 +149,18 @@
       }
 
       .group-footer {
-        height: 5rem;
+        flex-wrap: wrap;
         padding-bottom: 0.5rem;
 
         .weapon-footer {
           width: 100%;
+          flex-wrap: wrap;    
+          min-width: 30rem; 
           display: flex;
           justify-content: space-between;
+          row-gap: 0.5rem;
 
+          padding-top: 1.5rem;
           padding-left: 0.5rem;
           padding-right: 0.5rem;
 
@@ -214,14 +218,18 @@
       }
 
       .group-footer {
-        height: 5rem;
+        flex-wrap: wrap;
         padding-bottom: 0.5rem;
 
         .armor-footer {
           width: 100%;
           display: flex;
+          flex-wrap: wrap;    
+          min-width: 25rem; 
           justify-content: space-between;
+          row-gap: 0.5rem;
 
+          padding-top: 1.5rem;
           padding-left: 0.5rem;
           padding-right: 0.5rem;
 

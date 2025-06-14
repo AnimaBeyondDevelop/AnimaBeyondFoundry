@@ -12,6 +12,7 @@ import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
 import { applyMigrations } from './module/migration/migrate';
+import { registerGlobalTypes } from './utils/registerGlobalTypes';
 
 import './scss/animabf.scss';
 
@@ -74,6 +75,8 @@ Hooks.once('ready', () => {
   attachCustomMacroBar();
 
   applyMigrations();
+  
+  registerGlobalTypes();
 });
 
 // Add any additional hooks if necessary
