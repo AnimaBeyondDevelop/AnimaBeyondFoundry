@@ -104,7 +104,6 @@ img {
           }
         }
       }
-      // TODO: Next needed for handlebars group contractible handling. Remove when all are in svelte
       .contractible-button {
         position: absolute;
         top: -0.5rem;
@@ -126,7 +125,7 @@ img {
         &.contracted {
           transform: rotate(180deg);
         }
-      } // End of removal after svelte
+      } 
     }
 
     width: 100%;
