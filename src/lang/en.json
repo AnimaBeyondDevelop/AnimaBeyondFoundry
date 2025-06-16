@@ -563,6 +563,8 @@
   "anima.ui.systemSettings.useIconLabels.hint.title": "Whether to use icons (default) or titles for labels inside dialogs and sheets.",
   "anima.ui.systemSettings.expandAbilityInputs.title": "Expand Ability Inputs",
   "anima.ui.systemSettings.expandAbilityInputs.hint.title": "If enabled, the ability input sections in the combat dialog will always be expanded by default.",
+  "anima.ui.systemSettings.combatModifiersExpanded.title": "Expand combat modifiers",
+  "anima.ui.systemSettings.combatModifiersExpanded.hint.title": "If enabled, the Combat Modifiers section in the combat interface will be expanded by default.",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Damage Resistance",
   "anima.ui.tabs.domine": "Domine",

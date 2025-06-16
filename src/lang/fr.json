@@ -513,6 +513,8 @@
   "anima.ui.systemSettings.useIconLabels.hint.title": "Whether to use icons (default) or titles for labels inside dialogs and sheets.",
   "anima.ui.systemSettings.expandAbilityInputs.title": "Développer les entrées de compétences",
   "anima.ui.systemSettings.expandAbilityInputs.hint.title": "Si activé, les sections d'entrée de compétences dans le dialogue de combat seront toujours développées par défaut.",
+  "anima.ui.systemSettings.combatModifiersExpanded.title": "Développer les modificateurs de combat",
+  "anima.ui.systemSettings.combatModifiersExpanded.hint.title": "Si activé, la section des modificateurs de combat dans l'interface de combat sera développée par défaut.",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Encaissement",
   "anima.ui.tabs.domine": "Domaine",
