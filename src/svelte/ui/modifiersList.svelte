@@ -11,14 +11,11 @@
 
   /** @type {props} */
   let { ability = $bindable(), disabled = false, class: cssClass = '' } = $props();
-  const modifiers = Object.entries(ability.modifiers).filter(
-    ([_, modifier]) => modifier.modifier !== 0 && modifier.active
-  );
   const i18n = game.i18n;
 </script>
 
 <div>
-  {#each modifiers as [key, modifier]}
+  {#each Object.entries(ability.modifiers).filter(([_, modifier]) => modifier.modifier !== 0) as [key, modifier]}
     <div class={['modifier-row', cssClass].join(' ')}>
       <IconCheckBox
         icon={modifier.active ? 'checkbox_active' : 'checkbox_inactive'}
@@ -26,7 +23,7 @@
         height="15px"
         {disabled}
       />
-      <div class="modifier-label">
+      <div class={`modifier-label ${modifier.active ? '' : 'inactive'}`}>
         <p>{i18n?.localize(`macros.combat.dialog.combatMod.${key}.title`)}</p>
         <Input value={modifier.modifier} disabled />
       </div>
@@ -49,6 +46,9 @@
       width: 100%;
       justify-content: space-between;
       padding-left: 5px;
+      &.inactive {
+        opacity: 60%;
+      }
     }
   }
 </style>
