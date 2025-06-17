@@ -1,6 +1,6 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
   <header class='header-fields'>
-    {{> "systems/animabf/templates/actor/parts/header/header.hbs"}}
+    {{> "systems/abf/templates/actor/parts/header/header.hbs"}}
   </header>
 
   {{!-- Character Sheet Navigation --}}
@@ -8,42 +8,39 @@
     <a class="item" data-tab="main">{{localize "anima.ui.tabs.main"}}</a>
     <a class="item" data-tab="secondaries">{{localize "anima.ui.tabs.secondaries"}}</a>
     <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
-    {{#if system.ui.tabVisibility.mystic.value}}
-      <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
-    {{#if system.ui.tabVisibility.domine.value}}
-      <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>{{/if}}
-    {{#if system.ui.tabVisibility.psychic.value}}
-      <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
-    <a class="item" data-tab="settings"><img src='/systems/animabf/assets/icons/game-icons.net/ffffff/lorc/cog.svg'></a>
+    <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>
+    <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>
+    <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>
+    <a class="item" data-tab="settings"><img src='/systems/abf/assets/icons/game-icons.net/ffffff/lorc/cog.svg'></a>
   </nav>
 
   <section class="sheet-body">
     <div class="tab main" data-group="primary" data-tab="main">
-      {{> "systems/animabf/templates/actor/parts/general/general.hbs"}}
+      {{> "systems/abf/templates/actor/parts/general/general.hbs"}}
     </div>
 
     <div class="tab secondaries" data-group="primary" data-tab="secondaries">
-      {{> "systems/animabf/templates/actor/parts/secondaries/secondaries.hbs"}}
+      {{> "systems/abf/templates/actor/parts/secondaries/secondaries.hbs"}}
     </div>
 
     <div class="tab combat" data-group="primary" data-tab="combat">
-      {{> "systems/animabf/templates/actor/parts/combat/combat.hbs"}}
+      {{> "systems/abf/templates/actor/parts/combat/combat.hbs"}}
     </div>
 
     <div class="tab mystic" data-group="primary" data-tab="mystic">
-      {{> "systems/animabf/templates/actor/parts/mystic/mystic.hbs"}}
+      {{> "systems/abf/templates/actor/parts/mystic/mystic.hbs"}}
     </div>
 
     <div class="tab domine" data-group="primary" data-tab="domine">
-      {{> "systems/animabf/templates/actor/parts/domine/domine.hbs"}}
+      {{> "systems/abf/templates/actor/parts/domine/domine.hbs"}}
     </div>
 
     <div class="tab psychics" data-group="primary" data-tab="psychic">
-      {{> "systems/animabf/templates/actor/parts/psychic/psychic.hbs"}}
+      {{> "systems/abf/templates/actor/parts/psychic/psychic.hbs"}}
     </div>
 
     <div class="tab settings" data-group="primary" data-tab="settings">
-      {{> "systems/animabf/templates/actor/parts/settings/settings.hbs"}}
+      {{> "systems/abf/templates/actor/parts/settings/settings.hbs"}}
     </div>
   </section>
 </form>

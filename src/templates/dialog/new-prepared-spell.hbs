@@ -1,16 +1,16 @@
 <form>
   <div class='form-group'>
     <div>
-    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
       title=(localize 'dialogs.spell.title')
       inputName='new.preparedSpell.id'
     }}
       {{#each data.actor.system.mystic.spells}}
         <option value='{{this._id}}'>{{this.name}}</option>
       {{/each}}
-    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
 
-    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+    {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
       title=(localize 'dialogs.spellGrade.title')
       inputName='new.preparedSpell.grade'
     }}
@@ -18,7 +18,7 @@
       <option value='intermediate'>{{localize 'dialogs.spellGrade.intermediate.title'}}</option>
       <option value='advanced'>{{localize 'dialogs.spellGrade.advanced.title'}}</option>
       <option value='arcane'>{{localize 'dialogs.spellGrade.arcane.title'}}</option>
-    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
     </div>
   </div>
 </form>

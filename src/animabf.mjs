@@ -74,7 +74,7 @@ Hooks.once('ready', () => {
 
   attachCustomMacroBar();
 
-  applyMigrations();
+  //applyMigrations();
   
   registerGlobalTypes();
 });

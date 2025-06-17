@@ -1,19 +1,19 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="elan"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize 'anima.ui.elanSection.title')
     addRowButtonData="add-elan"
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="elan"
   }}
     {{#each system.general.elan as |elan|}}
       <div class='elan-row'>
         <div data-item-id='{{elan._id}}' class='base'>
           {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
             class="name"
             title=(localize 'anima.ui.elanSection.elanRow.name')
             inputType="text"
@@ -21,7 +21,7 @@
             inputValue=elan.name
           }}
           {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
             class="level"
             title=(localize 'anima.ui.elanSection.elanRow.level')
             inputName=(concat "system.dynamic.elan." elan._id ".system.level.value")
@@ -41,7 +41,7 @@
               value='{{elan._id}}'
             />
             {{>
-            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
               class="elan-power-name"
               hideTitle=true
               inputType="text"
@@ -49,7 +49,7 @@
               inputValue=power.name
             }}
             {{>
-            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
               class="elan-power-level"
               hideTitle=true
               inputType="text"
@@ -60,5 +60,5 @@
         {{/each}}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

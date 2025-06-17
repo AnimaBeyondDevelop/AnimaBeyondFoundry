@@ -1,15 +1,15 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="innate-magic-vias"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.innateMagic.title")
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="innate-magic-vias"
   }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="main"
       title=(localize "anima.ui.mystic.innateMagic.main.title")
       inputName="system.mystic.innateMagic.main.base.value"
@@ -23,7 +23,7 @@
     {{#each system.mystic.innateMagic.via as |innateMagicVia|}}
       <div data-item-id='{{this._id}}' class='innate-magic-via-row'>
         {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
           class="via"
           title=(localize (concat 'anima.ui.mystic.spell.via.' this.name '.title'))
           inputName=(concat "system.dynamic.via." this._id ".system.base.value")
@@ -36,5 +36,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

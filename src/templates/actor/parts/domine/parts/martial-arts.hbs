@@ -1,18 +1,18 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="martial-arts"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.domine.martialArts.title")
     addRowButtonData="add-martial-art"
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="martial-arts"
   }}
     {{#each system.domine.martialArts as |martialArt index|}}
       <div data-item-id='{{martialArt._id}}' class='martial-art-row'>
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.domine.martialArts.name.title")
           hideTitle=(is "gt" index 0)
@@ -21,7 +21,7 @@
           inputValue=martialArt.name
         }}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="grade"
           title=(localize "anima.ui.domine.martialArts.grade.title")
           hideTitle=(is "gt" index 0)
@@ -31,5 +31,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

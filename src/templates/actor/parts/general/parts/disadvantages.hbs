@@ -1,12 +1,12 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="disadvantages"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize 'anima.ui.disadvantageSection.title')
     addRowButtonData="add-disadvantage"
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="disadvantages"
   }}
     {{#each system.general.disadvantages as |disadvantage|}}
@@ -19,5 +19,5 @@
         />
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

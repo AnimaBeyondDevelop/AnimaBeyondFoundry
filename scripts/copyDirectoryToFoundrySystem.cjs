@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 
-const directory = process.argv[2] ?? 'animabf';
+const directory = process.argv[2] ?? 'abf';
 let destPath;
 
 try {

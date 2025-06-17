@@ -1,5 +1,5 @@
 {{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.attackSent
   inputName="attacker.psychic.modifier"
@@ -7,7 +7,7 @@
 }}
 
 {{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.psychicProjection.title')
   disabled=this.attackSent
   inputName="attacker.psychic.psychicProjection"
@@ -15,7 +15,7 @@
 }}
 
 {{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.psychicPotential.title')
   disabled=this.attackSent
   inputName="attacker.psychic.psychicPotential.special"
@@ -26,7 +26,7 @@
   secondaryInputValue=this.attacker.psychic.psychicPotential.final
 }}
 
-{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+{{#> 'systems/abf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.psychicPower.title')
   disabled=this.attackSent
   inputName='attacker.psychic.powerUsed'
@@ -34,9 +34,9 @@
   {{#each_when this.attacker.actor.system.psychic.psychicPowers "system" "combatType" "value" "attack"}}
     <option {{#if (is "eq" this._id ../this.attacker.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
-{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+{{/'systems/abf/templates/common/ui/custom-select.hbs'}}
 
-{{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+{{> 'systems/abf/templates/common/ui/custom-select-choices.hbs'
   disabled=this.attackSent
   choices=config.iterables.combat.weapon.criticTypesWithNone
   title=(localize "macros.combat.dialog.weapon.critic.title")
@@ -45,7 +45,7 @@
 }}
 
 {{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.psychic.damageModifier.title")
   disabled=this.attackSent
   inputName="attacker.psychic.damageModifier"
@@ -56,7 +56,7 @@
 <div class='columns'>
   <div>
     {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.eliminateFatigue.title')
       inputType="checkbox"
       inputName="attacker.psychic.eliminateFatigue"
@@ -70,7 +70,7 @@
 <div class='columns'>
   <div>
     {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
       inputType="checkbox"
       inputName="attacker.psychic.mentalPatternImbalance"
@@ -84,7 +84,7 @@
 <div class='columns'>
   <div>
     {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.distance.title')
       inputType="checkbox"
       inputName="attacker.psychic.distanceCheck"
@@ -96,7 +96,7 @@
 
 {{#if this.attackSent}}
   <div class='psychic-attack-sent'>
-    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    {{>'systems/abf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
       {{localize 'macros.combat.dialog.attackSent.title'}}
     </p>

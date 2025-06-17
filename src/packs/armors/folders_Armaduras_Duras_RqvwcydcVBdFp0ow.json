@@ -8,9 +8,9 @@
   "color": null,
   "flags": {},
   "_stats": {
-    "systemId": null,
-    "systemVersion": null,
-    "coreVersion": null,
+    "systemId": "abf",
+    "systemVersion": "1.0.0",
+    "coreVersion": "13.345",
     "createdTime": null,
     "modifiedTime": null,
     "lastModifiedBy": null

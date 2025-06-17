@@ -1,18 +1,18 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="inventory-items"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize 'anima.ui.inventoryItemsSection.title')
     addRowButtonData="add-inventory-item"
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="inventory-items"
   }}
     {{#each system.general.inventory as |item index|}}
       <div data-item-id='{{item._id}}' class='inventory-item-row'>
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.name.title')
@@ -21,7 +21,7 @@
           inputValue=item.name
         }}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="amount"
           hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.amount.title')
@@ -29,7 +29,7 @@
           inputValue=item.system.amount.value
         }}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="weight"
           hideTitle=(is "gt" index 0)
           title=(localize 'anima.ui.inventoryItemsSection.weight.title')
@@ -38,5 +38,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

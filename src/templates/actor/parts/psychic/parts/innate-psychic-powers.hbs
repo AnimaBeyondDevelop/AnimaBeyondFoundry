@@ -1,18 +1,18 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="innate-psychic-powers"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.psychic.innatePsychicPower.title")
     addRowButtonData="add-innate-psychic-power"
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="innate-psychic-powers"
   }}
     {{#each system.psychic.innatePsychicPowers as |innatePsychicPower index|}}
       <div data-item-id='{{innatePsychicPower._id}}' class='innate-psychic-power-row'>
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.psychic.innatePsychicPower.power.title")
           hideTitle=(is "gt" index 0)
@@ -22,7 +22,7 @@
         }}
 
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="effect"
           title=(localize "anima.ui.psychic.innatePsychicPower.effect.title")
           hideTitle=(is "gt" index 0)
@@ -32,7 +32,7 @@
         }}
 
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="value"
           title=(localize "anima.ui.psychic.innatePsychicPower.value.title")
           hideTitle=(is "gt" index 0)
@@ -42,14 +42,14 @@
 
       </div>
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-  {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+  {{#> "systems/abf/templates/common/ui/group-footer.hbs"}}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="amount"
       title=(localize "anima.ui.psychic.innatePsychicPower.amount.title")
       inputName="system.psychic.innatePsychicPower.amount.value"
       inputValue=system.psychic.innatePsychicPower.amount.value
     }}
-  {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-footer.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

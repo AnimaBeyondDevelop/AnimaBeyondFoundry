@@ -1,15 +1,15 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="tab-visibility"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.settings.tabVisibility.title")
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="tab-visibility"
   }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="mystic"
       title=(localize "anima.ui.settings.tabVisibility.mystic.title")
       inputType="checkbox"
@@ -17,7 +17,7 @@
       inputValue=system.ui.tabVisibility.mystic.value
     }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="domine"
       title=(localize "anima.ui.settings.tabVisibility.domine.title")
       inputType="checkbox"
@@ -25,12 +25,12 @@
       inputValue=system.ui.tabVisibility.domine.value
     }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="psychic"
       title=(localize "anima.ui.settings.tabVisibility.psychic.title")
       inputType="checkbox"
       inputName="system.ui.tabVisibility.psychic.value"
       inputValue=system.ui.tabVisibility.psychic.value
     }}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

@@ -1,5 +1,5 @@
 {{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.defenseSent
   inputName="defender.psychic.modifier"
@@ -7,7 +7,7 @@
 }}
 
 {{>
-"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.psychicProjection.title')
   disabled=this.defenseSent
   inputName="defender.psychic.psychicProjection"
@@ -16,7 +16,7 @@
 
 {{#if this.defender.psychic.supernaturalShield.newShield}}
   {{>
-  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize 'macros.combat.dialog.psychicPotential.title')
     disabled=this.defenseSent
     inputName="defender.psychic.psychicPotential.special"
@@ -27,7 +27,7 @@
     secondaryInputValue=this.defender.psychic.psychicPotential.final
   }}
 
-  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.psychicPower.title')
     disabled=this.defenseSent
     inputName='defender.psychic.powerUsed'
@@ -35,13 +35,13 @@
     {{#each_when this.defender.actor.system.psychic.psychicPowers "system" "combatType" "value" "defense"}}
       <option {{#if (is "eq" this._id ../this.defender.psychic.powerUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
     {{/each_when}}
-  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
 
   {{#if (and (is 'gt' this.defender.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.defender.actor.system.psychic.psychicSettings.fatigueResistance false))}}
   <div class='columns'>
     <div>
       {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
         title=(localize 'macros.combat.dialog.eliminateFatigue.title')
         inputType="checkbox"
         inputName="defender.psychic.eliminateFatigue"
@@ -55,7 +55,7 @@
   <div class='columns'>
     <div>
       {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
         title=(localize 'macros.combat.dialog.mentalPatternImbalance.title')
         inputType="checkbox"
         inputName="defender.psychic.mentalPatternImbalance"
@@ -67,7 +67,7 @@
 
   {{else}}
 
-  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+  {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.psychicShield.title')
     disabled=this.defenseSent
     inputName='defender.psychic.supernaturalShield.shieldUsed'
@@ -77,10 +77,10 @@
         <option {{#if (is "eq" this._id ../this.defender.psychic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
       {{/if}}
     {{/each_when}}
-  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
 
   {{>
-  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize "macros.combat.dialog.shieldValue.title")
     disabled=this.defenseSent
     inputName="defender.psychic.supernaturalShield.shieldValue"
@@ -91,7 +91,7 @@
 <div class='columns'>
   <div>
     {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.newShield.title')
       inputType="checkbox"
       inputName="defender.psychic.supernaturalShield.newShield"
@@ -102,7 +102,7 @@
 
 {{#if this.defenseSent}}
   <div class='defense-sent'>
-    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    {{>'systems/abf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
       {{localize 'macros.combat.dialog.defenseSent.title'}}
     </p>

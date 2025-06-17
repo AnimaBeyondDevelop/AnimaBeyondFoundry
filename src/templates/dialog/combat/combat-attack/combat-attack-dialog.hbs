@@ -1,12 +1,12 @@
 <form class='{{cssClass}} {{#if this.allowed}}allowed{{/if}}' autocomplete='off'>
-  {{#> "systems/animabf/templates/common/ui/group.hbs"
+  {{#> "systems/abf/templates/common/ui/group.hbs"
     class="attack-values"
   }}
     {{>
-    "systems/animabf/templates/common/ui/group-header.hbs"
+    "systems/abf/templates/common/ui/group-header.hbs"
       title=(concat (localize 'macros.combat.dialog.attacking.title') this.defender.token.name)
     }}
-    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    {{#> "systems/abf/templates/common/ui/group-body.hbs"
       class="attack-values"
     }}
       {{#if this.allowed}}
@@ -19,7 +19,7 @@
       <div class='columns'>
         <div>
           {{>
-              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
               title=(localize 'macros.combat.dialog.noRoll.title')
               inputType="checkbox"
               inputName="attacker.withoutRoll"
@@ -29,7 +29,7 @@
         <div>
           {{#if this.ui.isGM}}
             {{>
-            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
               title=(localize 'macros.combat.dialog.showRoll.title')
               disabled=this.attackSent
               inputType="checkbox"
@@ -42,7 +42,7 @@
 
         {{#if this.attacker.counterAttackBonus}}
           {{>
-          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
             title=(localize 'macros.combat.dialog.counterAttackBonus.title')
             disabled=true
             inputValue=this.attacker.counterAttackBonus
@@ -51,23 +51,23 @@
 
         <section class="sheet-body">
           <div class="tab combat" data-group="primary" data-tab="combat">
-            {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs' this=this}}
+            {{> 'systems/abf/templates/dialog/combat/combat-attack/parts/combat.hbs' this=this}}
           </div>
 
           <div class="tab mystic" data-group="primary" data-tab="mystic">
-            {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/mystic.hbs' this=this}}
+            {{> 'systems/abf/templates/dialog/combat/combat-attack/parts/mystic.hbs' this=this}}
           </div>
 
           <div class="tab psychic" data-group="primary" data-tab="psychic">
-            {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/psychic.hbs' this=this}}
+            {{> 'systems/abf/templates/dialog/combat/combat-attack/parts/psychic.hbs' this=this}}
           </div>
         </section>
       {{else}}
         <div class='waiting-row'>
-          {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+          {{>'systems/abf/templates/common/ui/loading-indicator.hbs' class="big"}}
           <p class='label'>{{localize 'macros.combat.dialog.waitRequest.title'}}</p>
         </div>
       {{/if}}
-    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+    {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/abf/templates/common/ui/group.hbs"}}
 </form>

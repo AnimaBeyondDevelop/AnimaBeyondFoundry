@@ -1,11 +1,11 @@
-{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
-  {{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/abf/templates/common/ui/group.hbs"
     class="ammo-item-dialog"
   }}
-    {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/abf/templates/common/ui/group-header.hbs"}}
       <div class='ammo-header'>
         {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
           hideTitle=true
           inputType="text"
@@ -13,11 +13,11 @@
           inputValue=item.name
         }}
       </div>
-    {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
-    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    {{/"systems/abf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/abf/templates/common/ui/group-body.hbs"
       class="ammo-item-dialog"
     }}
-      {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+      {{> 'systems/abf/templates/common/ui/custom-select-choices.hbs'
         class="critic"
         isVertical=true
         choices=config.iterables.combat.weapon.criticTypes
@@ -26,41 +26,41 @@
         inputValue=system.critic.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="presence"
         title=(localize "anima.ui.combat.ammo.presence.base.title")
         inputName="system.presence.base.value"
         inputValue=system.presence.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="integrity"
         title=(localize "anima.ui.combat.ammo.integrity.base.title")
         inputName="system.integrity.base.value"
         inputValue=system.integrity.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="breaking"
         title=(localize "anima.ui.combat.ammo.breaking.base.title")
         inputName="system.breaking.base.value"
         inputValue=system.breaking.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="damage"
         title=(localize "anima.ui.combat.ammo.damage.base.title")
         inputName="system.damage.base.value"
         inputValue=system.damage.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="special"
         title=(localize "anima.ui.combat.ammo.special.title")
         inputType="text"
         inputName="system.special.value"
         inputValue=system.special.value
       }}
-    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-  {{/"systems/animabf/templates/common/ui/group.hbs"}}
-{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}
+    {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/abf/templates/common/ui/group.hbs"}}
+{{/"systems/abf/templates/items/base/base-sheet.hbs"}}

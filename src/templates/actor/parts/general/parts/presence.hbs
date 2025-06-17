@@ -1,19 +1,19 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="presence"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.general.presence.title")
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="presence"
   }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="presence"
       title=(localize "anima.ui.general.presence.title")
       inputName="system.general.presence.base.value"
       inputValue=system.general.presence.base.value
     }}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

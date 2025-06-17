@@ -1,11 +1,11 @@
-{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
-  {{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/abf/templates/common/ui/group.hbs"
     class="weapon-item-dialog"
   }}
-    {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/abf/templates/common/ui/group-header.hbs"}}
       <div class='weapon-header'>
         {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
           hideTitle=true
           inputType="text"
@@ -13,12 +13,12 @@
           inputValue=item.name
         }}
       </div>
-    {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
-    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    {{/"systems/abf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/abf/templates/common/ui/group-body.hbs"
       class="weapon-item-dialog"
     }}
       {{#unless (and (is 'eq' system.isRanged.value true) (is 'eq' system.shotType.value 'shot'))}}
-        {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        {{> 'systems/abf/templates/common/ui/custom-select-choices.hbs'
           class="critic-primary"
           isVertical=true
           choices=config.iterables.combat.weapon.criticTypes
@@ -28,7 +28,7 @@
         }}
       {{/unless}}
       {{#if (or (is 'eq' system.isRanged.value false) (is 'eq' system.shotType.value 'throw'))}}
-        {{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        {{> 'systems/abf/templates/common/ui/custom-select-choices.hbs'
           class="critic-secondary"
           isVertical=true
           choices=config.iterables.combat.weapon.criticTypesWithNone
@@ -38,14 +38,14 @@
         }}
       {{/if}}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="presence"
         title=(localize "anima.ui.combat.weapons.presence.base.title")
         inputName="system.presence.base.value"
         inputValue=system.presence.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="is-shield"
         title=(localize "anima.ui.combat.weapons.isShield.title")
         inputType="checkbox"
@@ -53,7 +53,7 @@
         inputValue=system.isShield.value
       }}
       {{>
-      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+      'systems/abf/templates/common/ui/custom-select-choices.hbs'
         class="size"
         isVertical=true
         choices=config.iterables.combat.weapon.sizes
@@ -62,7 +62,7 @@
         inputValue=system.size.value
       }}
       {{>
-      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+      'systems/abf/templates/common/ui/custom-select-choices.hbs'
         class="size-proportion"
         isVertical=true
         choices=config.iterables.combat.weapon.sizeProportions
@@ -71,35 +71,35 @@
         inputValue=system.sizeProportion.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="integrity"
         title=(localize "anima.ui.combat.weapons.integrity.base.title")
         inputName="system.integrity.base.value"
         inputValue=system.integrity.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="breaking"
         title=(localize "anima.ui.combat.weapons.breaking.base.title")
         inputName="system.breaking.base.value"
         inputValue=system.breaking.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="damage"
         title=(localize "anima.ui.combat.weapons.damage.base.title")
         inputName="system.damage.base.value"
         inputValue=system.damage.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
         title=(localize "anima.ui.combat.weapons.initiative.base.title")
         inputName="system.initiative.base.value"
         inputValue=system.initiative.base.value
       }}
       {{>
-      'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+      'systems/abf/templates/common/ui/custom-select-choices.hbs'
         class="manageability-type"
         isVertical=true
         choices=config.iterables.combat.weapon.manageabilityTypes
@@ -109,7 +109,7 @@
       }}
       {{#if (or (is 'eq' system.manageabilityType.value 'one_hand') (is 'eq' system.manageabilityType.value 'one_or_two_hands'))}}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="fue-required"
           title=(localize "anima.ui.combat.weapons.strRequired.oneHand.title")
           inputName="system.strRequired.oneHand.base.value"
@@ -122,7 +122,7 @@
       {{/if}}
       {{#if (or (is 'eq' system.manageabilityType.value 'two_hands') (is 'eq' system.manageabilityType.value 'one_or_two_hands'))}}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="fue-required-two-hands"
           title=(localize "anima.ui.combat.weapons.strRequired.twoHands.title")
           inputName="system.strRequired.twoHands.base.value"
@@ -134,7 +134,7 @@
         }}
       {{/if}}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="is-ranged"
         title=(localize "anima.ui.combat.weapons.isRanged.title")
         inputType="checkbox"
@@ -143,14 +143,14 @@
       }}
       {{#if system.isRanged.value}}
         {{>
-        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
           class="range"
           title=(localize "anima.ui.combat.weapons.range.base.title")
           inputName="system.range.base.value"
           inputValue=system.range.base.value
         }}
         {{>
-        'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+        'systems/abf/templates/common/ui/custom-select-choices.hbs'
           class="shot-type"
           isVertical=true
           choices=config.iterables.combat.weapon.shotTypes
@@ -160,7 +160,7 @@
         }}
         {{#if (is 'eq' system.shotType.value 'throw')}}
           {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
             class="cadence"
             title=(localize "anima.ui.combat.weapons.cadence.title")
             inputName="system.cadence.value"
@@ -168,7 +168,7 @@
           }}
         {{else}}
           {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
             class="has-own-strength"
             title=(localize "anima.ui.combat.weapons.hasOwnStr.title")
             inputType="checkbox"
@@ -177,7 +177,7 @@
           }}
           {{#if system.hasOwnStr.value}}
             {{>
-            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
               class="weapon-fue"
               title=(localize "anima.ui.combat.weapons.weaponStrength.title")
               inputName="system.weaponStrength.base.value"
@@ -189,7 +189,7 @@
             }}
           {{/if}}
           {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
             class="reload"
             title=(localize "anima.ui.combat.weapons.reload.base.title")
             inputName="system.reload.base.value"
@@ -198,13 +198,13 @@
         {{/if}}
       {{/if}}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="special"
         title=(localize "anima.ui.combat.weapons.special.title")
         inputType="text"
         inputName="system.special.value"
         inputValue=system.special.value
       }}
-    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-  {{/"systems/animabf/templates/common/ui/group.hbs"}}
-{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}
+    {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/abf/templates/common/ui/group.hbs"}}
+{{/"systems/abf/templates/items/base/base-sheet.hbs"}}

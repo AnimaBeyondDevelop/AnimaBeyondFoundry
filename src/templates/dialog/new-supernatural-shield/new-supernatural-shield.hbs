@@ -1,13 +1,13 @@
 <form autocomplete="off">
   <div class='form-group'>
-  {{#> "systems/animabf/templates/common/ui/group.hbs"
+  {{#> "systems/abf/templates/common/ui/group.hbs"
     class="new-supernatural-shield"
   }}
     {{>
-    "systems/animabf/templates/common/ui/group-header.hbs"
+    "systems/abf/templates/common/ui/group-header.hbs"
       title=(localize 'dialogs.newSupernaturalShield.title')
     }}
-    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    {{#> "systems/abf/templates/common/ui/group-body.hbs"
       class="new-supernatural-shield"
     }}
         <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
@@ -17,15 +17,15 @@
 
         <section class="sheet-body">
           <div class="tab mystic" data-group="primary" data-tab="mystic">
-            {{> 'systems/animabf/templates/dialog/new-supernatural-shield/parts/new-mystic-shield.hbs' this=this}}
+            {{> 'systems/abf/templates/dialog/new-supernatural-shield/parts/new-mystic-shield.hbs' this=this}}
           </div>
 
           <div class="tab psychic" data-group="primary" data-tab="psychic">
-            {{> 'systems/animabf/templates/dialog/new-supernatural-shield/parts/new-psychic-shield.hbs' this=this}}
+            {{> 'systems/abf/templates/dialog/new-supernatural-shield/parts/new-psychic-shield.hbs' this=this}}
           </div>
         </section>
 
-    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+    {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/abf/templates/common/ui/group.hbs"}}
   </div>
 </form>

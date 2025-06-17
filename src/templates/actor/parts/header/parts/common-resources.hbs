@@ -1,12 +1,12 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="common-resources"
 }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="common-resources"
   }}
     <div class='first-row'>
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="current-life"
         title=(localize 'anima.ui.general.life.current.title')
         inputName="system.characteristics.secondaries.lifePoints.value"
@@ -18,7 +18,7 @@
         secondaryInputValue=system.characteristics.secondaries.lifePoints.max
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="fatigue"
         title=(localize 'anima.ui.general.fatigue.title')
         inputName="system.characteristics.secondaries.fatigue.value"
@@ -28,7 +28,7 @@
         secondaryInputValue=system.characteristics.secondaries.fatigue.max
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
         rollable=true
         rollableDice='1d100Initiative'
@@ -45,7 +45,7 @@
     </div>
     <div class='movements'>
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movementType.title')
         inputName="system.characteristics.secondaries.movementType.mod.value"
@@ -56,7 +56,7 @@
         secondaryInputValue=system.characteristics.secondaries.movementType.final.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.maximum.title')
         disabled=true
@@ -64,7 +64,7 @@
         inputValue=system.characteristics.secondaries.movement.maximum.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="running"
         title=(localize 'anima.ui.general.movement.running.title')
         disabled=true
@@ -72,7 +72,7 @@
         inputValue=system.characteristics.secondaries.movement.running.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.movement.quarter.title')
         disabled=true
@@ -80,5 +80,5 @@
       }}
     </div>
 
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

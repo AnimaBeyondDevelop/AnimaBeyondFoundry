@@ -1,15 +1,30 @@
 {
-  "id": "animabf",
-  "title": "Anima Beyond Fantasy",
+  "id": "abf",
+  "title": "Anima Beyond Fantasy 2",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
-  "version": "1.19.5",
-  "compatibility": { "minimum": "12", "verified": "12.331" },
-  "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
-  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
-  "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.19.5",
-  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.19.5/animabf.zip",
-  "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
-  "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
+  "version": "1.0.0",
+  "compatibility": { "minimum": "13", "verified": "13.345" },
+  "url": "https://github.com/JulenBordonaba/AnimaBeyondFoundryFork",
+  "manifest": "https://raw.githubusercontent.com/JulenBordonaba/AnimaBeyondFoundryFork/main/src/system.json",
+  "download": "https://github.com/JulenBordonaba/AnimaBeyondFoundryFork/releases/download/v1.19.5/abf.zip",
+  "authors": [
+    { 
+      "name": "Linkaynn", 
+      "url": "https://www.jeseromero.com" 
+    },
+    {
+      "name": "Julen Bordonaba"
+    },
+    {
+      "name": "Alfonso Paiva"
+    },
+    {
+      "name": "Aitor Balmaseda"
+    },
+    {
+      "name": "Luisin"
+    }
+  ],
   "scripts": [],
   "esmodules": ["animabf.js"],
   "styles": ["animabf.css"],
@@ -18,7 +33,7 @@
     {
       "name": "weapons",
       "label": "(ES) Armas",
-      "system": "animabf",
+      "system": "abf",
       "path": "./packs/weapons",
       "type": "Item",
       "private": false,
@@ -27,7 +42,7 @@
     {
       "name": "armors",
       "label": "(ES) Armaduras",
-      "system": "animabf",
+      "system": "abf",
       "path": "./packs/armors",
       "type": "Item",
       "private": false,
@@ -36,7 +51,7 @@
     {
       "name": "magic",
       "label": "(ES) Magia",
-      "system": "animabf",
+      "system": "abf",
       "path": "./packs/magic",
       "type": "Item",
       "private": false,
@@ -45,7 +60,7 @@
     {
       "name": "psychic",
       "label": "(ES) Mentalismo",
-      "system": "animabf",
+      "system": "abf",
       "path": "./packs/psychic_powers",
       "type": "Item",
       "private": false,
@@ -54,7 +69,7 @@
     {
       "name": "npcs",
       "label": "(ES) NPCs Core Exxet",
-      "system": "animabf",
+      "system": "abf",
       "path": "./packs/npcs",
       "type": "Actor",
       "private": false,

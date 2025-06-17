@@ -1,28 +1,28 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
+{{#> "systems/abf/templates/common/ui/group.hbs"
   class="advancedSettings"
 }}
   {{>
-  "systems/animabf/templates/common/ui/group-header.hbs"
+  "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.settings.advancedSettings.title")
   }}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"
     class="advancedSettings"
   }}
     {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
         class="doubles"
         title= (localize "anima.ui.settings.advancedSettings.doubles")
         inputType="checkbox"
         inputName="system.general.settings.openOnDoubles.value"
         inputValue=system.general.settings.openOnDoubles.value
       }}
-    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="openRolls"
       title=(localize "anima.ui.settings.advancedSettings.openRolls.title")
       inputName="system.general.settings.openRolls.value"
       inputValue= system.general.settings.openRolls.value
     }}
-    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="fumbles"
       title=(localize "anima.ui.settings.advancedSettings.fumbles.title")
       inputName="system.general.settings.fumbles.value"
@@ -30,7 +30,7 @@
     }}
 
     <div>
-      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
         class="defenseType"
         title=(localize "anima.ui.settings.advancedSettings.defenseType.title")
         inputName="system.general.settings.defenseType.value"
@@ -39,7 +39,7 @@
           <option {{#if (is "eq" this.inputValue '')}} selected{{/if}} value=''>{{localize 'anima.ui.settings.advancedSettings.defenseType.normal.title'}}</option>
           <option {{#if (is "eq" this.inputValue 'resistance')}} selected{{/if}} value='resistance'>{{localize 'anima.ui.settings.advancedSettings.defenseType.damageResistance.title'}}</option>
           <option {{#if (is "eq" this.inputValue 'mass')}} selected{{/if}} value='mass'>{{localize 'anima.ui.settings.advancedSettings.defenseType.mass.title'}}</option>
-      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+      {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
     </div>
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}
