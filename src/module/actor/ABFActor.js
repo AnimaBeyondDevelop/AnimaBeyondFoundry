@@ -181,7 +181,7 @@ export class ABFActor extends Actor {
       shieldId: item._id
     };
     if (supernaturalShieldData.psychic.overmantained) {
-      item.setFlag('animabf', 'psychic', supernaturalShieldData.psychic);
+      item.setFlag('abf', 'psychic', supernaturalShieldData.psychic);
     }
     executeMacro(supernaturalShieldData.name, args);
     return item._id;
@@ -231,7 +231,7 @@ export class ABFActor extends Actor {
       // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && newCombatResult) {
         const needToRound = game.settings.get(
-          'animabf',
+          'abf',
           ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
         );
         const result = calculateDamage(
@@ -325,10 +325,10 @@ export class ABFActor extends Actor {
     );
 
     for (const psychicShield of psychicShields) {
-      const psychic = psychicShield.getFlag('animabf', 'psychic');
+      const psychic = psychicShield.getFlag('abf', 'psychic');
       if (psychic?.overmantained) {
         if (psychic.maintainMax >= psychicShield.system.shieldPoints) {
-          psychicShield.unsetFlag('animabf', 'psychic');
+          psychicShield.unsetFlag('abf', 'psychic');
         } else {
           const supShield = {
             system: psychicShield.system,
@@ -348,18 +348,18 @@ export class ABFActor extends Actor {
    */
   accumulateDefenses(keepAccumulating) {
     /** @type {{accumulated: number, keepAccumulating: boolean}} */
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter') || {
+    const defensesCounter = this.getFlag('abf', 'defensesCounter') || {
       accumulated: 0,
       keepAccumulating
     };
     const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
-      this.setFlag('animabf', 'defensesCounter', {
+      this.setFlag('abf', 'defensesCounter', {
         accumulated: newDefensesCounter,
         keepAccumulating
       });
     } else {
-      this.setFlag('animabf', 'defensesCounter.keepAccumulating', keepAccumulating);
+      this.setFlag('abf', 'defensesCounter.keepAccumulating', keepAccumulating);
     }
   }
 
@@ -371,14 +371,14 @@ export class ABFActor extends Actor {
    * actor.resetDefensesCounter();
    */
   resetDefensesCounter() {
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter');
+    const defensesCounter = this.getFlag('abf', 'defensesCounter');
     if (defensesCounter === undefined) {
-      this.setFlag('animabf', 'defensesCounter', {
+      this.setFlag('abf', 'defensesCounter', {
         accumulated: 0,
         keepAccumulating: true
       });
     } else {
-      this.setFlag('animabf', 'defensesCounter.accumulated', 0);
+      this.setFlag('abf', 'defensesCounter.accumulated', 0);
     }
   }
 

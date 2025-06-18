@@ -146,6 +146,7 @@ export default class ABFActorSheet extends ActorSheet {
         row.addEventListener('dragstart', handler, false);
       });
 
+      //Buttons cllback from hbs
       html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
         item.onCreate(this.actor);
       });

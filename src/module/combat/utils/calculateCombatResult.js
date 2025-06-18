@@ -21,7 +21,7 @@ export const calculateCombatResult = (
   halvedAbsorption = false
 ) => {
   const needToRound = game.settings.get(
-    'animabf',
+    'abf',
     ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
   );
 

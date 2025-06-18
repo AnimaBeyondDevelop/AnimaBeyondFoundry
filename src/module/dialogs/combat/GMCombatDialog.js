@@ -52,7 +52,7 @@ export class GMCombatDialog extends FormApplication {
       closeOnSubmit: false,
       height: 600,
       width: 700,
-      template: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs',
+      template: 'systems/abf/templates/dialog/combat/gm-combat-dialog.hbs',
       title: 'GM Combat'
     });
   }
@@ -446,11 +446,11 @@ export class GMCombatDialog extends FormApplication {
 
   executeCombatMacro(resistanceRoll) {
     const missedAttackValue = game.settings.get(
-      'animabf',
+      'abf',
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
     const macroPrefixAttack = game.settings.get(
-      'animabf',
+      'abf',
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
     const { attacker, defender, calculations } = this.modalData

@@ -4,11 +4,11 @@ export class WSCombatManager {
   constructor(game) {
     this.game = game;
 
-    game.socket?.on('system.animabf', msg => this.receive(msg));
+    game.socket?.on('system.abf', msg => this.receive(msg));
   }
 
   emit(msg) {
-    this.game.socket?.emit('system.animabf', msg);
+    this.game.socket?.emit('system.abf', msg);
   }
 
   findTokenById(tokenId) {

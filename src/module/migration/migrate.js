@@ -14,13 +14,13 @@ import * as MigrationList from './migrations';
 function migrationApplies(migration) {
   /** @type {number} */
   const currentVersion = game.settings.get(
-    'animabf',
+    'abf',
     ABFSettingsKeys.SYSTEM_MIGRATION_VERSION
   );
   if (currentVersion < migration.version) {
     return true;
   }
-  if (game.settings.get('animabf', ABFSettingsKeys.DEVELOP_MODE)) {
+  if (game.settings.get('abf', ABFSettingsKeys.DEVELOP_MODE)) {
     Logger.warn(
       `Migration ${migration.version} needs not to be applied, current system migration version is ${currentVersion}.`
     );

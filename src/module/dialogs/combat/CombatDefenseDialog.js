@@ -5,7 +5,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
   const showRollByDefault = !!game.settings.get(
-    'animabf',
+    'abf',
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
   );
   const isGM = !!game.user?.isGM;
@@ -18,7 +18,7 @@ const getInitialData = (attacker, defender) => {
       ? 'damageResistance'
       : 'combat';
 
-  const defensesCounter = defenderActor.getFlag('animabf', 'defensesCounter') || {
+  const defensesCounter = defenderActor.getFlag('abf', 'defensesCounter') || {
     accumulated: 0,
     keepAccumulating: true
   };
@@ -135,7 +135,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (psychicPowers.length > 0) {
       const lastDefensivePowerUsed = this.defenderActor.getFlag(
-        'animabf',
+        'abf',
         'lastDefensivePowerUsed'
       );
       if (psychicPowers.find(w => w._id === lastDefensivePowerUsed)) {
@@ -152,7 +152,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (spells.length > 0) {
       const lastDefensiveSpellUsed = this.defenderActor.getFlag(
-        'animabf',
+        'abf',
         'lastDefensiveSpellUsed'
       );
       if (spells.find(w => w._id === lastDefensiveSpellUsed)) {
@@ -161,7 +161,7 @@ export class CombatDefenseDialog extends FormApplication {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
       const spellCastingOverride = this.defenderActor.getFlag(
-        'animabf',
+        'abf',
         'spellCastingOverride'
       );
       mystic.spellCasting.override = spellCastingOverride || false;
@@ -206,7 +206,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (weapons.length > 0) {
       const lastDefensiveWeaponUsed = this.defenderActor.getFlag(
-        'animabf',
+        'abf',
         'lastDefensiveWeaponUsed'
       );
       if (weapons.find(weapon => weapon._id == lastDefensiveWeaponUsed)) {
@@ -291,7 +291,7 @@ export class CombatDefenseDialog extends FormApplication {
         blindness,
         distance
       } = this.modalData.defender;
-      this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
+      this.defenderActor.setFlag('abf', 'lastDefensiveWeaponUsed', weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
@@ -465,11 +465,11 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false, id: shieldUsed };
       } else if (spellUsed) {
         this.defenderActor.setFlag(
-          'animabf',
+          'abf',
           'spellCastingOverride',
           spellCasting.override
         );
-        this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
+        this.defenderActor.setFlag('abf', 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         if (this.defenderActor.evaluateCast(spellCasting)) {
@@ -586,7 +586,7 @@ export class CombatDefenseDialog extends FormApplication {
         power = supernaturalShields.find(w => w._id === shieldUsed);
         supShield = { create: false, id: shieldUsed };
       } else if (powerUsed) {
-        this.defenderActor.setFlag('animabf', 'lastDefensivePowerUsed', powerUsed);
+        this.defenderActor.setFlag('abf', 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,

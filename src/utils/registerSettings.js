@@ -28,7 +28,7 @@ export const registerSettings = () => {
     hint: 'anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title',
     scope: 'world',
     config: true,
-    default: true,
+    default: false,
     type: Boolean
   });
 
