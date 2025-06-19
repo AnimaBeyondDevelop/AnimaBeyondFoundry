@@ -4,7 +4,9 @@ import { ABFItems } from '../../items/ABFItems';
 
 /** @type Migration */
 export const Migration3AlternativeAct = {
-  version: 3,
+  id: 'migration_fix-magic-projection',
+  version: '1.0.0',
+  order: 1,
   title: 'Alternative ACT',
   description:
     'The alternative ACT is going to be an internal item so you dont lose the value.' +

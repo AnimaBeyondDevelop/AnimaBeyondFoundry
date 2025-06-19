@@ -1,4 +1,4 @@
-import { registerSettings } from './utils/registerSettings';
+import { registerSettings, ABFSettingsKeys } from './utils/registerSettings';
 import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
@@ -51,7 +51,7 @@ Hooks.once('init', async () => {
 
   // Register custom system settings
   registerSettings();
-
+  
   registerHelpers();
 
   // Preload Handlebars templates
@@ -69,12 +69,22 @@ Hooks.once('setup', () => {
 /* ------------------------------------ */
 /* When ready */
 /* ------------------------------------ */
-Hooks.once('ready', () => {
+Hooks.once('ready', async () => {
+  if (game.user.isGM)
+  {
+    const creationVersion = game.settings.get("abf", ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION);
+
+    if (!creationVersion) {
+      await game.settings.set("abf", ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION, game.system.version);
+      console.log(`Registrada versión de creación del mundo: ${game.system.version}`);
+    }
+  }
+
   registerCombatWebsocketRoutes();
 
   attachCustomMacroBar();
 
-  //applyMigrations();
+  applyMigrations();
   
   registerGlobalTypes();
 });

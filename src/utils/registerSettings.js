@@ -10,7 +10,8 @@ export const ABFSettingsKeys = {
   MACRO_PROJECTILE_DEFAULT: 'MACRO_PROJECTILE_DEFAULT',
   MACRO_SHIELD_DEFAULT: 'MACRO_SHIELD_DEFAULT',
   MACRO_MISS_ATTACK_VALUE: 'MACRO_MISS_ATTACK_VALUE',
-  SYSTEM_MIGRATION_VERSION: 'SYSTEM_MIGRATION_VERSION'
+  APPLIED_MIGRATIONS: 'APPLIED_MIGRATIONS',
+  WORLD_CREATION_SYSTEM_VERSION: 'WORLD_CREATION_SYSTEM_VERSION'
 };
 
 export const registerSettings = () => {
@@ -118,10 +119,19 @@ export const registerSettings = () => {
   });
 
   // This is for migration purposes, it stores the last migration version runned for the world.
-  game.settings.register('abf', ABFSettingsKeys.SYSTEM_MIGRATION_VERSION, {
-    config: false,
-    scope: 'world',
-    type: Number,
-    default: 0
+  game.settings.register('abf', ABFSettingsKeys.APPLIED_MIGRATIONS, {
+    name: "Applied Migration Versions",
+    scope: "world",
+    config: false, 
+    type: Object,
+    default: {}
   });
+
+  game.settings.register("abf", ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION, {
+  name: "World Creation System Version",
+  scope: "world",
+  config: false,
+  type: String,
+  default: null
+});
 };

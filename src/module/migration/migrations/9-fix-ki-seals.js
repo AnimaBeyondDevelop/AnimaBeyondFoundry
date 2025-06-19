@@ -4,7 +4,9 @@ import { Logger } from '../../../utils';
 
 /** @type Migration */
 export const Migration9FixKiSeals = {
-  version: 9,
+  id: 'migration_fix-ki-seals',
+  version: '1.0.0',
+  order: 1,
   title: 'Fix ki seals data reference',
   description:
     'Ki seals were using IsActive.value non existing data reference. ' +
