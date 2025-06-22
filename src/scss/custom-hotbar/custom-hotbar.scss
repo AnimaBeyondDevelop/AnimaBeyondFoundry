@@ -1,5 +1,5 @@
 .custom-action-bar {
-  z-index: 70;
+  z-index: calc(var(--z-index-app) - 1); 
   position: fixed;
   bottom: 100px;
   left: 240px;

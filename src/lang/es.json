@@ -786,5 +786,7 @@
   "macros.damageCalculator.dialog.damage.title": "Daño",
   "macros.damageCalculator.dialog.defense.title": "Defensa",
   "macros.damageCalculator.dialog.ta.title": "TA",
-  "macros.damageCalculator.dialog.title": "Calculadora de daño"
+  "macros.damageCalculator.dialog.title": "Calculadora de daño",
+  "customHotbar.damageCalculator": "Calculadora de daño",
+  "customHotbar.sendAttack": "Enviar ataque"
 }
