@@ -13,42 +13,78 @@
       class="attack"
       title=(localize "anima.ui.combat.baseValues.attack.title")
       rollable=true
+
       inputName="system.combat.attack.base.value"
       inputValue=system.combat.attack.base.value
-      rollSecondaryInput=true
+      disabled=false
+      tooltip= (localize "anima.ui.tooltips.base")
+      
       hasSecondaryInput=true
+      inputType="number"
+      secondaryInputName="system.combat.attack.special.value"
+      secondaryInputValue=system.combat.attack.special.value
+      disableSecondaryInput=false
+      secondaryTooltip= (localize "anima.ui.tooltips.special")
+
+      hasTertiaryInput=true
+      tertiaryInputName="system.combat.attack.final.value"
+      tertiaryInputValue=system.combat.attack.final.value
+      disableTertiaryInput=true
+      tertiaryTooltip= (localize "anima.ui.tooltips.final")
+
       addTooltips=true
-      disableSecondaryInput=true
-      secondaryInputName="system.combat.attack.final.value"
-      secondaryInputValue=system.combat.attack.final.value
     }}
     {{>
     "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="block"
       title=(localize "anima.ui.combat.baseValues.block.title")
       rollable=true
+
       inputName="system.combat.block.base.value"
       inputValue=system.combat.block.base.value
-      rollSecondaryInput=true
+      disabled=false
+      tooltip= (localize "anima.ui.tooltips.base")
+      
       hasSecondaryInput=true
+      inputType="number"
+      secondaryInputName="system.combat.block.special.value"
+      secondaryInputValue=system.combat.block.special.value
+      disableSecondaryInput=false
+      secondaryTooltip= (localize "anima.ui.tooltips.special")
+
+      hasTertiaryInput=true
+      tertiaryInputName="system.combat.block.final.value"
+      tertiaryInputValue=system.combat.block.final.value
+      disableTertiaryInput=true
+      tertiaryTooltip= (localize "anima.ui.tooltips.final")
+
       addTooltips=true
-      disableSecondaryInput=true
-      secondaryInputName="system.combat.block.final.value"
-      secondaryInputValue=system.combat.block.final.value
     }}
     {{>
     "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
       class="dodge"
       title=(localize "anima.ui.combat.baseValues.dodge.title")
       rollable=true
+
       inputName="system.combat.dodge.base.value"
       inputValue=system.combat.dodge.base.value
-      rollSecondaryInput=true
+      disabled=false
+      tooltip= (localize "anima.ui.tooltips.base")
+      
       hasSecondaryInput=true
+      inputType="number"
+      secondaryInputName="system.combat.dodge.special.value"
+      secondaryInputValue=system.combat.dodge.special.value
+      disableSecondaryInput=false
+      secondaryTooltip= (localize "anima.ui.tooltips.special")
+
+      hasTertiaryInput=true
+      tertiaryInputName="system.combat.dodge.final.value"
+      tertiaryInputValue=system.combat.dodge.final.value
+      disableTertiaryInput=true
+      tertiaryTooltip= (localize "anima.ui.tooltips.final")
+
       addTooltips=true
-      disableSecondaryInput=true
-      secondaryInputName="system.combat.dodge.final.value"
-      secondaryInputValue=system.combat.dodge.final.value
     }}
     {{>
     "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
@@ -59,10 +95,17 @@
     }}
     {{>
     "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
-      class="wear-armor"
+      class="extra-damage"
       title=(localize "anima.ui.combat.baseValues.extraDamage.title")
       inputName="system.general.modifiers.extraDamage.value"
       inputValue=system.general.modifiers.extraDamage.value
+    }}
+    {{>
+    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      class="reduced-damage"
+      title=(localize "anima.ui.combat.baseValues.damageReduction.title")
+      inputName="system.combat.damageReduction.special.value"
+      inputValue=system.combat.damageReduction.special.value
     }}
   {{/"systems/abf/templates/common/ui/group-body.hbs"}}
 {{/"systems/abf/templates/common/ui/group.hbs"}}

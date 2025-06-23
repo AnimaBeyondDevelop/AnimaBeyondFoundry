@@ -75,11 +75,9 @@ export default class ABFCombat extends Combat {
     for (const id of ids) {
       const combatant = this.combatants.get(id);
 
-      await super.rollInitiative(id, {
-        formula: `1d100Initiative + ${combatant?.actor?.system.characteristics.secondaries.initiative.final.value} + ${mod}`,
-        updateTurn,
-        messageOptions
-      });
+      const baseInit = combatant.actor.system.characteristics.secondaries.initiative.final.value || 0;
+      const formula = `${combatant._getInitiativeFormula()} + ${baseInit} + ${mod}`;
+      await super.rollInitiative(id, { formula, updateTurn, messageOptions });
     }
 
     if (this.getFlag('world', 'newRound')) {

@@ -11,8 +11,10 @@ import ABFItem from './module/items/ABFItem';
 import ABFActorDirectory from './module/SidebarDirectories/ABFActorDirectory';
 import { registerCombatWebsocketRoutes } from './module/combat/websocket/registerCombatWebsocketRoutes';
 import { attachCustomMacroBar } from './utils/attachCustomMacroBar';
+import { registerKeyBindings } from './utils/registerKeyBindings';
 import { applyMigrations } from './module/migration/migrate';
 import { registerGlobalTypes } from './utils/registerGlobalTypes';
+import ABFCombatant from './module/combat/ABFCombatant';
 
 import './scss/animabf.scss';
 
@@ -31,11 +33,7 @@ Hooks.once('init', async () => {
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
 
   CONFIG.Combat.documentClass = ABFCombat;
-
-  CONFIG.Combat.initiative = {
-    formula: '1d100Initiative',
-    decimals: 2
-  };
+  CONFIG.Combatant.documentClass = ABFCombatant;
 
   CONFIG.Item.documentClass = ABFItem;
   CONFIG.ui.actors = ABFActorDirectory;
@@ -53,6 +51,8 @@ Hooks.once('init', async () => {
   registerSettings();
   
   registerHelpers();
+
+  registerKeyBindings();
 
   // Preload Handlebars templates
   await preloadTemplates();
@@ -82,7 +82,7 @@ Hooks.once('ready', async () => {
 
   registerCombatWebsocketRoutes();
 
-  attachCustomMacroBar();
+  //attachCustomMacroBar();
 
   applyMigrations();
   

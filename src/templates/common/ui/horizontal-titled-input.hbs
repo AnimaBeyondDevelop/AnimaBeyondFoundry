@@ -4,29 +4,27 @@
       class='label
             {{#if this.rollable}}
               rollable
-            {{/if}}
-            '
-            {{#if this.rollable}}
-      data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}1d100xa{{/if}}+{{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}"
-      data-extra="{{this.inputValue}}"
-              data-label="
-              {{#if this.rollableMessage}}
-                {{this.rollableMessage}}
-              {{else}}
-                {{manipulateString "toLowerCase" this.title}}
-              {{/if}}
-              "
-            {{/if}}
+            {{/if}}'
+      {{#if this.rollable}}
+        data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}{{@root.system.general.diceSettings.abilityDie.value}}{{/if}}+{{#if this.hasTertiaryInput}}{{this.tertiaryInputValue}}{{else}}{{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}{{/if}}"
+        data-extra="{{this.inputValue}}"
+        data-label="
+          {{#if this.rollableMessage}}
+            {{this.rollableMessage}}
+          {{else}}
+            {{manipulateString "toLowerCase" this.title}}
+          {{/if}}"
+      {{/if}}
     >{{this.title}}</p>
   {{/unless}}
 
-  <div class='input-container {{#if this.hasSecondaryInput}}big{{/if}}'>
+  <div class='input-container {{#if this.hasSecondaryInput}}big{{/if}}{{#if this.hasTertiaryInput}} bigger{{/if}}'>
     <input
-      {{#if this.addTooltips}}title='Base'{{/if}}
+      {{#if this.addTooltips}}title='{{this.tooltip}}'{{/if}}
       {{#if this.disabled}}disabled{{/if}}
       name='{{this.inputName}}'
       type='{{#if this.inputType}}{{this.inputType}}{{else}}number{{/if}}'
-      class='input {{#if this.hasSecondaryInput}}primary-input{{/if}}'
+      class='input primary-input {{#if this.hasTertiaryInput}}primary-3{{else}}{{#if this.hasSecondaryInput}}primary-2{{else}}primary-1{{/if}}{{/if}} {{#if this.disabled}}disabled{{/if}}'
       {{#if (is 'eq' this.inputType 'checkbox')}}
         {{checked this.inputValue}}
       {{else}}
@@ -35,12 +33,22 @@
     />
     {{#if this.hasSecondaryInput}}
       <input
-        {{#if this.addTooltips}}title='Final'{{/if}}
+        {{#if this.addTooltips}}title='{{this.secondaryTooltip}}'{{/if}}
         {{#if this.disableSecondaryInput}}disabled{{/if}}
         name='{{this.secondaryInputName}}'
         type='{{#if this.secondaryInputType}}{{this.secondaryInputType}}{{else}}number{{/if}}'
-        class='input secondary-input'
+        class='input secondary-input {{#if this.hasTertiaryInput}}secondary-3{{else}}secondary-2{{/if}} {{#if this.disableSecondaryInput}}disabled{{/if}}'
         value='{{this.secondaryInputValue}}'
+      />
+    {{/if}}
+    {{#if this.hasTertiaryInput}}
+      <input
+        {{#if this.addTooltips}}title='{{this.tertiaryTooltip}}'{{/if}}
+        {{#if this.disableTertiaryInput}}disabled{{/if}}
+        name='{{this.tertiaryInputName}}'
+        type='{{#if this.tertiaryInputType}}{{this.tertiaryInputType}}{{else}}number{{/if}}'
+        class='input tertiary-input' {{#if this.disableTertiaryInput}}disabled{{/if}}
+        value='{{this.tertiaryInputValue}}'
       />
     {{/if}}
   </div>

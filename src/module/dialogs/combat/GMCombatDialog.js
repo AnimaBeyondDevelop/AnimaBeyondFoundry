@@ -1,6 +1,5 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
-import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { executeMacro } from '../../utils/functions/executeMacro';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
@@ -268,15 +267,19 @@ export class GMCombatDialog extends FormApplication {
 
       const atResistance = defender.result.values?.at * 10 + 20;
 
+      
+
       if (this.isDamagingCombat) {
+
+        const { weapon } = attacker.result;
+        const finalAt = Math.max(defender.result.values.at - weapon.system.reducedArmor.final.value, 0);
+        const finalBaseDamage = attacker.result.values.damage - this.defenderActor.system.combat.damageReduction.final.value;
+
         const combatResult = calculateCombatResult(
           attackerTotal,
           defenderTotal,
-          Math.max(
-            defender.result.values.at - calculateATReductionByQuality(attacker.result),
-            0
-          ),
-          attacker.result.values.damage,
+          finalAt,
+          finalBaseDamage,
           defender.result.type === 'resistance' ? defender.result.values.surprised : false
         );
         const { distance, projectile } = attacker.result.values;
@@ -414,15 +417,18 @@ export class GMCombatDialog extends FormApplication {
         halvedAbsorption: false
       };
 
+      
+
       if (this.isDamagingCombat) {
         const { attacker, defender } = this.modalData;
+        const { weapon } = attacker.result; 
 
         newCombatResult.attack = Math.max(
           attacker.result.values.total + this.modalData.attacker.customModifier,
           0
         );
         newCombatResult.at = Math.max(
-          defender.result.values.at - calculateATReductionByQuality(attacker.result),
+          defender.result.values.at - weapon.system.reducedArmor.final.value,
           0
         );
         newCombatResult.halvedAbsorption =

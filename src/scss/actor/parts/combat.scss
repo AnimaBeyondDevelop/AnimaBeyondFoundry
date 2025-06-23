@@ -110,7 +110,9 @@
       margin-top: 0.5rem;
       border-radius: $border-radius;
       box-shadow: $card-box-shadow;
-
+      
+      .initiative,
+      .damage,
       .attack,
       .block {
         .input {
@@ -118,11 +120,11 @@
         }
       }
 
-      .damage,
+      //.damage,
       .integrity,
       .breaking,
       .presence,
-      .initiative,
+      // .initiative,
       .fue-required,
       .quality {
         .input-container {
@@ -138,7 +140,7 @@
         .common-titled-input {
           flex-basis: 3rem;
 
-          margin: 0.5rem;
+          //margin: 0.5rem;
         }
 
         .special {
@@ -155,7 +157,7 @@
         .weapon-footer {
           width: 100%;
           flex-wrap: wrap;    
-          min-width: 30rem; 
+          min-width: 34rem; 
           display: flex;
           justify-content: space-between;
           row-gap: 0.5rem;

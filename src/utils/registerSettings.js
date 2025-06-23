@@ -1,3 +1,5 @@
+import ModifyDicePermissionsConfig from '../module/dialogs/ModifyDicePermissionsConfig';
+
 export const ABFSettingsKeys = {
   AUTO_ACCEPT_COMBAT_REQUESTS: 'AUTO_ACCEPT_COMBAT_REQUESTS',
   ROUND_DAMAGE_IN_MULTIPLES_OF_5: 'ROUND_DAMAGE_IN_MULTIPLES_OF_5',
@@ -11,7 +13,8 @@ export const ABFSettingsKeys = {
   MACRO_SHIELD_DEFAULT: 'MACRO_SHIELD_DEFAULT',
   MACRO_MISS_ATTACK_VALUE: 'MACRO_MISS_ATTACK_VALUE',
   APPLIED_MIGRATIONS: 'APPLIED_MIGRATIONS',
-  WORLD_CREATION_SYSTEM_VERSION: 'WORLD_CREATION_SYSTEM_VERSION'
+  WORLD_CREATION_SYSTEM_VERSION: 'WORLD_CREATION_SYSTEM_VERSION',
+  MODIFY_DICE_FORMULAS_PERMISSION: 'MODIFY_DICE_FORMULAS_PERMISSION'
 };
 
 export const registerSettings = () => {
@@ -133,5 +136,28 @@ export const registerSettings = () => {
   config: false,
   type: String,
   default: null
-});
+  });
+
+  
+  game.settings.register("abf", ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION, {
+    name: "modifyDiceFormulasPermission",
+    scope: "world",
+    config: false, 
+    type: Object,
+    default: {
+      [CONST.USER_ROLES.PLAYER]: false,
+      [CONST.USER_ROLES.TRUSTED]: true,
+      [CONST.USER_ROLES.ASSISTANT]: true,
+      [CONST.USER_ROLES.GAMEMASTER]: true
+    }
+  });
+
+  game.settings.registerMenu("abf", "modifyDiceFormulasPermissionMenu", {
+    name: "anima.permissions.modifyDiceFormulasPermission.title",
+    label: "anima.permissions.modifyDiceFormulasPermission.title",
+    hint: "anima.permissions.modifyDiceFormulasPermission.hint",
+    icon: "fas fa-dice",
+    type: ModifyDicePermissionsConfig,
+    restricted: true
+  });
 };

@@ -207,6 +207,12 @@ export type DerivedField = {
   final: { value: number };
 };
 
+export type DerivedSpecialField = {
+  base: { value: number };
+  special: { value: number };
+  final: { value: number };
+};
+
 export type SecondaryData = {
   base: { value: number };
   final: { value: number };
@@ -228,6 +234,8 @@ export type AmmoItemData = {
   presence: DerivedField;
   quality: { value: number };
   special: { value: string };
+  reducedArmor : DerivedSpecialField;
+  ignoreArmor : {value: boolean};
 };
 export type AmmoDataSource = ABFItemBaseDataSource<AmmoItemData>;
 export type AmmoChanges = ItemChanges<AmmoItemData>;

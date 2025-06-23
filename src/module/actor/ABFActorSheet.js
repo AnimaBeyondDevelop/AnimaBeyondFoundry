@@ -8,6 +8,7 @@ import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObje
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
 import { Logger } from '../../utils';
+import { ABFSettingsKeys } from '../../utils/registerSettings';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -97,12 +98,13 @@ export default class ABFActorSheet extends ActorSheet {
     const sheet = await super.getData(options);
 
     if (this.actor.type === 'character') {
-      await sheet.actor.prepareDerivedData();
-
-      sheet.system = sheet.actor.system;
+    await sheet.actor.prepareDerivedData();
+    sheet.system = sheet.actor.system;
     }
 
     sheet.config = CONFIG.config;
+    const permissions = game.settings.get("abf", ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION);
+    sheet.canModifyDice = permissions?.[game.user.role] === true;
 
     return sheet;
   }

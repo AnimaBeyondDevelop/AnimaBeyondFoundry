@@ -141,6 +141,8 @@ img {
 
       position: relative;
       z-index: 2;
+      
+      background: $red !important;
 
       display: flex;
       align-items: center;
@@ -242,6 +244,11 @@ img {
       &.big {
         width: 6rem;
       }
+      
+
+      &.bigger {
+        width: 9rem;
+      }
 
       .input {
         text-align: center;
@@ -255,16 +262,48 @@ img {
     .primary-input {
       width: 5rem;
 
-      margin-right: 0.5rem;
-      padding-right: 1.75rem;
-      text-align: left;
+      &.primary-1 {
+        text-align: center;
+      }
+
+      &.primary-2,
+      &.primary-3 {
+        text-align: center;
+        text-indent: -0.5rem;
+      }
+
+      &.primary-3 {
+        
+        &.disabled{
+          background-color: $light-cream-transparent;
+          color: $transparent-black;
+        }
+      }
     }
 
     .secondary-input {
-      background-color: $red;
-      color: white;
+      &.secondary-2 {
+        margin-left: -1rem; 
+        width: 4rem;
+        background-color: $red;
+        color: $white;
+      }
+
+      &.secondary-3 {
+        margin-left: -1rem; 
+        width: 5rem;
+        color: $black;
+        text-align: center;
+        text-indent: -0.5rem;
+      }
+    }
+
+    .tertiary-input {
       width: 4rem;
-      margin-left: -2rem;
+      margin-left: -1rem; 
+      z-index: 1;
+      background-color: $red;
+      color: $white;
     }
   }
 }

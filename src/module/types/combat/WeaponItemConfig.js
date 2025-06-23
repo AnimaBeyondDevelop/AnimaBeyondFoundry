@@ -93,6 +93,12 @@ export const INITIAL_WEAPON_DATA = {
   isShield: { value: false },
   special: { value: '' },
   hasOwnStr: { value: false },
+  ignoreArmor: { value: false },
+  reducedArmor: {
+    base: { value: 0 },
+    special: { value: 0 },
+    final: { value: 0 }
+  },
   integrity: {
     base: { value: 0 },
     final: { value: 0 }
@@ -102,19 +108,23 @@ export const INITIAL_WEAPON_DATA = {
     final: { value: 0 }
   },
   attack: {
+    base: { value: 0 },
     special: { value: 0 },
     final: { value: 0 }
   },
   block: {
+    base: { value: 0 },
     special: { value: 0 },
     final: { value: 0 }
   },
   damage: {
     base: { value: 0 },
+    special: { value: 0 },
     final: { value: 0 }
   },
   initiative: {
     base: { value: 0 },
+    special: { value: 0 },
     final: { value: 0 }
   },
   presence: {

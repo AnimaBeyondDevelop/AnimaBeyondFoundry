@@ -245,28 +245,28 @@ export const parseExcelToActor = async (excelData, actor) => {
           },
           resistances: {
             physical: {
-              base: {
-                value: excelData.RF_final
+              special: {
+                value: bonoRF
               }
             },
             disease: {
-              base: {
-                value: excelData.RE_final
+              special: {
+                value: bonoRE
               }
             },
             poison: {
-              base: {
-                value: excelData.RV_final
+              special: {
+                value: bonoRV
               }
             },
             magic: {
-              base: {
-                value: excelData.RM_final
+              special: {
+                value: bonoRM
               }
             },
             psychic: {
-              base: {
-                value: excelData.RP_final
+              special: {
+                value: bonoRP
               }
             }
           }
