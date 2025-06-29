@@ -8,6 +8,7 @@
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
   import InputLabel from '@svelte/ui/inputLabel.svelte';
   import ModifiedAbilityInput from '@svelte/ui/modifiedAbilityInput.svelte';
+  import ModifiersList from '@svelte/ui/modifiersList.svelte';
 
   /**
    * @typedef {import(".").PsychicAttack} PsychicAttack
@@ -179,6 +180,9 @@
         </CardButton>
       {/if}
     </div>
+  {/snippet}
+  {#snippet modifiers()}
+    <ModifiersList ability={attack.ability} />
   {/snippet}
 </CombatCard>
 

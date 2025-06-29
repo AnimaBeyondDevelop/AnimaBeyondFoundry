@@ -11,7 +11,9 @@ export const ABFSettingsKeys = {
   MACRO_SHIELD_DEFAULT: 'MACRO_SHIELD_DEFAULT',
   MACRO_MISS_ATTACK_VALUE: 'MACRO_MISS_ATTACK_VALUE',
   SYSTEM_MIGRATION_VERSION: 'SYSTEM_MIGRATION_VERSION',
-  USE_ICON_LABELS: 'USE_ICON_LABELS'
+  USE_ICON_LABELS: 'USE_ICON_LABELS',
+  EXPAND_ABILITY_INPUTS: 'EXPAND_ABILITY_INPUTS',
+  COMBAT_MODIFIERS_EXPANDED: 'COMBAT_MODIFIERS_EXPANDED'
 };
 
 export const registerSettings = () => {
@@ -129,6 +131,24 @@ export const registerSettings = () => {
   game.settings.register('animabf', ABFSettingsKeys.USE_ICON_LABELS, {
     name: 'anima.ui.systemSettings.useIconLabels.title',
     hint: 'anima.ui.systemSettings.useIconLabels.hint.title',
+    config: true,
+    scope: 'world',
+    type: Boolean,
+    default: false
+  });
+
+  game.settings.register('animabf', ABFSettingsKeys.EXPAND_ABILITY_INPUTS, {
+    name: 'anima.ui.systemSettings.expandAbilityInputs.title',
+    hint: 'anima.ui.systemSettings.expandAbilityInputs.hint.title',
+    config: true,
+    scope: 'world',
+    type: Boolean,
+    default: false
+  });
+
+  game.settings.register('animabf', ABFSettingsKeys.COMBAT_MODIFIERS_EXPANDED, {
+    name: 'anima.ui.systemSettings.combatModifiersExpanded.title',
+    hint: 'anima.ui.systemSettings.combatModifiersExpanded.hint.title',
     config: true,
     scope: 'world',
     type: Boolean,

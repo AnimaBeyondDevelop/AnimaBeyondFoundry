@@ -1,5 +1,6 @@
 <script>
   import Input from './input.svelte';
+  import { ABFSettingsKeys } from '@utils/registerSettings';
 
   /**
    * @typedef {Object} props
@@ -9,7 +10,18 @@
    */
 
   /** @type {props} */
-  let { ability = $bindable(), disabled = false, class: cssClass = '' } = $props();
+  let {
+    ability = $bindable(),
+    expanded = $bindable(false),
+    disabled = false,
+    class: cssClass = ''
+  } = $props();
+
+  let operationSign = $state('+');
+  const alwaysExpanded = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.EXPAND_ABILITY_INPUTS
+  );
 
   $effect(() => {
     if (!ability.modifiers.special) {
@@ -22,25 +34,76 @@
   function onchange(e) {
     e.currentTarget.blur();
     const input = e.currentTarget.value;
-    if (['+', '-'].includes(input.slice(0, 1))) {
-      ability.modifiers.special.value += parseInt(input);
-    } else if (input === '') {
+    if (input === '') {
       ability.modifiers.special.value = 0;
+    } else if (['+', '-'].includes(operationSign)) {
+      ability.modifiers.special.value = parseInt(operationSign + input);
     } else {
       ability.modifiers.special.value += parseInt(input) - ability.final;
+    }
+    operationSign = ability.modifiers.special.value < 0 ? '-' : '+';
+    expanded = false;
+  }
+  /**
+   * @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}
+   */
+  function onkeydown(e) {
+    let valueBeforeKey = e.currentTarget.value;
+
+    if (e.key === 'Backspace' && valueBeforeKey === '') {
+      operationSign = '';
+    }
+
+    if (e.key === '+' || e.key === '-') {
+      e.preventDefault();
+      operationSign = e.key;
     }
   }
 </script>
 
 <Input
-  class={cssClass}
-  value={ability.final}
+  class={`${cssClass} ability final`}
+  value={alwaysExpanded || expanded ? ability.base : ability.final}
   type="text"
-  onfocus={e => e.currentTarget.select()}
-  {onchange}
+  readonly
   {disabled}
+  onclick={e => {
+    e.currentTarget.blur();
+    expanded = !expanded;
+  }}
 />
+{#if alwaysExpanded || expanded}
+  <Input
+    class={`${cssClass} ability operator`}
+    value={operationSign}
+    type="text"
+    readonly
+    {disabled}
+  />
+  <Input
+    class={`${cssClass} ability special`}
+    value={Math.abs(ability.modifiers.special?.value) ?? 0}
+    type="text"
+    onfocus={e => e.currentTarget.select()}
+    {onchange}
+    {onkeydown}
+    {disabled}
+    autofocus
+  />
+{/if}
 
 <style lang="scss">
   @use 'card';
+  :global(.card-input.ability.final) {
+    cursor: pointer;
+  }
+  :global(.card-input.ability.final:disabled) {
+    cursor: auto;
+  }
+  :global(.card-input.ability.special) {
+    padding-right: 0.3em;
+  }
+  :global(.card-input.ability) {
+    margin-right: -0.8em;
+  }
 </style>

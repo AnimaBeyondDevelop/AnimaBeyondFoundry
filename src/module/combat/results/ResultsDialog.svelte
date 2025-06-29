@@ -11,6 +11,7 @@
   import Input from '@svelte/ui/input.svelte';
   import { CombatResults } from './CombatResults.svelte';
   import IconSwitch from '@svelte/ui/iconSwitch.svelte';
+  import { ABFSettingsKeys } from '@utils/registerSettings';
   import { Templates } from '../../utils/constants';
 
   /**
@@ -74,6 +75,11 @@
       });
     });
   }
+
+  let combatModifiersExpanded = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.COMBAT_MODIFIERS_EXPANDED
+  );
 </script>
 
 {#snippet overview(/** @type {Attack | Defense} */ dataObject)}
@@ -81,10 +87,11 @@
   {@const actor = /** @type {ABFActor} */ (
     dataObject[actionType === 'attack' ? 'attacker' : 'defender']
   )}
-  <h4>{actor.name}</h4>
+  {@const token = dataObject[actionType === 'attack' ? 'attackerToken' : 'defenderToken']}
+  <h4>{token.name}</h4>
   <div class="option-name" title={dataObject.displayName}>{dataObject.displayName}</div>
   {#await actor.getTokenImages() then images}
-    <img src={images[0]} alt={actor.name} />
+    <img src={images[0]} alt={token.name} />
   {/await}
   {#if dataObject.rolled !== undefined}
     {@const abilityName =
@@ -169,6 +176,7 @@
   <div class="modifiers">
     <ContractibleCard
       title={i18n.localize('macros.combat.dialog.gm.modifiers.title')}
+      expanded={combatModifiersExpanded}
       bind:titleHeight
     >
       {#snippet body()}

@@ -9,13 +9,22 @@
    * @property {Snippet} [marker]
    * @property {Snippet} [bottom]
    * @property {Snippet} [buttons]
+   * @property {Snippet} [modifiers]
    */
 
   import Card from '@svelte/ui/card/card.svelte';
+  import ContractibleCard from '@svelte/ui/card/contractibleCard.svelte';
+  import { ABFSettingsKeys } from '@utils/registerSettings';
 
   /** @type {Props} */
-  let { sidebar, top, selector, marker, bottom, buttons } = $props();
+  let { sidebar, top, selector, marker, bottom, buttons, modifiers } = $props();
   let topHeight = $state();
+  let titleHeight = $state(33);
+  const i18n = game.i18n;
+  let combatModifiersExpanded = game.settings.get(
+    'animabf',
+    ABFSettingsKeys.COMBAT_MODIFIERS_EXPANDED
+  );
 </script>
 
 <!--
@@ -74,6 +83,23 @@ to this component:
 
   <div class="marker-container" style:top={`${topHeight}px`}>{@render marker?.()}</div>
 
+  <div class="combat-modifiers">
+    <div class="modifiers">
+      <ContractibleCard
+        title={i18n.localize('macros.combat.dialog.gm.modifiers.title')}
+        direction={'up'}
+        expanded={combatModifiersExpanded}
+        bind:titleHeight
+      >
+        {#snippet body()}
+          <div class="modifiers-container">
+            {@render modifiers?.()}
+          </div>
+        {/snippet}
+      </ContractibleCard>
+    </div>
+  </div>
+
   <div class="buttons">
     {@render buttons?.()}
   </div>
@@ -121,7 +147,7 @@ to this component:
           padding: 10px;
           align-items: center;
           place-items: center;
-          gap: 50px;
+          gap: 20px;
 
           &:first-child {
             padding-right: calc(card.$edge-size - card.$border-size);
@@ -196,7 +222,7 @@ to this component:
         @include button-container(38px);
         position: absolute;
         bottom: calc(($border * 0.5) - $height / 2);
-        left: calc($sidebar + ($border * 1.5) - $height / 2);
+        left: calc($sidebar / 2 - $border);
       }
 
       #main-button {
@@ -215,6 +241,29 @@ to this component:
           --cardbutton-height: 48px;
           left: calc(-0.2 * var(--cardbutton-height));
         }
+      }
+    }
+
+    .combat-modifiers :global {
+      --height: 100%;
+      --width: 300px;
+      --edge: 30px;
+      --sidebar-size: 25px;
+      --font-size: 20px;
+      .modifiers {
+        position: absolute;
+        left: 36px;
+        bottom: -27px;
+        height: 33px;
+        .title {
+          line-height: 24px;
+        }
+      }
+      & .modifiers-container {
+        min-height: 50px;
+        padding-top: 35px;
+        padding-left: 5px;
+        padding-right: 10px;
       }
     }
   }
