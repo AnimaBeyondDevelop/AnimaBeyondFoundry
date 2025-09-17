@@ -1,0 +1,32 @@
+{{#each targets}}
+  <div class="chip"
+       data-actor="{{actorUuid}}"
+       data-token="{{tokenUuid}}"
+       title="{{rollerTitle}}"
+       style="display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.35rem; width:100%; border:1px solid var(--color-border-light-tertiary); padding:.15rem .6rem; border-radius:999px;">
+    <span style="grid-column:1 / 2;">{{stateDot}}</span>
+
+    <span class="chip-name"
+          style="grid-column:2 / 3; min-width:0; overflow:hidden; text-overflow:ellipsis;">
+      {{label}}
+    </span>
+
+    <div class="chip-right"
+         style="grid-column:3 / 4; display:flex; align-items:center; gap:.35rem;">
+      <small class="chip-meta" style="opacity:.7; white-space:nowrap;">
+        · {{stateLabel}}{{#if rollerName}} · {{rollerName}}{{/if}}
+      </small>
+
+      {{#if showDefendButton}}
+        <button class="chat-action-button"
+                style="width:auto !important; display:inline-flex; white-space:nowrap; flex:0 0 auto;"
+                data-action="defend-target"
+                data-message-id="{{messageId}}"
+                data-target-actor="{{actorUuid}}"
+                data-target-token="{{tokenUuid}}">
+          {{localize "chat.attackData.defendButton"}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+{{/each}}

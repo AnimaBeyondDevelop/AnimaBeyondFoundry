@@ -51,6 +51,19 @@ export class ABFActor extends Actor {
     await prepareActor(this);
   }
 
+  getRollData() {
+    const data = super.getRollData();
+
+    // data.system = this.system;
+    // data.health = this.system.characteristics.secondaries.lifePoints;
+    // data.modifiers = this.system.general.modifiers;
+    // data.presence = this.system.general.presence;
+    // data.initiative = this.system.characteristics.secondaries.initiative;
+    // data.characteristics = this.system.characteristics.primaries; 
+
+    return data;
+  }
+
   /**
    * Updates the value of the 'fatigue' secondary characteristic of an ABFActor object.
    *

@@ -1,0 +1,108 @@
+@import '../variable';
+
+/* [Attack Data] Group header (collapsible header at the top of the chat card) */
+.attack-data-message {
+  .group-header{
+    @include group-header;
+
+    .group-header-title {
+      color: $white;
+      font-weight: normal;
+    }
+  }
+}
+
+/* [Attack Data] Enable container queries for the whole Attack Data message */
+.abf-chat-message.attack-data-message { 
+  container-type: inline-size;
+}
+
+/* [Attack Data] Top-row action buttons (fallback size)
+   Afecta a cualquier .chat-action-button dentro del mensaje */
+.abf-chat-message.attack-data-message .chat-action-button{
+  font-size: 13px;
+  line-height: 1.1;
+  padding: .28rem .40rem;
+  white-space: nowrap;      /* por defecto, una línea */
+  word-break: keep-all;
+  hyphens: none;
+  box-sizing: border-box;
+}
+
+/* [Multi-Defense Result] (opcional) tamaño base */
+.abf-chat-message.multi-defense-result { 
+  container-type: inline-size; 
+}
+.abf-chat-message.multi-defense-result .mdr-row-actions .chat-action-button{
+  font-size: 13px;
+  line-height: 1.1;
+  white-space: nowrap;
+  word-break: keep-all;
+  hyphens: none;
+}
+
+/* [Responsive — only if container queries are supported] */
+@supports (container-type: inline-size) {
+
+  /* [Attack Data] Shrink top-row buttons when the card gets narrower */
+  @container (max-width: 420px){
+    .abf-chat-message.attack-data-message .chat-action-button{
+      font-size: 13px;
+      padding: .24rem .34rem;
+    }
+  }
+  @container (max-width: 360px){
+    .abf-chat-message.attack-data-message .chat-action-button{
+      font-size: 13px;
+      padding: .22rem .30rem;
+    }
+  }
+
+  /* [Multi-Defense Result] Shrink per-actor buttons */
+  @container (max-width: 420px){
+    .abf-chat-message.multi-defense-result .mdr-row-actions .chat-action-button{
+      font-size: 13px;
+    }
+  }
+  @container (max-width: 360px){
+    .abf-chat-message.multi-defense-result .mdr-row-actions .chat-action-button{
+      font-size: 13px;
+    }
+  }
+}
+
+/* [Attack Data] Per-target “Defenderse” button inside the targets chip list */
+.abf-chat-message.attack-data-message .abf-defense-row .chip-right .chat-action-button{
+  width: auto !important;
+  font-size: 10px;
+  line-height: 1.1;
+  padding: .22rem .35rem;
+  white-space: nowrap;
+  word-break: keep-all;
+  hyphens: none;
+}
+
+/* [Attack Data] Top action row: 3 equal columns */
+.abf-chat-message.attack-data-message .attack-actions-row{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
+  width: 100%;
+}
+
+/* [Attack Data] Buttons inside the top action row:
+   permitir 2+ líneas (e.g. “Defensa↵automática”) y centrar texto */
+.abf-chat-message.attack-data-message .attack-actions-row .chat-action-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+
+  white-space: normal !important; /* permite saltos entre palabras */
+  word-break: normal;             /* no cortar palabras por la mitad */
+  overflow-wrap: normal;          /* solo partir por espacios */
+  hyphens: none;
+  text-align: center;
+  line-height: 1.15;
+}

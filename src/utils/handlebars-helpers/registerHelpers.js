@@ -15,6 +15,7 @@ import { logHBSHelper } from './helpers/logHBSHelper';
 import { calculateLevelsHBSHelper } from './helpers/calculateLevelsHBSHelper';
 import { calculateLanguagesHBSHelper } from './helpers/calculateLanguagesHBSHelper';
 import { injectFromHookHelper } from './helpers/injectFromHookHelper';
+import { jsonHelper } from './helpers/jsonHelper';
 
 export const registerHelpers = () => {
   const helpers = [
@@ -34,10 +35,12 @@ export const registerHelpers = () => {
     logHBSHelper,
     calculateLanguagesHBSHelper,
     calculateLevelsHBSHelper,
-    injectFromHookHelper
+    injectFromHookHelper,
+    jsonHelper
   ];
 
   for (const helper of helpers) {
     Handlebars.registerHelper(helper.name, helper.fn);
   }
+
 };

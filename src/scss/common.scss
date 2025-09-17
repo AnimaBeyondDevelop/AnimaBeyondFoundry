@@ -19,6 +19,7 @@ img {
   }
 }
 
+
 .abf.sheet.actor {
   .rollable {
     cursor: pointer;
@@ -118,12 +119,14 @@ img {
 
         transition: background-color 0.3ms ease-in-out;
 
+        transform: translate(-0.625rem, 0.625rem);
+
         &:hover {
           background-color: $light-gray;
         }
 
         &.contracted {
-          transform: rotate(180deg);
+          transform: translate(-0.625rem, 0.625rem) rotate(180deg);
         }
       } 
     }

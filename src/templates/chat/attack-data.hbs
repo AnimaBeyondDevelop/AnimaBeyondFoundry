@@ -1,0 +1,53 @@
+{{#> "systems/abf/templates/common/ui/group.hbs"
+  class="abf-chat-message attack-data-message"
+  contractible=true
+  contractibleItemId="chat-attack-data"
+}}
+  {{>
+    "systems/abf/templates/common/ui/group-header.hbs"
+    title=(localize "chat.attackData.title")
+  }}
+
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
+    {{!-- <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{weapon.system.attack.final.value}}</p> --}}
+    <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{attackData.attackAbility}}</p>
+    <p data-requires-permission="owner"><strong>{{localize "anima.ui.combat.weapons.damage.final.title"}}:</strong> {{attackData.damage}}</p>
+    {{!-- <p><strong>{{localize "anima.ui.combat.weapons.block.title"}}:</strong> {{weapon.system.block.final.value}}</p> --}}
+    {{!-- <p><strong>{{localize "anima.ui.combat.weapons.presence.final.title"}}:</strong> {{weapon.system.presence.final.value}}</p> --}}
+  
+
+    <div class="attack-actions-row">
+      <button
+        type="button"
+        class="chat-action-button"
+        data-action="defend"
+        data-message-id="{{xRoot.messageId}}"
+        data-weapon-id="{{weapon._id}}"
+        data-attack-data='{{json attackData}}'>
+        {{localize "chat.attackData.defendButton"}}
+      </button>
+
+      <button
+        type="button"
+        class="chat-action-button"
+        data-action="auto-defend"
+        data-message-id="{{xRoot.messageId}}"
+        data-attack-data='{{json attackData}}'>
+        {{localize "chat.attackData.autoDefendButton"}}
+      </button>
+
+      <button
+        type="button"
+        class="chat-action-button"
+        data-action="auto-defend-pending"
+        data-message-id="{{xRoot.messageId}}"
+        data-attack-data='{{json attackData}}'>
+        {{localize "chat.attackData.autoDefendPendingButton"}}
+      </button>
+    </div>
+    <div id="abf-defense-row-{{xRoot.messageId}}"
+       class="abf-defense-row"
+       style="margin-top:.5rem; display:flex; gap:.25rem; flex-wrap:wrap;">
+    </div>
+    {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

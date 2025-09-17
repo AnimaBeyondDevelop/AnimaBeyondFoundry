@@ -1,4 +1,4 @@
-import { WeaponCritic, NoneWeaponCritic, WeaponShotType } from '../module/types/combat/WeaponItemConfig';
+import { WeaponCritic, NoneWeaponCritic, WeaponShotType, DamageType } from '../module/types/combat/WeaponItemConfig';
 
 export function registerGlobalTypes() {
   game.abf = game.abf || {};
@@ -7,5 +7,10 @@ export function registerGlobalTypes() {
     WeaponCritic,
     NoneWeaponCritic,
     WeaponShotType
+    
   };
+
+  game.abf.combat = {
+    DamageType
+  }
 }

@@ -210,7 +210,15 @@
                 disableSecondaryInput=true
                 secondaryInputValue=weapon.system.initiative.final.value
               }}
+              
               {{{injectFromHook "abf.actor.combat.weapon.footer" weapon._id}}}
+              
+              {{!-- <button class='attack-button' data-on-click="createDefaultWeaponAttack" data-weapon-id="{{weapon._id}}">
+                {{localize "anima.ui.combat.weapons.defaultAttackButton.title"}}
+              </button> --}}
+              {{!-- <button class='attack-button' data-on-click="createWeaponAttack" data-weapon-id="{{weapon._id}}">
+                {{localize "anima.ui.combat.weapons.attackButton.title"}}
+              </button> --}}
             </div>
           {{/"systems/abf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/abf/templates/common/ui/group.hbs"}}

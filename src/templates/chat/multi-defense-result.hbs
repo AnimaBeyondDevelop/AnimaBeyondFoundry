@@ -1,0 +1,108 @@
+{{#> "systems/abf/templates/common/ui/group.hbs"
+  class="abf-chat-message multi-defense-result"
+  contractible=true
+  contractibleItemId="chat-multi-defense-result"
+}}
+  {{> "systems/abf/templates/common/ui/group-header.hbs" title=(localize "chat.multiDefenseResult.title") }}
+
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
+    <p class="only-if-gm" style="opacity:.8;">
+      {{localize "chat.multiDefenseResult.fromAttack"}}: {{attackLabel}}
+    </p>
+
+    <div class="abf-mdr-list" style="display:flex; flex-direction:column; gap:.5rem;">
+      {{#each entries}}
+        <div class="mdr-entry" style="border:1px solid var(--color-border-light-tertiary); border-radius:.6rem; padding:.5rem .6rem;">
+          {{!-- Fila 1: nombre + daño o contra --}}
+          <div class="mdr-row mdr-row-top" style="display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;">
+            <strong class="mdr-name" style="flex:1 1 auto; min-width:12rem;">{{label}}</strong>
+
+            {{#if hasCounter}}
+              <span class="mdr-pill" style="border:1px solid var(--color-border-light-tertiary); border-radius:999px; padding:.1rem .5rem;">
+                {{localize "chat.multiDefenseResult.defense"}}: {{defenseTotal}}
+              </span>
+              <span class="mdr-pill" style="border:1px solid var(--color-border-light-tertiary); border-radius:999px; padding:.1rem .5rem;">
+                {{localize "chat.multiDefenseResult.counter"}}: {{counterAttackValue}}
+              </span>
+            {{else}}
+              <span class="mdr-pill" style="border:1px solid var(--color-border-light-tertiary); border-radius:999px; padding:.1rem .5rem;">
+                {{localize "chat.multiDefenseResult.defense"}}: {{defenseTotal}}
+              </span>
+              {{#if (gt damageFinal 0)}}
+                <span class="mdr-pill" style="border:1px solid var(--color-border-light-tertiary); border-radius:999px; padding:.1rem .5rem;">
+                  {{localize "chat.multiDefenseResult.damage"}}: {{damageFinal}}
+                </span>
+              {{/if}}
+            {{/if}}
+
+            {{#if applied}}
+              <span title="{{localize "chat.multiDefenseResult.appliedBy"}} {{appliedByName}}">✅</span>
+            {{/if}}
+          </div>
+
+          {{!-- Fila 2: botones (solo si hay daño posible) --}}
+          {{#unless hasCounter}}
+            {{#if (gt damageFinal 0)}}
+              <div class="mdr-row mdr-row-actions"
+                  style="margin-top:.5rem; display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem;">
+                <button
+                  class="chat-action-button {{#if applied}}applied{{/if}}"
+                  style="width:100%; min-width:0; white-space:normal; {{#if applied}}background:rgba(0,128,0,.15); border-color:rgba(0,128,0,.35);{{/if}}"
+                  data-action="abf-apply-multi-entry"
+                  data-message-id="{{xRoot.messageId}}"
+                  data-def-actor="{{actorId}}"
+                  data-def-token="{{tokenId}}"
+                  data-mult="0.5"
+                  data-base="{{damageFinal}}">
+                  {{localize "chat.result.applyHalf"}}
+                </button>
+
+                <button
+                  class="chat-action-button {{#if applied}}applied{{/if}}"
+                  style="width:100%; min-width:0; white-space:normal; {{#if applied}}background:rgba(0,128,0,.15); border-color:rgba(0,128,0,.35);{{/if}}"
+                  data-action="abf-apply-multi-entry"
+                  data-message-id="{{xRoot.messageId}}"
+                  data-def-actor="{{actorId}}"
+                  data-def-token="{{tokenId}}"
+                  data-mult="1"
+                  data-base="{{damageFinal}}">
+                  {{localize "chat.result.applyFull"}}
+                </button>
+
+                <button
+                  class="chat-action-button {{#if applied}}applied{{/if}}"
+                  style="width:100%; min-width:0; white-space:normal; {{#if applied}}background:rgba(0,128,0,.15); border-color:rgba(0,128,0,.35);{{/if}}"
+                  data-action="abf-apply-multi-entry"
+                  data-message-id="{{xRoot.messageId}}"
+                  data-def-actor="{{actorId}}"
+                  data-def-token="{{tokenId}}"
+                  data-mult="2"
+                  data-base="{{damageFinal}}">
+                  {{localize "chat.result.applyDouble"}}
+                </button>
+              </div>
+
+
+            {{/if}}
+          {{/unless}}
+
+
+          {{!-- Separador claro por actor --}}
+          <div class="mdr-sep" style="height:1px; background:var(--color-border-light-tertiary); opacity:.8; margin:.6rem -0.6rem 0;"></div>
+
+        </div>
+      {{/each}}
+    </div>
+
+    {{#if hasRemaining}}
+      <div style="margin-top:.6rem; display:flex; justify-content:flex-end;">
+        <button
+          class="chat-action-button"
+          data-action="abf-apply-multi-remaining"
+          data-message-id="{{xRoot.messageId}}">
+          {{localize "chat.multiDefenseResult.applyRemaining"}}
+        </button>
+      </div>
+    {{/if}}
+  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
+{{/"systems/abf/templates/common/ui/group.hbs"}}

@@ -49,6 +49,14 @@ export const NoneWeaponCritic = /** @type {const} */ ({
  * @readonly
  * @enum {string}
  */
+export const DamageType = /** @type {const} */ ({
+  NONE: '-'
+});
+
+/**
+ * @readonly
+ * @enum {string}
+ */
 export const WeaponManageabilityType = /** @type {const} */ ({
   ONE_HAND: 'one_hand',
   TWO_HAND: 'two_hands',

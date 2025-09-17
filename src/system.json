@@ -1,6 +1,6 @@
 {
   "id": "abf",
-  "title": "Anima Beyond Fantasy 2",
+  "title": "Anima Beyond Fantasy",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
   "version": "1.0.0",
   "compatibility": { "minimum": "13", "verified": "13.345" },

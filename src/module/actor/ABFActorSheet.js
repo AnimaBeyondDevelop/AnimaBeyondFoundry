@@ -9,6 +9,7 @@ import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
 import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
+import { createClickHandlers } from './utils/createClickHandlers';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -153,6 +154,15 @@ export default class ABFActorSheet extends ActorSheet {
         item.onCreate(this.actor);
       });
     }
+
+    const clickHandlers = createClickHandlers(this);
+
+    html.find('[data-on-click]').click(e => {
+      const key = e.currentTarget.dataset.onClick;
+      const handler = clickHandlers[key];
+      if (handler) handler(e);
+      else console.warn(`No handler for data-on-click="${key}"`);
+    });
   }
 
   async _onRoll(event) {

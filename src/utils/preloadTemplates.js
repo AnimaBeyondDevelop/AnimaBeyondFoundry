@@ -22,6 +22,9 @@ export const preloadTemplates = () => {
     Templates.Dialog.Icons.Cancel,
     Templates.CustomHotBar,
     Templates.Chat.CombatResult,
+    Templates.Chat.AttackData,
+    Templates.Chat.MultiDefenseResult,
+    Templates.Chat.AttackTargetsChips,
 
     // Common parts
     'systems/abf/templates/common/ui/horizontal-titled-input.hbs',

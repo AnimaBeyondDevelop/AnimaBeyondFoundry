@@ -169,6 +169,13 @@
           .input {
             height: 1.5rem;
           }
+
+          .attack-button {
+            @include button;
+            padding-top: 0rem;
+            height: 2rem;
+            width: 49%;
+          }
         }
       }
     }

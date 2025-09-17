@@ -1,42 +1,65 @@
 {{#> "systems/abf/templates/common/ui/group.hbs"
   class="abf-chat-message combat-result-message"
+  contractible=true
+  contractibleItemId="chat-combat-result"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+    "systems/abf/templates/common/ui/group-header.hbs"
     title=(localize "chat.combatResult.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
-    <div class='abf-chat-message-body'>
-      <div class='combatants'>
-        <div class='combatant-profile'>
-          <div class='image'>
-            <img src='{{this.attacker.img}}' data-edit='img' title='{{this.attacker.name}}' />
-          </div>
-          <p class='label name'>
-            {{this.attacker.name}}
-          </p>
-        </div>
-        <div class='versus-label'>
-          <p class='label'>VS</p>
-        </div>
-        <div class='combatant-profile'>
-          <div class='image'>
-            <img src='{{this.defender.img}}' data-edit='img' title='{{this.defender.name}}' />
-          </div>
-          <p class='label name'>
-            {{this.defender.name}}
-          </p>
-        </div>
-      </div>
-      <div class='combat-result'>
-        <p class='result'>{{this.result}}</p>
 
-        {{#if this.canCounter}}
-          <p class='counter'>{{{localize "chat.combatResult.counter.title" defender=this.defender.name bonus=this.bonus}}}</p>
-        {{else}}
-          <p class='counter'>{{{localize "chat.combatResult.damage.title" defender=this.defender.name damage=this.damage}}}</p>
-        {{/if}}
+  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
+    <p data-requires-permission="gm"><strong>{{localize "chat.combatResult.difference"}}:</strong> {{combatResult.difference}}</p>
+
+    {{#if combatResult.hasCounterAttack}}
+      <p><strong>{{localize "chat.combatResult.counterAttackValue"}}:</strong> {{combatResult.counterAttackValue}}</p>
+    {{/if}}
+
+    <p><strong>{{localize "chat.combatResult.finalDamage"}}:</strong> {{combatResult.damageFinal}}</p>
+    <p data-requires-permission="owner"><strong>{{localize "chat.combatResult.lifePercentRemoved"}}:</strong> {{combatResult.lifePercentRemoved}}%</p>
+    <p data-requires-permission="owner"><strong>{{localize "chat.combatResult.isCritical"}}:</strong> {{#if combatResult.isCritical}}{{localize "chat.combatResult.yes"}}{{else}}{{localize "chat.combatResult.no"}}{{/if}}</p>
+
+    {{#if combatResult.isCritical}}
+      <p data-requires-permission="owner"><strong>{{localize "chat.combatResult.baseCriticalValue"}}:</strong> {{combatResult.baseCriticalValue}}</p>
+    {{/if}}
+
+    {{#if (gt combatResult.damageFinal 0)}}
+      <div class="abf-result-damage-controls"
+           data-requires-permission="owner"
+           style="margin-top:.5rem; display:flex; gap:.5rem; flex-wrap:wrap;">
+        <button type="button"
+                class="chat-action-button"
+                style="flex:1 1 0; width:100%;"
+                data-action="abf-apply-damage"
+                data-base="{{combatResult.damageFinal}}"
+                data-mult="0.5"
+                data-def-actor="{{defenderId}}"
+                data-def-token="{{defenderTokenId}}">
+          {{localize "chat.result.applyHalf"}}
+        </button>
+
+        <button type="button"
+                class="chat-action-button"
+                style="flex:1 1 0; width:100%;"
+                data-action="abf-apply-damage"
+                data-base="{{combatResult.damageFinal}}"
+                data-mult="1"
+                data-def-actor="{{defenderId}}"
+                data-def-token="{{defenderTokenId}}">
+          {{localize "chat.result.applyFull"}}
+        </button>
+
+        <button type="button"
+                class="chat-action-button"
+                style="flex:1 1 0; width:100%;"
+                data-action="abf-apply-damage"
+                data-base="{{combatResult.damageFinal}}"
+                data-mult="2"
+                data-def-actor="{{defenderId}}"
+                data-def-token="{{defenderTokenId}}">
+          {{localize "chat.result.applyDouble"}}
+        </button>
       </div>
-    </div>
+    {{/if}}
   {{/"systems/abf/templates/common/ui/group-body.hbs"}}
 {{/"systems/abf/templates/common/ui/group.hbs"}}
