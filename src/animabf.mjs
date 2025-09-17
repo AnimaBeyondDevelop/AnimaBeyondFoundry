@@ -25,11 +25,14 @@ import { Templates } from './module/utils/constants';
 
 import './scss/animabf.scss';
 
+import { SYSTEM_ID, SYSTEM_VERSION, CORE_VERSION } from './utils/getSystemMeta.mjs';
+
 /* ------------------------------------ */
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
   Logger.log('Initializing system');
+  Logger.log('Game Id:' + SYSTEM_ID);
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
