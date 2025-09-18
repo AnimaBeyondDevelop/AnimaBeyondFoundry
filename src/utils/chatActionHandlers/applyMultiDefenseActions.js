@@ -3,7 +3,7 @@ export async function applyMultiEntry(message, _html, ds) {
     const msg = game.messages.get(ds.messageId ?? message?.id);
     if (!msg) return ui.notifications?.warn('Mensaje no encontrado.');
 
-    const entries = msg.getFlag('abf', 'entries') ?? [];
+    const entries = msg.getFlag(game.abf.id, 'entries') ?? [];
     const actorId = ds.defActor ?? ds['def-actor'];
     const tokenId = ds.defToken ?? ds['def-token'];
     if (!actorId) return;
@@ -50,7 +50,7 @@ export async function applyMultiEntry(message, _html, ds) {
     if (!ok) return;
 
     entries[idx] = { ...entry, applied: true, appliedBy: game.user.id };
-    await msg.setFlag('abf', 'entries', entries);
+    await msg.setFlag(game.abf.id, 'entries', entries);
     ui.chat?.updateMessage?.(msg);
   } catch (e) {
     console.error(e);
@@ -64,7 +64,7 @@ export async function applyMultiRemaining(message, _html, ds) {
     const msg = game.messages.get(ds.messageId ?? message?.id);
     if (!msg) return ui.notifications?.warn('Mensaje no encontrado.');
 
-    const entries = msg.getFlag('abf', 'entries') ?? [];
+    const entries = msg.getFlag(game.abf.id, 'entries') ?? [];
     for (let i = 0; i < entries.length; i++) {
       const e = entries[i];
       if (e.applied) continue;
@@ -81,7 +81,7 @@ export async function applyMultiRemaining(message, _html, ds) {
       if (ok) entries[i] = { ...e, applied: true, appliedBy: game.user.id };
     }
 
-    await msg.setFlag('abf', 'entries', entries);
+    await msg.setFlag(game.abf.id, 'entries', entries);
     ui.chat?.updateMessage?.(msg);
   } catch (e) {
     console.error(e);

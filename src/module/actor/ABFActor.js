@@ -59,7 +59,7 @@ export class ABFActor extends Actor {
     // data.modifiers = this.system.general.modifiers;
     // data.presence = this.system.general.presence;
     // data.initiative = this.system.characteristics.secondaries.initiative;
-    // data.characteristics = this.system.characteristics.primaries; 
+    // data.characteristics = this.system.characteristics.primaries;
 
     return data;
   }
@@ -114,7 +114,11 @@ export class ABFActor extends Actor {
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog();
     let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
-    if (abilityValue >= 200) formula = formula.replace(this.system.general.diceSettings.abilityDie, this.system.general.diceSettings.abilityMasteryDie);
+    if (abilityValue >= 200)
+      formula = formula.replace(
+        this.system.general.diceSettings.abilityDie,
+        this.system.general.diceSettings.abilityMasteryDie
+      );
     const roll = new ABFFoundryRoll(formula, this.system);
     await roll.roll();
     if (sendToChat) {
@@ -194,7 +198,7 @@ export class ABFActor extends Actor {
       shieldId: item._id
     };
     if (supernaturalShieldData.psychic.overmantained) {
-      item.setFlag('abf', 'psychic', supernaturalShieldData.psychic);
+      item.setFlag(game.abf.id, 'psychic', supernaturalShieldData.psychic);
     }
     executeMacro(supernaturalShieldData.name, args);
     return item._id;
@@ -244,7 +248,7 @@ export class ABFActor extends Actor {
       // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && newCombatResult) {
         const needToRound = game.settings.get(
-          'abf',
+          game.abf.id,
           ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
         );
         const result = calculateDamage(
@@ -338,10 +342,10 @@ export class ABFActor extends Actor {
     );
 
     for (const psychicShield of psychicShields) {
-      const psychic = psychicShield.getFlag('abf', 'psychic');
+      const psychic = psychicShield.getFlag(game.abf.id, 'psychic');
       if (psychic?.overmantained) {
         if (psychic.maintainMax >= psychicShield.system.shieldPoints) {
-          psychicShield.unsetFlag('abf', 'psychic');
+          psychicShield.unsetFlag(game.abf.id, 'psychic');
         } else {
           const supShield = {
             system: psychicShield.system,
@@ -361,18 +365,18 @@ export class ABFActor extends Actor {
    */
   accumulateDefenses(keepAccumulating) {
     /** @type {{accumulated: number, keepAccumulating: boolean}} */
-    const defensesCounter = this.getFlag('abf', 'defensesCounter') || {
+    const defensesCounter = this.getFlag(game.abf.id, 'defensesCounter') || {
       accumulated: 0,
       keepAccumulating
     };
     const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
-      this.setFlag('abf', 'defensesCounter', {
+      this.setFlag(game.abf.id, 'defensesCounter', {
         accumulated: newDefensesCounter,
         keepAccumulating
       });
     } else {
-      this.setFlag('abf', 'defensesCounter.keepAccumulating', keepAccumulating);
+      this.setFlag(game.abf.id, 'defensesCounter.keepAccumulating', keepAccumulating);
     }
   }
 
@@ -384,14 +388,14 @@ export class ABFActor extends Actor {
    * actor.resetDefensesCounter();
    */
   resetDefensesCounter() {
-    const defensesCounter = this.getFlag('abf', 'defensesCounter');
+    const defensesCounter = this.getFlag(game.abf.id, 'defensesCounter');
     if (defensesCounter === undefined) {
-      this.setFlag('abf', 'defensesCounter', {
+      this.setFlag(game.abf.id, 'defensesCounter', {
         accumulated: 0,
         keepAccumulating: true
       });
     } else {
-      this.setFlag('abf', 'defensesCounter.accumulated', 0);
+      this.setFlag(game.abf.id, 'defensesCounter.accumulated', 0);
     }
   }
 
@@ -923,4 +927,3 @@ export class ABFActor extends Actor {
     return this.getEmbeddedDocument('Item', itemId);
   }
 }
-

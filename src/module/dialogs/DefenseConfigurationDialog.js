@@ -240,7 +240,7 @@ export class DefenseConfigurationDialog extends FormApplication {
     if (firstRealRender && this.modalData?.messageId && this.defenderActor) {
       try {
         const msg = game.messages.get(this.modalData.messageId);
-        const targets = msg?.getFlag('abf', 'targets') ?? [];
+        const targets = msg?.getFlag(game.abf.id, 'targets') ?? [];
         const keyA = this.defenderActor.id;
         const keyT = this.modalData?.defender?.token?.id ?? '';
 
@@ -283,7 +283,7 @@ export class DefenseConfigurationDialog extends FormApplication {
         this.defenderActor
       ) {
         const msg = game.messages.get(this.modalData.messageId);
-        const targets = msg?.getFlag('abf', 'targets') ?? [];
+        const targets = msg?.getFlag(game.abf.id, 'targets') ?? [];
         const keyA = this.defenderActor.id;
         const keyT = this.modalData?.defender?.token?.id ?? '';
 

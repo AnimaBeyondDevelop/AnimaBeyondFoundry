@@ -28,7 +28,7 @@ export default class ABFActorSheet extends ActorSheet {
     return {
       ...super.defaultOptions,
       ...{
-        classes: ['abf', 'sheet', 'actor'],
+        classes: [game.abf.id, 'sheet', 'actor'],
         template: 'systems/abf/templates/actor/actor-sheet.hbs',
         width: 1000,
         height: 850,
@@ -99,12 +99,15 @@ export default class ABFActorSheet extends ActorSheet {
     const sheet = await super.getData(options);
 
     if (this.actor.type === 'character') {
-    await sheet.actor.prepareDerivedData();
-    sheet.system = sheet.actor.system;
+      await sheet.actor.prepareDerivedData();
+      sheet.system = sheet.actor.system;
     }
 
     sheet.config = CONFIG.config;
-    const permissions = game.settings.get("abf", ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION);
+    const permissions = game.settings.get(
+      game.abf.id,
+      ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION
+    );
     sheet.canModifyDice = permissions?.[game.user.role] === true;
 
     return sheet;
@@ -303,7 +306,8 @@ export default class ABFActorSheet extends ActorSheet {
       });
     }
 
-    return new ContextMenu(this.element.find(containerSelector), rowSelector, [...otherItems]);
-
+    return new ContextMenu(this.element.find(containerSelector), rowSelector, [
+      ...otherItems
+    ]);
   };
 }

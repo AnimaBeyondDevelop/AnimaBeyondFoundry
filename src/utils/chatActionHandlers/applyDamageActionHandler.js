@@ -50,7 +50,7 @@ export default async function applyDamageActionHandler(message, _html, ds) {
       ? [...abf.damageControl.apps]
       : [];
     apps.push({ ts: Date.now(), by: game.user.id, amount, mult, actorId: actor.id });
-    await msg.setFlag('abf', 'damageControl', { appliedOnce: true, apps });
+    await msg.setFlag(game.abf.id, 'damageControl', { appliedOnce: true, apps });
     ui.chat?.updateMessage?.(msg);
   } catch (err) {
     console.error(err);

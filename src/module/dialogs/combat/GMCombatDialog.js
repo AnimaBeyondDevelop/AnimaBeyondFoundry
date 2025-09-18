@@ -260,20 +260,28 @@ export class GMCombatDialog extends FormApplication {
         defenderModifier;
       defender.result.values.total = Math.max(0, defender.result.values.total);
 
-      const attackerTotal = Math.max(0, attacker.result.values.total + attacker.customModifier);
-      const defenderTotal = Math.max(0, defender.result.values.total + defender.customModifier);
+      const attackerTotal = Math.max(
+        0,
+        attacker.result.values.total + attacker.customModifier
+      );
+      const defenderTotal = Math.max(
+        0,
+        defender.result.values.total + defender.customModifier
+      );
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       const atResistance = defender.result.values?.at * 10 + 20;
 
-      
-
       if (this.isDamagingCombat) {
-
         const { weapon } = attacker.result;
-        const finalAt = Math.max(defender.result.values.at - weapon.system.reducedArmor.final.value, 0);
-        const finalBaseDamage = attacker.result.values.damage - this.defenderActor.system.combat.damageReduction.final.value;
+        const finalAt = Math.max(
+          defender.result.values.at - weapon.system.reducedArmor.final.value,
+          0
+        );
+        const finalBaseDamage =
+          attacker.result.values.damage -
+          this.defenderActor.system.combat.damageReduction.final.value;
 
         const combatResult = calculateCombatResult(
           attackerTotal,
@@ -417,11 +425,9 @@ export class GMCombatDialog extends FormApplication {
         halvedAbsorption: false
       };
 
-      
-
       if (this.isDamagingCombat) {
         const { attacker, defender } = this.modalData;
-        const { weapon } = attacker.result; 
+        const { weapon } = attacker.result;
 
         newCombatResult.attack = Math.max(
           attacker.result.values.total + this.modalData.attacker.customModifier,
@@ -452,37 +458,39 @@ export class GMCombatDialog extends FormApplication {
 
   executeCombatMacro(resistanceRoll) {
     const missedAttackValue = game.settings.get(
-      'abf',
+      game.abf.id,
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
     const macroPrefixAttack = game.settings.get(
-      'abf',
+      game.abf.id,
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
-    const { attacker, defender, calculations } = this.modalData
-    const winner =
-      calculations.winner === this.defenderToken
-        ? 'defender'
-        : 'attacker';
+    const { attacker, defender, calculations } = this.modalData;
+    const winner = calculations.winner === this.defenderToken ? 'defender' : 'attacker';
     let macroName;
     let args = {
       attacker: this.attackerToken,
       spellGrade: attacker.result.values.spellGrade,
       psychicPotential: attacker.result.values?.psychicPotential,
       projectile: attacker.result.values?.projectile,
-      defenders: [{
-        defender: this.defenderToken,
-        winner,
-        defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
-        totalAttack: attacker.result.values.total,
-        appliedDamage: calculations.damage,
-        damageType: attacker.result.values?.critic,
-        bloodColor: 'red', // add bloodColor to actor template
-        missedAttack: false,
-        resistanceRoll,
-        defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-        criticImpact: 0
-      }]
+      defenders: [
+        {
+          defender: this.defenderToken,
+          winner,
+          defenseType:
+            defender.result.type === 'combat'
+              ? defender.result.values.type
+              : defender.result.type,
+          totalAttack: attacker.result.values.total,
+          appliedDamage: calculations.damage,
+          damageType: attacker.result.values?.critic,
+          bloodColor: 'red', // add bloodColor to actor template
+          missedAttack: false,
+          resistanceRoll,
+          defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+          criticImpact: 0
+        }
+      ]
     };
     if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
       args.defenders[0].missedAttack = true;
@@ -490,7 +498,7 @@ export class GMCombatDialog extends FormApplication {
 
     if (attacker.result?.type === 'combat') {
       if (!attacker.result.weapon) {
-        attacker.result.weapon = { name: 'Unarmed' }
+        attacker.result.weapon = { name: 'Unarmed' };
       }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
@@ -504,6 +512,6 @@ export class GMCombatDialog extends FormApplication {
       macroName = attacker.result?.values.macro;
     }
 
-    executeMacro(macroName, args)
+    executeMacro(macroName, args);
   }
 }

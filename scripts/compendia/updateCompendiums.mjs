@@ -7,9 +7,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const BASE_DIR = path.resolve(__dirname, '../../src/packs');
-const TARGET_SYSTEM_ID = "abf";
-const TARGET_SYSTEM_VERSION = "1.0.0";
-const TARGET_CORE_VERSION = "13.345";
+const TARGET_SYSTEM_ID = 'abf';
+const TARGET_SYSTEM_VERSION = '1.0.0';
+const TARGET_CORE_VERSION = '13.345';
 
 function processJsonFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8');

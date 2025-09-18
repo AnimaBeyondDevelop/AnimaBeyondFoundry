@@ -21,7 +21,7 @@ export const calculateCombatResult = (
   halvedAbsorption = false
 ) => {
   const needToRound = game.settings.get(
-    'abf',
+    game.abf.id,
     ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
   );
 

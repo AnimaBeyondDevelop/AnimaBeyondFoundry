@@ -3,7 +3,7 @@ import { Templates } from '../constants';
 
 export const openComplexInputDialog = async (actor, dialogType) => {
   const { i18n } = game;
-  let castOverride = actor.getFlag('abf', 'spellCastingOverride') || false;
+  let castOverride = actor.getFlag(game.abf.id, 'spellCastingOverride') || false;
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
       name:
@@ -40,10 +40,10 @@ export const openComplexInputDialog = async (actor, dialogType) => {
             callback: html => {
               const results = new FormDataExtended(html.find('form')[0], {}).object;
               if (html.find('.psychic.active').length !== 0) {
-                results.tab = 'psychic'
+                results.tab = 'psychic';
               }
               if (html.find('.mystic.active').length !== 0) {
-                results.tab = 'mystic'
+                results.tab = 'mystic';
               }
               resolve(results);
             }

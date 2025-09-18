@@ -21,11 +21,11 @@ export async function updateAttackTargetsFlag(messageId, entry) {
     game.user.isGM || (msg && (msg.user?.id === game.user.id || msg.isAuthor));
 
   if (canDirect && msg) {
-    const targets = foundry.utils.duplicate(msg.getFlag('abf', 'targets') ?? []);
+    const targets = foundry.utils.duplicate(msg.getFlag(game.abf.id, 'targets') ?? []);
     const i = findIndexByKey(targets, entry);
     if (i >= 0) targets[i] = { ...targets[i], ...entry };
     else targets.push(entry);
-    await msg.setFlag('abf', 'targets', targets);
+    await msg.setFlag(game.abf.id, 'targets', targets);
     ui.chat?.updateMessage?.(msg);
     return true;
   }

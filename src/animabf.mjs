@@ -16,7 +16,6 @@ import { applyMigrations } from './module/migration/migrate';
 import { registerGlobalTypes } from './utils/registerGlobalTypes';
 import ABFCombatant from './module/combat/ABFCombatant';
 
-// ⬇️ Auto-registry basado en import.meta.glob (no requiere FS browse)
 import { chatActionHandlers } from './utils/chatActionHandlers.js';
 
 import { ABFAttackData } from './module/combat/ABFAttackData.js';
@@ -25,14 +24,16 @@ import { Templates } from './module/utils/constants';
 
 import './scss/animabf.scss';
 
-import { SYSTEM_ID, SYSTEM_VERSION, CORE_VERSION } from './utils/getSystemMeta.mjs';
+import { System, registerSystemOnGame } from './utils/systemMeta';
 
 /* ------------------------------------ */
 /* Initialize system */
 /* ------------------------------------ */
 Hooks.once('init', async () => {
   Logger.log('Initializing system');
-  Logger.log('Game Id:' + SYSTEM_ID);
+  registerSystemOnGame();
+  Logger.log('Game Id:' + System.id);
+  Logger.log('Game Id:' + game.abf.id);
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
@@ -50,10 +51,10 @@ Hooks.once('init', async () => {
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('abf', ABFActorSheet, { makeDefault: true });
+  Actors.registerSheet(System.id, ABFActorSheet, { makeDefault: true });
 
   Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('abf', ABFItemSheet, {
+  Items.registerSheet(System.id, ABFItemSheet, {
     makeDefault: true
   });
 
@@ -82,12 +83,12 @@ Hooks.once('setup', () => {
 Hooks.once('ready', async () => {
   if (game.user.isGM) {
     const creationVersion = game.settings.get(
-      'abf',
+      System.id,
       ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION
     );
     if (!creationVersion) {
       await game.settings.set(
-        'abf',
+        System.id,
         ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION,
         game.system.version
       );
@@ -112,11 +113,11 @@ Hooks.once('ready', async () => {
 
     const msg = game.messages.get(p.messageId);
     if (!msg) return;
-    const kind = msg.getFlag('abf', 'kind');
+    const kind = msg.getFlag(System.id, 'kind');
     if (kind !== 'attackData') return;
 
     const entry = p.entry ?? {};
-    const targets = foundry.utils.duplicate(msg.getFlag('abf', 'targets') ?? []);
+    const targets = foundry.utils.duplicate(msg.getFlag(System.id, 'targets') ?? []);
 
     const findIndexByKey = (arr, e) => {
       if (e.tokenUuid) {
@@ -133,7 +134,7 @@ Hooks.once('ready', async () => {
     if (i >= 0) targets[i] = { ...targets[i], ...entry };
     else targets.push(entry);
 
-    await msg.setFlag('abf', 'targets', targets);
+    await msg.setFlag(System.id, 'targets', targets);
     ui.chat?.updateMessage?.(msg);
   });
 });
@@ -168,7 +169,7 @@ Hooks.on('renderChatMessage', async (message, html) => {
   });
 
   // Chips/row rendering only for attackData messages
-  if (message.getFlag('abf', 'kind') !== 'attackData') return;
+  if (message.getFlag(System.id, 'kind') !== 'attackData') return;
 
   const flags = message.flags?.abf ?? {};
   const targets = Array.isArray(flags.targets) ? [...flags.targets] : [];

@@ -10,7 +10,7 @@ export default async function autoDefendActionHandler(message, _html, ds) {
       (typeof ds.attackData === 'string'
         ? safeParseJSON(ds.attackData)
         : ds.attackData) ??
-      msg?.getFlag('abf', 'attackData') ??
+      msg?.getFlag(game.abf.id, 'attackData') ??
       msg?.flags?.abf?.attackData ??
       null;
 
@@ -66,8 +66,8 @@ export default async function autoDefendActionHandler(message, _html, ds) {
       attackLabel: attackData?.weaponId
         ? game.i18n.localize?.('chat.attackData.title') ?? 'Ataque'
         : 'Ataque',
-      entries: cm.getFlag('abf', 'entries') ?? entries,
-      hasRemaining: (cm.getFlag('abf', 'entries') ?? entries).some(
+      entries: cm.getFlag(game.abf.id, 'entries') ?? entries,
+      hasRemaining: (cm.getFlag(game.abf.id, 'entries') ?? entries).some(
         e => !e.applied && e.damageFinal > 0
       ),
       messageId: cm.id

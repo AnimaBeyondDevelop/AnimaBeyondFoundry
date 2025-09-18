@@ -11,7 +11,7 @@ export default async function defendActionHandler(message, _html, dataset) {
       (typeof dataset.attackData === 'string'
         ? safeParseJSON(dataset.attackData)
         : dataset.attackData) ||
-      msg.getFlag('abf', 'attackData') ||
+      msg.getFlag(game.abf.id, 'attackData') ||
       msg.flags?.abf?.attackData ||
       null;
 
@@ -92,7 +92,7 @@ function safeParseJSON(s) {
  */
 function autoPickOwnableTargetToken(msg) {
   try {
-    const targets = msg.getFlag('abf', 'targets');
+    const targets = msg.getFlag(game.abf.id, 'targets');
     if (!Array.isArray(targets) || targets.length !== 1) return null;
 
     const t = targets[0];

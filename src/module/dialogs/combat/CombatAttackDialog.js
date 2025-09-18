@@ -7,11 +7,11 @@ import { ABFConfig } from '../../ABFConfig';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const combatDistance = !!game.settings.get(
-    'abf',
+    game.abf.id,
     ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE
   );
   const showRollByDefault = !!game.settings.get(
-    'abf',
+    game.abf.id,
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
   );
   const isGM = !!game.user?.isGM;
@@ -150,7 +150,7 @@ export class CombatAttackDialog extends FormApplication {
 
     if (psychicPowers.length > 0) {
       const lastOffensivePowerUsed = this.attackerActor.getFlag(
-        'abf',
+        game.abf.id,
         'lastOffensivePowerUsed'
       );
       if (psychicPowers.find(w => w._id === lastOffensivePowerUsed)) {
@@ -161,12 +161,13 @@ export class CombatAttackDialog extends FormApplication {
         )?._id;
       }
       const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-      psychic.critic = power?.system.critic.value ?? game.abf.weapon.NoneWeaponCritic.NONE;
+      psychic.critic =
+        power?.system.critic.value ?? game.abf.weapon.NoneWeaponCritic.NONE;
     }
 
     if (spells.length > 0) {
       const lastOffensiveSpellUsed = this.attackerActor.getFlag(
-        'abf',
+        game.abf.id,
         'lastOffensiveSpellUsed'
       );
       if (spells.find(w => w._id === lastOffensiveSpellUsed)) {
@@ -175,7 +176,7 @@ export class CombatAttackDialog extends FormApplication {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
       }
       const spellCastingOverride = this.attackerActor.getFlag(
-        'abf',
+        game.abf.id,
         'spellCastingOverride'
       );
       mystic.spellCasting.override = spellCastingOverride || false;
@@ -205,7 +206,7 @@ export class CombatAttackDialog extends FormApplication {
 
     if (weapons.length > 0) {
       const lastOffensiveWeaponUsed = this.attackerActor.getFlag(
-        'abf',
+        game.abf.id,
         'lastOffensiveWeaponUsed'
       );
       if (weapons.find(weapon => weapon._id == lastOffensiveWeaponUsed)) {
@@ -285,7 +286,7 @@ export class CombatAttackDialog extends FormApplication {
         targetInCover
       } = this.modalData.attacker;
       distance.check = distanceCheck;
-      this.attackerActor.setFlag('abf', 'lastOffensiveWeaponUsed', weaponUsed);
+      this.attackerActor.setFlag(game.abf.id, 'lastOffensiveWeaponUsed', weaponUsed);
       if (typeof damage !== 'undefined') {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true },
@@ -423,11 +424,11 @@ export class CombatAttackDialog extends FormApplication {
           modifier: { value: modifier, apply: true }
         };
         this.attackerActor.setFlag(
-          'abf',
+          game.abf.id,
           'spellCastingOverride',
           spellCasting.override
         );
-        this.attackerActor.setFlag('abf', 'lastOffensiveSpellUsed', spellUsed);
+        this.attackerActor.setFlag(game.abf.id, 'lastOffensiveSpellUsed', spellUsed);
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
@@ -525,7 +526,7 @@ export class CombatAttackDialog extends FormApplication {
         };
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
-        this.attackerActor.setFlag('abf', 'lastOffensivePowerUsed', powerUsed);
+        this.attackerActor.setFlag(game.abf.id, 'lastOffensivePowerUsed', powerUsed);
         let combatModifier = 0;
         for (const key in attackerCombatMod) {
           combatModifier += attackerCombatMod[key]?.value ?? 0;

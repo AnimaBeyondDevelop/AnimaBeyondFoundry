@@ -22,17 +22,17 @@ export const executeMacro = (name, args) => {
       let defaultMacroName = '';
       if (args.shieldId) {
         defaultMacroName = game.settings.get(
-          'abf',
+          game.abf.id,
           ABFSettingsKeys.MACRO_SHIELD_DEFAULT
         );
       } else if (args.projectile?.name) {
         defaultMacroName = game.settings.get(
-          'abf',
+          game.abf.id,
           ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT
         );
       } else {
         defaultMacroName = game.settings.get(
-          'abf',
+          game.abf.id,
           ABFSettingsKeys.MACRO_ATTACK_DEFAULT
         );
       }
