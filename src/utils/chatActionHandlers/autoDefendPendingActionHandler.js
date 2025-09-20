@@ -11,12 +11,12 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
       (typeof ds.attackData === 'string'
         ? safeParseJSON(ds.attackData)
         : ds.attackData) ??
-      msg.getFlag(game.abf.id, 'attackData') ??
-      msg.flags?.abf?.attackData ??
+      msg.getFlag(game.animabf.id, 'attackData') ??
+      msg.flags?.animabf?.attackData ??
       null;
     if (!attackData) return ui.notifications?.warn('Datos de ataque no disponibles.');
 
-    const targets = msg.getFlag(game.abf.id, 'targets') ?? [];
+    const targets = msg.getFlag(game.animabf.id, 'targets') ?? [];
     const pendings = targets.filter(t => (t.state ?? 'pending') === 'pending');
 
     if (!pendings.length) return ui.notifications?.info('No hay objetivos pendientes.');
@@ -71,7 +71,7 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
       content,
       speaker: message.speaker, // keep same speaker context
       flags: {
-        abf: {
+        animabf: {
           kind: 'multiDefenseResult',
           sourceAttackMessageId: msg.id,
           batch: { createdAt: Date.now() },
@@ -82,8 +82,8 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
 
     const content2 = await renderTemplate(Templates.Chat.MultiDefenseResult, {
       attackLabel: game.i18n.localize?.('chat.attackData.title') ?? 'Ataque',
-      entries: cm.getFlag(game.abf.id, 'entries') ?? entries,
-      hasRemaining: (cm.getFlag(game.abf.id, 'entries') ?? entries).some(
+      entries: cm.getFlag(game.animabf.id, 'entries') ?? entries,
+      hasRemaining: (cm.getFlag(game.animabf.id, 'entries') ?? entries).some(
         e => !e.applied && e.damageFinal > 0
       ),
       messageId: cm.id

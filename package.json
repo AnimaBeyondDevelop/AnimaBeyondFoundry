@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build:dev": "npm run build:prod && node scripts/copyDirectoryToFoundrySystem.cjs abf",
+    "build:dev": "npm run build:prod && node scripts/copyDirectoryToFoundrySystem.cjs animabf",
     "build:prod": "npm run compendia:pack && npx vite build",
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.cjs",

@@ -5,7 +5,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
   const showRollByDefault = !!game.settings.get(
-    game.abf.id,
+    game.animabf.id,
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
   );
   const isGM = !!game.user?.isGM;
@@ -18,7 +18,7 @@ const getInitialData = (attacker, defender) => {
       ? 'damageResistance'
       : 'combat';
 
-  const defensesCounter = defenderActor.getFlag(game.abf.id, 'defensesCounter') || {
+  const defensesCounter = defenderActor.getFlag(game.animabf.id, 'defensesCounter') || {
     accumulated: 0,
     keepAccumulating: true
   };
@@ -135,7 +135,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (psychicPowers.length > 0) {
       const lastDefensivePowerUsed = this.defenderActor.getFlag(
-        game.abf.id,
+        game.animabf.id,
         'lastDefensivePowerUsed'
       );
       if (psychicPowers.find(w => w._id === lastDefensivePowerUsed)) {
@@ -152,7 +152,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (spells.length > 0) {
       const lastDefensiveSpellUsed = this.defenderActor.getFlag(
-        game.abf.id,
+        game.animabf.id,
         'lastDefensiveSpellUsed'
       );
       if (spells.find(w => w._id === lastDefensiveSpellUsed)) {
@@ -161,7 +161,7 @@ export class CombatDefenseDialog extends FormApplication {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
       const spellCastingOverride = this.defenderActor.getFlag(
-        game.abf.id,
+        game.animabf.id,
         'spellCastingOverride'
       );
       mystic.spellCasting.override = spellCastingOverride || false;
@@ -214,7 +214,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (weapons.length > 0) {
       const lastDefensiveWeaponUsed = this.defenderActor.getFlag(
-        game.abf.id,
+        game.animabf.id,
         'lastDefensiveWeaponUsed'
       );
       if (weapons.find(weapon => weapon._id == lastDefensiveWeaponUsed)) {
@@ -247,7 +247,7 @@ export class CombatDefenseDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog combat-defense-dialog no-close'],
+      classes: ['animabf-dialog combat-defense-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: 525,
@@ -299,7 +299,7 @@ export class CombatDefenseDialog extends FormApplication {
         blindness,
         distance
       } = this.modalData.defender;
-      this.defenderActor.setFlag(game.abf.id, 'lastDefensiveWeaponUsed', weaponUsed);
+      this.defenderActor.setFlag(game.animabf.id, 'lastDefensiveWeaponUsed', weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
@@ -479,11 +479,11 @@ export class CombatDefenseDialog extends FormApplication {
         supShield = { create: false, id: shieldUsed };
       } else if (spellUsed) {
         this.defenderActor.setFlag(
-          game.abf.id,
+          game.animabf.id,
           'spellCastingOverride',
           spellCasting.override
         );
-        this.defenderActor.setFlag(game.abf.id, 'lastDefensiveSpellUsed', spellUsed);
+        this.defenderActor.setFlag(game.animabf.id, 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         if (this.defenderActor.evaluateCast(spellCasting)) {
@@ -604,7 +604,7 @@ export class CombatDefenseDialog extends FormApplication {
         power = supernaturalShields.find(w => w._id === shieldUsed);
         supShield = { create: false, id: shieldUsed };
       } else if (powerUsed) {
-        this.defenderActor.setFlag(game.abf.id, 'lastDefensivePowerUsed', powerUsed);
+        this.defenderActor.setFlag(game.animabf.id, 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,

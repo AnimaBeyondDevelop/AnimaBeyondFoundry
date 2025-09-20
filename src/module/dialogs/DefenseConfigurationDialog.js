@@ -64,7 +64,7 @@ export class DefenseConfigurationDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog', 'defense-config-dialog'],
+      classes: ['animabf-dialog', 'defense-config-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: 520,
@@ -193,7 +193,7 @@ export class DefenseConfigurationDialog extends FormApplication {
         speaker: ChatMessage.getSpeaker({ actor }),
         ...vis,
         flags: {
-          abf: {
+          animabf: {
             kind: 'combatResult',
             result: { ...combatResult, damageFinal },
             defender: { actorId: actor.id, tokenId: defender.token?.id ?? '' },
@@ -240,7 +240,7 @@ export class DefenseConfigurationDialog extends FormApplication {
     if (firstRealRender && this.modalData?.messageId && this.defenderActor) {
       try {
         const msg = game.messages.get(this.modalData.messageId);
-        const targets = msg?.getFlag(game.abf.id, 'targets') ?? [];
+        const targets = msg?.getFlag(game.animabf.id, 'targets') ?? [];
         const keyA = this.defenderActor.id;
         const keyT = this.modalData?.defender?.token?.id ?? '';
 
@@ -283,7 +283,7 @@ export class DefenseConfigurationDialog extends FormApplication {
         this.defenderActor
       ) {
         const msg = game.messages.get(this.modalData.messageId);
-        const targets = msg?.getFlag(game.abf.id, 'targets') ?? [];
+        const targets = msg?.getFlag(game.animabf.id, 'targets') ?? [];
         const keyA = this.defenderActor.id;
         const keyT = this.modalData?.defender?.token?.id ?? '';
 

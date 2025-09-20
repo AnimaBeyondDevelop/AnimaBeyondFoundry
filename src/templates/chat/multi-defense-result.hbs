@@ -1,16 +1,16 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
-  class="abf-chat-message multi-defense-result"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="animabf-chat-message multi-defense-result"
   contractible=true
   contractibleItemId="chat-multi-defense-result"
 }}
-  {{> "systems/abf/templates/common/ui/group-header.hbs" title=(localize "chat.multiDefenseResult.title") }}
+  {{> "systems/animabf/templates/common/ui/group-header.hbs" title=(localize "chat.multiDefenseResult.title") }}
 
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"}}
     <p class="only-if-gm" style="opacity:.8;">
       {{localize "chat.multiDefenseResult.fromAttack"}}: {{attackLabel}}
     </p>
 
-    <div class="abf-mdr-list" style="display:flex; flex-direction:column; gap:.5rem;">
+    <div class="animabf-mdr-list" style="display:flex; flex-direction:column; gap:.5rem;">
       {{#each entries}}
         <div class="mdr-entry" style="border:1px solid var(--color-border-light-tertiary); border-radius:.6rem; padding:.5rem .6rem;">
           {{!-- Fila 1: nombre + daño o contra --}}
@@ -48,7 +48,7 @@
                 <button
                   class="chat-action-button {{#if applied}}applied{{/if}}"
                   style="width:100%; min-width:0; white-space:normal; {{#if applied}}background:rgba(0,128,0,.15); border-color:rgba(0,128,0,.35);{{/if}}"
-                  data-action="abf-apply-multi-entry"
+                  data-action="animabf-apply-multi-entry"
                   data-message-id="{{xRoot.messageId}}"
                   data-def-actor="{{actorId}}"
                   data-def-token="{{tokenId}}"
@@ -60,7 +60,7 @@
                 <button
                   class="chat-action-button {{#if applied}}applied{{/if}}"
                   style="width:100%; min-width:0; white-space:normal; {{#if applied}}background:rgba(0,128,0,.15); border-color:rgba(0,128,0,.35);{{/if}}"
-                  data-action="abf-apply-multi-entry"
+                  data-action="animabf-apply-multi-entry"
                   data-message-id="{{xRoot.messageId}}"
                   data-def-actor="{{actorId}}"
                   data-def-token="{{tokenId}}"
@@ -72,7 +72,7 @@
                 <button
                   class="chat-action-button {{#if applied}}applied{{/if}}"
                   style="width:100%; min-width:0; white-space:normal; {{#if applied}}background:rgba(0,128,0,.15); border-color:rgba(0,128,0,.35);{{/if}}"
-                  data-action="abf-apply-multi-entry"
+                  data-action="animabf-apply-multi-entry"
                   data-message-id="{{xRoot.messageId}}"
                   data-def-actor="{{actorId}}"
                   data-def-token="{{tokenId}}"
@@ -98,11 +98,11 @@
       <div style="margin-top:.6rem; display:flex; justify-content:flex-end;">
         <button
           class="chat-action-button"
-          data-action="abf-apply-multi-remaining"
+          data-action="animabf-apply-multi-remaining"
           data-message-id="{{xRoot.messageId}}">
           {{localize "chat.multiDefenseResult.applyRemaining"}}
         </button>
       </div>
     {{/if}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

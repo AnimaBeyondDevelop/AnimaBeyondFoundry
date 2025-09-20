@@ -1,18 +1,18 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="ammo"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.ammo.title")
     addRowButtonData="add-ammo"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="ammo"
   }}
     {{#each system.combat.ammo as |ammo index|}}
       <div data-item-id='{{ammo._id}}' class='ammo-row'>
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.combat.ammo.name.title")
           hideTitle=(is "gt" index 0)
@@ -21,7 +21,7 @@
           inputValue=ammo.name
         }}
         {{>
-        'systems/abf/templates/common/domain/select-quality.hbs'
+        'systems/animabf/templates/common/domain/select-quality.hbs'
           class="quality"
           title=(localize "anima.ui.combat.ammo.quality.title")
           hideTitle=(is "gt" index 0)
@@ -30,7 +30,7 @@
           inputValue=ammo.system.quality.value
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="presence"
           title=(localize "anima.ui.combat.ammo.presence.title")
           hideTitle=(is "gt" index 0)
@@ -39,7 +39,7 @@
           inputValue=ammo.system.presence.final.value
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="damage"
           title=(localize "anima.ui.combat.ammo.damage.title")
           hideTitle=(is "gt" index 0)
@@ -48,7 +48,7 @@
           inputValue=ammo.system.damage.final.value
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="breaking"
           title=(localize "anima.ui.combat.ammo.breaking.title")
           hideTitle=(is "gt" index 0)
@@ -57,7 +57,7 @@
           inputValue=ammo.system.breaking.final.value
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="integrity"
           title=(localize "anima.ui.combat.ammo.integrity.title")
           hideTitle=(is "gt" index 0)
@@ -66,7 +66,7 @@
           inputValue=ammo.system.integrity.final.value
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="amount"
           title=(localize "anima.ui.combat.ammo.amount.title")
           hideTitle=(is "gt" index 0)
@@ -75,5 +75,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

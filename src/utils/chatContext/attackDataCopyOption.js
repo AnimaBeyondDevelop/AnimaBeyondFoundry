@@ -10,14 +10,14 @@ export default function attackDataCopyOption() {
       const id = el?.closest('li.chat-message')?.dataset.messageId;
       const msg = id && game.messages.get(id);
       return (
-        msg?.getFlag(game.abf.id, 'kind') === 'attackData' &&
-        !!msg.getFlag(game.abf.id, 'attackData')
+        msg?.getFlag(game.animabf.id, 'kind') === 'attackData' &&
+        !!msg.getFlag(game.animabf.id, 'attackData')
       );
     },
     // Copy JSON from flags (with fallback)
     callback: async target => {
       const id = target.closest('li.chat-message')?.dataset.messageId;
-      const data = id && game.messages.get(id)?.getFlag(game.abf.id, 'attackData');
+      const data = id && game.messages.get(id)?.getFlag(game.animabf.id, 'attackData');
       if (!data) return ui.notifications.warn('No attackData flag found.');
       const json = JSON.stringify(data, null, 2);
       try {

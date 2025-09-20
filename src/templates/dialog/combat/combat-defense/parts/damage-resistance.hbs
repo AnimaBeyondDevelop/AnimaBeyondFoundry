@@ -1,6 +1,6 @@
 <div class='columns'>
   {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.surprised.title')
       inputType="checkbox"
       inputName="defender.resistance.surprised"
@@ -10,13 +10,13 @@
 
 {{#if this.defenseSent}}
   <div class='defense-buttons'>
-    {{>'systems/abf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
       {{localize 'macros.combat.dialog.defenseSent.title'}}
     </p>
   </div>
 {{else}}
-  <button class='abf-button send-defense-damage-resistance'>
+  <button class='animabf-button send-defense-damage-resistance'>
     {{localize 'macros.combat.dialog.defenseButton.title'}}
   </button>
 {{/if}}

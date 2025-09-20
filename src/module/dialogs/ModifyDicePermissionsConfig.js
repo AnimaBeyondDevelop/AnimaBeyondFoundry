@@ -26,8 +26,10 @@ export default class ModifyDicePermissionsConfig extends FormApplication {
 
   get settings() {
     return (
-      game.settings.get(game.abf.id, ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION) ||
-      {}
+      game.settings.get(
+        game.animabf.id,
+        ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION
+      ) || {}
     );
   }
 
@@ -37,7 +39,7 @@ export default class ModifyDicePermissionsConfig extends FormApplication {
       newSettings[k] = v === 'true' || v === true;
     }
     await game.settings.set(
-      game.abf.id,
+      game.animabf.id,
       ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION,
       newSettings
     );

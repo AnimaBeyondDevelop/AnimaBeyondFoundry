@@ -1,16 +1,16 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="modifiers"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.general.modifiers.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="modifiers"
   }}
     <div class='first-row'>
       {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="physical"
         title=(localize "anima.ui.general.modifiers.physicalActions.title")
         inputName="system.general.modifiers.physicalActions.base.value"
@@ -22,7 +22,7 @@
         secondaryInputValue=system.general.modifiers.physicalActions.final.value
       }}
       {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="all-actions"
         title=(localize "anima.ui.general.modifiers.allActions.title")
         inputName="system.general.modifiers.allActions.base.value"
@@ -34,7 +34,7 @@
         secondaryInputValue=system.general.modifiers.allActions.final.value
       }}
       {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="natural-penalty"
         title=(localize 'anima.ui.general.naturalPenalty.title')
         inputName="system.general.modifiers.naturalPenalty.base.value"
@@ -46,7 +46,7 @@
         secondaryInputValue=system.general.modifiers.naturalPenalty.final.value
       }}
       {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="perception-penalty"
         title=(localize 'anima.ui.general.perceptionPenalty.title')
         inputName="system.general.modifiers.perceptionPenalty.base.value"
@@ -58,5 +58,5 @@
         secondaryInputValue=system.general.modifiers.perceptionPenalty.final.value
       }}
     </div>
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

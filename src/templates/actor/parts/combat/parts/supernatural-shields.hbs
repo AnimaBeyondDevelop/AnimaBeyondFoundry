@@ -1,19 +1,19 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="supernatural-shields"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.supernaturalShields.title")
     addRowButtonData="add-supernatural-shield"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="supernatural-shields"
   }}
     {{#each system.combat.supernaturalShields as |supernaturalShields|}}
       <div data-item-id='{{this._id}}' class='supernatural-shield-row'>
         {{#if (is 'eq' this.system.type 'mystic')}}
           {{>
-          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
             class="name"
             title=(localize "anima.ui.combat.supernaturalShields.name.title")
             hideTitle=(is "gt" @index 0)
@@ -24,7 +24,7 @@
           }}
         {{else}}
           {{>
-          "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
             class="name"
             title=(localize "anima.ui.combat.supernaturalShields.name.title")
             hideTitle=(is "gt" @index 0)
@@ -35,7 +35,7 @@
           }}
         {{/if}}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="shieldPoints"
           title=(localize "anima.ui.combat.supernaturalShields.shieldPoints.title")
           hideTitle=(is "gt" @index 0)
@@ -43,7 +43,7 @@
           inputValue=this.system.shieldPoints
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="origin"
           title=(localize "anima.ui.combat.supernaturalShields.origin.title")
           hideTitle=(is "gt" @index 0)
@@ -54,5 +54,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

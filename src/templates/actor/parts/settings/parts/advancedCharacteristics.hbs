@@ -1,15 +1,15 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="advancedCharacteristics"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.settings.advancedCharacteristics.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="advancedCharacteristics"
   }}
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="zen"
         title= (localize "anima.ui.settings.advancedCharacteristics.zen")
         inputType="checkbox"
@@ -17,7 +17,7 @@
         inputValue=system.general.settings.zen.value
       }}
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="inhuman"
         title= (localize "anima.ui.settings.advancedCharacteristics.inhuman")
         inputType="checkbox"
@@ -25,7 +25,7 @@
         inputValue=system.general.settings.inhuman.value
       }}
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="inmaterial"
         title= (localize "anima.ui.settings.advancedCharacteristics.inmaterial")
         inputType="checkbox"
@@ -33,7 +33,7 @@
         inputValue=system.general.settings.inmaterial.value
       }}
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="perceiveMystic"
         title= (localize "anima.ui.settings.advancedCharacteristics.perceiveMystic")
         inputType="checkbox"
@@ -41,12 +41,12 @@
         inputValue=system.general.settings.perceiveMystic.value
       }}
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="perceivePsychic"
         title= (localize "anima.ui.settings.advancedCharacteristics.perceivePsychic")
         inputType="checkbox"
         inputName="system.general.settings.perceivePsychic.value"
         inputValue=system.general.settings.perceivePsychic.value
       }}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

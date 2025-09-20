@@ -1,18 +1,18 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="contacts"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize 'anima.ui.contactSection.title')
     addRowButtonData="add-contact"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="contacts"
   }}
     {{#each system.general.contacts as |contact index|}}
       <div data-item-id='{{contact._id}}' class='contact-row'>
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize 'anima.ui.contactSection.contactRow.name')
           hideTitle=(is "gt" index 0)
@@ -21,7 +21,7 @@
           inputValue=contact.name
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="description"
           title=(localize 'anima.ui.contactSection.contactRow.description')
           hideTitle=(is "gt" index 0)
@@ -31,5 +31,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

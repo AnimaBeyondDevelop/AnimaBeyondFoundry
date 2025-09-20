@@ -1,28 +1,28 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="advancedSettings"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.settings.advancedSettings.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="advancedSettings"
   }}
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="doubles"
         title= (localize "anima.ui.settings.advancedSettings.doubles")
         inputType="checkbox"
         inputName="system.general.settings.openOnDoubles.value"
         inputValue=system.general.settings.openOnDoubles.value
       }}
-    {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="openRolls"
       title=(localize "anima.ui.settings.advancedSettings.openRolls.title")
       inputName="system.general.settings.openRolls.value"
       inputValue= system.general.settings.openRolls.value
     }}
-    {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="fumbles"
       title=(localize "anima.ui.settings.advancedSettings.fumbles.title")
       inputName="system.general.settings.fumbles.value"
@@ -30,35 +30,35 @@
     }}
     
     {{#if canModifyDice}}
-      {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="die"
         inputType="text"
         title=(localize "anima.ui.settings.advancedSettings.characteristicDie.title")
         inputName="system.general.diceSettings.characteristicDie.value"
         inputValue= system.general.diceSettings.characteristicDie.value
       }}
-      {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="die"
         inputType="text"
         title=(localize "anima.ui.settings.advancedSettings.initiativeDie.title")
         inputName="system.general.diceSettings.initiativeDie.value"
         inputValue= system.general.diceSettings.initiativeDie.value
       }}
-      {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="die"
         inputType="text"
         title=(localize "anima.ui.settings.advancedSettings.resistanceDie.title")
         inputName="system.general.diceSettings.resistanceDie.value"
         inputValue= system.general.diceSettings.resistanceDie.value
       }}
-      {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="die"
         inputType="text"
         title=(localize "anima.ui.settings.advancedSettings.abilityDie.title")
         inputName="system.general.diceSettings.abilityDie.value"
         inputValue= system.general.diceSettings.abilityDie.value
       }}
-      {{> "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="die"
         inputType="text"
         title=(localize "anima.ui.settings.advancedSettings.abilityMasteryDie.title")
@@ -67,7 +67,7 @@
       }}
     {{/if}}
     <div>
-      {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
         class="defenseType"
         title=(localize "anima.ui.settings.advancedSettings.defenseType.title")
         inputName="system.general.settings.defenseType.value"
@@ -76,7 +76,7 @@
           <option {{#if (is "eq" this.inputValue '')}} selected{{/if}} value=''>{{localize 'anima.ui.settings.advancedSettings.defenseType.normal.title'}}</option>
           <option {{#if (is "eq" this.inputValue 'resistance')}} selected{{/if}} value='resistance'>{{localize 'anima.ui.settings.advancedSettings.defenseType.damageResistance.title'}}</option>
           <option {{#if (is "eq" this.inputValue 'mass')}} selected{{/if}} value='mass'>{{localize 'anima.ui.settings.advancedSettings.defenseType.mass.title'}}</option>
-      {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
     </div>
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -17,8 +17,8 @@ export const ABFSettingsKeys = {
   MODIFY_DICE_FORMULAS_PERMISSION: 'MODIFY_DICE_FORMULAS_PERMISSION'
 };
 
-export const registerSettings = () => {
-  game.settings.register(game.abf.id, ABFSettingsKeys.AUTO_ACCEPT_COMBAT_REQUESTS, {
+export const registerSettings = systemId => {
+  game.settings.register(systemId, ABFSettingsKeys.AUTO_ACCEPT_COMBAT_REQUESTS, {
     name: 'anima.ui.systemSettings.autoAcceptCombatRequests.title',
     hint: 'anima.ui.systemSettings.autoAcceptCombatRequests.hint.title',
     scope: 'world',
@@ -27,7 +27,7 @@ export const registerSettings = () => {
     type: Boolean
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5, {
+  game.settings.register(systemId, ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5, {
     name: 'anima.ui.systemSettings.roundDamageInMultiplesOf5.title',
     hint: 'anima.ui.systemSettings.roundDamageInMultiplesOf5.hint.title',
     scope: 'world',
@@ -37,7 +37,7 @@ export const registerSettings = () => {
   });
 
   game.settings.register(
-    game.abf.id,
+    systemId,
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT,
     {
       name: 'anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title',
@@ -49,7 +49,7 @@ export const registerSettings = () => {
     }
   );
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.USE_DAMAGE_TABLE, {
+  game.settings.register(systemId, ABFSettingsKeys.USE_DAMAGE_TABLE, {
     name: 'anima.ui.systemSettings.useCombatTable.title',
     hint: 'anima.ui.systemSettings.useCombatTable.hint.title',
     scope: 'world',
@@ -58,7 +58,7 @@ export const registerSettings = () => {
     type: Boolean
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE, {
+  game.settings.register(systemId, ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE, {
     name: 'anima.ui.systemSettings.useDistanceAutomation.title',
     hint: 'anima.ui.systemSettings.useDistanceAutomation.hint.title',
     scope: 'world',
@@ -67,7 +67,7 @@ export const registerSettings = () => {
     type: Boolean
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.MACRO_PREFIX_ATTACK, {
+  game.settings.register(systemId, ABFSettingsKeys.MACRO_PREFIX_ATTACK, {
     name: 'anima.ui.systemSettings.prefixAttackMacro.title',
     hint: 'anima.ui.systemSettings.prefixAttackMacro.hint.title',
     scope: 'world',
@@ -76,7 +76,7 @@ export const registerSettings = () => {
     type: String
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.MACRO_ATTACK_DEFAULT, {
+  game.settings.register(systemId, ABFSettingsKeys.MACRO_ATTACK_DEFAULT, {
     name: 'anima.ui.systemSettings.defaultAttackMacro.title',
     hint: 'anima.ui.systemSettings.defaultAttackMacro.hint.title',
     scope: 'world',
@@ -85,7 +85,7 @@ export const registerSettings = () => {
     type: String
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT, {
+  game.settings.register(systemId, ABFSettingsKeys.MACRO_PROJECTILE_DEFAULT, {
     name: 'anima.ui.systemSettings.defaultProjectileMacro.title',
     hint: 'anima.ui.systemSettings.defaultProjectileMacro.hint.title',
     scope: 'world',
@@ -94,7 +94,7 @@ export const registerSettings = () => {
     type: String
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.MACRO_SHIELD_DEFAULT, {
+  game.settings.register(systemId, ABFSettingsKeys.MACRO_SHIELD_DEFAULT, {
     name: 'anima.ui.systemSettings.defaultShieldMacro.title',
     hint: 'anima.ui.systemSettings.defaultShieldMacro.hint.title',
     scope: 'world',
@@ -103,7 +103,7 @@ export const registerSettings = () => {
     type: String
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE, {
+  game.settings.register(systemId, ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE, {
     name: 'anima.ui.systemSettings.missValueAttackMacro.title',
     hint: 'anima.ui.systemSettings.missValueAttackMacro.hint.title',
     scope: 'world',
@@ -112,7 +112,7 @@ export const registerSettings = () => {
     type: Number
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.DEVELOP_MODE, {
+  game.settings.register(systemId, ABFSettingsKeys.DEVELOP_MODE, {
     name: 'Develop mode',
     hint: 'Activate certain access to information. Only for developers',
     scope: 'world',
@@ -122,7 +122,7 @@ export const registerSettings = () => {
   });
 
   // This is for migration purposes, it stores the last migration version runned for the world.
-  game.settings.register(game.abf.id, ABFSettingsKeys.APPLIED_MIGRATIONS, {
+  game.settings.register(systemId, ABFSettingsKeys.APPLIED_MIGRATIONS, {
     name: 'Applied Migration Versions',
     scope: 'world',
     config: false,
@@ -130,7 +130,7 @@ export const registerSettings = () => {
     default: {}
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION, {
+  game.settings.register(systemId, ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION, {
     name: 'World Creation System Version',
     scope: 'world',
     config: false,
@@ -138,7 +138,7 @@ export const registerSettings = () => {
     default: null
   });
 
-  game.settings.register(game.abf.id, ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION, {
+  game.settings.register(systemId, ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION, {
     name: 'modifyDiceFormulasPermission',
     scope: 'world',
     config: false,
@@ -151,7 +151,7 @@ export const registerSettings = () => {
     }
   });
 
-  game.settings.registerMenu(game.abf.id, 'modifyDiceFormulasPermissionMenu', {
+  game.settings.registerMenu(systemId, 'modifyDiceFormulasPermissionMenu', {
     name: 'anima.permissions.modifyDiceFormulasPermission.title',
     label: 'anima.permissions.modifyDiceFormulasPermission.title',
     hint: 'anima.permissions.modifyDiceFormulasPermission.hint',

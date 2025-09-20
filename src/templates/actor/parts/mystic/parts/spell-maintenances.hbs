@@ -1,18 +1,18 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="spell-maintenances"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.spellMaintenance.title")
     addRowButtonData="add-spell-maintenance"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="spell-maintenances"
   }}
     {{#each system.mystic.spellMaintenances as |spellMaintenance index|}}
       <div data-item-id='{{spellMaintenance._id}}' class='spell-maintenance-row'>
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.mystic.spellMaintenance.name.title")
           hideTitle=(is "gt" index 0)
@@ -21,7 +21,7 @@
           inputValue=spellMaintenance.name
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="cost"
           title=(localize "anima.ui.mystic.spellMaintenance.cost.title")
           hideTitle=(is "gt" index 0)
@@ -30,5 +30,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -1,14 +1,14 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
-  class="abf-chat-message attack-data-message"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="animabf-chat-message attack-data-message"
   contractible=true
   contractibleItemId="chat-attack-data"
 }}
   {{>
-    "systems/abf/templates/common/ui/group-header.hbs"
+    "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "chat.attackData.title")
   }}
 
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"}}
     {{!-- <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{weapon.system.attack.final.value}}</p> --}}
     <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{attackData.attackAbility}}</p>
     <p data-requires-permission="owner"><strong>{{localize "anima.ui.combat.weapons.damage.final.title"}}:</strong> {{attackData.damage}}</p>
@@ -45,9 +45,9 @@
         {{localize "chat.attackData.autoDefendPendingButton"}}
       </button>
     </div>
-    <div id="abf-defense-row-{{xRoot.messageId}}"
-       class="abf-defense-row"
+    <div id="animabf-defense-row-{{xRoot.messageId}}"
+       class="animabf-defense-row"
        style="margin-top:.5rem; display:flex; gap:.25rem; flex-wrap:wrap;">
     </div>
-    {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

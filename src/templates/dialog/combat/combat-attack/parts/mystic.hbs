@@ -1,5 +1,5 @@
 {{>
-"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.zeonAccumulated.title")
   disabled=true
   inputName="attacker.mystic.spellCasting.zeon.accumulated"
@@ -7,21 +7,21 @@
 }}
 
 {{>
-"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.attackSent
   inputName="attacker.mystic.modifier"
   inputValue=this.attacker.mystic.modifier
 }}
 
-{{> 'systems/abf/templates/common/ui/horizontal-titled-input.hbs'
+{{> 'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
   title=(localize 'macros.combat.dialog.magicProjection.title')
   disabled=this.attackSent
   inputName='attacker.mystic.magicProjection.final'
   inputValue=this.attacker.mystic.magicProjection.final
 }}
 
-{{#> 'systems/abf/templates/common/ui/custom-select.hbs'
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spell.title')
   disabled=this.attackSent
   inputName='attacker.mystic.spellUsed'
@@ -29,9 +29,9 @@
   {{#each_when this.attacker.actor.system.mystic.spells "system" "combatType" "value" "attack"}}
     <option {{#if (is "eq" this._id ../this.attacker.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
-{{/'systems/abf/templates/common/ui/custom-select.hbs'}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-{{#> 'systems/abf/templates/common/ui/custom-select.hbs'
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spellGrade.title')
   disabled=this.attackSent
   inputName='attacker.mystic.spellGrade'
@@ -39,9 +39,9 @@
 {{#each this.attacker.mystic.attainableSpellGrades}}
   <option {{#if (is "eq" ../this.attacker.mystic.spellGrade this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.spellGrade.' this '.title')}}</option>
 {{/each}}
-{{/'systems/abf/templates/common/ui/custom-select.hbs'}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-{{> 'systems/abf/templates/common/ui/custom-select-choices.hbs'
+{{> 'systems/animabf/templates/common/ui/custom-select-choices.hbs'
   disabled=this.attackSent
   choices=config.iterables.combat.weapon.criticTypesWithNone
   title=(localize "macros.combat.dialog.weapon.critic.title")
@@ -50,7 +50,7 @@
 }}
 
 {{>
-"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.damage.title")
   disabled=this.attackSent
   inputName="attacker.mystic.damage.special"
@@ -66,7 +66,7 @@
 <div class='columns'>
   <div>
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.distance.title')
       inputType="checkbox"
       inputName="attacker.mystic.distanceCheck"
@@ -80,7 +80,7 @@
 <div class='columns'>
   <div>
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize 'macros.combat.dialog.castInnate.title')
     disabled=this.attackSent
     inputType="checkbox"
@@ -95,7 +95,7 @@
 <div class='columns'>
   <div>
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize 'macros.combat.dialog.castPrepared.title')
     disabled=this.attackSent
     inputType="checkbox"
@@ -111,7 +111,7 @@
 <div class='columns'>
   <div>
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize 'macros.combat.dialog.castOverride.title')
     disabled=this.attackSent
     inputType="checkbox"
@@ -124,13 +124,13 @@
 
 {{#if this.attackSent}}
   <div class='mystic-attack-sent'>
-    {{>'systems/abf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
       {{localize 'macros.combat.dialog.attackSent.title'}}
     </p>
   </div>
 {{else}}
-  <button class='abf-button send-mystic-attack'>
+  <button class='animabf-button send-mystic-attack'>
     {{localize 'macros.combat.dialog.attackButton.title'}}
   </button>
 {{/if}}

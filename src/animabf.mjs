@@ -33,7 +33,9 @@ Hooks.once('init', async () => {
   Logger.log('Initializing system');
   registerSystemOnGame();
   Logger.log('Game Id:' + System.id);
-  Logger.log('Game Id:' + game.abf.id);
+
+  // Preload Handlebars templates
+  await preloadTemplates();
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
@@ -59,14 +61,11 @@ Hooks.once('init', async () => {
   });
 
   // Register custom system settings
-  registerSettings();
+  registerSettings(System.id);
 
   registerHelpers();
 
   registerKeyBindings();
-
-  // Preload Handlebars templates
-  await preloadTemplates();
 });
 
 /* ------------------------------------ */
@@ -102,12 +101,12 @@ Hooks.once('ready', async () => {
   registerGlobalTypes();
 
   // --- Expose public API for user macros (ABFAttackData) ---
-  game.abf ??= {};
-  game.abf.api ??= {};
-  Object.assign(game.abf.api, { ABFAttackData });
+  game.animabf ??= {};
+  game.animabf.api ??= {};
+  Object.assign(game.animabf.api, { ABFAttackData });
 
   // GM-side socket to update attack targets flag
-  game.socket.on('system.abf', async p => {
+  game.socket.on('system.animabf', async p => {
     if (!game.user.isGM) return;
     if (!p || p.op !== 'updateAttackTargets') return;
 
@@ -171,10 +170,10 @@ Hooks.on('renderChatMessage', async (message, html) => {
   // Chips/row rendering only for attackData messages
   if (message.getFlag(System.id, 'kind') !== 'attackData') return;
 
-  const flags = message.flags?.abf ?? {};
+  const flags = message.flags?.animabf ?? {};
   const targets = Array.isArray(flags.targets) ? [...flags.targets] : [];
 
-  const rowId = `#abf-defense-row-${message.id}`;
+  const rowId = `#animabf-defense-row-${message.id}`;
   const $row = html.find(rowId);
   if (!$row.length) return;
 

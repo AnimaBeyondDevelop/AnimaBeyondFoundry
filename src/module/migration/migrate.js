@@ -15,9 +15,9 @@ import * as MigrationList from './migrations';
 function migrationApplies(migration) {
   /** @type {number} */
   const createdWith =
-    game.settings.get(game.abf.id, ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION) ??
+    game.settings.get(game.animabf.id, ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION) ??
     '0.0.0';
-  const applied = game.settings.get(game.abf.id, ABFSettingsKeys.APPLIED_MIGRATIONS);
+  const applied = game.settings.get(game.animabf.id, ABFSettingsKeys.APPLIED_MIGRATIONS);
 
   const alreadyApplied = applied[migration.id];
   const wasCreatedAfter = !isVersionGreater(migration.version, createdWith);
@@ -197,9 +197,12 @@ async function applyMigration(migration) {
     Logger.log(`Migration ${migration.id} completed.`);
 
     const currentVersion = game.system.version;
-    const applied = game.settings.get(game.abf.id, ABFSettingsKeys.APPLIED_MIGRATIONS);
+    const applied = game.settings.get(
+      game.animabf.id,
+      ABFSettingsKeys.APPLIED_MIGRATIONS
+    );
     applied[migration.id] = currentVersion;
-    game.settings.set(game.abf.id, ABFSettingsKeys.APPLIED_MIGRATIONS, applied);
+    game.settings.set(game.animabf.id, ABFSettingsKeys.APPLIED_MIGRATIONS, applied);
 
     // TODO: add french translation for the warning dialog also.
     await ABFDialogs.prompt(

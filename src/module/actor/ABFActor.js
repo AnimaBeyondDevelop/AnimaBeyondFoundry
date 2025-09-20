@@ -365,18 +365,18 @@ export class ABFActor extends Actor {
    */
   accumulateDefenses(keepAccumulating) {
     /** @type {{accumulated: number, keepAccumulating: boolean}} */
-    const defensesCounter = this.getFlag(game.abf.id, 'defensesCounter') || {
+    const defensesCounter = this.getFlag(game.animabf.id, 'defensesCounter') || {
       accumulated: 0,
       keepAccumulating
     };
     const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
-      this.setFlag(game.abf.id, 'defensesCounter', {
+      this.setFlag(game.animabf.id, 'defensesCounter', {
         accumulated: newDefensesCounter,
         keepAccumulating
       });
     } else {
-      this.setFlag(game.abf.id, 'defensesCounter.keepAccumulating', keepAccumulating);
+      this.setFlag(game.animabf.id, 'defensesCounter.keepAccumulating', keepAccumulating);
     }
   }
 
@@ -388,14 +388,14 @@ export class ABFActor extends Actor {
    * actor.resetDefensesCounter();
    */
   resetDefensesCounter() {
-    const defensesCounter = this.getFlag(game.abf.id, 'defensesCounter');
+    const defensesCounter = this.getFlag(game.animabf.id, 'defensesCounter');
     if (defensesCounter === undefined) {
-      this.setFlag(game.abf.id, 'defensesCounter', {
+      this.setFlag(game.animabf.id, 'defensesCounter', {
         accumulated: 0,
         keepAccumulating: true
       });
     } else {
-      this.setFlag(game.abf.id, 'defensesCounter.accumulated', 0);
+      this.setFlag(game.animabf.id, 'defensesCounter.accumulated', 0);
     }
   }
 

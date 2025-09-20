@@ -1,7 +1,7 @@
 import { ABFMacros } from '../module/macros/ABFMacros';
 
 export function registerKeyBindings() {
-  game.keybindings.register(game.abf.id, 'damageCalculator', {
+  game.keybindings.register(game.animabf.id, 'damageCalculator', {
     name: game.i18n.localize('keyBindings.damageCalculator.name'),
     hint: game.i18n.localize('keyBindings.damageCalculator.hint'),
     editable: [
@@ -18,7 +18,7 @@ export function registerKeyBindings() {
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
   });
 
-  game.keybindings.register(game.abf.id, 'sendAttack', {
+  game.keybindings.register(game.animabf.id, 'sendAttack', {
     name: game.i18n.localize('keyBindings.sendAttack.name'),
     hint: game.i18n.localize('keyBindings.sendAttack.hint'),
     editable: [

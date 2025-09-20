@@ -1,15 +1,15 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="zeon"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.zeon.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="zeon"
   }}
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="final"
       title=(localize "anima.ui.mystic.zeon.final.title")
       inputName="system.mystic.zeon.value"
@@ -20,18 +20,18 @@
       secondaryInputValue=system.mystic.zeon.max
     }}
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="accumulated"
       title=(localize "anima.ui.mystic.zeon.accumulated.title")
       inputName="system.mystic.zeon.accumulated"
       inputValue=system.mystic.zeon.accumulated
     }}
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="zeonMaintained"
       title=(localize "anima.ui.mystic.zeonMaintained.title")
       inputName="system.mystic.zeonMaintained.value"
       inputValue=system.mystic.zeonMaintained.value
     }}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

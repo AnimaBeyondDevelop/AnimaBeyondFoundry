@@ -8,7 +8,10 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
  * @param {boolean} [halvedAbs]
  */
 export const calculateDamage = (attack, defense, at, damage, halvedAbs = false) => {
-  const useCombatTable = game.settings.get(game.abf.id, ABFSettingsKeys.USE_DAMAGE_TABLE);
+  const useCombatTable = game.settings.get(
+    game.animabf.id,
+    ABFSettingsKeys.USE_DAMAGE_TABLE
+  );
   let diference = attack - defense;
   let percent = 0;
   if (useCombatTable) {

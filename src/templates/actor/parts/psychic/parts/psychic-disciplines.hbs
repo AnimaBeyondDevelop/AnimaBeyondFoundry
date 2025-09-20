@@ -1,18 +1,18 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="psychic-disciplines"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.psychic.psychicDiscipline.title")
     addRowButtonData="add-psychic-discipline"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="psychic-disciplines"
   }}
     {{#each system.psychic.psychicDisciplines as |psychicDiscipline|}}
       <div data-item-id='{{psychicDiscipline._id}}' class='psychic-discipline-row'>
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.psychic.psychicDiscipline.name.title")
           hideTitle=(is "gt" @index 0)
@@ -22,7 +22,7 @@
           inputValue=(localize (concat 'anima.ui.psychic.psychicPowers.discipline.' psychicDiscipline.name '.title'))
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="imbalance"
           title=(localize "anima.ui.psychic.psychicDiscipline.imbalance.title")
           hideTitle=(is "gt" @index 0)
@@ -33,5 +33,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

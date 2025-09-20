@@ -1,25 +1,25 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="weapons"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.weapons.title")
     addRowButtonData="add-weapon"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="weapons"
   }}
     {{#each system.combat.weapons as |weapon|}}
       <div data-item-id='{{weapon._id}}' class='weapon-row'>
-        {{#> "systems/abf/templates/common/ui/group.hbs"
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="weapon"
           contractible=true
           contractibleItemId=weapon._id
         }}
-          {{#> "systems/abf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='weapon-header'>
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 hideTitle=true
                 inputType="text"
@@ -27,13 +27,13 @@
                 inputValue=weapon.name
               }}
             </div>
-          {{/"systems/abf/templates/common/ui/group-header.hbs"}}
-          {{#> "systems/abf/templates/common/ui/group-body.hbs"
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="weapon"
           }}
             {{#if (or (is 'eq' weapon.system.isRanged.value false) (is 'eq' weapon.system.shotType.value 'throw'))}}
               {{>
-              'systems/abf/templates/common/ui/custom-select-choices.hbs'
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="critic-secondary"
                 isVertical=true
                 disabled=true
@@ -43,7 +43,7 @@
                 inputValue=weapon.system.critic.secondary.value
               }}
             {{/if}}
-            {{> 'systems/abf/templates/common/domain/select-quality.hbs'
+            {{> 'systems/animabf/templates/common/domain/select-quality.hbs'
               class="quality"
               isVertical=true
               title=(localize "anima.ui.combat.weapons.quality.title")
@@ -51,7 +51,7 @@
               inputValue=weapon.system.quality.value
             }}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="integrity"
               disabled=true
               title=(localize "anima.ui.combat.weapons.integrity.final.title")
@@ -59,7 +59,7 @@
               inputValue=weapon.system.integrity.final.value
             }}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="breaking"
               rollable=true
               rollableDice=@root.system.general.diceSettings.characteristicDie.value
@@ -69,7 +69,7 @@
               inputValue=weapon.system.breaking.final.value
             }}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="presence"
               rollable=true
               rollableDice=@root.system.general.diceSettings.resistanceDie.value
@@ -80,7 +80,7 @@
             }}
             {{#if (is 'eq' weapon.system.isRanged.value true)}}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="range"
                 disabled=true
                 title=(localize "anima.ui.combat.weapons.range.final.title")
@@ -89,7 +89,7 @@
               }}
               {{#if (is 'eq' weapon.system.shotType.value 'shot')}}
                 {{>
-                'systems/abf/templates/common/ui/vertical-titled-input.hbs'
+                'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
                   class="reload"
                   disabled=true
                   title=(localize "anima.ui.combat.weapons.reload.final.title")
@@ -97,7 +97,7 @@
                   inputValue=weapon.system.reload.final.value
                 }}
                 {{>
-                'systems/abf/templates/common/domain/weapon/select-ammo.hbs'
+                'systems/animabf/templates/common/domain/weapon/select-ammo.hbs'
                   class="ammo"
                   isVertical=true
                   title=(localize "anima.ui.combat.weapons.ammo.title")
@@ -107,7 +107,7 @@
                 }}
               {{/if}}
             {{/if}}
-            {{> 'systems/abf/templates/common/domain/weapon/knowledge-type.hbs'
+            {{> 'systems/animabf/templates/common/domain/weapon/knowledge-type.hbs'
               class="knowledge-type"
               title=(localize "anima.ui.combat.weapons.knowledgeType.title")
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.knowledgeType.value")
@@ -115,7 +115,7 @@
             }}
             {{#if (is 'eq' weapon.system.manageabilityType.value 'one_or_two_hands')}}
               {{>
-              "systems/abf/templates/common/domain/weapon/one-or-two-handed.hbs"
+              "systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs"
                 class="one-or-two-handed"
                 title=(localize "anima.ui.combat.weapons.oneOrTwoHanded.title")
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.oneOrTwoHanded.value")
@@ -123,7 +123,7 @@
               }}
             {{/if}}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="reduced-armor"
               title=(localize "anima.ui.combat.weapons.reducedArmor.final.title")
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.reducedArmor.special.value")
@@ -134,11 +134,11 @@
               disableSecondaryInput=true
               secondaryInputValue=weapon.system.reducedArmor.final.value
             }}
-          {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-          {{#> "systems/abf/templates/common/ui/group-footer.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='weapon-footer'>
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="equipped"
                 title=(localize "anima.ui.combat.weapons.equipped.title")
                 inputType="checkbox"
@@ -146,7 +146,7 @@
                 inputValue=(is 'eq' weapon.system.equipped.value true)
               }}
               {{>
-              'systems/abf/templates/common/ui/custom-select-choices.hbs'
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
                 class="critic-primary"
                 isVertical=true
                 disabled=true
@@ -156,7 +156,7 @@
                 inputValue=weapon.system.critic.primary.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="attack"
                 title=(localize "anima.ui.combat.weapons.attack.title")
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.attack.roll.message") weapon.name)
@@ -170,7 +170,7 @@
                 secondaryInputValue=weapon.system.attack.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="block"
                 title=(localize "anima.ui.combat.weapons.block.title")
                 rollableMessage=(concat (localize "anima.ui.combat.weapons.block.roll.message") weapon.name)
@@ -184,7 +184,7 @@
                 secondaryInputValue=weapon.system.block.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="damage"
                 title=(localize "anima.ui.combat.weapons.damage.final.title")
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.damage.special.value")
@@ -196,7 +196,7 @@
                 secondaryInputValue=weapon.system.damage.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="initiative"
                 rollable=true
                 rollableDice=@root.system.general.diceSettings.initiativeDie.value
@@ -211,7 +211,7 @@
                 secondaryInputValue=weapon.system.initiative.final.value
               }}
               
-              {{{injectFromHook "abf.actor.combat.weapon.footer" weapon._id}}}
+              {{{injectFromHook "animabf.actor.combat.weapon.footer" weapon._id}}}
               
               {{!-- <button class='attack-button' data-on-click="createDefaultWeaponAttack" data-weapon-id="{{weapon._id}}">
                 {{localize "anima.ui.combat.weapons.defaultAttackButton.title"}}
@@ -220,9 +220,9 @@
                 {{localize "anima.ui.combat.weapons.attackButton.title"}}
               </button> --}}
             </div>
-          {{/"systems/abf/templates/common/ui/group-footer.hbs"}}
-        {{/"systems/abf/templates/common/ui/group.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

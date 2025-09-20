@@ -19,7 +19,7 @@ export default class ABFItemSheet extends ItemSheet {
   get template() {
     const configuration = ITEM_CONFIGURATIONS[this.item.type];
     if (configuration && configuration.hasSheet) {
-      return `systems/abf/templates/items/${this.item.type}/${this.item.type}.hbs`;
+      return `systems/animabf/templates/items/${this.item.type}/${this.item.type}.hbs`;
     }
 
     return super.template;

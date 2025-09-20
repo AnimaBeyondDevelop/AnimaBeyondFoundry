@@ -1,14 +1,14 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
-  class="abf-chat-message combat-result-message"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="animabf-chat-message combat-result-message"
   contractible=true
   contractibleItemId="chat-combat-result"
 }}
   {{>
-    "systems/abf/templates/common/ui/group-header.hbs"
+    "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "chat.combatResult.title")
   }}
 
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"}}
     <p data-requires-permission="gm"><strong>{{localize "chat.combatResult.difference"}}:</strong> {{combatResult.difference}}</p>
 
     {{#if combatResult.hasCounterAttack}}
@@ -24,13 +24,13 @@
     {{/if}}
 
     {{#if (gt combatResult.damageFinal 0)}}
-      <div class="abf-result-damage-controls"
+      <div class="animabf-result-damage-controls"
            data-requires-permission="owner"
            style="margin-top:.5rem; display:flex; gap:.5rem; flex-wrap:wrap;">
         <button type="button"
                 class="chat-action-button"
                 style="flex:1 1 0; width:100%;"
-                data-action="abf-apply-damage"
+                data-action="animabf-apply-damage"
                 data-base="{{combatResult.damageFinal}}"
                 data-mult="0.5"
                 data-def-actor="{{defenderId}}"
@@ -41,7 +41,7 @@
         <button type="button"
                 class="chat-action-button"
                 style="flex:1 1 0; width:100%;"
-                data-action="abf-apply-damage"
+                data-action="animabf-apply-damage"
                 data-base="{{combatResult.damageFinal}}"
                 data-mult="1"
                 data-def-actor="{{defenderId}}"
@@ -52,7 +52,7 @@
         <button type="button"
                 class="chat-action-button"
                 style="flex:1 1 0; width:100%;"
-                data-action="abf-apply-damage"
+                data-action="animabf-apply-damage"
                 data-base="{{combatResult.damageFinal}}"
                 data-mult="2"
                 data-def-actor="{{defenderId}}"
@@ -61,5 +61,5 @@
         </button>
       </div>
     {{/if}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

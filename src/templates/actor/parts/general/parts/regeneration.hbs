@@ -1,16 +1,16 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="regeneration"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize 'anima.ui.general.regeneration.title')
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="regeneration"
   }}
     <div class='regeneration-row'>
         {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="movement"
         title=(localize 'anima.ui.general.regeneration.regenerationType.title')
         inputName="system.characteristics.secondaries.regenerationType.mod.value"
@@ -21,7 +21,7 @@
         secondaryInputValue=system.characteristics.secondaries.regenerationType.final.value
         }}
         {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="info-container"
         title=(localize 'anima.ui.general.regeneration.resting.title')
         inputType="text"
@@ -29,7 +29,7 @@
         inputValue=(concat system.characteristics.secondaries.regeneration.resting.value (localize (concat "anima.ui.general.regeneration.period." system.characteristics.secondaries.regeneration.resting.period ".title")))
         }}
         {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="info-container"
         title=(localize 'anima.ui.general.regeneration.notResting.title')
         inputType="text"
@@ -37,7 +37,7 @@
         inputValue=(concat system.characteristics.secondaries.regeneration.normal.value (localize (concat "anima.ui.general.regeneration.period." system.characteristics.secondaries.regeneration.normal.period ".title")))
         }}
         {{>
-      "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="info-container"
         title=(localize 'anima.ui.general.regeneration.penaltyReduction.title')
         inputType="text"
@@ -48,7 +48,7 @@
     </div>
     <div class="regeneration-second-row">
       {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="info-container"
         title=(localize 'anima.ui.general.regeneration.special.title')
         inputType="text"
@@ -57,6 +57,6 @@
         }}
     </div>
 
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}
 

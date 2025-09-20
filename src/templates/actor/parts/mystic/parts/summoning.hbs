@@ -1,17 +1,17 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="summoning"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.summoning.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="summoning"
   }}
     <div class='columns'>
       <div>
         {{>
-        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="summon"
           title=(localize "anima.ui.mystic.summoning.summon.title")
           rollable=true
@@ -25,7 +25,7 @@
           secondaryInputValue=system.mystic.summoning.summon.final.value
         }}
         {{>
-        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="bind"
           title=(localize "anima.ui.mystic.summoning.bind.title")
           rollable=true
@@ -41,7 +41,7 @@
       </div>
       <div>
         {{>
-        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="control"
           title=(localize "anima.ui.mystic.summoning.control.title")
           rollable=true
@@ -55,7 +55,7 @@
           secondaryInputValue=system.mystic.summoning.control.final.value
         }}
         {{>
-        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="banish"
           title=(localize "anima.ui.mystic.summoning.banish.title")
           rollable=true
@@ -70,5 +70,5 @@
         }}
       </div>
     </div>
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

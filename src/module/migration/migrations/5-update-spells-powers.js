@@ -8,8 +8,8 @@ const newItems = {
   },
   async init() {
     if (this.ready) return;
-    this.spell = await game.packs.get('abf.magic').getDocuments();
-    this.psychicPower = await game.packs.get('abf.psychic').getDocuments();
+    this.spell = await game.packs.get('animabf.magic').getDocuments();
+    this.psychicPower = await game.packs.get('animabf.psychic').getDocuments();
   },
   async get(itemType, name) {
     if (!this.ready) await this.init();
@@ -31,7 +31,7 @@ export const Migration5UpdateSpellsPowers = {
   filterItems(item) {
     return (
       ['spell', 'psychicPower'].includes(item.type) &&
-      !['abf.magic', 'abf.psychic'].includes(item.pack)
+      !['animabf.magic', 'animabf.psychic'].includes(item.pack)
     );
   },
   filterActors(actor) {

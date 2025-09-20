@@ -1,37 +1,37 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="armors"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.combat.armors.title")
     addRowButtonData="add-armor"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="armors"
   }}
     {{#each system.combat.armors as |armor|}}
       <div data-item-id='{{armor._id}}' class='armor-row'>
-        {{#> "systems/abf/templates/common/ui/group.hbs"
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="armor"
           contractible=true
           contractibleItemId=armor._id
         }}
-          {{#> "systems/abf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='armor-header'>
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 inputType="text"
                 inputName=(concat "system.dynamic.armors." armor._id ".name")
                 inputValue=armor.name
               }}
             </div>
-          {{/"systems/abf/templates/common/ui/group-header.hbs"}}
-          {{#> "systems/abf/templates/common/ui/group-body.hbs"
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="armor"
           }}
             {{>
-            'systems/abf/templates/common/domain/select-quality.hbs'
+            'systems/animabf/templates/common/domain/select-quality.hbs'
               class="quality"
               isVertical=true
               title=(localize "anima.ui.combat.armors.quality.title")
@@ -39,7 +39,7 @@
               inputValue=armor.system.quality.value
             }}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="integrity"
               title=(localize "anima.ui.combat.armors.integrity.title")
               disabled=true
@@ -47,7 +47,7 @@
               inputValue=armor.system.integrity.final.value
             }}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="final-movement-restriction"
               title=(localize "anima.ui.combat.armors.movementRestriction.final.title")
               disabled=true
@@ -55,7 +55,7 @@
               inputValue=armor.system.movementRestriction.final.value
             }}
             {{>
-            "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="presence"
               title=(localize "anima.ui.combat.armors.presence.title")
               disabled=true
@@ -64,7 +64,7 @@
             }}
             {{#if (is 'eq' armor.system.localization.value 'head')}}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="final-natural-penalty"
                 title=(localize "anima.ui.combat.armors.perceptionPenalty.title")
                 disabled=true
@@ -73,7 +73,7 @@
               }}
             {{else}}
               {{>
-                "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+                "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                   class="final-natural-penalty"
                   title=(localize "anima.ui.combat.armors.naturalPenalty.title")
                   disabled=true
@@ -81,11 +81,11 @@
                   inputValue=armor.system.naturalPenalty.final.value
                 }}
             {{/if}} 
-          {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-          {{#> "systems/abf/templates/common/ui/group-footer.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='armor-footer'>
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="equipped"
                 title=(localize "anima.ui.combat.armors.equipped.title")
                 inputType="checkbox"
@@ -93,7 +93,7 @@
                 inputValue=(is 'eq' armor.system.equipped.value true)
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="cut"
                 title=(localize "anima.ui.combat.armors.at.cut.title")
                 disabled=true
@@ -101,7 +101,7 @@
                 inputValue=armor.system.cut.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="impact"
                 title=(localize "anima.ui.combat.armors.at.impact.title")
                 disabled=true
@@ -109,7 +109,7 @@
                 inputValue=armor.system.impact.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="thrust"
                 title=(localize "anima.ui.combat.armors.at.thrust.title")
                 disabled=true
@@ -117,7 +117,7 @@
                 inputValue=armor.system.thrust.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="heat"
                 title=(localize "anima.ui.combat.armors.at.heat.title")
                 disabled=true
@@ -125,7 +125,7 @@
                 inputValue=armor.system.heat.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="electricity"
                 title=(localize "anima.ui.combat.armors.at.electricity.title")
                 disabled=true
@@ -133,7 +133,7 @@
                 inputValue=armor.system.electricity.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="cold"
                 title=(localize "anima.ui.combat.armors.at.cold.title")
                 disabled=true
@@ -141,18 +141,18 @@
                 inputValue=armor.system.cold.final.value
               }}
               {{>
-              "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="energy"
                 title=(localize "anima.ui.combat.armors.at.energy.title")
                 disabled=true
                 inputName=(concat "system.dynamic.armors." armor._id ".system.energy.final.value")
                 inputValue=armor.system.energy.final.value
               }}
-              {{{injectFromHook "abf.actor.combat.armor.footer" armor._id}}}
+              {{{injectFromHook "animabf.actor.combat.armor.footer" armor._id}}}
             </div>
-          {{/"systems/abf/templates/common/ui/group-footer.hbs"}}
-        {{/"systems/abf/templates/common/ui/group.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

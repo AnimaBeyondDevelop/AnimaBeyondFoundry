@@ -1,6 +1,6 @@
 {{#if this.defender.mystic.supernaturalShield.newShield}}
 {{>
-"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize "macros.combat.dialog.zeonAccumulated.title")
   disabled=true
   inputName="defender.mystic.spellCasting.zeon.accumulated"
@@ -9,14 +9,14 @@
 {{/if}}
 
 {{>
-"systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.modifier.title')
   disabled=this.defenseSent
   inputName="defender.mystic.modifier"
   inputValue=this.defender.mystic.modifier
 }}
 
-{{> 'systems/abf/templates/common/ui/horizontal-titled-input.hbs'
+{{> 'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
   title=(localize 'macros.combat.dialog.magicProjection.title')
   disabled=this.defenseSent
   inputName='defender.mystic.magicProjection.final'
@@ -24,7 +24,7 @@
 }}
 
 {{#if this.defender.mystic.supernaturalShield.newShield}}
-{{#> 'systems/abf/templates/common/ui/custom-select.hbs'
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spell.title')
   disabled=this.defenseSent
   inputName='defender.mystic.spellUsed'
@@ -32,9 +32,9 @@
   {{#each_when this.defender.actor.system.mystic.spells "system" "combatType" "value" "defense"}}
     <option {{#if (is "eq" this._id ../this.defender.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
   {{/each_when}}
-{{/'systems/abf/templates/common/ui/custom-select.hbs'}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
-{{#> 'systems/abf/templates/common/ui/custom-select.hbs'
+{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spellGrade.title')
   disabled=this.defenseSent
   inputName='defender.mystic.spellGrade'
@@ -42,13 +42,13 @@
 {{#each this.defender.mystic.attainableSpellGrades}}
   <option {{#if (is "eq" ../this.defender.mystic.spellGrade this)}}selected{{/if}} value='{{this}}'>{{localize (concat 'macros.combat.dialog.spellGrade.' this '.title')}}</option>
 {{/each}}
-{{/'systems/abf/templates/common/ui/custom-select.hbs'}}
+{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
   {{#if (and this.defender.mystic.spellCasting.canCast.innate (is 'eq' this.defender.mystic.spellCasting.override false))}}
   <div class='columns'>
     <div>
       {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.castInnate.title')
       disabled=this.defenseSent
       inputType="checkbox"
@@ -63,7 +63,7 @@
   <div class='columns'>
     <div>
       {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.castPrepared.title')
       disabled=this.defenseSent
       inputType="checkbox"
@@ -75,7 +75,7 @@
   {{/if}}
 
 {{else}}
-  {{#> 'systems/abf/templates/common/ui/custom-select.hbs'
+  {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
     title=(localize 'macros.combat.dialog.mysticShield.title')
     disabled=this.defenseSent
     inputName='defender.mystic.supernaturalShield.shieldUsed'
@@ -85,10 +85,10 @@
         <option {{#if (is "eq" this._id ../this.defender.mystic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
       {{/if}}
     {{/each_when}}
-  {{/'systems/abf/templates/common/ui/custom-select.hbs'}}
+  {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
   {{>
-  "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize "macros.combat.dialog.shieldValue.title")
     disabled=this.defenseSent
     inputName="defender.mystic.supernaturalShield.shieldValue"
@@ -99,7 +99,7 @@
 <div class='columns'>
   <div>
     {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       title=(localize 'macros.combat.dialog.newShield.title')
       inputType="checkbox"
       inputName="defender.mystic.supernaturalShield.newShield"
@@ -113,7 +113,7 @@
 <div class='columns'>
   <div>
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     title=(localize 'macros.combat.dialog.castOverride.title')
     disabled=this.defenseSent
     inputType="checkbox"
@@ -126,13 +126,13 @@
 
 {{#if this.defenseSent}}
   <div class='defense-sent'>
-    {{>'systems/abf/templates/common/ui/loading-indicator.hbs' class="big"}}
+    {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
     <p class='label'>
       {{localize 'macros.combat.dialog.defenseSent.title'}}
     </p>
   </div>
 {{else}}
-  <button class='abf-button send-mystic-defense'>
+  <button class='animabf-button send-mystic-defense'>
     {{localize 'macros.combat.dialog.defenseButton.title'}}
   </button>
 {{/if}}

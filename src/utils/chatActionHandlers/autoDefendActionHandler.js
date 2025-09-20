@@ -10,8 +10,8 @@ export default async function autoDefendActionHandler(message, _html, ds) {
       (typeof ds.attackData === 'string'
         ? safeParseJSON(ds.attackData)
         : ds.attackData) ??
-      msg?.getFlag(game.abf.id, 'attackData') ??
-      msg?.flags?.abf?.attackData ??
+      msg?.getFlag(game.animabf.id, 'attackData') ??
+      msg?.flags?.animabf?.attackData ??
       null;
 
     if (!attackData) return ui.notifications?.warn('Datos de ataque no disponibles.');
@@ -52,7 +52,7 @@ export default async function autoDefendActionHandler(message, _html, ds) {
       content,
       speaker: ChatMessage.getSpeaker({ actor: tokens[0]?.actor }),
       flags: {
-        abf: {
+        animabf: {
           kind: 'multiDefenseResult',
           sourceAttackMessageId: msg?.id ?? null,
           batch: { createdAt: Date.now() },
@@ -66,8 +66,8 @@ export default async function autoDefendActionHandler(message, _html, ds) {
       attackLabel: attackData?.weaponId
         ? game.i18n.localize?.('chat.attackData.title') ?? 'Ataque'
         : 'Ataque',
-      entries: cm.getFlag(game.abf.id, 'entries') ?? entries,
-      hasRemaining: (cm.getFlag(game.abf.id, 'entries') ?? entries).some(
+      entries: cm.getFlag(game.animabf.id, 'entries') ?? entries,
+      hasRemaining: (cm.getFlag(game.animabf.id, 'entries') ?? entries).some(
         e => !e.applied && e.damageFinal > 0
       ),
       messageId: cm.id

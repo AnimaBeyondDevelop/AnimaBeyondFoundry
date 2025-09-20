@@ -1,20 +1,20 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="psychic-settings"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.psychic.psychicSettings.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="psychic-settings"
   }}
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="fatigue-resistance"
       title=(localize "anima.ui.psychic.psychicSettings.fatigueResistance.title")
       inputType="checkbox"
       inputName="system.psychic.psychicSettings.fatigueResistance"
       inputValue=(is 'eq' system.psychic.psychicSettings.fatigueResistance true)
     }}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

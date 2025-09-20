@@ -80,7 +80,7 @@ export class AttackConfigurationDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog', 'attack-config-dialog'],
+      classes: ['animabf-dialog', 'attack-config-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       resizable: true,
@@ -133,7 +133,7 @@ export class AttackConfigurationDialog extends FormApplication {
 
       ui.weaponHasSecondaryCritic =
         weapon?.system?.critic?.secondary?.value !==
-        game.abf.weapon.NoneWeaponCritic.NONE;
+        game.animabf.weapon.NoneWeaponCritic.NONE;
 
       combat.damage.final =
         (combat.damage.special ?? 0) + (weapon?.system?.damage?.final?.value ?? 0);
@@ -185,7 +185,7 @@ export class AttackConfigurationDialog extends FormApplication {
         .ignoreArmor(!!weapon.system.ignoreArmor?.value)
         .reducedArmor(Number(weapon.system.reducedArmor?.final?.value ?? 0))
         .armorType(combat.criticSelected ?? weapon.system.critic?.primary?.value)
-        .damageType(game.abf.combat.DamageType.NONE)
+        .damageType(game.animabf.combat.DamageType.NONE)
         .presence(Number(weapon.system.presence?.final?.value ?? 0))
         .isProjectile(!!combat.projectile?.value)
         .automaticCrit(false)

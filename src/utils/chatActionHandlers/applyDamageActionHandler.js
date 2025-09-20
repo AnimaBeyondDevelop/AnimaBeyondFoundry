@@ -3,16 +3,16 @@ export default async function applyDamageActionHandler(message, _html, ds) {
     const msg = game.messages.get(ds.messageId ?? message.id);
     if (!msg) return ui.notifications?.warn('Mensaje no encontrado.');
 
-    const abf = msg.flags?.abf ?? {};
-    const base = Number(ds.base ?? abf.result?.damageFinal ?? 0);
+    const animabf = msg.flags?.animabf ?? {};
+    const base = Number(ds.base ?? animabf.result?.damageFinal ?? 0);
     if (!(base > 0)) return ui.notifications?.warn('Sin daño que aplicar.');
 
     const mult = Number(ds.mult ?? 1);
     const amount = Math.max(0, Math.round(base * mult));
 
     // Resolve defender
-    const tokenId = ds.defToken ?? ds['def-token'] ?? abf.defender?.tokenId ?? '';
-    const actorId = ds.defActor ?? ds['def-actor'] ?? abf.defender?.actorId ?? '';
+    const tokenId = ds.defToken ?? ds['def-token'] ?? animabf.defender?.tokenId ?? '';
+    const actorId = ds.defActor ?? ds['def-actor'] ?? animabf.defender?.actorId ?? '';
     let token = tokenId ? canvas.tokens.get(tokenId) : null;
     let actor = token?.actor ?? (actorId ? game.actors.get(actorId) : null);
     if (!actor) return ui.notifications?.warn('Defensor no encontrado.');
@@ -24,7 +24,7 @@ export default async function applyDamageActionHandler(message, _html, ds) {
     if (!canApply) return ui.notifications?.warn('Sin permisos para aplicar daño.');
 
     // Confirm only if already applied at least once
-    const appliedOnce = !!abf.damageControl?.appliedOnce;
+    const appliedOnce = !!animabf.damageControl?.appliedOnce;
     if (appliedOnce) {
       const ok = await Dialog.confirm({
         title:
@@ -46,11 +46,11 @@ export default async function applyDamageActionHandler(message, _html, ds) {
     if (!applied) return;
 
     // Update flags (mark as applied once and log)
-    const apps = Array.isArray(abf.damageControl?.apps)
-      ? [...abf.damageControl.apps]
+    const apps = Array.isArray(animabf.damageControl?.apps)
+      ? [...animabf.damageControl.apps]
       : [];
     apps.push({ ts: Date.now(), by: game.user.id, amount, mult, actorId: actor.id });
-    await msg.setFlag(game.abf.id, 'damageControl', { appliedOnce: true, apps });
+    await msg.setFlag(game.animabf.id, 'damageControl', { appliedOnce: true, apps });
     ui.chat?.updateMessage?.(msg);
   } catch (err) {
     console.error(err);
@@ -58,7 +58,7 @@ export default async function applyDamageActionHandler(message, _html, ds) {
   }
 }
 
-export const action = 'abf-apply-damage';
+export const action = 'animabf-apply-damage';
 
 /**
  * Apply damage to the actor sheet.

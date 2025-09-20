@@ -21,17 +21,19 @@ export async function updateAttackTargetsFlag(messageId, entry) {
     game.user.isGM || (msg && (msg.user?.id === game.user.id || msg.isAuthor));
 
   if (canDirect && msg) {
-    const targets = foundry.utils.duplicate(msg.getFlag(game.abf.id, 'targets') ?? []);
+    const targets = foundry.utils.duplicate(
+      msg.getFlag(game.animabf.id, 'targets') ?? []
+    );
     const i = findIndexByKey(targets, entry);
     if (i >= 0) targets[i] = { ...targets[i], ...entry };
     else targets.push(entry);
-    await msg.setFlag(game.abf.id, 'targets', targets);
+    await msg.setFlag(game.animabf.id, 'targets', targets);
     ui.chat?.updateMessage?.(msg);
     return true;
   }
 
   // Otherwise, ask the GM via socket
-  game.socket.emit('system.abf', {
+  game.socket.emit('system.animabf', {
     op: 'updateAttackTargets',
     messageId,
     entry,

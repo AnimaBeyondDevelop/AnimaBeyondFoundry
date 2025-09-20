@@ -1,7 +1,7 @@
 <div class='{{this.class}} grade-row'>
   <p class='label grade-name'>{{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}</p>
   {{>
-  "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="int-required"
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.intRequired.title")
@@ -9,7 +9,7 @@
     inputValue=this.grade.intRequired.value
   }}
   {{>
-  "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="zeon"
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.zeon.title")
@@ -17,7 +17,7 @@
     inputValue=this.grade.zeon.value
   }}
   {{>
-  "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="maintenance-cost"
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.maintenanceCost.title")
@@ -26,7 +26,7 @@
     inputValue=this.grade.maintenanceCost.value
   }}
   {{>
-  "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="description"
     hideTitle=this.hideTitle
     title=(localize "anima.ui.mystic.spell.grade.description.title")

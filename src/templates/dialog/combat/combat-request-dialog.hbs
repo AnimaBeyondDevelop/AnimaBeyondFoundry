@@ -3,14 +3,14 @@
     {{concat this.system.attacker.name (localize 'macros.combat.dialog.requestPermission.title') this.system.defender.name}}
   </p>
   <div class='combatants'>
-    {{#> "systems/abf/templates/common/ui/group.hbs"
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
       class="attack-values"
     }}
       {{>
-      "systems/abf/templates/common/ui/group-header.hbs"
+      "systems/animabf/templates/common/ui/group-header.hbs"
         title="Attacker"
       }}
-      {{#> "systems/abf/templates/common/ui/group-body.hbs"
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
         class="attack-values"
       }}
         <div class='combatant-profile'>
@@ -21,21 +21,21 @@
             {{this.system.attacker.name}}
           </p>
         </div>
-      {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-    {{/"systems/abf/templates/common/ui/group.hbs"}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
 
     <div class='versus-label'>
       <p class='label'>VS</p>
     </div>
 
-    {{#> "systems/abf/templates/common/ui/group.hbs"
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
       class="defender-values"
     }}
       {{>
-      "systems/abf/templates/common/ui/group-header.hbs"
+      "systems/animabf/templates/common/ui/group-header.hbs"
         title="Defender"
       }}
-      {{#> "systems/abf/templates/common/ui/group-body.hbs"
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
         class="defender-values"
       }}
         <div class='combatant-profile'>
@@ -46,7 +46,7 @@
             {{this.system.defender.name}}
           </p>
         </div>
-      {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-    {{/"systems/abf/templates/common/ui/group.hbs"}}
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
   </div>
 </div>

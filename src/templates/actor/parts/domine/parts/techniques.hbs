@@ -1,25 +1,25 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="techniques"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.domine.techniques.title")
     addRowButtonData="add-technique"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="techniques"
   }}
     {{#each system.domine.techniques as |technique|}}
       <div data-item-id='{{technique._id}}' class='technique-row'>
-        {{#> "systems/abf/templates/common/ui/group.hbs"
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
           class="technique"
           contractible=true
           contractibleItemId=technique._id
         }}
-          {{#> "systems/abf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
             <div class='technique-header'>
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="name"
                 title=(localize "anima.ui.domine.techniques.technique.header.name.title")
                 inputType="text"
@@ -27,17 +27,17 @@
                 inputValue=technique.name
               }}
             </div>
-          {{/"systems/abf/templates/common/ui/group-header.hbs"}}
-          {{#> "systems/abf/templates/common/ui/group-body.hbs"
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="technique"
           }}
             {{editor technique.system.enrichedDescription target=(concat "system.dynamic.techniques." technique._id ".system.description.value") button=true owner=true editable=true}}
-            {{{injectFromHook "abf.actor.domine.technique.body" technique._id}}}
-          {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-          {{#> "systems/abf/templates/common/ui/group-footer.hbs"}}
+            {{{injectFromHook "animabf.actor.domine.technique.body" technique._id}}}
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='technique-footer'>
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="level"
                 title=(localize "anima.ui.domine.techniques.technique.footer.level.title")
                 inputType='text'
@@ -45,7 +45,7 @@
                 inputValue=technique.system.level.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="strength"
                 title=(localize "anima.ui.domine.techniques.technique.footer.strength.title")
                 inputType='text'
@@ -53,7 +53,7 @@
                 inputValue=technique.system.strength.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="agility"
                 title=(localize "anima.ui.domine.techniques.technique.footer.agility.title")
                 inputType='text'
@@ -61,7 +61,7 @@
                 inputValue=technique.system.agility.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="dexterity"
                 title=(localize "anima.ui.domine.techniques.technique.footer.dexterity.title")
                 inputType='text'
@@ -69,7 +69,7 @@
                 inputValue=technique.system.dexterity.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="constitution"
                 title=(localize "anima.ui.domine.techniques.technique.footer.constitution.title")
                 inputType='text'
@@ -77,7 +77,7 @@
                 inputValue=technique.system.constitution.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="willPower"
                 title=(localize "anima.ui.domine.techniques.technique.footer.willPower.title")
                 inputType='text'
@@ -85,7 +85,7 @@
                 inputValue=technique.system.willPower.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="power"
                 title=(localize "anima.ui.domine.techniques.technique.footer.power.title")
                 inputType='text'
@@ -93,7 +93,7 @@
                 inputValue=technique.system.power.value
               }}
               {{>
-              "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+              "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
                 class="martial-knowledge"
                 title=(localize "anima.ui.domine.techniques.technique.footer.martialKnowledge.title")
                 inputType='text'
@@ -101,11 +101,11 @@
                 inputValue=technique.system.martialKnowledge.value
               }}
               
-              {{{injectFromHook "abf.actor.domine.technique.footer" technique._id}}}
+              {{{injectFromHook "animabf.actor.domine.technique.footer" technique._id}}}
             </div>
-          {{/"systems/abf/templates/common/ui/group-footer.hbs"}}
-        {{/"systems/abf/templates/common/ui/group.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

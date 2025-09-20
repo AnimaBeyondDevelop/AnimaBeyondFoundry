@@ -1,20 +1,20 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="mystic-settings"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.mysticSettings.title")
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="mystic-settings"
   }}
     {{>
-    "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="aptitude-magic-development"
       title=(localize "anima.ui.mystic.mysticSettings.aptitudeForMagicDevelopment.title")
       inputType="checkbox"
       inputName="system.mystic.mysticSettings.aptitudeForMagicDevelopment"
       inputValue=(is 'eq' system.mystic.mysticSettings.aptitudeForMagicDevelopment true)
     }}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

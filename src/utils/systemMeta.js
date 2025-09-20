@@ -1,7 +1,7 @@
 // utils/systemMeta.js
 export const System = {
   get id() {
-    return game.system?.id ?? 'abf';
+    return game.system?.id ?? 'animabf';
   },
   get title() {
     return game.system?.title ?? 'Anima Beyond Fantasy';
@@ -35,16 +35,16 @@ export function registerSystemOnGame() {
     flagsScope: System.flagsScope
   };
 
-  // If something already put stuff under game.abf, merge it into the canonical bucket
-  if (game.abf && game.abf !== bucket) {
+  // If something already put stuff under game.animabf, merge it into the canonical bucket
+  if (game.animabf && game.animabf !== bucket) {
     try {
-      const src = game.abf;
+      const src = game.animabf;
       for (const k of Object.keys(src)) {
         if (bucket[k] === undefined) bucket[k] = src[k];
       }
     } catch (_) {}
   }
 
-  // Hard alias: ensure game.abf points to the canonical bucket
-  game.abf = bucket;
+  // Hard alias: ensure game.animabf points to the canonical bucket
+  game.animabf = bucket;
 }

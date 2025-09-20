@@ -3,7 +3,7 @@ import { Templates } from '../constants';
 
 export const openComplexInputDialog = async (actor, dialogType) => {
   const { i18n } = game;
-  let castOverride = actor.getFlag(game.abf.id, 'spellCastingOverride') || false;
+  let castOverride = actor.getFlag(game.animabf.id, 'spellCastingOverride') || false;
   const [dialogHTML, iconHTML] = await renderTemplates(
     {
       name:

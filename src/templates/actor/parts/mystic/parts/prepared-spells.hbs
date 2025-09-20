@@ -1,18 +1,18 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="prepared-spells"
 }}
   {{>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
     title=(localize "anima.ui.mystic.preparedSpells.title")
     addRowButtonData="add-prepared-spell"
   }}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="prepared-spells"
   }}
     {{#each system.mystic.preparedSpells as |preparedSpell|}}
       <div data-item-id='{{this._id}}' class='prepared-spell-row'>
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="name"
           title=(localize "anima.ui.mystic.preparedSpells.name.title")
           hideTitle=(is "gt" @index 0)
@@ -22,7 +22,7 @@
           inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.grade.value '.title')))
         }}
         {{>
-        "systems/abf/templates/common/ui/vertical-titled-input.hbs"
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="zeonAcc"
           title=(localize "anima.ui.mystic.preparedSpells.zeonAcc.title")
           hideTitle=(is "gt" @index 0)
@@ -35,7 +35,7 @@
           secondaryInputValue=this.system.zeonAcc.max
         }}
         {{>
-        'systems/abf/templates/common/ui/vertical-titled-input.hbs'
+        'systems/animabf/templates/common/ui/vertical-titled-input.hbs'
           class="prepared"
           title=(localize "anima.ui.mystic.preparedSpells.prepared.title")
           hideTitle=(is "gt" @index 0)
@@ -45,5 +45,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

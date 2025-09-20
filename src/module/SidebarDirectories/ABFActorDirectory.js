@@ -16,7 +16,7 @@ export default class ABFActorDirectory extends ActorDirectory {
         const entryId = li.dataset.entryId;
         const document = this.collection.get(entryId);
         // Verifica que el usuario tenga al menos permiso de OWNER
-        return document?.testUserPermission(game.user, "OWNER");
+        return document?.testUserPermission(game.user, 'OWNER');
       },
       callback: li => {
         const entryId = li.dataset.entryId;
@@ -34,46 +34,49 @@ export default class ABFActorDirectory extends ActorDirectory {
    * @returns {Promise<void>}
    */
   async importFromExcelDialog(document) {
-    new Dialog({
-      title: game.i18n.format('anima.ui.importDataFromExcelTitle', {
-        name: document.name
-      }),
-      content: await renderTemplate(
-        'systems/abf/templates/dialog/import-data-from-excel.html',
-        {
-          hint1: game.i18n.format('anima.ui.importDataFromExcelHint1', {
-            documentType: document.documentName
-          }),
-          hint2: game.i18n.format('anima.ui.importDataFromExcelHint2', {
-            name: document.name
-          })
-        }
-      ),
-      buttons: {
-        import: {
-          icon: '<i class="fas fa-file-import"></i>',
-          label: 'Import',
-          callback: html => {
-            const fileInput = html.find('input[type="file"]')[0];
-            const file = fileInput?.files[0];
-            if (!file) {
-              return ui.notifications.error('You did not upload a data file!');
-            }
+    new Dialog(
+      {
+        title: game.i18n.format('anima.ui.importDataFromExcelTitle', {
+          name: document.name
+        }),
+        content: await renderTemplate(
+          'systems/animabf/templates/dialog/import-data-from-excel.html',
+          {
+            hint1: game.i18n.format('anima.ui.importDataFromExcelHint1', {
+              documentType: document.documentName
+            }),
+            hint2: game.i18n.format('anima.ui.importDataFromExcelHint2', {
+              name: document.name
+            })
+          }
+        ),
+        buttons: {
+          import: {
+            icon: '<i class="fas fa-file-import"></i>',
+            label: 'Import',
+            callback: html => {
+              const fileInput = html.find('input[type="file"]')[0];
+              const file = fileInput?.files[0];
+              if (!file) {
+                return ui.notifications.error('You did not upload a data file!');
+              }
 
-            this.readExcelData(file).then(excelRows =>
-              parseExcelToActor(excelRows, document)
-            ).catch(() => {
-              ui.notifications.error('Error reading Excel file.');
-            });
+              this.readExcelData(file)
+                .then(excelRows => parseExcelToActor(excelRows, document))
+                .catch(() => {
+                  ui.notifications.error('Error reading Excel file.');
+                });
+            }
+          },
+          no: {
+            icon: '<i class="fas fa-times"></i>',
+            label: 'Cancel'
           }
         },
-        no: {
-          icon: '<i class="fas fa-times"></i>',
-          label: 'Cancel'
-        }
+        default: 'import'
       },
-      default: 'import'
-    }, { width: 400 }).render(true);
+      { width: 400 }
+    ).render(true);
   }
 
   /**

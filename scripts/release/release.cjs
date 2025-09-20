@@ -118,7 +118,7 @@ const { dry } = argv;
     readlineSync.question(
       chalk.blue(
         'Create the release now using the link: ' +
-          `https://github.com/JulenBordonaba/AnimaBeyondFoundryFork/releases/new?title=v${systemFile.version}&tag=v${systemFile.version}` +
+          `https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/new?title=v${systemFile.version}&tag=v${systemFile.version}` +
           '\nPress any key to continue...'
       )
     );

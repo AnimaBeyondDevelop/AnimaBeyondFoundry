@@ -46,12 +46,12 @@ export class GMCombatDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog gm-combat-dialog'],
+      classes: ['animabf-dialog gm-combat-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       height: 600,
       width: 700,
-      template: 'systems/abf/templates/dialog/combat/gm-combat-dialog.hbs',
+      template: 'systems/animabf/templates/dialog/combat/gm-combat-dialog.hbs',
       title: 'GM Combat'
     });
   }
@@ -169,7 +169,7 @@ export class GMCombatDialog extends FormApplication {
         data.damage = this.modalData.calculations?.damage;
       }
 
-      await renderTemplate(Templates.Chat.CombatResult, data).then(content => {
+      await renderTemplate(Templates.Chat.AutoCombatResult, data).then(content => {
         ChatMessage.create({
           content
         });
@@ -184,20 +184,43 @@ export class GMCombatDialog extends FormApplication {
     attacker.result = result;
 
     if (result.type === 'combat') {
-      const { weapons } = this.attackerActor.system.combat;
+      // Prefer an explicit weapon object coming from the attack dialog (unarmed aux)
+      let w = result.values.weapon;
 
-      attacker.result.weapon = weapons.find(w => w._id === result.values.weaponUsed);
+      if (!w) {
+        const { weapons } = this.attackerActor.system.combat;
+        w = weapons.find(wep => wep._id === result.values.weaponUsed);
+      }
+
+      // Final fallback for unarmed: craft a minimal pseudo-weapon so downstream never breaks
+      if (!w && result.values.unarmed) {
+        const unarmedDamage = Math.max(0, result.values?.damage ?? 0);
+        w = {
+          name: game.i18n.localize('macros.combat.unarmed') || 'Unarmed',
+          system: {
+            isRanged: { value: false },
+            shotType: { value: '' },
+            special: { value: '' },
+            reducedArmor: { final: { value: 0 } },
+            damage: { final: { value: unarmedDamage } },
+            critic: {
+              primary: { value: game.animabf.weapon.WeaponCritic.IMPACT },
+              secondary: { value: game.animabf.weapon.NoneWeaponCritic.NONE }
+            }
+          }
+        };
+      }
+
+      attacker.result.weapon = w;
     }
 
     if (result.type === 'mystic') {
       const { spells } = this.attackerActor.system.mystic;
-
       attacker.result.spell = spells.find(w => w._id === result.values.spellUsed);
     }
 
     if (result.type === 'psychic') {
       const { psychicPowers } = this.attackerActor.system.psychic;
-
       attacker.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
@@ -458,11 +481,11 @@ export class GMCombatDialog extends FormApplication {
 
   executeCombatMacro(resistanceRoll) {
     const missedAttackValue = game.settings.get(
-      game.abf.id,
+      game.animabf.id,
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
     const macroPrefixAttack = game.settings.get(
-      game.abf.id,
+      game.animabf.id,
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
     const { attacker, defender, calculations } = this.modalData;

@@ -28,8 +28,8 @@ export default class ABFActorSheet extends ActorSheet {
     return {
       ...super.defaultOptions,
       ...{
-        classes: [game.abf.id, 'sheet', 'actor'],
-        template: 'systems/abf/templates/actor/actor-sheet.hbs',
+        classes: [game.animabf.id, 'sheet', 'actor'],
+        template: 'systems/animabf/templates/actor/actor-sheet.hbs',
         width: 1000,
         height: 850,
         submitOnChange: true,
@@ -61,7 +61,7 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   get template() {
-    return 'systems/abf/templates/actor/actor-sheet.hbs';
+    return 'systems/animabf/templates/actor/actor-sheet.hbs';
   }
 
   async close(options) {
@@ -105,7 +105,7 @@ export default class ABFActorSheet extends ActorSheet {
 
     sheet.config = CONFIG.config;
     const permissions = game.settings.get(
-      game.abf.id,
+      game.animabf.id,
       ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION
     );
     sheet.canModifyDice = permissions?.[game.user.role] === true;

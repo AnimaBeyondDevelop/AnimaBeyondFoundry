@@ -1,12 +1,14 @@
 {
-  "id": "abf",
+  "id": "animabf",
   "title": "Anima Beyond Fantasy",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "compatibility": { "minimum": "13", "verified": "13.345" },
-  "url": "https://github.com/JulenBordonaba/AnimaBeyondFoundryFork",
-  "manifest": "https://raw.githubusercontent.com/JulenBordonaba/AnimaBeyondFoundryFork/main/src/system.json",
-  "download": "https://github.com/JulenBordonaba/AnimaBeyondFoundryFork/releases/download/v1.19.5/abf.zip",
+  "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
+  "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
+  "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.19.5",
+  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.19.5/animabf.zip",
+  "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
   "authors": [
     { 
       "name": "Linkaynn", 
@@ -33,7 +35,7 @@
     {
       "name": "weapons",
       "label": "(ES) Armas",
-      "system": "abf",
+      "system": "animabf",
       "path": "./packs/weapons",
       "type": "Item",
       "private": false,
@@ -42,7 +44,7 @@
     {
       "name": "armors",
       "label": "(ES) Armaduras",
-      "system": "abf",
+      "system": "animabf",
       "path": "./packs/armors",
       "type": "Item",
       "private": false,
@@ -51,7 +53,7 @@
     {
       "name": "magic",
       "label": "(ES) Magia",
-      "system": "abf",
+      "system": "animabf",
       "path": "./packs/magic",
       "type": "Item",
       "private": false,
@@ -60,7 +62,7 @@
     {
       "name": "psychic",
       "label": "(ES) Mentalismo",
-      "system": "abf",
+      "system": "animabf",
       "path": "./packs/psychic_powers",
       "type": "Item",
       "private": false,
@@ -69,7 +71,7 @@
     {
       "name": "npcs",
       "label": "(ES) NPCs Core Exxet",
-      "system": "abf",
+      "system": "animabf",
       "path": "./packs/npcs",
       "type": "Actor",
       "private": false,

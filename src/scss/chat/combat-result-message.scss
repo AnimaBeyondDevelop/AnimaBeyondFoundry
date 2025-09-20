@@ -10,7 +10,7 @@
   }
 
   /* [Combat Result] (Legacy layout styles for optional sections/images) */
-  .abf-chat-message-body {
+  .animabf-chat-message-body {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -82,14 +82,14 @@
 }
 
 /* [Combat Result] Enable container queries for the whole result message */
-.abf-chat-message.combat-result-message {
+.animabf-chat-message.combat-result-message {
   container-type: inline-size;
 }
 
 /* [Combat Result] Damage-application buttons (Half / Full / Double) at the bottom
    of the single-target result message */
-.abf-chat-message.combat-result-message
-  .abf-result-damage-controls .chat-action-button{
+.animabf-chat-message.combat-result-message
+  .animabf-result-damage-controls .chat-action-button{
   font-size: 14px;
   line-height: 1.1;
   padding: .28rem .40rem;
@@ -104,16 +104,16 @@
 
   /* [Combat Result] Shrink damage buttons when the card gets narrower */
   @container (max-width: 420px){
-    .abf-chat-message.combat-result-message
-      .abf-result-damage-controls .chat-action-button{
+    .animabf-chat-message.combat-result-message
+      .animabf-result-damage-controls .chat-action-button{
       font-size: 14px;
       padding: .24rem .34rem;
     }
   }
 
   @container (max-width: 360px){
-    .abf-chat-message.combat-result-message
-      .abf-result-damage-controls .chat-action-button{
+    .animabf-chat-message.combat-result-message
+      .animabf-result-damage-controls .chat-action-button{
       font-size: 14px;
       padding: .22rem .30rem;
     }

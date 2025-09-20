@@ -1,25 +1,25 @@
-{{#> "systems/abf/templates/common/ui/group.hbs"
+{{#> "systems/animabf/templates/common/ui/group.hbs"
   class="languages"
 }}
   {{#>
-  "systems/abf/templates/common/ui/group-header.hbs"
+  "systems/animabf/templates/common/ui/group-header.hbs"
   }}
     {{>
-    "systems/abf/templates/common/ui/add-item-button.hbs"
+    "systems/animabf/templates/common/ui/add-item-button.hbs"
       data="add-language"
     }}
     {{>
-    "systems/abf/templates/common/ui/group-header-title.hbs"
+    "systems/animabf/templates/common/ui/group-header-title.hbs"
       title=(localize 'anima.ui.languageSection.title')
     }}
     <input type='number' class='input' value='{{calculateLanguages system.characteristics.primaries.intelligence.value}}' disabled='true'/>
-  {{/"systems/abf/templates/common/ui/group-header.hbs"}}
-  {{#> "systems/abf/templates/common/ui/group-body.hbs"
+  {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="languages"
   }}
     <div class='base-language'>
       {{>
-      "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
         class="name"
         title=(localize 'anima.ui.languageSection.base')
         inputType="text"
@@ -30,7 +30,7 @@
     {{#each system.general.languages.others as |language|}}
       <div data-item-id='{{language._id}}' class='language-row'>
         {{>
-        "systems/abf/templates/common/ui/horizontal-titled-input.hbs"
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
           class="name"
           hideTitle=true
           inputType="text"
@@ -39,5 +39,5 @@
         }}
       </div>
     {{/each}}
-  {{/"systems/abf/templates/common/ui/group-body.hbs"}}
-{{/"systems/abf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

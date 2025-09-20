@@ -6,7 +6,8 @@ async function defendTargetActionHandler(message, _html, dataset) {
     const msg = game.messages.get(messageId);
     if (!msg) return ui.notifications?.warn('Mensaje no encontrado.');
 
-    const atk = msg.getFlag(game.abf.id, 'attackData') ?? msg.flags?.abf?.attackData;
+    const atk =
+      msg.getFlag(game.animabf.id, 'attackData') ?? msg.flags?.animabf?.attackData;
     if (!atk) return ui.notifications?.warn('Datos de ataque no disponibles.');
 
     // Resolve defender token from dataset

@@ -9,10 +9,10 @@ export class ABFAttackData {
     this.damage = p.damage ?? 0;
     this.reducedArmor = p.reducedArmor ?? 0;
     this.ignoreArmor = !!p.ignoreArmor;
-    this.armorType = p.armorType ?? game.abf.weapon.NoneWeaponCritic.NONE;
+    this.armorType = p.armorType ?? game.animabf.weapon.NoneWeaponCritic.NONE;
 
     // Damage typing
-    this.damageType = p.damageType ?? game.abf.combat.DamageType.NONE;
+    this.damageType = p.damageType ?? game.animabf.combat.DamageType.NONE;
     this.damagesEnergy = !!p.damagesEnergy;
 
     // Targeting / delivery
@@ -116,7 +116,7 @@ export class ABFAttackData {
       speaker: ChatMessage.getSpeaker({ actor }),
       ...vis,
       flags: {
-        abf: {
+        animabf: {
           kind: 'attackData',
           attackData: this.toJSON(),
           sessionId: randomID(),
@@ -170,13 +170,13 @@ export class ABFAttackDataBuilder {
     return this;
   }
   armorType(t) {
-    this._p.armorType = t ?? game.abf.weapon.NoneWeaponCritic.NONE;
+    this._p.armorType = t ?? game.animabf.weapon.NoneWeaponCritic.NONE;
     return this;
   }
 
   // Damage typing
   damageType(t) {
-    this._p.damageType = t ?? game.abf.combat.DamageType.NONE;
+    this._p.damageType = t ?? game.animabf.combat.DamageType.NONE;
     return this;
   }
   damagesEnergy(b = true) {
