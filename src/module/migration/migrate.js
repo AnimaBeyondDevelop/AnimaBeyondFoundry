@@ -3,6 +3,7 @@ import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { ABFActor } from '../actor/ABFActor';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
 import ABFItem from '../items/ABFItem';
+import isVersionGreater from '@module/utils/functions/isVersionGreater';
 import * as MigrationList from './migrations';
 
 /** @typedef {import('./migrations/Migration').Migration} Migration */
@@ -13,19 +14,17 @@ import * as MigrationList from './migrations';
  */
 function migrationApplies(migration) {
   /** @type {number} */
-  const currentVersion = game.settings.get(
-    'animabf',
-    ABFSettingsKeys.SYSTEM_MIGRATION_VERSION
-  );
-  if (currentVersion < migration.version) {
-    return true;
-  }
-  if (game.settings.get('animabf', ABFSettingsKeys.DEVELOP_MODE)) {
-    Logger.warn(
-      `Migration ${migration.version} needs not to be applied, current system migration version is ${currentVersion}.`
-    );
-  }
-  return false;
+  const createdWith =
+    game.settings.get(game.animabf.id, ABFSettingsKeys.WORLD_CREATION_SYSTEM_VERSION) ??
+    '0.0.0';
+  const applied = game.settings.get(game.animabf.id, ABFSettingsKeys.APPLIED_MIGRATIONS);
+
+  const alreadyApplied = applied[migration.id];
+  const wasCreatedAfter = !isVersionGreater(migration.version, createdWith);
+
+  if (alreadyApplied || wasCreatedAfter) return false;
+
+  return true;
 }
 
 /**
@@ -187,7 +186,7 @@ function migrateTokens(migration) {
  */
 async function applyMigration(migration) {
   try {
-    Logger.log(`Applying migration ${migration.version}.`);
+    Logger.log(`Applying migration ${migration.id}.`);
 
     await migrateWorldItems(migration);
     await migrateWorldActors(migration);
@@ -195,12 +194,16 @@ async function applyMigration(migration) {
     migrateTokens(migration);
     migration.migrate?.();
 
-    Logger.log(`Migration ${migration.version} completed.`);
-    game.settings.set(
-      'animabf',
-      ABFSettingsKeys.SYSTEM_MIGRATION_VERSION,
-      migration.version
+    Logger.log(`Migration ${migration.id} completed.`);
+
+    const currentVersion = game.system.version;
+    const applied = game.settings.get(
+      game.animabf.id,
+      ABFSettingsKeys.APPLIED_MIGRATIONS
     );
+    applied[migration.id] = currentVersion;
+    game.settings.set(game.animabf.id, ABFSettingsKeys.APPLIED_MIGRATIONS, applied);
+
     // TODO: add french translation for the warning dialog also.
     await ABFDialogs.prompt(
       game.i18n.format('dialogs.migrations.success', {
@@ -230,7 +233,10 @@ export async function applyMigrations() {
   const migrations = Object.values(MigrationList).filter(migration =>
     migrationApplies(migration)
   );
-  migrations.sort((a, b) => a.version - b.version);
+  migrations.sort((a, b) => {
+    if (a.version !== b.version) return isVersionGreater(a.version, b.version) ? 1 : -1;
+    return (a.order ?? 0) - (b.order ?? 0);
+  });
 
   for (const migration of migrations) {
     const result = await ABFDialogs.confirm(

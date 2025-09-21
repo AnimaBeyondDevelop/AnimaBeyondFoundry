@@ -10,7 +10,7 @@
       class="attack-values"
     }}
       {{#if this.allowed}}
-        <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+        <nav class="animabf-tabs sheet-tabs tabs" data-group="primary">
           <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
           {{#if (is 'gt' this.attacker.actor.system.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
           {{#if (is 'gt' this.attacker.actor.system.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}

@@ -51,6 +51,19 @@ export class ABFActor extends Actor {
     await prepareActor(this);
   }
 
+  getRollData() {
+    const data = super.getRollData();
+
+    // data.system = this.system;
+    // data.health = this.system.characteristics.secondaries.lifePoints;
+    // data.modifiers = this.system.general.modifiers;
+    // data.presence = this.system.general.presence;
+    // data.initiative = this.system.characteristics.secondaries.initiative;
+    // data.characteristics = this.system.characteristics.primaries;
+
+    return data;
+  }
+
   /**
    * Updates the value of the 'fatigue' secondary characteristic of an ABFActor object.
    *
@@ -101,7 +114,11 @@ export class ABFActor extends Actor {
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog();
     let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
-    if (abilityValue >= 200) formula = formula.replace('xa', 'xamastery');
+    if (abilityValue >= 200)
+      formula = formula.replace(
+        this.system.general.diceSettings.abilityDie,
+        this.system.general.diceSettings.abilityMasteryDie
+      );
     const roll = new ABFFoundryRoll(formula, this.system);
     await roll.roll();
     if (sendToChat) {
@@ -181,7 +198,7 @@ export class ABFActor extends Actor {
       shieldId: item._id
     };
     if (supernaturalShieldData.psychic.overmantained) {
-      item.setFlag('animabf', 'psychic', supernaturalShieldData.psychic);
+      item.setFlag(game.abf.id, 'psychic', supernaturalShieldData.psychic);
     }
     executeMacro(supernaturalShieldData.name, args);
     return item._id;
@@ -231,7 +248,7 @@ export class ABFActor extends Actor {
       // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && newCombatResult) {
         const needToRound = game.settings.get(
-          'animabf',
+          game.abf.id,
           ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
         );
         const result = calculateDamage(
@@ -325,10 +342,10 @@ export class ABFActor extends Actor {
     );
 
     for (const psychicShield of psychicShields) {
-      const psychic = psychicShield.getFlag('animabf', 'psychic');
+      const psychic = psychicShield.getFlag(game.abf.id, 'psychic');
       if (psychic?.overmantained) {
         if (psychic.maintainMax >= psychicShield.system.shieldPoints) {
-          psychicShield.unsetFlag('animabf', 'psychic');
+          psychicShield.unsetFlag(game.abf.id, 'psychic');
         } else {
           const supShield = {
             system: psychicShield.system,
@@ -348,18 +365,18 @@ export class ABFActor extends Actor {
    */
   accumulateDefenses(keepAccumulating) {
     /** @type {{accumulated: number, keepAccumulating: boolean}} */
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter') || {
+    const defensesCounter = this.getFlag(game.animabf.id, 'defensesCounter') || {
       accumulated: 0,
       keepAccumulating
     };
     const newDefensesCounter = defensesCounter.accumulated + 1;
     if (keepAccumulating) {
-      this.setFlag('animabf', 'defensesCounter', {
+      this.setFlag(game.animabf.id, 'defensesCounter', {
         accumulated: newDefensesCounter,
         keepAccumulating
       });
     } else {
-      this.setFlag('animabf', 'defensesCounter.keepAccumulating', keepAccumulating);
+      this.setFlag(game.animabf.id, 'defensesCounter.keepAccumulating', keepAccumulating);
     }
   }
 
@@ -371,14 +388,14 @@ export class ABFActor extends Actor {
    * actor.resetDefensesCounter();
    */
   resetDefensesCounter() {
-    const defensesCounter = this.getFlag('animabf', 'defensesCounter');
+    const defensesCounter = this.getFlag(game.animabf.id, 'defensesCounter');
     if (defensesCounter === undefined) {
-      this.setFlag('animabf', 'defensesCounter', {
+      this.setFlag(game.animabf.id, 'defensesCounter', {
         accumulated: 0,
         keepAccumulating: true
       });
     } else {
-      this.setFlag('animabf', 'defensesCounter.accumulated', 0);
+      this.setFlag(game.animabf.id, 'defensesCounter.accumulated', 0);
     }
   }
 
@@ -910,4 +927,3 @@ export class ABFActor extends Actor {
     return this.getEmbeddedDocument('Item', itemId);
   }
 }
-

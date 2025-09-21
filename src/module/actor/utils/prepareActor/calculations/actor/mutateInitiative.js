@@ -7,25 +7,23 @@ export const mutateInitiative = data => {
   const { general } = data;
 
   const allActionMod = general.modifiers.allActions.final.value;
-  const penalty =
-    Math.ceil(
-      Math.min(allActionMod + general.modifiers.physicalActions.final.value, 0) / 2
-    ) + general.modifiers.naturalPenalty.final.value;
+
+  const penalty = Math.ceil( Math.min(allActionMod + general.modifiers.physicalActions.final.value, 0) / 2) + general.modifiers.naturalPenalty.final.value;
+
   const { initiative } = data.characteristics.secondaries;
 
-  initiative.final.value = initiative.base.value + penalty;
+  initiative.final.value = initiative.base.value + initiative.special.value + penalty;
 
   const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 
-  const firstTwoWeapons = equippedWeapons
-    .filter(weapon => !weapon.system.isShield.value)
-    .slice(0, 2);
 
-  const equippedShield = equippedWeapons.find(weapon => weapon.system.isShield.value);
-
+    
   // We subtract 20 because people are used to put as base unarmed initiative
   initiative.final.value -= 20;
 
+  const equippedShield = equippedWeapons.find(weapon => weapon.system.isShield.value);
+
+  //Ajuste por llevar un escudo
   if (equippedShield) {
     if (equippedShield.system.size.value === WeaponSize.SMALL) {
       initiative.final.value -= 15;
@@ -36,11 +34,19 @@ export const mutateInitiative = data => {
     }
   }
 
+
+  //Ajuste según la cantidad de armas que lleva equipadas el personaje
+  const firstTwoWeapons = equippedWeapons
+    .filter(weapon => !weapon.system.isShield.value)
+    .slice(0, 2);
+
   if (firstTwoWeapons.length === 0) {
     initiative.final.value += 20;
   } else if (firstTwoWeapons.length === 1) {
     initiative.final.value += firstTwoWeapons[0].system.initiative.final.value;
-  } else if (firstTwoWeapons.length === 2) {
+  } 
+  else if (firstTwoWeapons.length === 2) //Ajuste por llevar dos armas
+  {
     const leftWeapon = firstTwoWeapons[0].system;
     const rightWeapon = firstTwoWeapons[1].system;
 

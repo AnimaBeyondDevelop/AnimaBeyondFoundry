@@ -2,7 +2,9 @@
 
 /** @type Migration */
 export const Migration6OldModifiers = {
-  version: 6,
+  id: 'migration_fix-old-modifiers',
+  version: '1.0.0',
+  order: 1,
   title: 'Migrate modifiers',
   description:
     'The modifiers data structure on the modifiers has changed, and the old ones are ' +

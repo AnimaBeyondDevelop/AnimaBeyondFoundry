@@ -14,15 +14,15 @@
         class="resistance"
         title=(localize (concat 'anima.ui.resistances.' key))
         rollable=true
-        rollableDice='1d100'
+        rollableDice=@root.system.general.diceSettings.resistanceDie.value
         rollableMessage=(localize (concat 'anima.ui.resistances.' key))
-        inputName=(concat "system.characteristics.secondaries.resistances." key ".base.value")
-        inputValue=atr.base.value
-        hasSecondaryInput=false
+        inputName=(concat "system.characteristics.secondaries.resistances." key ".special.value")
+        inputValue=atr.special.value
         rollSecondaryInput=true
+        hasSecondaryInput=true
         addTooltips=true
         disableSecondaryInput=true
-        secondaryInputName=(concat "system.characteristics.secondaries.resistances." key ".base.value")
+        secondaryInputName=(concat "system.characteristics.secondaries.resistances." key ".final.value")
         secondaryInputValue=atr.final.value
       }}
     {{/each}}

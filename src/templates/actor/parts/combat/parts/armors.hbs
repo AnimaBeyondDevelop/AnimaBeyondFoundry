@@ -148,6 +148,7 @@
                 inputName=(concat "system.dynamic.armors." armor._id ".system.energy.final.value")
                 inputValue=armor.system.energy.final.value
               }}
+              {{{injectFromHook "animabf.actor.combat.armor.footer" armor._id}}}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}

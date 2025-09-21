@@ -324,7 +324,13 @@
         box-shadow: $card-box-shadow;
 
         margin: 0.5rem;
-        .spell-svelte {
+        .input {
+          height: 1.25rem;
+        }
+
+        .spell-header {
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
           width: 100%;
 
           .first-row {

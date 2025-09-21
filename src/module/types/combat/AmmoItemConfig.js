@@ -6,6 +6,11 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
 /** @type {import("../Items").AmmoItemData} */
 export const INITIAL_AMMO_DATA = {
   amount: { value: 0 },
+  reducedArmor: {
+    base: { value: 0 },
+    special: { value: 0 },
+    final: { value: 0 }
+  },
   damage: {
     base: { value: 0 },
     final: { value: 0 }

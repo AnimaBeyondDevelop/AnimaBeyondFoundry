@@ -1,5 +1,4 @@
 import { Templates } from '../../utils/constants';
-import { NoneWeaponCritic, WeaponCritic } from '../../types/combat/WeaponItemConfig';
 import { resistanceEffectCheck } from '../../combat/utils/resistanceEffectCheck.js';
 import { damageCheck } from '../../combat/utils/damageCheck.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
@@ -8,11 +7,11 @@ import { ABFConfig } from '../../ABFConfig';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const combatDistance = !!game.settings.get(
-    'animabf',
+    game.animabf.id,
     ABFSettingsKeys.AUTOMATE_COMBAT_DISTANCE
   );
   const showRollByDefault = !!game.settings.get(
-    'animabf',
+    game.animabf.id,
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
   );
   const isGM = !!game.user?.isGM;
@@ -81,7 +80,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           override: false
         },
         overrideMysticCast: false,
-        critic: NoneWeaponCritic.NONE,
+        critic: game.animabf.weapon.NoneWeaponCritic.NONE,
         resistanceEffect: { value: 0, type: undefined, check: false },
         visible: false,
         distanceCheck: false,
@@ -103,7 +102,7 @@ const getInitialData = (attacker, defender, options = {}) => {
           final: attackerActor.system.psychic.psychicPotential.final.value
         },
         powerUsed: undefined,
-        critic: NoneWeaponCritic.NONE,
+        critic: game.animabf.weapon.NoneWeaponCritic.NONE,
         eliminateFatigue: false,
         mentalPatternImbalance: false,
         resistanceEffect: { value: 0, type: undefined, check: false },
@@ -151,7 +150,7 @@ export class CombatAttackDialog extends FormApplication {
 
     if (psychicPowers.length > 0) {
       const lastOffensivePowerUsed = this.attackerActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'lastOffensivePowerUsed'
       );
       if (psychicPowers.find(w => w._id === lastOffensivePowerUsed)) {
@@ -162,12 +161,13 @@ export class CombatAttackDialog extends FormApplication {
         )?._id;
       }
       const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-      psychic.critic = power?.system.critic.value ?? NoneWeaponCritic.NONE;
+      psychic.critic =
+        power?.system.critic.value ?? game.animabf.weapon.NoneWeaponCritic.NONE;
     }
 
     if (spells.length > 0) {
       const lastOffensiveSpellUsed = this.attackerActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'lastOffensiveSpellUsed'
       );
       if (spells.find(w => w._id === lastOffensiveSpellUsed)) {
@@ -176,13 +176,14 @@ export class CombatAttackDialog extends FormApplication {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
       }
       const spellCastingOverride = this.attackerActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'spellCastingOverride'
       );
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
       const spell = spells.find(w => w._id === mystic.spellUsed);
-      mystic.critic = spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+      mystic.critic =
+        spell?.system.critic.value ?? game.animabf.weapon.NoneWeaponCritic.NONE;
       if (this.modalData.attacker.mystic.spellCasting.override) {
         this.modalData.attacker.mystic.attainableSpellGrades = [
           'base',
@@ -206,7 +207,7 @@ export class CombatAttackDialog extends FormApplication {
 
     if (weapons.length > 0) {
       const lastOffensiveWeaponUsed = this.attackerActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'lastOffensiveWeaponUsed'
       );
       if (weapons.find(weapon => weapon._id == lastOffensiveWeaponUsed)) {
@@ -227,7 +228,7 @@ export class CombatAttackDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog combat-attack-dialog no-close'],
+      classes: ['animabf-dialog combat-attack-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: null,
@@ -285,14 +286,18 @@ export class CombatAttackDialog extends FormApplication {
         poorVisibility,
         targetInCover
       } = this.modalData.attacker;
+
       distance.check = distanceCheck;
-      this.attackerActor.setFlag('animabf', 'lastOffensiveWeaponUsed', weaponUsed);
+      this.attackerActor.setFlag(game.animabf.id, 'lastOffensiveWeaponUsed', weaponUsed);
+
       if (typeof damage !== 'undefined') {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true },
           fatigueUsed: { value: fatigueUsed * 15, apply: true }
         };
+
         let projectile = { value: false, type: '' };
+
         if (weapon?.system.isRanged.value) {
           projectile = {
             value: true,
@@ -305,54 +310,45 @@ export class CombatAttackDialog extends FormApplication {
             (!distance.enable && distance.check) ||
             (distance.enable && distance.value <= 1)
           ) {
-            attackerCombatMod.pointBlank = {
-              value: 30,
-              apply: true
-            };
+            attackerCombatMod.pointBlank = { value: 30, apply: true };
           }
-          if (highGround) {
-            attackerCombatMod.highGround = { value: 20, apply: true };
-          }
-          if (poorVisibility) {
+          if (highGround) attackerCombatMod.highGround = { value: 20, apply: true };
+          if (poorVisibility)
             attackerCombatMod.poorVisibility = { value: -20, apply: true };
-          }
-          if (targetInCover) {
+          if (targetInCover)
             attackerCombatMod.targetInCover = { value: -40, apply: true };
-          }
         }
+
         if (
           weapon !== undefined &&
-          criticSelected !== NoneWeaponCritic.NONE &&
+          criticSelected !== game.animabf.weapon.NoneWeaponCritic.NONE &&
           criticSelected == weapon?.system.critic.secondary.value
         ) {
           attackerCombatMod.secondaryCritic = { value: -10, apply: true };
         }
+
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
 
         const counterAttackBonus = this.modalData.attacker.counterAttackBonus ?? 0;
         let combatModifier = 0;
-        for (const key in attackerCombatMod) {
+        for (const key in attackerCombatMod)
           combatModifier += attackerCombatMod[key]?.value ?? 0;
-        }
+
         let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${combatModifier}`;
-        if (this.modalData.attacker.withoutRoll) {
-          // Remove the dice from the formula
+        if (this.modalData.attacker.withoutRoll)
           formula = formula.replace('1d100xa', '0');
-        }
         if (this.attackerActor.system.combat.attack.base.value >= 200) {
           // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
 
         const roll = new ABFFoundryRoll(formula, this.attackerActor.system);
-
         await roll.roll();
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
-
           const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
                 weapon: weapon?.name,
@@ -368,9 +364,48 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const critic = criticSelected ?? WeaponCritic.IMPACT;
+        // --- Unarmed helper weapon (aux) ---
+        // Build a pseudo-weapon when attacking unarmed so GM dialog never sees undefined.
+        let weaponForPayload = weapon;
+        if (unarmed) {
+          const strMod =
+            this.attackerActor.system.characteristics.primaries.strength.mod ?? 0;
+          const unarmedDamageFinal = Math.max(0, (damage?.special ?? 0) + 10 + strMod);
+
+          // ensure damage.final carries the computed value
+          if (typeof damage === 'object') {
+            damage.final = unarmedDamageFinal;
+          }
+
+          // minimal but useful structure for downstream usage (macros, UI)
+          weaponForPayload = {
+            name: game.i18n.localize('macros.combat.unarmed') || 'Unarmed',
+            system: {
+              isRanged: { value: false },
+              shotType: { value: '' },
+              special: { value: '' }, // no special, avoids resistance check side effects
+              attack: {
+                final: { value: this.attackerActor.system.combat.attack.final.value }
+              },
+              reducedArmor: { final: { value: 0 } },
+              damage: { final: { value: unarmedDamageFinal } },
+              critic: {
+                primary: { value: game.animabf.weapon.WeaponCritic.IMPACT },
+                secondary: { value: game.animabf.weapon.NoneWeaponCritic.NONE }
+              }
+            }
+          };
+
+          // Unarmed attacks are not projectiles
+          projectile = { value: false, type: '' };
+        }
+        // --- end unarmed helper ---
+
+        const critic = criticSelected ?? game.animabf.weapon.WeaponCritic.IMPACT;
+
         let resistanceEffect = { value: 0, type: undefined, check: false };
-        if (weapon !== undefined) {
+        if (weapon) {
+          // Only read special from real weapons
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
         }
 
@@ -383,6 +418,7 @@ export class CombatAttackDialog extends FormApplication {
             damage: damage.final,
             attack,
             weaponUsed,
+            weapon: weaponForPayload,
             critic,
             modifier: combatModifier,
             fatigueUsed,
@@ -398,7 +434,6 @@ export class CombatAttackDialog extends FormApplication {
         });
 
         this.modalData.attackSent = true;
-
         this.render();
       }
     });
@@ -424,11 +459,11 @@ export class CombatAttackDialog extends FormApplication {
           modifier: { value: modifier, apply: true }
         };
         this.attackerActor.setFlag(
-          'animabf',
+          game.animabf.id,
           'spellCastingOverride',
           spellCasting.override
         );
-        this.attackerActor.setFlag('animabf', 'lastOffensiveSpellUsed', spellUsed);
+        this.attackerActor.setFlag(game.animabf.id, 'lastOffensiveSpellUsed', spellUsed);
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
         const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
@@ -526,7 +561,7 @@ export class CombatAttackDialog extends FormApplication {
         };
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
-        this.attackerActor.setFlag('animabf', 'lastOffensivePowerUsed', powerUsed);
+        this.attackerActor.setFlag(game.animabf.id, 'lastOffensivePowerUsed', powerUsed);
         let combatModifier = 0;
         for (const key in attackerCombatMod) {
           combatModifier += attackerCombatMod[key]?.value ?? 0;
@@ -687,7 +722,8 @@ export class CombatAttackDialog extends FormApplication {
       }
 
       ui.weaponHasSecondaryCritic =
-        weapon.system.critic.secondary.value !== NoneWeaponCritic.NONE;
+        weapon.system.critic.secondary.value !==
+        game.animabf.weapon.NoneWeaponCritic.NONE;
 
       combat.damage.final = combat.damage.special + weapon.system.damage.final.value;
     }
@@ -711,7 +747,7 @@ export class CombatAttackDialog extends FormApplication {
       const { spells } = this.attackerActor.system.mystic;
       const spell = spells.find(w => w._id === this.modalData.attacker.mystic.spellUsed);
       this.modalData.attacker.mystic.critic =
-        spell?.system.critic.value ?? NoneWeaponCritic.NONE;
+        spell?.system.critic.value ?? game.animabf.weapon.NoneWeaponCritic.NONE;
       this.modalData.attacker.mystic.spellGrade = 'base';
       this.modalData.attacker.mystic.attainableSpellGrades = [];
       const intelligence =
@@ -740,7 +776,7 @@ export class CombatAttackDialog extends FormApplication {
         w => w._id === this.modalData.attacker.psychic.powerUsed
       );
       this.modalData.attacker.psychic.critic =
-        power?.system.critic.value ?? NoneWeaponCritic.NONE;
+        power?.system.critic.value ?? game.animabf.weapon.NoneWeaponCritic.NONE;
     }
 
     this.render();

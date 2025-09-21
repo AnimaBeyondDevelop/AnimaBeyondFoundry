@@ -10,9 +10,9 @@ jest.mock('../ABFFoundryRoll');
  * @param {string} formula
  */
 function getRoll(formula) {
-  const abfRoll = new ABFFoundryRoll(formula);
-  const abfRollTesting = /** @type {ABFRollTesting} */ (abfRoll);
-  return { abfRoll, abfRollTesting };
+  const animabfRoll = new ABFFoundryRoll(formula);
+  const animabfRollTesting = /** @type {ABFRollTesting} */ (animabfRoll);
+  return { animabfRoll, animabfRollTesting };
 }
 
 describe('ABFRoll', () => {
@@ -21,58 +21,58 @@ describe('ABFRoll', () => {
   });
 
   test('must explode roll if first result is bigger or equals to 90', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(90);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFInitiativeRoll(abfRoll);
+    const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().getResults().length).toBe(2);
-    expect(abfRollProxy.getRoll().getResults()[0]).toBe(90);
-    expect(abfRollProxy.getRoll().total).toBeGreaterThan(90);
+    expect(animabfRollProxy.getRoll().getResults().length).toBe(2);
+    expect(animabfRollProxy.getRoll().getResults()[0]).toBe(90);
+    expect(animabfRollProxy.getRoll().total).toBeGreaterThan(90);
   });
 
   test('must penalize if roll is 1', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(1);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFInitiativeRoll(abfRoll);
+    const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().getResults().length).toBe(1);
-    expect(abfRollProxy.getRoll().getResults()[0]).toBe(1);
-    expect(abfRollProxy.getRoll().total).toBe(1 - 125);
+    expect(animabfRollProxy.getRoll().getResults().length).toBe(1);
+    expect(animabfRollProxy.getRoll().getResults()[0]).toBe(1);
+    expect(animabfRollProxy.getRoll().total).toBe(1 - 125);
   });
 
   test('must penalize if roll is 2', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(2);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFInitiativeRoll(abfRoll);
+    const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().getResults().length).toBe(1);
-    expect(abfRollProxy.getRoll().getResults()[0]).toBe(2);
-    expect(abfRollProxy.getRoll().total).toBe(2 - 100);
+    expect(animabfRollProxy.getRoll().getResults().length).toBe(1);
+    expect(animabfRollProxy.getRoll().getResults()[0]).toBe(2);
+    expect(animabfRollProxy.getRoll().total).toBe(2 - 100);
   });
 
   test('must penalize if roll is 3', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100Initiative');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(3);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFInitiativeRoll(abfRoll);
+    const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.getRoll().getResults().length).toBe(1);
-    expect(abfRollProxy.getRoll().getResults()[0]).toBe(3);
-    expect(abfRollProxy.getRoll().total).toBe(3 - 75);
+    expect(animabfRollProxy.getRoll().getResults().length).toBe(1);
+    expect(animabfRollProxy.getRoll().getResults()[0]).toBe(3);
+    expect(animabfRollProxy.getRoll().total).toBe(3 - 75);
   });
 });

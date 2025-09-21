@@ -31,16 +31,27 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"
         rollable=true
-        rollableDice='1d100Initiative'
+        inputType="number"
+        rollableDice=@root.system.general.diceSettings.initiativeDie.value
         title=(localize 'anima.ui.general.initiative.base.title')
         inputName="system.characteristics.secondaries.initiative.base.value"
         inputValue=system.characteristics.secondaries.initiative.base.value
+        tooltip= (localize "anima.ui.tooltips.base")
+
         hasSecondaryInput=true
-        disableSecondaryInput=true
-        rollSecondaryInput=true
+        rollSecondaryInput=false
+        secondaryInputName="system.characteristics.secondaries.initiative.special.value"
+        secondaryInputValue=system.characteristics.secondaries.initiative.special.value
+        disableSecondaryInput=false
+        secondaryTooltip= (localize "anima.ui.tooltips.special")
+
+        hasTertiaryInput=true
+        tertiaryInputName="system.characteristics.secondaries.initiative.final.value"
+        tertiaryInputValue=system.characteristics.secondaries.initiative.final.value
+        disableTertiaryInput=true
+        tertiaryTooltip= (localize "anima.ui.tooltips.final")
+
         addTooltips=true
-        secondaryInputName="system.characteristics.secondaries.initiative.final.value"
-        secondaryInputValue=system.characteristics.secondaries.initiative.final.value
       }}
     </div>
     <div class='movements'>

@@ -8,9 +8,9 @@
   "color": "#000000",
   "flags": {},
   "_stats": {
-    "systemId": null,
-    "systemVersion": null,
-    "coreVersion": null,
+    "systemId": "animabf",
+    "systemVersion": "1.20.0",
+    "coreVersion": "13.345",
     "createdTime": null,
     "modifiedTime": null,
     "lastModifiedBy": null

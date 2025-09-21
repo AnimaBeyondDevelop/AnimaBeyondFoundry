@@ -13,7 +13,7 @@
     "systems/animabf/templates/common/ui/group-header-title.hbs"
       title=(localize 'anima.ui.levelSection.title')
     }}
-    <input type='number' class='input' value='{{calculateLevels system.general.levels}}' disabled='true'/>
+    <input type='number' class='input' value='{{system.general.level.value}}' disabled='true'/>
   {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="level"

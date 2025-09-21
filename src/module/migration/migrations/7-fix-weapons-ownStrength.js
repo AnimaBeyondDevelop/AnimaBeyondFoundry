@@ -4,7 +4,9 @@ import { Logger } from '../../../utils';
 
 /** @type Migration */
 export const Migration7WeaponsOwnStrength = {
-  version: 7,
+  id: 'migration_fix-weapons-own-strength',
+  version: '1.0.0',
+  order: 1,
   title: 'Migrate weapons own strength',
   description:
     'Shoot weapons often has its own strength for calculating the damage modifiers. ' +

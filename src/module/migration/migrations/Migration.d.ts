@@ -14,10 +14,20 @@ import { ABFActorDataSourceData } from '../../types/Actor';
  * - Test that your changes work.
  */
 export interface Migration {
-  /**
-   * This is the migration version.
+/**
+   * This is the migration id.
    */
-  readonly version: number;
+  readonly id: string;
+
+  /**
+   * Minimum required system version for this migration before the migration is applied.
+   */
+  readonly version: string;
+
+  /**
+   * The value used to sort migrations within the same version.
+   */
+  readonly order: number;
 
   /**
    * This is a short title describing the purpose of the migration.

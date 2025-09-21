@@ -7,15 +7,13 @@ import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFr
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
-import { sveltify } from '@svelte/sveltify';
-import SpellsBoard from '@svelte/components/spellBoard.svelte';
 import { Logger } from '../../utils';
+import { ABFSettingsKeys } from '../../utils/registerSettings';
+import { createClickHandlers } from './utils/createClickHandlers';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-export default class ABFActorSheet extends sveltify(
-  /** @type {TFormApplication} */ (ActorSheet)
-) {
+export default class ABFActorSheet extends ActorSheet {
   i18n;
 
   constructor(actor, options) {
@@ -26,15 +24,11 @@ export default class ABFActorSheet extends sveltify(
     this.position.width = this.getWidthDependingFromContent();
   }
 
-  static get svelteDescriptors() {
-    return [{ SvelteComponent: SpellsBoard, selector: '#svelte-spell-board' }];
-  }
-
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
       ...{
-        classes: ['abf', 'sheet', 'actor'],
+        classes: [game.animabf.id, 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor/actor-sheet.hbs',
         width: 1000,
         height: 850,
@@ -106,11 +100,15 @@ export default class ABFActorSheet extends sveltify(
 
     if (this.actor.type === 'character') {
       await sheet.actor.prepareDerivedData();
-
       sheet.system = sheet.actor.system;
     }
 
     sheet.config = CONFIG.config;
+    const permissions = game.settings.get(
+      game.animabf.id,
+      ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION
+    );
+    sheet.canModifyDice = permissions?.[game.user.role] === true;
 
     return sheet;
   }
@@ -154,10 +152,20 @@ export default class ABFActorSheet extends sveltify(
         row.addEventListener('dragstart', handler, false);
       });
 
+      //Buttons cllback from hbs
       html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
         item.onCreate(this.actor);
       });
     }
+
+    const clickHandlers = createClickHandlers(this);
+
+    html.find('[data-on-click]').click(e => {
+      const key = e.currentTarget.dataset.onClick;
+      const handler = clickHandlers[key];
+      if (handler) handler(e);
+      else console.warn(`No handler for data-on-click="${key}"`);
+    });
   }
 
   async _onRoll(event) {
@@ -298,6 +306,8 @@ export default class ABFActorSheet extends sveltify(
       });
     }
 
-    return new ContextMenu($(containerSelector), rowSelector, [...otherItems]);
+    return new ContextMenu(this.element.find(containerSelector), rowSelector, [
+      ...otherItems
+    ]);
   };
 }

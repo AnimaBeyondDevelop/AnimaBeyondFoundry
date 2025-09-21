@@ -1,5 +1,5 @@
 <div class='mystic'>
-  <nav class="abf-tabs mystic-tabs tabs secondary-tab" data-group="secondary">
+  <nav class="animabf-tabs mystic-tabs tabs secondary-tab" data-group="secondary">
     <a class="item active" data-tab="mystic-main">{{localize "anima.ui.mystic.tabs.main"}}</a>
     <a class="item" data-tab="mystic-spells">{{localize "anima.ui.mystic.tabs.secondaries"}}</a>
   </nav>
@@ -34,7 +34,7 @@
 
     <div class='tab' data-group="secondary" data-tab="mystic-spells">
       <div class='mystic-spells-tab'>
-        <div id='svelte-spell-board'></div>
+          {{> "systems/animabf/templates/actor/parts/mystic/parts/spells/spells.hbs"}}
       </div>
     </div>
   </section>

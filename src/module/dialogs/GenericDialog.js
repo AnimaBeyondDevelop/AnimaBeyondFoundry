@@ -32,7 +32,7 @@ export class GenericDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog generic-dialog'],
+      classes: ['animabf-dialog generic-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: null,

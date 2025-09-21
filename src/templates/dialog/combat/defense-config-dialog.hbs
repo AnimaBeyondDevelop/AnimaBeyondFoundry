@@ -1,0 +1,86 @@
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs" class="defense-config"}}
+
+    {{!-- <div class='columns'>
+      <div>
+        {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          title=(localize 'macros.combat.dialog.noRoll.title')
+          inputType="checkbox"
+          inputName="defender.withoutRoll"
+          inputValue=(is 'eq' this.defender.withoutRoll true)
+        }}
+      </div>
+      <div>
+        {{#if this.ui.isGM}}
+          {{>
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            title=(localize 'macros.combat.dialog.showRoll.title')
+            inputType="checkbox"
+            inputName="defender.showRoll"
+            inputValue=(is 'eq' this.defender.showRoll true)
+          }}
+        {{/if}}
+      </div>
+    </div> --}}
+
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.modifier.title')
+      inputName="defender.combat.modifier"
+      inputValue=this.defender.combat.modifier
+    }}
+
+    {{!-- {{#if this.ui.hasFatiguePoints}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'macros.combat.dialog.fatigue.title')
+        inputName="defender.combat.fatigueUsed"
+        inputValue=this.defender.combat.fatigueUsed
+      }}
+        <option {{#if (is "eq" 0 this.defender.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
+        {{#iterateNumber this.defender.actor.system.characteristics.secondaries.fatigue.value}}
+          <option {{#if (is "eq" (math this "+" 1) ../this.defender.combat.fatigueUsed)}}selected{{/if}} value='{{math this "+" 1}}'>{{math this "+" 1}}</option>
+        {{/iterateNumber}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{else}}
+      <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
+    {{/if}} --}}
+
+    {{#if this.defender.combat.unarmed}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'macros.combat.dialog.weapon.title')
+        disabled=true
+      }}
+        <option>Unarmed</option>
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{else}}
+      {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+        title=(localize 'macros.combat.dialog.weapon.title')
+        inputName='defender.combat.weaponUsed'
+      }}
+        {{#each this.defender.actor.system.combat.weapons}}
+          <option {{#if (is 'eq' this._id ../this.defender.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>
+            {{localize 'macros.combat.dialog.weaponRow.defense.title' name=this.name value=this.system.block.final.value}}
+          </option>
+        {{/each}}
+      {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+    {{/if}}
+
+    {{#if this.defenseSent}}
+      <div class='defense-sent'>
+        {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+        <p class='label'>{{localize 'macros.combat.dialog.defenseSent.title'}}</p>
+      </div>
+    {{else}}
+      <div class='defense-buttons'>
+        <button class='animabf-button send-defense' data-type='dodge'>
+          {{localize 'macros.combat.dialog.dodgeButton.title'}}
+        </button>
+        <button class='animabf-button send-defense' data-type='block'>
+          {{localize 'macros.combat.dialog.blockButton.title'}}
+        </button>
+      </div>
+    {{/if}}
+
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+</form>

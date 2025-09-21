@@ -5,7 +5,7 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 
 const getInitialData = (attacker, defender) => {
   const showRollByDefault = !!game.settings.get(
-    'animabf',
+    game.animabf.id,
     ABFSettingsKeys.SEND_ROLL_MESSAGES_ON_COMBAT_BY_DEFAULT
   );
   const isGM = !!game.user?.isGM;
@@ -18,7 +18,7 @@ const getInitialData = (attacker, defender) => {
       ? 'damageResistance'
       : 'combat';
 
-  const defensesCounter = defenderActor.getFlag('animabf', 'defensesCounter') || {
+  const defensesCounter = defenderActor.getFlag(game.animabf.id, 'defensesCounter') || {
     accumulated: 0,
     keepAccumulating: true
   };
@@ -135,7 +135,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (psychicPowers.length > 0) {
       const lastDefensivePowerUsed = this.defenderActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'lastDefensivePowerUsed'
       );
       if (psychicPowers.find(w => w._id === lastDefensivePowerUsed)) {
@@ -152,7 +152,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (spells.length > 0) {
       const lastDefensiveSpellUsed = this.defenderActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'lastDefensiveSpellUsed'
       );
       if (spells.find(w => w._id === lastDefensiveSpellUsed)) {
@@ -161,20 +161,28 @@ export class CombatDefenseDialog extends FormApplication {
         mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
       }
       const spellCastingOverride = this.defenderActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'spellCastingOverride'
       );
       mystic.spellCasting.override = spellCastingOverride || false;
       mystic.overrideMysticCast = spellCastingOverride || false;
       const spell = spells.find(w => w._id === mystic.spellUsed);
       if (this.modalData.defender.mystic.spellCasting.override) {
-        this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+        this.modalData.defender.mystic.attainableSpellGrades = [
+          'base',
+          'intermediate',
+          'advanced',
+          'arcane'
+        ];
       } else {
-        const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
-        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+        const intelligence =
+          this.defenderActor.system.characteristics.primaries.intelligence.value;
+        const finalIntelligence = mysticSettings.aptitudeForMagicDevelopment
+          ? intelligence + 3
+          : intelligence;
         for (const grade in spell?.system.grades) {
           if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
-            mystic.attainableSpellGrades.push(grade)
+            mystic.attainableSpellGrades.push(grade);
           }
         }
       }
@@ -206,7 +214,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (weapons.length > 0) {
       const lastDefensiveWeaponUsed = this.defenderActor.getFlag(
-        'animabf',
+        game.animabf.id,
         'lastDefensiveWeaponUsed'
       );
       if (weapons.find(weapon => weapon._id == lastDefensiveWeaponUsed)) {
@@ -239,7 +247,7 @@ export class CombatDefenseDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog combat-defense-dialog no-close'],
+      classes: ['animabf-dialog combat-defense-dialog no-close'],
       submitOnChange: true,
       closeOnSubmit: false,
       width: 525,
@@ -291,7 +299,7 @@ export class CombatDefenseDialog extends FormApplication {
         blindness,
         distance
       } = this.modalData.defender;
-      this.defenderActor.setFlag('animabf', 'lastDefensiveWeaponUsed', weaponUsed);
+      this.defenderActor.setFlag(game.animabf.id, 'lastDefensiveWeaponUsed', weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
@@ -304,7 +312,9 @@ export class CombatDefenseDialog extends FormApplication {
           apply: true
         }
       };
-      if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
+      if (blindness) {
+        defenderCombatMod.blindness = { value: -80, apply: true };
+      }
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
@@ -453,23 +463,27 @@ export class CombatDefenseDialog extends FormApplication {
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true }
       };
-      if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
+      if (blindness) {
+        defenderCombatMod.blindness = { value: -80, apply: true };
+      }
 
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            i18n.localize('macros.combat.dialog.warning.supernaturalShieldNotFound.mystic')
+            i18n.localize(
+              'macros.combat.dialog.warning.supernaturalShieldNotFound.mystic'
+            )
           );
         }
         spell = supernaturalShields.find(w => w._id === shieldUsed);
         supShield = { create: false, id: shieldUsed };
       } else if (spellUsed) {
         this.defenderActor.setFlag(
-          'animabf',
+          game.animabf.id,
           'spellCastingOverride',
           spellCasting.override
         );
-        this.defenderActor.setFlag('animabf', 'lastDefensiveSpellUsed', spellUsed);
+        this.defenderActor.setFlag(game.animabf.id, 'lastDefensiveSpellUsed', spellUsed);
         spell = spells.find(w => w._id === spellUsed);
         spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
         if (this.defenderActor.evaluateCast(spellCasting)) {
@@ -549,9 +563,11 @@ export class CombatDefenseDialog extends FormApplication {
       const { supernaturalShields } = this.defenderActor.system.combat;
       let power, psychicFatigue, supShield, newPsychicPotential;
       const defenderCombatMod = {
-        modifier: { value: modifier, apply: true },
+        modifier: { value: modifier, apply: true }
       };
-      if (blindness) { defenderCombatMod.blindness = { value: -80, apply: true } };
+      if (blindness) {
+        defenderCombatMod.blindness = { value: -80, apply: true };
+      }
 
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
@@ -580,13 +596,15 @@ export class CombatDefenseDialog extends FormApplication {
       if (!newShield) {
         if (!shieldUsed) {
           return ui.notifications.warn(
-            i18n.localize('macros.combat.dialog.warning.supernaturalShieldNotFound.psychic')
+            i18n.localize(
+              'macros.combat.dialog.warning.supernaturalShieldNotFound.psychic'
+            )
           );
         }
         power = supernaturalShields.find(w => w._id === shieldUsed);
         supShield = { create: false, id: shieldUsed };
       } else if (powerUsed) {
-        this.defenderActor.setFlag('animabf', 'lastDefensivePowerUsed', powerUsed);
+        this.defenderActor.setFlag(game.animabf.id, 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,
@@ -609,7 +627,7 @@ export class CombatDefenseDialog extends FormApplication {
         );
 
         if (!psychicFatigue) {
-          supShield = { create: true }
+          supShield = { create: true };
         }
       }
 
@@ -676,7 +694,12 @@ export class CombatDefenseDialog extends FormApplication {
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
     if (spell) {
-      mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(spell, mystic.spellGrade, mystic.spellCasting.casted, mystic.spellCasting.override);
+      mystic.spellCasting = this.defenderActor.mysticCanCastEvaluate(
+        spell,
+        mystic.spellGrade,
+        mystic.spellCasting.casted,
+        mystic.spellCasting.override
+      );
     }
 
     const { supernaturalShields } = this.defenderActor.system.combat;
@@ -716,18 +739,27 @@ export class CombatDefenseDialog extends FormApplication {
     if (prevSpell !== this.modalData.defender.mystic.spellUsed) {
       const { spells } = this.defenderActor.system.mystic;
       const spell = spells.find(w => w._id === this.modalData.defender.mystic.spellUsed);
-      this.modalData.defender.mystic.spellGrade = 'base'
-      this.modalData.defender.mystic.attainableSpellGrades = []
-      const intelligence = this.defenderActor.system.characteristics.primaries.intelligence.value
-      const finalIntelligence = this.defenderActor.system.mystic.mysticSettings.aptitudeForMagicDevelopment ? intelligence + 3 : intelligence
+      this.modalData.defender.mystic.spellGrade = 'base';
+      this.modalData.defender.mystic.attainableSpellGrades = [];
+      const intelligence =
+        this.defenderActor.system.characteristics.primaries.intelligence.value;
+      const finalIntelligence = this.defenderActor.system.mystic.mysticSettings
+        .aptitudeForMagicDevelopment
+        ? intelligence + 3
+        : intelligence;
       for (const grade in spell?.system.grades) {
         if (finalIntelligence >= spell?.system.grades[grade].intRequired.value) {
-          this.modalData.defender.mystic.attainableSpellGrades.push(grade)
+          this.modalData.defender.mystic.attainableSpellGrades.push(grade);
         }
       }
     }
     if (this.modalData.defender.mystic.spellCasting.override) {
-      this.modalData.defender.mystic.attainableSpellGrades = ['base', 'intermediate', 'advanced', 'arcane']
+      this.modalData.defender.mystic.attainableSpellGrades = [
+        'base',
+        'intermediate',
+        'advanced',
+        'arcane'
+      ];
     }
 
     this.render();

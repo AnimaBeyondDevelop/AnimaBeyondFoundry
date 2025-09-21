@@ -10,7 +10,7 @@
     {{#> "systems/animabf/templates/common/ui/group-body.hbs"
       class="new-supernatural-shield"
     }}
-        <nav class="abf-tabs sheet-tabs tabs" data-group="primary">
+        <nav class="animabf-tabs sheet-tabs tabs" data-group="primary">
           {{#if (is 'gt' this.data.actor.system.mystic.spells.length 0)}}<a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
           {{#if (is 'gt' this.data.actor.system.psychic.psychicPowers.length 0)}}<a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
         </nav>

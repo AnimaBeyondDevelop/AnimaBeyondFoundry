@@ -9,11 +9,31 @@
     class="presence"
   }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
       class="presence"
       title=(localize "anima.ui.general.presence.title")
+      rollable=true
+      rollableDice=@root.system.general.diceSettings.resistanceDie.value
+
       inputName="system.general.presence.base.value"
       inputValue=system.general.presence.base.value
+      disabled=true
+      tooltip= (localize "anima.ui.tooltips.base")
+
+      hasSecondaryInput=true
+      inputType="number"
+      secondaryInputName="system.general.presence.special.value"
+      secondaryInputValue=system.general.presence.special.value
+      disableSecondaryInput=false
+      secondaryTooltip= (localize "anima.ui.tooltips.special")
+
+      hasTertiaryInput=true
+      tertiaryInputName="system.general.presence.final.value"
+      tertiaryInputValue=system.general.presence.final.value
+      disableTertiaryInput=true
+      tertiaryTooltip= (localize "anima.ui.tooltips.final")
+
+      addTooltips=true
     }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

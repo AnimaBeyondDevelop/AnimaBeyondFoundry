@@ -3,7 +3,9 @@
 /** @type Migration */
 
 export const Migration4PsychicDisciplinesMentalPatterns = {
-  version: 4,
+  id: 'migration_fix-psychic-disciplines-mental-patterns',
+  version: '1.0.0',
+  order: 1,
   title: 'Normalise Psychic Disciplines and Mental Patterns',
   description:
     'Psychic Disciplines and Mental Patterns are going to be normalised to standard strings. ' +

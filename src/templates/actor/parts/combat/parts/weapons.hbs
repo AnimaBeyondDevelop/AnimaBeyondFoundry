@@ -32,15 +32,13 @@
             class="weapon"
           }}
             {{#if (or (is 'eq' weapon.system.isRanged.value false) (is 'eq' weapon.system.shotType.value 'throw'))}}
-              {{>
-              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              {{> "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="critic-secondary"
-                isVertical=true
                 disabled=true
-                choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
+                inputType="text"
                 title=(localize "anima.ui.combat.weapons.critic.secondary.title")
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.critic.secondary.value")
-                inputValue=weapon.system.critic.secondary.value
+                inputValue=(abfCritLabel weapon.system.critic.secondary.value)
               }}
             {{/if}}
             {{> 'systems/animabf/templates/common/domain/select-quality.hbs'
@@ -53,7 +51,6 @@
             {{>
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="integrity"
-              rollable=true
               disabled=true
               title=(localize "anima.ui.combat.weapons.integrity.final.title")
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.integrity.final.value")
@@ -63,6 +60,7 @@
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="breaking"
               rollable=true
+              rollableDice=@root.system.general.diceSettings.characteristicDie.value
               disabled=true
               title=(localize "anima.ui.combat.weapons.breaking.final.title")
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.breaking.final.value")
@@ -72,6 +70,7 @@
             "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
               class="presence"
               rollable=true
+              rollableDice=@root.system.general.diceSettings.resistanceDie.value
               disabled=true
               title=(localize "anima.ui.combat.weapons.presence.final.title")
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.presence.final.value")
@@ -112,6 +111,27 @@
               inputName=(concat "system.dynamic.weapons." weapon._id ".system.knowledgeType.value")
               inputValue=weapon.system.knowledgeType.value
             }}
+            {{#if (is 'eq' weapon.system.manageabilityType.value 'one_or_two_hands')}}
+              {{>
+              "systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs"
+                class="one-or-two-handed"
+                title=(localize "anima.ui.combat.weapons.oneOrTwoHanded.title")
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.oneOrTwoHanded.value")
+                inputValue=weapon.system.oneOrTwoHanded.value
+              }}
+            {{/if}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="reduced-armor"
+              title=(localize "anima.ui.combat.weapons.reducedArmor.final.title")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.reducedArmor.special.value")
+              inputValue=weapon.system.reducedArmor.special.value
+              
+              hasSecondaryInput=true
+              addTooltips=true
+              disableSecondaryInput=true
+              secondaryInputValue=weapon.system.reducedArmor.final.value
+            }}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='weapon-footer'>
@@ -123,25 +143,14 @@
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.equipped.value")
                 inputValue=(is 'eq' weapon.system.equipped.value true)
               }}
-              {{>
-              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+              {{> "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="critic-primary"
-                isVertical=true
                 disabled=true
+                inputType="text"
                 title=(localize "anima.ui.combat.weapons.critic.primary.title")
-                choices=xRoot.config.iterables.combat.weapon.criticTypes
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.critic.primary.value")
-                inputValue=weapon.system.critic.primary.value
+                inputValue=(abfCritLabel weapon.system.critic.primary.value)
               }}
-              {{#if (is 'eq' weapon.system.manageabilityType.value 'one_or_two_hands')}}
-                {{>
-                "systems/animabf/templates/common/domain/weapon/one-or-two-handed.hbs"
-                  class="one-or-two-handed"
-                  title=(localize "anima.ui.combat.weapons.oneOrTwoHanded.title")
-                  inputName=(concat "system.dynamic.weapons." weapon._id ".system.oneOrTwoHanded.value")
-                  inputValue=weapon.system.oneOrTwoHanded.value
-                }}
-              {{/if}}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="attack"
@@ -173,20 +182,39 @@
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="damage"
-                disabled=true
                 title=(localize "anima.ui.combat.weapons.damage.final.title")
-                inputName=(concat "system.dynamic.weapons." weapon._id ".system.damage.final.value")
-                inputValue=weapon.system.damage.final.value
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.damage.special.value")
+                inputValue=weapon.system.damage.special.value
+                
+                hasSecondaryInput=true
+                addTooltips=true
+                disableSecondaryInput=true
+                secondaryInputValue=weapon.system.damage.final.value
               }}
               {{>
               "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="initiative"
                 rollable=true
-                disabled=true
+                rollableDice=@root.system.general.diceSettings.initiativeDie.value
                 title=(localize "anima.ui.combat.weapons.initiative.final.title")
-                inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.final.value")
-                inputValue=weapon.system.initiative.final.value
+                inputName=(concat "system.dynamic.weapons." weapon._id ".system.initiative.special.value")
+                inputValue=weapon.system.initiative.special.value
+                
+                
+                hasSecondaryInput=true
+                addTooltips=true
+                disableSecondaryInput=true
+                secondaryInputValue=weapon.system.initiative.final.value
               }}
+              
+              {{{injectFromHook "animabf.actor.combat.weapon.footer" weapon._id}}}
+              
+              {{!-- <button class='attack-button' data-on-click="createDefaultWeaponAttack" data-weapon-id="{{weapon._id}}">
+                {{localize "anima.ui.combat.weapons.defaultAttackButton.title"}}
+              </button> --}}
+              {{!-- <button class='attack-button' data-on-click="createWeaponAttack" data-weapon-id="{{weapon._id}}">
+                {{localize "anima.ui.combat.weapons.attackButton.title"}}
+              </button> --}}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}

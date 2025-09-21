@@ -1,4 +1,4 @@
-.abf-tabs {
+.animabf-tabs {
   &.secondary-tab {
     margin-top: 0;
     height: 1.2rem;
@@ -40,6 +40,14 @@
     font-weight: 600;
   }
 }
+
+// .tab {
+//   display: none;
+// }
+
+// .tab.active {
+//   display: block;
+// }
 
 .actor-sheet {
   display: flex;

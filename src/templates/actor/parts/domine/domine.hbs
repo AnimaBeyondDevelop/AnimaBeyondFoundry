@@ -1,11 +1,13 @@
 <div class='domine-tab'>
   <div class='first-column'>
+    {{{injectFromHook "animabf.actor.domine.first-column.start" @root}}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/ki-skills.hbs"}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/nemesis-skills.hbs"}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/ars-magnus.hbs"}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/martial-arts.hbs"}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/creatures.hbs"}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/special-skills-tables.hbs"}}
+    {{{injectFromHook "animabf.actor.domine.first-column.end" @root}}}
   </div>
   <div class='second-column'>
     <div class='sub-columns'>
@@ -15,6 +17,8 @@
         {{> "systems/animabf/templates/actor/parts/domine/parts/seals.hbs"}}
       </div>
     </div>
+    {{{injectFromHook "animabf.actor.domine.second-column.before-techniques" @root}}}
     {{> "systems/animabf/templates/actor/parts/domine/parts/techniques.hbs"}}
+    {{{injectFromHook "animabf.actor.domine.second-column.after-techniques" @root}}}
   </div>
 </div>

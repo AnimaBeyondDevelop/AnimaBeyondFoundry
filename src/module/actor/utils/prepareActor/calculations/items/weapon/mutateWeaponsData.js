@@ -8,6 +8,8 @@ import { calculateWeaponBreaking } from './calculations/calculateWeaponBreaking'
 import { calculateWeaponPresence } from './calculations/calculateWeaponPresence';
 import { calculateWeaponRange } from './calculations/calculateWeaponRange';
 import { calculateWeaponInitiative } from './calculations/calculateWeaponInitiative';
+import { calculateWeaponArmorReduction } from './calculations/calculateWeaponArmorReduction';
+import { calculateArmorReductionFromQuality } from './util/calculateArmorReductionFromQuality';
 
 /**
  *
@@ -32,12 +34,22 @@ export const mutateWeaponsData = data => {
 
     weapon.system.initiative = {
       base: weapon.system.initiative.base,
+      special: weapon.system.initiative.special,
       final: { value: calculateWeaponInitiative(weapon) }
     };
 
     weapon.system.damage = {
       base: weapon.system.damage.base,
+      special: weapon.system.damage.special,
       final: { value: calculateWeaponDamage(weapon, data) }
+    };
+
+    weapon.system.reducedArmor.base.value = calculateArmorReductionFromQuality(weapon);
+
+    weapon.system.reducedArmor = {
+      base: weapon.system.reducedArmor.base,
+      special: weapon.system.reducedArmor.special,
+      final: { value: calculateWeaponArmorReduction(weapon) }
     };
 
     weapon.system.integrity = {

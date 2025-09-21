@@ -19,7 +19,8 @@ img {
   }
 }
 
-.abf.sheet.actor {
+
+.animabf.sheet.actor {
   .rollable {
     cursor: pointer;
     &:hover,
@@ -104,7 +105,6 @@ img {
           }
         }
       }
-      // TODO: Next needed for handlebars group contractible handling. Remove when all are in svelte
       .contractible-button {
         position: absolute;
         top: -0.5rem;
@@ -119,14 +119,16 @@ img {
 
         transition: background-color 0.3ms ease-in-out;
 
+        transform: translate(-0.625rem, 0.625rem);
+
         &:hover {
           background-color: $light-gray;
         }
 
         &.contracted {
-          transform: rotate(180deg);
+          transform: translate(-0.625rem, 0.625rem) rotate(180deg);
         }
-      } // End of removal after svelte
+      } 
     }
 
     width: 100%;
@@ -142,6 +144,8 @@ img {
 
       position: relative;
       z-index: 2;
+      
+      background: $red !important;
 
       display: flex;
       align-items: center;
@@ -243,6 +247,11 @@ img {
       &.big {
         width: 6rem;
       }
+      
+
+      &.bigger {
+        width: 9rem;
+      }
 
       .input {
         text-align: center;
@@ -256,16 +265,48 @@ img {
     .primary-input {
       width: 5rem;
 
-      margin-right: 0.5rem;
-      padding-right: 1.75rem;
-      text-align: left;
+      &.primary-1 {
+        text-align: center;
+      }
+
+      &.primary-2,
+      &.primary-3 {
+        text-align: center;
+        text-indent: -0.5rem;
+      }
+
+      &.primary-3 {
+        
+        &.disabled{
+          background-color: $light-cream-transparent;
+          color: $transparent-black;
+        }
+      }
     }
 
     .secondary-input {
-      background-color: $red;
-      color: white;
+      &.secondary-2 {
+        margin-left: -1rem; 
+        width: 4rem;
+        background-color: $red;
+        color: $white;
+      }
+
+      &.secondary-3 {
+        margin-left: -1rem; 
+        width: 5rem;
+        color: $black;
+        text-align: center;
+        text-indent: -0.5rem;
+      }
+    }
+
+    .tertiary-input {
       width: 4rem;
-      margin-left: -2rem;
+      margin-left: -1rem; 
+      z-index: 1;
+      background-color: $red;
+      color: $white;
     }
   }
 }
@@ -316,4 +357,23 @@ img {
       transform: rotate(360deg);
     }
   }
+
+  
 }
+
+
+
+.input-container { 
+  min-width: 0;            
+}
+
+.input-container > input.input.primary-input.primary-1 {
+  display: block;          
+  width: 100% !important;             
+  max-width: 100%;         
+  box-sizing: border-box;  
+  flex: 1 1 auto;          
+}
+
+
+

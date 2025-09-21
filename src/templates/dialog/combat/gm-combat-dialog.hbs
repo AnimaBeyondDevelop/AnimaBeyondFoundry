@@ -465,31 +465,31 @@
         </div>
         <div class='ready-buttons'>
           {{#if (or this.calculations.canCounter (is 'gt' this.calculations.damage 0))}}
-            <button class='abf-button show-results'>
+            <button class='animabf-button show-results'>
               {{localize 'macros.combat.dialog.showResultsButton.title'}}
             </button>
           {{/if}}
           {{#if this.calculations.canCounter}}
             {{#unless this.ui.isCounter}}
               <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}'
-                      class='abf-button make-counter'>
+                      class='animabf-button make-counter'>
                 {{localize 'macros.combat.dialog.counterAttackButton.title'}}
               </button>
             {{/unless}}
           {{/if}}
           {{#if this.ui.resistanceRoll}}
             <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
-                    class='abf-button roll-resistance'>
+                    class='animabf-button roll-resistance'>
               {{localize 'macros.combat.dialog.rollResistanceButton.title'}}
             </button>
           {{/if}}
           {{#unless this.ui.resistanceRoll}}
             <button title='{{localize 'macros.combat.dialog.applyAndCloseButtonTooltip.title'}}'
-                    class='abf-button apply-values'>
+                    class='animabf-button apply-values'>
               {{localize 'macros.combat.dialog.applyAndCloseButton.title'}}
             </button>
           {{/unless}}
-          <button class='abf-button cancel-button'>
+          <button class='animabf-button cancel-button'>
             {{localize 'macros.combat.dialog.cancelButton.title'}}
           </button>
         </div>

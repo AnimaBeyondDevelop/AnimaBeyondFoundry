@@ -42,6 +42,10 @@ export const parseExcelToActor = async (excelData, actor) => {
   const volResistance =
     excelData.Presencia_final + calculateAttributeModifier(excelData.VOL);
 
+    const presenciaBase = excelData.Nivel_Total <= 0 ? 20 : 25 + (excelData.Nivel_Total*5);
+
+    const bonoPresencia = excelData.Presencia_final - presenciaBase;
+
   //Esto es para cuando esté la automatización de las resistencias
   const bonoRF = excelData.RF_final - conResistance;
   const bonoRE = excelData.RE_final - conResistance;
@@ -245,28 +249,28 @@ export const parseExcelToActor = async (excelData, actor) => {
           },
           resistances: {
             physical: {
-              base: {
-                value: excelData.RF_final
+              special: {
+                value: bonoRF
               }
             },
             disease: {
-              base: {
-                value: excelData.RE_final
+              special: {
+                value: bonoRE
               }
             },
             poison: {
-              base: {
-                value: excelData.RV_final
+              special: {
+                value: bonoRV
               }
             },
             magic: {
-              base: {
-                value: excelData.RM_final
+              special: {
+                value: bonoRM
               }
             },
             psychic: {
-              base: {
-                value: excelData.RP_final
+              special: {
+                value: bonoRP
               }
             }
           }
@@ -296,8 +300,8 @@ export const parseExcelToActor = async (excelData, actor) => {
       },
       general: {
         presence: {
-          base: {
-            value: excelData.Presencia_final
+          special: {
+            value: bonoPresencia
           }
         },
         modifiers: {

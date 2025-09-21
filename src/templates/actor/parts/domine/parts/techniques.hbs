@@ -32,6 +32,7 @@
             class="technique"
           }}
             {{editor technique.system.enrichedDescription target=(concat "system.dynamic.techniques." technique._id ".system.description.value") button=true owner=true editable=true}}
+            {{{injectFromHook "animabf.actor.domine.technique.body" technique._id}}}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='technique-footer'>
@@ -99,6 +100,8 @@
                 inputName=(concat "system.dynamic.techniques." technique._id ".system.martialKnowledge.value")
                 inputValue=technique.system.martialKnowledge.value
               }}
+              
+              {{{injectFromHook "animabf.actor.domine.technique.footer" technique._id}}}
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}

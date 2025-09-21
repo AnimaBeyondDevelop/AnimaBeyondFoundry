@@ -29,7 +29,7 @@ const addSizeModifier = (weapon, damage) => {
 export const calculateWeaponDamage = (weapon, data) => {
   const getDamage = () => {
     const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
-    const extraDamage = data.general.modifiers.extraDamage.value;
+    const extraDamage = data.general.modifiers.extraDamage.value + weapon.system.damage.special.value;
 
     if (
       weapon.system.isRanged.value &&

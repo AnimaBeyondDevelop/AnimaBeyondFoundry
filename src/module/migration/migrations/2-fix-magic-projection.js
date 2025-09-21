@@ -2,7 +2,9 @@
 
 /** @type Migration */
 export const Migration2MagicProjection = {
-  version: 2,
+  id: 'migration_fix-magic-projection',
+  version: '1.0.0',
+  order: 1,
   title: 'Magic Projection Removed',
   description:
     'We remove the main magic projection.' +

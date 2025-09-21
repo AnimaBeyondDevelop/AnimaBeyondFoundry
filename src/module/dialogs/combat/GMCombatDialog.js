@@ -1,6 +1,5 @@
 import { Templates } from '../../utils/constants';
 import { calculateCombatResult } from '../../combat/utils/calculateCombatResult';
-import { calculateATReductionByQuality } from '../../combat/utils/calculateATReductionByQuality';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { executeMacro } from '../../utils/functions/executeMacro';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
@@ -47,7 +46,7 @@ export class GMCombatDialog extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['abf-dialog gm-combat-dialog'],
+      classes: ['animabf-dialog gm-combat-dialog'],
       submitOnChange: true,
       closeOnSubmit: false,
       height: 600,
@@ -170,7 +169,7 @@ export class GMCombatDialog extends FormApplication {
         data.damage = this.modalData.calculations?.damage;
       }
 
-      await renderTemplate(Templates.Chat.CombatResult, data).then(content => {
+      await renderTemplate(Templates.Chat.AutoCombatResult, data).then(content => {
         ChatMessage.create({
           content
         });
@@ -185,20 +184,43 @@ export class GMCombatDialog extends FormApplication {
     attacker.result = result;
 
     if (result.type === 'combat') {
-      const { weapons } = this.attackerActor.system.combat;
+      // Prefer an explicit weapon object coming from the attack dialog (unarmed aux)
+      let w = result.values.weapon;
 
-      attacker.result.weapon = weapons.find(w => w._id === result.values.weaponUsed);
+      if (!w) {
+        const { weapons } = this.attackerActor.system.combat;
+        w = weapons.find(wep => wep._id === result.values.weaponUsed);
+      }
+
+      // Final fallback for unarmed: craft a minimal pseudo-weapon so downstream never breaks
+      if (!w && result.values.unarmed) {
+        const unarmedDamage = Math.max(0, result.values?.damage ?? 0);
+        w = {
+          name: game.i18n.localize('macros.combat.unarmed') || 'Unarmed',
+          system: {
+            isRanged: { value: false },
+            shotType: { value: '' },
+            special: { value: '' },
+            reducedArmor: { final: { value: 0 } },
+            damage: { final: { value: unarmedDamage } },
+            critic: {
+              primary: { value: game.animabf.weapon.WeaponCritic.IMPACT },
+              secondary: { value: game.animabf.weapon.NoneWeaponCritic.NONE }
+            }
+          }
+        };
+      }
+
+      attacker.result.weapon = w;
     }
 
     if (result.type === 'mystic') {
       const { spells } = this.attackerActor.system.mystic;
-
       attacker.result.spell = spells.find(w => w._id === result.values.spellUsed);
     }
 
     if (result.type === 'psychic') {
       const { psychicPowers } = this.attackerActor.system.psychic;
-
       attacker.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
@@ -261,22 +283,34 @@ export class GMCombatDialog extends FormApplication {
         defenderModifier;
       defender.result.values.total = Math.max(0, defender.result.values.total);
 
-      const attackerTotal = Math.max(0, attacker.result.values.total + attacker.customModifier);
-      const defenderTotal = Math.max(0, defender.result.values.total + defender.customModifier);
+      const attackerTotal = Math.max(
+        0,
+        attacker.result.values.total + attacker.customModifier
+      );
+      const defenderTotal = Math.max(
+        0,
+        defender.result.values.total + defender.customModifier
+      );
 
       const winner = attackerTotal > defenderTotal ? attacker.token : defender.token;
 
       const atResistance = defender.result.values?.at * 10 + 20;
 
       if (this.isDamagingCombat) {
+        const { weapon } = attacker.result;
+        const finalAt = Math.max(
+          defender.result.values.at - weapon.system.reducedArmor.final.value,
+          0
+        );
+        const finalBaseDamage =
+          attacker.result.values.damage -
+          this.defenderActor.system.combat.damageReduction.final.value;
+
         const combatResult = calculateCombatResult(
           attackerTotal,
           defenderTotal,
-          Math.max(
-            defender.result.values.at - calculateATReductionByQuality(attacker.result),
-            0
-          ),
-          attacker.result.values.damage,
+          finalAt,
+          finalBaseDamage,
           defender.result.type === 'resistance' ? defender.result.values.surprised : false
         );
         const { distance, projectile } = attacker.result.values;
@@ -416,13 +450,14 @@ export class GMCombatDialog extends FormApplication {
 
       if (this.isDamagingCombat) {
         const { attacker, defender } = this.modalData;
+        const { weapon } = attacker.result;
 
         newCombatResult.attack = Math.max(
           attacker.result.values.total + this.modalData.attacker.customModifier,
           0
         );
         newCombatResult.at = Math.max(
-          defender.result.values.at - calculateATReductionByQuality(attacker.result),
+          defender.result.values.at - weapon.system.reducedArmor.final.value,
           0
         );
         newCombatResult.halvedAbsorption =
@@ -446,37 +481,39 @@ export class GMCombatDialog extends FormApplication {
 
   executeCombatMacro(resistanceRoll) {
     const missedAttackValue = game.settings.get(
-      'animabf',
+      game.animabf.id,
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
     );
     const macroPrefixAttack = game.settings.get(
-      'animabf',
+      game.animabf.id,
       ABFSettingsKeys.MACRO_PREFIX_ATTACK
     );
-    const { attacker, defender, calculations } = this.modalData
-    const winner =
-      calculations.winner === this.defenderToken
-        ? 'defender'
-        : 'attacker';
+    const { attacker, defender, calculations } = this.modalData;
+    const winner = calculations.winner === this.defenderToken ? 'defender' : 'attacker';
     let macroName;
     let args = {
       attacker: this.attackerToken,
       spellGrade: attacker.result.values.spellGrade,
       psychicPotential: attacker.result.values?.psychicPotential,
       projectile: attacker.result.values?.projectile,
-      defenders: [{
-        defender: this.defenderToken,
-        winner,
-        defenseType: defender.result.type === 'combat' ? defender.result.values.type : defender.result.type,
-        totalAttack: attacker.result.values.total,
-        appliedDamage: calculations.damage,
-        damageType: attacker.result.values?.critic,
-        bloodColor: 'red', // add bloodColor to actor template
-        missedAttack: false,
-        resistanceRoll,
-        defenderPsychicFatigue: defender.result.values?.psychicFatigue,
-        criticImpact: 0
-      }]
+      defenders: [
+        {
+          defender: this.defenderToken,
+          winner,
+          defenseType:
+            defender.result.type === 'combat'
+              ? defender.result.values.type
+              : defender.result.type,
+          totalAttack: attacker.result.values.total,
+          appliedDamage: calculations.damage,
+          damageType: attacker.result.values?.critic,
+          bloodColor: 'red', // add bloodColor to actor template
+          missedAttack: false,
+          resistanceRoll,
+          defenderPsychicFatigue: defender.result.values?.psychicFatigue,
+          criticImpact: 0
+        }
+      ]
     };
     if (args.defenders[0].totalAttack < missedAttackValue && winner === 'defener') {
       args.defenders[0].missedAttack = true;
@@ -484,7 +521,7 @@ export class GMCombatDialog extends FormApplication {
 
     if (attacker.result?.type === 'combat') {
       if (!attacker.result.weapon) {
-        attacker.result.weapon = { name: 'Unarmed' }
+        attacker.result.weapon = { name: 'Unarmed' };
       }
       const { name } = attacker.result.weapon;
       macroName = macroPrefixAttack + name;
@@ -498,6 +535,6 @@ export class GMCombatDialog extends FormApplication {
       macroName = attacker.result?.values.macro;
     }
 
-    executeMacro(macroName, args)
+    executeMacro(macroName, args);
   }
 }

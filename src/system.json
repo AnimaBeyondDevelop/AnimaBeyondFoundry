@@ -2,14 +2,31 @@
   "id": "animabf",
   "title": "Anima Beyond Fantasy",
   "description": "Unofficial Anima Beyond Fantasy system for Foundry VTT",
-  "version": "1.19.5",
-  "compatibility": { "minimum": "12", "verified": "12.331" },
+  "version": "1.20.0",
+  "compatibility": { "minimum": "13", "verified": "13.345" },
   "url": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry",
   "manifest": "https://raw.githubusercontent.com/AnimaBeyondDevelop/AnimaBeyondFoundry/main/src/system.json",
-  "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.19.5",
-  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.19.5/animabf.zip",
+  "changelog": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/tag/v1.20.0",
+  "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.20.0/animabf.zip",
   "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
-  "authors": [{ "name": "Linkaynn", "url": "https://www.jeseromero.com" }],
+  "authors": [
+    { 
+      "name": "Linkaynn", 
+      "url": "https://www.jeseromero.com" 
+    },
+    {
+      "name": "Julen Bordonaba"
+    },
+    {
+      "name": "Alfonso Paiva"
+    },
+    {
+      "name": "Aitor Balmaseda"
+    },
+    {
+      "name": "Luisin"
+    }
+  ],
   "scripts": [],
   "esmodules": ["animabf.js"],
   "styles": ["animabf.css"],

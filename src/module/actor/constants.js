@@ -29,6 +29,13 @@ export const INITIAL_ACTOR_DATA = {
       perceivePsychic: { value: false },
       defenseType: { value: '' }
     },
+    diceSettings: {
+      characteristicDie: { value: '1d10ControlRoll' },
+      initiativeDie: { value: '1d100Initiative' },
+      resistanceDie: { value: '1d100' },
+      abilityDie: { value: '1d100xa' },
+      abilityMasteryDie: { value: '1d100xamastery' }
+    },
     modifiers: {
       physicalActions: {
         base: {
@@ -93,7 +100,15 @@ export const INITIAL_ACTOR_DATA = {
       }
     },
     presence: {
-      value: 0
+      base: {
+        value: 0
+      },
+      special: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
     },
     aspect: {
       hair: {
@@ -157,6 +172,7 @@ export const INITIAL_ACTOR_DATA = {
       others: []
     },
     levels: [],
+    level: { value: 0 },
     notes: [],
     titles: []
   },
@@ -203,6 +219,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       initiative: {
         base: {
+          value: 0
+        },
+        special: {
           value: 0
         },
         final: {
@@ -256,12 +275,18 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
         },
         disease: {
           base: {
+            value: 0
+          },
+          special: {
             value: 0
           },
           final: {
@@ -272,6 +297,9 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
@@ -280,12 +308,18 @@ export const INITIAL_ACTOR_DATA = {
           base: {
             value: 0
           },
+          special: {
+            value: 0
+          },
           final: {
             value: 0
           }
         },
         psychic: {
           base: {
+            value: 0
+          },
+          special: {
             value: 0
           },
           final: {
@@ -880,6 +914,9 @@ export const INITIAL_ACTOR_DATA = {
       base: {
         value: 0
       },
+      special: {
+        value: 0
+      },
       final: {
         value: 0
       }
@@ -888,12 +925,18 @@ export const INITIAL_ACTOR_DATA = {
       base: {
         value: 0
       },
+      special: {
+        value: 0
+      },
       final: {
         value: 0
       }
     },
     dodge: {
       base: {
+        value: 0
+      },
+      special: {
         value: 0
       },
       final: {
@@ -933,7 +976,18 @@ export const INITIAL_ACTOR_DATA = {
     ammo: [],
     weapons: [],
     armors: [],
-    supernaturalShields: []
+    supernaturalShields: [],
+    damageReduction: {
+      base: {
+        value: 0
+      },
+      special: {
+        value: 0
+      },
+      final: {
+        value: 0
+      }
+    }
   },
 
   mystic: {

@@ -4,7 +4,9 @@ import { Logger } from '../../../utils';
 
 /** @type Migration */
 export const Migration8RemoveWeaponFue = {
-  version: 8,
+  id: 'migration_remove-unused-weapon-fue',
+  version: '1.0.0',
+  order: 1,
   title: 'Remove old, unused `weaponFue` from weapons',
   description:
     '`system.weaponFue` in weapons is no longer used, so this migration removes it.',

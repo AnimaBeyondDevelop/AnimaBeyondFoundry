@@ -186,7 +186,10 @@ export class WSGMCombatManager extends WSCombatManager {
 
     try {
       if (
-        !this.game.settings.get('animabf', ABFSettingsKeys.AUTO_ACCEPT_COMBAT_REQUESTS)
+        !this.game.settings.get(
+          game.animabf.id,
+          ABFSettingsKeys.AUTO_ACCEPT_COMBAT_REQUESTS
+        )
       ) {
         await CombatDialogs.openCombatRequestDialog({
           attacker: attacker.actor,

@@ -1,0 +1,19 @@
+<form autocomplete="off">
+  <div class="form-group">
+    <label>{{localize "anima.permissions.modifyDiceFormulasPermission.label"}}</label>
+    <p class="notes">{{localize "anima.permissions.modifyDiceFormulasPermission.hint"}}</p>
+  </div>
+
+  {{#each roles}}
+    <div class="form-group">
+      <label for="{{key}}">{{label}}</label>
+      <input type="checkbox" name="{{val}}" id="{{key}}" {{#if checked}}checked{{/if}}>
+    </div>
+  {{/each}}
+
+  <footer class="sheet-footer flexrow">
+    <button type="submit" class="dialog-button default">
+      <i class="fas fa-save"></i> {{localize "Save"}}
+    </button>
+  </footer>
+</form>

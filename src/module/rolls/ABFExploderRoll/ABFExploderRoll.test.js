@@ -10,9 +10,9 @@ jest.mock('../ABFFoundryRoll');
  * @param {string} formula
  */
 function getRoll(formula) {
-  const abfRoll = new ABFFoundryRoll(formula);
-  const abfRollTesting = /** @type {ABFRollTesting} */ (abfRoll);
-  return { abfRoll, abfRollTesting };
+  const animabfRoll = new ABFFoundryRoll(formula);
+  const animabfRollTesting = /** @type {ABFRollTesting} */ (animabfRoll);
+  return { animabfRoll, animabfRollTesting };
 }
 
 describe('ABFRoll', () => {
@@ -21,44 +21,44 @@ describe('ABFRoll', () => {
   });
 
   test('must explode roll if first result is bigger or equals to 90', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xa');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100xa');
     nextValueService.setNextValue(90);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFExploderRoll(abfRoll);
+    const animabfRollProxy = new ABFExploderRoll(animabfRoll);
 
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.firstDice.results.length).toBe(2);
-    expect(abfRollProxy.firstDice.results[0].result).toBe(90);
-    expect(abfRollProxy.getRoll().total).toBeGreaterThan(90);
+    expect(animabfRollProxy.firstDice.results.length).toBe(2);
+    expect(animabfRollProxy.firstDice.results[0].result).toBe(90);
+    expect(animabfRollProxy.getRoll().total).toBeGreaterThan(90);
   });
 
   test('must not explode roll if first result is less than 90', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xa');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100xa');
     nextValueService.setNextValue(89);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFExploderRoll(abfRoll);
+    const animabfRollProxy = new ABFExploderRoll(animabfRoll);
 
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.firstDice.results.length).toBe(1);
-    expect(abfRollProxy.firstDice.results[0].result).toBe(89);
-    expect(abfRollProxy.getRoll().total).toBe(89);
+    expect(animabfRollProxy.firstDice.results.length).toBe(1);
+    expect(animabfRollProxy.firstDice.results[0].result).toBe(89);
+    expect(animabfRollProxy.getRoll().total).toBe(89);
   });
 
   test('must explode multiple times increasing open range', () => {
-    const { abfRoll, abfRollTesting } = getRoll('1d100xa');
+    const { animabfRoll, animabfRollTesting } = getRoll('1d100xa');
     nextValueService.setNextValue(90);
-    abfRollTesting.evaluate();
+    animabfRollTesting.evaluate();
 
-    const abfRollProxy = new ABFExploderRoll(abfRoll);
+    const animabfRollProxy = new ABFExploderRoll(animabfRoll);
 
     nextValueService.setNextValue(91);
-    abfRollProxy.evaluate();
+    animabfRollProxy.evaluate();
 
-    expect(abfRollProxy.firstDice.results.length).toBeGreaterThan(1);
-    expect(abfRollProxy.getRoll().total).toBeGreaterThan(90 + 91);
+    expect(animabfRollProxy.firstDice.results.length).toBeGreaterThan(1);
+    expect(animabfRollProxy.getRoll().total).toBeGreaterThan(90 + 91);
   });
 });

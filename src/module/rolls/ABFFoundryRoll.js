@@ -15,7 +15,7 @@ export default class ABFFoundryRoll extends Roll {
    * @readonly
    * @type {ABFRoll | undefined}
    */
-  abfRoll;
+  animabfRoll;
 
   /**
    * @param {string} rawFormula
@@ -38,19 +38,19 @@ export default class ABFFoundryRoll extends Roll {
     }
 
     if (this.formula.includes('xa')) {
-      this.abfRoll = new ABFExploderRoll(this);
+      this.animabfRoll = new ABFExploderRoll(this);
     }
 
     if (this.formula.includes('Initiative')) {
-      this.abfRoll = new ABFInitiativeRoll(this);
+      this.animabfRoll = new ABFInitiativeRoll(this);
     }
 
     if (this.formula.includes('ControlRoll')) {
-      this.abfRoll = new ABFControlRoll(this);
+      this.animabfRoll = new ABFControlRoll(this);
     }
 
     if (this.formula.includes('PsychicRoll')) {
-      this.abfRoll = new ABFPsychicRoll(this);
+      this.animabfRoll = new ABFPsychicRoll(this);
     }
   }
 
@@ -63,7 +63,8 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   get fumbled() {
-    if (this.abfRoll instanceof ABFExploderRoll) return this.abfRoll?.fumbled || false;
+    if (this.animabfRoll instanceof ABFExploderRoll)
+      return this.animabfRoll?.fumbled || false;
     return false;
   }
 
@@ -86,7 +87,7 @@ export default class ABFFoundryRoll extends Roll {
   async evaluate(options) {
     await super.evaluate(options);
 
-    await this.abfRoll?.evaluate(options);
+    await this.animabfRoll?.evaluate(options);
 
     return new Promise((resolve, reject) => {
       resolve(this);

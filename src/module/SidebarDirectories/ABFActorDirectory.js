@@ -2,33 +2,35 @@ import { read, utils } from 'xlsx';
 import { parseExcelToActor } from '../actor/utils/parseExcelToActor.js';
 
 export default class ABFActorDirectory extends ActorDirectory {
+  /**
+   * Añadir opciones personalizadas al menú contextual del actor.
+   */
   _getEntryContextOptions() {
-    let result = super._getEntryContextOptions();
-    let excelImportEntry = this.getExcelImportContextOption();
-    result.push(excelImportEntry);
-    return result;
-  }
+    const options = super._getEntryContextOptions();
 
-  getExcelImportContextOption() {
-    return {
+    // Opción personalizada de importación desde Excel
+    options.push({
       name: 'Import from Excel',
       icon: '<i class="fas fa-file-import"></i>',
-      condition: header => {
-        const li = header.closest('.directory-item');
-        const document = this.collection.get(li.data('documentId'));
-        return document.isOwner;
+      condition: li => {
+        const entryId = li.dataset.entryId;
+        const document = this.collection.get(entryId);
+        // Verifica que el usuario tenga al menos permiso de OWNER
+        return document?.testUserPermission(game.user, 'OWNER');
       },
-      callback: header => {
-        const li = header.closest('.directory-item');
-        const document = this.collection.get(li.data('documentId'));
+      callback: li => {
+        const entryId = li.dataset.entryId;
+        const document = this.collection.get(entryId);
         return this.importFromExcelDialog(document);
       }
-    };
+    });
+
+    return options;
   }
 
   /**
-   * Render an import dialog for updating the data related to this Document from an excel file
-   * @param {import('@module/actor/ABFActor').ABFActor} document
+   * Muestra el diálogo para importar desde Excel
+   * @param {Actor} document
    * @returns {Promise<void>}
    */
   async importFromExcelDialog(document) {
@@ -53,13 +55,17 @@ export default class ABFActorDirectory extends ActorDirectory {
             icon: '<i class="fas fa-file-import"></i>',
             label: 'Import',
             callback: html => {
-              const form = html.find('form')[0];
-              if (!form.data.files.length)
+              const fileInput = html.find('input[type="file"]')[0];
+              const file = fileInput?.files[0];
+              if (!file) {
                 return ui.notifications.error('You did not upload a data file!');
+              }
 
-              this.readExcelData(form).then(excelRows =>
-                parseExcelToActor(excelRows, document)
-              );
+              this.readExcelData(file)
+                .then(excelRows => parseExcelToActor(excelRows, document))
+                .catch(() => {
+                  ui.notifications.error('Error reading Excel file.');
+                });
             }
           },
           no: {
@@ -69,34 +75,43 @@ export default class ABFActorDirectory extends ActorDirectory {
         },
         default: 'import'
       },
-      {
-        width: 400
-      }
+      { width: 400 }
     ).render(true);
   }
 
-  readExcelData(form) {
+  /**
+   * Lee y convierte los datos del archivo Excel
+   * @param {File} file
+   * @returns {Promise<Object>}
+   */
+  readExcelData(file) {
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
       reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = read(data, { type: 'array' });
-        const worksheet = workbook.Sheets['NamedRangesList'];
-        if (typeof worksheet !== 'undefined') {
-          const rows = utils.sheet_to_json(worksheet).reduce((acc, obj) => {
-            acc[obj.Name] = obj.Value;
-            return acc;
-          }, {});
-          resolve(rows);
-        } else {
-          reject();
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = read(data, { type: 'array' });
+          const worksheet = workbook.Sheets['NamedRangesList'];
+          if (worksheet) {
+            const rows = utils.sheet_to_json(worksheet).reduce((acc, obj) => {
+              acc[obj.Name] = obj.Value;
+              return acc;
+            }, {});
+            resolve(rows);
+          } else {
+            reject();
+          }
+        } catch (err) {
+          reject(err);
         }
       };
-      reader.onerror = ev => {
+
+      reader.onerror = () => {
         reader.abort();
         reject();
       };
-      reader.readAsArrayBuffer(form.data.files[0]);
+
+      reader.readAsArrayBuffer(file);
     });
   }
 }

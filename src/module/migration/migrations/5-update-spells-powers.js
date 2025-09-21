@@ -19,7 +19,9 @@ const newItems = {
 
 /** @type Migration */
 export const Migration5UpdateSpellsPowers = {
-  version: 5,
+  id: 'migration_fix-spells-powers',
+  version: '1.0.0',
+  order: 1,
   title: 'Update inner spells and psychic powers to match compendia',
   description:
     'This migration updates existing spells and psychic powers to match some changes made on compendia. ' +

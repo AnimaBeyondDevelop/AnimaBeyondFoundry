@@ -20,3 +20,18 @@
   font-weight: bold;
   padding: 0.25rem 0.5rem;
 }
+
+@mixin button {
+  border-radius: $border-radius;
+  background: $light-cream;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+
+  &:hover {
+    background: darken($light-cream, 10%);
+  }
+
+  &:active {
+    background: darken($light-cream, 20%);
+  }
+}
