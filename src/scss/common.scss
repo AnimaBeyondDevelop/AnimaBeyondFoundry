@@ -357,4 +357,23 @@ img {
       transform: rotate(360deg);
     }
   }
+
+  
 }
+
+
+
+.input-container { 
+  min-width: 0;            
+}
+
+.input-container > input.input.primary-input.primary-1 {
+  display: block;          
+  width: 100% !important;             
+  max-width: 100%;         
+  box-sizing: border-box;  
+  flex: 1 1 auto;          
+}
+
+
+
