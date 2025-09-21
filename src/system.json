@@ -10,22 +10,11 @@
   "download": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/releases/download/v1.20.0/animabf.zip",
   "bugs": "https://github.com/AnimaBeyondDevelop/AnimaBeyondFoundry/issues",
   "authors": [
-    { 
-      "name": "Linkaynn", 
-      "url": "https://www.jeseromero.com" 
-    },
-    {
-      "name": "Julen Bordonaba"
-    },
-    {
-      "name": "Alfonso Paiva"
-    },
-    {
-      "name": "Aitor Balmaseda"
-    },
-    {
-      "name": "Luisin"
-    }
+    { "name": "Linkaynn", "url": "https://www.jeseromero.com" },
+    { "name": "Julen Bordonaba" },
+    { "name": "Alfonso Paiva" },
+    { "name": "Aitor Balmaseda" },
+    { "name": "Luisin" }
   ],
   "scripts": [],
   "esmodules": ["animabf.js"],
