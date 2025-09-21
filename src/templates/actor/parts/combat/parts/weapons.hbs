@@ -32,16 +32,6 @@
             class="weapon"
           }}
             {{#if (or (is 'eq' weapon.system.isRanged.value false) (is 'eq' weapon.system.shotType.value 'throw'))}}
-              {{!-- {{>
-              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
-                class="critic-secondary"
-                isVertical=true
-                disabled=true
-                choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
-                title=(localize "anima.ui.combat.weapons.critic.secondary.title")
-                inputName=(concat "system.dynamic.weapons." weapon._id ".system.critic.secondary.value")
-                inputValue=weapon.system.critic.secondary.value
-              }} --}}
               {{> "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="critic-secondary"
                 disabled=true
@@ -153,16 +143,6 @@
                 inputName=(concat "system.dynamic.weapons." weapon._id ".system.equipped.value")
                 inputValue=(is 'eq' weapon.system.equipped.value true)
               }}
-              {{!-- {{>
-              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
-                class="critic-primary"
-                isVertical=true
-                disabled=true
-                title=(localize "anima.ui.combat.weapons.critic.primary.title")
-                choices=xRoot.config.iterables.combat.weapon.criticTypes
-                inputName=(concat "system.dynamic.weapons." weapon._id ".system.critic.primary.value")
-                inputValue=weapon.system.critic.primary.value
-              }} --}}
               {{> "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
                 class="critic-primary"
                 disabled=true
