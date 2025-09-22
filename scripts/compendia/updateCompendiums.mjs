@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const BASE_DIR = path.resolve(__dirname, '../../src/packs');
 const TARGET_SYSTEM_ID = 'animabf';
-const TARGET_SYSTEM_VERSION = '1.20.0';
+const TARGET_SYSTEM_VERSION = '2.0.1';
 const TARGET_CORE_VERSION = '13.345';
 
 function processJsonFile(filePath) {
