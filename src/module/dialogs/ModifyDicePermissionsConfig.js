@@ -12,13 +12,22 @@ export default class ModifyDicePermissionsConfig extends FormApplication {
   }
 
   getData() {
+    const roleLabel = key => {
+      // key: "PLAYER", "TRUSTED", "ASSISTANT", "GAMEMASTER"
+      const cap = key.charAt(0) + key.slice(1).toLowerCase(); // "Player", "Trusted", ...
+      const i18nKey = `USER.Role${cap}`; // e.g. "USER.RolePlayer"
+      const localized = game.i18n.localize(i18nKey);
+      // If no translation is found, fall back to a pretty name
+      return localized !== i18nKey ? localized : cap.replace(/Gm/i, 'GM');
+    };
+
     return {
       roles: Object.entries(CONST.USER_ROLES)
         .filter(([key, val]) => typeof val === 'number')
         .map(([key, val]) => ({
           key,
           val,
-          label: game.i18n.localize(`USER.Role${key.capitalize()}`),
+          label: roleLabel(key),
           checked: this.settings[val]
         }))
     };
