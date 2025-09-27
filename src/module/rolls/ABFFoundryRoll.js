@@ -79,7 +79,16 @@ export default class ABFFoundryRoll extends Roll {
   }
 
   getResults() {
-    return this.dice.map(d => d.results.map(res => res.result)).flat();
+    return this.dice
+      .map(d =>
+        d.results.map(res => {
+          const val = typeof res.result === 'number' ? res.result : 0;
+          const cnt = res?.count ?? 1;
+          const contributes = !(res?.discarded || res?.active === false || cnt === 0);
+          return contributes ? val * cnt : 0;
+        })
+      )
+      .flat();
   }
 
   // TODO Evaluate not finished this | Promise<this>
