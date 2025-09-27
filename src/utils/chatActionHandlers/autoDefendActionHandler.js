@@ -35,7 +35,7 @@ export default async function autoDefendActionHandler(message, _html, ds) {
           updatedAt: Date.now()
         });
       }
-      entries.push(entryFromAuto(r));
+      entries.push(entryFromAuto(r, tok));
     }
 
     // Render consolidated message
@@ -94,11 +94,12 @@ function safeParseJSON(s) {
   }
 }
 
-function entryFromAuto(r) {
+function entryFromAuto(r, tok) {
   return {
     actorId: r.actor.id,
-    tokenId: r.token?.id ?? '',
-    label: r.actor.name,
+    // Prefer token instance over actor
+    tokenId: r.token?.id ?? tok?.id ?? '',
+    label: r.token?.name ?? tok?.name ?? r.actor.name,
     defenseTotal: Number(r.defenseTotal ?? 0),
     damageFinal: Number(
       r.combatResult?.damageFinal ??

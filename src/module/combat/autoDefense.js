@@ -40,8 +40,8 @@ export async function autoRollDefenseAgainstAttack({
 
   const die =
     naturalBase >= 200
-      ? actor.system?.general?.diceSettings?.abilityMasteryDie?.value ?? '1d100'
-      : actor.system?.general?.diceSettings?.abilityDie?.value ?? '1d100';
+      ? actor.system?.general?.diceSettings?.abilityMasteryDie?.value ?? '1d100xa'
+      : actor.system?.general?.diceSettings?.abilityDie?.value ?? '1d100xa';
 
   const staticBonus = finalBase; // no extra modifiers in auto mode
   const formula = `${die} + ${staticBonus}`;

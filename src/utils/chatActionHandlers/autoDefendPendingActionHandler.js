@@ -54,7 +54,7 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
         updatedAt: Date.now()
       });
 
-      entries.push(entryFromAuto(r));
+      entries.push(entryFromAuto(r, tok));
     }
 
     if (!entries.length)
@@ -103,11 +103,12 @@ function safeParseJSON(s) {
     return null;
   }
 }
-function entryFromAuto(r) {
+function entryFromAuto(r, tok) {
   return {
     actorId: r.actor.id,
-    tokenId: r.token?.id ?? '',
-    label: r.actor.name,
+    // Prefer token instance name over actor name (v13-safe)
+    tokenId: r.token?.id ?? tok?.id ?? '',
+    label: r.token?.name ?? tok?.name ?? r.actor.name,
     defenseTotal: Number(r.defenseTotal ?? 0),
     damageFinal: Number(
       r.combatResult?.damageFinal ??
