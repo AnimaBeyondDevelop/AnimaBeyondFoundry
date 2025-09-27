@@ -177,7 +177,18 @@ export default class ABFActorSheet extends ActorSheet {
       const label = dataset.label ? `Rolling ${dataset.label}` : '';
       const mod = await openModDialog();
       let formula = `${dataset.roll}+ ${mod}`;
-      if (parseInt(dataset.extra) >= 200) formula = formula.replace('xa', 'xamastery');
+      if (parseInt(dataset.extra) >= 200) {
+        formula = formula.replace(
+          this.actor.system.general.diceSettings.abilityDie.value,
+          this.actor.system.general.diceSettings.abilityMasteryDie.value
+        );
+        // let splittedFormula = formula.split(
+        //   this.actor.system.general.diceSettings.abilityDie.value
+        // );
+        // formula = splittedFormula.join(
+        //   this.actor.system.general.diceSettings.abilityMasteryDie.value
+        // );
+      }
       const roll = new ABFFoundryRoll(formula, this.actor.system);
 
       roll.toMessage({

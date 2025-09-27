@@ -113,11 +113,13 @@ export class ABFActor extends Actor {
     const abilityValue = this.system.secondaries[groupPath][ability].final.value;
     const label = name ? `Rolling ${name}` : '';
     const mod = await openModDialog();
-    let formula = `1d100xa + ${abilityValue} + ${mod ?? 0}`;
+    let formula = `${
+      this.system.general.diceSettings.abilityDie.value
+    } + ${abilityValue} + ${mod ?? 0}`;
     if (abilityValue >= 200)
       formula = formula.replace(
-        this.system.general.diceSettings.abilityDie,
-        this.system.general.diceSettings.abilityMasteryDie
+        this.system.general.diceSettings.abilityDie.value,
+        this.system.general.diceSettings.abilityMasteryDie.value
       );
     const roll = new ABFFoundryRoll(formula, this.system);
     await roll.roll();
