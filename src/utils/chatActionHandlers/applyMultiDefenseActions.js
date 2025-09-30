@@ -108,7 +108,8 @@ async function applyDamageToActor(actor, amount) {
     const primary = 'system.characteristics.secondaries.lifePoints.value';
     let cur = getProperty(actor, primary);
     if (typeof cur === 'number' && !Number.isNaN(cur)) {
-      const next = Math.max(0, cur - amount);
+      // const next = Math.max(0, cur - amount);
+      const next = cur - amount;
       await actor.update({ [primary]: next });
       ui.notifications?.info(`${actor.name}: -${amount} LP`);
       return true;
