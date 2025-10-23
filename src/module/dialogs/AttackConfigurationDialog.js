@@ -25,12 +25,12 @@ export class AttackConfigurationDialog extends FormApplication {
       ui.notifications?.warn('Arma no encontrada.');
     }
 
-    // Snapshot de targets si no te lo pasan
+    // Snapshot de targets si no te lo pasan (tokenUuid = UUID si existe)
     const fallbackSnapshot = Array.from(game.user?.targets ?? [])
       .map(t => {
         const token = t?.document ?? t;
         const actorUuid = token?.actor?.id ?? token?.actorId ?? '';
-        const tokenUuid = token?.id ?? '';
+        const tokenUuid = token?.uuid ?? token?.document?.uuid ?? token?.id ?? '';
         const label = token?.name ?? token?.actor?.name ?? '';
         return actorUuid && tokenUuid
           ? { actorUuid, tokenUuid, state: 'pending', label, updatedAt: Date.now() }
@@ -38,7 +38,6 @@ export class AttackConfigurationDialog extends FormApplication {
       })
       .filter(Boolean);
 
-    // 👇 Permite a jugadores (owners) abrir/usar el diálogo sin ser GM
     const isOwner = attackerActor.testUserPermission?.(
       game.user,
       CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
@@ -69,10 +68,7 @@ export class AttackConfigurationDialog extends FormApplication {
         distance: { value: 0, enable: false, check: false }
       },
       targets: Array.isArray(targets) && targets.length ? targets : fallbackSnapshot,
-
-      // 🔓 clave: sin GM. Vale con ser owner; o forzar con options.allowed
       allowed: options?.allowed ?? isOwner ?? false,
-
       config: ABFConfig,
       attackSent: false
     };
@@ -151,7 +147,6 @@ export class AttackConfigurationDialog extends FormApplication {
     });
   }
 
-  // Comments in English
   async _sendAttack() {
     const actor = this.attackerActor;
     if (!actor) return ui.notifications?.warn('Actor no encontrado.');
@@ -174,8 +169,17 @@ export class AttackConfigurationDialog extends FormApplication {
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
+      // 🔹 Use token speaker (alias = token name) instead of actor
+      const tokenDocOrToken = this.modalData?.attacker?.token ?? null; // TokenDocument or Token
+      const tokenForSpeaker = tokenDocOrToken?.object ?? tokenDocOrToken ?? null; // Token if on canvas
+      const tokenName =
+        tokenForSpeaker?.name ?? tokenForSpeaker?.document?.name ?? actor.name;
+      const speaker = tokenForSpeaker
+        ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
+        : ChatMessage.getSpeaker({ actor });
+
       await roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor }),
+        speaker,
         flavor: 'Rolling attack'
       });
 
@@ -192,7 +196,6 @@ export class AttackConfigurationDialog extends FormApplication {
         .critBonus(0)
         .attackerId(actor.id)
         .weaponId(weapon.id)
-        // Inject targets captured at dialog open
         .targets(this.modalData.targets ?? [])
         .build();
 

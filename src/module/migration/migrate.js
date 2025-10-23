@@ -4,9 +4,69 @@ import { ABFActor } from '../actor/ABFActor';
 import { ABFDialogs } from '../dialogs/ABFDialogs';
 import ABFItem from '../items/ABFItem';
 import isVersionGreater from '@module/utils/functions/isVersionGreater';
-import * as MigrationList from './migrations';
 
 /** @typedef {import('./migrations/Migration').Migration} Migration */
+
+/* ------------------------- Auto-discovery of migrations -------------------- */
+// Eagerly import every JS module under ./migrations and nested folders
+const migrationModules = {
+  ...import.meta.glob('./migrations/*.js', { eager: true }),
+  ...import.meta.glob('./migrations/**/*.js', { eager: true }),
+  ...import.meta.glob('./**/migrations/*.js', { eager: true }),
+  ...import.meta.glob('./**/migrations/**/*.js', { eager: true })
+};
+
+/** @type {Record<string, Migration>} */
+const MigrationList = (() => {
+  const registry = {};
+
+  /** @param {any} mig @param {string} src */
+  const register = (mig, src) => {
+    // Basic shape check
+    if (!mig || typeof mig !== 'object') return;
+    const { id, version, title } = mig;
+    if (!id || !version || !title) return;
+
+    if (registry[id]) {
+      console.warn(
+        `[ABF] migrations: override '${id}' from ${registry[id].__src} with ${src}`
+      );
+    }
+    try {
+      Object.defineProperty(mig, '__src', { value: src });
+    } catch {}
+    registry[id] = mig;
+  };
+
+  for (const p in migrationModules) {
+    const mod = migrationModules[p];
+
+    // 1) default export (single migration or array of migrations)
+    if (mod?.default) {
+      if (Array.isArray(mod.default))
+        mod.default.forEach(m => register(m, `default@${p}`));
+      else register(mod.default, `default@${p}`);
+    }
+
+    // 2) named export: "migrations" array
+    if (Array.isArray(mod?.migrations)) {
+      mod.migrations.forEach(m => register(m, `migrations@${p}`));
+    }
+
+    // 3) any other named exports that look like a Migration
+    for (const [key, value] of Object.entries(mod)) {
+      if (key === 'default' || key === 'migrations') continue;
+      if (value && typeof value === 'object') register(value, `${key}@${p}`);
+    }
+  }
+
+  console.debug(
+    `[ABF] migrations loaded (${Object.keys(registry).length})`,
+    Object.keys(registry)
+  );
+  return registry;
+})();
+/* -------------------------------------------------------------------------- */
 
 /**
  * @param {Migration} migration

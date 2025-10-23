@@ -16,10 +16,11 @@ export function createWeaponAttack(sheet, e) {
   const snapshotTargets = Array.from(game.user?.targets ?? [])
     .map(t => {
       const tok = t?.document ?? t;
-      const actorUuid = tok?.actor?.id ?? tok?.actorId ?? "";
-      const tokenUuid = tok?.id ?? "";
-      const label = tok?.name ?? tok?.actor?.name ?? "";
-      return (actorUuid && tokenUuid)
+      const actorUuid = tok?.actor?.id ?? tok?.actorId ?? '';
+      // Prefer UUID; fallback to id
+      const tokenUuid = tok?.uuid ?? tok?.document?.uuid ?? tok?.id ?? '';
+      const label = tok?.name ?? tok?.actor?.name ?? '';
+      return actorUuid && tokenUuid
         ? { actorUuid, tokenUuid, state: 'pending', label, updatedAt: Date.now() }
         : null;
     })
@@ -27,7 +28,7 @@ export function createWeaponAttack(sheet, e) {
 
   new AttackConfigurationDialog(
     { attacker: attackerToken, weaponId, targets: snapshotTargets },
-    { allowed: true } 
+    { allowed: true }
   );
 
   console.log('Usando arma:', weapon.name);

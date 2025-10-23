@@ -261,7 +261,6 @@ export class CombatAttackDialog extends FormApplication {
       return super.close(options);
     }
 
-    // eslint-disable-next-line no-useless-return,consistent-return
     return;
   }
 
@@ -340,7 +339,6 @@ export class CombatAttackDialog extends FormApplication {
         if (this.modalData.attacker.withoutRoll)
           formula = formula.replace('1d100xa', '0');
         if (this.attackerActor.system.combat.attack.base.value >= 200) {
-          // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
 
@@ -364,48 +362,14 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        // --- Unarmed helper weapon (aux) ---
-        // Build a pseudo-weapon when attacking unarmed so GM dialog never sees undefined.
-        let weaponForPayload = weapon;
-        if (unarmed) {
-          const strMod =
-            this.attackerActor.system.characteristics.primaries.strength.mod ?? 0;
-          const unarmedDamageFinal = Math.max(0, (damage?.special ?? 0) + 10 + strMod);
-
-          // ensure damage.final carries the computed value
-          if (typeof damage === 'object') {
-            damage.final = unarmedDamageFinal;
-          }
-
-          // minimal but useful structure for downstream usage (macros, UI)
-          weaponForPayload = {
-            name: game.i18n.localize('macros.combat.unarmed') || 'Unarmed',
-            system: {
-              isRanged: { value: false },
-              shotType: { value: '' },
-              special: { value: '' }, // no special, avoids resistance check side effects
-              attack: {
-                final: { value: this.attackerActor.system.combat.attack.final.value }
-              },
-              reducedArmor: { final: { value: 0 } },
-              damage: { final: { value: unarmedDamageFinal } },
-              critic: {
-                primary: { value: game.animabf.weapon.WeaponCritic.IMPACT },
-                secondary: { value: game.animabf.weapon.NoneWeaponCritic.NONE }
-              }
-            }
-          };
-
-          // Unarmed attacks are not projectiles
-          projectile = { value: false, type: '' };
-        }
-        // --- end unarmed helper ---
+        // New fields
+        const reducedArmorFinal = weapon?.system?.reducedArmor?.final?.value ?? 0;
+        const weaponName = weapon?.name ?? game.i18n.localize('macros.combat.unarmed') ?? 'Unarmed';
 
         const critic = criticSelected ?? game.animabf.weapon.WeaponCritic.IMPACT;
 
         let resistanceEffect = { value: 0, type: undefined, check: false };
         if (weapon) {
-          // Only read special from real weapons
           resistanceEffect = resistanceEffectCheck(weapon.system.special.value);
         }
 
@@ -418,7 +382,9 @@ export class CombatAttackDialog extends FormApplication {
             damage: damage.final,
             attack,
             weaponUsed,
-            weapon: weaponForPayload,
+            reducedArmorFinal,
+            weaponName,
+            weapon,
             critic,
             modifier: combatModifier,
             fatigueUsed,
@@ -481,11 +447,9 @@ export class CombatAttackDialog extends FormApplication {
         }
         let formula = `1d100xa + ${magicProjection.final} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
-          // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
         if (magicProjection.base >= 200) {
-          // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
 
@@ -518,6 +482,7 @@ export class CombatAttackDialog extends FormApplication {
             magicProjection: magicProjection.final,
             critic,
             damage: damage.final,
+            reducedArmorFinal: 0,
             roll: rolled,
             total: roll.total,
             fumble: roll.fumbled,
@@ -568,11 +533,9 @@ export class CombatAttackDialog extends FormApplication {
         }
         let formula = `1d100xa + ${psychicProjection} + ${combatModifier ?? 0}`;
         if (this.modalData.attacker.withoutRoll) {
-          // Remove the dice from the formula
           formula = formula.replace('1d100xa', '0');
         }
         if (this.attackerActor.system.psychic.psychicProjection.base.value >= 200) {
-          // Mastery reduces the fumble range
           formula = formula.replace('xa', 'xamastery');
         }
 
@@ -635,7 +598,7 @@ export class CombatAttackDialog extends FormApplication {
             psychicProjection,
             critic,
             damage,
-            psychicFatigue,
+            reducedArmorFinal: 0,
             roll: psychicFatigue ? 0 : rolled,
             total: psychicFatigue ? 0 : psychicProjectionRoll.total,
             fumble: psychicFatigue ? false : psychicProjectionRoll.fumbled,
@@ -737,6 +700,19 @@ export class CombatAttackDialog extends FormApplication {
     const prevWeapon = this.modalData.attacker.combat.weaponUsed;
     const prevSpell = this.modalData.attacker.mystic.spellUsed;
     const prevPower = this.modalData.attacker.psychic.powerUsed;
+
+    if (
+      Object.prototype.hasOwnProperty.call(formData, 'attacker.mystic.spellUsed') &&
+      formData['attacker.mystic.spellUsed'] === ''
+    ) {
+      delete formData['attacker.mystic.spellUsed'];
+    }
+    if (
+      Object.prototype.hasOwnProperty.call(formData, 'attacker.mystic.spellGrade') &&
+      formData['attacker.mystic.spellGrade'] === ''
+    ) {
+      delete formData['attacker.mystic.spellGrade'];
+    }
 
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 

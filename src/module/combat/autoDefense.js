@@ -3,19 +3,41 @@ import { AbilityData } from '../types/AbilityData.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll.js';
 import { computeCombatResult } from './computeCombatResult.js';
 
+/**
+ * Auto-pick best defense (block vs dodge), roll it, post the roll
+ * and return the full computed defense package.
+ *
+ * @param {object} params
+ * @param {Token|null}   params.defenderToken  Token instance (preferred)
+ * @param {Actor|null}   params.defenderActor  Actor (used if no token)
+ * @param {object}       params.attackData     Serialized ABFAttackData
+ * @param {number|string|null|undefined} [params.defenseMod=0] - Extra modifier added to the defense roll.
+ *   Accepted types: number, numeric string, '', null, undefined. Non-numeric → 0.
+ * @returns {Promise<object>} Defense result payload
+ */
 export async function autoRollDefenseAgainstAttack({
-  defenderToken,
-  defenderActor,
-  attackData
+  defenderToken = null,
+  defenderActor = null,
+  attackData,
+  defenseMod = 0
 }) {
-  const actor = defenderActor ?? defenderToken?.actor;
+  const actor = defenderActor ?? defenderToken?.actor ?? null;
   if (!actor) throw new Error('autoRollDefenseAgainstAttack: defender actor missing');
 
-  // --- pick best option: BLOCK (best weapon) vs DODGE ---
+  // --- helpers ---
+  /** @param {*} v */
+  const toSafeNumber = v => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+  const safeMod = toSafeNumber(defenseMod);
+
+  // --- Choose best option: BLOCK (best weapon) vs DODGE ---
   const weapons = actor.system?.combat?.weapons ?? [];
   const bestWeapon = weapons.reduce((best, w) => {
-    const v = Number(w?.system?.block?.final?.value ?? -Infinity);
-    return v > (best?.system?.block?.final?.value ?? -Infinity) ? w : best;
+    const cand = Number(w?.system?.block?.final?.value ?? -Infinity);
+    const cur = Number(best?.system?.block?.final?.value ?? -Infinity);
+    return cand > cur ? w : best;
   }, undefined);
 
   const blockBase = Number(
@@ -43,13 +65,14 @@ export async function autoRollDefenseAgainstAttack({
       ? actor.system?.general?.diceSettings?.abilityMasteryDie?.value ?? '1d100xa'
       : actor.system?.general?.diceSettings?.abilityDie?.value ?? '1d100xa';
 
-  const staticBonus = finalBase; // no extra modifiers in auto mode
-  const formula = `${die} + ${staticBonus}`;
+  const staticBonus = finalBase;
+  // Include safeMod in the formula so chat shows the actual total
+  const formula = `${die} + ${staticBonus} + ${safeMod}`;
 
   const roll = new ABFFoundryRoll(formula, actor.system);
   await roll.evaluate({ async: true });
 
-  // === NUEVO: publicar la tirada con el mismo rollMode que la defensa normal ===
+  // --- Post the roll using token speaker + alias = token name ---
   const rollMode =
     game.settings?.get?.('core', 'rollMode') ?? CONST.DICE_ROLL_MODES.PUBLIC;
   const flavorKey =
@@ -58,20 +81,20 @@ export async function autoRollDefenseAgainstAttack({
       : 'chat.defense.autoRollFlavor.dodge';
   const flavor = game.i18n?.localize?.(flavorKey) || `Auto Defense — ${defenseType}`;
 
+  const tokenName = defenderToken?.name ?? defenderToken?.document?.name ?? actor.name;
   const speaker = defenderToken
-    ? ChatMessage.getSpeaker({ token: defenderToken })
+    ? { ...ChatMessage.getSpeaker({ token: defenderToken }), alias: tokenName }
     : ChatMessage.getSpeaker({ actor });
 
   await roll.toMessage({ speaker, flavor, rollMode });
 
-  // Armor vs attack's armorType
+  // --- Build defense data (TA depends on attack's armorType) ---
   const armorType = attackData?.armorType;
   const taFinal =
     armorType != null ? actor.system?.combat?.totalArmor?.at?.[armorType]?.value ?? 0 : 0;
 
-  // Build defense data
   const defenseData = ABFDefenseData.builder()
-    .defenseAbility(roll.total)
+    .defenseAbility(roll.total) // roll already includes safeMod
     .armor(taFinal)
     .inmodifiableArmor(false)
     .defenseType(defenseType)
@@ -86,7 +109,7 @@ export async function autoRollDefenseAgainstAttack({
     actor,
     token: defenderToken ?? null,
     defenseType,
-    defenseTotal: roll.total,
+    defenseTotal: roll.total, // includes safeMod
     weaponId: bestWeapon?._id ?? '',
     defenseData,
     combatResult
