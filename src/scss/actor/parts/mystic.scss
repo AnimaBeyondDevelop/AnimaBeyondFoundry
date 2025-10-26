@@ -213,7 +213,7 @@
 
         display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-column-gap: 0.1rem;
+        grid-column-gap: 0.25rem;
 
         .name .input-container {
           width: 100%;
@@ -233,10 +233,30 @@
 
         display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-column-gap: 0.1rem;
+        grid-column-gap: 0.25rem;
 
         .name .input-container {
           width: 100%;
+        }
+      }
+
+      .maintenance-total {
+        margin-top: 1.5rem !important;
+        padding: 0.4rem 0.5rem;
+        background: rgba($red, 0.1);
+        border: 1px solid rgba($red, 0.3);
+        border-radius: $border-radius;
+        text-align: center;
+        font-size: 1rem;
+
+        strong {
+          color: $red;
+        }
+
+        .total-cost {
+          font-weight: bold;
+          color: $black;
+          font-size: 1.1rem;
         }
       }
     }
