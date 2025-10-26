@@ -81,6 +81,43 @@ export class ABFAttackData {
   }
 
   /**
+   * Try to resolve the most relevant TokenDocument for the given actor.
+   * Preference order:
+   *  1) a controlled token on the canvas for the actor
+   *  2) a selected token on the canvas for the actor
+   *  3) any token on the current scene for the actor
+   * Returns null if none found.
+   */
+  static _resolveTokenForActor(actor) {
+    try {
+      if (!actor || !canvas?.tokens) return null;
+
+      // 1) any controlled token matching actor
+      const controlled = canvas.tokens.controlled?.find(t => t?.actor?.id === actor.id);
+      if (controlled) return controlled.document ?? controlled;
+
+      // 2) any selected/hovered token (use controlled above; fallback to first controlled or selected)
+      const selected = canvas.tokens.placeables?.find(
+        t =>
+          t.isHovered ||
+          (t.isVisible &&
+            t.document?.id &&
+            canvas.tokens.controlled.length === 0 &&
+            t.document?.actorId === actor.id)
+      );
+      if (selected && selected.actor?.id === actor.id)
+        return selected.document ?? selected;
+
+      // 3) any token on the scene for the actor
+      const anyToken = canvas.tokens.placeables?.find(t => t?.actor?.id === actor.id);
+      if (anyToken) return anyToken.document ?? anyToken;
+    } catch (err) {
+      console.warn('ABFAttackData._resolveTokenForActor error', err);
+    }
+    return null;
+  }
+
+  /**
    * Render and post the attack chat message using Templates.Chat.AttackData.
    * It does NOT post the separate dice roll message; do that before if needed.
    * @param {{actor?: Actor, weapon?: Item}} [opts]
@@ -110,10 +147,17 @@ export class ABFAttackData {
     });
     const initialTargets = (this.targets ?? []).map(ABFAttackData._normalizeTarget);
 
+    // Resolve a token to use for the chat speaker so chat shows token name when possible.
+    // If no token is found, fall back to the actor-only speaker (legacy behavior).
+    const token = ABFAttackData._resolveTokenForActor(actor);
+    const speaker = token
+      ? ChatMessage.getSpeaker({ actor, token })
+      : ChatMessage.getSpeaker({ actor });
+
     const msg = await ChatMessage.create({
       user: game.user.id,
       content: content0,
-      speaker: ChatMessage.getSpeaker({ actor }),
+      speaker,
       ...vis,
       flags: {
         animabf: {

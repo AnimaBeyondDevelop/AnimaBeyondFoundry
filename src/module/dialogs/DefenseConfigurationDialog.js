@@ -148,8 +148,17 @@ export class DefenseConfigurationDialog extends FormApplication {
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
+      // 🔹 Use token for speaker (alias = token name)
+      const tokenDocOrToken = defender?.token ?? null; // TokenDocument or Token
+      const tokenForSpeaker = tokenDocOrToken?.object ?? tokenDocOrToken ?? null;
+      const tokenName =
+        tokenForSpeaker?.name ?? tokenForSpeaker?.document?.name ?? actor.name;
+      const speaker = tokenForSpeaker
+        ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
+        : ChatMessage.getSpeaker({ actor });
+
       await roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor }),
+        speaker,
         flavor: 'Rolling defense',
         rollMode: vis.rollMode
       });
@@ -166,13 +175,12 @@ export class DefenseConfigurationDialog extends FormApplication {
         .inmodifiableArmor(false)
         .defenseType(type)
         .defenderId(actor.id)
-        .defenderTokenId(defender.token?.id ?? '')
+        .defenderTokenId(defender?.token?.id ?? '')
         .weaponId(weapon?._id ?? '')
         .build();
 
       const combatResult = computeCombatResult(attackData, defenseData);
 
-      // Reliable damageFinal number for buttons
       const damageFinal = Number(
         combatResult?.damageFinal ??
           combatResult?.damage?.final ??
@@ -181,32 +189,38 @@ export class DefenseConfigurationDialog extends FormApplication {
           0
       );
 
-      // 👉 Pasamos defenderId/defenderTokenId al template para los data-*
       const content = await renderTemplate(Templates.Chat.CombatResult, {
         combatResult: { ...combatResult, damageFinal },
         defenderId: actor.id,
-        defenderTokenId: defender.token?.id ?? ''
+        defenderTokenId: defender?.token?.id ?? ''
       });
 
       await ChatMessage.create({
         content,
-        speaker: ChatMessage.getSpeaker({ actor }),
+        speaker, // 🔹 usa el mismo speaker basado en token
         ...vis,
         flags: {
           animabf: {
             kind: 'combatResult',
             result: { ...combatResult, damageFinal },
-            defender: { actorId: actor.id, tokenId: defender.token?.id ?? '' },
-            damageControl: { appliedOnce: false, apps: [] } // usado por la confirmación
+            defender: {
+              actorId: actor.id,
+              tokenId: defender?.token?.id ?? ''
+            },
+            damageControl: { appliedOnce: false, apps: [] }
           }
         }
       });
 
-      // Mark as resolved + done in the original attack
+      // Mark as resolved + done in the original attack (store tokenUuid as UUID when possible)
       this._resolved = true;
       await updateAttackTargetsFlag(this.modalData.messageId, {
         actorUuid: actor.id,
-        tokenUuid: this.modalData.defender?.token?.id ?? '',
+        tokenUuid:
+          tokenDocOrToken?.document?.uuid ??
+          tokenDocOrToken?.uuid ??
+          defender?.token?.id ??
+          '',
         state: 'done',
         rolledBy: game.user.id,
         defenseResult: defenseData.toJSON?.() ?? defenseData,

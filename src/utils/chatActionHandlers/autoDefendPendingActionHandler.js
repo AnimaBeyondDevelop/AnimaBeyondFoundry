@@ -1,6 +1,8 @@
 import { autoRollDefenseAgainstAttack } from '../../module/combat/autoDefense.js';
 import { Templates } from '../../module/utils/constants';
 import { updateAttackTargetsFlag } from '../../utils/updateAttackTargetsFlag.js';
+import { resolveTokenName } from '../tokenName.js';
+import { openModDialog } from '../../module/utils/dialogs/openSimpleInputDialog.js';
 
 export default async function autoDefendPendingActionHandler(message, _html, ds) {
   try {
@@ -18,36 +20,40 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
 
     const targets = msg.getFlag(game.animabf.id, 'targets') ?? [];
     const pendings = targets.filter(t => (t.state ?? 'pending') === 'pending');
-
     if (!pendings.length) return ui.notifications?.info('No hay objetivos pendientes.');
 
-    // Resolve tokens on canvas by tokenUuid or by actorUuid
+    const mod = await openModDialog();
+
     const entries = [];
     for (const t of pendings) {
-      const tok = t.tokenUuid
-        ? canvas.tokens.get(t.tokenUuid)
-        : t.actorUuid
-        ? canvas.tokens.placeables.find(tt => tt.actor?.id === t.actorUuid)
-        : null;
+      const tok = resolveTokenForTarget(t, message);
       const actor = tok?.actor ?? (t.actorUuid ? game.actors.get(t.actorUuid) : null);
       if (!actor) continue;
 
-      // permission: GM or owner
       if (
         !game.user.isGM &&
         !actor.testUserPermission?.(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
-      )
+      ) {
         continue;
+      }
 
       const r = await autoRollDefenseAgainstAttack({
         defenderToken: tok ?? null,
         defenderActor: actor,
-        attackData
+        attackData,
+        defenseMod: mod
       });
 
       await updateAttackTargetsFlag(msg.id, {
         actorUuid: r.actor.id,
-        tokenUuid: r.token?.id ?? tok?.id ?? '',
+        // store UUID when possible (v13 friendly)
+        tokenUuid:
+          r.token?.document?.uuid ??
+          tok?.document?.uuid ??
+          r.token?.uuid ??
+          tok?.uuid ??
+          tok?.id ??
+          '',
         state: 'done',
         rolledBy: game.user.id,
         defenseResult: r.defenseData.toJSON?.() ?? r.defenseData,
@@ -69,7 +75,7 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
 
     const cm = await ChatMessage.create({
       content,
-      speaker: message.speaker, // keep same speaker context
+      speaker: message.speaker,
       flags: {
         animabf: {
           kind: 'multiDefenseResult',
@@ -96,6 +102,37 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
 }
 export const action = 'auto-defend-pending';
 
+/** Resolve token from target entry supporting UUID (Scene.X.Token.Y) or raw id */
+function resolveTokenForTarget(t, message) {
+  const id = t?.tokenUuid ?? '';
+  // UUID path
+  if (id && id.includes('.')) {
+    try {
+      const doc = fromUuidSync(id); // TokenDocument
+      return doc?.object ?? null; // Token on canvas if present
+    } catch {
+      /* noop */
+    }
+  }
+  // Raw canvas id
+  if (id) {
+    const onCanvas = canvas.tokens?.get?.(id);
+    if (onCanvas) return onCanvas;
+  }
+  // Fallback by actor id (same scene first)
+  const actorId = t?.actorUuid ?? '';
+  if (actorId) {
+    const sceneId = message?.speaker?.scene;
+    if (sceneId) {
+      const tok = game.scenes?.get(sceneId)?.tokens?.find(tt => tt.actorId === actorId);
+      const live = tok ? canvas.tokens?.get?.(tok.id) : null;
+      if (live) return live;
+    }
+    return canvas.tokens?.placeables?.find(tt => tt.actor?.id === actorId) ?? null;
+  }
+  return null;
+}
+
 function safeParseJSON(s) {
   try {
     return JSON.parse(s);
@@ -104,11 +141,23 @@ function safeParseJSON(s) {
   }
 }
 function entryFromAuto(r, tok) {
+  const tokenUuid =
+    r.token?.document?.uuid ??
+    tok?.document?.uuid ??
+    r.token?.uuid ??
+    tok?.uuid ??
+    tok?.id ??
+    '';
+  const actorUuid = r.actor?.id ?? tok?.actor?.id ?? '';
+  const label = resolveTokenName(
+    { tokenUuid, actorUuid },
+    { message: ui?.chat?.lastMessage }
+  );
+
   return {
     actorId: r.actor.id,
-    // Prefer token instance name over actor name (v13-safe)
     tokenId: r.token?.id ?? tok?.id ?? '',
-    label: r.token?.name ?? tok?.name ?? r.actor.name,
+    label: label ?? r.token?.name ?? tok?.name ?? r.actor.name, // final fallback
     defenseTotal: Number(r.defenseTotal ?? 0),
     damageFinal: Number(
       r.combatResult?.damageFinal ??

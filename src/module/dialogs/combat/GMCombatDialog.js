@@ -184,34 +184,8 @@ export class GMCombatDialog extends FormApplication {
     attacker.result = result;
 
     if (result.type === 'combat') {
-      // Prefer an explicit weapon object coming from the attack dialog (unarmed aux)
-      let w = result.values.weapon;
-
-      if (!w) {
-        const { weapons } = this.attackerActor.system.combat;
-        w = weapons.find(wep => wep._id === result.values.weaponUsed);
-      }
-
-      // Final fallback for unarmed: craft a minimal pseudo-weapon so downstream never breaks
-      if (!w && result.values.unarmed) {
-        const unarmedDamage = Math.max(0, result.values?.damage ?? 0);
-        w = {
-          name: game.i18n.localize('macros.combat.unarmed') || 'Unarmed',
-          system: {
-            isRanged: { value: false },
-            shotType: { value: '' },
-            special: { value: '' },
-            reducedArmor: { final: { value: 0 } },
-            damage: { final: { value: unarmedDamage } },
-            critic: {
-              primary: { value: game.animabf.weapon.WeaponCritic.IMPACT },
-              secondary: { value: game.animabf.weapon.NoneWeaponCritic.NONE }
-            }
-          }
-        };
-      }
-
-      attacker.result.weapon = w;
+      const { weapons } = this.attackerActor.system.combat;
+      attacker.result.weapon = weapons.find(wep => wep._id === result.values.weaponUsed);
     }
 
     if (result.type === 'mystic') {
@@ -297,14 +271,11 @@ export class GMCombatDialog extends FormApplication {
       const atResistance = defender.result.values?.at * 10 + 20;
 
       if (this.isDamagingCombat) {
-        const { weapon } = attacker.result;
-        const finalAt = Math.max(
-          defender.result.values.at - weapon.system.reducedArmor.final.value,
-          0
-        );
+        const reducedArmor = attacker.result.values?.reducedArmorFinal ?? 0;
+        const finalAt = Math.max(defender.result.values.at - reducedArmor, 0);
         const finalBaseDamage =
-          attacker.result.values.damage -
-          this.defenderActor.system.combat.damageReduction.final.value;
+          (attacker.result.values.damage ?? 0) -
+          (this.defenderActor.system.combat.damageReduction.final.value ?? 0);
 
         const combatResult = calculateCombatResult(
           attackerTotal,
@@ -450,14 +421,14 @@ export class GMCombatDialog extends FormApplication {
 
       if (this.isDamagingCombat) {
         const { attacker, defender } = this.modalData;
-        const { weapon } = attacker.result;
+        const reducedArmor = attacker.result.values?.reducedArmorFinal ?? 0;
 
         newCombatResult.attack = Math.max(
           attacker.result.values.total + this.modalData.attacker.customModifier,
           0
         );
         newCombatResult.at = Math.max(
-          defender.result.values.at - weapon.system.reducedArmor.final.value,
+          defender.result.values.at - reducedArmor,
           0
         );
         newCombatResult.halvedAbsorption =
@@ -507,7 +478,7 @@ export class GMCombatDialog extends FormApplication {
           totalAttack: attacker.result.values.total,
           appliedDamage: calculations.damage,
           damageType: attacker.result.values?.critic,
-          bloodColor: 'red', // add bloodColor to actor template
+          bloodColor: 'red',
           missedAttack: false,
           resistanceRoll,
           defenderPsychicFatigue: defender.result.values?.psychicFatigue,
@@ -520,10 +491,11 @@ export class GMCombatDialog extends FormApplication {
     }
 
     if (attacker.result?.type === 'combat') {
-      if (!attacker.result.weapon) {
-        attacker.result.weapon = { name: 'Unarmed' };
-      }
-      const { name } = attacker.result.weapon;
+      const weaponName =
+        attacker.result.values?.weaponName ||
+        attacker.result.weapon?.name ||
+        'Unarmed';
+      const { name } = { name: weaponName };
       macroName = macroPrefixAttack + name;
     } else if (attacker.result?.type === 'mystic') {
       macroName = attacker.result.values.spellName;

@@ -17,6 +17,7 @@ import { registerGlobalTypes } from './utils/registerGlobalTypes';
 import ABFCombatant from './module/combat/ABFCombatant';
 
 import { chatActionHandlers } from './utils/chatActionHandlers.js';
+import { preloadClickHandlers } from './module/actor/utils/createClickHandlers.js';
 
 import { ABFAttackData } from './module/combat/ABFAttackData.js';
 import { getChatContextMenuFactories } from './utils/buildChatContextMenu.js';
@@ -25,6 +26,8 @@ import { Templates } from './module/utils/constants';
 import './scss/animabf.scss';
 
 import { System, registerSystemOnGame } from './utils/systemMeta';
+
+import { resolveTokenName } from './utils/tokenName.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -66,6 +69,9 @@ Hooks.once('init', async () => {
   registerHelpers();
 
   registerKeyBindings();
+
+  // Warm-up click handlers so they stay cached for later use from sheets
+  preloadClickHandlers();
 });
 
 /* ------------------------------------ */
@@ -139,12 +145,10 @@ Hooks.once('ready', async () => {
 });
 
 Hooks.on('renderChatMessage', async (message, html) => {
-  // contractible toggle
   html.on('click', '.contractible-button', e => {
     $(e.currentTarget).closest('.contractible-group').toggleClass('contracted');
   });
 
-  // Permission-based filtering
   if (!game.user.isGM) {
     html.find('.only-if-gm').remove();
     html.find('[data-requires-permission="gm"]').remove();
@@ -159,7 +163,6 @@ Hooks.on('renderChatMessage', async (message, html) => {
     html.find('[data-requires-permission="owner"]').remove();
   }
 
-  // Delegated action buttons
   html.on('click', '.chat-action-button', e => {
     const action = e.currentTarget.dataset.action;
     const handler = chatActionHandlers[action];
@@ -167,7 +170,6 @@ Hooks.on('renderChatMessage', async (message, html) => {
     else console.warn(`No handler found for action: ${action}`);
   });
 
-  // Chips/row rendering only for attackData messages
   if (message.getFlag(System.id, 'kind') !== 'attackData') return;
 
   const flags = message.flags?.animabf ?? {};
@@ -216,7 +218,39 @@ Hooks.on('renderChatMessage', async (message, html) => {
       ? game.i18n.format('chat.attackData.rollingBy', { name: rollerName })
       : '';
 
-    const label = t.label ?? actor?.name ?? game.i18n.localize('chat.common.target');
+    // Token name resolver: UUID -> canvas -> same scene -> any scene
+    const tokenName = (() => {
+      const id = t.tokenUuid;
+      if (!id) return null;
+      try {
+        if (typeof id === 'string' && id.includes('.')) {
+          const doc = fromUuidSync(id);
+          return doc?.name ?? doc?.document?.name ?? doc?.object?.name ?? null;
+        }
+        const onCanvas = canvas?.tokens?.get?.(id);
+        if (onCanvas) return onCanvas.name ?? onCanvas.document?.name ?? null;
+
+        const sceneId = message.speaker?.scene;
+        if (sceneId) {
+          const tok = game.scenes?.get(sceneId)?.tokens?.get?.(id);
+          if (tok) return tok.name;
+        }
+
+        for (const s of game.scenes) {
+          const tok = s.tokens?.get?.(id);
+          if (tok) return tok.name;
+        }
+      } catch {}
+      return null;
+    })();
+
+    const tokenLabel = resolveTokenName(
+      { tokenUuid: t.tokenUuid, actorUuid: t.actorUuid },
+      { message }
+    );
+
+    const label =
+      t.label ?? tokenLabel ?? actor?.name ?? game.i18n.localize('chat.common.target');
 
     return {
       messageId: message.id,
@@ -235,7 +269,6 @@ Hooks.on('renderChatMessage', async (message, html) => {
   const chipsHTML = await renderTemplate(Templates.Chat.AttackTargetsChips, {
     targets: enriched
   });
-
   $row.html(chipsHTML);
 });
 
@@ -249,30 +282,30 @@ Hooks.on('getChatMessageContextOptions', (_app, menu) => {
   }
 });
 
-// Auto-number unlinked tokens as "{name} (n)" when dropped
-Hooks.on('createToken', async doc => {
-  // Ignore linked tokens
-  if (doc.actorLink) return;
+// // Auto-number unlinked tokens as "{name} (n)" when dropped
+// Hooks.on('createToken', async doc => {
+//   // Ignore linked tokens
+//   if (doc.actorLink) return;
 
-  // Helper to escape regex
-  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+//   // Helper to escape regex
+//   const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-  const baseName = doc.name ?? doc.actor?.name ?? 'Token';
-  const rx = new RegExp(`^${esc(baseName)}(?: \\((\\d+)\\))?$`);
+//   const baseName = doc.name ?? doc.actor?.name ?? 'Token';
+//   const rx = new RegExp(`^${esc(baseName)}(?: \\((\\d+)\\))?$`);
 
-  // Find siblings with same baseName
-  const siblings = doc.parent.tokens.filter(
-    t => t.id !== doc.id && rx.test(t.name ?? '')
-  );
-  let max = 0;
-  for (const t of siblings) {
-    const m = (t.name ?? '').match(rx);
-    if (m) max = Math.max(max, m[1] ? Number(m[1]) : 1);
-  }
+//   // Find siblings with same baseName
+//   const siblings = doc.parent.tokens.filter(
+//     t => t.id !== doc.id && rx.test(t.name ?? '')
+//   );
+//   let max = 0;
+//   for (const t of siblings) {
+//     const m = (t.name ?? '').match(rx);
+//     if (m) max = Math.max(max, m[1] ? Number(m[1]) : 1);
+//   }
 
-  const next = max ? max + 1 : 1;
-  await doc.update({ name: `${baseName} (${next})` });
-});
+//   const next = max ? max + 1 : 1;
+//   await doc.update({ name: `${baseName} (${next})` });
+// });
 
 // Add any additional hooks if necessary
 
