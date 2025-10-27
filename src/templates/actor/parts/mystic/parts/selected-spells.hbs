@@ -34,7 +34,7 @@
     {{/each}}
     {{#if system.mystic.selectedSpells}}
       <div class="maintenance-total">
-        <strong>{{localize "anima.ui.mystic.maintainedSpells.totalPerTurn.title"}}</strong> <span class="total-cost">{{system.mystic.zeonMaintained.value}}</span> Zeon
+        <strong>{{localize "anima.ui.mystic.maintainedSpells.totalPerTurn.title"}}</strong> <span class="total-cost">{{system.mystic.spellsMaintenanceCost}}</span> Zeon
       </div>
     {{/if}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

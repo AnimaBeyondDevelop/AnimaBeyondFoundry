@@ -62,8 +62,11 @@ export const mutateMysticData = data => {
       acc + (Number(currentValue.system.cost.value) || 0),
     0
   );
-  
-  mystic.zeonMaintained.value = perTurnZeon;
+
+  mystic.spellsMaintenanceCost = perTurnZeon;
+
+  const manualMaintained = Number(mystic.zeonMaintained?.max) || 0;
+  mystic.zeonMaintained.value = perTurnZeon + manualMaintained;
   
   mystic.zeonRegeneration.final.value = Math.max(
     mystic.zeonRegeneration.base.value - dailyZeon,
