@@ -9,6 +9,7 @@ export const Templates = {
     ModDialog: T('dialog/mod-dialog.html'),
     DamageCalculator: T('dialog/damage-calculator.hbs'),
     newPreparedSpell: T('dialog/new-prepared-spell.hbs'),
+    newSelectedSpell: T('dialog/new-selected-spell.hbs'),
     newSupernaturalShield: {
       main: T('dialog/new-supernatural-shield/new-supernatural-shield.hbs'),
       parts: {

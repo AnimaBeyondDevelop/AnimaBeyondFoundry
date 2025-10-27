@@ -1,5 +1,6 @@
 import { ABFItems } from '../../items/ABFItems';
-import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
+import { SpellGrades } from './SpellItemConfig';
+import { openComplexInputDialog } from '../../utils/dialogs/openComplexInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
 
 /** @type {import("../Items").SelectedSpellItemConfig} */
@@ -13,16 +14,23 @@ export const SelectedSpellItemConfig = ABFItemConfigFactory({
     rowSelector: '.selected-spell-row'
   },
   onCreate: async actor => {
-    const { i18n } = game;
+    const results = await openComplexInputDialog(actor, 'newSelectedSpell');
+    const spellID = results['new.selectedSpell.id'];
+    const spellGrade = results['new.selectedSpell.grade'];
+    const spell = actor.system.mystic.spells.find(i => i._id == spellID);
+    if (!spell) {
+      return;
+    }
+    const name = spell.name;
+    const maintenanceCost = spell.system.grades[spellGrade].maintenanceCost.value;
 
-    const name = await openSimpleInputDialog({
-      content: i18n.localize('dialogs.items.selectedSpell.content')
-    });
-
-    actor.createInnerItem({
-      type: ABFItems.SELECTED_SPELL,
+    await actor.createInnerItem({
       name,
-      system: { cost: { value: 0 } }
+      type: ABFItems.SELECTED_SPELL,
+      system: {
+        grade: { value: spellGrade },
+        cost: { value: maintenanceCost }
+      }
     });
   }
 });
