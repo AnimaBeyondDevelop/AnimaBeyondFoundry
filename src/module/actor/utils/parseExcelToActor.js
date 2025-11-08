@@ -22,7 +22,7 @@ export const parseExcelToActor = async (excelData, actor) => {
     let excelVersion = excelVersionSplitted.pop();
     if (!requiredExcelVersions.some(item => item === excelVersion)) {
       const versionWarning =
-        game.i18n.localize("anima.ui.importDataFromExcelWarning") +
+        game.i18n.localize('anima.ui.importDataFromExcelWarning') +
         requiredExcelVersions.join(', ');
       ui.notifications.warn(versionWarning);
       return;
@@ -42,9 +42,9 @@ export const parseExcelToActor = async (excelData, actor) => {
   const volResistance =
     excelData.Presencia_final + calculateAttributeModifier(excelData.VOL);
 
-    const presenciaBase = excelData.Nivel_Total <= 0 ? 20 : 25 + (excelData.Nivel_Total*5);
+  const presenciaBase = excelData.Nivel_Total <= 0 ? 20 : 25 + excelData.Nivel_Total * 5;
 
-    const bonoPresencia = excelData.Presencia_final - presenciaBase;
+  const bonoPresencia = excelData.Presencia_final - presenciaBase;
 
   //Esto es para cuando esté la automatización de las resistencias
   const bonoRF = excelData.RF_final - conResistance;
@@ -356,6 +356,9 @@ export const parseExcelToActor = async (excelData, actor) => {
           others: []
         },
         levels: [],
+        level: {
+          value: excelData.Nivel_Total
+        },
         destinyPoints: {
           base: {
             value: excelData.PuntosDeDestino_Max - excelData.PuntosDeDestino_Gastados
@@ -891,7 +894,7 @@ export const parseExcelToActor = async (excelData, actor) => {
       abilityName.indexOf('Detección del Ki') !== -1 ||
       abilityName.indexOf('Ocultación del Ki') !== -1
     ) {
-      abilityName = splitAndRemoveLast(habilidadesKi[i]);
+      abilityName = splitAndRemoveLast(habilidadesKi[i]); //quita el valor de la detección y ocultación, deja solo el nombre
     }
 
     await actor.createInnerItem({
@@ -1006,16 +1009,13 @@ export const parseExcelToActor = async (excelData, actor) => {
     });
   }
 
-  
-
   for (var i = 0; i < artesMarciales.length; i++) {
-    if (artesMarciales[i].includes("Tabla de Armas:")) {
+    if (artesMarciales[i].includes('Tabla de Armas:')) {
       await actor.createInnerItem({
         name: artesMarciales[i],
         type: ABFItems.COMBAT_TABLE
       });
-    }
-    else {
+    } else {
       const arteMarcialSeparada = artesMarciales[i]
         .split('(')
         .map(value => value.trim())
@@ -1131,47 +1131,63 @@ export const parseExcelToActor = async (excelData, actor) => {
       system: INITIAL_MENTAL_PATTERN_DATA
     });
   }
+
+  actor.prepareData();
+  actor.sheet.render(false);
 };
 
 function separarHabilidadesKi(habilidades) {
+  /** Ensure valid string */
+  if (typeof habilidades !== 'string') {
+    return {
+      habilidadesKi: '',
+      habilidadesNemesis: ''
+    };
+  }
+
   let result = {
     habilidadesKi: '',
     habilidadesNemesis: ''
   };
 
-  const indexSellos = habilidades.indexOf('Sellos: ');
-  let habilidadesSinSellos = '';
-  if (indexSellos !== -1) {
-    habilidadesSinSellos = habilidades.slice(0, indexSellos).trim();
-  }
-  else{
-    habilidadesSinSellos=habilidades;
-  }
+  // Remove seals section
+  const indexSellos = habilidades.indexOf('Sellos:');
+  const habilidadesSinSellos =
+    indexSellos !== -1 ? habilidades.slice(0, indexSellos).trim() : habilidades.trim();
 
+  // Split Ki / Némesis by marker
   const indexNemesis = habilidadesSinSellos.indexOf('Uso del Némesis');
 
   if (indexNemesis === -1) {
-    result.habilidadesKi = habilidadesSinSellos;
+    // Only Ki abilities
+    result.habilidadesKi = expandAtaqueElemental(habilidadesSinSellos);
     return result;
   }
 
-  result.habilidadesKi = habilidadesSinSellos.slice(0, indexNemesis).trim();
-  result.habilidadesNemesis = habilidadesSinSellos.slice(indexNemesis).trim();
+  const kiPart = habilidadesSinSellos.slice(0, indexNemesis).trim();
+  const nemesisPart = habilidadesSinSellos.slice(indexNemesis).trim();
 
-  const indexAtaqueElemental = result.habilidadesKi.indexOf('Ataque elemental (');
-  if (indexAtaqueElemental !== -1) {
-    let habilidadesKiSeparadas = result.habilidadesKi.split('Ataque elemental (');
-    let indexCierreAtaqueElemental = habilidadesKiSeparadas[1].indexOf(')');
-    let habilidadesKiPostAtaqueElemental = habilidadesKiSeparadas[1].slice(
-      indexCierreAtaqueElemental + 1
-    );
-    result.habilidadesKi = [
-      habilidadesKiSeparadas[0],
-      habilidadesKiPostAtaqueElemental
-    ].join('Ataque elemental, ');
-  }
+  result.habilidadesKi = expandAtaqueElemental(kiPart);
+  result.habilidadesNemesis = nemesisPart;
 
   return result;
+}
+
+function expandAtaqueElemental(text) {
+  if (!text) return '';
+
+  return text
+    .replace(/Ataque elemental\s*\(([^)]+)\)/gi, (_match, group) => {
+      const elements = group
+        .split(',')
+        .map(e => e.trim())
+        .filter(e => e !== '');
+      if (!elements.length) return '';
+      return elements.map(e => `Ataque elemental: ${e}`).join(', ');
+    })
+    .replace(/,\s*,/g, ', ') // clean double commas if any
+    .replace(/,\s*$/g, '') // remove trailing comma
+    .trim();
 }
 
 function splitAndRemoveLast(cadena) {
@@ -1262,4 +1278,3 @@ function SetEmptyIfUndefined(data) {
   }
   return data;
 }
-
