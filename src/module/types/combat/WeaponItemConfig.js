@@ -128,7 +128,9 @@ export const INITIAL_WEAPON_DATA = {
   damage: {
     base: { value: 0 },
     special: { value: 0 },
-    final: { value: 0 }
+    final: { value: 0 },
+    formula: { value: '' },
+    applyQualityInFormula: { value: false }
   },
   initiative: {
     base: { value: 0 },
@@ -173,7 +175,8 @@ export const INITIAL_WEAPON_DATA = {
   critic: {
     primary: { value: WeaponCritic.CUT },
     secondary: { value: NoneWeaponCritic.NONE }
-  }
+  },
+  useCustomFormula: { value: false }
 };
 
 /** @type {import("../Items").WeaponItemConfig} */

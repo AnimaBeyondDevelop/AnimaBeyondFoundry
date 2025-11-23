@@ -85,12 +85,41 @@
         inputValue=system.breaking.base.value
       }}
       {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="damage"
-        title=(localize "anima.ui.combat.weapons.damage.base.title")
-        inputName="system.damage.base.value"
-        inputValue=system.damage.base.value
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="use-formula"
+          title=(localize "anima.ui.combat.weapons.useFormula.title")
+          inputType="checkbox"
+          inputName="system.useCustomFormula.value"
+          inputValue=system.useCustomFormula.value
       }}
+      {{#if system.useCustomFormula.value}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="special"
+          title=(localize "anima.ui.combat.weapons.damage.formula.title")
+          inputType="text"
+          inputName="system.damage.formula.value"
+          inputValue=system.damage.formula.value
+        }}
+        {{>
+          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+            class="add-quality-damage"
+            title=(localize "anima.ui.combat.weapons.damage.applyQualityInFormula.title")
+            inputType="checkbox"
+            inputName="system.damage.applyQualityInFormula.value"
+            inputValue=system.damage.applyQualityInFormula.value
+        }}
+      {{else}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="damage"
+          title=(localize "anima.ui.combat.weapons.damage.base.title")
+          inputName="system.damage.base.value"
+          inputValue=system.damage.base.value
+        }}
+      {{/if}}
+      
+      
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="initiative-base"

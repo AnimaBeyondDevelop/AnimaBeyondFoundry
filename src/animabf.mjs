@@ -28,6 +28,7 @@ import './scss/animabf.scss';
 import { System, registerSystemOnGame } from './utils/systemMeta';
 
 import { resolveTokenName } from './utils/tokenName.js';
+import { FormulaEvaluator } from './utils/formulaEvaluator.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -280,6 +281,42 @@ Hooks.on('getChatMessageContextOptions', (_app, menu) => {
     if (Array.isArray(item)) menu.push(...item);
     else menu.push(item);
   }
+});
+
+Hooks.on('chatMessage', (chatLog, message, chatData) => {
+  if (!message || !message.includes('@formula{')) return;
+  if (chatData._animabfFormulaDone) return;
+
+  const speaker = chatData.speaker || {};
+  let actor = null;
+
+  if (speaker.actor) {
+    actor = game.actors.get(speaker.actor) ?? actor;
+  }
+
+  if (!actor && speaker.token) {
+    try {
+      const tokenDoc = fromUuidSync(speaker.token);
+      actor = tokenDoc?.actor ?? actor;
+    } catch (e) {
+      console.error('Formula @ speaker.token resolve error', e);
+    }
+  }
+
+  if (!actor && canvas?.tokens?.controlled?.length) {
+    actor = canvas.tokens.controlled[0]?.actor ?? actor;
+  }
+
+  const replaced = message.replace(/@formula\{([^}]+)\}/g, (match, inner) => {
+    const value = FormulaEvaluator.evaluate(inner, actor);
+    return value ?? match;
+  });
+
+  if (replaced === message) return;
+
+  chatData._animabfFormulaDone = true;
+  chatLog.processMessage(replaced, chatData);
+  return false;
 });
 
 // // Auto-number unlinked tokens as "{name} (n)" when dropped

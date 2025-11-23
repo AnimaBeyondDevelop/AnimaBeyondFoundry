@@ -41,7 +41,9 @@ export const mutateWeaponsData = data => {
     weapon.system.damage = {
       base: weapon.system.damage.base,
       special: weapon.system.damage.special,
-      final: { value: calculateWeaponDamage(weapon, data) }
+      final: { value: calculateWeaponDamage(weapon, data) },
+      formula: weapon.system.damage.formula ?? { value: '' },
+      applyQualityInFormula: weapon.system.damage.applyQualityInFormula
     };
 
     weapon.system.reducedArmor.base.value = calculateArmorReductionFromQuality(weapon);

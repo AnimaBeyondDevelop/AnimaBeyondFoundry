@@ -3,6 +3,7 @@ import {
   WeaponSizeProportion
 } from '../../../../../../../types/combat/WeaponItemConfig';
 import { calculateWeaponStrengthModifier } from '../util/calculateWeaponStrengthModifier';
+import { FormulaEvaluator } from '../../../../../../../../utils/formulaEvaluator.js';
 
 /**
  * @param {import('../../../../../../../types/Items').WeaponDataSource} weapon
@@ -28,8 +29,27 @@ const addSizeModifier = (weapon, damage) => {
  */
 export const calculateWeaponDamage = (weapon, data) => {
   const getDamage = () => {
+    const formula = weapon.system?.damage?.formula?.value?.trim();
+    const useFormula = weapon.system?.useCustomFormula.value;
+
+    if (useFormula && formula) {
+      const fakeActor = { system: data };
+      const value = FormulaEvaluator.evaluate(formula, fakeActor);
+
+      if (value !== null && !Number.isNaN(value)) {
+        const specialBonus = weapon.system.damage.special?.value ?? 0;
+        const extraDamage = data.general.modifiers.extraDamage?.value ?? 0;
+
+        const addQuality = weapon.system.damage.applyQualityInFormula?.value === true;
+        const qualityBonus = addQuality ? (weapon.system.quality?.value ?? 0) * 2 : 0;
+
+        return value + specialBonus + extraDamage + qualityBonus;
+      }
+    }
+
     const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
-    const extraDamage = data.general.modifiers.extraDamage.value + weapon.system.damage.special.value;
+    const extraDamage =
+      data.general.modifiers.extraDamage.value + weapon.system.damage.special.value;
 
     if (
       weapon.system.isRanged.value &&
