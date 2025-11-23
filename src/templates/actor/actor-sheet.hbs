@@ -9,11 +9,19 @@
     <a class="item" data-tab="secondaries">{{localize "anima.ui.tabs.secondaries"}}</a>
     <a class="item" data-tab="combat">{{localize "anima.ui.tabs.combat"}}</a>
     {{#if system.ui.tabVisibility.mystic.value}}
-      <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>{{/if}}
+      <a class="item" data-tab="mystic">{{localize "anima.ui.tabs.mystic"}}</a>
+    {{/if}}
     {{#if system.ui.tabVisibility.domine.value}}
-      <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>{{/if}}
+      <a class="item" data-tab="domine">{{localize "anima.ui.tabs.domine"}}</a>
+    {{/if}}
     {{#if system.ui.tabVisibility.psychic.value}}
-      <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>{{/if}}
+      <a class="item" data-tab="psychic">{{localize "anima.ui.tabs.psychic"}}</a>
+    {{/if}}
+    {{#if system.ui.tabVisibility.effects.value}}
+      {{#if (settingBool "DEVELOP_MODE")}}
+        <a class="item" data-tab="effects">{{localize "anima.ui.tabs.effects"}}</a> 
+      {{/if}}
+    {{/if}}
     <a class="item" data-tab="settings">
       <img src='{{sysAsset "assets/icons/game-icons.net/ffffff/lorc/cog.svg"}}'>
     </a>
@@ -42,6 +50,10 @@
 
     <div class="tab psychics" data-group="primary" data-tab="psychic">
       {{> (sysTpl "templates/actor/parts/psychic/psychic.hbs") }}
+    </div>
+
+    <div class="tab effects" data-group="primary" data-tab="effects">
+      {{> "systems/animabf/templates/actor/parts/effects/effects.hbs"}}
     </div>
 
     <div class="tab settings" data-group="primary" data-tab="settings">

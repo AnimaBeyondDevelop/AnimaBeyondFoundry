@@ -109,7 +109,7 @@ export default class ABFActorSheet extends ActorSheet {
       ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION
     );
     sheet.canModifyDice = permissions?.[game.user.role] === true;
-
+    sheet.effects = this.actor.effects?.contents ?? [];
     return sheet;
   }
 
@@ -166,6 +166,41 @@ export default class ABFActorSheet extends ActorSheet {
       if (handler) handler(e);
       else console.warn(`No handler for data-on-click="${key}"`);
     });
+
+    html.find('.effect-control').click(this._onEffectControl.bind(this));
+  }
+
+  async _onEffectControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    const action = a.dataset.action;
+    const li = a.closest('.effect');
+    const effectId = li?.dataset.effectId;
+
+    switch (action) {
+      case 'create':
+        const name = game.i18n.localize('anima.effects.newEffect') ?? 'New Effect';
+        return this.actor.createEmbeddedDocuments('ActiveEffect', [
+          {
+            name,
+            icon: 'icons/svg/aura.svg'
+          }
+        ]);
+
+      case 'edit': {
+        const effect = this.actor.effects.get(effectId);
+        return effect?.sheet?.render(true);
+      }
+
+      case 'delete':
+        return this.actor.deleteEmbeddedDocuments('ActiveEffect', [effectId]);
+
+      case 'toggle': {
+        const effect = this.actor.effects.get(effectId);
+        if (!effect) return;
+        return effect.update({ disabled: !effect.disabled });
+      }
+    }
   }
 
   async _onRoll(event) {

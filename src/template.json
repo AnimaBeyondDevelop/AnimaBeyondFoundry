@@ -9,7 +9,8 @@
         "tabVisibility": {
           "mystic": { "value": false },
           "domine": { "value": false },
-          "psychic": { "value": false }
+          "psychic": { "value": false },
+          "effects": { "value": false }
         }
       },
       "automationOptions": {

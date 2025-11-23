@@ -523,6 +523,7 @@
   "anima.ui.settings.tabVisibility.domine.title": "Domine",
   "anima.ui.settings.tabVisibility.mystic.title": "Mystic",
   "anima.ui.settings.tabVisibility.psychic.title": "Psychic",
+  "anima.ui.settings.tabVisibility.effects.title": "Effects",
   "anima.ui.settings.tabVisibility.title": "Tab visibility",
   "anima.ui.settings.advancedSettings.defenseType.damageResistance.title": "Damage resistance",
   "anima.ui.settings.advancedSettings.defenseType.mass.title": "Mass of enemies",
@@ -570,6 +571,7 @@
   "anima.ui.tabs.mystic": "Mystic",
   "anima.ui.tabs.psychic": "Psychic",
   "anima.ui.tabs.secondaries": "Secondaries",
+  "anima.ui.tabs.effects": "Effects",
   "anima.ui.titleSection.title": "Titles",
   "anima.ui.weapons.different.title": "Different / Unarmed",
   "anima.ui.weapons.known.title": "Known",
@@ -857,5 +859,14 @@
   "chat.attackData.state.done": "done",
   "chat.attackData.state.expired": "expired",
 
-  "chat.common.target": "Target"
+  "chat.common.target": "Target",
+
+  "anima.ui.effects.effectsList.title": "Effects",
+  "anima.ui.effects.effectsList.name.title": "Effect",
+  "anima.ui.effects.effectsList.enable.title": "Enable",
+  "anima.ui.effects.effectsList.disable.title": "Disable",
+  "anima.ui.effects.effectsList.edit.title": "Edit",
+  "anima.ui.effects.effectsList.delete.title": "Delete",
+  "anima.effects.newEffect": "New effect"
+  
 }

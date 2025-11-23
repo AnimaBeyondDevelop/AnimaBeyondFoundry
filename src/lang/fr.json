@@ -509,6 +509,7 @@
   "anima.ui.settings.tabVisibility.domine.title": "Domaine",
   "anima.ui.settings.tabVisibility.mystic.title": "Mystique",
   "anima.ui.settings.tabVisibility.psychic.title": "Psychique",
+  "anima.ui.settings.tabVisibility.effects.title": "Effects",
   "anima.ui.settings.tabVisibility.title": "Table de visibilité",
   "anima.ui.systemSettings.autoAcceptCombatRequests.hint.title": "Dans le combat autogéré, les demandes de combat au MJ seront automatiquement acceptées en fonction de si cette option est activée",
   "anima.ui.systemSettings.autoAcceptCombatRequests.title": "Accepter automatiquement les demandes de combat",
@@ -525,6 +526,7 @@
   "anima.ui.tabs.mystic": "Mystique",
   "anima.ui.tabs.psychic": "Psychique",
   "anima.ui.tabs.secondaries": "Secondaires",
+  "anima.ui.tabs.effects": "Efectos",
   "anima.ui.titleSection.title": "Titres",
   "anima.ui.tooltips.base": "Final",
   "anima.ui.tooltips.final": "Final",
@@ -741,5 +743,13 @@
   "chat.attackData.state.done": "terminé",
   "chat.attackData.state.expired": "expiré",
 
-  "chat.common.target": "Cible"
+  "chat.common.target": "Cible",
+
+  "anima.ui.effects.effectsList.title": "Effects",
+  "anima.ui.effects.effectsList.name.title": "Effect",
+  "anima.ui.effects.effectsList.enable.title": "Enable",
+  "anima.ui.effects.effectsList.disable.title": "Disable",
+  "anima.ui.effects.effectsList.edit.title": "Edit",
+  "anima.ui.effects.effectsList.delete.title": "Delete",
+  "anima.effects.newEffect": "New effect"
 }

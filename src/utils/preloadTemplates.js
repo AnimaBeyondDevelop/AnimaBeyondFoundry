@@ -166,6 +166,10 @@ export async function preloadTemplates() {
     `${BASE}/actor/parts/psychic/parts/psychic-disciplines.hbs`,
     `${BASE}/actor/parts/psychic/parts/psychic-powers.hbs`,
 
+    // --- Actor sheet: effects ---
+    `${BASE}/actor/parts/effects/effects.hbs`,
+    `${BASE}/actor/parts/effects/parts/effects-list.hbs`,
+
     // --- Actor sheet: settings ---
     `${BASE}/actor/parts/settings/settings.hbs`,
     `${BASE}/actor/parts/settings/parts/tabVisibility.hbs`,

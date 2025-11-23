@@ -11,6 +11,9 @@ export const INITIAL_ACTOR_DATA = {
       },
       psychic: {
         value: false
+      },
+      effects: {
+        value: false
       }
     }
   },
