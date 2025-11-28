@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "200 Puntos de Resistencia / Dificultad 14 / RF 100."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "300 Puntos de Resistencia / Dificultad 16 / RF 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "400 Puntos de Resistencia / Dificultad 18 / RF 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "500 Puntos de Resistencia / Dificultad 20 / RF 160."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "physical"
         }
       }
     }

@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "+20 RF / +3 entereza."
+        },
+        "resistanceEffect": {
+          "value": 20,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "+30 RF / +5 entereza."
+        },
+        "resistanceEffect": {
+          "value": 30,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "+45 RF / +7 entereza."
+        },
+        "resistanceEffect": {
+          "value": 45,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "+60 RF / +9 entereza."
+        },
+        "resistanceEffect": {
+          "value": 60,
+          "type": "physical"
         }
       }
     }

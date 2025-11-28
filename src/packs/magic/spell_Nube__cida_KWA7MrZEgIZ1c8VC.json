@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "RF 120 / 5 metros de radio / Tipo de Vuelo 6."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "RF 140 / 10 metros de radio / Tipo de Vuelo 8."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "RF 160 / 20 metros de radio / Tipo de Vuelo 10."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -103,6 +115,10 @@
         },
         "description": {
           "value": "RF 180 / 50 metros de radio / Tipo de Vuelo 12."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "physical"
         }
       }
     }

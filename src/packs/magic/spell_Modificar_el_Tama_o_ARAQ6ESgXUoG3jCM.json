@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "Altera 2 puntos de Tamaño / RM 100."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "Altera 4 puntos de Tamaño / RM 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "Altera 6 puntos de Tamaño / RM 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -103,6 +115,10 @@
         },
         "description": {
           "value": "Altera 8 puntos de Tamaño / RM 160."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       }
     }

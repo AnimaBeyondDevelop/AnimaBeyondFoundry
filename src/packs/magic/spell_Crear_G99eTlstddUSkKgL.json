@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "1.000 Puntos de presencia / Presencia máxima 180 / 1 regla existencial."
+        },
+        "resistanceEffect": {
+          "value": 1,
+          "type": "disease"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "10.000 Puntos de presencia / Presencia máxima 220 / 5 reglas existenciales."
+        },
+        "resistanceEffect": {
+          "value": 5,
+          "type": "disease"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "10.000 Puntos de presencia / Presencia máxima 260 / 10 reglas existenciales."
+        },
+        "resistanceEffect": {
+          "value": 10,
+          "type": "disease"
         }
       },
       "arcane": {

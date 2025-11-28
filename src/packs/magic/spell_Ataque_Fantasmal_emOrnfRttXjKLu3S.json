@@ -51,6 +51,13 @@
         },
         "description": {
           "value": "RM 140 / Daño 100"
+        },
+        "damage": {
+          "value": 100
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +75,13 @@
         },
         "description": {
           "value": "RM 160 / Daño 180"
+        },
+        "damage": {
+          "value": 180
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +99,13 @@
         },
         "description": {
           "value": "RM 180 / Daño 250"
+        },
+        "damage": {
+          "value": 250
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +123,13 @@
         },
         "description": {
           "value": "RM 200 / Daño 350"
+        },
+        "damage": {
+          "value": 350
+        },
+        "resistanceEffect": {
+          "value": 200,
+          "type": "magic"
         }
       }
     }

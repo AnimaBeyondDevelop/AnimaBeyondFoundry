@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Daño 200 / Crítico +20."
+        },
+        "damage": {
+          "value": 200
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Daño 400 / Crítico +40."
+        },
+        "damage": {
+          "value": 400
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Daño 500 / Crítico +60."
+        },
+        "damage": {
+          "value": 500
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Daño 800 / Crítico +100."
+        },
+        "damage": {
+          "value": 800
         }
       }
     }

@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Daño Base 100 / Proyección Mágica 150."
+        },
+        "damage": {
+          "value": 100
         }
       },
       "intermediate": {

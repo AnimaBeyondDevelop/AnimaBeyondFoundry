@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "RM 140 / 10 Km de radio / 100 niveles a repartir entre seres"
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "RM 180 / 100 Km de radio / 500 niveles a repartir entre seres"
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "RM 220 / 1000 Km de radio / 1500 niveles a repartir entre seres"
+        },
+        "resistanceEffect": {
+          "value": 220,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "RM 260 / 10000 Km de radio / 5000 niveles a repartir entre seres"
+        },
+        "resistanceEffect": {
+          "value": 260,
+          "type": "magic"
         }
       }
     }

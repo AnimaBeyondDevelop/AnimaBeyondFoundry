@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "Radio de 5 metros / RM 100."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "Radio de 25 metros / RM 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "Radio de 50 metros / RM 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -103,6 +115,10 @@
         },
         "description": {
           "value": "Radio de 100 metros / RM 160."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       }
     }

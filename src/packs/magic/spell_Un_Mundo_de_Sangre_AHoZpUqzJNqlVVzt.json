@@ -51,6 +51,13 @@
         },
         "description": {
           "value": "RM o RF 120 / Daño 60 / 500 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 60
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -68,6 +75,13 @@
         },
         "description": {
           "value": "RM o RF 140 / Daño 90 / 1.200 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 90
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -85,6 +99,13 @@
         },
         "description": {
           "value": "RM o RF 160 / Daño 120 / 2.400 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 120
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -102,6 +123,13 @@
         },
         "description": {
           "value": "RM o RF 180 / Daño 150 / 3.600 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 150
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "physical"
         }
       }
     }

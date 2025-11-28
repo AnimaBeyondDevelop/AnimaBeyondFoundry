@@ -102,6 +102,10 @@
         },
         "description": {
           "value": "Quien huela el perfume durante +5 asaltos, RM 100 o fascinación / 50m de radio."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       }
     }

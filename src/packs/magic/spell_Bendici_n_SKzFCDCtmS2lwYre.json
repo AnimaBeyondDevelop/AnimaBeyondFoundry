@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "+10 a toda acción / +10 resistencias / Radio de 5 metros."
+        },
+        "resistanceEffect": {
+          "value": 10,
+          "type": "disease"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "+20 a toda acción / +20 resistencias / Radio de 25 metros."
+        },
+        "resistanceEffect": {
+          "value": 20,
+          "type": "disease"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "+20 a toda acción / +30 resistencias / Radio de 50 metros."
+        },
+        "resistanceEffect": {
+          "value": 30,
+          "type": "disease"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "+30 a toda acción / +30 resistencias / Radio de 150 metros."
+        },
+        "resistanceEffect": {
+          "value": 30,
+          "type": "disease"
         }
       }
     }

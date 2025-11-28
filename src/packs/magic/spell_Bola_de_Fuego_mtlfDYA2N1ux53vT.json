@@ -51,6 +51,12 @@
         },
         "description": {
           "value": "Daño base 50 / Área de 5 metros de radio."
+        },
+        "damage": {
+          "value": 50
+        },
+        "area": {
+          "value": 5
         }
       },
       "intermediate": {
@@ -68,6 +74,12 @@
         },
         "description": {
           "value": "Daño base 100 / Área de 25 metros de radio."
+        },
+        "damage": {
+          "value": 100
+        },
+        "area": {
+          "value": 25
         }
       },
       "advanced": {
@@ -85,6 +97,12 @@
         },
         "description": {
           "value": "Daño base 140 / Área de 80 metros de radio."
+        },
+        "damage": {
+          "value": 140
+        },
+        "area": {
+          "value": 80
         }
       },
       "arcane": {
@@ -102,6 +120,12 @@
         },
         "description": {
           "value": "Daño base 160 / área de 150 metros de radio."
+        },
+        "damage": {
+          "value": 160
+        },
+        "area": {
+          "value": 150
         }
       }
     }

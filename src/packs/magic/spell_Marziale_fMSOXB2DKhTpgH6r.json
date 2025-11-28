@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "10 metros de radio / +2 a la TA / +20 RM."
+        },
+        "resistanceEffect": {
+          "value": 20,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "25 metros de radio / +3 a la TA / +20 RM y RF."
+        },
+        "resistanceEffect": {
+          "value": 20,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,13 @@
         },
         "description": {
           "value": "50 metros de radio / +4 a la TA / +20 RM, RF y RP / Barrera de daño 50."
+        },
+        "damage": {
+          "value": 50
+        },
+        "resistanceEffect": {
+          "value": 20,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +117,13 @@
         },
         "description": {
           "value": "100 metros de radio / +5 a la TA / +30 RM, RF y RP / Barrera de daño 60."
+        },
+        "damage": {
+          "value": 60
+        },
+        "resistanceEffect": {
+          "value": 30,
+          "type": "magic"
         }
       }
     }

@@ -102,6 +102,9 @@
         },
         "description": {
           "value": "30 kilómetros de longitud / Arrasa construcciones de hasta barrera de daño 90."
+        },
+        "damage": {
+          "value": 90
         }
       }
     }

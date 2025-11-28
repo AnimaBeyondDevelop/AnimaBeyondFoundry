@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Barrera de daño 60 / 600 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 60
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Barrera de daño 100 / 1600 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 100
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Barrera de daño 150 / 3000 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 150
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Barrera de daño 200 / 5000 Puntos de Resistencia."
+        },
+        "damage": {
+          "value": 200
         }
       }
     }

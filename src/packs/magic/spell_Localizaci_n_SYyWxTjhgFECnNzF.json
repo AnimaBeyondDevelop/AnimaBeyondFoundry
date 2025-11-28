@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "100 Kilómetros / RM 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "1000 Kilómetros / RM 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "10000 Kilómetros / RM 180."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -103,6 +115,10 @@
         },
         "description": {
           "value": "Cualquier distancia / RM 220."
+        },
+        "resistanceEffect": {
+          "value": 220,
+          "type": "magic"
         }
       }
     }

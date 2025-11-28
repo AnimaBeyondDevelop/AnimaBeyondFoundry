@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Daño 120 contra escudos."
+        },
+        "damage": {
+          "value": 120
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Daño 250 contra escudos."
+        },
+        "damage": {
+          "value": 250
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Daño 400 contra escudos."
+        },
+        "damage": {
+          "value": 400
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Daño 600 contra escudos."
+        },
+        "damage": {
+          "value": 600
         }
       }
     }

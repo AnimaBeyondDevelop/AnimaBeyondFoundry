@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "El personaje puede sentir si una persona está asustada o no / RM o RP 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "Además también cual es el origen del miedo / RM o RP 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "El mago percibe los miedos de alguien, aunque no esté asustada /RM o RP 160."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "El personaje percibe representación visual de los miedos / RM o RP 180."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       }
     }

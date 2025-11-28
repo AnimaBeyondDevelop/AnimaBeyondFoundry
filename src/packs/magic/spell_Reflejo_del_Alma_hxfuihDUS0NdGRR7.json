@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "RM 140 / Copia entidades de hasta Nivel 3."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "RM 160 / Copia entidades de hasta Nivel 5."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "RM 180 / Copia entidades de hasta Nivel 8 / Imita poderes de hasta Gnosis 25."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "RM 200 / Copia entidades de hasta Nivel 12 / Imita poderes de hasta Gnosis 30."
+        },
+        "resistanceEffect": {
+          "value": 200,
+          "type": "magic"
         }
       }
     }

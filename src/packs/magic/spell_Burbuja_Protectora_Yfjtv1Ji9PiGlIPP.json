@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Hasta Daño base 40."
+        },
+        "damage": {
+          "value": 40
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Hasta Daño base 90."
+        },
+        "damage": {
+          "value": 90
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Hasta Daño base 120."
+        },
+        "damage": {
+          "value": 120
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Hasta Daño base 160."
+        },
+        "damage": {
+          "value": 160
         }
       }
     }

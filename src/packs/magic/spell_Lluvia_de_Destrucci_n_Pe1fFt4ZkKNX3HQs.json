@@ -51,6 +51,13 @@
         },
         "description": {
           "value": "Daño 200 / RM 140 / 50 metros de radio."
+        },
+        "damage": {
+          "value": 200
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +75,13 @@
         },
         "description": {
           "value": "Daño 250 / RM 180 / 150 metros de radio."
+        },
+        "damage": {
+          "value": 250
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +99,13 @@
         },
         "description": {
           "value": "Daño 300 / RM 220 / 500 metros de radio."
+        },
+        "damage": {
+          "value": 300
+        },
+        "resistanceEffect": {
+          "value": 220,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +123,13 @@
         },
         "description": {
           "value": "Daño 400 / RM 260 / 1 kilómetro de radio."
+        },
+        "damage": {
+          "value": 400
+        },
+        "resistanceEffect": {
+          "value": 260,
+          "type": "magic"
         }
       }
     }

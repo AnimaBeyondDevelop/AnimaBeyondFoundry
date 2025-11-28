@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "RM o RF 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "RM o RF 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "RM o RF 160."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "RM o RF 180."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "physical"
         }
       }
     }

@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "-2 Tipos de Movimiento / -40 al Turno / 10 metros de radio / 100 RM."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "-4 Tipos de Movimiento / -60 al Turno / -10 a Toda Acción / 25 metros de radio / 120 RM."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "-6 Tipos de Movimiento / -80 al Turno / -20 a Toda Acción / 50 metros de radio / 140 RM."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "-8 Tipos de Movimiento / -100 al Turno / -30 a Toda Acción / 100 metros de radio / 160 RM."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       }
     }
