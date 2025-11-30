@@ -54,28 +54,52 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       intRequired: { value: 0 },
       maintenanceCost: { value: 0 },
       zeon: { value: 0 },
-      description: { value: '' }
+      description: { value: '' },
+      damage: { value: 0 },
+      area: { value: 0 },
+      resistanceEffect: {
+        value: 0,
+        type: ''
+      }
     },
     intermediate: {
       name: { value: SpellGradeNames.INTERMEDIATE },
       intRequired: { value: 0 },
       maintenanceCost: { value: 0 },
       zeon: { value: 0 },
-      description: { value: '' }
+      description: { value: '' },
+      damage: { value: 0 },
+      area: { value: 0 },
+      resistanceEffect: {
+        value: 0,
+        type: ''
+      }
     },
     advanced: {
       name: { value: SpellGradeNames.ADVANCED },
       intRequired: { value: 0 },
       maintenanceCost: { value: 0 },
       zeon: { value: 0 },
-      description: { value: '' }
+      description: { value: '' },
+      damage: { value: 0 },
+      area: { value: 0 },
+      resistanceEffect: {
+        value: 0,
+        type: ''
+      }
     },
     arcane: {
       name: { value: SpellGradeNames.ARCANE },
       intRequired: { value: 0 },
       maintenanceCost: { value: 0 },
       zeon: { value: 0 },
-      description: { value: '' }
+      description: { value: '' },
+      damage: { value: 0 },
+      area: { value: 0 },
+      resistanceEffect: {
+        value: 0,
+        type: ''
+      }
     }
   }
 };

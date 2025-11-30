@@ -656,28 +656,52 @@
           "intRequired": { "value": 0 },
           "zeon": { "value": 0 },
           "maintenanceCost": { "value": 0 },
-          "description": { "value": "" }
+          "description": { "value": "" },
+          "damage": { "value": 0 },
+          "area": { "value": 0 },
+          "resistanceEffect": {
+            "value": 0,
+            "type": ""
+          }
         },
         "intermediate": {
           "name": { "value": "" },
           "intRequired": { "value": 0 },
           "zeon": { "value": 0 },
           "maintenanceCost": { "value": 0 },
-          "description": { "value": "" }
+          "description": { "value": "" },
+          "damage": { "value": 0 },
+          "area": { "value": 0 },
+          "resistanceEffect": {
+            "value": 0,
+            "type": ""
+          }
         },
         "advanced": {
           "name": { "value": "" },
           "intRequired": { "value": 0 },
           "zeon": { "value": 0 },
           "maintenanceCost": { "value": 0 },
-          "description": { "value": "" }
+          "description": { "value": "" },
+          "damage": { "value": 0 },
+          "area": { "value": 0 },
+          "resistanceEffect": {
+            "value": 0,
+            "type": ""
+          }
         },
         "arcane": {
           "name": { "value": "" },
           "intRequired": { "value": 0 },
           "zeon": { "value": 0 },
           "maintenanceCost": { "value": 0 },
-          "description": { "value": "" }
+          "description": { "value": "" },
+          "damage": { "value": 0 },
+          "area": { "value": 0 },
+          "resistanceEffect": {
+            "value": 0,
+            "type": ""
+          }
         }
       }
     },
