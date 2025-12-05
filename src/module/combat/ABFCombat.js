@@ -7,7 +7,7 @@ export default class ABFCombat extends Combat {
    */
   constructor(data, context) {
     super(data, context);
-    this.setFlag('world', 'newRound', true);
+    this.updateSource({ 'flags.world.newRound': true });
   }
 
   async startCombat() {
@@ -75,7 +75,8 @@ export default class ABFCombat extends Combat {
     for (const id of ids) {
       const combatant = this.combatants.get(id);
 
-      const baseInit = combatant.actor.system.characteristics.secondaries.initiative.final.value || 0;
+      const baseInit =
+        combatant.actor.system.characteristics.secondaries.initiative.final.value || 0;
       const formula = `${combatant._getInitiativeFormula()} + ${baseInit} + ${mod}`;
       await super.rollInitiative(id, { formula, updateTurn, messageOptions });
     }
