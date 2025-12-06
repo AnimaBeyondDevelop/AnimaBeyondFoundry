@@ -12,6 +12,15 @@
     }
   },
   "system": {
+    "equipped": {
+      "value": false
+    },
+    "isShield": {
+      "value": false
+    },
+    "ignoreArmor": {
+      "value": false
+    },
     "special": {
       "value": "Presa (FUE 10), Alcance (10m), Arma Grande, Torbellino envolvente"
     },
@@ -38,6 +47,17 @@
         "value": 0
       },
       "value": 2
+    },
+    "reducedArmor": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      }
     },
     "attack": {
       "base": {
@@ -72,6 +92,12 @@
       },
       "special": {
         "value": 0
+      },
+      "formula": {
+        "value": ""
+      },
+      "applyQualityInFormula": {
+        "value": false
       },
       "value": 40
     },
@@ -164,6 +190,9 @@
     "sizeProportion": {
       "value": "normal"
     },
+    "hasOwnStr": {
+      "value": false
+    },
     "weaponStrength": {
       "base": {
         "value": 0
@@ -180,6 +209,9 @@
         "value": "thrust"
       }
     },
+    "useCustomFormula": {
+      "value": false
+    },
     "weaponFue": {
       "value": 0
     },
@@ -188,24 +220,21 @@
     },
     "fueRequired": {
       "value": ""
-    },
-    "isShield": {
-      "value": false
-    },
-    "hasOwnStr": {
-      "value": false
     }
   },
   "_stats": {
     "systemId": "animabf",
     "systemVersion": "2.0.1",
-    "coreVersion": "13.345",
+    "coreVersion": "13.351",
     "createdTime": 1690991077233,
-    "modifiedTime": 1691058443100,
-    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+    "modifiedTime": 1764249579218,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_id": "vQlU8e88d6riqDVK",
-  "sort": 0,
+  "sort": 2100000,
   "ownership": {
     "default": 0,
     "jsmBo00pwrK7EnHs": 3

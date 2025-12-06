@@ -1,0 +1,230 @@
+{
+  "name": "Cáncer",
+  "type": "weapon",
+  "img": "icons/magic/air/wind-swirl-gray-blue.webp",
+  "effects": [],
+  "folder": "3IjK7OoUu4uHOuK3",
+  "flags": {
+    "scene-packer": {
+      "hash": "9a78caa01a48f57bf07315579ba558f76ef530f8"
+    }
+  },
+  "system": {
+    "equipped": {
+      "value": true
+    },
+    "isShield": {
+      "value": false
+    },
+    "ignoreArmor": {
+      "value": false
+    },
+    "special": {
+      "value": "Presa 12"
+    },
+    "integrity": {
+      "base": {
+        "value": 10
+      },
+      "final": {
+        "value": 20
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "breaking": {
+      "base": {
+        "value": 1
+      },
+      "final": {
+        "value": 4
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "reducedArmor": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 1
+      }
+    },
+    "attack": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 205
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "block": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 5
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "damage": {
+      "base": {
+        "value": 50
+      },
+      "final": {
+        "value": 90
+      },
+      "special": {
+        "value": 0
+      },
+      "formula": {
+        "value": "50"
+      },
+      "applyQualityInFormula": {
+        "value": true
+      }
+    },
+    "initiative": {
+      "base": {
+        "value": 15
+      },
+      "final": {
+        "value": 20
+      },
+      "special": {
+        "value": 0
+      }
+    },
+    "presence": {
+      "base": {
+        "value": 30
+      },
+      "final": {
+        "value": 80
+      },
+      "special": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "size": {
+      "value": "small"
+    },
+    "strRequired": {
+      "oneHand": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "value": 0
+      },
+      "twoHands": {
+        "base": {
+          "value": 4
+        },
+        "final": {
+          "value": 4
+        },
+        "value": 0
+      }
+    },
+    "quality": {
+      "value": 5
+    },
+    "oneOrTwoHanded": {
+      "value": "one-handed"
+    },
+    "knowledgeType": {
+      "value": "known"
+    },
+    "manageabilityType": {
+      "value": "two_hands"
+    },
+    "shotType": {
+      "value": "throw"
+    },
+    "isRanged": {
+      "value": true
+    },
+    "range": {
+      "base": {
+        "value": 5
+      },
+      "final": {
+        "value": 25
+      }
+    },
+    "cadence": {
+      "value": null
+    },
+    "reload": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "value": 0
+    },
+    "sizeProportion": {
+      "value": "normal"
+    },
+    "hasOwnStr": {
+      "value": false
+    },
+    "weaponStrength": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 1
+      },
+      "value": 0
+    },
+    "critic": {
+      "primary": {
+        "value": "cut"
+      },
+      "secondary": {
+        "value": "thrust"
+      }
+    },
+    "useCustomFormula": {
+      "value": true
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.5",
+    "createdTime": 1764248232929,
+    "modifiedTime": 1764249579218,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "MjvgJvcQBrMZW7ul",
+  "sort": 2300000,
+  "_key": "!items!MjvgJvcQBrMZW7ul"
+}

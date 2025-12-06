@@ -12,6 +12,15 @@
     }
   },
   "system": {
+    "equipped": {
+      "value": false
+    },
+    "isShield": {
+      "value": false
+    },
+    "ignoreArmor": {
+      "value": false
+    },
     "special": {
       "value": "Sorpresa, Pantalla, At. área, Presa (DES), Uso indirecto, Ofuscación"
     },
@@ -38,6 +47,17 @@
         "value": 0
       },
       "value": 0
+    },
+    "reducedArmor": {
+      "base": {
+        "value": 0
+      },
+      "final": {
+        "value": 0
+      },
+      "special": {
+        "value": 0
+      }
     },
     "attack": {
       "base": {
@@ -72,6 +92,12 @@
       },
       "special": {
         "value": 0
+      },
+      "formula": {
+        "value": "@general.presence.final.value + @characteristics.primaries.power.mod"
+      },
+      "applyQualityInFormula": {
+        "value": true
       },
       "value": 20
     },
@@ -164,6 +190,9 @@
     "sizeProportion": {
       "value": "normal"
     },
+    "hasOwnStr": {
+      "value": false
+    },
     "weaponStrength": {
       "base": {
         "value": 0
@@ -180,6 +209,9 @@
         "value": "-"
       }
     },
+    "useCustomFormula": {
+      "value": true
+    },
     "weaponFue": {
       "value": 0
     },
@@ -188,21 +220,21 @@
     },
     "fueRequired": {
       "value": ""
-    },
-    "isShield": {
-      "value": false
     }
   },
   "_stats": {
     "systemId": "animabf",
-    "systemVersion": "2.0.1",
-    "coreVersion": "13.345",
+    "systemVersion": "2.0.5",
+    "coreVersion": "13.351",
     "createdTime": 1690991077555,
-    "modifiedTime": 1691058443100,
-    "lastModifiedBy": "jsmBo00pwrK7EnHs"
+    "modifiedTime": 1764250214719,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_id": "DQW83EwoZgRaTHPc",
-  "sort": 0,
+  "sort": 300000,
   "ownership": {
     "default": 0,
     "jsmBo00pwrK7EnHs": 3
