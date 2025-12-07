@@ -226,6 +226,18 @@ export class CombatAttackDialog extends FormApplication {
     this.render(true);
   }
 
+  // Helper: get base dice formula from actor settings
+  getBaseCombatDiceFormula(actor) {
+    const diceSettings = actor.system.general.diceSettings;
+    return diceSettings?.abilityDie.value ?? '1d100xa';
+  }
+
+  // Helper: remove first dice term when rolling "withoutRoll"
+  removeFirstDiceTerm(formula) {
+    // Replace everything hasta el primer '+' por '0'
+    return formula.replace(/^[^+]+/, '0');
+  }
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['animabf-dialog combat-attack-dialog no-close'],
@@ -335,9 +347,13 @@ export class CombatAttackDialog extends FormApplication {
         for (const key in attackerCombatMod)
           combatModifier += attackerCombatMod[key]?.value ?? 0;
 
-        let formula = `1d100xa + ${counterAttackBonus} + ${attack} + ${combatModifier}`;
-        if (this.modalData.attacker.withoutRoll)
-          formula = formula.replace('1d100xa', '0');
+        const baseDice = this.getBaseCombatDiceFormula(this.attackerActor);
+        let formula = `${baseDice} + ${counterAttackBonus} + ${attack} + ${combatModifier}`;
+
+        if (this.modalData.attacker.withoutRoll) {
+          formula = this.removeFirstDiceTerm(formula);
+        }
+
         if (this.attackerActor.system.combat.attack.base.value >= 200) {
           formula = formula.replace('xa', 'xamastery');
         }
@@ -364,7 +380,8 @@ export class CombatAttackDialog extends FormApplication {
 
         // New fields
         const reducedArmorFinal = weapon?.system?.reducedArmor?.final?.value ?? 0;
-        const weaponName = weapon?.name ?? game.i18n.localize('macros.combat.unarmed') ?? 'Unarmed';
+        const weaponName =
+          weapon?.name ?? game.i18n.localize('macros.combat.unarmed') ?? 'Unarmed';
 
         const critic = criticSelected ?? game.animabf.weapon.WeaponCritic.IMPACT;
 

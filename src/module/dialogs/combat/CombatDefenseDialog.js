@@ -245,6 +245,18 @@ export class CombatDefenseDialog extends FormApplication {
     this.render(true);
   }
 
+  // Helper: get base dice formula from actor settings
+  getBaseCombatDiceFormula(actor) {
+    const diceSettings = actor.system.general.diceSettings;
+    return diceSettings?.abilityDie.value ?? '1d100xa';
+  }
+
+  // Helper: remove first dice term when rolling "withoutRoll"
+  removeFirstDiceTerm(formula) {
+    // Replace everything hasta el primer '+' por '0'
+    return formula.replace(/^[^+]+/, '0');
+  }
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['animabf-dialog combat-defense-dialog no-close'],
@@ -376,13 +388,13 @@ export class CombatDefenseDialog extends FormApplication {
       for (const key in defenderCombatMod) {
         combatModifier += defenderCombatMod[key]?.value ?? 0;
       }
-      let formula = `1d100xa + ${combatModifier} + ${value}`;
+      const baseDice = this.getBaseCombatDiceFormula(this.defenderActor);
+      let formula = `${baseDice} + ${combatModifier} + ${value}`;
+
       if (this.modalData.defender.withoutRoll) {
-        // Remove the dice from the formula
-        formula = formula.replace('1d100xa', '0');
+        formula = this.removeFirstDiceTerm(formula);
       }
       if (baseDefense >= 200) {
-        // Mastery reduces the fumble range
         formula = formula.replace('xa', 'xamastery');
       }
 
