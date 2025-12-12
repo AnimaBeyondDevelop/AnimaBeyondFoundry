@@ -3,6 +3,7 @@ import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { splitAsActorAndItemChanges } from './utils/splitAsActorAndItemChanges';
 import { unflat } from './utils/unflat';
 import { ALL_ITEM_CONFIGURATIONS } from './utils/prepareItems/constants';
+import { INITIAL_EFFECT_DATA } from '../types/effects/EffectItemConfig';
 import { getFieldValueFromPath } from './utils/prepareItems/util/getFieldValueFromPath';
 import { getUpdateObjectFromPath } from './utils/prepareItems/util/getUpdateObjectFromPath';
 import { ABFItems } from '../items/ABFItems';
@@ -98,18 +99,27 @@ export default class ABFActorSheet extends ActorSheet {
   async getData(options) {
     const sheet = await super.getData(options);
 
-    if (this.actor.type === 'character') {
-      await sheet.actor.prepareDerivedData();
-      sheet.system = sheet.actor.system;
+    const actor = this.actor; // use the real Document, not sheet.actor
+
+    if (actor?.type === 'character') {
+      await actor.prepareDerivedData();
+      sheet.system = actor.system;
     }
 
     sheet.config = CONFIG.config;
+
     const permissions = game.settings.get(
       game.animabf.id,
       ABFSettingsKeys.MODIFY_DICE_FORMULAS_PERMISSION
     );
     sheet.canModifyDice = permissions?.[game.user.role] === true;
-    sheet.effects = this.actor.effects?.contents ?? [];
+
+    // Use embedded item collection directly
+    const effectItems = actor.items.filter(i => i && i.type === ABFItems.EFFECT);
+    sheet.effects = effectItems;
+
+    console.log('EFFECT ITEMS EN SHEET', sheet.effects);
+
     return sheet;
   }
 
@@ -175,31 +185,74 @@ export default class ABFActorSheet extends ActorSheet {
     const a = event.currentTarget;
     const action = a.dataset.action;
     const li = a.closest('.effect');
-    const effectId = li?.dataset.effectId;
+    const itemId = li?.dataset.itemId;
+    const item = itemId ? this.actor.items.get(itemId) : null;
 
     switch (action) {
-      case 'create':
+      case 'create': {
         const name = game.i18n.localize('anima.effects.newEffect') ?? 'New Effect';
-        return this.actor.createEmbeddedDocuments('ActiveEffect', [
+        const [created] = await this.actor.createEmbeddedDocuments('Item', [
           {
+            type: ABFItems.EFFECT,
             name,
-            icon: 'icons/svg/aura.svg'
+            system: INITIAL_EFFECT_DATA
           }
         ]);
+        if (created?.sheet) created.sheet.render(true);
+        return;
+      }
 
       case 'edit': {
-        const effect = this.actor.effects.get(effectId);
-        return effect?.sheet?.render(true);
+        if (!item) return;
+
+        // Asegura que exista un AE vinculado a este item
+        const effect = await this._ensureEffectForItem(item);
+        if (!effect) return;
+
+        // Configura la sincronización item <-> AE
+        this._setupEffectSync(item, effect);
+
+        return effect.sheet?.render(true);
       }
 
-      case 'delete':
-        return this.actor.deleteEmbeddedDocuments('ActiveEffect', [effectId]);
+      case 'delete': {
+        if (!itemId) return;
+
+        const item = this.actor.items.get(itemId);
+        if (!item) return;
+
+        // get linked AE
+        const effect = this._getLinkedEffect(item);
+
+        const deletions = [];
+
+        // delete item
+        deletions.push(this.actor.deleteEmbeddedDocuments('Item', [itemId]));
+
+        // delete linked AE
+        if (effect) {
+          deletions.push(this.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id]));
+        }
+
+        return Promise.all(deletions);
+      }
 
       case 'toggle': {
-        const effect = this.actor.effects.get(effectId);
-        if (!effect) return;
-        return effect.update({ disabled: !effect.disabled });
+        if (!item) return;
+
+        const newActive = !item.system.active;
+        await item.update({ 'system.active': newActive });
+
+        const effect = this._getLinkedEffect(item);
+        if (effect) {
+          await effect.update({ disabled: !newActive });
+        }
+
+        return;
       }
+
+      default:
+        return;
     }
   }
 
@@ -356,4 +409,80 @@ export default class ABFActorSheet extends ActorSheet {
       ...otherItems
     ]);
   };
+
+  _getLinkedEffect(item) {
+    if (!item) return null;
+    return this.actor.effects.find(e => e.origin === item.uuid) ?? null;
+  }
+
+  async _linkItemToEffect(item, effect) {
+    if (!item || !effect) return;
+    await item.setFlag('animabf', 'linkedEffectId', effect.id);
+  }
+
+  async _ensureEffectForItem(item) {
+    if (!item) return null;
+
+    let effect = this._getLinkedEffect(item);
+    if (effect) return effect;
+
+    const rawBaseData = item.system?.effectData ?? {};
+    // Ignore old origin if it exists in stored data
+    const { origin, ...baseData } = rawBaseData;
+
+    const data = foundry.utils.mergeObject(
+      {
+        name: item.name,
+        icon: item.img || 'icons/svg/aura.svg',
+        disabled: !item.system?.active,
+        origin: item.uuid // always the current item
+      },
+      baseData,
+      { inplace: false }
+    );
+
+    const [created] = await this.actor.createEmbeddedDocuments('ActiveEffect', [data]);
+    return created ?? null;
+  }
+
+  async _onDropItem(event, data) {
+    const created = await super._onDropItem(event, data);
+
+    const items = Array.isArray(created) ? created : created ? [created] : [];
+
+    for (const item of items) {
+      if (item.type !== ABFItems.EFFECT) continue;
+
+      await item.update({
+        'system.active': false,
+        'system.effectData.disabled': true
+      });
+
+      await this._ensureEffectForItem(item);
+    }
+
+    return created;
+  }
+
+  _setupEffectSync(item, effect) {
+    const handler = async (doc, diff, options, userId) => {
+      if (doc.id !== effect.id) return;
+      if (userId !== game.user.id) return;
+
+      if (doc.transfer === true) {
+        await doc.update({ transfer: false });
+        return;
+      }
+
+      const obj = doc.toObject();
+      const { _id, _key, parent, ...clean } = obj;
+
+      await item.update({ 'system.effectData': clean });
+      await item.update({ 'system.active': !doc.disabled });
+
+      Hooks.off('updateActiveEffect', handler);
+    };
+
+    Hooks.on('updateActiveEffect', handler);
+  }
 }

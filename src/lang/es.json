@@ -635,6 +635,7 @@
   "dialogs.items.technique.content": "Nombre de la técnica",
   "dialogs.items.title.content": "Nombre del título",
   "dialogs.items.weapons.content": "Nombre del arma",
+  "anima.ui.effects.effectsList.newEffectDialog.content": "Nombre del efecto",
   "dialogs.mod.content": "Modificador",
   "dialogs.newSupernaturalShield.title": "Nuevo Escudo Sobrenatural",
   "dialogs.psychicShield.difficulty.special": "Realizar Tirada",

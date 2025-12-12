@@ -1,0 +1,20 @@
+<form class="flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" />
+    <div class="header-fields">
+      <h1>
+        <input name="name" type="text" value="{{item.name}}" />
+      </h1>
+
+      <div class="field">
+        <label>{{localize "anima.effects.active"}}</label>
+        <input type="checkbox" name="system.active" {{checked system.active}} />
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body">
+    <h2>{{localize "anima.effects.modifiers"}}</h2>
+    <p>TODO: define aquí cómo guardas los modificadores.</p>
+  </section>
+</form>

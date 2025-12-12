@@ -65,6 +65,15 @@
       "type": "Actor",
       "private": false,
       "flags": {}
+    },
+    {
+      "name": "effects",
+      "label": "(ES) Efectos",
+      "system": "animabf",
+      "path": "./packs/effects",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     }
   ],
   "languages": [

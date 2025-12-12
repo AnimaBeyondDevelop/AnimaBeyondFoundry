@@ -1,6 +1,7 @@
 import { registerSettings, ABFSettingsKeys } from './utils/registerSettings';
 import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
+import ABFTokenHUD from './module/actor/ABFTokenHUD';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
 import { ABFActor } from './module/actor/ABFActor';
@@ -54,6 +55,7 @@ Hooks.once('init', async () => {
 
   CONFIG.Item.documentClass = ABFItem;
   CONFIG.ui.actors = ABFActorDirectory;
+  CONFIG.Token.hudClass = ABFTokenHUD;
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);
@@ -317,6 +319,16 @@ Hooks.on('chatMessage', (chatLog, message, chatData) => {
   chatData._animabfFormulaDone = true;
   chatLog.processMessage(replaced, chatData);
   return false;
+});
+
+Hooks.on('renderActiveEffectConfig', (app, html) => {
+  const transfer = html.find('input[name="transfer"]');
+  if (!transfer.length) return;
+
+  transfer.prop('checked', false);
+  transfer.prop('disabled', true);
+
+  transfer.closest('.form-group').hide();
 });
 
 // // Auto-number unlinked tokens as "{name} (n)" when dropped

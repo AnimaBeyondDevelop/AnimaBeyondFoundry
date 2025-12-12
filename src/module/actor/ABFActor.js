@@ -344,10 +344,10 @@ export class ABFActor extends Actor {
     );
 
     for (const psychicShield of psychicShields) {
-      const psychic = psychicShield.getFlag(game.abf.id, 'psychic');
+      const psychic = psychicShield.getFlag(game.animabf.id, 'psychic');
       if (psychic?.overmantained) {
         if (psychic.maintainMax >= psychicShield.system.shieldPoints) {
-          psychicShield.unsetFlag(game.abf.id, 'psychic');
+          psychicShield.unsetFlag(game.animabf.id, 'psychic');
         } else {
           const supShield = {
             system: psychicShield.system,

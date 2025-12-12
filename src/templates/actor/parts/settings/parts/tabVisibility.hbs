@@ -32,15 +32,13 @@
       inputName="system.ui.tabVisibility.psychic.value"
       inputValue=system.ui.tabVisibility.psychic.value
     }}
-    {{#if (settingBool "DEVELOP_MODE")}}
-      {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-        class="psychic"
-        title=(localize "anima.ui.settings.tabVisibility.effects.title")
-        inputType="checkbox"
-        inputName="system.ui.tabVisibility.effects.value"
-        inputValue=system.ui.tabVisibility.effects.value
-      }}
-    {{/if}}
+    {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      class="psychic"
+      title=(localize "anima.ui.settings.tabVisibility.effects.title")
+      inputType="checkbox"
+      inputName="system.ui.tabVisibility.effects.value"
+      inputValue=system.ui.tabVisibility.effects.value
+    }}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -606,7 +606,8 @@
       "psychicDiscipline",
       "psychicPower",
       "technique",
-      "weapon"
+      "weapon",
+      "effect"
     ],
     "ammo": {
       "amount": { "value": 0 },
@@ -789,6 +790,12 @@
       "damageBarrier": { "value": 0 },
       "shieldPoints": { "value": 0 },
       "origin": { "value": "" }
+    },
+    "effect": {
+      "active":   { "value": true },
+      "category": { "value": "generic" },
+      "modifiers": []
     }
+
   }
 }

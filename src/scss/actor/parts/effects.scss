@@ -1,0 +1,70 @@
+/* ============================= */
+/*   CONTENEDOR DEL PANEL        */
+/* ============================= */
+
+/* Este div envuelve todo el bloque de efectos */
+.effects{
+    .first-column {
+        width: 33%;             /* El panel ocupa el ancho total del tab */
+        flex: 0 0 100%;
+        box-sizing: border-box;
+    
+        /* ============================= */
+        /*   LISTA DE EFECTOS            */
+        /* ============================= */
+
+        .item-list.effects-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        }
+
+        /* ============================= */
+        /*   FILA DE UN EFECTO           */
+        /* ============================= */
+
+        .effect-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 6px 6px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+
+        background: rgba(255,255,255,0.02);
+
+        width: 100%;
+        box-sizing: border-box;
+
+        h4 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .effect-name {
+            flex: 1;     /* ocupa todo el espacio posible */
+            overflow: hidden;
+        }
+
+        .effect-controls {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+
+            input[type="checkbox"] {
+            cursor: pointer;
+            transform: scale(1.0);
+            margin-left: 5px;
+            }
+        }
+        }
+
+        /* Hover */
+        .effect-row:hover {
+        background: rgba(255,255,255,0.05);
+        }
+    }
+}
+
+

@@ -34,6 +34,7 @@ import { ElanPowerItemConfig } from '../../../types/general/ElanPowerItemConfig'
 import { ArmorItemConfig } from '../../../types/combat/ArmorItemConfig';
 import { SupernaturalShieldItemConfig } from '../../../types/combat/SupernaturalShieldItemConfig';
 import { InventoryItemItemConfig } from '../../../types/general/InventoryItemItemConfig';
+import { EffectItemConfig } from '../../../types/effects/EffectItemConfig';
 
 export const INTERNAL_ITEM_CONFIGURATIONS = {
   [ArsMagnusItemConfig.type]: ArsMagnusItemConfig,
@@ -74,7 +75,8 @@ export const ITEM_CONFIGURATIONS = {
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,
   [PsychicPowerItemConfig.type]: PsychicPowerItemConfig,
   [TechniqueItemConfig.type]: TechniqueItemConfig,
-  [WeaponItemConfig.type]: WeaponItemConfig
+  [WeaponItemConfig.type]: WeaponItemConfig,
+  [EffectItemConfig.type]: EffectItemConfig
 };
 
 export const ALL_ITEM_CONFIGURATIONS = {

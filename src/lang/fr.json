@@ -597,6 +597,7 @@
   "dialogs.items.technique.content": "Nom de la Technique",
   "dialogs.items.title.content": "Nom du Titre",
   "dialogs.items.weapons.content": "Nom de l'Arme",
+  "anima.ui.effects.effectsList.newEffectDialog.content": "Effect name",
   "dialogs.migrations.content": "Une migration va commencer. Pour éviter toute perte de données, sauvegardez votre dossier de données avant d'appliquer la migration. Êtes-vous prêt à continuer ?",
   "dialogs.migrations.error": "Échec de l'application de la migration n°{version} :\n{error}",
   "dialogs.migrations.success": "La migration n°{version} « {title} » a été appliquée avec succès.",
