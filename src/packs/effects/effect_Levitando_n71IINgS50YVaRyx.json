@@ -1,0 +1,147 @@
+{
+  "folder": "Xnc7DkNi5GnpMsWV",
+  "name": "Levitando",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/item-bag.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-60",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Levitando 2",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-60",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/item-bag.svg",
+      "_id": "0Usb8wLejIdHH6TF",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!n71IINgS50YVaRyx.0Usb8wLejIdHH6TF"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765562941385,
+    "modifiedTime": 1765562975047,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "n71IINgS50YVaRyx",
+  "sort": 600000,
+  "_key": "!items!n71IINgS50YVaRyx"
+}

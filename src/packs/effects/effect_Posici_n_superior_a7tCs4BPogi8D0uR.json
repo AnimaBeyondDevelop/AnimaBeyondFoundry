@@ -1,0 +1,129 @@
+{
+  "folder": "Xnc7DkNi5GnpMsWV",
+  "name": "Posición superior",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": true,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/tower.svg",
+      "disabled": false,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Posición superior 2",
+      "disabled": false,
+      "changes": [],
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/aura.svg",
+      "_id": "ynZJPeNePZ8Mn0xL",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!a7tCs4BPogi8D0uR.ynZJPeNePZ8Mn0xL"
+    },
+    {
+      "name": "Posición superior",
+      "disabled": false,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/tower.svg",
+      "_id": "QXXQSadzSLHfqNsy",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!a7tCs4BPogi8D0uR.QXXQSadzSLHfqNsy"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765562979890,
+    "modifiedTime": 1765562979890,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "a7tCs4BPogi8D0uR",
+  "sort": 0,
+  "_key": "!items!a7tCs4BPogi8D0uR"
+}

@@ -1,0 +1,62 @@
+{
+  "folder": "5diz9hJLjjOu7Xc7",
+  "name": "Shephon (base)",
+  "type": "effect",
+  "_id": "2i0zbwdZ9IFY9loA",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/item-bag.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "60",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "60",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "rX4MRGIlAJmbcDJE": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765572557136,
+    "modifiedTime": 1765572762548,
+    "lastModifiedBy": "rX4MRGIlAJmbcDJE"
+  },
+  "_key": "!items!2i0zbwdZ9IFY9loA"
+}

@@ -1,0 +1,62 @@
+{
+  "folder": "qGuzVGLbhD1drP26",
+  "name": "Legado de la Luna (Tsukiyomi) - Luna Nueva",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/item-bag.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.allActions.special.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.regenerationType.mod.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765564979147,
+    "modifiedTime": 1765564986414,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "YoIVMGcpFE5Se3RN",
+  "sort": 100000,
+  "_key": "!items!YoIVMGcpFE5Se3RN"
+}

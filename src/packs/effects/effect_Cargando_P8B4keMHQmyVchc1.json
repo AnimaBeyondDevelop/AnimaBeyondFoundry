@@ -1,0 +1,123 @@
+{
+  "folder": "3JHGrI3z8yZ7GbSQ",
+  "name": "Cargando",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/wingfoot.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "10",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "-10",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "A la ofensiva 2",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "10",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "-30",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "-30",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/sword.svg",
+      "_id": "EzEJPZQgdEFejjjh",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!P8B4keMHQmyVchc1.EzEJPZQgdEFejjjh"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765562911264,
+    "modifiedTime": 1765562955963,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "P8B4keMHQmyVchc1",
+  "sort": 50000,
+  "_key": "!items!P8B4keMHQmyVchc1"
+}

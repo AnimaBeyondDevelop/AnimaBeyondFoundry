@@ -1,0 +1,213 @@
+{
+  "folder": "Xnc7DkNi5GnpMsWV",
+  "name": "Amenazado",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/hazard.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-100",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "80",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.offensive.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.defensive.base.value",
+          "mode": 2,
+          "value": "-120",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.offensive.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.defensive.base.value",
+          "mode": 2,
+          "value": "-120",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Parálisis menor",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/paralysis.svg",
+      "_id": "F9b81Pm2qyuYAQMU",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!TyJZYaMZ7lnCFsUR.F9b81Pm2qyuYAQMU"
+    },
+    {
+      "name": "Parálisis menor (copia)",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-60",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/paralysis.svg",
+      "_id": "YuVy7N6auJhBK7Qq",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!TyJZYaMZ7lnCFsUR.YuVy7N6auJhBK7Qq"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765562905952,
+    "modifiedTime": 1765562975047,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "TyJZYaMZ7lnCFsUR",
+  "sort": 100000,
+  "_key": "!items!TyJZYaMZ7lnCFsUR"
+}

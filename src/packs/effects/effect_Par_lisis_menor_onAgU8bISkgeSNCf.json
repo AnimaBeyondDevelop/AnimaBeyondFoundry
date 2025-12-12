@@ -1,0 +1,123 @@
+{
+  "folder": "Xnc7DkNi5GnpMsWV",
+  "name": "Parálisis menor",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/paralysis.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Parálisis menor",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.general.modifiers.physicalActions.base.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/paralysis.svg",
+      "_id": "F9b81Pm2qyuYAQMU",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!onAgU8bISkgeSNCf.F9b81Pm2qyuYAQMU"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765562969938,
+    "modifiedTime": 1765562975047,
+    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+  },
+  "_id": "onAgU8bISkgeSNCf",
+  "sort": 700000,
+  "_key": "!items!onAgU8bISkgeSNCf"
+}

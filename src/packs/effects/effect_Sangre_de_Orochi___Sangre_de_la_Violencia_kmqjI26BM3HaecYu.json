@@ -1,0 +1,213 @@
+{
+  "folder": "qGuzVGLbhD1drP26",
+  "name": "Sangre de Orochi - Sangre de la Violencia",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/item-bag.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.act.main.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.agility.base.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.constitution.base.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.dexterity.base.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.power.base.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.strength.base.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.willPower.base.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.offensive.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.defensive.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.offensive.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.defensive.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Sangre de Orochi - Sangre de la Violencia",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.act.main.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.agility.final.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/item-bag.svg",
+      "_id": "PECFlQDly4q1y8hK",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "animabf",
+        "systemVersion": "2.0.7",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!kmqjI26BM3HaecYu.PECFlQDly4q1y8hK"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.0.7",
+    "createdTime": 1765564986388,
+    "modifiedTime": 1765574580272,
+    "lastModifiedBy": "rX4MRGIlAJmbcDJE"
+  },
+  "_id": "kmqjI26BM3HaecYu",
+  "sort": 200000,
+  "_key": "!items!kmqjI26BM3HaecYu"
+}
