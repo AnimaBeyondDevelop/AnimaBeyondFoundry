@@ -1,7 +1,6 @@
 import { registerSettings, ABFSettingsKeys } from './utils/registerSettings';
 import { Logger, preloadTemplates } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
-import ABFTokenHUD from './module/actor/ABFTokenHUD';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
 import { ABFActor } from './module/actor/ABFActor';
@@ -55,7 +54,6 @@ Hooks.once('init', async () => {
 
   CONFIG.Item.documentClass = ABFItem;
   CONFIG.ui.actors = ABFActorDirectory;
-  CONFIG.Token.hudClass = ABFTokenHUD;
 
   // Register custom sheets (if any)
   Actors.unregisterSheet('core', ActorSheet);
@@ -329,6 +327,54 @@ Hooks.on('renderActiveEffectConfig', (app, html) => {
   transfer.prop('disabled', true);
 
   transfer.closest('.form-group').hide();
+});
+
+Hooks.on('renderTokenHUD', async (hud, html) => {
+  const root = hud.element ?? html?.[0];
+  if (!root) return;
+
+  const token = hud.object;
+  const actor = token?.actor;
+  if (!actor) return;
+
+  const flagSystem = game.animabf.id;
+  const flagKey = 'defensesCounter';
+
+  const defensesCounter = (await actor.getFlag(flagSystem, flagKey)) ?? {
+    accumulated: 0,
+    keepAccumulating: true
+  };
+  const currentValue = Number(defensesCounter.accumulated) || 0;
+
+  const middleCol = root.querySelector('.col.middle');
+  if (!middleCol) return;
+
+  let control = middleCol.querySelector('.attribute.abf-flag-value');
+  if (!control) {
+    control = document.createElement('div');
+    control.classList.add('attribute', 'abf-flag-value');
+    control.dataset.tooltip = 'Defensas adicionales';
+    control.innerHTML = `
+      <label style="margin-right: 4px;">DEF</label>
+      <input type="number" name="abfFlagValue" min="0" step="1" value="0">
+    `;
+    middleCol.prepend(control);
+  }
+
+  const input = control.querySelector("input[name='abfFlagValue']");
+  if (!input) return;
+
+  input.value = currentValue;
+
+  input.onchange = async ev => {
+    ev.stopPropagation();
+    const newValue = Number(ev.target.value) || 0;
+
+    await actor.setFlag(flagSystem, flagKey, {
+      ...defensesCounter,
+      accumulated: newValue
+    });
+  };
 });
 
 // // Auto-number unlinked tokens as "{name} (n)" when dropped
