@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "Podrá ver magia, matrices psíquicas y seres invisibles / +50 RM contra ilusiones."
+        },
+        "resistanceEffect": {
+          "value": 50,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -85,6 +89,10 @@
         },
         "description": {
           "value": "Como en Intermedio, pero obtiene un +75 RM contra ilusiones."
+        },
+        "resistanceEffect": {
+          "value": 75,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +110,10 @@
         },
         "description": {
           "value": "Como avanzado, pero obtiene un +100 RM contra ilusiones."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       }
     }

@@ -449,14 +449,14 @@ export class CombatAttackDialog extends FormApplication {
         this.attackerActor.setFlag(game.animabf.id, 'lastOffensiveSpellUsed', spellUsed);
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
-        const spellUsedEffect = spell?.system.grades[spellGrade].description.value ?? '';
+        const spellGradeData = spell?.system.grades[spellGrade];
         if (this.attackerActor.evaluateCast(spellCasting)) {
           this.modalData.attacker.mystic.overrideMysticCast = true;
           return;
         }
         let visibleCheck = spell?.system.visible;
 
-        let resistanceEffect = resistanceEffectCheck(spellUsedEffect);
+        let resistanceEffect = resistanceEffectCheck(spellGradeData);
 
         let combatModifier = 0;
         for (const key in attackerCombatMod) {
@@ -662,9 +662,8 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    const spellUsedEffect =
-      spell?.system.grades[mystic.spellGrade].description.value ?? '';
-    mystic.damage.final = mystic.damage.special + damageCheck(spellUsedEffect);
+    const spellGradeData = spell?.system.grades[mystic.spellGrade];
+    mystic.damage.final = mystic.damage.special + damageCheck(spellGradeData);
     mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(
       spell,
       mystic.spellGrade,

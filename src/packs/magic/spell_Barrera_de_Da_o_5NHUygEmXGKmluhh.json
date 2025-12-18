@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Barrera de Daño 30."
+        },
+        "damage": {
+          "value": 30
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Barrera de Daño 50."
+        },
+        "damage": {
+          "value": 50
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Barrera de Daño 80."
+        },
+        "damage": {
+          "value": 80
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Barrera de Daño 100."
+        },
+        "damage": {
+          "value": 100
         }
       }
     }

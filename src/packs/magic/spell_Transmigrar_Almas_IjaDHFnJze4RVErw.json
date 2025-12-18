@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "RM 100 / Presencia Máxima 60"
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "RM 140 / Presencia Máxima 100"
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "RM 160 / Presencia Máxima 140"
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "RM 200 / Presencia Máxima 180"
+        },
+        "resistanceEffect": {
+          "value": 200,
+          "type": "magic"
         }
       }
     }

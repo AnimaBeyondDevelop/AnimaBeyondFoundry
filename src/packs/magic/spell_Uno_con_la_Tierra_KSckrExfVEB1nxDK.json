@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "100 kilómetros de radio / 140 RM."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "1000 kilómetros de radio / 180 RM."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "10000 kilómetros de radio / 200 RM."
+        },
+        "resistanceEffect": {
+          "value": 200,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "Afecta cualquier elemento mineral existente / 240 RM."
+        },
+        "resistanceEffect": {
+          "value": 240,
+          "type": "magic"
         }
       }
     }

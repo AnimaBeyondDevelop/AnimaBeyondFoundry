@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "RM 80 / 25 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 80,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "RM 100 / 150 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "RM 120 / 250 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -103,6 +115,10 @@
         },
         "description": {
           "value": "RM 140 / 350 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       }
     }

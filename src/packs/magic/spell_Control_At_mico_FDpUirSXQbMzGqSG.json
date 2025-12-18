@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "RM o RF 140 / 100 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "RM o RF 160 / 250 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "RM o RF 200 / 500 metros de radio."
+        },
+        "resistanceEffect": {
+          "value": 200,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "RM o RF 240 / 1 kilómetro de radio."
+        },
+        "resistanceEffect": {
+          "value": 240,
+          "type": "physical"
         }
       }
     }

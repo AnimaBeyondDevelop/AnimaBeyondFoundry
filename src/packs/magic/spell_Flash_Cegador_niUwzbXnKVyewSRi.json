@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "10 metros de radio / 140 RF."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "25 metros de radio / 140 RF."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "50 metros de radio / 140 RF."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "physical"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "100 metros de radio / 160 RF."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "physical"
         }
       }
     }

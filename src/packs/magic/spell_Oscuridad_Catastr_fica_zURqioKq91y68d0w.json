@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Daño 120 / 25 metros de radio."
+        },
+        "damage": {
+          "value": 120
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Daño 150 / 100 metros de radio."
+        },
+        "damage": {
+          "value": 150
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Daño 200 / 150 metros de radio."
+        },
+        "damage": {
+          "value": 200
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Daño 250 / 250 metros de radio."
+        },
+        "damage": {
+          "value": 250
         }
       }
     }

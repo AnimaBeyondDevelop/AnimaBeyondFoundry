@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "10 metros de radio / RF 80."
+        },
+        "resistanceEffect": {
+          "value": 80,
+          "type": "physical"
         }
       },
       "intermediate": {

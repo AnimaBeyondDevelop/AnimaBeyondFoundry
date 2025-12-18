@@ -1,4 +1,26 @@
-export const resistanceEffectCheck = effect => {
+export const resistanceEffectCheck = gradeDataOrEffect => {
+  if (typeof gradeDataOrEffect === 'object' && gradeDataOrEffect !== null) {
+    const resEffect = gradeDataOrEffect.resistanceEffect;
+    if (resEffect && typeof resEffect.value === 'number' && resEffect.type) {
+      return {
+        value: resEffect.value,
+        type: resEffect.type,
+        check: resEffect.value > 0
+      };
+    }
+    if (gradeDataOrEffect.description?.value) {
+      return parseDescriptionForResistance(gradeDataOrEffect.description.value);
+    }
+  }
+
+  if (typeof gradeDataOrEffect === 'string') {
+    return parseDescriptionForResistance(gradeDataOrEffect);
+  }
+
+  return { value: 0, type: undefined, check: false };
+};
+
+function parseDescriptionForResistance(effect) {
   const resistanceEffect = { value: 0, type: undefined, check: false };
   const resistances = { physical: 'RF', disease: 'RE', poison: 'RV', magic: 'RM', psychic: 'RP' }
 
@@ -22,4 +44,4 @@ export const resistanceEffectCheck = effect => {
   }
 
   return resistanceEffect;
-};
+}

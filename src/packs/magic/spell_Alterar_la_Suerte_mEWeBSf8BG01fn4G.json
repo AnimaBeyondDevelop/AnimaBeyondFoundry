@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "RM 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "RM 140."
+        },
+        "resistanceEffect": {
+          "value": 140,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "RM 160 / La suerte concedida es algo desproporcionado, rozando lo absurdo."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "RM 180 / Como en Avanzado, pero salvo contra entes de Gnosis o Natura alta, siempre ganará o perderá."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       }
     }

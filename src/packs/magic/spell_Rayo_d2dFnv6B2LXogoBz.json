@@ -51,6 +51,13 @@
         },
         "description": {
           "value": "Daño 100, 1 rebote o +10 al Daño."
+        },
+        "damage": {
+          "value": 100
+        },
+        "resistanceEffect": {
+          "value": 1,
+          "type": "disease"
         }
       },
       "intermediate": {
@@ -68,6 +75,13 @@
         },
         "description": {
           "value": "Daño 100, 10 rebotes o + 40 al Daño."
+        },
+        "damage": {
+          "value": 100
+        },
+        "resistanceEffect": {
+          "value": 10,
+          "type": "disease"
         }
       },
       "advanced": {
@@ -85,6 +99,13 @@
         },
         "description": {
           "value": "Daño 100, 15 rebotes o + 80 al Daño."
+        },
+        "damage": {
+          "value": 100
+        },
+        "resistanceEffect": {
+          "value": 15,
+          "type": "disease"
         }
       },
       "arcane": {
@@ -102,6 +123,13 @@
         },
         "description": {
           "value": "Daño 100, 25 rebotes o +150 al Daño."
+        },
+        "damage": {
+          "value": 100
+        },
+        "resistanceEffect": {
+          "value": 25,
+          "type": "disease"
         }
       }
     }

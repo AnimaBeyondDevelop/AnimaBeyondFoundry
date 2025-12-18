@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "RM 100."
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "RM 110."
+        },
+        "resistanceEffect": {
+          "value": 110,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "RM 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -103,6 +115,10 @@
         },
         "description": {
           "value": "RM 130."
+        },
+        "resistanceEffect": {
+          "value": 130,
+          "type": "magic"
         }
       }
     }

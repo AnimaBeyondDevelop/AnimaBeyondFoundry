@@ -52,6 +52,10 @@
         },
         "description": {
           "value": "5 metros de abertura / 1000 kilómetros de distancia / 500 presencias al día."
+        },
+        "resistanceEffect": {
+          "value": 500,
+          "type": "disease"
         }
       },
       "intermediate": {
@@ -69,6 +73,10 @@
         },
         "description": {
           "value": "15 metros de abertura / 5000 kilómetros de distancia / 1000 presencias al día."
+        },
+        "resistanceEffect": {
+          "value": 1000,
+          "type": "disease"
         }
       },
       "advanced": {
@@ -86,6 +94,10 @@
         },
         "description": {
           "value": "25 metros de abertura / 25000 kilómetros de distancia / 2000 presencias al día."
+        },
+        "resistanceEffect": {
+          "value": 2000,
+          "type": "disease"
         }
       },
       "arcane": {

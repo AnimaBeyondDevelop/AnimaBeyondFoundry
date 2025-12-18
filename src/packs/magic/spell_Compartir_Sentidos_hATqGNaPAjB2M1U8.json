@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "Presencia máxima 100 / RM o RP 100 / 1 Kilometro de distancia"
+        },
+        "resistanceEffect": {
+          "value": 100,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "Presencia máxima 160 / RM o RP 160 / 10 Kilometro de distancia"
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "Presencia máxima 200 / RM o RP 190 / 50 Kilometro de distancia"
+        },
+        "resistanceEffect": {
+          "value": 190,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "Presencia máxima 240 / RM o RP 220 / 150 Kilometro de distancia"
+        },
+        "resistanceEffect": {
+          "value": 220,
+          "type": "magic"
         }
       }
     }

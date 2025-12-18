@@ -51,6 +51,10 @@
         },
         "description": {
           "value": "Visible en 1 kilómetro de radio / RM o RP 120."
+        },
+        "resistanceEffect": {
+          "value": 120,
+          "type": "magic"
         }
       },
       "intermediate": {
@@ -68,6 +72,10 @@
         },
         "description": {
           "value": "Visible en 5 kilómetros de radio / RM o RP 150."
+        },
+        "resistanceEffect": {
+          "value": 150,
+          "type": "magic"
         }
       },
       "advanced": {
@@ -85,6 +93,10 @@
         },
         "description": {
           "value": "Visible en 15 kilómetros de radio / RM o RP 180."
+        },
+        "resistanceEffect": {
+          "value": 180,
+          "type": "magic"
         }
       },
       "arcane": {
@@ -102,6 +114,10 @@
         },
         "description": {
           "value": "Visible en 25 kilómetros de radio / RM o RP 220."
+        },
+        "resistanceEffect": {
+          "value": 220,
+          "type": "magic"
         }
       }
     }

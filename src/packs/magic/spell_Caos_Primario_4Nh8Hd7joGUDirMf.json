@@ -102,6 +102,10 @@
         },
         "description": {
           "value": "25 kilómetros / Igual que Avanzado y a menos de 1 km del núcleo RM 160 o descreación."
+        },
+        "resistanceEffect": {
+          "value": 160,
+          "type": "magic"
         }
       }
     }
