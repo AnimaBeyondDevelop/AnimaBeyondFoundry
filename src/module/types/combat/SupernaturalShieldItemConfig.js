@@ -9,11 +9,8 @@ import { ABFItemConfigFactory } from '../ABFItemConfig';
  * @readonly
  */
 export const INITIAL_SUPERNATURAL_SHIELD_DATA = {
-  type: 'none',
-  spellGrade: SpellGrades.BASE,
-  damageBarrier: 0,
   shieldPoints: 0,
-  origin: ''
+  abilityFormula: ''
 };
 
 /** @type {import("../Items").SupernaturalShieldItemConfig} */

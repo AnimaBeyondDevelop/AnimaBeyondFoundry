@@ -785,11 +785,8 @@
       "useCustomFormula": {"value": false }
     },
     "supernaturalShield": {
-      "type": { "value": "none" },
-      "spellGrade": { "value": "" },
-      "damageBarrier": { "value": 0 },
       "shieldPoints": { "value": 0 },
-      "origin": { "value": "" }
+      "abilityFormula": { "value": "" }
     },
     "effect": {
       "active":   { "value": true },

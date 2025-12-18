@@ -3,6 +3,8 @@ import { calculateCombatResult } from '../../combat/utils/calculateCombatResult'
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { executeMacro } from '../../utils/functions/executeMacro';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
+import { ABFSupernaturalShieldData } from '../../combat/ABFSupernaturalShieldData';
+import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const attackerActor = attacker.actor;
@@ -385,19 +387,21 @@ export class GMCombatDialog extends FormApplication {
 
   async newSupernaturalShieldIfBeAble() {
     const { supShield } = this.modalData.defender.result?.values;
-    if (
-      (this.modalData.defender.result?.type === 'mystic' ||
-        this.modalData.defender.result?.type === 'psychic') &&
-      supShield.create
-    ) {
-      const supShieldId = await this.defenderActor.newSupernaturalShield(
-        this.modalData.defender.result.type,
-        this.modalData.defender.result?.power ?? {},
-        this.modalData.defender.result.values?.psychicPotential ?? 0,
-        this.modalData.defender.result.spell ?? {},
-        this.modalData.defender.result.values?.spellGrade
-      );
-      return supShieldId;
+    const result = this.modalData.defender.result;
+
+    if ((result?.type === 'mystic' || result?.type === 'psychic') && supShield.create) {
+      const shieldPoints = Number(result.values?.supShield?.shieldPoints ?? 0);
+
+      const abilityFormula =
+        result.type === 'psychic' ? 'TU_FORMULA_PSIQUICA' : 'TU_FORMULA_MAGICA';
+
+      const shieldData = ABFSupernaturalShieldData.builder()
+        .name(result.type === 'psychic' ? result?.power?.name : result?.spell?.name)
+        .shieldPoints(shieldPoints)
+        .abilityFormula(abilityFormula)
+        .build();
+
+      return await this.defenderActor.newSupernaturalShield(shieldData);
     }
   }
 
@@ -427,10 +431,7 @@ export class GMCombatDialog extends FormApplication {
           attacker.result.values.total + this.modalData.attacker.customModifier,
           0
         );
-        newCombatResult.at = Math.max(
-          defender.result.values.at - reducedArmor,
-          0
-        );
+        newCombatResult.at = Math.max(defender.result.values.at - reducedArmor, 0);
         newCombatResult.halvedAbsorption =
           defender.result.type === 'resistance'
             ? defender.result.values.surprised
@@ -492,9 +493,7 @@ export class GMCombatDialog extends FormApplication {
 
     if (attacker.result?.type === 'combat') {
       const weaponName =
-        attacker.result.values?.weaponName ||
-        attacker.result.weapon?.name ||
-        'Unarmed';
+        attacker.result.values?.weaponName || attacker.result.weapon?.name || 'Unarmed';
       const { name } = { name: weaponName };
       macroName = macroPrefixAttack + name;
     } else if (attacker.result?.type === 'mystic') {

@@ -132,77 +132,17 @@ export class ABFActor extends Actor {
     return roll.total;
   }
 
-  /**
-   * Creates a new supernatural shield item for the ABFActor class and execute a macro using the shield's name.
-   *
-   * @param {string} type The type of the supernatural shield ('psychic' or 'mystic').
-   * @param {any} power - The power object containing information about the psychic power. Only needed if type = 'psychic'.
-   * @param {number} psychicDifficulty - The difficulty level of the psychic power. Only needed if type = 'psychic'.
-   * @param {any} spell - The spell object containing information about the mystic spell. Only needed if type = 'mystic'.
-   * @param {string} spellGrade - The grade of the mystic spell. Only needed if type = 'mystic'.
-   * @returns {Promise<string>} - The ID of the newly created supernatural shield item.
-   */
-  async newSupernaturalShield(type, power, psychicDifficulty, spell, spellGrade) {
-    const supernaturalShieldData = {
-      name: '',
-      type: ABFItems.SUPERNATURAL_SHIELD,
-      system: {},
-      psychic: { overmantained: false, maintainMax: 0 }
-    };
-    if (type === 'psychic') {
-      const {
-        general: {
-          settings: { inhuman, zen }
-        },
-        psychic
-      } = this.system;
+  async newSupernaturalShield(shieldData) {
+    // Accept either DTO or plain create data
+    const itemCreateData =
+      typeof shieldData?.toItemCreateData === 'function'
+        ? shieldData.toItemCreateData()
+        : shieldData;
 
-      const potentialBaseDifficulty = psychicPotentialEffect(
-        psychic.psychicPotential.base.value,
-        0,
-        inhuman.value,
-        zen.value
-      );
-      const baseEffect =
-        shieldBaseValueCheck(potentialBaseDifficulty, power?.system.effects) ?? 0;
-      const finalEffect = shieldValueCheck(
-        power?.system.effects[psychicDifficulty].value ?? ''
-      );
-      supernaturalShieldData.name = power.name;
-      supernaturalShieldData.system = {
-        type: 'psychic',
-        damageBarrier: 0,
-        shieldPoints: finalEffect,
-        origin: this.uuid
-      };
-      supernaturalShieldData.psychic = {
-        overmantained: finalEffect > baseEffect,
-        maintainMax: baseEffect
-      };
-    } else if (type === 'mystic') {
-      const finalEffect = shieldValueCheck(
-        spell?.system.grades[spellGrade].description.value ?? ''
-      );
-      supernaturalShieldData.name = spell.name;
-      supernaturalShieldData.system = {
-        type: 'mystic',
-        spellGrade,
-        damageBarrier: 0,
-        shieldPoints: finalEffect,
-        origin: this.uuid
-      };
-    }
+    const item = await this.createItem(itemCreateData);
 
-    const item = await this.createItem(supernaturalShieldData);
-    let args = {
-      thisActor: this,
-      newShield: true,
-      shieldId: item._id
-    };
-    if (supernaturalShieldData.psychic.overmantained) {
-      item.setFlag(game.abf.id, 'psychic', supernaturalShieldData.psychic);
-    }
-    executeMacro(supernaturalShieldData.name, args);
+    const args = { thisActor: this, newShield: true, shieldId: item._id };
+    executeMacro(itemCreateData.name, args);
     return item._id;
   }
 
