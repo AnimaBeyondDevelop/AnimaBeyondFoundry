@@ -1,4 +1,4 @@
-import { autoRollDefenseAgainstAttack } from '../../module/combat/autoDefense.js';
+import { autoRollDefenseAgainstAttack } from '../../module/combat/autoRollDefenseAgainstAttack.js';
 import { Templates } from '../../module/utils/constants';
 import { updateAttackTargetsFlag } from '../../utils/updateAttackTargetsFlag.js';
 import { openModDialog } from '../../module/utils/dialogs/openSimpleInputDialog.js';

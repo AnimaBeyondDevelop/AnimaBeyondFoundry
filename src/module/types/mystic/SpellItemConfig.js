@@ -57,6 +57,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       description: { value: '' },
       damage: { value: 0 },
       area: { value: 0 },
+      shieldPoints: { value: 0 },
       resistanceEffect: {
         value: 0,
         type: ''
@@ -70,6 +71,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       description: { value: '' },
       damage: { value: 0 },
       area: { value: 0 },
+      shieldPoints: { value: 0 },
       resistanceEffect: {
         value: 0,
         type: ''
@@ -83,6 +85,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       description: { value: '' },
       damage: { value: 0 },
       area: { value: 0 },
+      shieldPoints: { value: 0 },
       resistanceEffect: {
         value: 0,
         type: ''
@@ -96,6 +99,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       description: { value: '' },
       damage: { value: 0 },
       area: { value: 0 },
+      shieldPoints: { value: 0 },
       resistanceEffect: {
         value: 0,
         type: ''

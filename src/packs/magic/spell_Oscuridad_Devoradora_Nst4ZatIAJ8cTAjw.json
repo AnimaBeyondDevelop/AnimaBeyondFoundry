@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Daño del choque 80 y 600 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 600
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Daño del choque 110 y 1200 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 1200
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Daño del choque 140 y 1800 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 1800
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Daño del choque 170 y 2200 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 2200
         }
       }
     }

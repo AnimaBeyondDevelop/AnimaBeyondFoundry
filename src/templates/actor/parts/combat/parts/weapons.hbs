@@ -209,14 +209,14 @@
               
               {{{injectFromHook "animabf.actor.combat.weapon.footer" weapon._id}}}
               
-              {{#if (settingBool "DEVELOP_MODE")}}
+              {{!-- {{#if (settingBool "DEVELOP_MODE")}} --}}
                 {{!-- <button class='attack-button' data-on-click="createDefaultWeaponAttack" data-weapon-id="{{weapon._id}}">
                   {{localize "anima.ui.combat.weapons.defaultAttackButton.title"}}
                 </button> --}}
                 <button class='attack-button' data-on-click="createWeaponAttack" data-weapon-id="{{weapon._id}}">
                   {{localize "anima.ui.combat.weapons.attackButton.title"}}
                 </button>
-              {{/if}}
+              {{!-- {{/if}} --}}
               
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}

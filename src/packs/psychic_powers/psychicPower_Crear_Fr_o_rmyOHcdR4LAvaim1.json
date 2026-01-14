@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 1"
+        "value": "Fatiga 1",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 1
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "1 intensidad"
+        "value": "1 intensidad",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "3 intensidades"
+        "value": "3 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "5 intensidades"
+        "value": "5 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "7 intensidades"
+        "value": "7 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "10 intensidades"
+        "value": "10 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "13 intensidades"
+        "value": "13 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "16 intensidades"
+        "value": "16 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "20 intensidades"
+        "value": "20 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "25 intensidades"
+        "value": "25 intensidades",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

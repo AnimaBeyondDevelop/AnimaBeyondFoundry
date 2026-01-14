@@ -52,6 +52,9 @@
         },
         "description": {
           "value": "Tipo de Movimiento 10, 500 PV, Fuerza 10, Tamaño Máximo 20."
+        },
+        "shieldPoints": {
+          "value": 500
         }
       },
       "intermediate": {
@@ -69,6 +72,9 @@
         },
         "description": {
           "value": "Tipo de Movimiento 12, 1000 PV, Fuerza 12, Tamaño Máximo 22."
+        },
+        "shieldPoints": {
+          "value": 1000
         }
       },
       "advanced": {
@@ -86,6 +92,9 @@
         },
         "description": {
           "value": "Tipo de Movimiento 14, 1500 PV, Fuerza 14, Tamaño Máximo 24."
+        },
+        "shieldPoints": {
+          "value": 1500
         }
       },
       "arcane": {
@@ -103,6 +112,9 @@
         },
         "description": {
           "value": "Tipo de Movimiento 15,  2000 PV, Fuerza 15, Tamaño Máximo 28."
+        },
+        "shieldPoints": {
+          "value": 2000
         }
       }
     }

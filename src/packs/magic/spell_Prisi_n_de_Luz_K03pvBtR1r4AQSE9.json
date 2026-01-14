@@ -55,6 +55,9 @@
         "resistanceEffect": {
           "value": 140,
           "type": "magic"
+        },
+        "shieldPoints": {
+          "value": 10000
         }
       },
       "intermediate": {
@@ -76,6 +79,9 @@
         "resistanceEffect": {
           "value": 180,
           "type": "magic"
+        },
+        "shieldPoints": {
+          "value": 250000
         }
       },
       "advanced": {
@@ -97,6 +103,9 @@
         "resistanceEffect": {
           "value": 220,
           "type": "magic"
+        },
+        "shieldPoints": {
+          "value": 500000
         }
       },
       "arcane": {
@@ -118,6 +127,9 @@
         "resistanceEffect": {
           "value": 240,
           "type": "magic"
+        },
+        "shieldPoints": {
+          "value": 500000
         }
       }
     }

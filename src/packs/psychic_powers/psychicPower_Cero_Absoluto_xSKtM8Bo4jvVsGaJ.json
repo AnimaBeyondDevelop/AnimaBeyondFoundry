@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 16"
+        "value": "Fatiga 16",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 16
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "Fatiga 12"
+        "value": "Fatiga 12",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 12
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "Fatiga 8"
+        "value": "Fatiga 8",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 8
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "Fatiga 6"
+        "value": "Fatiga 6",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 6
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "Fatiga 4"
+        "value": "Fatiga 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 4
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "5 metros de radio"
+        "value": "5 metros de radio",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "10 metros de radio"
+        "value": "10 metros de radio",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "20 metros de radio"
+        "value": "20 metros de radio",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "50 metros de radio"
+        "value": "50 metros de radio",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "100 metros de radio"
+        "value": "100 metros de radio",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 1"
+        "value": "Fatiga 1",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 1
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "Una hora"
+        "value": "Una hora",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "Seis horas"
+        "value": "Seis horas",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "Un día"
+        "value": "Un día",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "Tres días"
+        "value": "Tres días",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "Una semana"
+        "value": "Una semana",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "Un mes"
+        "value": "Un mes",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "Un año"
+        "value": "Un año",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "Una década"
+        "value": "Una década",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "Un siglo"
+        "value": "Un siglo",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 1"
+        "value": "Fatiga 1",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 1
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "1 Kg. / Tipo de vuelo 4"
+        "value": "1 Kg. / Tipo de vuelo 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "2 Kg / Tipo de vuelo 6"
+        "value": "2 Kg / Tipo de vuelo 6",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "5 Kg / Tipo de vuelo 8"
+        "value": "5 Kg / Tipo de vuelo 8",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "10 Kg / Tipo de vuelo 10"
+        "value": "10 Kg / Tipo de vuelo 10",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "20 Kg / Tipo de vuelo 12"
+        "value": "20 Kg / Tipo de vuelo 12",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "40 Kg / Tipo de vuelo 14"
+        "value": "40 Kg / Tipo de vuelo 14",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "100 Kg / Tipo de vuelo 16"
+        "value": "100 Kg / Tipo de vuelo 16",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "200 Kg / Tipo de vuelo 18"
+        "value": "200 Kg / Tipo de vuelo 18",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "500 Kg / Tipo de vuelo 20"
+        "value": "500 Kg / Tipo de vuelo 20",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

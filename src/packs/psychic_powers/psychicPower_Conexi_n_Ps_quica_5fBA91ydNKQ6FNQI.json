@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 6"
+        "value": "Fatiga 6",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 6
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "Fatiga 4"
+        "value": "Fatiga 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 4
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "Fatiga 2"
+        "value": "Fatiga 2",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 2
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "100 metros"
+        "value": "100 metros",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "500 metros"
+        "value": "500 metros",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "1 kilómetro"
+        "value": "1 kilómetro",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "10 kilómetros"
+        "value": "10 kilómetros",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "100 kilómetros"
+        "value": "100 kilómetros",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "1.000 kilómetros"
+        "value": "1.000 kilómetros",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "Cualquier distancia"
+        "value": "Cualquier distancia",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

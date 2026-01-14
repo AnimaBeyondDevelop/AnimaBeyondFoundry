@@ -171,7 +171,16 @@
             @include input;
 
             text-align: center;
-            height: 1rem;
+            height: 1.25rem;
+            line-height: 1.25rem;
+            padding-top: 0.05rem;
+            padding-bottom: 0;
+          }
+
+          button.input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
         }
 
@@ -222,14 +231,31 @@
           width: 100%;
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
+          row-gap: 0.5rem;
 
           padding-left: 0.5rem;
           padding-right: 0.5rem;
+          padding-top: 1.5rem;
+          padding-bottom: 0.25rem;
+
+          height: auto;
+          min-height: 2rem;
+          align-items: stretch;
 
           .input {
             height: 1.5rem;
           }
+
+          .psychic-cast-button {
+            @include button;
+            padding-top: 0rem;
+            height: 2rem;
+            width: 99%;
+          }
         }
+
+
       }
     }
     // Psychic Powers

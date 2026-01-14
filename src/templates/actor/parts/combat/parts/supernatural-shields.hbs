@@ -11,29 +11,16 @@
   }}
     {{#each system.combat.supernaturalShields as |supernaturalShields|}}
       <div data-item-id='{{this._id}}' class='supernatural-shield-row'>
-        {{#if (is 'eq' this.system.type 'mystic')}}
-          {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-            class="name"
-            title=(localize "anima.ui.combat.supernaturalShields.name.title")
-            hideTitle=(is "gt" @index 0)
-            disabled=true
-            inputType="text"
-            inputName=(concat "system.dynamic.supernaturalShields." this._id ".name")
-            inputValue=(concat this.name " - " (localize (concat 'dialogs.spellGrade.' this.system.spellGrade '.title')))
-          }}
-        {{else}}
-          {{>
-          "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-            class="name"
-            title=(localize "anima.ui.combat.supernaturalShields.name.title")
-            hideTitle=(is "gt" @index 0)
-            disabled=true
-            inputType="text"
-            inputName=(concat "system.dynamic.supernaturalShields." this._id ".name")
-            inputValue=this.name
-          }}
-        {{/if}}
+        {{>
+        "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+          class="name"
+          title=(localize "anima.ui.combat.supernaturalShields.name.title")
+          hideTitle=(is "gt" @index 0)
+          disabled=true
+          inputType="text"
+          inputName=(concat "system.dynamic.supernaturalShields." this._id ".name")
+          inputValue=this.name
+        }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
           class="shieldPoints"
@@ -44,13 +31,13 @@
         }}
         {{>
         "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-          class="origin"
-          title=(localize "anima.ui.combat.supernaturalShields.origin.title")
+          class="ability"
+          title=(localize "anima.ui.combat.supernaturalShields.ability.title")
           hideTitle=(is "gt" @index 0)
           disabled=true
           inputType="text"
-          inputName=''
-          inputValue=(getNameActorUuid this.system.origin ../this.actor)
+          inputName=(concat "system.dynamic.supernaturalShields." this._id ".system.abilityFormula")
+          inputValue=(formulaValue this.system.abilityFormula @root.actor)
         }}
       </div>
     {{/each}}

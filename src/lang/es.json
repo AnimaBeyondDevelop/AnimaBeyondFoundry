@@ -143,8 +143,12 @@
   "anima.ui.combat.weapons.defaultAttackButton.title": "Mandar Ataque sin configurar",
   "anima.ui.combat.supernaturalShields.origin.title": "Origen",
   "anima.ui.combat.supernaturalShields.shieldPoints.title": "Puntos de vida",
+  "anima.ui.combat.supernaturalShields.ability.title": "Habilidad",
   "anima.ui.combat.supernaturalShields.name.title": "Escudo",
   "anima.ui.combat.supernaturalShields.title": "Escudos Sobrenaturales",
+  "anima.ui.combat.supernaturalShields.bonus.title": "Modificador",
+  "anima.ui.combat.attack.modifier.title": "Modificador",
+  "anima.ui.psychic.psychicPowers.castButton.title": "Lanzar Poder",
   "anima.ui.contactSection.contactRow.description": "Descripción",
   "anima.ui.contactSection.contactRow.name": "Nombre",
   "anima.ui.contactSection.title": "Contactos",
@@ -841,6 +845,7 @@
 
   "chat.defense.autoRollFlavor.block": "Defensa automática — Bloqueo",
   "chat.defense.autoRollFlavor.dodge": "Defensa automática — Esquiva",
+  "chat.defense.autoRollFlavor.supernaturalShield": "Auto defense — Escudo",
 
   "chat.result.confirmTitle": "¿Aplicar el daño de nuevo?",
   "chat.result.confirmBody": "Este resultado ya aplicó daño antes. ¿Seguro?",

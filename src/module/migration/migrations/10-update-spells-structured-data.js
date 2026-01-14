@@ -16,18 +16,25 @@ const newItems = {
   }
 };
 
+const ensureGradeDefaults = gradeData => {
+  if (!gradeData) return;
+
+  gradeData.damage ??= { value: 0 };
+  gradeData.area ??= { value: 0 };
+  gradeData.resistanceEffect ??= { value: 0, type: null };
+  gradeData.shieldPoints ??= { value: 0 };
+};
+
 /** @type Migration */
 export const Migration10UpdateSpellsStructuredData = {
   id: 'migration_update-spells-structured-data',
-  version: '2.0.6',
+  version: '2.0.9',
   order: 1,
-  title: 'Update spells to use structured damage and resistance data',
+  title: 'Update spells to use structured data',
   description:
-    'This migration updates existing spells to include structured fields for damage, area of effect, ' +
-    'and resistance bonuses instead of relying on text parsing. This improves performance and ' +
-    'makes spell data more reliable and easier to work with. ' +
-    'Custom spell descriptions will be preserved. Custom spells will be left unchanged but may need ' +
-    'manual updates to benefit from the new structured data format.',
+    'Updates spells to the new structured data format by copying the system data from the official compendium ' +
+    '(animabf.magic) while preserving custom descriptions. Ensures default structured fields exist (damage, area, ' +
+    'resistanceEffect, shieldPoints).',
   filterItems(item) {
     return item.type === 'spell' && !['animabf.magic'].includes(item.pack);
   },
@@ -45,13 +52,24 @@ export const Migration10UpdateSpellsStructuredData = {
     if (!newItem) return;
 
     item.name = newItem.name;
+
+    // Start from the compendium system (already structured)
     const { system } = newItem;
+
+    // Preserve base description
     system.description.value = item.system.description.value;
 
+    // Preserve per-grade custom descriptions + ensure defaults
     for (const gradeName of ['base', 'intermediate', 'advanced', 'arcane']) {
-      if (item.system.grades?.[gradeName]?.description?.value) {
-        system.grades[gradeName].description.value = item.system.grades[gradeName].description.value;
+      const srcGrade = item.system.grades?.[gradeName];
+      const dstGrade = system.grades?.[gradeName];
+      if (!dstGrade) continue;
+
+      if (srcGrade?.description?.value) {
+        dstGrade.description.value = srcGrade.description.value;
       }
+
+      ensureGradeDefaults(dstGrade);
     }
 
     item.system = system;

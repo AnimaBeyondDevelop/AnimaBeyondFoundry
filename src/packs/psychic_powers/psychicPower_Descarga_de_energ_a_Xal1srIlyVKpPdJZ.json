@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 4"
+        "value": "Fatiga 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 4
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "Fatiga 2"
+        "value": "Fatiga 2",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 2
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "Fatiga 1"
+        "value": "Fatiga 1",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 1
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "Daño 50"
+        "value": "Daño 50",
+        "damage": {
+          "value": 50
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "Daño 70"
+        "value": "Daño 70",
+        "damage": {
+          "value": 70
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "Daño 100"
+        "value": "Daño 100",
+        "damage": {
+          "value": 100
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "Daño 120"
+        "value": "Daño 120",
+        "damage": {
+          "value": 120
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "Daño 140 / Afecta a seres inmateriales"
+        "value": "Daño 140 / Afecta a seres inmateriales",
+        "damage": {
+          "value": 140
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": true
+        }
       },
       "320": {
-        "value": "Daño 180 / Afecta a seres inmateriales"
+        "value": "Daño 180 / Afecta a seres inmateriales",
+        "damage": {
+          "value": 180
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": true
+        }
       },
       "440": {
-        "value": "Daño 220 / Afecta a seres inmateriales"
+        "value": "Daño 220 / Afecta a seres inmateriales",
+        "damage": {
+          "value": 220
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": true
+        }
       }
     },
     "actionType": {

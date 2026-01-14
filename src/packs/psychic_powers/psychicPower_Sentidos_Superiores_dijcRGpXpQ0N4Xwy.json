@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 12"
+        "value": "Fatiga 12",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 12
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "Fatiga 10"
+        "value": "Fatiga 10",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 10
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "Fatiga 8"
+        "value": "Fatiga 8",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 8
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "Fatiga 6"
+        "value": "Fatiga 6",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 6
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "Fatiga 4"
+        "value": "Fatiga 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 4
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "Sentir electromagnetismo"
+        "value": "Sentir electromagnetismo",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "Sentir matrices"
+        "value": "Sentir matrices",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "Sentir magia"
+        "value": "Sentir magia",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "Sentir ki"
+        "value": "Sentir ki",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "Sentirlo todo"
+        "value": "Sentirlo todo",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

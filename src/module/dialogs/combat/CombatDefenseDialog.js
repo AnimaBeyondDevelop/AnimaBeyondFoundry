@@ -2,6 +2,7 @@ import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
+import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 
 const getInitialData = (attacker, defender) => {
   const showRollByDefault = !!game.settings.get(
@@ -190,7 +191,7 @@ export class CombatDefenseDialog extends FormApplication {
 
     if (supernaturalShields.length > 0) {
       const mysticShield = supernaturalShields.find(
-        w => w.system.type === 'mystic' && w.system.origin === this.defenderActor.uuid
+        w => w.flags?.animabf?.supernaturalShield?.type === 'mystic'
       );
       if (mysticShield) {
         mystic.supernaturalShield = {
@@ -201,7 +202,7 @@ export class CombatDefenseDialog extends FormApplication {
       }
 
       const psychicShield = supernaturalShields.find(
-        w => w.system.type === 'psychic' && w.system.origin === this.defenderActor.uuid
+        w => w.flags?.animabf?.supernaturalShield?.type === 'psychic'
       );
       if (psychicShield) {
         psychic.supernaturalShield = {
@@ -502,7 +503,13 @@ export class CombatDefenseDialog extends FormApplication {
           this.modalData.defender.mystic.overrideMysticCast = true;
           return;
         }
-        supShield = { create: true };
+
+        const gradeData = spell?.system?.grades?.[spellGrade];
+        const structured = gradeData?.shieldPoints?.value;
+        const fallbackFromDesc = shieldValueCheck(gradeData?.description?.value ?? '');
+        const shieldPoints = Number.isFinite(structured) ? structured : fallbackFromDesc;
+
+        supShield = { create: true, shieldPoints };
       }
 
       let combatModifier = 0;
@@ -584,6 +591,7 @@ export class CombatDefenseDialog extends FormApplication {
       const psychicProjection =
         this.defenderActor.system.psychic.psychicProjection.imbalance.defensive.final
           .value;
+
       let combatModifier = 0;
       for (const key in defenderCombatMod) {
         combatModifier += defenderCombatMod[key]?.value ?? 0;
@@ -618,12 +626,14 @@ export class CombatDefenseDialog extends FormApplication {
       } else if (powerUsed) {
         this.defenderActor.setFlag(game.animabf.id, 'lastDefensivePowerUsed', powerUsed);
         power = psychicPowers.find(w => w._id === powerUsed);
+
         const psychicPotentialRoll = new ABFFoundryRoll(
           `1d100PsychicRoll + ${psychicPotential.final}`,
           { ...this.defenderActor.system, power, mentalPatternImbalance }
         );
         await psychicPotentialRoll.roll();
         newPsychicPotential = psychicPotentialRoll.total;
+
         if (this.modalData.defender.showRoll) {
           psychicPotentialRoll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.defender.token }),
@@ -639,7 +649,13 @@ export class CombatDefenseDialog extends FormApplication {
         );
 
         if (!psychicFatigue) {
-          supShield = { create: true };
+          const effStr =
+            power?.system?.effects?.[newPsychicPotential]?.value ??
+            power?.system?.effects?.[String(newPsychicPotential)]?.value ??
+            '';
+          const shieldPoints = shieldValueCheck(effStr);
+
+          supShield = { create: true, shieldPoints };
         }
       }
 
@@ -684,9 +700,24 @@ export class CombatDefenseDialog extends FormApplication {
       defender: { combat, psychic, mystic },
       ui
     } = this.modalData;
+
     ui.hasFatiguePoints =
       this.defenderActor.system.characteristics.secondaries.fatigue.value > 0;
 
+    // --- Ensure supernaturalShields list includes flags (use real embedded Items) ---
+    const supernaturalShields = this.defenderActor.items
+      .filter(i => i.type === 'supernaturalShield')
+      .map(i => ({
+        _id: i.id,
+        name: i.name,
+        system: i.system,
+        flags: i.flags
+      }));
+
+    // Keep templates using the same path they already expect
+    this.defenderActor.system.combat.supernaturalShields = supernaturalShields;
+
+    // --- Psychic: default power + potential calc ---
     const { psychicPowers } = this.defenderActor.system.psychic;
     if (!psychic.powerUsed) {
       psychic.powerUsed = psychicPowers.find(
@@ -694,15 +725,17 @@ export class CombatDefenseDialog extends FormApplication {
       )?._id;
     }
     const power = psychicPowers.find(w => w._id === psychic.powerUsed);
-    let psychicBonus = power?.system.bonus.value ?? 0;
+    const psychicBonus = power?.system.bonus.value ?? 0;
     psychic.psychicPotential.final =
       psychic.psychicPotential.special +
       this.defenderActor.system.psychic.psychicPotential.final.value +
       psychicBonus;
 
+    // --- Mystic: default spell + canCast calc ---
     const { spells } = this.defenderActor.system.mystic;
     if (!mystic.spellUsed) {
-      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
+      // NOTE: this is a defense dialog
+      mystic.spellUsed = spells.find(w => w.system.combatType.value === 'defense')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
     if (spell) {
@@ -714,27 +747,29 @@ export class CombatDefenseDialog extends FormApplication {
       );
     }
 
-    const { supernaturalShields } = this.defenderActor.system.combat;
+    // --- Default mystic shield selection (store the _id, not the whole object) ---
     if (!mystic.supernaturalShield.shieldUsed) {
       mystic.supernaturalShield.shieldUsed = supernaturalShields.find(
-        w => w.system.type === 'mystic' && w.system.origin === this.defenderActor.uuid
-      );
+        w => w.flags?.animabf?.supernaturalShield?.type === 'mystic'
+      )?._id;
     }
     const mysticShield = supernaturalShields.find(
       w => w._id === mystic.supernaturalShield.shieldUsed
     );
-    mystic.supernaturalShield.shieldValue = mysticShield?.system.shieldPoints ?? 0;
+    mystic.supernaturalShield.shieldValue = mysticShield?.system?.shieldPoints ?? 0;
 
+    // --- Default psychic shield selection (store the _id, not the whole object) ---
     if (!psychic.supernaturalShield.shieldUsed) {
       psychic.supernaturalShield.shieldUsed = supernaturalShields.find(
-        w => w.system.type === 'psychic' && w.system.origin === this.defenderActor.uuid
-      );
+        w => w.flags?.animabf?.supernaturalShield?.type === 'psychic'
+      )?._id;
     }
     const psychicShield = supernaturalShields.find(
       w => w._id === psychic.supernaturalShield.shieldUsed
     );
-    psychic.supernaturalShield.shieldValue = psychicShield?.system.shieldPoints ?? 0;
+    psychic.supernaturalShield.shieldValue = psychicShield?.system?.shieldPoints ?? 0;
 
+    // --- Weapons + AT ---
     const { weapons } = this.defenderActor.system.combat;
     combat.weapon = weapons.find(w => w._id === combat.weaponUsed);
 

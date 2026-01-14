@@ -72,12 +72,13 @@
     disabled=this.defenseSent
     inputName='defender.psychic.supernaturalShield.shieldUsed'
   }}
-    {{#each_when this.defender.actor.system.combat.supernaturalShields "system" "type" "" "psychic"}}
-      {{#if (is "eq" this.system.origin ../this.defender.actor.uuid)}}
+    {{#each this.defender.actor.system.combat.supernaturalShields}}
+      {{#if (is "eq" this.flags.animabf.supernaturalShield.type "psychic")}}
         <option {{#if (is "eq" this._id ../this.defender.psychic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
       {{/if}}
-    {{/each_when}}
+    {{/each}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
 
   {{>
   "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"

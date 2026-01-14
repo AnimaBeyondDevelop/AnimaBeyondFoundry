@@ -54,6 +54,9 @@
         },
         "damage": {
           "value": 80
+        },
+        "shieldPoints": {
+          "value": 300
         }
       },
       "intermediate": {
@@ -74,6 +77,9 @@
         },
         "damage": {
           "value": 90
+        },
+        "shieldPoints": {
+          "value": 500
         }
       },
       "advanced": {
@@ -94,6 +100,9 @@
         },
         "damage": {
           "value": 100
+        },
+        "shieldPoints": {
+          "value": 800
         }
       },
       "arcane": {
@@ -114,6 +123,9 @@
         },
         "damage": {
           "value": 100
+        },
+        "shieldPoints": {
+          "value": 1500
         }
       }
     }

@@ -14,6 +14,8 @@ export async function preloadTemplates() {
     // --- Dialogs (desde Templates) ---
     Templates.Dialog.ModDialog,
     Templates.Dialog.DamageCalculator,
+    Templates.Dialog.SpellShieldConfigDialog,
+    Templates.Dialog.SpellAttackConfigDialog,
     Templates.Dialog.newSupernaturalShield.main,
     Templates.Dialog.newSupernaturalShield.parts.mystic,
     Templates.Dialog.newSupernaturalShield.parts.psychic,

@@ -386,23 +386,43 @@ export class GMCombatDialog extends FormApplication {
   }
 
   async newSupernaturalShieldIfBeAble() {
-    const { supShield } = this.modalData.defender.result?.values;
     const result = this.modalData.defender.result;
+    const supShield = result?.values?.supShield ?? { create: false };
 
     if ((result?.type === 'mystic' || result?.type === 'psychic') && supShield.create) {
-      const shieldPoints = Number(result.values?.supShield?.shieldPoints ?? 0);
+      let shieldPoints = 0;
+
+      if (result.type === 'mystic') {
+        const grade = result.values?.spellGrade;
+        const desc = result.spell?.system?.grades?.[grade]?.description?.value ?? '';
+        // shieldValueCheck expects a string
+        shieldPoints = shieldValueCheck(desc);
+      } else {
+        const potential = result.values?.psychicPotential ?? 0;
+        const eff = result.power?.system?.effects?.[potential]?.value ?? '';
+        shieldPoints = shieldValueCheck(eff);
+      }
 
       const abilityFormula =
-        result.type === 'psychic' ? 'TU_FORMULA_PSIQUICA' : 'TU_FORMULA_MAGICA';
+        result.type === 'psychic'
+          ? '@psychic.psychicProjection.imbalance.defensive.final.value'
+          : '@mystic.magicProjection.imbalance.defensive.final.value';
 
       const shieldData = ABFSupernaturalShieldData.builder()
         .name(result.type === 'psychic' ? result?.power?.name : result?.spell?.name)
         .shieldPoints(shieldPoints)
         .abilityFormula(abilityFormula)
+        .flags({
+          animabf: {
+            supernaturalShield: { type: result.type } // 'mystic' | 'psychic'
+          }
+        })
         .build();
 
       return await this.defenderActor.newSupernaturalShield(shieldData);
     }
+
+    return undefined;
   }
 
   applyDamageSupernaturalShieldIfBeAble(supShieldId) {
@@ -441,9 +461,11 @@ export class GMCombatDialog extends FormApplication {
       if (supShieldId) {
         supShield.id = supShieldId;
       }
+      const shieldId = supShieldId ?? supShield?.id;
+      if (!shieldId) return;
 
       this.defenderActor.applyDamageSupernaturalShield(
-        supShield.id,
+        shieldId,
         damage,
         dobleDamage,
         newCombatResult

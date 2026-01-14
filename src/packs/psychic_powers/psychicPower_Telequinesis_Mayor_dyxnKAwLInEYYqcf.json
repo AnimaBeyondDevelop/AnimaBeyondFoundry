@@ -18,34 +18,154 @@
     },
     "effects": {
       "20": {
-        "value": "Fatiga 24"
+        "value": "Fatiga 24",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 24
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "40": {
-        "value": "Fatiga 20"
+        "value": "Fatiga 20",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 20
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "80": {
-        "value": "Fatiga 16"
+        "value": "Fatiga 16",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 16
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "120": {
-        "value": "Fatiga 12"
+        "value": "Fatiga 12",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 12
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "140": {
-        "value": "Fatiga 8"
+        "value": "Fatiga 8",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 8
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "180": {
-        "value": "Fatiga 4"
+        "value": "Fatiga 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 4
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "240": {
-        "value": "500 toneladas / Tipo de vuelo 4"
+        "value": "500 toneladas / Tipo de vuelo 4",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "280": {
-        "value": "10.000 toneladas / Tipo de vuelo 6"
+        "value": "10.000 toneladas / Tipo de vuelo 6",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "320": {
-        "value": "100.00 toneladas / Tipo de vuelo 8"
+        "value": "100.00 toneladas / Tipo de vuelo 8",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       },
       "440": {
-        "value": "1.000.000 toneladas / Tipo de vuelo 10"
+        "value": "1.000.000 toneladas / Tipo de vuelo 10",
+        "damage": {
+          "value": 0
+        },
+        "fatigue": {
+          "value": 0
+        },
+        "shieldPoints": {
+          "value": 0
+        },
+        "affectsInmaterial": {
+          "value": false
+        }
       }
     },
     "actionType": {

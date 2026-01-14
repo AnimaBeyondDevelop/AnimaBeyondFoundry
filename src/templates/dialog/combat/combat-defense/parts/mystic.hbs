@@ -25,14 +25,17 @@
 
 {{#if this.defender.mystic.supernaturalShield.newShield}}
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  title=(localize 'macros.combat.dialog.spell.title')
+  title=(localize 'macros.combat.dialog.mysticShield.title')
   disabled=this.defenseSent
-  inputName='defender.mystic.spellUsed'
+  inputName='defender.mystic.supernaturalShield.shieldUsed'
 }}
-  {{#each_when this.defender.actor.system.mystic.spells "system" "combatType" "value" "defense"}}
-    <option {{#if (is "eq" this._id ../this.defender.mystic.spellUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
-  {{/each_when}}
+  {{#each this.defender.actor.system.combat.supernaturalShields}}
+    {{#if (is "eq" this.flags.animabf.supernaturalShield.type "mystic")}}
+      <option {{#if (is "eq" this._id ../this.defender.mystic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+    {{/if}}
+  {{/each}}
 {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
 
 {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
   title=(localize 'macros.combat.dialog.spellGrade.title')
@@ -80,11 +83,14 @@
     disabled=this.defenseSent
     inputName='defender.mystic.supernaturalShield.shieldUsed'
   }}
-    {{#each_when this.defender.actor.system.combat.supernaturalShields "system" "type" "" "mystic"}}
-      {{#if (is "eq" this.system.origin ../this.defender.actor.uuid)}}
-        <option {{#if (is "eq" this._id ../this.defender.mystic.supernaturalShield.shieldUsed)}}selected{{/if}} value='{{this._id}}'>{{this.name}}</option>
+    {{#each this.defender.actor.system.combat.supernaturalShields}}
+      {{#if (is "eq" this.flags.animabf.supernaturalShield.type "mystic")}}
+        <option
+          {{#if (is "eq" this._id ../this.defender.mystic.supernaturalShield.shieldUsed)}}selected{{/if}}
+          value='{{this._id}}'
+        >{{this.name}}</option>
       {{/if}}
-    {{/each_when}}
+    {{/each}}
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 
   {{>
@@ -95,6 +101,7 @@
     inputValue=this.defender.mystic.supernaturalShield.shieldValue
   }}
 {{/if}}
+
 
 <div class='columns'>
   <div>

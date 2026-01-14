@@ -61,12 +61,16 @@
           }}
             {{#each power.system.effects as |effect key|}}
               <div class='effect-row'>
-                <input
-                  type='text'
-                  class='input difficulty'
-                  disabled
-                  value='{{key}}'
-                />
+                <button
+                  type="button"
+                  class="input difficulty psychic-cast-button"
+                  data-on-click="castPsychicPowerDifficulty"
+                  data-power-id="{{power._id}}"
+                  data-difficulty="{{key}}"
+                >
+                  {{key}}
+                </button>
+
                 <input
                   type='text'
                   class='input description'
@@ -101,6 +105,15 @@
                 inputName=(concat "system.dynamic.psychicPowers." power._id ".system.bonus.value")
                 inputValue=power.system.bonus.value
               }}
+
+              <button
+                type="button"
+                class="psychic-cast-button"
+                data-on-click="castPsychicPower"
+                data-power-id="{{power._id}}"
+              >
+                {{localize "anima.ui.psychic.psychicPowers.castButton.title"}}
+              </button>
             </div>
           {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
         {{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -49,16 +49,76 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   description: { value: '' },
   level: { value: 0 },
   effects: {
-    20: { value: '' },
-    40: { value: '' },
-    80: { value: '' },
-    120: { value: '' },
-    140: { value: '' },
-    180: { value: '' },
-    240: { value: '' },
-    280: { value: '' },
-    320: { value: '' },
-    440: { value: '' }
+    20: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    40: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    80: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    120: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    140: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    180: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    240: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    280: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    320: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    },
+    440: {
+      value: '',
+      damage: { value: 0 },
+      fatigue: { value: 0 },
+      shieldPoints: { value: 0 },
+      affectsInmaterial: { value: false }
+    }
   },
   actionType: { value: PsychicPowerActionTypes.ACTIVE },
   combatType: { value: PsychicPowerCombatTypes.ATTACK },

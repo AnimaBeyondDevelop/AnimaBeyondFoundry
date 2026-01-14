@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "Perdida de -10 PV / Calidad +0 / Objetos de hasta 2 kilos."
+        },
+        "shieldPoints": {
+          "value": 10
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "Perdida de -20 PV / Calidad +5 / Objetos de hasta 5 kilos."
+        },
+        "shieldPoints": {
+          "value": 20
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "Perdida de -40 PV / Calidad +10 / Objetos de hasta 15 kilos."
+        },
+        "shieldPoints": {
+          "value": 40
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "Perdida de -60 PV / Calidad +15 / Objetos de hasta 25 kilos."
+        },
+        "shieldPoints": {
+          "value": 60
         }
       }
     }

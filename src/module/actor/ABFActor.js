@@ -139,7 +139,7 @@ export class ABFActor extends Actor {
         ? shieldData.toItemCreateData()
         : shieldData;
 
-    const item = await this.createItem(itemCreateData);
+    const [item] = await this.createEmbeddedDocuments('Item', [itemCreateData]);
 
     const args = { thisActor: this, newShield: true, shieldId: item._id };
     executeMacro(itemCreateData.name, args);
@@ -190,7 +190,7 @@ export class ABFActor extends Actor {
       // If shield breaks, apply damage to actor
       if (newShieldPoints < 0 && newCombatResult) {
         const needToRound = game.settings.get(
-          game.abf.id,
+          game.animabf.id,
           ABFSettingsKeys.ROUND_DAMAGE_IN_MULTIPLES_OF_5
         );
         const result = calculateDamage(
@@ -541,13 +541,15 @@ export class ABFActor extends Actor {
    *  @param {import('../items/ABFItems').ABFItemsEnum} data.type
    *  @param {string} data.name
    *  @param {ABFItem["system"]} data.system
+   *  @param {Record<string, unknown>} [data.flags]
    */
-  async createItem({ type, name, system = {} }) {
+  async createItem({ type, name, system = {}, flags = {} }) {
     const items = await this.createEmbeddedDocuments('Item', [
       {
         type,
         name,
-        system
+        system,
+        flags
       }
     ]);
     return items[0];

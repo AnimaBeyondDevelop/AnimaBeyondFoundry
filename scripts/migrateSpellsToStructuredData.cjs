@@ -36,6 +36,17 @@ function parseResistanceEffect(description) {
   return { value: 0, type: null };
 }
 
+function parseShieldPoints(description) {
+  const effect = (description || '').replace('.', '');
+  const m1 = effect.match(/(\d+)\s+puntos de resistencia/i);
+  if (m1) return parseInt(m1[1], 10) || 0;
+
+  const m2 = effect.match(/(\d+)\s*PV/i);
+  if (m2) return parseInt(m2[1], 10) || 0;
+
+  return 0;
+}
+
 function migrateSpellFile(filePath) {
   const fileName = path.basename(filePath);
 
@@ -59,6 +70,7 @@ function migrateSpellFile(filePath) {
       const damage = parseDamage(description);
       const area = parseArea(description);
       const resistanceEffect = parseResistanceEffect(description);
+      const shieldPoints = parseShieldPoints(description);
 
       if (damage > 0 && !grade.damage) {
         grade.damage = { value: damage };
@@ -80,10 +92,21 @@ function migrateSpellFile(filePath) {
       } else if (
         grade.resistanceEffect &&
         (grade.resistanceEffect.value !== resistanceEffect.value ||
-         grade.resistanceEffect.type !== resistanceEffect.type) &&
+          grade.resistanceEffect.type !== resistanceEffect.type) &&
         resistanceEffect.value > 0
       ) {
         console.log(`  ⚠ ${fileName} [${gradeName}]: resistance mismatch`);
+      }
+
+      if (shieldPoints > 0 && !grade.shieldPoints) {
+        grade.shieldPoints = { value: shieldPoints };
+        modified = true;
+      } else if (
+        grade.shieldPoints &&
+        grade.shieldPoints.value !== shieldPoints &&
+        shieldPoints > 0
+      ) {
+        console.log(`  ⚠ ${fileName} [${gradeName}]: shieldPoints mismatch`);
       }
     }
 
@@ -109,7 +132,8 @@ function migrateAllSpells() {
     process.exit(1);
   }
 
-  const files = fs.readdirSync(MAGIC_PACKS_DIR)
+  const files = fs
+    .readdirSync(MAGIC_PACKS_DIR)
     .filter(file => file.endsWith('.json') && file.startsWith('spell_'));
 
   console.log(`Found ${files.length} spell files\n`);

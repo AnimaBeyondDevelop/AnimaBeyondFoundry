@@ -113,6 +113,12 @@
   "anima.ui.combat.weapons.damage.base.title": "Base de dégâts",
   "anima.ui.combat.weapons.damage.final.title": "Dégats",
   "anima.ui.combat.weapons.defaultAttackButton.title": "Attaque par défaut",
+  "anima.ui.combat.supernaturalShields.origin.title": "Origin",
+  "anima.ui.combat.supernaturalShields.shieldPoints.title": "Life points",
+  "anima.ui.combat.supernaturalShields.ability.title": "Ability",
+  "anima.ui.combat.supernaturalShields.bonus.title": "Modifier",
+  "anima.ui.combat.attack.modifier.title": "Modifier",
+  "anima.ui.psychic.psychicPowers.castButton.title": "Lancer le pouvoir",
   "anima.ui.combat.weapons.equipped.title": "Equipé?",
   "anima.ui.combat.weapons.hasOwnStr.title": "Assez de FOR?",
   "anima.ui.combat.weapons.damage.formula.title": "Damage Formula",
@@ -717,6 +723,7 @@
 
   "chat.defense.autoRollFlavor.block": "Défense automatique — Parade",
   "chat.defense.autoRollFlavor.dodge": "Défense automatique — Esquive",
+  "chat.defense.autoRollFlavor.supernaturalShield": "Défense automatique — Shield",
 
   "chat.common.msgNotFound": "Message introuvable.",
   "chat.defend.noAttackData": "Données d’attaque manquantes.",

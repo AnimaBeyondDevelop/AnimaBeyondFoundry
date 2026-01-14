@@ -1,5 +1,13 @@
 <div class='{{this.class}} grade-row'>
-  <p class='label grade-name'>{{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}</p>
+  <button
+    type="button"
+    class="grade-name spell-cast-button"
+    data-on-click="castSpellGrade"
+    data-spell-id="{{this.spellId}}"
+    data-grade="{{this.gradeName}}"
+  >
+    {{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}
+  </button>
   {{>
   "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="int-required"
@@ -34,7 +42,4 @@
     inputName=this.descriptionInputName
     inputValue=this.grade.description.value
   }}
-  {{!-- <button class='attack-button' data-on-click="createWeaponAttack" data-weapon-id="{{weapon._id}}">
-    {{localize "anima.ui.combat.weapons.attackButton.title"}}
-  </button> --}}
 </div>

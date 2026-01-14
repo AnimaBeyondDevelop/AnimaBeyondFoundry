@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "100 contra choques / Tiene 800 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 800
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "120 contra choques / Tiene 1.500 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 1500
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "140 contra choques / Tiene 3.000 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 3000
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "180 contra choques / Tiene 6.000 puntos de Resistencia."
+        },
+        "shieldPoints": {
+          "value": 6000
         }
       }
     }

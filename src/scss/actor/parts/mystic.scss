@@ -391,10 +391,13 @@
         }
 
         .base-grade {
-          margin-bottom: 0.5rem;
+          // margin-bottom: 0.5rem;
 
-          .grade-name {
-            align-self: flex-end;
+          // .grade-name {
+          //   align-self: flex-end;
+          // }
+          .spell-cast-button {
+            margin-top: 1.5rem;
           }
         }
 
@@ -402,14 +405,22 @@
         .arcane-grade,
         .intermediate-grade,
         .advanced-grade {
+          margin-bottom: 0.5rem;
           .grade-name {
-            min-width: 4.5rem;
+            min-width: 7rem;
+          }
+          .spell-cast-button {
+            @include button;
+            padding-top: 0rem;
+            height: 1.7rem;
+            width: 30%;
           }
         }
 
         .grade-row {
           display: flex;
           justify-content: start;
+          // height: 1.5rem;
 
           .int-required,
           .zeon,

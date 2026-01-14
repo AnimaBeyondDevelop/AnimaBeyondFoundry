@@ -52,6 +52,9 @@
         },
         "description": {
           "value": "300 puntos de resistencia"
+        },
+        "shieldPoints": {
+          "value": 300
         }
       },
       "intermediate": {
@@ -69,6 +72,9 @@
         },
         "description": {
           "value": "1.000 puntos de resistencia"
+        },
+        "shieldPoints": {
+          "value": 1000
         }
       },
       "advanced": {
@@ -86,6 +92,9 @@
         },
         "description": {
           "value": "2.000 puntos de resistencia"
+        },
+        "shieldPoints": {
+          "value": 2000
         }
       },
       "arcane": {
@@ -103,6 +112,9 @@
         },
         "description": {
           "value": "3.000 puntos de resistencia"
+        },
+        "shieldPoints": {
+          "value": 3000
         }
       }
     }

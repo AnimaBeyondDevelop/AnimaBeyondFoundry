@@ -42,6 +42,9 @@ export function computeCombatResult(attackData, defenseData) {
   const damagePercentage = Math.max(0, roundedDifference - finalArmor * 10 - 20);
   const finalDamage = (baseDamage * damagePercentage) / 100;
 
+  // Apply supernatural shield wear centrally (works from any combat resolution)
+  tryApplySupernaturalShieldWear(defenderActor, attackData, defenseData, difference);
+
   const lifeBeforeAttack =
     defenderActor.system.characteristics.secondaries.lifePoints.value;
   let lifePercentRemoved = 100;
@@ -62,6 +65,65 @@ export function computeCombatResult(attackData, defenseData) {
     .baseCriticalValue(critValue)
     .attackBreak(attackData.breakage)
     .build();
+}
+
+/**
+ * If defense used a supernatural shield and successfully blocked the attack,
+ * reduce shieldPoints by the attack base damage (attackData.damage).
+ * This is best-effort and non-blocking.
+ * @param {Actor|null} defenderActor
+ * @param {ABFAttackData} attackData
+ * @param {ABFDefenseData} defenseData
+ * @param {number} difference
+ */
+function tryApplySupernaturalShieldWear(
+  defenderActor,
+  attackData,
+  defenseData,
+  difference
+) {
+  if (!defenderActor) return;
+
+  const defenseType = defenseData?.defenseType;
+  const usedShield = defenseType === 'shield' || defenseType === 'supernaturalShield';
+  const blockedSuccessfully = (difference ?? 0) <= 0;
+
+  if (!usedShield || !blockedSuccessfully) return;
+
+  const shieldId = defenseData?.shieldId;
+  if (!shieldId) return;
+
+  const baseAttackDamage = Number(attackData?.damage ?? 0) || 0;
+  let shieldDamageFromArmorPenetration = Number(attackData?.reducedArmor * 10);
+  if (attackData?.ignoreArmor) {
+    shieldDamageFromArmorPenetration = 200;
+  }
+  if (baseAttackDamage <= 0) return;
+
+  const totalShieldDamage = baseAttackDamage + shieldDamageFromArmorPenetration;
+
+  const shieldItem = defenderActor.items?.get?.(shieldId);
+  if (shieldItem) {
+    const current = Number(shieldItem.system?.shieldPoints ?? 0) || 0;
+    const next = Math.max(0, current - totalShieldDamage);
+    if (next !== current) {
+      shieldItem.update({ 'system.shieldPoints': next }).catch(() => {});
+    }
+    return;
+  }
+
+  const dyn = defenderActor.system?.dynamic?.supernaturalShields?.[shieldId];
+  if (dyn?.system) {
+    const current = Number(dyn.system.shieldPoints ?? 0) || 0;
+    const next = Math.max(0, current - totalShieldDamage);
+    if (next !== current) {
+      defenderActor
+        .update({
+          [`system.dynamic.supernaturalShields.${shieldId}.system.shieldPoints`]: next
+        })
+        .catch(() => {});
+    }
+  }
 }
 
 /** Final base damage after flat reductions (rounded down to 10s) */

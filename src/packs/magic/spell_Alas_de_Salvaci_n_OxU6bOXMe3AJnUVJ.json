@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "El escudo tiene 500 puntos de Resistencia / 5 metros de radio."
+        },
+        "shieldPoints": {
+          "value": 500
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "El escudo tiene 1.200 puntos de Resistencia / 15 metros de radio."
+        },
+        "shieldPoints": {
+          "value": 1200
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "El escudo tiene 2.500 puntos de Resistencia / 25 metros de radio."
+        },
+        "shieldPoints": {
+          "value": 2500
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "El escudo tiene 5.000 puntos de Resistencia / 50 metros de radio."
+        },
+        "shieldPoints": {
+          "value": 5000
         }
       }
     }

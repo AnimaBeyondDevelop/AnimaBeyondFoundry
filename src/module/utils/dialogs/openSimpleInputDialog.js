@@ -31,7 +31,6 @@ export const openSimpleInputDialog = async ({
           label: referencedGame.i18n.localize('dialogs.continue'),
           callback: html => {
             const results = new FormDataExtended(html.find('form')[0], {}).object;
-
             resolve(results['dialog-input']);
           }
         }
@@ -43,10 +42,11 @@ export const openSimpleInputDialog = async ({
 };
 
 // Open the mod Dialog window. It returns resolver(html), which in turn returns the modifier
-export const openModDialog = async () => {
+export const openModDialog = async ({ title = '' } = {}) => {
   const referencedGame = game;
 
   return openSimpleInputDialog({
+    title,
     content: referencedGame.i18n.localize('dialogs.mod.content'),
     placeholder: '0'
   });

@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "+10 a toda acción / -5 PV por turno."
+        },
+        "shieldPoints": {
+          "value": 5
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "+20 a toda acción / -15 PV por turno."
+        },
+        "shieldPoints": {
+          "value": 15
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "+40 a toda acción / -30 PV por turno."
+        },
+        "shieldPoints": {
+          "value": 30
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "+60 a toda acción / -50 PV por turno."
+        },
+        "shieldPoints": {
+          "value": 50
         }
       }
     }

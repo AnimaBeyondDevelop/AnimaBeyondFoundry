@@ -143,8 +143,12 @@
   "anima.ui.combat.weapons.defaultAttackButton.title": "Default Attack",
   "anima.ui.combat.supernaturalShields.origin.title": "Origin",
   "anima.ui.combat.supernaturalShields.shieldPoints.title": "Life points",
+  "anima.ui.combat.supernaturalShields.ability.title": "Ability",
   "anima.ui.combat.supernaturalShields.name.title": "Shield",
   "anima.ui.combat.supernaturalShields.title": "Supernatural shields",
+  "anima.ui.combat.supernaturalShields.bonus.title": "Modifier",
+  "anima.ui.combat.attack.modifier.title": "Modifier",
+  "anima.ui.psychic.psychicPowers.castButton.title": "Cast Power",
   "anima.ui.contactSection.contactRow.description": "Description",
   "anima.ui.contactSection.contactRow.name": "Name",
   "anima.ui.contactSection.title": "Contacts",
@@ -833,6 +837,7 @@
 
   "chat.defense.autoRollFlavor.block": "Auto defense — Block",
   "chat.defense.autoRollFlavor.dodge": "Auto defense — Dodge",
+  "chat.defense.autoRollFlavor.supernaturalShield": "Auto defense — Shield",
 
   "chat.common.msgNotFound": "Message not found.",
   "chat.defend.noAttackData": "Attack data missing.",

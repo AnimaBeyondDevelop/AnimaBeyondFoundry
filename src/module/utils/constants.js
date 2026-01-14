@@ -50,7 +50,9 @@ export const Templates = {
     },
     Config: {
       ModifyDiceFormulas: T('dialog/config/modify-dice-formulas.hbs')
-    }
+    },
+    SpellShieldConfigDialog: T('dialog/spell-shield-config-dialog.hbs'),
+    SpellAttackConfigDialog: T('dialog/spell-attack-config-dialog.hbs')
   },
 
   CustomHotBar: T('custom-hotbar/custom-hotbar.hbs'),

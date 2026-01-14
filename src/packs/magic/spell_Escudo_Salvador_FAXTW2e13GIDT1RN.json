@@ -51,6 +51,9 @@
         },
         "description": {
           "value": "300 puntos de Resistencia / Es capaz de proteger hasta a dos personas sin penalizador."
+        },
+        "shieldPoints": {
+          "value": 300
         }
       },
       "intermediate": {
@@ -68,6 +71,9 @@
         },
         "description": {
           "value": "900 puntos de Resistencia / Es capaz de proteger hasta a cinco personas sin penalizador."
+        },
+        "shieldPoints": {
+          "value": 900
         }
       },
       "advanced": {
@@ -85,6 +91,9 @@
         },
         "description": {
           "value": "1.500 puntos de Resistencia / Es capaz de proteger hasta a ocho personas sin penalizador."
+        },
+        "shieldPoints": {
+          "value": 1500
         }
       },
       "arcane": {
@@ -102,6 +111,9 @@
         },
         "description": {
           "value": "3.000 puntos de Resistencia / Es capaz de proteger hasta a doce personas sin penalizador."
+        },
+        "shieldPoints": {
+          "value": 3000
         }
       }
     }

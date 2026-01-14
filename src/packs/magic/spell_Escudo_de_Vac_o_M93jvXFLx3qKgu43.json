@@ -55,6 +55,9 @@
         "resistanceEffect": {
           "value": 100,
           "type": "physical"
+        },
+        "shieldPoints": {
+          "value": 200
         }
       },
       "intermediate": {
@@ -76,6 +79,9 @@
         "resistanceEffect": {
           "value": 120,
           "type": "physical"
+        },
+        "shieldPoints": {
+          "value": 300
         }
       },
       "advanced": {
@@ -97,6 +103,9 @@
         "resistanceEffect": {
           "value": 140,
           "type": "physical"
+        },
+        "shieldPoints": {
+          "value": 400
         }
       },
       "arcane": {
@@ -118,6 +127,9 @@
         "resistanceEffect": {
           "value": 160,
           "type": "physical"
+        },
+        "shieldPoints": {
+          "value": 500
         }
       }
     }
