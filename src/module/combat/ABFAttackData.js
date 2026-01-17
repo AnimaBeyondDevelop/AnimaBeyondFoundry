@@ -53,7 +53,6 @@ export class ABFAttackData {
       : [];
   }
 
-  // Comments in English
   static _normalizeTarget(t = {}) {
     return {
       actorUuid: String(t.actorUuid ?? t.actorId ?? ''),

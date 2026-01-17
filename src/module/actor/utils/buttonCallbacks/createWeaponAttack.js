@@ -1,4 +1,5 @@
 import { AttackConfigurationDialog } from '../../../dialogs/AttackConfigurationDialog.js';
+import { getSnapshotTargets } from '../getSnapshotTargets.js';
 
 /**
  * Open AttackConfigurationDialog with the selected weapon locked.
@@ -13,18 +14,7 @@ export function createWeaponAttack(sheet, e) {
   const attackerToken = sheet.token ?? sheet.actor?.getActiveTokens?.()[0];
   if (!attackerToken) return ui.notifications.warn('No attacker token found.');
 
-  const snapshotTargets = Array.from(game.user?.targets ?? [])
-    .map(t => {
-      const tok = t?.document ?? t;
-      const actorUuid = tok?.actor?.id ?? tok?.actorId ?? '';
-      // Prefer UUID; fallback to id
-      const tokenUuid = tok?.uuid ?? tok?.document?.uuid ?? tok?.id ?? '';
-      const label = tok?.name ?? tok?.actor?.name ?? '';
-      return actorUuid && tokenUuid
-        ? { actorUuid, tokenUuid, state: 'pending', label, updatedAt: Date.now() }
-        : null;
-    })
-    .filter(Boolean);
+  const snapshotTargets = getSnapshotTargets();
 
   new AttackConfigurationDialog(
     { attacker: attackerToken, weaponId, targets: snapshotTargets },

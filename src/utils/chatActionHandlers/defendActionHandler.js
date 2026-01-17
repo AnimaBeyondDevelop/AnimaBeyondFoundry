@@ -1,4 +1,5 @@
 import { DefenseConfigurationDialog } from '../../module/dialogs/DefenseConfigurationDialog';
+import { sendAccumulationZeroDefense } from '../sendAccumulationZeroDefense.js';
 
 export default async function defendActionHandler(message, _html, dataset) {
   try {
@@ -56,6 +57,18 @@ export default async function defendActionHandler(message, _html, dataset) {
     if (!attackerToken && attackData.attackerId) {
       attackerToken =
         canvas.tokens.placeables.find(t => t.actor?.id === attackData.attackerId) ?? null;
+    }
+
+    const defenseMode =
+      defenderToken.actor?.system?.general?.settings?.defenseType?.value;
+    if (defenseMode === 'resistance') {
+      await sendAccumulationZeroDefense({
+        defenderToken,
+        attackerToken,
+        attackData,
+        messageId: msg.id
+      });
+      return;
     }
 
     // 4) Open dialog (dialog will claim target state only if it was 'pending')

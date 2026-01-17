@@ -2,6 +2,7 @@ import { Templates } from '../utils/constants';
 import { ABFAttackData } from '../combat/ABFAttackData';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll.js';
 import { ABFConfig } from '../ABFConfig';
+import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
 
 export class SpellAttackConfigurationDialog extends FormApplication {
   constructor(object = {}, options = {}) {
@@ -11,11 +12,13 @@ export class SpellAttackConfigurationDialog extends FormApplication {
     this.render(true);
   }
 
-  static _buildInitialData({ attacker, spell, spellId, grade }) {
+  static _buildInitialData({ attacker, spell, spellId, grade, targets }) {
     if (!attacker?.actor) return { allowed: false };
 
     const actor = attacker.actor;
     const resolvedSpell = spell ?? (spellId ? actor.items.get(spellId) : null);
+
+    const fallbackSnapshot = getSnapshotTargets();
 
     return {
       allowed: true,
@@ -28,12 +31,10 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         grade: grade ?? 'base',
         combat: {
           modifier: 0,
-          damage: {
-            special: 0,
-            final: 0
-          }
+          damage: { special: 0, final: 0 }
         }
-      }
+      },
+      targets: Array.isArray(targets) && targets.length ? targets : fallbackSnapshot
     };
   }
 
@@ -138,7 +139,7 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         .critBonus(0)
         .attackerId(actor.id)
         .weaponId(spell.id)
-        .targets([])
+        .targets(this.modalData.targets ?? [])
         .build();
 
       await attackData.toChatMessage({ actor, weapon: spell });

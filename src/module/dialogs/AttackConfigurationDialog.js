@@ -1,6 +1,9 @@
 import { Templates } from '../utils/constants';
 import { ABFConfig } from '../ABFConfig';
 import { ABFAttackData } from '../combat/ABFAttackData';
+import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
+///dialogs/AttackConfigurationDialog.js
+///actor/utils/getSnapshotTargets.js
 
 export class AttackConfigurationDialog extends FormApplication {
   constructor(object = {}, options = {}) {
@@ -16,6 +19,7 @@ export class AttackConfigurationDialog extends FormApplication {
       ui.notifications?.error('AttackConfigurationDialog: attacker is required');
       return { allowed: false };
     }
+
     const attackerActor = attacker.actor;
 
     const resolvedWeapon =
@@ -25,18 +29,8 @@ export class AttackConfigurationDialog extends FormApplication {
       ui.notifications?.warn('Arma no encontrada.');
     }
 
-    // Snapshot de targets si no te lo pasan (tokenUuid = UUID si existe)
-    const fallbackSnapshot = Array.from(game.user?.targets ?? [])
-      .map(t => {
-        const token = t?.document ?? t;
-        const actorUuid = token?.actor?.id ?? token?.actorId ?? '';
-        const tokenUuid = token?.uuid ?? token?.document?.uuid ?? token?.id ?? '';
-        const label = token?.name ?? token?.actor?.name ?? '';
-        return actorUuid && tokenUuid
-          ? { actorUuid, tokenUuid, state: 'pending', label, updatedAt: Date.now() }
-          : null;
-      })
-      .filter(Boolean);
+    // Fallback targets snapshot (reusing shared helper)
+    const fallbackSnapshot = getSnapshotTargets();
 
     const isOwner = attackerActor.testUserPermission?.(
       game.user,

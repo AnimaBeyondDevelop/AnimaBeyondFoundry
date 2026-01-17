@@ -3,6 +3,7 @@ import { ABFAttackData } from '../../../combat/ABFAttackData.js';
 import { ABFSupernaturalShieldData } from '../../../combat/ABFSupernaturalShieldData.js';
 import { shieldValueCheck } from '../../../combat/utils/shieldValueCheck.js';
 import { openModDialog } from '../../../utils/dialogs/openSimpleInputDialog.js';
+import { getSnapshotTargets } from '../getSnapshotTargets.js';
 
 function _getBestEffectKey(effects, rolledValue) {
   if (!effects) return null;
@@ -81,7 +82,8 @@ async function _sendPsychicAttackToChat({
   power,
   difficultyKey,
   effectData,
-  baseDamage
+  baseDamage,
+  targets
 }) {
   // Quick attack like spells: ask mod, roll offensive projection, post roll, then attack data to chat
   const mod = Number(await openModDialog({ title: 'Modificador de Proyección' })) || 0;
@@ -116,7 +118,7 @@ async function _sendPsychicAttackToChat({
     .critBonus(0)
     .attackerId(actor.id)
     .weaponId(power.id)
-    .targets([])
+    .targets(targets ?? [])
     .build()
     .toChatMessage({ actor, weapon: power });
 
@@ -195,12 +197,15 @@ export async function castPsychicPower(sheet, event) {
     if (fatigueResult === 0) {
       const baseDamage = Number(effectData?.damage?.value ?? 0) || 0;
 
+      const snapshotTargets = getSnapshotTargets();
+
       await _sendPsychicAttackToChat({
         actor,
         power,
         difficultyKey,
         effectData,
-        baseDamage
+        baseDamage,
+        targets: snapshotTargets
       });
 
       return;
@@ -272,12 +277,15 @@ export async function castPsychicPowerDifficulty(sheet, event) {
     if (fatigueResult === 0) {
       const baseDamage = Number(effectData?.damage?.value ?? 0) || 0;
 
+      const snapshotTargets = getSnapshotTargets();
+
       await _sendPsychicAttackToChat({
         actor,
         power,
         difficultyKey,
         effectData,
-        baseDamage
+        baseDamage,
+        targets: snapshotTargets
       });
 
       return;

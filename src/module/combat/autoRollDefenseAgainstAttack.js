@@ -37,6 +37,43 @@ function getDefensesCounter(actor) {
   );
 }
 
+function buildZeroDefenseResult({ actor, defenderToken, attackData }) {
+  const armorType = attackData?.armorType;
+  const taFinal =
+    armorType != null ? actor.system?.combat?.totalArmor?.at?.[armorType]?.value ?? 0 : 0;
+
+  const defenseData = ABFDefenseData.builder()
+    .defenseAbility(0)
+    .armor(taFinal)
+    .inmodifiableArmor(false)
+    .defenseType('resistance')
+    .defenderId(actor.id)
+    .defenderTokenId(defenderToken?.id ?? '')
+    .weaponId('')
+    .shieldId('')
+    .stackDefense(false)
+    .applyMultipleDefensePenalty(false)
+    .projectilePenalty(0)
+    .build();
+
+  const combatResult = computeCombatResult(attackData, defenseData);
+
+  return {
+    actor,
+    token: defenderToken ?? null,
+    defenseType: 'resistance',
+    defenseTotal: 0,
+    weaponId: '',
+    shieldId: '',
+    defenseData,
+    combatResult,
+    appliedPenalties: {
+      projectilePenalty: 0,
+      multipleDefensePenalty: 0
+    }
+  };
+}
+
 export async function autoRollDefenseAgainstAttack({
   defenderToken = null,
   defenderActor = null,
@@ -45,6 +82,13 @@ export async function autoRollDefenseAgainstAttack({
 }) {
   const actor = defenderActor ?? defenderToken?.actor ?? null;
   if (!actor) throw new Error('autoRollDefenseAgainstAttack: defender actor missing');
+
+  const defenseMode = actor.system?.general?.settings?.defenseType?.value;
+
+  // Accumulation/resistance defenders: base defense 0, no roll, no penalties.
+  if (defenseMode === 'resistance') {
+    return buildZeroDefenseResult({ actor, defenderToken, attackData });
+  }
 
   const defensesCounter = getDefensesCounter(actor);
 

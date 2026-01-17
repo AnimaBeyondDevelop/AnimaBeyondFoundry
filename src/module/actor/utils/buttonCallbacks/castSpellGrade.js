@@ -5,13 +5,12 @@ import { shieldValueCheck } from '../../../combat/utils/shieldValueCheck.js';
 import { Templates } from '../../../utils/constants';
 import { openModDialog } from '../../../utils/dialogs/openSimpleInputDialog.js';
 import { SpellAttackConfigurationDialog } from '../../../dialogs/SpellAttackConfigurationDialog.js';
+import { getSnapshotTargets } from '../getSnapshotTargets.js';
 
-// Comments in English
 function localizeGrade(grade) {
   return game.i18n.localize(`anima.ui.mystic.spell.grade.${grade}.title`);
 }
 
-// Comments in English
 async function openShieldConfigDialog({ spell, grade }) {
   const content = await renderTemplate(Templates.Dialog.SpellShieldConfigDialog, {
     formulaBonus: 0
@@ -81,7 +80,8 @@ export async function castSpellGrade(sheet, event) {
     new SpellAttackConfigurationDialog({
       attacker: token,
       spell,
-      grade
+      grade,
+      targets: getSnapshotTargets()
     });
 
     return;
@@ -116,7 +116,7 @@ export async function castSpellGrade(sheet, event) {
     .critBonus(0)
     .attackerId(actor.id)
     .weaponId(spell.id)
-    .targets([])
+    .targets(getSnapshotTargets())
     .build()
     .toChatMessage({ actor, weapon: spell });
 }

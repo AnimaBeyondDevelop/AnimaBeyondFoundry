@@ -21,6 +21,7 @@ import { INITIAL_SPELL_CASTING_DATA } from '../types/mystic/SpellItemConfig.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 import ABFItem from '../items/ABFItem';
+import { FormulaEvaluator } from '../../utils/formulaEvaluator.js';
 
 export class ABFActor extends Actor {
   i18n = game.i18n;
@@ -869,5 +870,49 @@ export class ABFActor extends Actor {
    */
   getItem(itemId) {
     return this.getEmbeddedDocument('Item', itemId);
+  }
+
+  applyActiveEffects() {
+    const originals = new Map();
+
+    try {
+      for (const effect of this.effects.contents) {
+        if (!effect.active) continue;
+
+        const changes = effect.changes;
+        if (!Array.isArray(changes) || changes.length === 0) continue;
+
+        // Save originals
+        originals.set(
+          effect,
+          changes.map(c => c.value)
+        );
+
+        // Patch values (in-memory only)
+        for (const change of changes) {
+          change.value = this._applyDynamicEffectValue(change.value);
+        }
+      }
+
+      // Let Foundry core do the real AE logic (modes, priority, etc.)
+      return super.applyActiveEffects();
+    } finally {
+      // Restore original values so nothing "sticks" on the document
+      for (const [effect, values] of originals.entries()) {
+        const changes = effect.changes;
+        for (let i = 0; i < changes.length; i++) {
+          changes[i].value = values[i];
+        }
+      }
+    }
+  }
+
+  _applyDynamicEffectValue(value) {
+    if (typeof value !== 'string') return value;
+
+    const evaluated = FormulaEvaluator.evaluate(value, this);
+    if (evaluated !== null && !Number.isNaN(evaluated)) return evaluated;
+
+    return value;
   }
 }
