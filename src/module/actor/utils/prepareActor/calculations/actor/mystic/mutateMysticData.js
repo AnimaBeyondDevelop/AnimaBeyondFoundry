@@ -16,7 +16,8 @@ export const mutateMysticData = data => {
   if (mystic.act.via.length !== 0) {
     for (const actVia of mystic.act.via) {
       actVia.system.final.value = Math.max(
-        actVia.system.base.value + Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
+        actVia.system.base.value +
+          Math.min(0, -roundTo5Multiples(-allActionsPenalty / 2)),
         0
       );
     }
@@ -40,26 +41,22 @@ export const mutateMysticData = data => {
     0
   );
   mystic.magicProjection.imbalance.offensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.offensive.base.value +
-    allActionsPenalty,
+    mystic.magicProjection.imbalance.offensive.base.value + allActionsPenalty,
     0
   );
 
   mystic.magicProjection.imbalance.defensive.final.value = Math.max(
-    mystic.magicProjection.imbalance.defensive.base.value +
-    allActionsPenalty,
+    mystic.magicProjection.imbalance.defensive.base.value + allActionsPenalty,
     0
   );
 
   const dailyZeon = mystic.spellMaintenances.reduce(
-    (acc, currentValue) =>
-      acc + (Number(currentValue.system.cost.value) || 0),
+    (acc, currentValue) => acc + (Number(currentValue.system.cost.value) || 0),
     0
   );
-  
+
   const perTurnZeon = mystic.selectedSpells.reduce(
-    (acc, currentValue) =>
-      acc + (Number(currentValue.system.cost.value) || 0),
+    (acc, currentValue) => acc + (Number(currentValue.system.cost.value) || 0),
     0
   );
 
@@ -67,11 +64,8 @@ export const mutateMysticData = data => {
 
   const manualMaintained = Number(mystic.zeonMaintained?.max) || 0;
   mystic.zeonMaintained.value = perTurnZeon + manualMaintained;
-  
-  mystic.zeonRegeneration.final.value = Math.max(
-    mystic.zeonRegeneration.base.value - dailyZeon,
-    0
-  );
+
+  mystic.zeonRegeneration.final.value = mystic.zeonRegeneration.base.value - dailyZeon;
 
   mystic.summoning.summon.final.value =
     mystic.summoning.summon.base.value + Math.min(allActionsPenalty, 0);

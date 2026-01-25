@@ -154,22 +154,22 @@
         }
 
         .effect-row {
-          display: flex;
+          display: grid;
+          grid-template-columns: 3rem 3rem 1fr; // dificultad | daño/escudo | descripción
+          column-gap: 0.5rem;
+          align-items: center;
 
           margin-top: 0.5rem;
 
-          .difficulty {
-            margin-right: 0.5rem;
-            width: 3rem;
-          }
+          .difficulty { width: 3rem; }
+          .damage, .shield-points { width: 100%; } 
+          .description { width: 100%; }
 
-          .description {
-            width: 100%;
-          }
+          .damage-title, .shield-points-title { grid-column: 2; margin: 0; font-weight: bold; text-align: center;}
+          .description-title { grid-column: 3; margin: 0; font-weight: bold; }text-align: center;
 
           .input {
             @include input;
-
             text-align: center;
             height: 1.25rem;
             line-height: 1.25rem;
@@ -183,6 +183,7 @@
             justify-content: center;
           }
         }
+
 
         .psychic-power-header {
           padding-right: 0.5rem;

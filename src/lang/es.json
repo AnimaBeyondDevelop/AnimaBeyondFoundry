@@ -329,6 +329,8 @@
   "anima.ui.mystic.spell.grade.intermediate.title": "Intermedio",
   "anima.ui.mystic.spell.grade.maintenanceCost.title": "Mant.",
   "anima.ui.mystic.spell.grade.zeon.title": "Zeón",
+  "anima.ui.mystic.spell.grade.damage.title": "Daño",
+  "anima.ui.mystic.spell.grade.shieldPoints.title": "Escudo",
   "anima.ui.mystic.spell.hasDailyMaintenance.title": "¿Mant. Diario?",
   "anima.ui.mystic.spell.visible.title": "Visible",
   "anima.ui.mystic.spell.level.title": "Nivel",
@@ -875,4 +877,5 @@
  "anima.ui.effects.effectsList.edit.title": "Editar",
  "anima.ui.effects.effectsList.delete.title": "Eliminar",
  "anima.effects.newEffect": "Nuevo efecto"
+
 }

@@ -10,7 +10,7 @@
 
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"}}
     {{!-- <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{weapon.system.attack.final.value}}</p> --}}
-    <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{attackData.attackAbility}}</p>
+    <p data-requires-permission="owner"><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{attackData.attackAbility}}</p>
     <p data-requires-permission="owner"><strong>{{localize "anima.ui.combat.weapons.damage.final.title"}}:</strong> {{attackData.damage}}</p>
     {{!-- <p><strong>{{localize "anima.ui.combat.weapons.block.title"}}:</strong> {{weapon.system.block.final.value}}</p> --}}
     {{!-- <p><strong>{{localize "anima.ui.combat.weapons.presence.final.title"}}:</strong> {{weapon.system.presence.final.value}}</p> --}}

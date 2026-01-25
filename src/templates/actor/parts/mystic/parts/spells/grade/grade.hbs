@@ -33,6 +33,26 @@
     inputName=this.maintenanceCostInputName
     inputValue=this.grade.maintenanceCost.value
   }}
+  {{#if (is 'eq' this.spellCombatType 'attack')}}
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="damage"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.damage.title")
+    inputName=this.damageInputName
+    inputValue=this.grade.damage.value
+  }}
+  {{/if}}
+  {{#if (is 'eq' this.spellCombatType 'defense')}}
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="shield-points"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.shieldPoints.title")
+    inputName=this.shieldPointsInputName
+    inputValue=this.grade.shieldPoints.value
+  }}
+  {{/if}}
   {{>
   "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="description"

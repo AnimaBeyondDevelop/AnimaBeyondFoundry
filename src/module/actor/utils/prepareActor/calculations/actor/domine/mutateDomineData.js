@@ -1,4 +1,4 @@
-export const mutateDomineData = async data => {
+export const mutateDomineData = data => {
   const allActionsPenalty = data.general.modifiers.allActions.final.value;
 
   const { domine } = data;

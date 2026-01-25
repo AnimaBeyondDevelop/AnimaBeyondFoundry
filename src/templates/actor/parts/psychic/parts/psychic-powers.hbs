@@ -59,6 +59,21 @@
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="psychic-power"
           }}
+          <div class='effect-row'>
+            {{#if (is 'eq' power.system.combatType.value 'attack')}}
+              <p class="damage-title">
+                {{localize "anima.ui.mystic.spell.grade.damage.title"}}
+              </p>
+            {{/if}}
+            {{#if (is 'eq' power.system.combatType.value 'defense')}}
+              <p class="shield-points-title">
+                {{localize "anima.ui.mystic.spell.grade.shieldPoints.title"}}
+              </p>
+            {{/if}}
+            <p class="description-title">
+              {{localize "anima.ui.mystic.spell.grade.description.title"}}
+            </p>
+          </div>
             {{#each power.system.effects as |effect key|}}
               <div class='effect-row'>
                 <button
@@ -70,7 +85,26 @@
                 >
                   {{key}}
                 </button>
-
+                {{#if (is 'eq' power.system.combatType.value 'attack')}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="damage"
+                    hideTitle=true
+                    title=(localize "anima.ui.mystic.spell.grade.damage.title")
+                    inputName=(concat "system.dynamic.psychicPowers." power._id ".system.effects." key ".damage.value")
+                    inputValue=effect.damage.value
+                  }}
+                {{/if}}
+                {{#if (is 'eq' power.system.combatType.value 'defense')}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="shield-points"
+                    hideTitle=true
+                    title=(localize "anima.ui.mystic.spell.grade.shieldPoints.title")
+                    inputName=(concat "system.dynamic.psychicPowers." power._id ".system.effects." key ".shieldPoints.value")
+                    inputValue=effect.shieldPoints.value
+                  }}
+                {{/if}}
                 <input
                   type='text'
                   class='input description'

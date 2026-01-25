@@ -163,7 +163,7 @@ export async function castPsychicPower(sheet, event) {
 
   // ---------- DEFENSE: create shield ----------
   if (combatType === 'defense') {
-    const shieldPoints = Number(shieldValueCheck(effectText) ?? 0) || 0;
+    const shieldPoints = Number(shieldValueCheck(effectData?.shieldPoints) ?? 0) || 0;
 
     const defaultAbilityFormula =
       '@psychic.psychicProjection.imbalance.defensive.base.value';
@@ -246,7 +246,7 @@ export async function castPsychicPowerDifficulty(sheet, event) {
   const combatType = power.system?.combatType?.value ?? 'attack';
 
   if (combatType === 'defense') {
-    const shieldPoints = Number(shieldValueCheck(effectText) ?? 0) || 0;
+    const shieldPoints = Number(shieldValueCheck(effectData?.shieldPoints) ?? 0) || 0;
     const defaultAbilityFormula =
       '@psychic.psychicProjection.imbalance.defensive.base.value';
 
