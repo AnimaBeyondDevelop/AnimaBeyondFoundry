@@ -17,8 +17,27 @@ export const mutateCombatData = data => {
     data.general.modifiers.allActions.final.value +
     data.general.modifiers.physicalActions.final.value;
 
-    
   data.combat.damageReduction.final.value =
-    data.combat.damageReduction.base.value +
-    data.combat.damageReduction.special.value;
+    data.combat.damageReduction.base.value + data.combat.damageReduction.special.value;
+};
+
+mutateCombatData.abfFlow = {
+  deps: [
+    'system.combat.attack.base.value',
+    'system.combat.attack.special.value',
+    'system.combat.block.base.value',
+    'system.combat.block.special.value',
+    'system.combat.dodge.base.value',
+    'system.combat.dodge.special.value',
+    'system.combat.damageReduction.base.value',
+    'system.combat.damageReduction.special.value',
+    'system.general.modifiers.allActions.final.value',
+    'system.general.modifiers.physicalActions.final.value'
+  ],
+  mods: [
+    'system.combat.attack.final.value',
+    'system.combat.block.final.value',
+    'system.combat.dodge.final.value',
+    'system.combat.damageReduction.final.value'
+  ]
 };

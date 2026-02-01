@@ -90,3 +90,38 @@ export const mutateWeaponsData = data => {
     return weapon;
   });
 };
+
+mutateWeaponsData.abfFlow = {
+  deps: [
+    // Whole weapon array is read extensively
+    'system.combat.weapons',
+
+    // These helpers use actor data (common patterns in your system)
+    'system.general.modifiers.allActions.final.value',
+    'system.general.modifiers.physicalActions.final.value',
+    'system.general.modifiers.naturalPenalty.final.value',
+
+    // Common primary stats typically used in weapon calcs
+    'system.characteristics.primaries.strength.final.value',
+    'system.characteristics.primaries.dexterity.final.value',
+    'system.characteristics.primaries.agility.final.value',
+
+    // Initiative interactions
+    'system.characteristics.secondaries.initiative.final.value'
+  ],
+  mods: [
+    // All these are written inside each weapon.system.*
+    'system.combat.weapons.attack.final.value',
+    'system.combat.weapons.block.final.value',
+    'system.combat.weapons.initiative.final.value',
+    'system.combat.weapons.damage.final.value',
+    'system.combat.weapons.reducedArmor.base.value',
+    'system.combat.weapons.reducedArmor.final.value',
+    'system.combat.weapons.integrity.final.value',
+    'system.combat.weapons.breaking.final.value',
+    'system.combat.weapons.presence.final.value',
+    'system.combat.weapons.range.final.value',
+    'system.combat.weapons.reload.final.value',
+    'system.combat.weapons.critic.primary.value'
+  ]
+};

@@ -89,3 +89,8 @@ export const mutateArmorsData = data => {
     return armor;
   });
 };
+
+mutateArmorsData.abfFlow = {
+  deps: ['system.combat.armors'],
+  mods: ['system.combat.armors']
+};

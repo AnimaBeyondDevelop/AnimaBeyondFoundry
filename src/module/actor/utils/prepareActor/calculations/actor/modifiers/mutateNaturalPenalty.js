@@ -26,3 +26,17 @@ export const mutateNaturalPenalty = data => {
     data.general.modifiers.naturalPenalty.base.value +
     data.general.modifiers.naturalPenalty.special.value;
 };
+
+mutateNaturalPenalty.abfFlow = {
+  deps: [
+    'system.combat.wearArmor.value',
+    'system.combat.armors',
+    'system.general.modifiers.naturalPenalty.base.value',
+    'system.general.modifiers.naturalPenalty.special.value'
+  ],
+  mods: [
+    'system.general.modifiers.naturalPenalty.unreduced.value',
+    'system.general.modifiers.naturalPenalty.reduction.value',
+    'system.general.modifiers.naturalPenalty.final.value'
+  ]
+};

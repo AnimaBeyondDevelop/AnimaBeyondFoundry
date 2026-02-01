@@ -31,7 +31,7 @@ export default class ABFActorSheet extends ActorSheet {
       ...{
         classes: [game.animabf.id, 'sheet', 'actor'],
         template: 'systems/animabf/templates/actor/actor-sheet.hbs',
-        width: 1000,
+        width: 1100,
         height: 850,
         submitOnChange: true,
         viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
@@ -76,7 +76,7 @@ export default class ABFActorSheet extends ActorSheet {
       return 1300;
     }
 
-    return 1000;
+    return 1100;
   }
 
   async _render(force, options = {}) {

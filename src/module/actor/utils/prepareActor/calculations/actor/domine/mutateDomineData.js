@@ -19,3 +19,24 @@ export const mutateDomineData = data => {
     );
   }
 };
+
+mutateDomineData.abfFlow = {
+  deps: [
+    'system.general.modifiers.allActions.final.value',
+
+    'system.domine.kiAccumulation.strength.base.value',
+    'system.domine.kiAccumulation.agility.base.value',
+    'system.domine.kiAccumulation.dexterity.base.value',
+    'system.domine.kiAccumulation.constitution.base.value',
+    'system.domine.kiAccumulation.willPower.base.value',
+    'system.domine.kiAccumulation.power.base.value'
+  ],
+  mods: [
+    'system.domine.kiAccumulation.strength.final.value',
+    'system.domine.kiAccumulation.agility.final.value',
+    'system.domine.kiAccumulation.dexterity.final.value',
+    'system.domine.kiAccumulation.constitution.final.value',
+    'system.domine.kiAccumulation.willPower.final.value',
+    'system.domine.kiAccumulation.power.final.value'
+  ]
+};

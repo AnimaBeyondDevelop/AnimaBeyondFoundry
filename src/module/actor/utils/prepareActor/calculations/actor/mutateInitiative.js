@@ -8,7 +8,10 @@ export const mutateInitiative = data => {
 
   const allActionMod = general.modifiers.allActions.final.value;
 
-  const penalty = Math.ceil( Math.min(allActionMod + general.modifiers.physicalActions.final.value, 0) / 2) + general.modifiers.naturalPenalty.final.value;
+  const penalty =
+    Math.ceil(
+      Math.min(allActionMod + general.modifiers.physicalActions.final.value, 0) / 2
+    ) + general.modifiers.naturalPenalty.final.value;
 
   const { initiative } = data.characteristics.secondaries;
 
@@ -16,8 +19,6 @@ export const mutateInitiative = data => {
 
   const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 
-
-    
   // We subtract 20 because people are used to put as base unarmed initiative
   initiative.final.value -= 20;
 
@@ -34,7 +35,6 @@ export const mutateInitiative = data => {
     }
   }
 
-
   //Ajuste según la cantidad de armas que lleva equipadas el personaje
   const firstTwoWeapons = equippedWeapons
     .filter(weapon => !weapon.system.isShield.value)
@@ -44,9 +44,8 @@ export const mutateInitiative = data => {
     initiative.final.value += 20;
   } else if (firstTwoWeapons.length === 1) {
     initiative.final.value += firstTwoWeapons[0].system.initiative.final.value;
-  } 
-  else if (firstTwoWeapons.length === 2) //Ajuste por llevar dos armas
-  {
+  } else if (firstTwoWeapons.length === 2) {
+    //Ajuste por llevar dos armas
     const leftWeapon = firstTwoWeapons[0].system;
     const rightWeapon = firstTwoWeapons[1].system;
 
@@ -65,4 +64,16 @@ export const mutateInitiative = data => {
       }
     }
   }
+};
+
+mutateInitiative.abfFlow = {
+  deps: [
+    'system.characteristics.secondaries.initiative.base.value',
+    'system.characteristics.secondaries.initiative.special.value',
+    'system.general.modifiers.allActions.final.value',
+    'system.general.modifiers.physicalActions.final.value',
+    'system.general.modifiers.naturalPenalty.final.value',
+    'system.combat.weapons' // equipped + isShield + size + initiative.*
+  ],
+  mods: ['system.characteristics.secondaries.initiative.final.value']
 };

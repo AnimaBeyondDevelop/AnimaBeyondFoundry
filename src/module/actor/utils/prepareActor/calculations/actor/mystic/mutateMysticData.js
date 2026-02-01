@@ -85,3 +85,66 @@ export const mutateMysticData = data => {
     }
   }
 };
+
+mutateMysticData.abfFlow = {
+  deps: [
+    // allActionsPenalty
+    'system.general.modifiers.allActions.final.value',
+
+    // ACT main + vias
+    'system.mystic.act.main.base.value',
+    'system.mystic.act.via', // reads via[*].system.base.value and matches by name
+
+    // Innate Magic main + vias
+    'system.mystic.innateMagic.main.base.value',
+    'system.mystic.innateMagic.via', // reads via[*].system.base.value and matches by name
+
+    // Magic projection base + imbalances base
+    'system.mystic.magicProjection.base.value',
+    'system.mystic.magicProjection.imbalance.offensive.base.value',
+    'system.mystic.magicProjection.imbalance.defensive.base.value',
+
+    // Spell maintenance cost aggregation
+    'system.mystic.spellMaintenances', // reads [*].system.cost.value
+    'system.mystic.selectedSpells', // reads [*].system.cost.value
+
+    // Manual maintained zeon
+    'system.mystic.zeonMaintained.max',
+
+    // Zeon regeneration
+    'system.mystic.zeonRegeneration.base.value',
+
+    // Summoning bases
+    'system.mystic.summoning.summon.base.value',
+    'system.mystic.summoning.banish.base.value',
+    'system.mystic.summoning.bind.base.value',
+    'system.mystic.summoning.control.base.value'
+  ],
+  mods: [
+    // ACT finals
+    'system.mystic.act.main.final.value',
+    'system.mystic.act.via', // writes via[*].system.final.value
+
+    // Innate Magic finals
+    'system.mystic.innateMagic.main.final.value',
+    'system.mystic.innateMagic.via', // writes via[*].system.final.value
+
+    // Magic projection finals
+    'system.mystic.magicProjection.final.value',
+    'system.mystic.magicProjection.imbalance.offensive.final.value',
+    'system.mystic.magicProjection.imbalance.defensive.final.value',
+
+    // Maintenance bookkeeping
+    'system.mystic.spellsMaintenanceCost',
+    'system.mystic.zeonMaintained.value',
+
+    // Zeon regeneration final
+    'system.mystic.zeonRegeneration.final.value',
+
+    // Summoning finals
+    'system.mystic.summoning.summon.final.value',
+    'system.mystic.summoning.banish.final.value',
+    'system.mystic.summoning.bind.final.value',
+    'system.mystic.summoning.control.final.value'
+  ]
+};

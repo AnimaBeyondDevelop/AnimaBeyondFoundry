@@ -183,36 +183,28 @@ export const INITIAL_ACTOR_DATA = {
   characteristics: {
     primaries: {
       agility: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       constitution: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       dexterity: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       strength: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       intelligence: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       perception: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       power: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       },
       willPower: {
-        value: 0,
-        mod: 0
+        __type: '{"type":"Characteristic"}'
       }
     },
     secondaries: {

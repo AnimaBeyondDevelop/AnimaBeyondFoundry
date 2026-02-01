@@ -24,3 +24,22 @@ export const mutatePsychicData = data => {
     0
   );
 };
+
+mutatePsychicData.abfFlow = {
+  deps: [
+    'system.general.modifiers.allActions.final.value',
+
+    'system.psychic.psychicProjection.base.value',
+    'system.psychic.psychicProjection.imbalance.offensive.base.value',
+    'system.psychic.psychicProjection.imbalance.defensive.base.value',
+
+    'system.psychic.psychicPotential.base.value'
+  ],
+  mods: [
+    'system.psychic.psychicProjection.final.value',
+    'system.psychic.psychicProjection.imbalance.offensive.final.value',
+    'system.psychic.psychicProjection.imbalance.defensive.final.value',
+
+    'system.psychic.psychicPotential.final.value'
+  ]
+};

@@ -25,7 +25,7 @@ export const mutateMovementType = data => {
 
   movementType.final.value =
     movementType.mod.value +
-    data.characteristics.primaries.agility.value +
+    data.characteristics.primaries.agility.final.value +
     Math.min(0, Math.ceil(data.general.modifiers.allActions.final.value / 20)) +
     armorsMovementRestrictions;
 
@@ -35,4 +35,21 @@ export const mutateMovementType = data => {
     calculateMovementInMetersFromMovementType(movementType.final.value);
   data.characteristics.secondaries.movement.running.value =
     calculateMovementInMetersFromMovementType(Math.max(0, movementType.final.value - 2));
+};
+
+mutateMovementType.abfFlow = {
+  deps: [
+    'system.characteristics.secondaries.movementType.mod.value',
+    'system.characteristics.primaries.agility.final.value',
+    'system.general.modifiers.allActions.final.value',
+
+    // armor penalty (calculateArmorPhysicalPenalty)
+    'system.combat.wearArmor.value',
+    'system.combat.armors'
+  ],
+  mods: [
+    'system.characteristics.secondaries.movementType.final.value',
+    'system.characteristics.secondaries.movement.maximum.value',
+    'system.characteristics.secondaries.movement.running.value'
+  ]
 };

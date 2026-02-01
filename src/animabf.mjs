@@ -1,5 +1,5 @@
 import { registerSettings, ABFSettingsKeys } from './utils/registerSettings';
-import { Logger, preloadTemplates } from './utils';
+import { Logger, TEMPLATE_PATHS } from './utils';
 import ABFActorSheet from './module/actor/ABFActorSheet';
 import ABFFoundryRoll from './module/rolls/ABFFoundryRoll';
 import ABFCombat from './module/combat/ABFCombat';
@@ -21,7 +21,7 @@ import { preloadClickHandlers } from './module/actor/utils/createClickHandlers.j
 
 import { ABFAttackData } from './module/combat/ABFAttackData.js';
 import { getChatContextMenuFactories } from './utils/buildChatContextMenu.js';
-import { Templates } from './module/utils/constants';
+import { Templates, HandlebarsPartials } from './module/utils/constants';
 
 import './scss/animabf.scss';
 
@@ -29,6 +29,8 @@ import { System, registerSystemOnGame } from './utils/systemMeta';
 
 import { resolveTokenName } from './utils/tokenName.js';
 import { FormulaEvaluator } from './utils/formulaEvaluator.js';
+
+import { registerHandlebarsPartials } from './utils/handlebarsPartials.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -38,16 +40,17 @@ Hooks.once('init', async () => {
   registerSystemOnGame();
   Logger.log('Game Id:' + System.id);
 
-  // Preload Handlebars templates
-  await preloadTemplates();
+  window.ABFFoundryRoll = ABFFoundryRoll;
+  CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
+
+  // Load Handlebars templates
+  await loadTemplates(TEMPLATE_PATHS);
+  await registerHandlebarsPartials(HandlebarsPartials);
 
   // Assign custom classes and constants here
   CONFIG.Actor.documentClass = ABFActor;
 
   CONFIG.config = ABFConfig;
-
-  window.ABFFoundryRoll = ABFFoundryRoll;
-  CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
 
   CONFIG.Combat.documentClass = ABFCombat;
   CONFIG.Combatant.documentClass = ABFCombatant;

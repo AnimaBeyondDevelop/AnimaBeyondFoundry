@@ -20,12 +20,15 @@ import { mutatePresence } from './calculations/actor/mutatePresence';
 import { mutateTotalLevel } from './calculations/actor/mutateTotalLevel';
 import { mutateResistances } from './calculations/actor/mutateResistances';
 
+import { runEffectFlow } from '../effectFow';
+import { inflateSystemFromTypeMarkers } from '../../types/inflateSystemFromTypeMarkers';
+
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS = [
   mutateTotalLevel,
   mutatePresence,
   mutateResistances,
-  mutatePrimaryModifiers,
+  // mutatePrimaryModifiers,
   mutateRegenerationType,
   mutateAllActionsModifier,
   mutateArmorsData,
@@ -45,24 +48,65 @@ const DERIVED_DATA_FUNCTIONS = [
 ];
 
 export const prepareActor = async actor => {
-  await prepareItems(actor);
-
-  actor.system.general.description.enriched = await TextEditor.enrichHTML(
-    actor.system.general.description.value,
-    { async: true }
-  );
-
-  // We need to parse to boolean because Foundry saves booleans as string
-  for (const key of Object.keys(actor.system.ui.contractibleItems)) {
-    if (typeof actor.system.ui.contractibleItems[key] === 'string') {
-      actor.system.ui.contractibleItems[key] =
-        actor.system.ui.contractibleItems[key] === 'true';
-    }
+  if (actor.__abfPreparePromise) {
+    await actor.__abfPreparePromise;
   }
 
-  const { system } = actor;
+  actor.__abfPreparePromise = (async () => {
+    globalThis.__abfPrepareRunId = (globalThis.__abfPrepareRunId ?? 0) + 1;
+    const runId = globalThis.__abfPrepareRunId;
 
-  for (const fn of DERIVED_DATA_FUNCTIONS) {
-    await fn(system);
+    // 🔍 DEBUG PATHS — pon aquí los que se estén acumulando
+    const watchPaths = [
+      'system.characteristics.secondaries.resistances.magic.special.value'
+    ];
+
+    dbgDump(actor, `RUN ${runId} BEFORE reset`, watchPaths);
+
+    // ✅ Baseline desde datos RAW del actor
+    const baselineSystem = foundry.utils.duplicate(actor._source.system);
+
+    foundry.utils.mergeObject(actor.system, baselineSystem, {
+      overwrite: true,
+      insertKeys: true,
+      insertValues: true
+    });
+
+    actor.system = inflateSystemFromTypeMarkers(actor.system);
+
+    dbgDump(actor, `RUN ${runId} AFTER reset`, watchPaths);
+
+    await prepareItems(actor);
+
+    dbgDump(actor, `RUN ${runId} BEFORE flow`, watchPaths);
+
+    // ✅ Nuevo pipeline: build -> order -> apply
+    await runEffectFlow(actor, {
+      derivedFns: DERIVED_DATA_FUNCTIONS
+      // debug: true
+    });
+
+    dbgDump(actor, `RUN ${runId} AFTER flow`, watchPaths);
+  })();
+
+  try {
+    await actor.__abfPreparePromise;
+  } finally {
+    actor.__abfPreparePromise = null;
   }
 };
+
+function dbgGet(actor, path) {
+  return {
+    path,
+    source: foundry.utils.getProperty(actor._source, path),
+    system: foundry.utils.getProperty(actor, path)
+  };
+}
+
+function dbgDump(actor, label, paths) {
+  // const rows = paths.map(p => dbgGet(actor, p));
+  // console.groupCollapsed(`[FLOW][DBG] ${label}`);
+  // console.table(rows);
+  // console.groupEnd();
+}

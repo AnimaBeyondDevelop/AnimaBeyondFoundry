@@ -97,14 +97,14 @@
       },
       "characteristics": {
         "primaries": {
-          "agility": { "value": 0, "mod": 0 },
-          "constitution": { "value": 0, "mod": 0 },
-          "dexterity": { "value": 0, "mod": 0 },
-          "strength": { "value": 0, "mod": 0 },
-          "intelligence": { "value": 0, "mod": 0 },
-          "perception": { "value": 0, "mod": 0 },
-          "power": { "value": 0, "mod": 0 },
-          "willPower": { "value": 0, "mod": 0 }
+          "agility":      { "__type": "{\"type\":\"Characteristic\"}" },
+          "constitution": { "__type": "{\"type\":\"Characteristic\"}" },
+          "dexterity":    { "__type": "{\"type\":\"Characteristic\"}" },
+          "strength":     { "__type": "{\"type\":\"Characteristic\"}" },
+          "intelligence": { "__type": "{\"type\":\"Characteristic\"}" },
+          "perception":   { "__type": "{\"type\":\"Characteristic\"}" },
+          "power":        { "__type": "{\"type\":\"Characteristic\"}" },
+          "willPower":    { "__type": "{\"type\":\"Characteristic\"}" }
         },
         "secondaries": {
           "lifePoints": { "value": 0, "max": 0 },

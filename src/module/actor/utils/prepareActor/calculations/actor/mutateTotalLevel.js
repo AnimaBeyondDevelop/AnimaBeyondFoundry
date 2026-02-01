@@ -14,3 +14,8 @@ export const mutateTotalLevel = data => {
   }
   level.value = totalLevel;
 };
+
+mutateTotalLevel.abfFlow = {
+  deps: ['system.general.levels'],
+  mods: ['system.general.level.value']
+};

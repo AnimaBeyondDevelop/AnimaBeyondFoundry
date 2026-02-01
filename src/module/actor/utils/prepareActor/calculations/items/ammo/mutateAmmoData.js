@@ -27,3 +27,16 @@ export const mutateAmmoData = data => {
       return ammo;
     });
 };
+
+mutateAmmoData.abfFlow = {
+  deps: [
+    // Actor stat used in breaking
+    'system.characteristics.primaries.strength.final.value',
+
+    // Ammo inputs
+    'system.combat.ammo' // reads base.value and quality.value inside each ammo.system.*
+  ],
+  mods: [
+    'system.combat.ammo' // damage.final, presence.final, integrity.final, breaking.final
+  ]
+};

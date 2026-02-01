@@ -65,3 +65,8 @@ export const mutateTotalArmor = data => {
 
   data.combat.totalArmor = totalArmor;
 };
+
+mutateTotalArmor.abfFlow = {
+  deps: ['system.combat.armors'],
+  mods: ['system.combat.totalArmor']
+};

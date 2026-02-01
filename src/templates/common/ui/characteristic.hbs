@@ -1,0 +1,38 @@
+{{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  class="characteristic"
+  title=(localize (concat 'anima.ui.characteristics.' key))
+  rollable=true
+  rollableDice=@root.system.general.diceSettings.characteristicDie.value
+  rollableMessage=(localize (concat 'anima.ui.characteristics.' key))
+
+  inputName=(concat "system.characteristics.primaries." key ".base.value")
+  inputValue=char.base.value
+  tooltip= (localize "anima.ui.tooltips.base")
+
+  hasSecondaryInput=true
+  secondaryInputName=(concat "system.characteristics.primaries." key ".special.value")
+  secondaryInputValue=char.special.value
+  disableSecondaryInput=false
+  secondaryTooltip= (localize "anima.ui.tooltips.special")
+
+  hasTertiaryInput=true
+  tertiaryInputName=(concat "system.characteristics.primaries." key ".final.value")
+  tertiaryInputValue=char.final.value
+  disableTertiaryInput=true
+  tertiaryTooltip= (localize "anima.ui.tooltips.final")
+  
+  addTooltips=true
+}}
+
+{{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  class="characteristic characteristic-mod"
+  hideTitle=true
+  disabled=true
+  inputName=(concat "system.characteristics.primaries." key ".mod.value")
+  inputValue=char.mod.value
+  tooltip= (localize "anima.ui.tooltips.mod")
+  
+  addTooltips=true
+}}

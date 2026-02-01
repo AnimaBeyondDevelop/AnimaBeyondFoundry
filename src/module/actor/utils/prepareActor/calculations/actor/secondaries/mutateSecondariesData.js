@@ -59,3 +59,21 @@ export const mutateSecondariesData = data => {
     }
   }
 };
+
+mutateSecondariesData.abfFlow = {
+  deps: [
+    // Inputs inside secondaries
+    'system.secondaries.*.*.base.value',
+    'system.secondaries.*.*.attribute.value',
+
+    // External modifiers
+    'system.general.modifiers.allActions.final.value',
+    'system.general.modifiers.naturalPenalty.final.value',
+    'system.general.modifiers.perceptionPenalty.final.value',
+    'system.general.modifiers.physicalActions.final.value'
+  ],
+  mods: [
+    // Outputs only
+    'system.secondaries.*.*.final.value'
+  ]
+};

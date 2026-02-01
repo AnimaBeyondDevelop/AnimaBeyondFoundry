@@ -8,12 +8,17 @@
     display: grid;
     grid-template-columns: 1fr 1fr 4fr;
     grid-column-gap: 0.5rem;
+    align-items: stretch; //
 
     .first-column {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      
+      overflow: hidden; //
+      max-height: 20rem;
+      min-width: 8rem;
     }
 
     .third-column .sub-column {
@@ -28,8 +33,18 @@
   .actor-image {
     margin-bottom: 0.75rem;
 
+    height: 100%;       // ocupa el alto de la columna
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     img {
+      max-height: 100%;   // 🔑 nunca más alta que la columna
+      width: auto;        // mantiene proporción
+      height: auto;
+      object-fit: contain;
       border-radius: 1rem;
+      min-width: 8rem;
     }
   }
   // Actor image
@@ -96,38 +111,52 @@
   // Modifiers
 
   // Characteristics
-  .characteristics {
+.characteristics {
+  .group-body,
+  .group-header
+  {
+    max-width: 18rem;
+  }
+  .group-body {
+    // margin-top: 0;
+    // padding: 0.5rem;
     height: 100%;
 
-    .group-body {
-      margin-top: 0;
-      padding: 0.5rem;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    display: inline-grid;
+    grid-template-columns: max-content max-content;
+    column-gap: 0.25rem;
+    row-gap: 0.265rem;
 
-      .characteristic {
-        margin-bottom: 0.265rem;
-      }
+    justify-content: start;
+    align-content: center;
 
-      .characteristic:last-child {
-        margin-bottom: 0;
-      }
+    .characteristic {
+      margin: 0;
+    
 
       .input-container {
+        
         > .input {
-          padding: 0.25rem 1rem 0.25rem 0.25rem;
+          width: 3.5rem;
         }
 
-        .secondary-input {
-          width: 2.5rem;
+        .tertiary-input {
+          width: 3rem;
           margin-left: -1rem;
           padding: 0.25rem;
         }
+
+        &.bigger {
+          width: 8rem;
+        }
       }
     }
+
+    .characteristic-mod .input-container {
+      width: 2.5rem;
+    }
   }
+}
   // Characteristics
 
   // Resistances

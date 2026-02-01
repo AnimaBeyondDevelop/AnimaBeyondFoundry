@@ -22,6 +22,9 @@ import ABFFoundryRoll from '../rolls/ABFFoundryRoll';
 import { openModDialog } from '../utils/dialogs/openSimpleInputDialog';
 import ABFItem from '../items/ABFItem';
 import { FormulaEvaluator } from '../../utils/formulaEvaluator.js';
+import { inflateSystemFromTypeMarkers } from './types/inflateSystemFromTypeMarkers.js';
+import { TYPED_PATHS } from './types/typedTemplateIndex.js';
+import { buildTypedNodes } from './types/runtimeTypedNodes.js';
 
 export class ABFActor extends Actor {
   i18n = game.i18n;
@@ -42,14 +45,31 @@ export class ABFActor extends Actor {
     }
   }
 
-  async prepareDerivedData() {
-    super.prepareDerivedData();
-
-    this.system = foundry.utils.mergeObject(this.system, INITIAL_ACTOR_DATA, {
+  async _preCreate(data, options, user) {
+    // Ensure system exists + template defaults
+    data.system = foundry.utils.mergeObject(data.system ?? {}, INITIAL_ACTOR_DATA, {
       overwrite: false
     });
 
+    // Inflate typed nodes from __type and remove markers
+    data.system = inflateSystemFromTypeMarkers(data.system);
+
+    return super._preCreate(data, options, user);
+  }
+
+  async prepareDerivedData() {
+    super.prepareDerivedData();
+
+    // this.system = foundry.utils.mergeObject(this.system, INITIAL_ACTOR_DATA, {
+    //   overwrite: false
+    // });
+
+    // Safety: if some actor came without inflation (old data / imports)
+    this.system = inflateSystemFromTypeMarkers(this.system);
+
+    buildTypedNodes(this, TYPED_PATHS);
     await prepareActor(this);
+    // applyTypedDerived(this);
   }
 
   getRollData() {
@@ -871,40 +891,10 @@ export class ABFActor extends Actor {
   getItem(itemId) {
     return this.getEmbeddedDocument('Item', itemId);
   }
-
   applyActiveEffects() {
-    const originals = new Map();
-
-    try {
-      for (const effect of this.effects.contents) {
-        if (!effect.active) continue;
-
-        const changes = effect.changes;
-        if (!Array.isArray(changes) || changes.length === 0) continue;
-
-        // Save originals
-        originals.set(
-          effect,
-          changes.map(c => c.value)
-        );
-
-        // Patch values (in-memory only)
-        for (const change of changes) {
-          change.value = this._applyDynamicEffectValue(change.value);
-        }
-      }
-
-      // Let Foundry core do the real AE logic (modes, priority, etc.)
-      return super.applyActiveEffects();
-    } finally {
-      // Restore original values so nothing "sticks" on the document
-      for (const [effect, values] of originals.entries()) {
-        const changes = effect.changes;
-        for (let i = 0; i < changes.length; i++) {
-          changes[i].value = values[i];
-        }
-      }
-    }
+    // Active Effects are applied in prepareActor using the flow ordering (per-change).
+    // We keep _applyDynamicEffectValue for evaluating dynamic change values.
+    return this;
   }
 
   _applyDynamicEffectValue(value) {

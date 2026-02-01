@@ -1,23 +1,8 @@
-{{#> "systems/animabf/templates/common/ui/group.hbs"
-  class="characteristics"
-}}
-  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
-    class="characteristics"
-  }}
+{{#> ui/group class="characteristics"}}
+  {{> ui/group-header title=(localize "anima.ui.characteristics.title") }}
+  {{#> ui/group-body class="characteristics"}}
     {{#each system.characteristics.primaries as |char key|}}
-      {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-        class="characteristic"
-        title=(localize (concat 'anima.ui.characteristics.' key))
-        rollable=true
-        rollableDice=@root.system.general.diceSettings.characteristicDie.value
-        rollableMessage=(localize (concat 'anima.ui.characteristics.' key))
-        inputName=(concat "system.characteristics.primaries." key ".value")
-        inputValue=char.value
-        hasSecondaryInput=true
-        disableSecondaryInput=true
-        secondaryInputValue=char.mod
-      }}
+      {{> ui/characteristic char=char key=key}}
     {{/each}}
-  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
-{{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/ ui/group-body}}
+{{/ ui/group}}

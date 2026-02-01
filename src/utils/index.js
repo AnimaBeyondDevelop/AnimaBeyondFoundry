@@ -1,2 +1,2 @@
 export { Logger } from './log';
-export { preloadTemplates } from './preloadTemplates';
+export { TEMPLATE_PATHS } from './templatePaths';
