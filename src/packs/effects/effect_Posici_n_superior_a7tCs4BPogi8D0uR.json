@@ -14,7 +14,7 @@
       "disabled": false,
       "changes": [
         {
-          "key": "system.combat.attack.base.value",
+          "key": "system.combat.attack.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
@@ -116,12 +116,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765562979890,
-    "modifiedTime": 1765562979890,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1770664036473,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "a7tCs4BPogi8D0uR",
   "sort": 0,

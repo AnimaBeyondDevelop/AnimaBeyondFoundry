@@ -78,7 +78,13 @@ export const Templates = {
     CustomSelect: T('common/ui/custom-select.hbs'),
     CustomSelectChoices: T('common/ui/custom-select-choices.hbs'),
     LoadingIndicator: T('common/ui/loading-indicator.hbs'),
-    Characteristic: T('common/ui/characteristic.hbs')
+    Characteristic: T('common/ui/characteristic.hbs'),
+    NumericalValue: T('common/ui/numerical-value.hbs'),
+    BaseTypeWrapper: T('common/ui/base-type-wrapper.hbs')
+  },
+
+  Apps: {
+    GenericBaseTypeEditor: T('apps/generic-base-type-editor.hbs')
   },
 
   Domain: {
@@ -229,10 +235,12 @@ export const HandlebarsPartials = {
   'ui/group-footer': Templates.UI.GroupFooter,
   'ui/horizontal-titled-input': Templates.UI.HorizontalTitledInput,
   'ui/vertical-titled-input': Templates.UI.VerticalTitledInput,
-  'ui/characteristic': Templates.UI.Characteristic,
   'ui/custom-select': Templates.UI.CustomSelect,
   'ui/loading-indicator': Templates.UI.LoadingIndicator,
   'ui/group-header-title': Templates.UI.GroupHeaderTitle,
   'ui/add-item-button': Templates.UI.AddItemButton,
-  'ui/custom-select-choices': Templates.UI.CustomSelectChoices
+  'ui/custom-select-choices': Templates.UI.CustomSelectChoices,
+  'ui/characteristic': Templates.UI.Characteristic,
+  'ui/numerical-value': Templates.UI.NumericalValue,
+  'ui/base-type-wrapper': Templates.UI.BaseTypeWrapper
 };

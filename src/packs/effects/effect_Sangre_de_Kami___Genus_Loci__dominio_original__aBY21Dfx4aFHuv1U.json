@@ -1,0 +1,116 @@
+{
+  "type": "effect",
+  "name": "Sangre de Kami - Genus Loci (dominio original)",
+  "system": {
+    "active": true,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/aura.svg",
+      "disabled": false,
+      "changes": [
+        {
+          "key": "system.mystic.act.main.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.agility.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.constitution.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.dexterity.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.power.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.strength.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.willPower.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.agility.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.constitution.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.dexterity.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.strength.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": 0,
+        "combat": null,
+        "startRound": 8,
+        "startTurn": 0,
+        "seconds": null,
+        "rounds": null,
+        "turns": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "flags": {},
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "qGuzVGLbhD1drP26",
+  "ownership": {
+    "default": 0,
+    "i22cqqk4LNN9HuHn": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1770665362058,
+    "modifiedTime": 1770665362058,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
+  },
+  "_id": "aBY21Dfx4aFHuv1U",
+  "sort": 0,
+  "_key": "!items!aBY21Dfx4aFHuv1U"
+}

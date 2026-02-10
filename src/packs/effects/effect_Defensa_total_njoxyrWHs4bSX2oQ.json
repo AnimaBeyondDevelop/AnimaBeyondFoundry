@@ -14,13 +14,13 @@
       "disabled": true,
       "changes": [
         {
-          "key": "system.combat.block.base.value",
+          "key": "system.combat.block.final.value",
           "mode": 2,
           "value": "30",
           "priority": null
         },
         {
-          "key": "system.combat.dodge.base.value",
+          "key": "system.combat.dodge.final.value",
           "mode": 2,
           "value": "30",
           "priority": null
@@ -49,12 +49,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765562696018,
-    "modifiedTime": 1765562696035,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1770665979008,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "njoxyrWHs4bSX2oQ",
   "sort": 200000,

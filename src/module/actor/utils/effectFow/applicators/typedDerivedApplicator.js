@@ -1,7 +1,12 @@
 function keyFromAbsPath(absPath) {
-  // "...base.value" -> "base", "...final.value" -> "final"
   const parts = absPath.split('.');
-  return parts.length >= 2 ? parts[parts.length - 2] : parts.at(-1);
+  const last = parts.at(-1);
+
+  // "...base.value" -> "base"
+  if (last === 'value' && parts.length >= 2) return parts.at(-2);
+
+  // "...formula" -> "formula", "...calculateBaseFromFormula" -> "calculateBaseFromFormula"
+  return last;
 }
 
 /**

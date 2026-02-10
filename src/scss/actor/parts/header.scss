@@ -110,32 +110,52 @@
   }
   // Modifiers
 
-  // Characteristics
-.characteristics {
-  .group-body,
-  .group-header
-  {
-    max-width: 18rem;
-  }
-  .group-body {
-    // margin-top: 0;
-    // padding: 0.5rem;
-    height: 100%;
+  //Characteristics
+  .characteristics {
+    .group-body,
+    .group-header {
+      max-width: 18rem;
+    }
 
-    display: inline-grid;
-    grid-template-columns: max-content max-content;
-    column-gap: 0.25rem;
-    row-gap: 0.265rem;
+    .group-body {
+      position: relative;
 
-    justify-content: start;
-    align-content: center;
+      // This grid defines the shared column widths
+      display: grid;
+      grid-template-columns: max-content 2.5rem; // main / mod
+      row-gap: 0.265rem;
+      column-gap: 0.25rem;
+      align-items: center;
 
-    .characteristic {
-      margin: 0;
-    
+      // Each row is just "display: contents"
+      // so all rows share the same grid columns
+      .base-type-row.characteristic-row {
+        display: contents;
+      }
 
-      .input-container {
-        
+      // MAIN block (label + inputs)
+      .characteristic.common-titled-input {
+        display: grid;
+        grid-template-columns: max-content 8rem; // label / inputs
+        column-gap: 0.5rem;
+        align-items: center;
+        margin: 0;
+      }
+
+      // Label takes natural width
+      .characteristic.common-titled-input > .label {
+        white-space: nowrap;
+        margin: 0;
+      }
+
+      // Inputs pill: fixed width, always aligned
+      .characteristic.common-titled-input > .input-container {
+        width: 8rem;
+        margin: 0;
+      }
+
+      // Keep existing input sizing
+      .characteristic .input-container {
         > .input {
           width: 3.5rem;
         }
@@ -150,13 +170,47 @@
           width: 8rem;
         }
       }
-    }
 
-    .characteristic-mod .input-container {
-      width: 2.5rem;
+      // MOD column (fixed)
+      // .characteristic-mod.common-titled-input {
+      //   width: 2.5rem;
+      //   margin: 0;
+      // }
+
+      .characteristic.characteristic-mod.common-titled-input {
+        width: 2.5rem;
+        min-width: 0;
+        max-width: 2.5rem;
+
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+        display: block; 
+        overflow: hidden;
+
+        > .input-container {
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
+
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+
+        > .input-container > input {
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
+
+          padding-left: 0.25rem;
+          padding-right: 0.25rem;
+          box-sizing: border-box;
+        }
+      }
     }
   }
-}
   // Characteristics
 
   // Resistances

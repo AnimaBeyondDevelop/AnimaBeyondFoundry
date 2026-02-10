@@ -100,6 +100,7 @@ mutateWeaponsData.abfFlow = {
     'system.general.modifiers.allActions.final.value',
     'system.general.modifiers.physicalActions.final.value',
     'system.general.modifiers.naturalPenalty.final.value',
+    'system.general.modifiers.extraDamage.final.value',
 
     // Common primary stats typically used in weapon calcs
     'system.characteristics.primaries.strength.final.value',

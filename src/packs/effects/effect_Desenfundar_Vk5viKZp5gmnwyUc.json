@@ -14,19 +14,19 @@
       "disabled": true,
       "changes": [
         {
-          "key": "system.combat.dodge.base.value",
+          "key": "system.combat.dodge.final.value",
           "mode": 2,
           "value": "25",
           "priority": null
         },
         {
-          "key": "system.general.modifiers.physicalActions.base.value",
+          "key": "system.general.modifiers.physicalActions.final.value",
           "mode": 2,
           "value": "-25",
           "priority": null
         },
         {
-          "key": "system.characteristics.secondaries.initiative.base.value",
+          "key": "system.characteristics.secondaries.initiative.final.value",
           "mode": 2,
           "value": "12",
           "priority": null
@@ -284,12 +284,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765562962280,
-    "modifiedTime": 1765562962280,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1770666003177,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "Vk5viKZp5gmnwyUc",
   "sort": 0,

@@ -14,7 +14,7 @@
       "disabled": true,
       "changes": [
         {
-          "key": "system.general.modifiers.allActions.special.value",
+          "key": "system.general.modifiers.allActions.final.value",
           "mode": 2,
           "value": "10",
           "priority": null
@@ -43,12 +43,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765564967871,
-    "modifiedTime": 1765564986414,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1770664133411,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "qVuDh84Gm3OJFdtD",
   "sort": 600000,

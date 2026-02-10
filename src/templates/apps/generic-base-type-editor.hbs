@@ -1,0 +1,38 @@
+<form>
+  <p><strong>{{type}}</strong></p>
+
+  {{#each fields as |f|}}
+    <div class="form-group">
+      <label>{{f.label}}</label>
+
+      {{#if (is "eq" f.kind "number")}}
+        <input
+          type="number"
+          name="{{f.fieldPath}}"
+          value="{{getProperty ../values f.fieldPath (getProperty ../defaults f.fieldPath)}}"
+          {{#if f.readonly}}disabled{{/if}}
+        />
+      {{else if (is "eq" f.kind "bool")}}
+        <input
+          type="checkbox"
+          name="{{f.fieldPath}}"
+          {{checked (getProperty ../values f.fieldPath (getProperty ../defaults f.fieldPath))}}
+          {{#if f.readonly}}disabled{{/if}}
+        />
+      {{else}}
+        <input
+          type="text"
+          name="{{f.fieldPath}}"
+          value="{{getProperty ../values f.fieldPath (getProperty ../defaults f.fieldPath)}}"
+          {{#if f.readonly}}disabled{{/if}}
+        />
+      {{/if}}
+    </div>
+  {{/each}}
+
+  <footer class="sheet-footer flexrow">
+    <button type="submit">
+      <i class="fas fa-save"></i> Save
+    </button>
+  </footer>
+</form>

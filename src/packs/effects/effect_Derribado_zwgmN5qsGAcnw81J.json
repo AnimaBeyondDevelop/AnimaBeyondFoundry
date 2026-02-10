@@ -14,13 +14,13 @@
       "disabled": true,
       "changes": [
         {
-          "key": "system.characteristics.secondaries.initiative.base.value",
+          "key": "system.characteristics.secondaries.initiative.final.value",
           "mode": 2,
           "value": "5",
           "priority": null
         },
         {
-          "key": "system.general.modifiers.physicalActions.base.value",
+          "key": "system.general.modifiers.physicalActions.final.value",
           "mode": 2,
           "value": "-30",
           "priority": null
@@ -87,6 +87,56 @@
         "lastModifiedBy": null
       },
       "_key": "!items.effects!zwgmN5qsGAcnw81J.hr8F9ORpr0AXCw7g"
+    },
+    {
+      "name": "Derribado",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.final.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.general.modifiers.physicalActions.final.value",
+          "mode": 2,
+          "value": "-30",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/falling.svg",
+      "_id": "pDSfxIB3JRlgzsLg",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "createdTime": 1770663823344,
+        "modifiedTime": 1770663901751,
+        "lastModifiedBy": "i22cqqk4LNN9HuHn"
+      },
+      "_key": "!items.effects!zwgmN5qsGAcnw81J.pDSfxIB3JRlgzsLg"
     }
   ],
   "ownership": {
@@ -98,12 +148,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765562930322,
-    "modifiedTime": 1765562975047,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1770663901768,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "zwgmN5qsGAcnw81J",
   "sort": 500000,

@@ -51,9 +51,6 @@ export class ABFActor extends Actor {
       overwrite: false
     });
 
-    // Inflate typed nodes from __type and remove markers
-    data.system = inflateSystemFromTypeMarkers(data.system);
-
     return super._preCreate(data, options, user);
   }
 
@@ -68,8 +65,36 @@ export class ABFActor extends Actor {
     this.system = inflateSystemFromTypeMarkers(this.system);
 
     buildTypedNodes(this, TYPED_PATHS);
+    this._applyDefaultKeysToTypedNodes();
     await prepareActor(this);
     // applyTypedDerived(this);
+  }
+
+  /**
+   * Ensure BaseType.key is persisted when empty.
+   * Derives it from the last segment of the system path.
+   */
+  _applyDefaultKeysToTypedNodes() {
+    const updates = {};
+
+    // typedNodes: Map<path, BaseTypeInstance>
+    for (const [path, node] of this.typedNodes ?? []) {
+      // Only if the type actually has a "key" field in its defaults/common defaults
+      // (BaseType.commonDefaults includes key)
+
+      const current = foundry.utils.getProperty(this.system, `${path}.key`);
+
+      if (current == null || String(current) === '') {
+        const parts = String(path).split('.');
+        const derivedKey = parts.length ? parts[parts.length - 1] : '';
+        if (derivedKey) updates[`${path}.key`] = derivedKey;
+      }
+    }
+
+    if (Object.keys(updates).length) {
+      // Persist without triggering another full update cycle
+      this.updateSource(updates);
+    }
   }
 
   getRollData() {

@@ -11,6 +11,7 @@ import { ABFDialogs } from '../dialogs/ABFDialogs';
 import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { createClickHandlers } from './utils/createClickHandlers';
+import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -129,6 +130,8 @@ export default class ABFActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    this._activateBaseTypeContextMenu(html);
+
     const handler = ev => this._onDragStart(ev);
 
     // Find all items on the character sheet.
@@ -178,6 +181,29 @@ export default class ABFActorSheet extends ActorSheet {
     });
 
     html.find('.effect-control').click(this._onEffectControl.bind(this));
+  }
+
+  _activateBaseTypeContextMenu(html) {
+    new ContextMenu(html, '.base-type-row', [
+      {
+        name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
+        icon: '<i class="fas fa-edit fa-fw"></i>',
+        callback: target => this._openBaseTypeEditor(target[0])
+      }
+    ]);
+  }
+
+  _openBaseTypeEditor(el) {
+    const path = el?.dataset?.path;
+    if (!path) return;
+
+    const node = this.actor.typedNodes?.get(path) ?? null;
+    if (!node) return;
+
+    const type = node.constructor.type;
+
+    const app = TypeEditorRegistry.create(type, this.actor, { path });
+    app?.render(true);
   }
 
   async _onEffectControl(event) {

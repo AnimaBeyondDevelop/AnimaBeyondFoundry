@@ -44,8 +44,14 @@ export class FormulaEvaluator {
 
     try {
       // 1) Replace @path with numeric values
-      const withValues = clean.replace(/@([a-zA-Z0-9_.]+)/g, (match, path) => {
-        const value = foundry.utils.getProperty(ctx, path);
+      const withValues = clean.replace(/@([a-zA-Z0-9_.]+)/g, (_match, path) => {
+        let value = foundry.utils.getProperty(ctx, path);
+
+        // If the path resolves to a { value } object, use it automatically
+        if (value && typeof value === 'object' && 'value' in value) {
+          value = value.value;
+        }
+
         const num = Number(value);
         return Number.isFinite(num) ? String(num) : '0';
       });
@@ -195,5 +201,36 @@ export class FormulaEvaluator {
       }
     }
     return -1;
+  }
+
+  /**
+   * Extract @path dependencies from a formula.
+   * Returns normalized paths prefixed with "system." (unless already "system.").
+   *
+   * Examples:
+   *  "@characteristics.primaries.power.mod" -> "system.characteristics.primaries.power.mod"
+   *  "@system.characteristics.primaries.power.mod" -> "system.characteristics.primaries.power.mod"
+   *
+   * @param {string} formula
+   * @returns {string[]}
+   */
+  static getDependencies(formula) {
+    const clean = (formula ?? '').trim();
+    if (!clean) return [];
+
+    const deps = new Set();
+
+    // Capture @paths (same pattern as evaluate)
+    const re = /@([a-zA-Z0-9_.]+)/g;
+    let m;
+    while ((m = re.exec(clean)) !== null) {
+      const raw = String(m[1] ?? '').trim();
+      if (!raw) continue;
+
+      const normalized = raw.startsWith('system.') ? raw : `system.${raw}`;
+      deps.add(normalized);
+    }
+
+    return [...deps];
   }
 }

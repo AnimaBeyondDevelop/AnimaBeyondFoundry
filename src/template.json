@@ -57,7 +57,7 @@
             "special": { "value": 0 },
             "final": { "value": 0 }
           },
-          "extraDamage": { "value": 0 }
+          "extraDamage": { "__type": "{\"type\":\"NumericalValue\"}" }
         },
         "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
         "presence": {
@@ -457,11 +457,7 @@
         "weapons": [],
         "armors": [],
         "supernaturalShields": [],
-        "damageReduction": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
-            }
+        "damageReduction": { "__type": "{\"type\":\"NumericalValue\"}" }
       },
       "mystic": {
         "act": {

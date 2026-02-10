@@ -8,8 +8,9 @@ import { TypeRegistry } from '../../actor/types/TypeRegistry.js';
  * @param {number} fallback
  */
 function toValueObj(node, fallback = 0) {
-  if (node && typeof node === 'object' && 'value' in node)
+  if (node && typeof node === 'object' && 'value' in node) {
     return { value: Number(node.value) || 0 };
+  }
   return { value: Number(node) || fallback };
 }
 
@@ -28,7 +29,7 @@ function normalizeCharacteristicNode(node) {
     const special = toValueObj(0, 0);
     const final = toValueObj(base.value + special.value, 0);
     const mod = toValueObj(node.mod ?? 0, 0);
-    return { base, special, final, mod };
+    return { ...node, base, special, final, mod };
   }
 
   // typed/partial: coerce fields
@@ -52,10 +53,9 @@ export const MigrationXXMigrateTypedCharacteristics = {
   order: 1,
   title: 'Migrate typed characteristics',
   description:
-    'Migrates only nodes declared as Characteristic via __type in the template (TYPED_PATHS).',
+    'Normalizes Characteristic nodes defined in the template (TYPED_PATHS) to the current typed shape.',
 
   filterActors(actor) {
-    // Solo tiene sentido si existe alguno de los paths tipados
     for (const [path, type] of TYPED_PATHS.entries()) {
       if (type !== 'Characteristic') continue;
       const rel = path.replace(/^system\./, '');
@@ -65,35 +65,40 @@ export const MigrationXXMigrateTypedCharacteristics = {
   },
 
   updateActor(actor) {
+    const ctor = TypeRegistry.get('Characteristic');
+    if (!ctor) return actor;
+
     for (const [path, type] of TYPED_PATHS.entries()) {
       if (type !== 'Characteristic') continue;
 
       const rel = path.replace(/^system\./, '');
       const current = foundry.utils.getProperty(actor.system, rel);
-      if (!current) continue;
+      if (!current || typeof current !== 'object') continue;
 
-      // 1) normaliza legacy (value/mod numbers, etc.)
+      // 1) normalize legacy shapes (numbers -> {value}, "value" legacy field, etc.)
       const normalizedLegacy = normalizeCharacteristicNode(current);
 
-      // 2) asegura shape final usando defaults del template (incluye overrides si los hay)
-      const ctor = TypeRegistry.get(type);
+      // 2) template defaults (already include overrides from __type in INITIAL_ACTOR_DATA)
       const def = TYPED_DEFAULTS.get(path) ?? ctor.defaults();
 
+      // 3) merge defaults + normalized data (data wins)
       const merged = foundry.utils.mergeObject(def, normalizedLegacy, {
         inplace: false,
         insertKeys: true,
-        insertValues: true
+        insertValues: true,
+        overwrite: true
       });
 
+      // Ensure we never keep the marker in persisted data for template nodes
       delete merged.__type;
 
-      // BORRA legacy: deja solo la shape del tipo
+      // 4) prune to the current type shape (drops any unknown keys)
       ctor.pruneToDefaults(merged);
 
       foundry.utils.setProperty(actor.system, rel, merged);
     }
 
-    Logger.log('Migrated typed Characteristic nodes (template-driven).');
+    Logger.log('Migrated Characteristic nodes (template-driven).');
     return actor;
   }
 };

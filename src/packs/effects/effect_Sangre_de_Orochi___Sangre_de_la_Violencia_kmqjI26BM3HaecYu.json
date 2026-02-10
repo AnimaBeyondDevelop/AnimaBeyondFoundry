@@ -14,91 +14,91 @@
       "disabled": true,
       "changes": [
         {
-          "key": "system.combat.attack.base.value",
+          "key": "system.combat.attack.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.combat.block.base.value",
+          "key": "system.combat.block.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.combat.dodge.base.value",
+          "key": "system.combat.dodge.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.characteristics.secondaries.initiative.base.value",
+          "key": "system.characteristics.secondaries.initiative.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.mystic.act.main.base.value",
+          "key": "system.mystic.act.main.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.domine.kiAccumulation.agility.base.value",
+          "key": "system.domine.kiAccumulation.agility.final.value",
           "mode": 2,
           "value": "1",
           "priority": null
         },
         {
-          "key": "system.domine.kiAccumulation.constitution.base.value",
+          "key": "system.domine.kiAccumulation.constitution.final.value",
           "mode": 2,
           "value": "1",
           "priority": null
         },
         {
-          "key": "system.domine.kiAccumulation.dexterity.base.value",
+          "key": "system.domine.kiAccumulation.dexterity.final.value",
           "mode": 2,
           "value": "1",
           "priority": null
         },
         {
-          "key": "system.domine.kiAccumulation.power.base.value",
+          "key": "system.domine.kiAccumulation.power.final.value",
           "mode": 2,
           "value": "1",
           "priority": null
         },
         {
-          "key": "system.domine.kiAccumulation.strength.base.value",
+          "key": "system.domine.kiAccumulation.strength.final.value",
           "mode": 2,
           "value": "1",
           "priority": null
         },
         {
-          "key": "system.domine.kiAccumulation.willPower.base.value",
+          "key": "system.domine.kiAccumulation.willPower.final.value",
           "mode": 2,
           "value": "1",
           "priority": null
         },
         {
-          "key": "system.psychic.psychicProjection.imbalance.offensive.base.value",
+          "key": "system.psychic.psychicProjection.imbalance.offensive.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.psychic.psychicProjection.imbalance.defensive.base.value",
+          "key": "system.psychic.psychicProjection.imbalance.defensive.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.mystic.magicProjection.imbalance.offensive.base.value",
+          "key": "system.mystic.magicProjection.imbalance.offensive.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
         },
         {
-          "key": "system.mystic.magicProjection.imbalance.defensive.base.value",
+          "key": "system.mystic.magicProjection.imbalance.defensive.final.value",
           "mode": 2,
           "value": "20",
           "priority": null
@@ -202,10 +202,10 @@
     "exportSource": null,
     "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765564986388,
-    "modifiedTime": 1765574580272,
-    "lastModifiedBy": "rX4MRGIlAJmbcDJE"
+    "modifiedTime": 1770665651603,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "kmqjI26BM3HaecYu",
   "sort": 200000,

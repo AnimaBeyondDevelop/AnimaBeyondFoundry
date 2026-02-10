@@ -819,7 +819,7 @@
   "anima.permissions.modifyDiceFormulasPermission.hint": "Permite al usuario cambiar las fórmulas de dados usadas por los actores.",
   "customHotbar.damageCalculator": "Calculadora de daño",
   "customHotbar.sendAttack": "Enviar ataque",
-  "anima.ui.tooltips.base": "Final",
+  "anima.ui.tooltips.base": "Base",
   "anima.ui.tooltips.special": "Especial",
   "anima.ui.tooltips.final": "Final",
   "anima.ui.tooltips.mod": "Modificador",

@@ -16,5 +16,5 @@ export const calculateWeaponStrengthModifier = (weapon, data) => {
     return calculateAttributeModifier(weapon.system.weaponStrength.final.value);
   }
 
-  return data.characteristics.primaries.strength.mod * equippedHandMultiplier;
+  return data.characteristics.primaries.strength.mod.value * equippedHandMultiplier;
 };

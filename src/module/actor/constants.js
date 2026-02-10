@@ -91,7 +91,7 @@ export const INITIAL_ACTOR_DATA = {
         }
       },
       extraDamage: {
-        value: 0
+        __type: '{"type":"NumericalValue"}'
       }
     },
     destinyPoints: {
@@ -973,15 +973,7 @@ export const INITIAL_ACTOR_DATA = {
     armors: [],
     supernaturalShields: [],
     damageReduction: {
-      base: {
-        value: 0
-      },
-      special: {
-        value: 0
-      },
-      final: {
-        value: 0
-      }
+      __type: '{"type":"NumericalValue"}'
     }
   },
 

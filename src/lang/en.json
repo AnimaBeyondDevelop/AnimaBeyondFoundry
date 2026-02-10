@@ -817,7 +817,7 @@
   "anima.permissions.modifyDiceFormulasPermission.hint": "Allows the user to modify the dice settings used by the actors.",
   "customHotbar.damageCalculator": "Damage calculator",
   "customHotbar.sendAttack": "Send attack",
-  "anima.ui.tooltips.base": "Final",
+  "anima.ui.tooltips.base": "Base",
   "anima.ui.tooltips.special": "Special",
   "anima.ui.tooltips.final": "Final",
   "anima.ui.tooltips.mod": "Modifier",

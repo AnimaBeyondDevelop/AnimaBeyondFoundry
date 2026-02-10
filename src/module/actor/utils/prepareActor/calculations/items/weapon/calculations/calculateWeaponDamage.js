@@ -38,7 +38,7 @@ export const calculateWeaponDamage = (weapon, data) => {
 
       if (value !== null && !Number.isNaN(value)) {
         const specialBonus = weapon.system.damage.special?.value ?? 0;
-        const extraDamage = data.general.modifiers.extraDamage?.value ?? 0;
+        const extraDamage = data.general.modifiers.extraDamage.final?.value ?? 0;
 
         const addQuality = weapon.system.damage.applyQualityInFormula?.value === true;
         const qualityBonus = addQuality ? (weapon.system.quality?.value ?? 0) * 2 : 0;
@@ -49,7 +49,7 @@ export const calculateWeaponDamage = (weapon, data) => {
 
     const weaponStrengthModifier = calculateWeaponStrengthModifier(weapon, data);
     const extraDamage =
-      data.general.modifiers.extraDamage.value + weapon.system.damage.special.value;
+      data.general.modifiers.extraDamage.final.value + weapon.system.damage.special.value;
 
     if (
       weapon.system.isRanged.value &&

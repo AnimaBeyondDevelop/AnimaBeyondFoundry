@@ -14,49 +14,49 @@
       "disabled": true,
       "changes": [
         {
-          "key": "system.general.modifiers.physicalActions.base.value",
+          "key": "system.general.modifiers.physicalActions.final.value",
           "mode": 2,
           "value": "-100",
           "priority": null
         },
         {
-          "key": "system.combat.attack.base.value",
+          "key": "system.combat.attack.final.value",
           "mode": 2,
           "value": "80",
           "priority": null
         },
         {
-          "key": "system.combat.block.base.value",
+          "key": "system.combat.block.final.value",
           "mode": 2,
           "value": "-20",
           "priority": null
         },
         {
-          "key": "system.combat.dodge.base.value",
+          "key": "system.combat.dodge.final.value",
           "mode": 2,
           "value": "-20",
           "priority": null
         },
         {
-          "key": "system.psychic.psychicProjection.imbalance.offensive.base.value",
+          "key": "system.psychic.psychicProjection.imbalance.offensive.final.value",
           "mode": 2,
           "value": "-20",
           "priority": null
         },
         {
-          "key": "system.psychic.psychicProjection.imbalance.defensive.base.value",
+          "key": "system.psychic.psychicProjection.imbalance.defensive.final.value",
           "mode": 2,
           "value": "-120",
           "priority": null
         },
         {
-          "key": "system.mystic.magicProjection.imbalance.offensive.base.value",
+          "key": "system.mystic.magicProjection.imbalance.offensive.final.value",
           "mode": 2,
           "value": "-20",
           "priority": null
         },
         {
-          "key": "system.mystic.magicProjection.imbalance.defensive.base.value",
+          "key": "system.mystic.magicProjection.imbalance.defensive.final.value",
           "mode": 2,
           "value": "-120",
           "priority": null
@@ -200,12 +200,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "13.345",
     "systemId": "animabf",
-    "systemVersion": "2.0.7",
+    "systemVersion": "2.2.0",
     "createdTime": 1765562905952,
-    "modifiedTime": 1765562975047,
-    "lastModifiedBy": "s1iIg3oHOkECBfdY"
+    "modifiedTime": 1770663581876,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "TyJZYaMZ7lnCFsUR",
   "sort": 100000,

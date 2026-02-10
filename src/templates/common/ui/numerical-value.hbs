@@ -1,0 +1,33 @@
+{{#> "ui/base-type-wrapper"
+    path=path
+    class="numerical-value-row"}}
+
+  {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    class=cssClass
+    title=title
+    rollable=rollable
+    rollableDice=rollableDice
+    rollableMessage=rollableMessage
+
+    inputName=(concat path ".base.value")
+    inputValue=value.base.value
+    disabled=value.calculateBaseFromFormula
+    tooltip=(localize "anima.ui.tooltips.base")
+
+    hasSecondaryInput=true
+    secondaryInputName=(concat path ".special.value")
+    secondaryInputValue=value.special.value
+    disableSecondaryInput=false
+    secondaryTooltip=(localize "anima.ui.tooltips.special")
+
+    hasTertiaryInput=true
+    tertiaryInputName=(concat path ".final.value")
+    tertiaryInputValue=value.final.value
+    disableTertiaryInput=true
+    tertiaryTooltip=(localize "anima.ui.tooltips.final")
+
+    addTooltips=true
+  }}
+
+{{/ "ui/base-type-wrapper"}}

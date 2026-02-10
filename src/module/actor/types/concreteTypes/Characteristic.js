@@ -67,6 +67,21 @@ export class Characteristic extends BaseType {
     return out;
   }
 
+  static editorConfig() {
+    return {
+      readonly: ['final.value', 'mod.value'],
+      hidden: [],
+      labels: {
+        'base.value': 'Base',
+        'special.value': 'Special',
+        'final.value': 'Final',
+        'mod.value': 'Mod'
+      },
+      order: ['base.value', 'special.value', 'final.value', 'mod.value'],
+      overrides: {}
+    };
+  }
+
   getDerivedFlowSpecs() {
     return [
       {
