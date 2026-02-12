@@ -34,7 +34,7 @@ export default class ABFActorSheet extends ActorSheet {
         template: 'systems/animabf/templates/actor/actor-sheet.hbs',
         width: 1100,
         height: 850,
-        submitOnChange: true,
+        submitOnChange: false,
         viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
         tabs: [
           {
@@ -127,60 +127,17 @@ export default class ABFActorSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
     this._activateBaseTypeContextMenu(html);
 
-    const handler = ev => this._onDragStart(ev);
+    this._setupDebouncedSheetUpdates(html);
 
-    // Find all items on the character sheet.
-
-    // Rollable abilities.
-    html.find('.rollable').click(e => {
-      this._onRoll(e);
-    });
-
-    html.find('.contractible-button').click(e => {
-      const { contractibleItemId } = e.currentTarget.dataset;
-
-      if (contractibleItemId) {
-        const ui = this.actor.system.ui;
-
-        ui.contractibleItems = {
-          ...ui.contractibleItems,
-          [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
-        };
-
-        this.actor.update({ system: { ui } });
-      }
-    });
-
-    for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
-      this.buildCommonContextualMenu(item);
-
-      html.find(item.selectors.rowSelector).each((_, row) => {
-        // Add draggable attribute and dragstart listener.
-        row.setAttribute('draggable', 'true');
-        row.addEventListener('dragstart', handler, false);
-      });
-
-      //Buttons cllback from hbs
-      html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
-        item.onCreate(this.actor);
-      });
-    }
-
-    const clickHandlers = createClickHandlers(this);
-
-    html.find('[data-on-click]').click(e => {
-      const key = e.currentTarget.dataset.onClick;
-      const handler = clickHandlers[key];
-      if (handler) handler(e);
-      else console.warn(`No handler for data-on-click="${key}"`);
-    });
-
-    html.find('.effect-control').click(this._onEffectControl.bind(this));
+    this._activateRollables(html);
+    this._activateContractibleButtons(html);
+    this._activateItemsDragAndContextMenus(html);
+    this._activateDataOnClickHandlers(html);
+    this._activateEffectControls(html);
   }
 
   _activateBaseTypeContextMenu(html) {
@@ -191,6 +148,101 @@ export default class ABFActorSheet extends ActorSheet {
         callback: target => this._openBaseTypeEditor(target[0])
       }
     ]);
+  }
+
+  _setupDebouncedSheetUpdates(html) {
+    // Keep a flat object with pending updates: { "system.foo.bar": 123, ... }
+    this._pendingUpdate = this._pendingUpdate ?? {};
+
+    // Debounced flush (single update per burst)
+    this._flushPendingUpdate =
+      this._flushPendingUpdate ??
+      foundry.utils.debounce(async () => {
+        const flat = this._pendingUpdate;
+        this._pendingUpdate = {};
+
+        if (!flat || Object.keys(flat).length === 0) return;
+
+        const [actorChanges, itemChanges] = splitAsActorAndItemChanges(flat);
+
+        // Update items first (if any)
+        await this.updateItems(itemChanges);
+
+        // Then update actor (if any)
+        if (actorChanges && Object.keys(actorChanges).length > 0) {
+          await this.actor.update(actorChanges);
+        }
+      }, 150);
+
+    // Listen to changes on any form control
+    html.on('change', 'input, select, textarea', ev => {
+      const el = ev.currentTarget;
+      if (!el?.name) return;
+
+      let value;
+      if (el.type === 'checkbox') value = el.checked;
+      else value = el.value;
+
+      // Convert numbers
+      if (el.type === 'number') value = Number(value);
+
+      // Accumulate changes using the input name as the update path
+      // Example: "system.general.presence.base.value"
+      this._pendingUpdate[el.name] = value;
+
+      this._flushPendingUpdate();
+    });
+  }
+
+  _activateRollables(html) {
+    html.find('.rollable').click(e => this._onRoll(e));
+  }
+
+  _activateContractibleButtons(html) {
+    html.find('.contractible-button').click(e => {
+      const { contractibleItemId } = e.currentTarget.dataset;
+      if (!contractibleItemId) return;
+
+      const ui = this.actor.system.ui;
+      ui.contractibleItems = {
+        ...ui.contractibleItems,
+        [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
+      };
+
+      this.actor.update({ system: { ui } });
+    });
+  }
+
+  _activateItemsDragAndContextMenus(html) {
+    const handler = ev => this._onDragStart(ev);
+
+    for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
+      this.buildCommonContextualMenu(item);
+
+      html.find(item.selectors.rowSelector).each((_, row) => {
+        row.setAttribute('draggable', 'true');
+        row.addEventListener('dragstart', handler, false);
+      });
+
+      html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
+        item.onCreate(this.actor);
+      });
+    }
+  }
+
+  _activateDataOnClickHandlers(html) {
+    const clickHandlers = createClickHandlers(this);
+
+    html.find('[data-on-click]').click(e => {
+      const key = e.currentTarget.dataset.onClick;
+      const handler = clickHandlers[key];
+      if (handler) handler(e);
+      else console.warn(`No handler for data-on-click="${key}"`);
+    });
+  }
+
+  _activateEffectControls(html) {
+    html.find('.effect-control').click(this._onEffectControl.bind(this));
   }
 
   _openBaseTypeEditor(el) {
