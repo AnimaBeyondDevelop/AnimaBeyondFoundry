@@ -189,6 +189,134 @@
         "lastModifiedBy": null
       },
       "_key": "!items.effects!PNo0ORW3uNnlfHj8.PECFlQDly4q1y8hK"
+    },
+    {
+      "name": "Sangre de Orochi - Ira desencadenada",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.initiative.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.act.main.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.agility.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.constitution.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.dexterity.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.power.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.strength.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.willPower.final.value",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.offensive.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.defensive.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.offensive.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.defensive.final.value",
+          "mode": 2,
+          "value": "30",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/item-bag.svg",
+      "_id": "ttuIcFrBV82hoKG1",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "createdTime": 1771331565287,
+        "modifiedTime": 1771331565287,
+        "lastModifiedBy": "i22cqqk4LNN9HuHn"
+      },
+      "_key": "!items.effects!PNo0ORW3uNnlfHj8.ttuIcFrBV82hoKG1"
     }
   ],
   "ownership": {

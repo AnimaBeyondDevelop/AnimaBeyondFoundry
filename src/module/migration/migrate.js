@@ -150,16 +150,12 @@ async function migrateActorCollection(actors, migration, context = {}) {
  * @param {Migration} migration
  * @param {{parent: ABFActor} | {pack: string} | {}} context - context for the updateDocuments calls
  */
-async function migrateUnlinkedActors(scenes, migration, context) {
-  const length = items.length || items.size; // takes care of the case of a DocumentCollection
+async function migrateUnlinkedActors(scenes, migration) {
+  const length = scenes?.length ?? scenes?.size ?? 0;
   if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
 
-  // This has to be performed individually instead of using directly migrateItemCollection() and
-  // migrateActorCollection() since unlinked (syntetic) actors won't get updated on batch
-  // Actors.updateDocuments() updates. {parent: TOKEN} has to be specified for the update to be
-  // completed.
   for (const scene of scenes) {
-    for (const token of scene.tokens.filter(token => !token.actorLink && token.actor)) {
+    for (const token of scene.tokens.filter(t => !t.actorLink && t.actor)) {
       await migrateActorCollection([token.actor], migration, { parent: token });
     }
   }
@@ -181,51 +177,68 @@ async function migrateWorldItems(migration) {
 async function migrateWorldActors(migration) {
   if (!migration.updateActor && !migration.updateItem) return;
 
-  migrateActorCollection(game.actors, migration);
-  migrateUnlinkedActors(game.scenes, migration);
+  // Ensure we wait for both migrations to finish
+  await migrateActorCollection(game.actors, migration);
+  await migrateUnlinkedActors(game.scenes, migration);
 }
 
 /**
  * @param {Migration} migration
  */
 async function migratePacks(migration) {
-  // load packs with actors, items or scenes
   const packTypes = migration.updateItem
     ? ['Actor', 'Item', 'Scene']
     : ['Actor', 'Scene'];
 
-  let packs = await Promise.all(
-    game.packs
-      .filter(pack => packTypes.includes(pack.metadata.type))
-      .map(async pack => {
-        const packObj = {
-          pack: pack,
-          wasLocked: pack.locked,
-          id: pack.metadata.id,
-          type: pack.metadata.type
-        };
-        await pack.configure({ locked: false });
-        packObj.documents = await pack.getDocuments();
-        return packObj;
-      })
-  );
+  const candidatePacks = game.packs.filter(p => packTypes.includes(p.metadata.type));
+
+  const packs = [];
+  for (const pack of candidatePacks) {
+    // Skip packs that are not writable (common for module compendiums)
+    const isWorldPack = pack.metadata.packageType === 'world';
+    if (!isWorldPack) continue;
+
+    const packObj = {
+      pack,
+      wasLocked: pack.locked,
+      id: pack.metadata.id,
+      type: pack.metadata.type,
+      documents: []
+    };
+
+    try {
+      if (pack.locked) await pack.configure({ locked: false });
+      packObj.documents = await pack.getDocuments();
+      packs.push(packObj);
+    } catch (e) {
+      // Do not abort the whole migration because of a single pack
+      console.warn(`[ABF] Skipping pack ${pack.metadata.id}: ${e}`);
+      // Best effort: if configure half-worked, re-lock it
+      try {
+        if (packObj.wasLocked) await pack.configure({ locked: true });
+      } catch {}
+    }
+  }
 
   const migrate = {
     Actor: migrateActorCollection,
     Item: migrateItemCollection,
     Scene: migrateUnlinkedActors
   };
-  await Promise.all(
-    packs.map(pack => migrate[pack.type](pack.documents, migration, { pack: pack.id }))
-  );
-  // Lock again packs which where locked
-  await Promise.all(
-    packs
-      .filter(packObject => packObject.wasLocked)
-      .map(async packObject => {
-        await packObject.pack.configure({ locked: true });
-      })
-  );
+
+  for (const p of packs) {
+    try {
+      await migrate[p.type](p.documents, migration, { pack: p.id });
+    } catch (e) {
+      console.warn(`[ABF] Failed migrating pack ${p.id}: ${e}`);
+    } finally {
+      if (p.wasLocked) {
+        try {
+          await p.pack.configure({ locked: true });
+        } catch {}
+      }
+    }
+  }
 }
 
 /**

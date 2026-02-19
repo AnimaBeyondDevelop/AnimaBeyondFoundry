@@ -1,9 +1,6 @@
 {
-  "folder": "zjeUWCoYJkE1AWpM",
-  "name": "Shinkyou: La Posición Espejo",
   "type": "effect",
-  "_id": "NFnTrf25dLWuQCwr",
-  "img": "icons/svg/item-bag.svg",
+  "name": "Mod FUE",
   "system": {
     "active": false,
     "category": {
@@ -11,42 +8,37 @@
     },
     "modifiers": [],
     "effectData": {
-      "icon": "icons/svg/item-bag.svg",
+      "icon": "icons/svg/aura.svg",
       "disabled": true,
       "changes": [
         {
-          "key": "system.combat.block.final.value",
+          "key": "system.combat.wearArmor.final.value",
           "mode": 2,
-          "value": "50",
-          "priority": null
-        },
-        {
-          "key": "system.combat.dodge.final.value",
-          "mode": 2,
-          "value": "50",
+          "value": "statMod(@system.characteristics.primaries.strength.final.value)-statMod(@system.characteristics.primaries.strength.base.value)",
           "priority": null
         }
       ],
       "duration": {
-        "startTime": null,
+        "startTime": 0,
         "combat": null,
+        "startRound": 8,
+        "startTurn": 0,
         "seconds": null,
         "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "turns": null
       },
       "transfer": false,
       "flags": {}
     }
   },
+  "flags": {},
+  "img": "icons/svg/item-bag.svg",
   "effects": [],
-  "sort": 300000,
+  "folder": "LyThpSJzru2yTuuG",
   "ownership": {
     "default": 0,
-    "rX4MRGIlAJmbcDJE": 3
+    "i22cqqk4LNN9HuHn": 3
   },
-  "flags": {},
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
@@ -54,9 +46,11 @@
     "coreVersion": "13.345",
     "systemId": "animabf",
     "systemVersion": "2.2.0",
-    "createdTime": 1765572969217,
-    "modifiedTime": 1771334931195,
+    "createdTime": 1771334061870,
+    "modifiedTime": 1771334083472,
     "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
-  "_key": "!items!NFnTrf25dLWuQCwr"
+  "_id": "G9nHxqqy073UigNo",
+  "sort": 400000,
+  "_key": "!items!G9nHxqqy073UigNo"
 }

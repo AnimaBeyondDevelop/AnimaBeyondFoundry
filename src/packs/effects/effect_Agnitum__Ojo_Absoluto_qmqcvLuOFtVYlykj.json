@@ -1,0 +1,171 @@
+{
+  "folder": "zjeUWCoYJkE1AWpM",
+  "name": "Agnitum: Ojo Absoluto",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/eye.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.final.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.final.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.final.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.secondaries.perception.notice.final.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.secondaries.perception.search.final.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.secondaries.perception.track.final.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Agnitum: Ojo Absoluto",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.psychic.psychicProjection.imbalance.defensive.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.mystic.magicProjection.imbalance.defensive.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.secondaries.perception.notice.base.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.secondaries.perception.search.base.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        },
+        {
+          "key": "system.secondaries.perception.track.base.value",
+          "mode": 2,
+          "value": "-40",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/eye.svg",
+      "_id": "vcviy3slvSERCrM4",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!qmqcvLuOFtVYlykj.vcviy3slvSERCrM4"
+    }
+  ],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771436120685,
+    "modifiedTime": 1771436120685,
+    "lastModifiedBy": "r6Bm1eyGCZ8yXk7c"
+  },
+  "_id": "qmqcvLuOFtVYlykj",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "r6Bm1eyGCZ8yXk7c": 3
+  },
+  "_key": "!items!qmqcvLuOFtVYlykj"
+}

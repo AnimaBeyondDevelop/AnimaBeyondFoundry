@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Stat Mods",
+  "color": null,
+  "sorting": "m",
+  "_id": "LyThpSJzru2yTuuG",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771333911321,
+    "modifiedTime": 1771333911321,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
+  },
+  "_key": "!folders!LyThpSJzru2yTuuG"
+}

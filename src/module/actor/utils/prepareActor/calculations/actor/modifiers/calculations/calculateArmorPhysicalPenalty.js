@@ -20,5 +20,5 @@ export const calculateArmorPhysicalPenalty = data => {
 
   if (getEquippedArmors(data).length === 0) return 0;
 
-  return Math.min(0, data.combat.wearArmor.value - totalWearRequirement);
+  return Math.min(0, data.combat.wearArmor.final.value - totalWearRequirement);
 };

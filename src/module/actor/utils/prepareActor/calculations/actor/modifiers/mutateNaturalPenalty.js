@@ -6,7 +6,7 @@ import { calculateEquippedArmorsRequirement } from './calculations/calculateArmo
  * @param {import('../../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const mutateNaturalPenalty = data => {
-  let wearArmor = data.combat.wearArmor.value;
+  let wearArmor = data.combat.wearArmor.final.value;
   let wearArmorRequirement = calculateEquippedArmorsRequirement(data);
   let armorsNaturalPenalty = calculateArmorsNaturalPenalty(data);
   let equippedArmorsPenalty = calculateEquippedArmorsNaturalPenalty(data);
@@ -29,7 +29,7 @@ export const mutateNaturalPenalty = data => {
 
 mutateNaturalPenalty.abfFlow = {
   deps: [
-    'system.combat.wearArmor.value',
+    'system.combat.wearArmor.final.value',
     'system.combat.armors',
     'system.general.modifiers.naturalPenalty.base.value',
     'system.general.modifiers.naturalPenalty.special.value'

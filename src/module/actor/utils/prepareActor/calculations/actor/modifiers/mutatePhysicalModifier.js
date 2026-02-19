@@ -17,7 +17,7 @@ mutatePhysicalModifier.abfFlow = {
     'system.general.modifiers.physicalActions.base.value',
     'system.general.modifiers.physicalActions.special.value',
 
-    'system.combat.wearArmor.value',
+    'system.combat.wearArmor.final.value',
     'system.combat.armors'
   ],
   mods: ['system.general.modifiers.physicalActions.final.value']

@@ -53,40 +53,40 @@ export const prepareActor = async actor => {
   }
 
   actor.__abfPreparePromise = (async () => {
-    globalThis.__abfPrepareRunId = (globalThis.__abfPrepareRunId ?? 0) + 1;
-    const runId = globalThis.__abfPrepareRunId;
+    // DEBUG PATHS
+    // const watchPaths = [
+    //   'system.characteristics.secondaries.resistances.magic.special.value'
+    // ];
 
-    // 🔍 DEBUG PATHS — pon aquí los que se estén acumulando
-    const watchPaths = [
-      'system.characteristics.secondaries.resistances.magic.special.value'
-    ];
+    // dbgDump(actor, `RUN ${runId} BEFORE reset`, watchPaths);
 
-    dbgDump(actor, `RUN ${runId} BEFORE reset`, watchPaths);
-
-    // ✅ Baseline desde datos RAW del actor
+    // 1) reset baseline
     const baselineSystem = foundry.utils.duplicate(actor._source.system);
-
     foundry.utils.mergeObject(actor.system, baselineSystem, {
       overwrite: true,
       insertKeys: true,
       insertValues: true
     });
-
     actor.system = inflateSystemFromTypeMarkers(actor.system);
 
-    dbgDump(actor, `RUN ${runId} AFTER reset`, watchPaths);
-
+    // 2) preparar items (si tus derivedFns dependen de items)
     await prepareItems(actor);
 
-    dbgDump(actor, `RUN ${runId} BEFORE flow`, watchPaths);
+    // 3) flow (AE + derivedFns)
+    await runEffectFlow(actor, { derivedFns: DERIVED_DATA_FUNCTIONS });
 
-    // ✅ Nuevo pipeline: build -> order -> apply
-    await runEffectFlow(actor, {
-      derivedFns: DERIVED_DATA_FUNCTIONS
-      // debug: true
-    });
+    // 4) UI-only derived (AQUÍ VA “LO NUEVO”)
+    actor.system.general.description.enriched = await TextEditor.enrichHTML(
+      actor.system.general.description.value,
+      { async: true }
+    );
 
-    dbgDump(actor, `RUN ${runId} AFTER flow`, watchPaths);
+    for (const key of Object.keys(actor.system.ui.contractibleItems ?? {})) {
+      if (typeof actor.system.ui.contractibleItems[key] === 'string') {
+        actor.system.ui.contractibleItems[key] =
+          actor.system.ui.contractibleItems[key] === 'true';
+      }
+    }
   })();
 
   try {
@@ -105,8 +105,8 @@ function dbgGet(actor, path) {
 }
 
 function dbgDump(actor, label, paths) {
-  // const rows = paths.map(p => dbgGet(actor, p));
-  // console.groupCollapsed(`[FLOW][DBG] ${label}`);
-  // console.table(rows);
-  // console.groupEnd();
+  const rows = paths.map(p => dbgGet(actor, p));
+  console.groupCollapsed(`[FLOW][DBG] ${label}`);
+  console.table(rows);
+  console.groupEnd();
 }

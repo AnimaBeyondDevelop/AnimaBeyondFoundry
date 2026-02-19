@@ -151,10 +151,8 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   _setupDebouncedSheetUpdates(html) {
-    // Keep a flat object with pending updates: { "system.foo.bar": 123, ... }
     this._pendingUpdate = this._pendingUpdate ?? {};
 
-    // Debounced flush (single update per burst)
     this._flushPendingUpdate =
       this._flushPendingUpdate ??
       foundry.utils.debounce(async () => {
@@ -165,31 +163,39 @@ export default class ABFActorSheet extends ActorSheet {
 
         const [actorChanges, itemChanges] = splitAsActorAndItemChanges(flat);
 
-        // Update items first (if any)
         await this.updateItems(itemChanges);
 
-        // Then update actor (if any)
         if (actorChanges && Object.keys(actorChanges).length > 0) {
           await this.actor.update(actorChanges);
         }
       }, 150);
 
-    // Listen to changes on any form control
     html.on('change', 'input, select, textarea', ev => {
       const el = ev.currentTarget;
       if (!el?.name) return;
 
       let value;
-      if (el.type === 'checkbox') value = el.checked;
-      else value = el.value;
 
-      // Convert numbers
-      if (el.type === 'number') value = Number(value);
+      if (el.type === 'checkbox') {
+        value = el.checked;
+      } else {
+        value = el.value;
+      }
 
-      // Accumulate changes using the input name as the update path
-      // Example: "system.general.presence.base.value"
+      // Respect Foundry-style dtype (works for <select> too)
+      const dtype = el.dataset?.dtype;
+
+      if (dtype === 'Number') {
+        const n = Number(value);
+        value = Number.isFinite(n) ? n : 0;
+      } else if (dtype === 'Boolean') {
+        value = value === 'true' || value === true;
+      } else if (el.type === 'number') {
+        const n = Number(value);
+        value = Number.isFinite(n) ? n : 0;
+      }
+
       this._pendingUpdate[el.name] = value;
-
       this._flushPendingUpdate();
     });
   }
@@ -367,13 +373,6 @@ export default class ABFActorSheet extends ActorSheet {
   protected;
 
   async _updateObject(event, formData) {
-    // We have to parse all qualities in order to convert from it selectable to integers to make calculations
-    Object.keys(formData).forEach(key => {
-      if (key.includes('quality')) {
-        formData[key] = parseInt(formData[key], 10);
-      }
-    });
-
     const [actorChanges, itemChanges] = splitAsActorAndItemChanges(formData);
 
     await this.updateItems(itemChanges);

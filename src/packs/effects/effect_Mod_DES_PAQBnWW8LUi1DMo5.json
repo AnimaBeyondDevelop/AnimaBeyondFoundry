@@ -1,8 +1,6 @@
 {
-  "folder": "zjeUWCoYJkE1AWpM",
-  "name": "Berserker",
   "type": "effect",
-  "img": "icons/svg/item-bag.svg",
+  "name": "Mod DES",
   "system": {
     "active": false,
     "category": {
@@ -10,47 +8,49 @@
     },
     "modifiers": [],
     "effectData": {
-      "icon": "icons/svg/item-bag.svg",
+      "icon": "icons/svg/aura.svg",
       "disabled": true,
       "changes": [
         {
           "key": "system.combat.attack.final.value",
           "mode": 2,
-          "value": "10",
+          "value": "statMod(@system.characteristics.primaries.dexterity.final.value)-statMod(@system.characteristics.primaries.dexterity.base.value)",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
           "mode": 2,
-          "value": "-20",
+          "value": "statMod(@system.characteristics.primaries.dexterity.final.value)-statMod(@system.characteristics.primaries.dexterity.base.value)",
           "priority": null
         },
         {
-          "key": "system.combat.dodge.final.value",
+          "key": "system.characteristics.secondaries.initiative.final.value",
           "mode": 2,
-          "value": "-20",
+          "value": "statMod(@system.characteristics.primaries.dexterity.final.value)-statMod(@system.characteristics.primaries.dexterity.base.value)",
           "priority": null
         }
       ],
       "duration": {
-        "startTime": null,
+        "startTime": 0,
         "combat": null,
+        "startRound": 8,
+        "startTurn": 0,
         "seconds": null,
         "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "turns": null
       },
       "transfer": false,
       "flags": {}
     }
   },
+  "flags": {},
+  "img": "icons/svg/item-bag.svg",
   "effects": [],
+  "folder": "LyThpSJzru2yTuuG",
   "ownership": {
     "default": 0,
-    "s1iIg3oHOkECBfdY": 3
+    "i22cqqk4LNN9HuHn": 3
   },
-  "flags": {},
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
@@ -58,11 +58,11 @@
     "coreVersion": "13.345",
     "systemId": "animabf",
     "systemVersion": "2.2.0",
-    "createdTime": 1765562707131,
-    "modifiedTime": 1771334931195,
+    "createdTime": 1771334058727,
+    "modifiedTime": 1771334083472,
     "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
-  "_id": "uHKRp8sPArfuD7DK",
-  "sort": 500000,
-  "_key": "!items!uHKRp8sPArfuD7DK"
+  "_id": "PAQBnWW8LUi1DMo5",
+  "sort": 200000,
+  "_key": "!items!PAQBnWW8LUi1DMo5"
 }

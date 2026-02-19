@@ -6,6 +6,7 @@
   <select
     class='input'
     name='{{this.inputName}}'
+    {{#if this.dtype}}data-dtype='{{this.dtype}}'{{/if}}
     {{#if this.disabled}}disabled{{/if}}
   >
     {{> @partial-block}}

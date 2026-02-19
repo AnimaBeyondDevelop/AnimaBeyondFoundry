@@ -1,0 +1,142 @@
+{
+  "folder": "PO1mA3TS5qVKq9iT",
+  "name": "Transformación: Los Sellos del Dragón (3)",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/sun.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.final.value",
+          "mode": 2,
+          "value": "15",
+          "priority": null
+        },
+        {
+          "key": "system.general.modifiers.allActions.final.value",
+          "mode": 2,
+          "value": "15",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.agility.final.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.constitution.final.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.dexterity.final.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.power.final.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.strength.final.value",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Transformación: Los Sellos del Dragón (1)",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.general.modifiers.allActions.base.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/sun.svg",
+      "_id": "JBXN9FSzgK0kqobN",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!Symr9Y5q4ogw6Xz5.JBXN9FSzgK0kqobN"
+    }
+  ],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771437036042,
+    "modifiedTime": 1771437036042,
+    "lastModifiedBy": "r6Bm1eyGCZ8yXk7c"
+  },
+  "ownership": {
+    "default": 0,
+    "s1iIg3oHOkECBfdY": 3,
+    "r6Bm1eyGCZ8yXk7c": 3
+  },
+  "_id": "Symr9Y5q4ogw6Xz5",
+  "sort": 75000,
+  "_key": "!items!Symr9Y5q4ogw6Xz5"
+}

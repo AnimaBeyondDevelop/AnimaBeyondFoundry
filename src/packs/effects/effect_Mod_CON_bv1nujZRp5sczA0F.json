@@ -1,0 +1,62 @@
+{
+  "type": "effect",
+  "name": "Mod CON",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/aura.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.lifePoints.max",
+          "mode": 2,
+          "value": "((@system.characteristics.primaries.constitution.final.value-@system.characteristics.primaries.constitution.base.value)*10)+(statMod(@system.characteristics.primaries.constitution.final.value)-statMod(@system.characteristics.primaries.constitution.base.value))",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.fatigue.max",
+          "mode": 2,
+          "value": "@system.characteristics.primaries.constitution.final.value-@system.characteristics.primaries.constitution.base.value",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": 0,
+        "combat": null,
+        "startRound": 8,
+        "startTurn": 0,
+        "seconds": null,
+        "rounds": null,
+        "turns": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "flags": {},
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "LyThpSJzru2yTuuG",
+  "ownership": {
+    "default": 0,
+    "i22cqqk4LNN9HuHn": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771334056070,
+    "modifiedTime": 1771334091824,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
+  },
+  "_id": "bv1nujZRp5sczA0F",
+  "sort": 150000,
+  "_key": "!items!bv1nujZRp5sczA0F"
+}

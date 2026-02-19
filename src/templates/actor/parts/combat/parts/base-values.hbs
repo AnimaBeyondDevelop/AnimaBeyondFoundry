@@ -87,25 +87,25 @@
       addTooltips=true
     }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="wear-armor"
+    "systems/animabf/templates/common/ui/numerical-value.hbs"
+      cssClass="wear-armor"
       title=(localize "anima.ui.combat.baseValues.wearArmor.title")
-      inputName="system.combat.wearArmor.value"
-      inputValue=system.combat.wearArmor.value
+      path="system.combat.wearArmor"
+      value=system.combat.wearArmor
     }}
     {{>
       "systems/animabf/templates/common/ui/numerical-value.hbs"
+      cssClass="extra-damage"
+      title=(localize "anima.ui.combat.baseValues.extraDamage.title")
       path="system.general.modifiers.extraDamage"
       value=system.general.modifiers.extraDamage
-      title=(localize "anima.ui.combat.baseValues.extraDamage.title")
-      cssClass="extra-damage"
     }}
     {{>
       "systems/animabf/templates/common/ui/numerical-value.hbs"
+      cssClass="damage-reduction"
+      title=(localize "anima.ui.combat.baseValues.damageReduction.title")
       path="system.combat.damageReduction"
       value=system.combat.damageReduction
-      title=(localize "anima.ui.combat.baseValues.damageReduction.title")
-      cssClass="damage-reduction"
     }}
 
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

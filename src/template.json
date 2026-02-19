@@ -49,6 +49,7 @@
           "naturalPenalty": {
             "unreduced": { "value": 0 },
             "reduction": { "value": 0 },
+            "base": { "value": 0 },
             "special": { "value": 0 },
             "final": { "value": 0 }
           },
@@ -439,7 +440,7 @@
               "special": { "value": 0 },
               "final": { "value": 0 }
             },
-        "wearArmor": { "value": 0 },
+        "wearArmor": { "__type": "{\"type\":\"NumericalValue\"}" },
         "totalArmor": {
           "at": {
             "cut": { "value": 0 },

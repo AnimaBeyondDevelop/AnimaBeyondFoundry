@@ -1,0 +1,177 @@
+{
+  "folder": "rXl8IFouMmRPmslB",
+  "name": "Aquarius - Posición defensiva",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/shield.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.final.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.final.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.final.value",
+          "mode": 2,
+          "value": "10",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Scorpio - Torbellino Envolvente",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.attack.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "10",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/item-bag.svg",
+      "_id": "Acy3ulwSZKGNaxbG",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!KcYVL10iCtBHFJ6Z.Acy3ulwSZKGNaxbG"
+    },
+    {
+      "name": "Aquarius - Posición defensiva",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "-20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.block.base.value",
+          "mode": 2,
+          "value": "20",
+          "priority": null
+        },
+        {
+          "key": "system.combat.dodge.base.value",
+          "mode": 2,
+          "value": "10",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/shield.svg",
+      "_id": "bAt3tVeLMGnVNoKZ",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!KcYVL10iCtBHFJ6Z.bAt3tVeLMGnVNoKZ"
+    }
+  ],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771436024736,
+    "modifiedTime": 1771436024736,
+    "lastModifiedBy": "r6Bm1eyGCZ8yXk7c"
+  },
+  "_id": "KcYVL10iCtBHFJ6Z",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "r6Bm1eyGCZ8yXk7c": 3
+  },
+  "_key": "!items!KcYVL10iCtBHFJ6Z"
+}

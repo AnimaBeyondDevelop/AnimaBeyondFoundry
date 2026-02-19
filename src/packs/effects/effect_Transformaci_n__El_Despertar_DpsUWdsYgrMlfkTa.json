@@ -52,6 +52,12 @@
           "mode": 2,
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
+        },
+        {
+          "key": "system.general.settings.zen.value",
+          "mode": 5,
+          "value": "true",
+          "priority": null
         }
       ],
       "duration": {
@@ -149,9 +155,95 @@
         "lastModifiedBy": "i22cqqk4LNN9HuHn"
       },
       "_key": "!items.effects!DpsUWdsYgrMlfkTa.qvlaMp4aS3dpDqpb"
+    },
+    {
+      "name": "Transformación: El Despertar",
+      "disabled": false,
+      "changes": [
+        {
+          "key": "system.general.modifiers.allActions.special.value",
+          "mode": 2,
+          "value": "@characteristics.primaries.power.mod",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.agility.final.value",
+          "mode": 2,
+          "value": "floor(@characteristics.primaries.power.mod/15)",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.constitution.final.value",
+          "mode": 2,
+          "value": "floor(@characteristics.primaries.power.mod/15)",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.power.final.value",
+          "mode": 2,
+          "value": "floor(@characteristics.primaries.power.mod/15)",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.dexterity.final.value",
+          "mode": 2,
+          "value": "floor(@characteristics.primaries.power.mod/15)",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.strength.final.value",
+          "mode": 2,
+          "value": "floor(@characteristics.primaries.power.mod/15)",
+          "priority": null
+        },
+        {
+          "key": "system.domine.kiAccumulation.willPower.final.value",
+          "mode": 2,
+          "value": "floor(@characteristics.primaries.power.mod/15)",
+          "priority": null
+        },
+        {
+          "key": "system.general.settings.zen.value",
+          "mode": 5,
+          "value": "true",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": 0,
+        "combat": null,
+        "startRound": 8,
+        "startTurn": 0,
+        "seconds": null,
+        "rounds": null,
+        "turns": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/aura.svg",
+      "_id": "a6hveruzJcoX3Hgc",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "createdTime": 1771334939671,
+        "modifiedTime": 1771334979375,
+        "lastModifiedBy": "i22cqqk4LNN9HuHn"
+      },
+      "_key": "!items.effects!DpsUWdsYgrMlfkTa.a6hveruzJcoX3Hgc"
     }
   ],
-  "folder": "qGuzVGLbhD1drP26",
+  "folder": "zjeUWCoYJkE1AWpM",
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
@@ -160,11 +252,11 @@
     "systemId": "animabf",
     "systemVersion": "2.2.0",
     "createdTime": 1770669125964,
-    "modifiedTime": 1770669125964,
+    "modifiedTime": 1771334979389,
     "lastModifiedBy": "i22cqqk4LNN9HuHn"
   },
   "_id": "DpsUWdsYgrMlfkTa",
-  "sort": 0,
+  "sort": 400000,
   "ownership": {
     "default": 0,
     "i22cqqk4LNN9HuHn": 3

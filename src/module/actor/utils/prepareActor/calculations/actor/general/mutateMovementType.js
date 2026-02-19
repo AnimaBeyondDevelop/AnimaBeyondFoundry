@@ -9,7 +9,7 @@ const calculateArmorsMovementTypeModifier = data => {
   );
 
   const totalWearRequirement = calculateEquippedArmorsRequirement(data);
-  const wearArmor = data.combat.wearArmor.value;
+  const wearArmor = data.combat.wearArmor.final.value;
 
   const wearArmorModifier = Math.floor(
     Math.max(0, wearArmor - totalWearRequirement) / 50
@@ -44,7 +44,7 @@ mutateMovementType.abfFlow = {
     'system.general.modifiers.allActions.final.value',
 
     // armor penalty (calculateArmorPhysicalPenalty)
-    'system.combat.wearArmor.value',
+    'system.combat.wearArmor.final.value',
     'system.combat.armors'
   ],
   mods: [

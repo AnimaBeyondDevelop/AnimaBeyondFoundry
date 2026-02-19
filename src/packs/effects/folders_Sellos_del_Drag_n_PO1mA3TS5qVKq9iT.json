@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": "zjeUWCoYJkE1AWpM",
+  "name": "Sellos del Dragón",
+  "color": null,
+  "sorting": "m",
+  "_id": "PO1mA3TS5qVKq9iT",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!PO1mA3TS5qVKq9iT"
+}

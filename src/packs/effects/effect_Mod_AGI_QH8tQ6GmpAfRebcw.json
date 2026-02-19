@@ -1,0 +1,62 @@
+{
+  "type": "effect",
+  "name": "Mod AGI",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/aura.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.combat.dodge.final.value",
+          "mode": 2,
+          "value": "statMod(@system.characteristics.primaries.agility.final.value)-statMod(@system.characteristics.primaries.agility.base.value)",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.secondaries.initiative.final.value",
+          "mode": 2,
+          "value": "statMod(@system.characteristics.primaries.agility.final.value)-statMod(@system.characteristics.primaries.agility.base.value)",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": 0,
+        "combat": null,
+        "startRound": 8,
+        "startTurn": 0,
+        "seconds": null,
+        "rounds": null,
+        "turns": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "flags": {},
+  "img": "icons/svg/item-bag.svg",
+  "effects": [],
+  "folder": "LyThpSJzru2yTuuG",
+  "ownership": {
+    "default": 0,
+    "i22cqqk4LNN9HuHn": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771334053343,
+    "modifiedTime": 1771334083472,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
+  },
+  "_id": "QH8tQ6GmpAfRebcw",
+  "sort": 100000,
+  "_key": "!items!QH8tQ6GmpAfRebcw"
+}

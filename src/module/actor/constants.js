@@ -939,7 +939,7 @@ export const INITIAL_ACTOR_DATA = {
       }
     },
     wearArmor: {
-      value: 0
+      __type: '{"type":"NumericalValue"}'
     },
     totalArmor: {
       at: {

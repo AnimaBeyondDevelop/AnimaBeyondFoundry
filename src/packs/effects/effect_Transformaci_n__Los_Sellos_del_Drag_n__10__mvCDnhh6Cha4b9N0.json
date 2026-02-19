@@ -1,0 +1,153 @@
+{
+  "folder": "PO1mA3TS5qVKq9iT",
+  "name": "Transformación: Los Sellos del Dragón (10)",
+  "type": "effect",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "active": false,
+    "category": {
+      "value": "generic"
+    },
+    "modifiers": [],
+    "effectData": {
+      "icon": "icons/svg/sun.svg",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.final.value",
+          "mode": 2,
+          "value": "50",
+          "priority": null
+        },
+        {
+          "key": "system.general.modifiers.allActions.final.value",
+          "mode": 2,
+          "value": "50",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.agility.final.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.constitution.final.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.dexterity.final.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.power.final.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.characteristics.primaries.strength.final.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.automationOptions.calculateFatigueModifier.value",
+          "mode": 5,
+          "value": "False",
+          "priority": null
+        },
+        {
+          "key": "system.general.modifiers.allActions.base.value",
+          "mode": 4,
+          "value": "0",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {}
+    }
+  },
+  "effects": [
+    {
+      "name": "Transformación: Los Sellos del Dragón (1)",
+      "disabled": true,
+      "changes": [
+        {
+          "key": "system.characteristics.secondaries.initiative.base.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        },
+        {
+          "key": "system.general.modifiers.allActions.base.value",
+          "mode": 2,
+          "value": "5",
+          "priority": null
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "transfer": false,
+      "flags": {},
+      "img": "icons/svg/sun.svg",
+      "_id": "JBXN9FSzgK0kqobN",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.345",
+        "systemId": "animabf",
+        "systemVersion": "2.2.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!mvCDnhh6Cha4b9N0.JBXN9FSzgK0kqobN"
+    }
+  ],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.0",
+    "createdTime": 1771437036042,
+    "modifiedTime": 1771439372801,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
+  },
+  "_id": "mvCDnhh6Cha4b9N0",
+  "sort": 490625,
+  "ownership": {
+    "default": 0,
+    "r6Bm1eyGCZ8yXk7c": 3
+  },
+  "_key": "!items!mvCDnhh6Cha4b9N0"
+}

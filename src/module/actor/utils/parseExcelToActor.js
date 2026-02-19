@@ -199,28 +199,44 @@ export const parseExcelToActor = async (excelData, actor) => {
       characteristics: {
         primaries: {
           agility: {
-            value: excelData.AGI
+            base: {
+              value: excelData.AGI
+            }
           },
           constitution: {
-            value: excelData.CON
+            base: {
+              value: excelData.CON
+            }
           },
           dexterity: {
-            value: excelData.DES
+            base: {
+              value: excelData.DES
+            }
           },
           strength: {
-            value: excelData.FUE
+            base: {
+              value: excelData.FUE
+            }
           },
           intelligence: {
-            value: excelData.INT
+            base: {
+              value: excelData.INT
+            }
           },
           power: {
-            value: excelData.POD
+            base: {
+              value: excelData.POD
+            }
           },
           perception: {
-            value: excelData.PER
+            base: {
+              value: excelData.PER
+            }
           },
           willPower: {
-            value: excelData.VOL
+            base: {
+              value: excelData.VOL
+            }
           }
         },
         secondaries: {
@@ -293,7 +309,9 @@ export const parseExcelToActor = async (excelData, actor) => {
           }
         },
         wearArmor: {
-          value: excelData.LlevarArmadura_final
+          base: {
+            value: excelData.LlevarArmadura_final
+          }
         },
         combatSpecialSkills: [],
         combatTables: []
@@ -306,7 +324,9 @@ export const parseExcelToActor = async (excelData, actor) => {
         },
         modifiers: {
           extraDamage: {
-            value: extraDamage
+            base: {
+              value: extraDamage
+            }
           }
         },
         settings: {
