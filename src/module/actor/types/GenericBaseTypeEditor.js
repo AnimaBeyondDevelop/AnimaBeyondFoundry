@@ -10,7 +10,7 @@ function normalizeEditorConfig(cfg) {
     hidden: Array.isArray(cfg?.hidden) ? cfg.hidden : [],
     labels: cfg?.labels && typeof cfg.labels === 'object' ? cfg.labels : {},
     order: Array.isArray(cfg?.order) ? cfg.order : [],
-    // Per-field overrides: { "key": { readonly: false, hidden: true, label: "..." }, ... }
+    // Per-field overrides: { "key": { readonly: false, hidden: true, label: "...", kind:"select", options:[...] }, ... }
     overrides: cfg?.overrides && typeof cfg.overrides === 'object' ? cfg.overrides : {}
   };
 }
@@ -74,16 +74,24 @@ export class GenericBaseTypeEditor extends FormApplication {
 
     this._fields = fieldPaths.map(fp => {
       const def = foundry.utils.getProperty(this._defaults, fp);
+      const o = this._mergedCfg.overrides?.[fp];
 
       let kind = 'string';
       if (typeof def === 'number') kind = 'number';
       else if (typeof def === 'boolean') kind = 'bool';
 
+      // Allow per-field override of "kind" (e.g. select)
+      if (o?.kind) kind = String(o.kind);
+
+      // Allow static options via overrides
+      const options = Array.isArray(o?.options) ? o.options : null;
+
       return {
         fieldPath: fp,
         label: this._mergedCfg.labels[fp] ?? fp,
         readonly: this._mergedCfg.readonly.has(fp),
-        kind
+        kind,
+        options
       };
     });
   }
@@ -114,16 +122,32 @@ export class GenericBaseTypeEditor extends FormApplication {
       foundry.utils.getProperty(values, 'calculateBaseFromFormula')
     );
 
-    // Apply dynamic readonly: base.value is readonly when formula calculation is enabled
+    // Prefer the real runtime type from the inflated node at this.path
+    const node = foundry.utils.getProperty(this.actor, this.path);
+    const realType = node?.constructor?.type ?? this.type;
+
+    const ctor = TypeRegistry.get(realType);
+    const dynamicOptions =
+      ctor?.getEditorFieldOptions?.(this.actor, { path: this.path }) ?? {};
+
+    // Apply dynamic readonly + dynamic options
     const fields = this._fields.map(f => {
+      let out = f;
+
       if (f.fieldPath === 'base.value' && calcFromFormula) {
-        return { ...f, readonly: true };
+        out = { ...out, readonly: true };
       }
-      return f;
+
+      const opt = dynamicOptions[f.fieldPath];
+      if (Array.isArray(opt)) {
+        out = { ...out, options: opt };
+      }
+
+      return out;
     });
 
     return {
-      type: this.type,
+      type: realType,
       path: this.path,
       defaults: this._defaults,
       values,
@@ -134,7 +158,6 @@ export class GenericBaseTypeEditor extends FormApplication {
   async _updateObject(_event, formData) {
     const update = {};
 
-    // Read current persisted flag from actor data (authoritative)
     const calcFromFormula =
       formData.calculateBaseFromFormula === 'on' ||
       formData.calculateBaseFromFormula === true;
@@ -142,7 +165,6 @@ export class GenericBaseTypeEditor extends FormApplication {
     for (const f of this._fields) {
       if (f.readonly) continue;
 
-      // Enforce dynamic readonly even if someone tampers with the DOM
       if (f.fieldPath === 'base.value' && calcFromFormula) continue;
 
       const fullPath = `${this.path}.${f.fieldPath}`;

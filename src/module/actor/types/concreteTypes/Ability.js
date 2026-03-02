@@ -1,49 +1,103 @@
-import { BaseType } from '../BaseType.js';
+import { AffectedByCharacteristicValue } from './AffectedByCharacteristicValue.js';
 
-export class Ability extends BaseType {
+export class Ability extends AffectedByCharacteristicValue {
   static type = 'Ability';
 
-  get base() {
-    return this._get('base.value', 0);
-  }
-  get special() {
-    return this._get('special.value', 0);
+  get applyAllActionMod() {
+    return this._get('applyAllActionMod', true);
   }
 
-  get attribute() {
-    return this._get('attribute', null);
+  get applyPhysicalActionMod() {
+    return this._get('applyPhysicalActionMod', true);
   }
-
-  // computeFinal() {
-  //   return this.base + this.special;
-  // }
-
-  // applyDerived() {
-  //   this._set('final.value', this.computeFinal());
-  // }
 
   static defaults() {
     return {
-      base: { value: 0 },
-      special: { value: 0 },
-      final: { value: 0 },
-      attribute: null
+      ...super.defaults(),
+      applyAllActionMod: true,
+      applyPhysicalActionMod: true
     };
   }
 
-  getDerivedFlowSpecs() {
-    return [
-      {
-        id: 'final',
-        deps: ['base.value', 'special.value'],
-        mods: ['final.value'],
-        compute: this.#computeFinal.bind(this)
-      }
-    ];
+  static normalizeInflateInput(node) {
+    const out = super.normalizeInflateInput(node);
+    if (!out || typeof out !== 'object') return out;
+
+    if (typeof out.applyAllActionMod !== 'boolean') out.applyAllActionMod = true;
+    if (typeof out.applyPhysicalActionMod !== 'boolean')
+      out.applyPhysicalActionMod = true;
+
+    return out;
   }
 
-  /** @param {{ base:number, special:number }} inputs */
-  #computeFinal({ base = 0, special = 0 }) {
-    return { final: base + special };
+  static editorConfig() {
+    const base = super.editorConfig();
+
+    return {
+      ...base,
+      labels: {
+        ...(base.labels ?? {}),
+        applyAllActionMod: 'Apply all action modifier',
+        applyPhysicalActionMod: 'Apply physical action modifier'
+      },
+      order: [...(base.order ?? []), 'applyAllActionMod', 'applyPhysicalActionMod']
+    };
+  }
+
+  _computeFinal({ base = 0, special = 0 }) {
+    let { final } = super._computeFinal({ base, special });
+
+    final += Number(this._computeMods());
+
+    return { final };
+  }
+
+  /**
+   *
+   * Calculates ability mod
+   * @returns {Number}
+   */
+  _computeMods() {
+    let result = 0;
+    if (this.applyAllActionMod) {
+      result += Number(
+        this.actor?.system?.general?.modifiers?.allActions?.final?.value ?? 0
+      );
+    }
+
+    if (this.applyPhysicalActionMod) {
+      result += Number(
+        this.actor?.system?.general?.modifiers?.physicalActions?.final?.value ?? 0
+      );
+    }
+    return result;
+  }
+
+  getDerivedFlowSpecs() {
+    const specs = super.getDerivedFlowSpecs();
+    const finalSpec = specs.find(s => s.id === 'final');
+
+    if (finalSpec) {
+      // keep super deps, just add toggles
+      finalSpec.deps = [...finalSpec.deps, 'applyAllActionMod', 'applyPhysicalActionMod'];
+      finalSpec.compute = this._computeFinal.bind(this);
+
+      const extraDeps = [];
+
+      if (this.applyAllActionMod) {
+        extraDeps.push('system.general.modifiers.allActions.final.value');
+      }
+      if (this.applyPhysicalActionMod) {
+        extraDeps.push('system.general.modifiers.physicalActions.final.value');
+      }
+
+      if (extraDeps.length) {
+        // merge with existing instance deps set by parent (characteristic deps)
+        const current = this.getInstanceDeps?.('final') ?? null; // if you don't have getter, ignore this line
+        this.setInstanceDeps('final', [...(current ?? []), ...extraDeps]);
+      }
+    }
+
+    return this._mergeInstanceDeps(specs);
   }
 }

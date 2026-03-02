@@ -114,7 +114,8 @@ export function orderFlowOps(ops) {
   }
 
   if (result.length !== ops.length) {
-    throw new Error('No valid execution order exists (cycle detected).');
+    console.warn('No valid execution order exists (cycle detected).');
+    ui.notifications.warn('No valid execution order exists (cycle detected).');
   }
 
   return result;

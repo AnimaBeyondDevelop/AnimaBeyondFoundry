@@ -19,6 +19,22 @@
           {{checked (getProperty ../values f.fieldPath (getProperty ../defaults f.fieldPath))}}
           {{#if f.readonly}}disabled{{/if}}
         />
+      {{else if (is "eq" f.kind "select")}}
+        {{!-- Robust current value: values -> defaults; supports primitive or {value:primitive} --}}
+        {{#with (getProperty ../values f.fieldPath (getProperty ../defaults f.fieldPath)) as |raw|}}
+          {{#with (getProperty raw "value" raw) as |cur|}}
+            <select name="{{f.fieldPath}}" {{#if f.readonly}}disabled{{/if}}>
+              {{#each f.options as |o|}}
+                <option
+                  value="{{o.value}}"
+                  {{#if (is "eq" cur o.value)}}selected{{/if}}
+                >
+                  {{o.label}}
+                </option>
+              {{/each}}
+            </select>
+          {{/with}}
+        {{/with}}
       {{else}}
         <input
           type="text"

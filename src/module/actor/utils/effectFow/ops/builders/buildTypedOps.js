@@ -2,7 +2,10 @@ import { normalizePaths } from '../normalizePaths.js';
 import { applyTypedDerivedSpec } from '../../applicators/typedDerivedApplicator.js';
 
 function abs(base, rel) {
-  return `${base}.${rel}`;
+  const p = String(rel ?? '');
+  // If already absolute, don't prefix with basePath
+  if (p.startsWith('system.')) return p;
+  return `${base}.${p}`;
 }
 
 export function buildTypedOps(actor) {

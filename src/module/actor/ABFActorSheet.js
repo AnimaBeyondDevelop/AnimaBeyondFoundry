@@ -66,8 +66,12 @@ export default class ABFActorSheet extends ActorSheet {
     return 'systems/animabf/templates/actor/actor-sheet.hbs';
   }
 
-  async close(options) {
-    super.close(options);
+  async close(options = {}) {
+    // Cancel any pending debounced update
+    this._flushPendingUpdate?.cancel?.();
+    this._pendingUpdate = {};
+
+    await super.close({ ...options, submit: false });
 
     this.position.width = this.getWidthDependingFromContent();
   }
@@ -151,8 +155,9 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   _setupDebouncedSheetUpdates(html) {
-    this._pendingUpdate = this._pendingUpdate ?? {};
+    this._pendingUpdate = {};
 
+    // Build debounce once
     this._flushPendingUpdate =
       this._flushPendingUpdate ??
       foundry.utils.debounce(async () => {
@@ -170,29 +175,21 @@ export default class ABFActorSheet extends ActorSheet {
         }
       }, 150);
 
-    html.on('change', 'input, select, textarea', ev => {
+    // IMPORTANT: remove previous handlers for this sheet instance
+    html.off('change.animabf');
+
+    html.on('change.animabf', 'input, select, textarea', ev => {
       const el = ev.currentTarget;
       if (!el?.name) return;
 
-      let value;
+      let value = el.type === 'checkbox' ? el.checked : el.value;
 
-      if (el.type === 'checkbox') {
-        value = el.checked;
-      } else {
-        value = el.value;
-      }
-
-      // Respect Foundry-style dtype (works for <select> too)
       const dtype = el.dataset?.dtype;
-
-      if (dtype === 'Number') {
+      if (dtype === 'Number' || el.type === 'number') {
         const n = Number(value);
         value = Number.isFinite(n) ? n : 0;
       } else if (dtype === 'Boolean') {
         value = value === 'true' || value === true;
-      } else if (el.type === 'number') {
-        const n = Number(value);
-        value = Number.isFinite(n) ? n : 0;
       }
 
       this._pendingUpdate[el.name] = value;

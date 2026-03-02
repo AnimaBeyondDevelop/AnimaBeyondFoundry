@@ -78,13 +78,13 @@ export class NumericalValue extends BaseType {
         id: 'baseFromFormula',
         deps: ['formula', 'calculateBaseFromFormula'],
         mods: ['base.value'],
-        compute: this.#computeBaseFromFormula.bind(this)
+        compute: this._computeBaseFromFormula.bind(this)
       },
       {
         id: 'final',
         deps: ['base.value', 'special.value'],
         mods: ['final.value'],
-        compute: this.#computeFinal.bind(this)
+        compute: this._computeFinal.bind(this)
       }
     ];
 
@@ -103,7 +103,7 @@ export class NumericalValue extends BaseType {
     return this._mergeInstanceDeps(specs);
   }
 
-  #computeBaseFromFormula({ formula = '', calculateBaseFromFormula = false }) {
+  _computeBaseFromFormula({ formula = '', calculateBaseFromFormula = false }) {
     if (!calculateBaseFromFormula || !formula) return {};
     const v = FormulaEvaluator.evaluate(String(formula), this.actor);
     const n = Number(v);
@@ -111,7 +111,7 @@ export class NumericalValue extends BaseType {
   }
 
   /** @param {{ base:number, special:number }} inputs */
-  #computeFinal({ base = 0, special = 0 }) {
+  _computeFinal({ base = 0, special = 0 }) {
     return { final: base + special };
   }
 }

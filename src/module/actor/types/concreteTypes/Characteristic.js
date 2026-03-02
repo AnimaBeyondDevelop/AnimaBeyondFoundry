@@ -88,25 +88,25 @@ export class Characteristic extends BaseType {
         id: 'final',
         deps: ['base.value', 'special.value'],
         mods: ['final.value'],
-        compute: this.#computeFinal.bind(this)
+        compute: this._computeFinal.bind(this)
       },
       {
         id: 'mod',
         deps: ['final.value'],
         mods: ['mod.value'],
-        compute: this.#computeMod.bind(this)
+        compute: this._computeMod.bind(this)
       }
     ];
   }
 
   /** @param {{ base:number, special:number }} inputs */
-  #computeFinal({ base = 0, special = 0 }) {
+  _computeFinal({ base = 0, special = 0 }) {
     const final = Math.min(Math.max(base + special, 0), 20);
     return { final };
   }
 
   /** @param {{ final:number }} inputs */
-  #computeMod({ final = 0 }) {
+  _computeMod({ final = 0 }) {
     return { mod: calculateAttributeModifier(final) };
   }
 }

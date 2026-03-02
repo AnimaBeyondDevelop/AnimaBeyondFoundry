@@ -1,12 +1,12 @@
 {{#> "ui/base-type-wrapper"
     path=path
-    class="numerical-value-row"}}
+    class="ability-row"}}
 
   {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
     class=cssClass
     title=title
-    rollable=rollable
+    rollable=(is "eq" rollable true)
     rollableDice=rollableDice
     rollableMessage=rollableMessage
 

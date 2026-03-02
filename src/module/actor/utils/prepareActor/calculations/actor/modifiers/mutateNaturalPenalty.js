@@ -12,9 +12,11 @@ export const mutateNaturalPenalty = data => {
   let equippedArmorsPenalty = calculateEquippedArmorsNaturalPenalty(data);
 
   let unreducedNaturalPenalty = Math.min(0, armorsNaturalPenalty);
+
   let naturalPenaltyReduction = Math.min(
+    //este min sirve para que la reducción no sea mayor que el valor de natural penalty
     -armorsNaturalPenalty,
-    Math.max(0, wearArmor - wearArmorRequirement)
+    Math.max(0, wearArmor - wearArmorRequirement) //reduce el máximo entre 0 y el valor por el que llevar armadura superael requerimiento
   );
 
   data.general.modifiers.naturalPenalty.unreduced.value = unreducedNaturalPenalty;

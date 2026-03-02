@@ -10,18 +10,12 @@
   }}
     {{#each this.secondarySkills as |atr key|}}
       {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-        class="name"
+        "systems/animabf/templates/common/ui/types/secondary-ability.hbs"
+        cssClass="name"
         title=(localize (concat "anima.ui.secondaries." key ".title"))
         rollable=true
-        rollSecondaryInput=true
-        inputName=(concat "system.secondaries." ../this.secondarySkillName "." key ".base.value")
-        inputValue=atr.base.value
-        hasSecondaryInput=true
-        addTooltips=true
-        disableSecondaryInput=true
-        secondaryInputName=(concat "system.secondaries." ../this.secondarySkillName "." key ".final.value")
-        secondaryInputValue=atr.final.value
+        path=(concat "system.secondaries." ../this.secondarySkillName "." key)
+        value=atr
       }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

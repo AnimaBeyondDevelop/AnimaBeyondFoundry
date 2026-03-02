@@ -9,99 +9,50 @@
     class="base-values"
   }}
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="attack"
+      "systems/animabf/templates/common/ui/types/ability.hbs"
+      cssClass="attack"
       title=(localize "anima.ui.combat.baseValues.attack.title")
       rollable=true
-
-      inputName="system.combat.attack.base.value"
-      inputValue=system.combat.attack.base.value
-      disabled=false
-      tooltip= (localize "anima.ui.tooltips.base")
-      
-      hasSecondaryInput=true
-      inputType="number"
-      secondaryInputName="system.combat.attack.special.value"
-      secondaryInputValue=system.combat.attack.special.value
-      disableSecondaryInput=false
-      secondaryTooltip= (localize "anima.ui.tooltips.special")
-
-      hasTertiaryInput=true
-      tertiaryInputName="system.combat.attack.final.value"
-      tertiaryInputValue=system.combat.attack.final.value
-      disableTertiaryInput=true
-      tertiaryTooltip= (localize "anima.ui.tooltips.final")
-
-      addTooltips=true
+      path="system.combat.attack"
+      value=system.combat.attack
     }}
+
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="block"
+      "systems/animabf/templates/common/ui/types/ability.hbs"
+      cssClass="block"
       title=(localize "anima.ui.combat.baseValues.block.title")
       rollable=true
-
-      inputName="system.combat.block.base.value"
-      inputValue=system.combat.block.base.value
-      disabled=false
-      tooltip= (localize "anima.ui.tooltips.base")
-      
-      hasSecondaryInput=true
-      inputType="number"
-      secondaryInputName="system.combat.block.special.value"
-      secondaryInputValue=system.combat.block.special.value
-      disableSecondaryInput=false
-      secondaryTooltip= (localize "anima.ui.tooltips.special")
-
-      hasTertiaryInput=true
-      tertiaryInputName="system.combat.block.final.value"
-      tertiaryInputValue=system.combat.block.final.value
-      disableTertiaryInput=true
-      tertiaryTooltip= (localize "anima.ui.tooltips.final")
-
-      addTooltips=true
+      path="system.combat.block"
+      value=system.combat.block
     }}
+
     {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-      class="dodge"
+      "systems/animabf/templates/common/ui/types/ability.hbs"
+      cssClass="dodge"
       title=(localize "anima.ui.combat.baseValues.dodge.title")
       rollable=true
-
-      inputName="system.combat.dodge.base.value"
-      inputValue=system.combat.dodge.base.value
-      disabled=false
-      tooltip= (localize "anima.ui.tooltips.base")
-      
-      hasSecondaryInput=true
-      inputType="number"
-      secondaryInputName="system.combat.dodge.special.value"
-      secondaryInputValue=system.combat.dodge.special.value
-      disableSecondaryInput=false
-      secondaryTooltip= (localize "anima.ui.tooltips.special")
-
-      hasTertiaryInput=true
-      tertiaryInputName="system.combat.dodge.final.value"
-      tertiaryInputValue=system.combat.dodge.final.value
-      disableTertiaryInput=true
-      tertiaryTooltip= (localize "anima.ui.tooltips.final")
-
-      addTooltips=true
+      path="system.combat.dodge"
+      value=system.combat.dodge
     }}
+
     {{>
-    "systems/animabf/templates/common/ui/numerical-value.hbs"
+      "systems/animabf/templates/common/ui/types/affected-by-characteristic-value.hbs"
       cssClass="wear-armor"
       title=(localize "anima.ui.combat.baseValues.wearArmor.title")
+      rollable=false
       path="system.combat.wearArmor"
       value=system.combat.wearArmor
     }}
+
     {{>
-      "systems/animabf/templates/common/ui/numerical-value.hbs"
+      "systems/animabf/templates/common/ui/types/numerical-value.hbs"
       cssClass="extra-damage"
       title=(localize "anima.ui.combat.baseValues.extraDamage.title")
       path="system.general.modifiers.extraDamage"
       value=system.general.modifiers.extraDamage
     }}
     {{>
-      "systems/animabf/templates/common/ui/numerical-value.hbs"
+      "systems/animabf/templates/common/ui/types/numerical-value.hbs"
       cssClass="damage-reduction"
       title=(localize "anima.ui.combat.baseValues.damageReduction.title")
       path="system.combat.damageReduction"

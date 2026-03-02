@@ -22,7 +22,10 @@ export function applyTypedDerivedSpec(actor, specAbs) {
 
   // 🔹 Read inputs
   for (const p of specAbs.depsAbs) {
-    inputs[keyFromAbsPath(p)] = foundry.utils.getProperty(actor, p);
+    const k = keyFromAbsPath(p);
+    // Don't overwrite existing keys (prevents collisions like base/final)
+    if (k in inputs) continue;
+    inputs[k] = foundry.utils.getProperty(actor, p);
   }
 
   // 🔹 Compute outputs (pure function from type)

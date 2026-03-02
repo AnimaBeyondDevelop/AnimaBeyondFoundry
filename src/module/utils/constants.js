@@ -78,9 +78,16 @@ export const Templates = {
     CustomSelect: T('common/ui/custom-select.hbs'),
     CustomSelectChoices: T('common/ui/custom-select-choices.hbs'),
     LoadingIndicator: T('common/ui/loading-indicator.hbs'),
-    Characteristic: T('common/ui/characteristic.hbs'),
-    NumericalValue: T('common/ui/numerical-value.hbs'),
-    BaseTypeWrapper: T('common/ui/base-type-wrapper.hbs')
+    BaseTypeWrapper: T('common/ui/base-type-wrapper.hbs'),
+    Types: {
+      Characteristic: T('common/ui/types/characteristic.hbs'),
+      NumericalValue: T('common/ui/types/numerical-value.hbs'),
+      AffectedByCharacteristicValue: T(
+        'common/ui/types/affected-by-characteristic-value.hbs'
+      ),
+      Ability: T('common/ui/types/ability.hbs'),
+      SecondaryAbility: T('common/ui/types/secondary-ability.hbs')
+    }
   },
 
   Apps: {
@@ -240,7 +247,11 @@ export const HandlebarsPartials = {
   'ui/group-header-title': Templates.UI.GroupHeaderTitle,
   'ui/add-item-button': Templates.UI.AddItemButton,
   'ui/custom-select-choices': Templates.UI.CustomSelectChoices,
-  'ui/characteristic': Templates.UI.Characteristic,
-  'ui/numerical-value': Templates.UI.NumericalValue,
+  'ui/types/characteristic': Templates.UI.Types.Characteristic,
+  'ui/types/numerical-value': Templates.UI.Types.NumericalValue,
+  'ui/types/ability': Templates.UI.Types.Ability,
+  'ui/types/secondary-ability': Templates.UI.Types.SecondaryAbility,
+  'ui/types/affected-by-characteristic-value':
+    Templates.UI.Types.AffectedByCharacteristicValue,
   'ui/base-type-wrapper': Templates.UI.BaseTypeWrapper
 };

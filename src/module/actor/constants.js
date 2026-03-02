@@ -328,618 +328,126 @@ export const INITIAL_ACTOR_DATA = {
   secondaries: {
     athletics: {
       acrobatics: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"agility","applyNaturalPenalty":"true"}'
       },
       athleticism: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"agility","applyNaturalPenalty":"true"}'
       },
-      ride: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
-      },
+      ride: { __type: '{"type":"SecondaryAbility","attribute":"agility"}' },
       swim: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"agility","applyNaturalPenalty":"true","maxNaturalPenaltyReductionPercentage":"0"}'
       },
       climb: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"agility","applyNaturalPenalty":"true"}'
       },
       jump: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'strength'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"strength","applyNaturalPenalty":"true"}'
       },
-      piloting: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      }
+      piloting: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' }
     },
+
     vigor: {
-      composure: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'willPower'
-        }
-      },
+      composure: { __type: '{"type":"SecondaryAbility","attribute":"willPower"}' },
       featsOfStrength: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'strength'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"strength","applyNaturalPenalty":"true"}'
       },
-      withstandPain: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'willPower'
-        }
-      }
+      withstandPain: { __type: '{"type":"SecondaryAbility","attribute":"willPower"}' }
     },
+
     perception: {
       notice: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'perception'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"perception","applyPerceptionPenalty":"true"}'
       },
       search: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'perception'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"perception","applyPerceptionPenalty":"true"}'
       },
-      track: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'perception'
-        }
-      }
+      track: { __type: '{"type":"SecondaryAbility","attribute":"perception"}' }
     },
+
     intellectual: {
-      animals: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      science: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      law: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      herbalLore: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      history: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      tactics: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agiliintelligencety'
-        }
-      },
-      medicine: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      memorize: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      navigation: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      occult: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      appraisal: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      magicAppraisal: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      }
+      animals: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      science: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      law: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      herbalLore: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      history: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      tactics: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      medicine: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      memorize: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      navigation: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      occult: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      appraisal: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      magicAppraisal: { __type: '{"type":"SecondaryAbility","attribute":"power"}' }
     },
+
     social: {
-      style: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      },
-      intimidate: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'willPower'
-        }
-      },
-      leadership: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      },
-      persuasion: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      trading: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      streetwise: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      etiquette: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      }
+      style: { __type: '{"type":"SecondaryAbility","attribute":"power"}' },
+      intimidate: { __type: '{"type":"SecondaryAbility","attribute":"willPower"}' },
+      leadership: { __type: '{"type":"SecondaryAbility","attribute":"power"}' },
+      persuasion: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      trading: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      streetwise: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      etiquette: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' }
     },
+
     subterfuge: {
-      lockPicking: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
-      disguise: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
+      lockPicking: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
+      disguise: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
       hide: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'perception'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"perception","applyNaturalPenalty":"true"}'
       },
-      theft: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
+      theft: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
       stealth: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"agility","applyNaturalPenalty":"true","maxNaturalPenaltyReductionPercentage":"50"}'
       },
-      trapLore: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
-      poisons: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      }
+      trapLore: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
+      poisons: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' }
     },
+
     creative: {
-      art: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      },
+      art: { __type: '{"type":"SecondaryAbility","attribute":"power"}' },
       dance: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'agility'
-        }
+        __type:
+          '{"type":"SecondaryAbility","attribute":"agility","applyNaturalPenalty":"true"}'
       },
-      forging: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
-      runes: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
-      alchemy: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'intelligence'
-        }
-      },
-      animism: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      },
-      music: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      },
-      sleightOfHand: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
+      forging: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
+      runes: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
+      alchemy: { __type: '{"type":"SecondaryAbility","attribute":"intelligence"}' },
+      animism: { __type: '{"type":"SecondaryAbility","attribute":"power"}' },
+      music: { __type: '{"type":"SecondaryAbility","attribute":"power"}' },
+      sleightOfHand: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
       ritualCalligraphy: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
+        __type: '{"type":"SecondaryAbility","attribute":"dexterity"}'
       },
-      jewelry: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
-      tailoring: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'dexterity'
-        }
-      },
-      puppetMaking: {
-        base: {
-          value: 0
-        },
-        final: {
-          value: 0
-        },
-        attribute: {
-          value: 'power'
-        }
-      }
+      jewelry: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
+      tailoring: { __type: '{"type":"SecondaryAbility","attribute":"dexterity"}' },
+      puppetMaking: { __type: '{"type":"SecondaryAbility","attribute":"power"}' }
     },
+
     secondarySpecialSkills: []
   },
 
   combat: {
     attack: {
-      base: {
-        value: 0
-      },
-      special: {
-        value: 0
-      },
-      final: {
-        value: 0
-      }
+      __type: '{"type":"Ability", "attribute":"dexterity"}'
     },
     block: {
-      base: {
-        value: 0
-      },
-      special: {
-        value: 0
-      },
-      final: {
-        value: 0
-      }
+      __type: '{"type":"Ability", "attribute":"dexterity"}'
     },
     dodge: {
-      base: {
-        value: 0
-      },
-      special: {
-        value: 0
-      },
-      final: {
-        value: 0
-      }
+      __type: '{"type":"Ability", "attribute":"agility"}'
     },
     wearArmor: {
-      __type: '{"type":"NumericalValue"}'
+      __type: '{"type":"AffectedByCharacteristicValue", "attribute":"strength"}'
     },
     totalArmor: {
       at: {
