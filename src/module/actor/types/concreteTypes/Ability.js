@@ -8,7 +8,17 @@ export class Ability extends AffectedByCharacteristicValue {
   }
 
   get applyPhysicalActionMod() {
-    return this._get('applyPhysicalActionMod', true);
+    const v = this._get('applyPhysicalActionMod', undefined);
+    if (v !== undefined) return v;
+
+    const ATTRIBUTES_AFFECTED_BY_PHYSICAL_PENALTIES = [
+      'agility',
+      'dexterity',
+      'strength',
+      'constitution'
+    ];
+
+    return ATTRIBUTES_AFFECTED_BY_PHYSICAL_PENALTIES.includes(this.attribute);
   }
 
   static defaults() {
@@ -24,8 +34,19 @@ export class Ability extends AffectedByCharacteristicValue {
     if (!out || typeof out !== 'object') return out;
 
     if (typeof out.applyAllActionMod !== 'boolean') out.applyAllActionMod = true;
-    if (typeof out.applyPhysicalActionMod !== 'boolean')
-      out.applyPhysicalActionMod = true;
+
+    const ATTRIBUTES_AFFECTED_BY_PHYSICAL_PENALTIES = [
+      'agility',
+      'dexterity',
+      'strength',
+      'constitution'
+    ];
+
+    if (typeof out.applyPhysicalActionMod !== 'boolean') {
+      out.applyPhysicalActionMod = ATTRIBUTES_AFFECTED_BY_PHYSICAL_PENALTIES.includes(
+        out.attribute
+      );
+    }
 
     return out;
   }

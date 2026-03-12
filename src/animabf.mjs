@@ -32,6 +32,8 @@ import { FormulaEvaluator } from './utils/formulaEvaluator.js';
 
 import { registerHandlebarsPartials } from './utils/handlebarsPartials.js';
 
+import { macroCreators, macroExecutors } from './utils/macroCreatorRegistry.js';
+
 /* ------------------------------------ */
 /* Initialize system */
 /* ------------------------------------ */
@@ -114,6 +116,19 @@ Hooks.once('ready', async () => {
   game.animabf ??= {};
   game.animabf.api ??= {};
   Object.assign(game.animabf.api, { ABFAttackData });
+
+  game.animabf.macros ??= {};
+
+  game.animabf.macros.execute = async ({ id, actorUuid, itemUuid }) => {
+    const exec = macroExecutors[id];
+    if (typeof exec !== 'function') return;
+
+    const actor = await fromUuid(actorUuid);
+    const item = await fromUuid(itemUuid);
+    if (!actor || !item) return;
+
+    return exec({ actor, item });
+  };
 
   // GM-side socket to update attack targets flag
   game.socket.on('system.animabf', async p => {
@@ -378,6 +393,26 @@ Hooks.on('renderTokenHUD', async (hud, html) => {
       accumulated: newValue
     });
   };
+});
+
+Hooks.on('hotbarDrop', async (_bar, data, slot) => {
+  if (data?.type !== 'Item' || !data.uuid) return;
+
+  const item = await fromUuid(data.uuid);
+  if (!item) return;
+
+  const actor = item.parent;
+  if (!actor) return; // No actor -> no macro
+
+  const creatorId = item.system?.hotbarMacroCreatorId;
+  if (!creatorId) return; // No reference -> do nothing (let Foundry default)
+
+  const creator = macroCreators[creatorId];
+  if (typeof creator !== 'function') return; // Unknown id -> do nothing
+
+  // Let the creator build+assign the macro. If it returns true => we handled it.
+  const handled = await creator({ actor, item, slot });
+  if (handled) return false; // Prevent default behavior
 });
 
 // // Auto-number unlinked tokens as "{name} (n)" when dropped

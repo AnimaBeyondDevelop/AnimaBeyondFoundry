@@ -74,6 +74,15 @@
       "type": "Item",
       "private": false,
       "flags": {}
+    },
+    {
+      "name": "macros",
+      "label": "(ES) Macros",
+      "type": "Macro",
+      "path": "packs/macros.db",
+      "system": "animabf",
+      "private": false,
+      "flags": {}
     }
   ],
   "languages": [
