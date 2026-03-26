@@ -53,13 +53,17 @@ export function computeCombatResult(attackData, defenseData) {
   }
 
   const isCritical = lifePercentRemoved >= 50 || attackData.automaticCrit; //TO-DO: Add crit inmunity
-  const critValue = finalDamage + attackData.critBonus;
+  const critValue = finalDamage + attackData.critBonus + (attackData.critDamageBonus ?? 0);
 
   return ABFCombatResultData.builder()
     .difference(difference)
     .hasCounterAttack(hasCounterAttack)
     .counterAttackValue(counterAttackValue)
     .damageFinal(finalDamage)
+    .finalBaseDamage(baseDamage)
+    .damagePercentage(damagePercentage)
+    .finalArmor(finalArmor)
+    .reducedArmor(attackData.reducedArmor ?? 0)
     .lifePercentRemoved(Math.floor(Math.min(100, Math.max(lifePercentRemoved, 0))))
     .isCritical(isCritical)
     .baseCriticalValue(critValue)
@@ -126,13 +130,13 @@ function tryApplySupernaturalShieldWear(
   }
 }
 
-/** Final base damage after flat reductions (rounded down to 10s) */
+/** Final base damage after flat reductions (rounded to nearest 10) */
 function getFinalBaseDamage(attackData, defenseData) {
   const finalBaseDamage = Math.max(
     0,
     (attackData.damage ?? 0) - (defenseData.damageReduction ?? 0)
   );
-  const roundedFinalBaseDamage = Math.ceil(finalBaseDamage / 10) * 10;
+  const roundedFinalBaseDamage = Math.round(finalBaseDamage / 10) * 10;
   return Math.max(0, roundedFinalBaseDamage);
 }
 

@@ -60,7 +60,9 @@ const getInitialData = (attacker, defender, options = {}) => {
         damage: {
           special: 0,
           final: 0
-        }
+        },
+        critDamageBonus: 0,
+        automaticCrit: false
       },
       mystic: {
         modifier: 0,
@@ -91,7 +93,9 @@ const getInitialData = (attacker, defender, options = {}) => {
         damage: {
           special: 0,
           final: 0
-        }
+        },
+        critDamageBonus: 0,
+        automaticCrit: false
       },
       psychic: {
         modifier: 0,
@@ -112,7 +116,12 @@ const getInitialData = (attacker, defender, options = {}) => {
           value: true,
           type: 'shot'
         },
-        damageModifier: 0
+        damage: {
+          special: 0,
+          final: 0
+        },
+        critDamageBonus: 0,
+        automaticCrit: false
       }
     },
     defender: {
@@ -290,7 +299,9 @@ export class CombatAttackDialog extends FormApplication {
           weaponUsed,
           unarmed,
           visible,
-          distanceCheck
+          distanceCheck,
+          critDamageBonus,
+          automaticCrit
         },
         distance,
         highGround,
@@ -412,7 +423,9 @@ export class CombatAttackDialog extends FormApplication {
             visible,
             distance,
             projectile,
-            attackerCombatMod
+            attackerCombatMod,
+            critDamageBonus: critDamageBonus ?? 0,
+            automaticCrit: !!automaticCrit
           }
         });
 
@@ -432,7 +445,9 @@ export class CombatAttackDialog extends FormApplication {
           critic,
           damage,
           projectile,
-          distanceCheck
+          distanceCheck,
+          critDamageBonus,
+          automaticCrit
         },
         distance
       } = this.modalData.attacker;
@@ -509,7 +524,9 @@ export class CombatAttackDialog extends FormApplication {
             projectile,
             spellCasting,
             macro: spell.macro,
-            attackerCombatMod
+            attackerCombatMod,
+            critDamageBonus: critDamageBonus ?? 0,
+            automaticCrit: !!automaticCrit
           }
         });
 
@@ -528,10 +545,12 @@ export class CombatAttackDialog extends FormApplication {
           psychicProjection,
           critic,
           eliminateFatigue,
-          damageModifier,
+          damage,
           mentalPatternImbalance,
           projectile,
-          distanceCheck
+          distanceCheck,
+          critDamageBonus,
+          automaticCrit
         },
         distance
       } = this.modalData.attacker;
@@ -599,7 +618,7 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const powerUsedEffect = power?.system.effects[psychicPotentialRoll.total].value;
-        let damage = damageCheck(powerUsedEffect) + damageModifier;
+        let finalDamage = damageCheck(powerUsedEffect) + damage.special;
         let resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         let visibleCheck = power?.system.visible;
 
@@ -614,7 +633,7 @@ export class CombatAttackDialog extends FormApplication {
             psychicPotential: psychicPotentialRoll.total,
             psychicProjection,
             critic,
-            damage,
+            damage: finalDamage,
             reducedArmorFinal: 0,
             roll: psychicFatigue ? 0 : rolled,
             total: psychicFatigue ? 0 : psychicProjectionRoll.total,
@@ -624,7 +643,9 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             macro: power.macro,
-            attackerCombatMod
+            attackerCombatMod,
+            critDamageBonus: critDamageBonus ?? 0,
+            automaticCrit: !!automaticCrit
           }
         });
 
@@ -656,6 +677,7 @@ export class CombatAttackDialog extends FormApplication {
       psychic.psychicPotential.special +
       this.attackerActor.system.psychic.psychicPotential.final.value +
       psychicBonus;
+    psychic.damage.final = psychic.damage.special;
 
     const { spells } = this.attackerActor.system.mystic;
     if (!mystic.spellUsed) {

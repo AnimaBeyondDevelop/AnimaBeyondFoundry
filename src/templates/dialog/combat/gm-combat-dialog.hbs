@@ -449,6 +449,34 @@
               disabled=true
               inputValue=this.calculations.damage
             }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="final-armor"
+              title=(localize 'chat.combatResult.armor')
+              inputType="text"
+              disabled=true
+              inputValue=this.calculations.finalArmor
+            }}
+            {{#if this.calculations.reducedArmor}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="reduced-armor"
+                title=(localize 'chat.combatResult.reduced')
+                inputType="text"
+                disabled=true
+                inputValue=this.calculations.reducedArmor
+              }}
+            {{/if}}
+            {{#if this.calculations.isCritical}}
+              {{>
+              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                class="base-critical-value"
+                title=(localize 'macros.combat.dialog.baseCriticalValue.title')
+                inputType="text"
+                disabled=true
+                inputValue=this.calculations.baseCriticalValue
+              }}
+            {{/if}}
           {{/if}}
           {{#if this.calculations.canCounter}}
             {{#unless this.ui.isCounter}}

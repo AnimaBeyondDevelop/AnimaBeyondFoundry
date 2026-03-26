@@ -33,6 +33,23 @@
         secondaryInputValue=this.attacker.combat.damage.final
       }}
 
+      {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.critDamageBonus.title')
+        inputName="attacker.combat.critDamageBonus"
+        inputValue=this.attacker.combat.critDamageBonus
+      }}
+
+      <div class='columns'><div>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          title=(localize 'macros.combat.dialog.automaticCrit.title')
+          inputType="checkbox"
+          inputName="attacker.combat.automaticCrit"
+          inputValue=(is 'eq' this.attacker.combat.automaticCrit true)
+        }}
+      </div></div>
+
       {{#if this.attackSent}}
         <div class='attack-sent'>
           {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}

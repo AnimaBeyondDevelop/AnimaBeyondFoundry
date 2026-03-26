@@ -31,7 +31,9 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         grade: grade ?? 'base',
         combat: {
           modifier: 0,
-          damage: { special: 0, final: 0 }
+          damage: { special: 0, final: 0 },
+          critDamageBonus: 0,
+          automaticCrit: false
         }
       },
       targets: Array.isArray(targets) && targets.length ? targets : fallbackSnapshot
@@ -135,8 +137,9 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         .damageType(game.animabf.combat.DamageType.NONE)
         .presence(0)
         .isProjectile(true)
-        .automaticCrit(false)
+        .automaticCrit(!!attacker.combat?.automaticCrit)
         .critBonus(0)
+        .critDamageBonus(Number(attacker.combat?.critDamageBonus ?? 0))
         .attackerId(actor.id)
         .weaponId(spell.id)
         .targets(this.modalData.targets ?? [])

@@ -26,6 +26,7 @@ export class ABFAttackData {
     // Crit / opposed / misc combat bonuses
     this.automaticCrit = !!p.automaticCrit;
     this.critBonus = p.critBonus ?? 0;
+    this.critDamageBonus = p.critDamageBonus ?? 0;
     this.opposedCheckBonus = p.opposedCheckBonus ?? 0;
     this.maneuvers = Array.isArray(p.maneuvers) ? [...p.maneuvers] : [];
 
@@ -260,6 +261,10 @@ export class ABFAttackDataBuilder {
   }
   critBonus(v) {
     this._p.critBonus = Number(v) || 0;
+    return this;
+  }
+  critDamageBonus(v) {
+    this._p.critDamageBonus = Number(v) || 0;
     return this;
   }
   opposedCheckBonus(v) {

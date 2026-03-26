@@ -1,14 +1,18 @@
 export class ABFCombatResultData {
   /** @param {Partial<ABFCombatResultData>} p */
   constructor(p = {}) {
-    this.difference = p.difference ?? 0; // Diferencia
-    this.counterAttackValue = p.counterAttackValue ?? 0; // Valor de contraataque
-    this.hasCounterAttack = p.hasCounterAttack ?? false; // ¿Hay contraataque?
-    this.damageFinal = p.damageFinal ?? 0; // Daño final
-    this.lifePercentRemoved = p.lifePercentRemoved ?? 0; // % de vida quitada
-    this.isCritical = p.isCritical ?? false; // ¿Es crítico?
-    this.baseCriticalValue = p.baseCriticalValue ?? 0; // Valor base del crítico
-    this.attackBreak = p.attackBreak ?? 0; // Rotura del ataque
+    this.difference = p.difference ?? 0;
+    this.counterAttackValue = p.counterAttackValue ?? 0;
+    this.hasCounterAttack = p.hasCounterAttack ?? false;
+    this.damageFinal = p.damageFinal ?? 0;
+    this.finalBaseDamage = p.finalBaseDamage ?? 0;
+    this.damagePercentage = p.damagePercentage ?? 0;
+    this.finalArmor = p.finalArmor ?? 0;
+    this.reducedArmor = p.reducedArmor ?? 0;
+    this.lifePercentRemoved = p.lifePercentRemoved ?? 0;
+    this.isCritical = p.isCritical ?? false;
+    this.baseCriticalValue = p.baseCriticalValue ?? 0;
+    this.attackBreak = p.attackBreak ?? 0;
   }
 
   toJSON() {
@@ -45,6 +49,22 @@ export class ABFCombatResultDataBuilder {
   }
   damageFinal(v) {
     this._p.damageFinal = Number(v) || 0;
+    return this;
+  }
+  finalBaseDamage(v) {
+    this._p.finalBaseDamage = Number(v) || 0;
+    return this;
+  }
+  damagePercentage(v) {
+    this._p.damagePercentage = Number(v) || 0;
+    return this;
+  }
+  finalArmor(v) {
+    this._p.finalArmor = Number(v) || 0;
+    return this;
+  }
+  reducedArmor(v) {
+    this._p.reducedArmor = Number(v) || 0;
     return this;
   }
   lifePercentRemoved(v) {

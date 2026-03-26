@@ -28,9 +28,9 @@ export const calculateDamage = (attack, defense, at, damage, halvedAbs = false) 
     percent = Math.floor((diference - abs) / 10) * 10;
   }
 
-  const damageRoundedToCeil10Multiplier = Math.ceil(damage / 10) * 10;
+  const damageRoundedToNearest10 = Math.round(damage / 10) * 10;
 
-  const dealDamage = (damageRoundedToCeil10Multiplier * percent) / 100;
+  const dealDamage = (damageRoundedToNearest10 * percent) / 100;
 
   return Math.max(dealDamage, 0);
 };

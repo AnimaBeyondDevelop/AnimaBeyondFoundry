@@ -46,11 +46,36 @@
 
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize "macros.combat.dialog.psychic.damageModifier.title")
+  title=(localize "macros.combat.dialog.damage.title")
   disabled=this.attackSent
-  inputName="attacker.psychic.damageModifier"
-  inputValue=this.attacker.psychic.damageModifier
+  inputName="attacker.psychic.damage.special"
+  inputValue=this.attacker.psychic.damage.special
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.psychic.damage.final"
+  secondaryInputValue=this.attacker.psychic.damage.final
 }}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.critDamageBonus.title')
+  inputName="attacker.psychic.critDamageBonus"
+  inputValue=this.attacker.psychic.critDamageBonus
+  disabled=this.attackSent
+}}
+
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.automaticCrit.title')
+      inputType="checkbox"
+      inputName="attacker.psychic.automaticCrit"
+      inputValue=(is 'eq' this.attacker.psychic.automaticCrit true)
+      disabled=this.attackSent
+    }}
+  </div>
+</div>
 
 {{#if (and (is 'gt' this.attacker.actor.system.psychic.psychicPoints.value 0) (is 'eq' this.attacker.actor.system.psychic.psychicSettings.fatigueResistance false))}}
 <div class='columns'>
