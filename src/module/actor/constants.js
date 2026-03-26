@@ -92,6 +92,12 @@ export const INITIAL_ACTOR_DATA = {
       },
       extraDamage: {
         __type: '{"type":"NumericalValue"}'
+      },
+      automaticCrit: {
+        value: false
+      },
+      critDamageBonus: {
+        __type: '{"type":"NumericalValue"}'
       }
     },
     destinyPoints: {

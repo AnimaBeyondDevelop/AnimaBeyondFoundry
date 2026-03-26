@@ -81,6 +81,8 @@
   "anima.ui.combat.baseValues.damageReduction.title": "Réduction des dégâts",
   "anima.ui.combat.baseValues.dodge.title": "Esquive",
   "anima.ui.combat.baseValues.extraDamage.title": "Dommages accrus",
+  "anima.ui.combat.baseValues.critDamageBonus.title": "Bonus dommages critique",
+  "anima.ui.combat.baseValues.automaticCrit.title": "Critique automatique",
   "anima.ui.combat.baseValues.title": "Valeurs de Base",
   "anima.ui.combat.baseValues.wearArmor.title": "Port d'Armure",
   "anima.ui.combat.combatSpecialSkill.title": "Compétences Spéciales",

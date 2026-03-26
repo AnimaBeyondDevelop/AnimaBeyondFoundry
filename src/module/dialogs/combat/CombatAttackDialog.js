@@ -61,8 +61,8 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        critDamageBonus: 0,
-        automaticCrit: false
+        critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+        automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value)
       },
       mystic: {
         modifier: 0,
@@ -94,8 +94,8 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        critDamageBonus: 0,
-        automaticCrit: false
+        critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+        automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value)
       },
       psychic: {
         modifier: 0,
@@ -120,8 +120,8 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        critDamageBonus: 0,
-        automaticCrit: false
+        critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+        automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value)
       }
     },
     defender: {

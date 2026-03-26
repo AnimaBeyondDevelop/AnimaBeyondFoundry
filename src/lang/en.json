@@ -78,6 +78,8 @@
   "anima.ui.combat.baseValues.block.title": "Block",
   "anima.ui.combat.baseValues.dodge.title": "Dodge",
   "anima.ui.combat.baseValues.extraDamage.title": "Extra damage",
+  "anima.ui.combat.baseValues.critDamageBonus.title": "Crit damage bonus",
+  "anima.ui.combat.baseValues.automaticCrit.title": "Automatic critical",
   "anima.ui.combat.baseValues.damageReduction.title": "Damage Reduction",
   "anima.ui.combat.baseValues.title": "Base Values",
   "anima.ui.combat.baseValues.wearArmor.title": "Wear armor",

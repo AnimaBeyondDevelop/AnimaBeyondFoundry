@@ -32,8 +32,8 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         combat: {
           modifier: 0,
           damage: { special: 0, final: 0 },
-          critDamageBonus: 0,
-          automaticCrit: false
+          critDamageBonus: actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+          automaticCrit: !!(actor.system.general.modifiers.automaticCrit?.value)
         }
       },
       targets: Array.isArray(targets) && targets.length ? targets : fallbackSnapshot

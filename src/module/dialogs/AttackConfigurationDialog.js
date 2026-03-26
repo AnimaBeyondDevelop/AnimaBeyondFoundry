@@ -58,8 +58,8 @@ export class AttackConfigurationDialog extends FormApplication {
           weapon: resolvedWeapon,
           projectile: { value: false, type: '' },
           damage: { special: 0, final: 0 },
-          critDamageBonus: 0,
-          automaticCrit: false
+          critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+          automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value)
         },
         distance: { value: 0, enable: false, check: false }
       },
