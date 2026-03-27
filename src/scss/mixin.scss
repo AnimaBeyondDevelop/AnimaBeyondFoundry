@@ -1,4 +1,5 @@
-@import 'variable';
+@use 'sass:color';
+@use 'variable' as *;
 
 @mixin group-header {
   text-align: center;
@@ -28,10 +29,10 @@
   padding: 0.25rem 0.5rem;
 
   &:hover {
-    background: darken($light-cream, 10%);
+    background: color.adjust($light-cream, $lightness: -10%);
   }
 
   &:active {
-    background: darken($light-cream, 20%);
+    background: color.adjust($light-cream, $lightness: -20%);
   }
 }

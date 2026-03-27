@@ -1,4 +1,4 @@
-@import '../variable';
+@use '../variable' as *;
 
 .combat-attack-dialog {
   height: auto !important;
