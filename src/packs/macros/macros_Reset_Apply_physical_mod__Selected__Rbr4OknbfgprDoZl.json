@@ -1,0 +1,28 @@
+{
+  "name": "Reset Apply physical mod [Selected]",
+  "type": "script",
+  "command": "(async () => {\n  const PHYSICAL_ATTRIBUTES = new Set([\n    'agility',\n    'dexterity',\n    'strength',\n    'constitution'\n  ]);\n\n  const getAttributeString = (node) => {\n    const a = node?.attribute;\n    if (typeof a === 'string') return a;\n    if (a && typeof a === 'object' && typeof a.value === 'string') return a.value; // legacy\n    return null;\n  };\n\n  const walk = (obj, pathParts, out) => {\n    if (!obj || typeof obj !== 'object') return;\n\n    if (Object.prototype.hasOwnProperty.call(obj, 'applyPhysicalActionMod')) {\n      const attr = getAttributeString(obj);\n      const shouldBeTrue = attr != null && PHYSICAL_ATTRIBUTES.has(attr);\n\n      if (obj.applyPhysicalActionMod !== shouldBeTrue) {\n        out.push({ path: pathParts.join('.'), value: shouldBeTrue });\n      }\n    }\n\n    for (const [k, v] of Object.entries(obj)) {\n      if (v && typeof v === 'object') walk(v, [...pathParts, k], out);\n    }\n  };\n\n  const actors = canvas?.tokens?.controlled\n    ?.map(t => t.actor)\n    .filter(a => a);\n\n  if (!actors?.length) {\n    ui.notifications.warn('[ABF] No hay tokens seleccionados.');\n    return;\n  }\n\n  let totalChanges = 0;\n  let touchedActors = 0;\n\n  for (const actor of actors) {\n    const changes = [];\n    walk(actor.system, ['system'], changes);\n\n    if (!changes.length) continue;\n\n    const updates = {};\n    for (const c of changes) updates[`${c.path}.applyPhysicalActionMod`] = c.value;\n\n    await actor.update(updates);\n\n    totalChanges += changes.length;\n    touchedActors += 1;\n\n    console.log(`[ABF] Updated ${actor.name}:`, updates);\n  }\n\n  ui.notifications.info(\n    `[ABF] applyPhysicalActionMod actualizado en ${touchedActors} actores (${totalChanges} cambios).`\n  );\n})();",
+  "img": "icons/svg/dice-target.svg",
+  "author": "i22cqqk4LNN9HuHn",
+  "scope": "global",
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "animabf",
+    "systemVersion": "2.2.1",
+    "createdTime": 1772540421579,
+    "modifiedTime": 1772540421579,
+    "lastModifiedBy": "i22cqqk4LNN9HuHn"
+  },
+  "_id": "Rbr4OknbfgprDoZl",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "i22cqqk4LNN9HuHn": 3
+  },
+  "_key": "!macros!Rbr4OknbfgprDoZl"
+}

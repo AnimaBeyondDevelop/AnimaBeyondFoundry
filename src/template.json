@@ -442,6 +442,7 @@
       "critic": { "value": "-" },
       "visible": false,
       "macro": "",
+      "hotbarMacroCreatorId": "",
       "grades": {
         "base": {
           "name": { "value": "" },
@@ -582,6 +583,7 @@
       "discipline": { "value": "matrixPowers" },
       "critic": { "value": "-" },
       "macro": "",
+      "hotbarMacroCreatorId": "",
       "hasMaintenance": { "value": false },
       "visible": false,
       "bonus": { "value": 0 }
@@ -661,7 +663,8 @@
       "hasOwnStr": { "value": false },
       "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
       "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } },
-      "useCustomFormula": {"value": false }
+      "useCustomFormula": {"value": false },
+      "hotbarMacroCreatorId": ""
     },
     "supernaturalShield": {
       "shieldPoints": { "value": 0 },
