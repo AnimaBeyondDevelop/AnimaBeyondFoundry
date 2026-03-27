@@ -24,6 +24,15 @@ export class AffectedByCharacteristicValue extends NumericalValue {
     const out = super.normalizeInflateInput(node);
     if (!out || typeof out !== 'object') return out;
 
+    // Migration: attribute.value -> attribute (string)
+    if (
+      out.attribute &&
+      typeof out.attribute === 'object' &&
+      typeof out.attribute.value === 'string'
+    ) {
+      out.attribute = out.attribute.value;
+    }
+
     if (out.attribute === undefined) out.attribute = null;
 
     if (typeof out.computeCharacteristicMod !== 'boolean') {

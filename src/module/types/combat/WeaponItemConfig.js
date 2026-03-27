@@ -176,7 +176,8 @@ export const INITIAL_WEAPON_DATA = {
     primary: { value: WeaponCritic.CUT },
     secondary: { value: NoneWeaponCritic.NONE }
   },
-  useCustomFormula: { value: false }
+  useCustomFormula: { value: false },
+  hotbarMacroCreatorId: 'weapon.attack'
 };
 
 /** @type {import("../Items").WeaponItemConfig} */

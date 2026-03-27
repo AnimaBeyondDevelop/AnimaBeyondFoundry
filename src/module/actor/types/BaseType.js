@@ -1,3 +1,21 @@
+import { INITIAL_ACTOR_DATA } from '../constants.js'; // ajusta el path si BaseType.js no está un nivel abajo
+
+function stripSystemPrefix(systemPath) {
+  return typeof systemPath === 'string' && systemPath.startsWith('system.')
+    ? systemPath.slice('system.'.length)
+    : systemPath;
+}
+
+function parseTypeMarker(str) {
+  try {
+    const obj = JSON.parse(str);
+    if (!obj || typeof obj !== 'object') return null;
+    return obj; // { type, ...overrides }
+  } catch {
+    return null;
+  }
+}
+
 export class BaseType {
   static type = 'BaseType';
 
@@ -8,6 +26,54 @@ export class BaseType {
 
     this.actor = actor;
     this.systemPath = systemPath;
+
+    // Cache to avoid parsing JSON every _get call
+    this._initialOverrideCache = null;
+    this._initialOverrideCacheReady = false;
+  }
+
+  _resolveInitialOverrides() {
+    if (this._initialOverrideCacheReady) return this._initialOverrideCache;
+
+    this._initialOverrideCacheReady = true;
+    this._initialOverrideCache = null;
+
+    const relPath = stripSystemPrefix(this.systemPath);
+    if (!relPath) return this._initialOverrideCache;
+
+    const node = foundry.utils.getProperty(INITIAL_ACTOR_DATA, relPath);
+    const markerStr = node?.__type;
+    if (typeof markerStr !== 'string') return this._initialOverrideCache;
+
+    const marker = parseTypeMarker(markerStr);
+    if (!marker) return this._initialOverrideCache;
+
+    // Remove "type", keep only overrides
+    const { type, ...overrides } = marker;
+    this._initialOverrideCache = overrides;
+
+    return this._initialOverrideCache;
+  }
+
+  _get(relPath, fallback = undefined) {
+    const actorValue = foundry.utils.getProperty(
+      this.actor,
+      `${this.systemPath}.${relPath}`
+    );
+    if (actorValue !== undefined) return actorValue;
+
+    // Fallback to INITIAL_ACTOR_DATA overrides (from __type marker), if any
+    const overrides = this._resolveInitialOverrides();
+    if (overrides) {
+      const overrideValue = foundry.utils.getProperty(overrides, relPath);
+      if (overrideValue !== undefined) return overrideValue;
+    }
+
+    return fallback;
+  }
+
+  _set(relPath, value) {
+    foundry.utils.setProperty(this.actor, `${this.systemPath}.${relPath}`, value);
   }
 
   // ---- Instance extra deps (per derived spec id) ----
@@ -41,16 +107,6 @@ export class BaseType {
       if (!extra.length) return s;
       return { ...s, deps: [...(s.deps ?? []), ...extra] };
     });
-  }
-
-  _get(relPath, fallback = undefined) {
-    return (
-      foundry.utils.getProperty(this.actor, `${this.systemPath}.${relPath}`) ?? fallback
-    );
-  }
-
-  _set(relPath, value) {
-    foundry.utils.setProperty(this.actor, `${this.systemPath}.${relPath}`, value);
   }
 
   /**
