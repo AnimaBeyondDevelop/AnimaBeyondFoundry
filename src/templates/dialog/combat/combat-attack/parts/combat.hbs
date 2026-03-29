@@ -74,6 +74,21 @@
   secondaryInputValue=this.attacker.combat.damage.final
 }}
 
+{{#if (and this.attacker.combat.weapon this.attacker.combat.weapon.system.isRanged.value)}}
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.throwWeapon.title')
+      inputType="checkbox"
+      disabled=this.attackSent
+      inputName="attacker.combat.projectile.value"
+      inputValue=(is 'eq' this.attacker.combat.projectile.value true)
+    }}
+  </div>
+</div>
+{{/if}}
+
 {{#if this.attacker.combat.projectile.value}}
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>

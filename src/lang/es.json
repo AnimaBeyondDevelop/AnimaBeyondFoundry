@@ -761,6 +761,7 @@
   "macros.combat.dialog.noRoll.title": "Sin tirar dado",
   "macros.combat.dialog.poorVisibility.title": "Escasa visibilidad",
   "macros.combat.dialog.targetInCover.title": "Blanco en cobertura",
+  "macros.combat.dialog.throwWeapon.title": "Lanzar arma",
   "macros.combat.dialog.highGround.title": "Terreno elevado",
   "macros.combat.dialog.distance.title": "Bocajarro",
   "macros.combat.dialog.notEnoughFatigue.title": "No tienes puntos de cansancio para usar",

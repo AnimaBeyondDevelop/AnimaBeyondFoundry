@@ -307,16 +307,22 @@ export class CombatAttackDialog extends FormApplication {
           fatigueUsed: { value: fatigueUsed * 15, apply: true }
         };
 
-        let projectile = { value: false, type: '' };
+        // Respeta el valor del formulario para projectile (checkbox del usuario)
+        let projectile = this.modalData.attacker.combat.projectile ?? {
+          value: false,
+          type: ''
+        };
 
-        if (weapon?.system.isRanged.value) {
-          projectile = {
-            value: true,
-            type: weapon.system.shotType.value
-          };
+        // Si el usuario activó el lanzamiento, asegura que tipo esté establecido correctamente
+        if (projectile.value && weapon?.system.isRanged.value && !projectile.type) {
+          projectile.type = weapon.system.shotType.value;
           if (weapon.system.shotType.value === 'shot') {
             projectile.name = weapon.system.ammo?.name;
           }
+        }
+
+        // Aplica modificadores de distancia SOLO si es lanzamiento
+        if (projectile.value) {
           if (
             (!distance.enable && distance.check) ||
             (distance.enable && distance.value <= 1)
@@ -684,12 +690,8 @@ export class CombatAttackDialog extends FormApplication {
         this.attackerActor.system.characteristics.primaries.strength.mod;
     } else {
       combat.weapon = weapon;
-      if (weapon?.system.isRanged.value) {
-        combat.projectile = {
-          value: true,
-          type: weapon.system.shotType.value
-        };
-      } else {
+      // Preserva el valor existente del checkbox; solo resetea si es undefined
+      if (!combat.projectile || combat.projectile.value === undefined) {
         combat.projectile = {
           value: false,
           type: ''
@@ -730,10 +732,19 @@ export class CombatAttackDialog extends FormApplication {
       delete formData['attacker.mystic.spellGrade'];
     }
 
+    // Convierte checkbox a booleano
+    if (formData['attacker.combat.projectile.value'] !== undefined) {
+      formData['attacker.combat.projectile.value'] =
+        formData['attacker.combat.projectile.value'] === 'on' ||
+        formData['attacker.combat.projectile.value'] === true;
+    }
+
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
     if (prevWeapon !== this.modalData.attacker.combat.weaponUsed) {
       this.modalData.attacker.combat.criticSelected = undefined;
+      // Resetea projectile a false cuando cambia de arma
+      this.modalData.attacker.combat.projectile = { value: false, type: '' };
     }
     if (prevSpell !== this.modalData.attacker.mystic.spellUsed) {
       const { spells } = this.attackerActor.system.mystic;

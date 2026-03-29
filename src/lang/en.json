@@ -759,6 +759,7 @@
   "macros.combat.dialog.noRoll.title": "Without dice roll",
   "macros.combat.dialog.poorVisibility.title": "Poor visibility",
   "macros.combat.dialog.targetInCover.title": "Target in Cover",
+  "macros.combat.dialog.throwWeapon.title": "Throw weapon",
   "macros.combat.dialog.highGround.title": "High ground",
   "macros.combat.dialog.distance.title": "Point blank",
   "macros.combat.dialog.notEnoughFatigue.title": "Don't have enough fatigue points to use",
