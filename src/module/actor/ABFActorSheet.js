@@ -67,13 +67,56 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   async close(options = {}) {
-    // Cancel any pending debounced update
-    this._flushPendingUpdate?.cancel?.();
-    this._pendingUpdate = {};
+    this._isClosing = true;
 
-    await super.close({ ...options, submit: false });
+    try {
+      await this._flushPendingSheetUpdatesImmediately();
 
-    this.position.width = this.getWidthDependingFromContent();
+      // Capture image before close; persist it after close to avoid re-render race.
+      const nextImg = this._getEditedActorImage();
+
+      await super.close({
+        ...options,
+        // Avoid submitting the whole form on close: it can persist derived/AE-applied values.
+        submit: options.submit ?? false
+      });
+
+      await this._persistActorImageIfChanged(nextImg);
+
+      this.position.width = this.getWidthDependingFromContent();
+    } finally {
+      this._isClosing = false;
+    }
+  }
+
+  _getEditedActorImage() {
+    const imgEl = this.element?.find?.("[data-edit='img']")?.[0];
+    return imgEl?.getAttribute?.('src')?.trim?.() ?? '';
+  }
+
+  async _persistActorImageIfChanged(nextImg = '') {
+    if (!this.options.editable) return false;
+
+    if (!nextImg || nextImg === this.actor.img) return false;
+
+    await this.actor.update({ img: nextImg });
+    await this._refreshActorDirectoryImage(nextImg);
+    return true;
+  }
+
+  async _refreshActorDirectoryImage(nextImg) {
+    const actorDirectory = ui.actors ?? ui.sidebar?.tabs?.actors ?? null;
+
+    actorDirectory?.render?.(true);
+
+    const selectors = [
+      `[data-entry-id="${this.actor.id}"] img`,
+      `[data-document-id="${this.actor.id}"] img`
+    ];
+
+    for (const selector of selectors) {
+      actorDirectory?.element?.find?.(selector)?.attr?.('src', nextImg);
+    }
   }
 
   getWidthDependingFromContent() {
@@ -85,6 +128,8 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   async _render(force, options = {}) {
+    if (this._isClosing) return;
+
     // If user permission is exactly LIMITED, then display image popout and quit; else do normal render
     if (force && this.actor.testUserPermission(game.user, 'LIMITED', { exact: true })) {
       this.displayActorImagePopout();
@@ -154,6 +199,27 @@ export default class ABFActorSheet extends ActorSheet {
     ]);
   }
 
+  async _flushPendingSheetUpdatesImmediately() {
+    const flat = this._pendingUpdate;
+
+    this._flushPendingUpdate?.cancel?.();
+    this._pendingUpdate = {};
+
+    await this._applyFlatChanges(flat);
+  }
+
+  async _applyFlatChanges(flat) {
+    if (!flat || Object.keys(flat).length === 0) return;
+
+    const [actorChanges, itemChanges] = splitAsActorAndItemChanges(flat);
+
+    await this.updateItems(itemChanges);
+
+    if (actorChanges && Object.keys(actorChanges).length > 0) {
+      await this.actor.update(actorChanges);
+    }
+  }
+
   _setupDebouncedSheetUpdates(html) {
     this._pendingUpdate = {};
 
@@ -164,15 +230,7 @@ export default class ABFActorSheet extends ActorSheet {
         const flat = this._pendingUpdate;
         this._pendingUpdate = {};
 
-        if (!flat || Object.keys(flat).length === 0) return;
-
-        const [actorChanges, itemChanges] = splitAsActorAndItemChanges(flat);
-
-        await this.updateItems(itemChanges);
-
-        if (actorChanges && Object.keys(actorChanges).length > 0) {
-          await this.actor.update(actorChanges);
-        }
+        await this._applyFlatChanges(flat);
       }, 150);
 
     // IMPORTANT: remove previous handlers for this sheet instance
