@@ -3,6 +3,8 @@
  */
 export const getWeaponRangeFromStrength = strength => {
   switch (strength) {
+    case 1:
+    case 2:
     case 3:
       return -30;
     case 4:
