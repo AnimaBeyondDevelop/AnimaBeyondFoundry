@@ -6,6 +6,19 @@ import ABFFoundryRoll from '../../rolls/ABFFoundryRoll.js';
 import { ABFSupernaturalShieldData } from '../../combat/ABFSupernaturalShieldData';
 import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
 
+const DEFAULT_SUPERNATURAL_SHIELD_STATE = {
+  dobleDamage: false,
+  immuneToDamage: false
+};
+
+const normalizeDefenderState = defender => ({
+  ...defender,
+  supernaturalShield: {
+    ...DEFAULT_SUPERNATURAL_SHIELD_STATE,
+    ...(defender?.supernaturalShield ?? {})
+  }
+});
+
 const getInitialData = (attacker, defender, options = {}) => {
   const attackerActor = attacker.actor;
   const defenderActor = defender.actor;
@@ -22,16 +35,12 @@ const getInitialData = (attacker, defender, options = {}) => {
       counterAttackBonus: options.counterAttackBonus,
       isReady: false
     },
-    defender: {
+    defender: normalizeDefenderState({
       token: defender,
       actor: defenderActor,
       customModifier: 0,
-      supernaturalShield: {
-        dobleDamage: false,
-        immuneToDamage: false
-      },
       isReady: false
-    }
+    })
   };
 };
 
@@ -221,6 +230,45 @@ export class GMCombatDialog extends FormApplication {
       defender.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
+    this.render();
+  }
+
+  /**
+   * Prepara el diálogo para un contraataque: intercambia atacante y defensor,
+   * resetea los datos de resultado y mantiene el diálogo abierto.
+   * @param {number} counterAttackBonus - Bonificación del contraataque
+   */
+  prepareForCounterAttack(counterAttackBonus) {
+    // Intercambia los roles: el defensor se convierte en atacante
+    const previousAttacker = this.modalData.attacker;
+    const previousDefender = this.modalData.defender;
+
+    this.modalData.attacker = {
+      ...previousDefender,
+      customModifier: 0,
+      counterAttackBonus,
+      isReady: false,
+      result: undefined
+    };
+    this.modalData.defender = normalizeDefenderState({
+      ...previousAttacker,
+      customModifier: 0,
+      isReady: false,
+      result: undefined,
+      supernaturalShield: DEFAULT_SUPERNATURAL_SHIELD_STATE
+    });
+
+    // Resetea estado transitorio del ciclo previo
+    this.modalData.calculations = undefined;
+    this.modalData.ui.resistanceRoll = false;
+
+    // Actualiza el flag de isCounter si es necesario
+    // (después del primer contraataque, todos son "contadores")
+    if (!this.modalData.ui.isCounter) {
+      this.modalData.ui.isCounter = true;
+    }
+
+    // Renderiza el diálogo actualizado
     this.render();
   }
 
@@ -426,9 +474,10 @@ export class GMCombatDialog extends FormApplication {
   }
 
   applyDamageSupernaturalShieldIfBeAble(supShieldId) {
-    const { dobleDamage, immuneToDamage } = this.modalData.defender.supernaturalShield;
+    const { dobleDamage, immuneToDamage } =
+      this.modalData.defender.supernaturalShield ?? DEFAULT_SUPERNATURAL_SHIELD_STATE;
     const defenderIsWinner =
-      this.modalData.calculations.winner == this.modalData.defender.token;
+      this.modalData.calculations.winner === this.modalData.defender.token;
     const damage = this.modalData.attacker.result?.values.damage;
     if (
       defenderIsWinner &&

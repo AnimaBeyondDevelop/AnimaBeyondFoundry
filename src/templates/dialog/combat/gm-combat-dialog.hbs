@@ -451,16 +451,14 @@
             }}
           {{/if}}
           {{#if this.calculations.canCounter}}
-            {{#unless this.ui.isCounter}}
-              {{>
-              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-                class="counterattack-bonus"
-                title=(localize 'macros.combat.dialog.counterAttackBonus.title')
-                inputType="text"
-                disabled=true
-                inputValue=this.calculations.counterAttackBonus
-              }}
-            {{/unless}}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="counterattack-bonus"
+              title=(localize 'macros.combat.dialog.counterAttackBonus.title')
+              inputType="text"
+              disabled=true
+              inputValue=this.calculations.counterAttackBonus
+            }}
           {{/if}}
         </div>
         <div class='ready-buttons'>
@@ -470,12 +468,10 @@
             </button>
           {{/if}}
           {{#if this.calculations.canCounter}}
-            {{#unless this.ui.isCounter}}
-              <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}'
-                      class='animabf-button make-counter'>
-                {{localize 'macros.combat.dialog.counterAttackButton.title'}}
-              </button>
-            {{/unless}}
+            <button title='{{localize 'macros.combat.dialog.counterAttackButtonTooltip.title'}}'
+                    class='animabf-button make-counter'>
+              {{localize 'macros.combat.dialog.counterAttackButton.title'}}
+            </button>
           {{/if}}
           {{#if this.ui.resistanceRoll}}
             <button title='{{localize 'macros.combat.dialog.rollResistanceButtonTooltip.title'}}'
