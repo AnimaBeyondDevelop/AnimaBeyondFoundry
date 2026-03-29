@@ -388,6 +388,11 @@ export class GMCombatDialog extends FormApplication {
     this.render();
   }
   async applyValuesIfBeAble(resistanceRoll) {
+    // Si no hay cálculos (ej: en un contraataque que acaba de resetear), no aplicar valores
+    if (!this.modalData.calculations) {
+      return;
+    }
+
     if (this.modalData.attacker.result?.type === 'combat') {
       this.attackerActor.applyFatigue(this.modalData.attacker.result.values.fatigueUsed);
     }
@@ -474,6 +479,11 @@ export class GMCombatDialog extends FormApplication {
   }
 
   applyDamageSupernaturalShieldIfBeAble(supShieldId) {
+    // Protección: si no hay cálculos o datos necesarios, no continuar
+    if (!this.modalData.calculations || !this.modalData.defender.result) {
+      return;
+    }
+
     const { dobleDamage, immuneToDamage } =
       this.modalData.defender.supernaturalShield ?? DEFAULT_SUPERNATURAL_SHIELD_STATE;
     const defenderIsWinner =
@@ -523,6 +533,11 @@ export class GMCombatDialog extends FormApplication {
   }
 
   executeCombatMacro(resistanceRoll) {
+    // Protección: no ejecutar macro si no hay cálculos (contraataque recién iniciado)
+    if (!this.modalData.calculations) {
+      return;
+    }
+
     const missedAttackValue = game.settings.get(
       game.animabf.id,
       ABFSettingsKeys.MACRO_MISS_ATTACK_VALUE
