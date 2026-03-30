@@ -574,6 +574,7 @@
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Damage Resistance",
   "anima.ui.tabs.domine": "Domine",
+  "anima.ui.header.toggle": "Collapse/Expand header",
   "anima.ui.tabs.main": "Main",
   "anima.ui.tabs.mystic": "Mystic",
   "anima.ui.tabs.psychic": "Psychic",

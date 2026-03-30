@@ -1,5 +1,18 @@
-<div class='actor-header'>
-  {{> "systems/animabf/templates/actor/parts/header/parts/top.hbs"}}
+<div class='actor-header {{#if (is 'eq' (lookup xRoot.system.ui.contractibleItems "actor-header") true)}}header-collapsed{{/if}}'>
+  <div class='header-collapse-bar'>
+    {{> "systems/animabf/templates/actor/parts/header/parts/top.hbs"}}
+    <img
+      class='header-collapse-button contractible-button {{#if (is 'eq' (lookup xRoot.system.ui.contractibleItems "actor-header") true)}}contracted{{/if}}'
+      data-contractible-item-id='actor-header'
+      src='/systems/animabf/assets/icons/own/expand-up.png'
+      title='{{localize "anima.ui.header.toggle"}}'
+    />
+    <input
+      type='hidden'
+      name='system.ui.contractibleItems.actor-header'
+      value={{lookup xRoot.system.ui.contractibleItems "actor-header"}}
+    />
+  </div>
 
   <div class='columns'>
     <div class='first-column'>
