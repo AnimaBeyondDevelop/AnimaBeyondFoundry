@@ -10,7 +10,7 @@ import { mutatePerceptionPenalty } from './calculations/actor/modifiers/mutatePe
 import { mutateAllActionsModifier } from './calculations/actor/modifiers/mutateAllActionsModifier';
 import { mutateSecondariesData } from './calculations/actor/secondaries/mutateSecondariesData';
 import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
-import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
+import { mutateMovementType, mutateMovementDistances } from './calculations/actor/general/mutateMovementType';
 import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
 import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicData';
 import { mutateDomineData } from './calculations/actor/domine/mutateDomineData';
@@ -38,6 +38,7 @@ const DERIVED_DATA_FUNCTIONS = [
   mutatePerceptionPenalty,
   // mutateCombatData,
   mutateMovementType,
+  mutateMovementDistances,
   //mutateSecondariesData,
   mutateAmmoData,
   mutateWeaponsData,
