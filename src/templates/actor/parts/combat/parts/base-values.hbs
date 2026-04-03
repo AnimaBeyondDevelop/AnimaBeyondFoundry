@@ -53,6 +53,20 @@
     }}
     {{>
       "systems/animabf/templates/common/ui/types/numerical-value.hbs"
+      cssClass="crit-damage-bonus"
+      title=(localize "anima.ui.combat.baseValues.critDamageBonus.title")
+      path="system.general.modifiers.critDamageBonus"
+      value=system.general.modifiers.critDamageBonus
+    }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize "anima.ui.combat.baseValues.automaticCrit.title")
+      inputType="checkbox"
+      inputName="system.general.modifiers.automaticCrit.value"
+      inputValue=system.general.modifiers.automaticCrit.value
+    }}
+    {{>
+      "systems/animabf/templates/common/ui/types/numerical-value.hbs"
       cssClass="damage-reduction"
       title=(localize "anima.ui.combat.baseValues.damageReduction.title")
       path="system.combat.damageReduction"

@@ -11,3 +11,5 @@ foundryconfig.json
 dist/
 package/
 /packs
+
+*.code-workspace

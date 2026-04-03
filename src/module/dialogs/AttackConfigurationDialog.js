@@ -57,7 +57,9 @@ export class AttackConfigurationDialog extends FormApplication {
           criticSelected: undefined,
           weapon: resolvedWeapon,
           projectile: { value: false, type: '' },
-          damage: { special: 0, final: 0 }
+          damage: { special: 0, final: 0 },
+          critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+          automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value)
         },
         distance: { value: 0, enable: false, check: false }
       },
@@ -187,8 +189,9 @@ export class AttackConfigurationDialog extends FormApplication {
         .damageType(game.animabf.combat.DamageType.NONE)
         .presence(Number(weapon.system.presence?.final?.value ?? 0))
         .isProjectile(!!combat.projectile?.value)
-        .automaticCrit(false)
+        .automaticCrit(!!combat.automaticCrit)
         .critBonus(0)
+        .critDamageBonus(Number(combat.critDamageBonus ?? 0))
         .attackerId(actor.id)
         .weaponId(weapon.id)
         .targets(this.modalData.targets ?? [])

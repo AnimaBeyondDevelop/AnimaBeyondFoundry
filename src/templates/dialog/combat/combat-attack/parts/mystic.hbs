@@ -61,6 +61,27 @@
   secondaryInputValue=attacker.mystic.damage.final
 }}
 
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.critDamageBonus.title')
+  inputName="attacker.mystic.critDamageBonus"
+  inputValue=this.attacker.mystic.critDamageBonus
+  disabled=this.attackSent
+}}
+
+<div class='columns'>
+  <div>
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+      title=(localize 'macros.combat.dialog.automaticCrit.title')
+      inputType="checkbox"
+      inputName="attacker.mystic.automaticCrit"
+      inputValue=(is 'eq' this.attacker.mystic.automaticCrit true)
+      disabled=this.attackSent
+    }}
+  </div>
+</div>
+
 
 {{#if (is 'eq' this.attacker.distance.enable false)}}
 <div class='columns'>

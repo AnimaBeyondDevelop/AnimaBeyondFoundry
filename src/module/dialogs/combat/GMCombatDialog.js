@@ -349,12 +349,26 @@ export class GMCombatDialog extends FormApplication {
             counterAttackBonus: combatResult.counterAttackBonus
           };
         } else {
+          const damage = combatResult.damage;
+          const lifePoints =
+            this.defenderActor.system.characteristics.secondaries.lifePoints.value;
+          const automaticCrit = !!attacker.result.values?.automaticCrit;
+          const isCritical =
+            automaticCrit || (lifePoints > 0 && (damage / lifePoints) * 100 >= 50);
+          const critDamageBonus = Number(attacker.result.values?.critDamageBonus ?? 0);
+          const critBonus = Number(attacker.result.values?.critBonus ?? 0);
+          const baseCriticalValue = isCritical ? damage + critBonus + critDamageBonus : 0;
+
           this.modalData.calculations = {
             difference: attackerTotal - defenderTotal,
             atResistance,
             canCounter: false,
             winner,
-            damage: combatResult.damage
+            damage,
+            finalArmor: finalAt,
+            reducedArmor,
+            isCritical,
+            baseCriticalValue
           };
         }
       } else {
