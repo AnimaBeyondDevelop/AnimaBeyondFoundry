@@ -1,3 +1,5 @@
+@use '../variable' as *;
+
 .custom-action-bar {
   z-index: calc(var(--z-index-app) - 1); 
   position: fixed;

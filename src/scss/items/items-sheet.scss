@@ -1,7 +1,7 @@
-@import './base/main.scss';
+@use './base/main';
 
-@import './weapon/weapon.scss';
-@import './ammo/ammo.scss';
-@import './armor/armor.scss';
-@import './spell/spell.scss';
-@import './psychic-power/psychic-power.scss';
+@use './weapon/weapon';
+@use './ammo/ammo';
+@use './armor/armor';
+@use './spell/spell';
+@use './psychic-power/psychic-power';

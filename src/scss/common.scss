@@ -1,5 +1,5 @@
-@import 'variable';
-@import 'mixin';
+@use 'variable' as *;
+@use 'mixin' as *;
 
 .window-app .window-content {
   background: $light-cream;

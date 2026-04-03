@@ -1,4 +1,5 @@
-@import '../variable';
+@use '../variable' as *;
+@use '../mixin' as *;
 
 /* [Attack Data] Group header (collapsible header at the top of the chat card) */
 .attack-data-message {

@@ -1,4 +1,5 @@
-@import '../../variable';
+@use '../../variable' as *;
+@use '../../mixin' as *;
 
 .psychic {
   .psychic-main-tab {

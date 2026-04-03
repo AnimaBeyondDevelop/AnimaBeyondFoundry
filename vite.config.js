@@ -3,6 +3,13 @@ import copy from 'rollup-plugin-copy';
 import path from 'path';
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   resolve: {
     alias: {
       '@module': path.resolve(__dirname, './src/module'),
