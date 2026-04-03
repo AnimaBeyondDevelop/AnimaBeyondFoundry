@@ -1,8 +1,51 @@
-@import '../../variable';
+@use '../../variable' as *;
 
 .actor-header {
   display: flex;
   flex-direction: column;
+
+  // Colapso del header completo
+  &.header-collapsed {
+    .columns {
+      display: none;
+    }
+  }
+
+  .header-collapse-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.25rem;
+    border-bottom: 2px solid $red;
+
+    .header-top {
+      flex: 1 1 auto;
+      width: 100%;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .header-collapse-button {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, transform 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.contracted {
+      transform: rotate(180deg);
+    }
+  }
+
 
   .columns {
     display: grid;
@@ -53,11 +96,10 @@
   .header-top {
     display: flex;
     height: 2.75rem;
-    margin-bottom: 0.25rem;
-
-    border-bottom: 2px solid $red;
+    margin-bottom: 0;
 
     .actor-name-input {
+      flex: 1;
       font-size: 2.5rem;
       height: 100%;
       font-weight: bold;

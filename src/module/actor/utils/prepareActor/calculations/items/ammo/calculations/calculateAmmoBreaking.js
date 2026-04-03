@@ -5,7 +5,10 @@ import { getWeaponBreakingFromStrength } from '../../weapon/util/getWeaponBreaki
  * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const calculateAmmoBreaking = (ammo, data) => {
-  const strength = data.characteristics.primaries.strength.value;
+  const strength =
+    data.characteristics.primaries.strength.final?.value ??
+    data.characteristics.primaries.strength.value ??
+    0;
 
   return (
     ammo.system.breaking.base.value +

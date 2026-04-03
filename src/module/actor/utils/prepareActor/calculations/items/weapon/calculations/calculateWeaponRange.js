@@ -5,29 +5,43 @@ import { getWeaponRangeFromStrength } from '../util/getWeaponRangeFromStrength';
  * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const calculateWeaponRange = (weapon, data) => {
-  const strength = weapon.system.hasOwnStr.value
-    ? weapon.system.weaponStrength.final.value
-    : data.characteristics.primaries.strength.value;
+  const actorStrength =
+    data.characteristics.primaries.strength.final?.value ??
+    data.characteristics.primaries.strength.value ??
+    0;
 
-  const baseRange = weapon.system.range.base.value;
+  const rawStrength = Number(
+    weapon.system.hasOwnStr.value
+      ? weapon.system.weaponStrength.final.value
+      : actorStrength
+  );
 
-  const rangeFromStrength = getWeaponRangeFromStrength(strength);
+  const quality = Number(weapon.system.quality.value ?? 0);
+  const inhuman = !!data.general?.settings?.inhuman?.value;
+  const zen = !!data.general?.settings?.zen?.value;
+  const hasInhumanOrZen = inhuman || zen;
 
-  if (strength > 10 && weapon.system.quality.value < 5) {
-    return baseRange + 50;
+  let effectiveStrength = rawStrength;
+
+  // Cap por condiciones de la tabla (de mayor a menor para mantener el mayor tramo permitido).
+  if (effectiveStrength >= 16 && (!zen || quality < 20)) {
+    effectiveStrength = 15;
   }
 
-  if ((strength === 12 || strength === 13) && weapon.system.quality.value < 10) {
-    return baseRange + 100;
+  if (effectiveStrength >= 14 && (!zen || quality < 15)) {
+    effectiveStrength = 13;
   }
 
-  if ((strength === 14 || strength === 15) && weapon.system.quality.value < 15) {
-    return baseRange + 500;
+  if (effectiveStrength >= 12 && (!hasInhumanOrZen || quality < 10)) {
+    effectiveStrength = 11;
   }
 
-  if (strength > 15 && weapon.system.quality.value < 20) {
-    return baseRange + 5000;
+  if (effectiveStrength >= 11 && (!hasInhumanOrZen || quality < 5)) {
+    effectiveStrength = 10;
   }
+
+  const baseRange = Number(weapon.system.range.base.value ?? 0);
+  const rangeFromStrength = getWeaponRangeFromStrength(effectiveStrength);
 
   if (rangeFromStrength !== undefined) {
     return Math.max(0, baseRange + rangeFromStrength);

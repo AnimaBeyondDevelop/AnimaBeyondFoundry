@@ -59,7 +59,7 @@
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="psychic-power"
           }}
-          <div class='effect-row'>
+          <div class='effect-row{{#unless (is "eq" power.system.combatType.value "attack")}}{{#unless (is "eq" power.system.combatType.value "defense")}} no-combat-type{{/unless}}{{/unless}}'>
             {{#if (is 'eq' power.system.combatType.value 'attack')}}
               <p class="damage-title">
                 {{localize "anima.ui.mystic.spell.grade.damage.title"}}
@@ -75,7 +75,7 @@
             </p>
           </div>
             {{#each power.system.effects as |effect key|}}
-              <div class='effect-row'>
+              <div class='effect-row{{#unless (is "eq" power.system.combatType.value "attack")}}{{#unless (is "eq" power.system.combatType.value "defense")}} no-combat-type{{/unless}}{{/unless}}'>
                 <button
                   type="button"
                   class="input difficulty psychic-cast-button"

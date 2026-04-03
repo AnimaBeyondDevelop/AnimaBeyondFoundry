@@ -74,6 +74,7 @@
   secondaryInputValue=this.attacker.combat.damage.final
 }}
 
+
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
   title=(localize 'macros.combat.dialog.critDamageBonus.title')
@@ -81,6 +82,7 @@
   inputValue=this.attacker.combat.critDamageBonus
   disabled=this.attackSent
 }}
+
 
 <div class='columns'>
   <div>
@@ -94,6 +96,7 @@
     }}
   </div>
 </div>
+
 
 {{#if this.attacker.combat.projectile.value}}
 {{#if (is 'eq' this.attacker.distance.enable false)}}

@@ -227,38 +227,27 @@ export class WSGMCombatManager extends WSCombatManager {
         this.endCombat();
       },
       onCounterAttack: bonus => {
-        this.endCombat();
+        // En lugar de cerrar y crear un nuevo diálogo,
+        // prepara el diálogo actual para el contraataque
+        this.combat.prepareForCounterAttack(bonus);
 
-        this.combat = new GMCombatDialog(
-          defender,
-          attacker,
-          {
-            onClose: () => {
-              this.endCombat();
-            },
-            onCounterAttack: () => {
-              this.endCombat();
-            }
-          },
-          {
-            isCounter: true,
-            counterAttackBonus: bonus
-          }
-        );
-
-        if (canOwnerReceiveMessage(defender.actor)) {
+        // Si el nuevo atacante es controlado por el usuario,
+        // emite el evento para que haga su contraataque
+        if (canOwnerReceiveMessage(this.combat.attackerActor)) {
           const newMsg = {
             type: GMMessageTypes.CounterAttack,
             payload: {
-              attackerTokenId: defender.id,
-              defenderTokenId: attacker.id,
+              attackerTokenId: this.combat.attackerToken.id,
+              defenderTokenId: this.combat.defenderToken.id,
               counterAttackBonus: bonus
             }
           };
 
           this.emit(newMsg);
         } else {
-          this.manageAttack(defender, attacker, bonus);
+          // Si el nuevo atacante es controlado por el GM,
+          // abre el diálogo de ataque para que haga su contraataque
+          this.manageAttack(this.combat.attackerToken, this.combat.defenderToken, bonus);
         }
       }
     });

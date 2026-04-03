@@ -4,21 +4,62 @@ import { mutatePrimaryModifiers } from './calculations/actor/mutatePrimaryModifi
 import { mutateTotalArmor } from './calculations/actor/mutateTotalArmor';
 import { mutateAmmoData } from './calculations/items/ammo/mutateAmmoData';
 import { mutateArmorsData } from './calculations/items/armor/mutateArmorsData';
-import { mutateNaturalPenalty } from './calculations/actor/modifiers/mutateNaturalPenalty';
+import {
+  mutateNaturalPenaltyUnreduced,
+  mutateNaturalPenaltyReduction,
+  mutateNaturalPenaltyFinal
+} from './calculations/actor/modifiers/mutateNaturalPenalty';
 import { mutatePhysicalModifier } from './calculations/actor/modifiers/mutatePhysicalModifier';
 import { mutatePerceptionPenalty } from './calculations/actor/modifiers/mutatePerceptionPenalty';
 import { mutateAllActionsModifier } from './calculations/actor/modifiers/mutateAllActionsModifier';
 import { mutateSecondariesData } from './calculations/actor/secondaries/mutateSecondariesData';
 import { mutateCombatData } from './calculations/actor/combat/mutateCombatData';
-import { mutateMovementType } from './calculations/actor/general/mutateMovementType';
-import { mutateMysticData } from './calculations/actor/mystic/mutateMysticData';
-import { mutatePsychicData } from './calculations/actor/psychic/mutatePsychicData';
-import { mutateDomineData } from './calculations/actor/domine/mutateDomineData';
+import { mutateMovementType, mutateMovementDistances } from './calculations/actor/general/mutateMovementType';
+import {
+  mutateActMain,
+  mutateActVias,
+  mutateInnateMagicMain,
+  mutateInnateMagicVias,
+  mutateMagicProjection,
+  mutateMagicProjectionOffensive,
+  mutateMagicProjectionDefensive,
+  mutateZeonMaintenance,
+  mutateSummoningSummon,
+  mutateSummoningBanish,
+  mutateSummoningBind,
+  mutateSummoningControl,
+  mutatePreparedSpells
+} from './calculations/actor/mystic/mutateMysticData';
+import {
+  mutatePsychicProjection,
+  mutatePsychicProjectionOffensive,
+  mutatePsychicProjectionDefensive,
+  mutatePsychicPotential
+} from './calculations/actor/psychic/mutatePsychicData';
+import {
+  mutateKiAccumulationStrength,
+  mutateKiAccumulationAgility,
+  mutateKiAccumulationDexterity,
+  mutateKiAccumulationConstitution,
+  mutateKiAccumulationWillPower,
+  mutateKiAccumulationPower
+} from './calculations/actor/domine/mutateDomineData';
 import { mutateInitiative } from './calculations/actor/mutateInitiative';
 import { mutateRegenerationType } from './calculations/actor/general/mutateRegenerationType';
 import { mutatePresence } from './calculations/actor/mutatePresence';
 import { mutateTotalLevel } from './calculations/actor/mutateTotalLevel';
-import { mutateResistances } from './calculations/actor/mutateResistances';
+import {
+  mutatePhysicalResistanceBase,
+  mutatePhysicalResistanceFinal,
+  mutateDiseaseResistanceBase,
+  mutateDiseaseResistanceFinal,
+  mutatePoisonResistanceBase,
+  mutatePoisonResistanceFinal,
+  mutateMagicResistanceBase,
+  mutateMagicResistanceFinal,
+  mutatePsychicResistanceBase,
+  mutatePsychicResistanceFinal
+} from './calculations/actor/mutateResistances';
 
 import { runEffectFlow } from '../effectFow';
 import { inflateSystemFromTypeMarkers } from '../../types/inflateSystemFromTypeMarkers';
@@ -27,24 +68,61 @@ import { inflateSystemFromTypeMarkers } from '../../types/inflateSystemFromTypeM
 const DERIVED_DATA_FUNCTIONS = [
   mutateTotalLevel,
   mutatePresence,
-  mutateResistances,
+  // Resistances — base must run before final (final depends on base)
+  mutatePhysicalResistanceBase,
+  mutatePhysicalResistanceFinal,
+  mutateDiseaseResistanceBase,
+  mutateDiseaseResistanceFinal,
+  mutatePoisonResistanceBase,
+  mutatePoisonResistanceFinal,
+  mutateMagicResistanceBase,
+  mutateMagicResistanceFinal,
+  mutatePsychicResistanceBase,
+  mutatePsychicResistanceFinal,
   // mutatePrimaryModifiers,
   mutateRegenerationType,
   mutateAllActionsModifier,
   mutateArmorsData,
   mutateTotalArmor,
-  mutateNaturalPenalty,
+  // Natural penalty — unreduced/reduction before final
+  mutateNaturalPenaltyUnreduced,
+  mutateNaturalPenaltyReduction,
+  mutateNaturalPenaltyFinal,
   mutatePhysicalModifier,
   mutatePerceptionPenalty,
   // mutateCombatData,
   mutateMovementType,
+  mutateMovementDistances,
   //mutateSecondariesData,
   mutateAmmoData,
   mutateWeaponsData,
   mutateInitiative,
-  mutateMysticData,
-  mutatePsychicData,
-  mutateDomineData
+  // Mystic — ACT before InnateMagic (InnateMagic depends on ACT final)
+  mutateActMain,
+  mutateActVias,
+  mutateInnateMagicMain,
+  mutateInnateMagicVias,
+  mutateMagicProjection,
+  mutateMagicProjectionOffensive,
+  mutateMagicProjectionDefensive,
+  mutateZeonMaintenance,
+  mutateSummoningSummon,
+  mutateSummoningBanish,
+  mutateSummoningBind,
+  mutateSummoningControl,
+  mutatePreparedSpells,
+  // Psychic
+  mutatePsychicProjection,
+  mutatePsychicProjectionOffensive,
+  mutatePsychicProjectionDefensive,
+  mutatePsychicPotential,
+  // Domine — ki accumulations
+  mutateKiAccumulationStrength,
+  mutateKiAccumulationAgility,
+  mutateKiAccumulationDexterity,
+  mutateKiAccumulationConstitution,
+  mutateKiAccumulationWillPower,
+  mutateKiAccumulationPower
 ];
 
 export const prepareActor = async actor => {

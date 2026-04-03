@@ -115,9 +115,10 @@ export class AttackConfigurationDialog extends FormApplication {
     } else {
       combat.weapon = weapon;
       combat.weaponUsed = weapon._id;
-      combat.projectile = weapon?.system?.isRanged?.value
-        ? { value: true, type: weapon.system.shotType.value }
-        : { value: false, type: '' };
+      // Preserva el valor existente del checkbox; solo resetea si es undefined
+      if (!combat.projectile || combat.projectile.value === undefined) {
+        combat.projectile = { value: false, type: '' };
+      }
 
       if (!combat.criticSelected) {
         combat.criticSelected = weapon.system.critic.primary.value;
@@ -213,6 +214,13 @@ export class AttackConfigurationDialog extends FormApplication {
     // Prevent weapon changes if locked
     if (this.modalData.ui.lockedWeapon) {
       delete formData['attacker.combat.weaponUsed'];
+    }
+
+    // Convierte checkbox a booleano
+    if (formData['attacker.combat.projectile.value'] !== undefined) {
+      formData['attacker.combat.projectile.value'] =
+        formData['attacker.combat.projectile.value'] === 'on' ||
+        formData['attacker.combat.projectile.value'] === true;
     }
 
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);

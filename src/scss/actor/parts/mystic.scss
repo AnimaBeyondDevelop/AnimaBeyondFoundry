@@ -1,4 +1,5 @@
-@import '../../variable';
+@use '../../variable' as *;
+@use '../../mixin' as *;
 
 .mystic {
   .mystic-main-tab {

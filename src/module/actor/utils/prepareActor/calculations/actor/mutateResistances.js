@@ -5,9 +5,64 @@ const mutateResistance = (resistance, presence, attribute) => {
   resistance.final.value = baseValue + resistance.special.value;
 };
 
+// ── Individual base+final per resistance ──────────────────────────────────────
+
+const makeResistanceMutator = (key, attrKey) => {
+  const fnBase = data => {
+    const presence = data.general.presence.final.value;
+    const attr = data.characteristics.primaries[attrKey];
+    const resistance = data.characteristics.secondaries.resistances[key];
+    resistance.base.value = presence + attr.mod.value;
+  };
+  fnBase.abfFlow = {
+    deps: [
+      'system.general.presence.final.value',
+      `system.characteristics.primaries.${attrKey}.final.value`
+    ],
+    mods: [`system.characteristics.secondaries.resistances.${key}.base.value`]
+  };
+  Object.defineProperty(fnBase, 'name', { value: `mutate${capitalize(key)}ResistanceBase` });
+
+  const fnFinal = data => {
+    const resistance = data.characteristics.secondaries.resistances[key];
+    resistance.final.value = resistance.base.value + resistance.special.value;
+  };
+  fnFinal.abfFlow = {
+    deps: [
+      `system.characteristics.secondaries.resistances.${key}.base.value`,
+      `system.characteristics.secondaries.resistances.${key}.special.value`
+    ],
+    mods: [`system.characteristics.secondaries.resistances.${key}.final.value`]
+  };
+  Object.defineProperty(fnFinal, 'name', { value: `mutate${capitalize(key)}ResistanceFinal` });
+
+  return { fnBase, fnFinal };
+};
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+const physicalR = makeResistanceMutator('physical', 'constitution');
+const diseaseR = makeResistanceMutator('disease', 'constitution');
+const poisonR = makeResistanceMutator('poison', 'constitution');
+const magicR = makeResistanceMutator('magic', 'power');
+const psychicR = makeResistanceMutator('psychic', 'willPower');
+
+export const mutatePhysicalResistanceBase = physicalR.fnBase;
+export const mutatePhysicalResistanceFinal = physicalR.fnFinal;
+export const mutateDiseaseResistanceBase = diseaseR.fnBase;
+export const mutateDiseaseResistanceFinal = diseaseR.fnFinal;
+export const mutatePoisonResistanceBase = poisonR.fnBase;
+export const mutatePoisonResistanceFinal = poisonR.fnFinal;
+export const mutateMagicResistanceBase = magicR.fnBase;
+export const mutateMagicResistanceFinal = magicR.fnFinal;
+export const mutatePsychicResistanceBase = psychicR.fnBase;
+export const mutatePsychicResistanceFinal = psychicR.fnFinal;
+
 /**
- * Adds to primary characteristics object without modifiers its modifiers,
- * calculated based on its value
+ * @deprecated Use individual mutate*Resistance* functions instead.
+ * Kept for backwards compatibility.
  * @param {import('../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const mutateResistances = data => {

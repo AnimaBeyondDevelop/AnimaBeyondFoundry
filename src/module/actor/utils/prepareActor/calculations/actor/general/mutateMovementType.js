@@ -30,11 +30,6 @@ export const mutateMovementType = data => {
     armorsMovementRestrictions;
 
   movementType.final.value = Math.max(0, movementType.final.value);
-
-  data.characteristics.secondaries.movement.maximum.value =
-    calculateMovementInMetersFromMovementType(movementType.final.value);
-  data.characteristics.secondaries.movement.running.value =
-    calculateMovementInMetersFromMovementType(Math.max(0, movementType.final.value - 2));
 };
 
 mutateMovementType.abfFlow = {
@@ -48,7 +43,29 @@ mutateMovementType.abfFlow = {
     'system.combat.armors'
   ],
   mods: [
-    'system.characteristics.secondaries.movementType.final.value',
+    'system.characteristics.secondaries.movementType.final.value'
+  ]
+};
+
+/**
+ * Calculates movement distances (maximum and running) from the final movement type value.
+ * This is a separate derived function so that Active Effects modifying movementType.final.value
+ * are applied before these values are computed.
+ */
+export const mutateMovementDistances = data => {
+  const { movementType } = data.characteristics.secondaries;
+
+  data.characteristics.secondaries.movement.maximum.value =
+    calculateMovementInMetersFromMovementType(movementType.final.value);
+  data.characteristics.secondaries.movement.running.value =
+    calculateMovementInMetersFromMovementType(Math.max(0, movementType.final.value - 2));
+};
+
+mutateMovementDistances.abfFlow = {
+  deps: [
+    'system.characteristics.secondaries.movementType.final.value'
+  ],
+  mods: [
     'system.characteristics.secondaries.movement.maximum.value',
     'system.characteristics.secondaries.movement.running.value'
   ]

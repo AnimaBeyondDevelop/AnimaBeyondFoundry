@@ -5,7 +5,10 @@ import { getStrengthRequirement } from './getStrengthRequirement';
  * @param {import('../../../../../../../types/Actor').ABFActorDataSourceData} data
  */
 export const calculateStrengthRequiredPenalty = (weapon, data) => {
-  const actorStrength = data.characteristics.primaries.strength.value;
+  const actorStrength =
+    data.characteristics.primaries.strength.final?.value ??
+    data.characteristics.primaries.strength.value ??
+    0;
 
   const strengthDifference = getStrengthRequirement(weapon) - actorStrength;
 
