@@ -1,19 +1,19 @@
-@import 'util/spacing-helpers.scss';
-@import 'util/display-helpers.scss';
-@import 'mixin.scss';
-@import 'variable.scss';
-@import 'common.scss';
+@use 'util/spacing-helpers';
+@use 'util/display-helpers';
+@use 'mixin';
+@use 'variable';
+@use 'common';
 
-@import 'actor/actor-sheet.scss';
-@import 'items/items-sheet.scss';
-@import 'chat/combat-result-message.scss';
-@import 'chat/attack-data-message.scss';
-@import 'custom-hotbar/custom-hotbar.scss';
+@use 'actor/actor-sheet';
+@use 'items/items-sheet';
+@use 'chat/combat-result-message';
+@use 'chat/attack-data-message';
+@use 'custom-hotbar/custom-hotbar';
 
-@import 'dialog/gm-combat-dialog.scss';
-@import 'dialog/combat-request-dialog.scss';
-@import 'dialog/combat-attack-dialog';
-@import 'dialog/combat-defense-dialog';
-@import 'dialog/generic-dialog.scss';
-@import 'dialog/confirmation-prompt-dialog';
-@import 'dialog/new-supernatural-shield';
+@use 'dialog/gm-combat-dialog';
+@use 'dialog/combat-request-dialog';
+@use 'dialog/combat-attack-dialog';
+@use 'dialog/combat-defense-dialog';
+@use 'dialog/generic-dialog';
+@use 'dialog/confirmation-prompt-dialog';
+@use 'dialog/new-supernatural-shield';

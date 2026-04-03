@@ -1,5 +1,5 @@
-@import '../../variable';
-@import '../../variable';
+@use '../../variable' as *;
+@use '../../mixin' as *;
 
 .general {
   .first-tab {
