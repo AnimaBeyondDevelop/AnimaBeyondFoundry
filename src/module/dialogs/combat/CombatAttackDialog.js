@@ -470,6 +470,9 @@ export class CombatAttackDialog extends FormApplication {
         this.attackerActor.setFlag(game.animabf.id, 'lastOffensiveSpellUsed', spellUsed);
         const { spells } = this.attackerActor.system.mystic;
         const spell = spells.find(w => w._id === spellUsed);
+        if (!spell) {
+          return;
+        }
         const spellGradeData = spell?.system.grades[spellGrade];
         if (this.attackerActor.evaluateCast(spellCasting)) {
           this.modalData.attacker.mystic.overrideMysticCast = true;
@@ -690,7 +693,10 @@ export class CombatAttackDialog extends FormApplication {
       mystic.spellUsed = spells.find(w => w.system.combatType.value === 'attack')?._id;
     }
     const spell = spells.find(w => w._id === mystic.spellUsed);
-    const spellGradeData = spell?.system.grades[mystic.spellGrade];
+    if (!spell && mystic.spellUsed) {
+      mystic.spellUsed = undefined;
+    }
+    const spellGradeData = spell?.system?.grades?.[mystic.spellGrade];
     mystic.damage.final = mystic.damage.special + damageCheck(spellGradeData);
     mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(
       spell,

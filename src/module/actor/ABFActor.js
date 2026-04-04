@@ -409,27 +409,43 @@ export class ABFActor extends Actor {
     casted = { prepared: false, innate: false },
     override = false
   ) {
-    const spellCasting = INITIAL_SPELL_CASTING_DATA;
-    spellCasting.casted = casted;
-    spellCasting.override = override;
+    const spellCasting = {
+      zeon: { ...INITIAL_SPELL_CASTING_DATA.zeon },
+      canCast: { ...INITIAL_SPELL_CASTING_DATA.canCast },
+      casted: { ...casted },
+      override
+    };
+
     spellCasting.zeon.accumulated = this.system.mystic.zeon.accumulated ?? 0;
 
     if (override) {
       return spellCasting;
     }
 
-    spellCasting.zeon.cost = spell?.system.grades[spellGrade].zeon.value;
+    const spellGradeData = spell?.system?.grades?.[spellGrade];
+    spellCasting.zeon.cost = spellGradeData?.zeon?.value ?? 0;
+
+    // Defensive fallback: if the selected spell no longer exists, keep default cast flags.
+    if (!spell?.name) {
+      spellCasting.casted.innate = false;
+      spellCasting.casted.prepared = false;
+      return spellCasting;
+    }
+
+    const preparedSpells = this.system.mystic.preparedSpells ?? [];
     spellCasting.canCast.prepared =
-      this.system.mystic.preparedSpells.find(
-        ps => ps.name == spell.name && ps.system.grade.value == spellGrade
-      )?.system.prepared.value ?? false;
-    const spellVia = spell?.system.via.value;
+      preparedSpells.find(
+        ps => ps?.name === spell.name && ps?.system?.grade?.value === spellGrade
+      )?.system?.prepared?.value ?? false;
+
+    const spellVia = spell?.system?.via?.value;
     const innateMagic = this.system.mystic.innateMagic;
-    const innateVia = innateMagic.via.find(i => i.name == spellVia);
+    const innateVia = innateMagic?.via?.find(i => i?.name === spellVia);
     const innateMagicValue =
-      innateMagic.via.length !== 0 && innateVia
+      innateMagic?.via?.length !== 0 && innateVia
         ? innateVia.system.final.value
-        : innateMagic.main.final.value;
+        : innateMagic?.main?.final?.value ?? 0;
+
     spellCasting.canCast.innate = innateMagicValue >= spellCasting.zeon.cost;
 
     if (!spellCasting.canCast.innate) {
@@ -438,6 +454,7 @@ export class ABFActor extends Actor {
     if (!spellCasting.canCast.prepared) {
       spellCasting.casted.prepared = false;
     }
+
     return spellCasting;
   }
 
