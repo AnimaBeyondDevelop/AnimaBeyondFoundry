@@ -273,7 +273,7 @@ export class CombatAttackDialog extends FormApplication {
   updatePermissions(allowed) {
     this.modalData.allowed = allowed;
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   async close(options) {
@@ -435,7 +435,7 @@ export class CombatAttackDialog extends FormApplication {
         });
 
         this.modalData.attackSent = true;
-        this.render();
+        setTimeout(() => this.render(), 0);
       }
     });
 
@@ -540,7 +540,7 @@ export class CombatAttackDialog extends FormApplication {
 
         this.modalData.attackSent = true;
 
-        this.render();
+        setTimeout(() => this.render(), 0);
       }
     });
 
@@ -659,7 +659,7 @@ export class CombatAttackDialog extends FormApplication {
 
         this.modalData.attackSent = true;
 
-        this.render();
+        setTimeout(() => this.render(), 0);
       }
     });
   }
