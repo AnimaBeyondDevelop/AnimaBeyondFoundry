@@ -94,12 +94,11 @@ export default class ABFFoundryRoll extends Roll {
   // TODO Evaluate not finished this | Promise<this>
   /** @returns {Promise<Roll>} */
   async evaluate(options) {
-    await super.evaluate(options);
+    const { async: _async, ...safeOptions } = options ?? {};
+    await super.evaluate(safeOptions);
 
-    await this.animabfRoll?.evaluate(options);
+    await this.animabfRoll?.evaluate(safeOptions);
 
-    return new Promise((resolve, reject) => {
-      resolve(this);
-    });
+    return this;
   }
 }
