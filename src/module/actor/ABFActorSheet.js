@@ -190,13 +190,18 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   _activateBaseTypeContextMenu(html) {
-    new ContextMenu(html, '.base-type-row', [
-      {
-        name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
-        icon: '<i class="fas fa-edit fa-fw"></i>',
-        callback: target => this._openBaseTypeEditor(target[0])
-      }
-    ]);
+    new foundry.applications.ux.ContextMenu.implementation(
+      html instanceof HTMLElement ? html : html[0],
+      '.base-type-row',
+      [
+        {
+          name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
+          icon: '<i class="fas fa-edit fa-fw"></i>',
+          callback: target => this._openBaseTypeEditor(target)
+        }
+      ],
+      { jQuery: false }
+    );
   }
 
   async _flushPendingSheetUpdatesImmediately() {
@@ -470,7 +475,7 @@ export default class ABFActorSheet extends ActorSheet {
         name: this.i18n.localize('contextualMenu.common.options.edit'),
         icon: '<i class="fas fa-edit fa-fw"></i>',
         callback: target => {
-          const { itemId } = target[0].dataset;
+          const { itemId } = target.dataset;
 
           if (itemId) {
             const item = this.actor.items.get(itemId);
@@ -501,7 +506,7 @@ export default class ABFActorSheet extends ActorSheet {
           if (customCallbackFn) {
             customCallbackFn(this.actor, target);
           } else {
-            const id = target[0].dataset.itemId;
+            const id = target.dataset.itemId;
 
             if (!id) {
               throw new Error(
@@ -537,9 +542,14 @@ export default class ABFActorSheet extends ActorSheet {
       });
     }
 
-    return new ContextMenu(this.element.find(containerSelector), rowSelector, [
-      ...otherItems
-    ]);
+    return new foundry.applications.ux.ContextMenu.implementation(
+      this.element instanceof HTMLElement
+        ? this.element.querySelector(containerSelector)
+        : this.element.find(containerSelector)[0],
+      rowSelector,
+      [...otherItems],
+      { jQuery: false }
+    );
   };
 
   _getLinkedEffect(item) {

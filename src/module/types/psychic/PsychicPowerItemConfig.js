@@ -156,7 +156,7 @@ export const PsychicPowerItemConfig = ABFItemConfigFactory({
     });
   },
   prepareItem: async psychicPower => {
-    psychicPower.system.enrichedDescription = await TextEditor.enrichHTML(
+    psychicPower.system.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       psychicPower.system.description?.value ?? '',
       { async: true }
     );

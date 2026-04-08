@@ -154,7 +154,7 @@ export const prepareActor = async actor => {
     await runEffectFlow(actor, { derivedFns: DERIVED_DATA_FUNCTIONS });
 
     // 4) UI-only derived (AQUÍ VA “LO NUEVO”)
-    actor.system.general.description.enriched = await TextEditor.enrichHTML(
+    actor.system.general.description.enriched = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       actor.system.general.description.value,
       { async: true }
     );

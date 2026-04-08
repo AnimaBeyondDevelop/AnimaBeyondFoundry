@@ -133,7 +133,7 @@ export const SpellItemConfig = ABFItemConfigFactory({
     });
   },
   prepareItem: async item => {
-    item.system.enrichedDescription = await TextEditor.enrichHTML(
+    item.system.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       item.system.description?.value ?? '',
       { async: true }
     );
