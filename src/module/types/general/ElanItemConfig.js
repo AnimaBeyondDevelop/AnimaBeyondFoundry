@@ -19,7 +19,7 @@ export const ElanItemConfig = ABFItemConfigFactory({
         name: game.i18n.localize('contextualMenu.elan.options.addPower'),
         icon: '<i class="fas fa-plus" aria-hidden="true"></i>',
         callback: target => {
-          const { itemId } = target[0].dataset;
+          const { itemId } = (target instanceof HTMLElement ? target : target[0]).dataset;
 
           if (!itemId) throw new Error('elanId missing');
 

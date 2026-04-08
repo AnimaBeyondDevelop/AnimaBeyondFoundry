@@ -30,7 +30,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
         name: game.i18n.localize('contextualMenu.superntarualShield.options.release'),
         icon: '<i class="fas fa-times" aria-hidden="true"></i>',
         callback: target => {
-          const { itemId } = target[0].dataset;
+          const { itemId } = (target instanceof HTMLElement ? target : target[0]).dataset;
 
           if (!itemId) throw new Error('supernaturalShieldId missing');
 
