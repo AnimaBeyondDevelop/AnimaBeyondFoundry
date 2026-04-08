@@ -168,7 +168,7 @@ Hooks.once('ready', async () => {
   });
 });
 
-Hooks.on('renderChatMessageHTML', async (message, html) => {
+async function _handleChatMessage(message, html) {
   html.addEventListener('click', e => {
     const btn = e.target.closest('.contractible-button');
     if (btn) btn.closest('.contractible-group')?.classList.toggle('contracted');
@@ -290,8 +290,16 @@ Hooks.on('renderChatMessageHTML', async (message, html) => {
   const fn = foundry.applications?.handlebars?.renderTemplate ?? renderTemplate;
   const chipsHTML = await fn(Templates.Chat.AttackTargetsChips, { targets: enriched });
   row.innerHTML = chipsHTML;
-});
+}
 
+// v14 uses renderChatMessageHTML (html is HTMLElement), v13 uses renderChatMessage (html is jQuery)
+Hooks.once('init', () => {
+  if (game.release.generation >= 14) {
+    Hooks.on('renderChatMessageHTML', (message, html) => _handleChatMessage(message, html));
+  } else {
+    Hooks.on('renderChatMessage', (message, $html) => _handleChatMessage(message, $html[0]));
+  }
+});
 Hooks.on('getChatMessageContextOptions', (_app, menu) => {
   const menuItemFactories = getChatContextMenuFactories();
 
