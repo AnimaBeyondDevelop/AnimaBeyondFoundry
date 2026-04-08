@@ -1,8 +1,8 @@
 import { ABFItems } from './ABFItems';
 import { ITEM_CONFIGURATIONS } from '../actor/utils/prepareItems/constants';
 
-const _ItemSheet = foundry.appv1?.sheets?.ItemSheet ?? ItemSheet;
-export default class ABFItemSheet extends _ItemSheet {
+const ItemSheetV1 = foundry.appv1?.sheets?.ItemSheet ?? ItemSheet;
+export default class ABFItemSheet extends ItemSheetV1 {
   constructor(object, options) {
     super(object, options);
 
@@ -88,7 +88,7 @@ export default class ABFItemSheet extends _ItemSheet {
     const aeData = this.item.toActiveEffectData();
     if (!aeData) return super._render(force, options);
 
-    const parent = this.item.parent;
+    const { parent } = this.item;
     const isOwned = parent instanceof Actor;
 
     // ============================
@@ -159,6 +159,5 @@ export default class ABFItemSheet extends _ItemSheet {
 
     Hooks.on('updateActiveEffect', syncHandler);
     effect.sheet?.render(true);
-    return;
   }
 }

@@ -1,8 +1,8 @@
 import { read, utils } from 'xlsx';
 import { parseExcelToActor } from '../actor/utils/parseExcelToActor.js';
 
-const _ActorDirectory = foundry.applications?.sidebar?.tabs?.ActorDirectory ?? ActorDirectory;
-export default class ABFActorDirectory extends _ActorDirectory {
+const ActorDirectoryV1 = foundry.applications?.sidebar?.tabs?.ActorDirectory ?? ActorDirectory;
+export default class ABFActorDirectory extends ActorDirectoryV1 {
   /**
    * Añadir opciones personalizadas al menú contextual del actor.
    */
@@ -14,13 +14,13 @@ export default class ABFActorDirectory extends _ActorDirectory {
       name: 'Import from Excel',
       icon: '<i class="fas fa-file-import"></i>',
       condition: li => {
-        const entryId = li.dataset.entryId;
+        const { entryId } = li.dataset;
         const document = this.collection.get(entryId);
         // Verifica que el usuario tenga al menos permiso de OWNER
         return document?.testUserPermission(game.user, 'OWNER');
       },
       callback: li => {
-        const entryId = li.dataset.entryId;
+        const { entryId } = li.dataset;
         const document = this.collection.get(entryId);
         return this.importFromExcelDialog(document);
       }
@@ -92,7 +92,7 @@ export default class ABFActorDirectory extends _ActorDirectory {
         try {
           const data = new Uint8Array(e.target.result);
           const workbook = read(data, { type: 'array' });
-          const worksheet = workbook.Sheets['NamedRangesList'];
+          const worksheet = workbook.Sheets.NamedRangesList;
           if (worksheet) {
             const rows = utils.sheet_to_json(worksheet).reduce((acc, obj) => {
               acc[obj.Name] = obj.Value;

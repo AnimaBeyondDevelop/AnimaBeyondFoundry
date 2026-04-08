@@ -15,8 +15,8 @@ import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-const _ActorSheet = foundry.appv1?.sheets?.ActorSheet ?? ActorSheet;
-export default class ABFActorSheet extends _ActorSheet {
+const ActorSheetV1 = foundry.appv1?.sheets?.ActorSheet ?? ActorSheet;
+export default class ABFActorSheet extends ActorSheetV1 {
   i18n;
 
   constructor(actor, options) {
@@ -150,7 +150,7 @@ export default class ABFActorSheet extends _ActorSheet {
   async getData(options) {
     const sheet = await super.getData(options);
 
-    const actor = this.actor; // use the real Document, not sheet.actor
+    const { actor } = this; // use the real Document, not sheet.actor
 
     if (actor?.type === 'character') {
       await actor.prepareDerivedData();
@@ -270,7 +270,7 @@ export default class ABFActorSheet extends _ActorSheet {
       const { contractibleItemId } = e.currentTarget.dataset;
       if (!contractibleItemId) return;
 
-      const ui = this.actor.system.ui;
+      const { ui } = this.actor.system;
       ui.contractibleItems = {
         ...ui.contractibleItems,
         [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
@@ -319,7 +319,7 @@ export default class ABFActorSheet extends _ActorSheet {
     const node = this.actor.typedNodes?.get(path) ?? null;
     if (!node) return;
 
-    const type = node.constructor.type;
+    const { type } = node.constructor;
 
     const app = TypeEditorRegistry.create(type, this.actor, { path });
     app?.render(true);
@@ -328,7 +328,7 @@ export default class ABFActorSheet extends _ActorSheet {
   async _onEffectControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const action = a.dataset.action;
+    const { action } = a.dataset;
     const li = a.closest('.effect');
     const itemId = li?.dataset.itemId;
     const item = itemId ? this.actor.items.get(itemId) : null;
@@ -392,12 +392,9 @@ export default class ABFActorSheet extends _ActorSheet {
         if (effect) {
           await effect.update({ disabled: !newActive });
         }
-
-        return;
       }
 
       default:
-        return;
     }
   }
 
@@ -566,7 +563,7 @@ export default class ABFActorSheet extends _ActorSheet {
   async _ensureEffectForItem(item) {
     if (!item) return null;
 
-    let effect = this._getLinkedEffect(item);
+    const effect = this._getLinkedEffect(item);
     if (effect) return effect;
 
     const rawBaseData = item.system?.effectData ?? {};
