@@ -209,7 +209,7 @@ export class GMCombatDialog extends FormApplication {
       attacker.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   updateDefenderData(result) {
@@ -230,7 +230,7 @@ export class GMCombatDialog extends FormApplication {
       defender.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   /**
@@ -269,7 +269,7 @@ export class GMCombatDialog extends FormApplication {
     }
 
     // Renderiza el diálogo actualizado
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   getData() {
