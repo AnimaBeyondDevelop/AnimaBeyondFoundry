@@ -63,7 +63,7 @@ export async function createDefaultWeaponAttack(sheet, e) {
   //   };
 
   // Keep original bindings in HBS: {{weapon...}} {{actor...}}
-  const content = await renderTemplate(Templates.Chat.AttackData, {
+  const content = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.AttackData, {
     weapon,
     actor: sheet.actor,
     attackData // for {{json attackData}} in the button

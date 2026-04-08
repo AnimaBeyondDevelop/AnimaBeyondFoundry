@@ -180,7 +180,7 @@ export class GMCombatDialog extends FormApplication {
         data.damage = this.modalData.calculations?.damage;
       }
 
-      await renderTemplate(Templates.Chat.AutoCombatResult, data).then(content => {
+      await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.AutoCombatResult, data).then(content => {
         ChatMessage.create({
           content
         });

@@ -66,7 +66,7 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
     if (!entries.length)
       return ui.notifications?.info('No se pudo auto-defender a ningún objetivo.');
 
-    const content = await renderTemplate(Templates.Chat.MultiDefenseResult, {
+    const content = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.MultiDefenseResult, {
       attackLabel: game.i18n.localize?.('chat.attackData.title') ?? 'Ataque',
       entries,
       hasRemaining: entries.some(e => !e.applied && e.damageFinal > 0),
@@ -86,7 +86,7 @@ export default async function autoDefendPendingActionHandler(message, _html, ds)
       }
     });
 
-    const content2 = await renderTemplate(Templates.Chat.MultiDefenseResult, {
+    const content2 = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.MultiDefenseResult, {
       attackLabel: game.i18n.localize?.('chat.attackData.title') ?? 'Ataque',
       entries: cm.getFlag(game.animabf.id, 'entries') ?? entries,
       hasRemaining: (cm.getFlag(game.animabf.id, 'entries') ?? entries).some(
