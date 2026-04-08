@@ -28,7 +28,7 @@ export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
     buildExtraOptionsInContextMenu: actor => [
       {
         name: game.i18n.localize('contextualMenu.superntarualShield.options.release'),
-        icon: '<i class="fa fa-times" aria-hidden="true"></i>',
+        icon: '<i class="fas fa-times" aria-hidden="true"></i>',
         callback: target => {
           const { itemId } = target[0].dataset;
 

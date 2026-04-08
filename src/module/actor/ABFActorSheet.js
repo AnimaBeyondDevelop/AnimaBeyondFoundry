@@ -197,7 +197,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
       [
         {
           name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
-          icon: '<i class="fas fa-edit fa-fw"></i>',
+          icon: '<i class="fas fa-edit"></i>',
           callback: target => this._openBaseTypeEditor(target)
         }
       ],
@@ -471,7 +471,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
     if (!itemConfig.isInternal && itemConfig.hasSheet) {
       otherItems.push({
         name: this.i18n.localize('contextualMenu.common.options.edit'),
-        icon: '<i class="fas fa-edit fa-fw"></i>',
+        icon: '<i class="fas fa-edit"></i>',
         callback: target => {
           const { itemId } = target.dataset;
 
@@ -493,7 +493,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
     if (!hideDeleteRow) {
       otherItems.push({
         name: deleteRowMessage,
-        icon: '<i class="fas fa-trash fa-fw"></i>',
+        icon: '<i class="fas fa-trash"></i>',
         callback: target => {
           if (!customCallbackFn && !fieldPath) {
             Logger.warn(
