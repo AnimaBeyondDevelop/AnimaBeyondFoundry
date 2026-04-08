@@ -153,7 +153,7 @@ export class AttackConfigurationDialog extends FormApplication {
 
     try {
       this.modalData.attackSent = true;
-      this.render();
+      setTimeout(() => this.render(), 0);
 
       const baseAttack = Number(weapon.system.attack?.final?.value ?? 0);
       const mod = Number(combat.modifier ?? 0);
@@ -205,7 +205,7 @@ export class AttackConfigurationDialog extends FormApplication {
       ui.notifications?.error('No se pudo enviar el ataque al chat.');
     } finally {
       this.modalData.attackSent = false;
-      if (this.rendered) this.render();
+      if (this.rendered) setTimeout(() => this.render(), 0);
     }
   }
 

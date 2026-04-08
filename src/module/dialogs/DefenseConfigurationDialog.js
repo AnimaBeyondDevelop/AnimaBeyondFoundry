@@ -276,7 +276,7 @@ export class DefenseConfigurationDialog extends FormApplication {
       }
 
       this.modalData.defenseSent = true;
-      this.render();
+      setTimeout(() => this.render(), 0);
 
       const vis = getChatVisibilityOptions();
 
@@ -424,7 +424,7 @@ export class DefenseConfigurationDialog extends FormApplication {
       ui.notifications?.error('No se pudo enviar la defensa al chat.');
     } finally {
       this.modalData.defenseSent = false;
-      if (this.rendered) this.render();
+      if (this.rendered) setTimeout(() => this.render(), 0);
     }
   }
 
