@@ -7,7 +7,8 @@
  * @param {Templates[]} templates
  */
 export const renderTemplates = (...templates) => {
+  const fn = foundry.applications?.handlebars?.renderTemplate ?? renderTemplate;
   return Promise.all(
-    templates.map(template => renderTemplate(template.name, template.context ?? {}))
+    templates.map(template => fn(template.name, template.context ?? {}))
   );
 };

@@ -40,7 +40,7 @@ import { macroCreators, macroExecutors } from './utils/macroCreatorRegistry.js';
 Hooks.once('init', async () => {
   Logger.log('Initializing system');
   registerSystemOnGame();
-  Logger.log('Game Id:' + System.id);
+  Logger.log(`Game Id:${System.id}`);
 
   window.ABFFoundryRoll = ABFFoundryRoll;
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
@@ -108,7 +108,7 @@ Hooks.once('ready', async () => {
   }
 
   registerCombatWebsocketRoutes();
-  //attachCustomMacroBar();
+  // attachCustomMacroBar();
   applyMigrations();
   registerGlobalTypes();
 
@@ -163,14 +163,14 @@ Hooks.once('ready', async () => {
   });
 });
 
-Hooks.on('renderChatMessage', async (message, html) => {
-  html.on('click', '.contractible-button', e => {
-    $(e.currentTarget).closest('.contractible-group').toggleClass('contracted');
+Hooks.on('renderChatMessageHTML', async (message, html) => {
+  html.addEventListener('click', e => {
+    const btn = e.target.closest('.contractible-button');
+    if (btn) btn.closest('.contractible-group')?.classList.toggle('contracted');
   });
 
   if (!game.user.isGM) {
-    html.find('.only-if-gm').remove();
-    html.find('[data-requires-permission="gm"]').remove();
+    html.querySelectorAll('.only-if-gm, [data-requires-permission="gm"]').forEach(el => el.remove());
   }
   const speakerActorId = message.speaker?.actor;
   const speakerActor = speakerActorId ? game.actors.get(speakerActorId) : null;
@@ -178,14 +178,15 @@ Hooks.on('renderChatMessage', async (message, html) => {
     speakerActor &&
     !speakerActor.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
   ) {
-    html.find('.only-if-owner').remove();
-    html.find('[data-requires-permission="owner"]').remove();
+    html.querySelectorAll('.only-if-owner, [data-requires-permission="owner"]').forEach(el => el.remove());
   }
 
-  html.on('click', '.chat-action-button', e => {
-    const action = e.currentTarget.dataset.action;
+  html.addEventListener('click', e => {
+    const btn = e.target.closest('.chat-action-button');
+    if (!btn) return;
+    const { action } = btn.dataset;
     const handler = chatActionHandlers[action];
-    if (handler) handler(message, html, e.currentTarget.dataset);
+    if (handler) handler(message, html, btn.dataset);
     else console.warn(`No handler found for action: ${action}`);
   });
 
@@ -194,18 +195,14 @@ Hooks.on('renderChatMessage', async (message, html) => {
   const flags = message.flags?.animabf ?? {};
   const targets = Array.isArray(flags.targets) ? [...flags.targets] : [];
 
-  const rowId = `#animabf-defense-row-${message.id}`;
-  const $row = html.find(rowId);
-  if (!$row.length) return;
+  const rowId = `animabf-defense-row-${message.id}`;
+  const row = html.querySelector(`#${rowId}`);
+  if (!row) return;
 
   if (!targets.length) {
-    $row.empty();
+    row.innerHTML = '';
     if (game.user.isGM) {
-      $row.append(
-        `<span class="hint" style="opacity:.7;">${game.i18n.localize(
-          'chat.attackData.noTargets'
-        )}</span>`
-      );
+      row.innerHTML = `<span class="hint" style="opacity:.7;">${game.i18n.localize('chat.attackData.noTargets')}</span>`;
     }
     return;
   }
@@ -285,10 +282,9 @@ Hooks.on('renderChatMessage', async (message, html) => {
     };
   });
 
-  const chipsHTML = await renderTemplate(Templates.Chat.AttackTargetsChips, {
-    targets: enriched
-  });
-  $row.html(chipsHTML);
+  const fn = foundry.applications?.handlebars?.renderTemplate ?? renderTemplate;
+  const chipsHTML = await fn(Templates.Chat.AttackTargetsChips, { targets: enriched });
+  row.innerHTML = chipsHTML;
 });
 
 Hooks.on('getChatMessageContextOptions', (_app, menu) => {
