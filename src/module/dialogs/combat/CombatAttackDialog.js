@@ -144,12 +144,11 @@ export class CombatAttackDialog extends FormApplication {
     const { combat, psychic, mystic } = this.modalData.attacker;
 
     if (this.modalData.attacker.distance.enable) {
+      const attackerCenter = this.modalData.attacker.token.object?.center ?? this.modalData.attacker.token.center;
+      const defenderCenter = this.modalData.defender.token.object?.center ?? this.modalData.defender.token.center;
       const calculateDistance =
-        canvas.grid.measureDistance(
-          this.modalData.attacker.token,
-          this.modalData.defender.token,
-          { gridSpaces: true }
-        ) / canvas.dimensions.distance;
+        canvas.grid.measurePath([attackerCenter, defenderCenter]).distance /
+        canvas.dimensions.distance;
       this.modalData.attacker.distance.value = calculateDistance;
     }
 
