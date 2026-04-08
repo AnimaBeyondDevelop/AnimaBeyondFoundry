@@ -25,7 +25,7 @@ export const NoteItemConfig = ABFItemConfigFactory({
     });
   },
   onAttach: async (actor, item) => {
-    item.system.enrichedName = await foundry.applications.ux.TextEditor.implementation.enrichHTML(item.name ?? '', {
+    item.system.enrichedName = await (foundry.applications?.ux?.TextEditor?.implementation ?? TextEditor).enrichHTML(item.name ?? '', {
       async: true
     });
   }
