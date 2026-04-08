@@ -60,12 +60,17 @@ Hooks.once('init', async () => {
   CONFIG.Item.documentClass = ABFItem;
   CONFIG.ui.actors = ABFActorDirectory;
 
-  // Register custom sheets (if any)
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet(System.id, ABFActorSheet, { makeDefault: true });
+  const ActorsCollection = foundry.documents?.collections?.Actors ?? Actors;
+  const ItemsCollection = foundry.documents?.collections?.Items ?? Items;
+  const ActorSheetV1 = foundry.appv1?.sheets?.ActorSheet ?? ActorSheet;
+  const ItemSheetV1 = foundry.appv1?.sheets?.ItemSheet ?? ItemSheet;
 
-  Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet(System.id, ABFItemSheet, {
+  // Register custom sheets (if any)
+  ActorsCollection.unregisterSheet('core', ActorSheetV1);
+  ActorsCollection.registerSheet(System.id, ABFActorSheet, { makeDefault: true });
+
+  ItemsCollection.unregisterSheet('core', ItemSheetV1);
+  ItemsCollection.registerSheet(System.id, ABFItemSheet, {
     makeDefault: true
   });
 
