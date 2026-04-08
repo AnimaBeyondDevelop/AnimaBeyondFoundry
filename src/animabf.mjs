@@ -292,14 +292,8 @@ async function _handleChatMessage(message, html) {
   row.innerHTML = chipsHTML;
 }
 
-// v14 uses renderChatMessageHTML (html is HTMLElement), v13 uses renderChatMessage (html is jQuery)
-Hooks.once('init', () => {
-  if (game.release.generation >= 14) {
-    Hooks.on('renderChatMessageHTML', (message, html) => _handleChatMessage(message, html));
-  } else {
-    Hooks.on('renderChatMessage', (message, $html) => _handleChatMessage(message, $html[0]));
-  }
-});
+// renderChatMessageHTML available since v13 (renderChatMessage deprecated in v13, removed in v15)
+Hooks.on('renderChatMessageHTML', (message, html) => _handleChatMessage(message, html));
 Hooks.on('getChatMessageContextOptions', (_app, menu) => {
   const menuItemFactories = getChatContextMenuFactories();
 
