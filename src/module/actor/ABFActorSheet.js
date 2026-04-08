@@ -15,7 +15,8 @@ import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-export default class ABFActorSheet extends ActorSheet {
+const _ActorSheet = foundry.appv1?.sheets?.ActorSheet ?? ActorSheet;
+export default class ABFActorSheet extends _ActorSheet {
   i18n;
 
   constructor(actor, options) {

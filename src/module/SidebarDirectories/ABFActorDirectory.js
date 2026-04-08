@@ -1,7 +1,8 @@
 import { read, utils } from 'xlsx';
 import { parseExcelToActor } from '../actor/utils/parseExcelToActor.js';
 
-export default class ABFActorDirectory extends ActorDirectory {
+const _ActorDirectory = foundry.applications?.sidebar?.tabs?.ActorDirectory ?? ActorDirectory;
+export default class ABFActorDirectory extends _ActorDirectory {
   /**
    * Añadir opciones personalizadas al menú contextual del actor.
    */

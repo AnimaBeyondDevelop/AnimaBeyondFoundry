@@ -1,7 +1,8 @@
 import { ABFItems } from './ABFItems';
 import { ITEM_CONFIGURATIONS } from '../actor/utils/prepareItems/constants';
 
-export default class ABFItemSheet extends ItemSheet {
+const _ItemSheet = foundry.appv1?.sheets?.ItemSheet ?? ItemSheet;
+export default class ABFItemSheet extends _ItemSheet {
   constructor(object, options) {
     super(object, options);
 

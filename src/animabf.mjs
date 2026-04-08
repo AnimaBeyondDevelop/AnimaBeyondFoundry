@@ -46,7 +46,7 @@ Hooks.once('init', async () => {
   CONFIG.Dice.rolls = [ABFFoundryRoll, ...CONFIG.Dice.rolls];
 
   // Load Handlebars templates
-  await loadTemplates(TEMPLATE_PATHS);
+  await (foundry.applications.handlebars.loadTemplates ?? loadTemplates)(TEMPLATE_PATHS);
   await registerHandlebarsPartials(HandlebarsPartials);
 
   // Assign custom classes and constants here
