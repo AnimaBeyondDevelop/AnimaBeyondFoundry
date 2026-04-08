@@ -191,17 +191,19 @@ export default class ABFActorSheet extends ActorSheetV1 {
   }
 
   _activateBaseTypeContextMenu(html) {
-    new foundry.applications.ux.ContextMenu.implementation(
+    const ContextMenuImpl = foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    new ContextMenuImpl(
       html instanceof HTMLElement ? html : html[0],
       '.base-type-row',
       [
         {
           name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
           icon: '<i class="fas fa-edit"></i>',
-          callback: target => this._openBaseTypeEditor(target)
+          callback: target => this._openBaseTypeEditor(target instanceof HTMLElement ? target : target[0])
         }
       ],
-      { jQuery: false }
+      ...(isV14 ? [{ jQuery: false }] : [])
     );
   }
 
@@ -473,7 +475,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
         name: this.i18n.localize('contextualMenu.common.options.edit'),
         icon: '<i class="fas fa-edit"></i>',
         callback: target => {
-          const { itemId } = target.dataset;
+          const { itemId } = (target instanceof HTMLElement ? target : target[0]).dataset;
 
           if (itemId) {
             const item = this.actor.items.get(itemId);
@@ -504,7 +506,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
           if (customCallbackFn) {
             customCallbackFn(this.actor, target);
           } else {
-            const id = target.dataset.itemId;
+            const id = (target instanceof HTMLElement ? target : target[0]).dataset.itemId;
 
             if (!id) {
               throw new Error(
@@ -540,13 +542,15 @@ export default class ABFActorSheet extends ActorSheetV1 {
       });
     }
 
-    return new foundry.applications.ux.ContextMenu.implementation(
+    const ContextMenuImpl = foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    return new ContextMenuImpl(
       this.element instanceof HTMLElement
         ? this.element.querySelector(containerSelector)
         : this.element.find(containerSelector)[0],
       rowSelector,
       [...otherItems],
-      { jQuery: false }
+      ...(isV14 ? [{ jQuery: false }] : [])
     );
   };
 
