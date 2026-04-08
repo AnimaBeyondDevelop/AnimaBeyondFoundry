@@ -13,13 +13,13 @@
       "changes": [
         {
           "key": "system.characteristics.secondaries.lifePoints.max",
-          "mode": 2,
+          "type": "add",
           "value": "((@system.characteristics.primaries.constitution.final.value-@system.characteristics.primaries.constitution.base.value)*10)+(statMod(@system.characteristics.primaries.constitution.final.value)-statMod(@system.characteristics.primaries.constitution.base.value))",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.fatigue.max",
-          "mode": 2,
+          "type": "add",
           "value": "@system.characteristics.primaries.constitution.final.value-@system.characteristics.primaries.constitution.base.value",
           "priority": null
         }

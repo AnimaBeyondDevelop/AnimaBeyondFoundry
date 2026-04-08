@@ -13,7 +13,7 @@
       "changes": [
         {
           "key": "system.combat.wearArmor.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "statMod(@system.characteristics.primaries.strength.final.value)-statMod(@system.characteristics.primaries.strength.base.value)",
           "priority": null
         }

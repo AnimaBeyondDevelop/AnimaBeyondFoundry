@@ -15,91 +15,91 @@
       "changes": [
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.combat.dodge.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.initiative.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.mystic.act.main.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.power.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.willPower.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.psychic.psychicProjection.imbalance.offensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.psychic.psychicProjection.imbalance.defensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.mystic.magicProjection.imbalance.offensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.mystic.magicProjection.imbalance.defensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         }
@@ -124,37 +124,37 @@
       "changes": [
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.combat.block.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.combat.dodge.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.initiative.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.mystic.act.main.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "1",
           "priority": null
         }
@@ -196,91 +196,91 @@
       "changes": [
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.combat.dodge.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.initiative.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.mystic.act.main.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.power.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.willPower.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.psychic.psychicProjection.imbalance.offensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.psychic.psychicProjection.imbalance.defensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.mystic.magicProjection.imbalance.offensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.mystic.magicProjection.imbalance.defensive.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         }

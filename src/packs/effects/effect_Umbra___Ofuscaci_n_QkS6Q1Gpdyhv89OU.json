@@ -15,13 +15,13 @@
       "changes": [
         {
           "key": "system.secondaries.subterfuge.hide.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.secondaries.subterfuge.stealth.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         }

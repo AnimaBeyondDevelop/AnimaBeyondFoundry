@@ -13,49 +13,49 @@
       "changes": [
         {
           "key": "system.general.modifiers.allActions.special.value",
-          "mode": 2,
+          "type": "add",
           "value": "@characteristics.primaries.power.mod",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.power.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.willPower.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.general.settings.zen.value",
-          "mode": 5,
+          "type": "override",
           "value": "true",
           "priority": null
         }
@@ -82,43 +82,43 @@
       "changes": [
         {
           "key": "system.general.modifiers.allActions.special.value",
-          "mode": 2,
+          "type": "add",
           "value": "@characteristics.primaries.power.mod",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.power.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.willPower.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         }
@@ -162,49 +162,49 @@
       "changes": [
         {
           "key": "system.general.modifiers.allActions.special.value",
-          "mode": 2,
+          "type": "add",
           "value": "@characteristics.primaries.power.mod",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.power.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.willPower.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "floor(@characteristics.primaries.power.mod/15)",
           "priority": null
         },
         {
           "key": "system.general.settings.zen.value",
-          "mode": 5,
+          "type": "override",
           "value": "true",
           "priority": null
         }

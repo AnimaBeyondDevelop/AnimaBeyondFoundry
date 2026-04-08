@@ -16,19 +16,19 @@
       "changes": [
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-30",
           "priority": null
         },
         {
           "key": "system.combat.dodge.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-30",
           "priority": null
         }

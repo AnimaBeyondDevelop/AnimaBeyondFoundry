@@ -15,13 +15,13 @@
       "changes": [
         {
           "key": "system.characteristics.secondaries.initiative.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "5",
           "priority": null
         },
         {
           "key": "system.general.modifiers.allActions.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "5",
           "priority": null
         }
@@ -46,13 +46,13 @@
       "changes": [
         {
           "key": "system.characteristics.secondaries.initiative.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "5",
           "priority": null
         },
         {
           "key": "system.general.modifiers.allActions.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "5",
           "priority": null
         }

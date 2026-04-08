@@ -13,67 +13,67 @@
       "changes": [
         {
           "key": "system.mystic.act.main.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.power.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.domine.kiAccumulation.willPower.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.characteristics.primaries.agility.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.characteristics.primaries.constitution.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.characteristics.primaries.dexterity.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         },
         {
           "key": "system.characteristics.primaries.strength.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         }

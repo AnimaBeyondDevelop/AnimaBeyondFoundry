@@ -15,37 +15,37 @@
       "changes": [
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.combat.dodge.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.secondaries.perception.notice.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         },
         {
           "key": "system.secondaries.perception.search.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         },
         {
           "key": "system.secondaries.perception.track.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         }
@@ -70,49 +70,49 @@
       "changes": [
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.combat.block.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.combat.dodge.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.psychic.psychicProjection.imbalance.defensive.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.mystic.magicProjection.imbalance.defensive.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.secondaries.perception.notice.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         },
         {
           "key": "system.secondaries.perception.search.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         },
         {
           "key": "system.secondaries.perception.track.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         }

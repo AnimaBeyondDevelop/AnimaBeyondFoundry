@@ -15,7 +15,7 @@
       "changes": [
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         }
@@ -70,7 +70,7 @@
       "changes": [
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         }

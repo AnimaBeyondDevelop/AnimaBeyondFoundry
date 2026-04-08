@@ -15,19 +15,19 @@
       "changes": [
         {
           "key": "system.general.modifiers.allActions.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "30",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.regenerationType.mod.value",
-          "mode": 2,
+          "type": "add",
           "value": "8",
           "priority": null
         },
         {
           "key": "system.general.settings.zen.value",
-          "mode": 4,
+          "type": "upgrade",
           "value": "True",
           "priority": null
         }

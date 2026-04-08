@@ -15,13 +15,13 @@
       "changes": [
         {
           "key": "system.general.modifiers.allActions.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.regenerationType.mod.value",
-          "mode": 2,
+          "type": "add",
           "value": "2",
           "priority": null
         }

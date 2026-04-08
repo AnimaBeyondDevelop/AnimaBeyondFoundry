@@ -15,25 +15,25 @@
       "changes": [
         {
           "key": "system.characteristics.secondaries.initiative.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "15",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.dodge.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         }
@@ -58,25 +58,25 @@
       "changes": [
         {
           "key": "system.characteristics.secondaries.initiative.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.block.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.dodge.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         }
@@ -118,25 +118,25 @@
       "changes": [
         {
           "key": "system.characteristics.secondaries.initiative.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "15",
           "priority": null
         },
         {
           "key": "system.combat.block.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "10",
           "priority": null
         },
         {
           "key": "system.combat.dodge.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         }

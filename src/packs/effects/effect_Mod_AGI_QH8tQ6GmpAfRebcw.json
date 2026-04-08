@@ -13,13 +13,13 @@
       "changes": [
         {
           "key": "system.combat.dodge.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "statMod(@system.characteristics.primaries.agility.final.value)-statMod(@system.characteristics.primaries.agility.base.value)",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.initiative.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "statMod(@system.characteristics.primaries.agility.final.value)-statMod(@system.characteristics.primaries.agility.base.value)",
           "priority": null
         }
