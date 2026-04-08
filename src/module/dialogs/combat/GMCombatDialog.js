@@ -399,7 +399,7 @@ export class GMCombatDialog extends FormApplication {
   async _updateObject(event, formData) {
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
   async applyValuesIfBeAble(resistanceRoll) {
     // Si no hay cálculos (ej: en un contraataque que acaba de resetear), no aplicar valores

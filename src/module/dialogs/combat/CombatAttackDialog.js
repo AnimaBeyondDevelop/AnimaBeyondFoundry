@@ -809,6 +809,6 @@ export class CombatAttackDialog extends FormApplication {
         power?.system.critic.value ?? game.animabf.weapon.NoneWeaponCritic.NONE;
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }

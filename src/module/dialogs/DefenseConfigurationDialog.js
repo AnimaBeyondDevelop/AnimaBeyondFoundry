@@ -438,7 +438,7 @@ export class DefenseConfigurationDialog extends FormApplication {
       insertValues: true
     });
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   async render(force, options) {

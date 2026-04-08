@@ -809,6 +809,6 @@ export class CombatDefenseDialog extends FormApplication {
       ];
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }

@@ -158,6 +158,6 @@ export class SpellAttackConfigurationDialog extends FormApplication {
 
   async _updateObject(_event, formData) {
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }

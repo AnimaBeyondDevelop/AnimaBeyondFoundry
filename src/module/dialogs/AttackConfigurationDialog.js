@@ -232,6 +232,6 @@ export class AttackConfigurationDialog extends FormApplication {
       }
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }
