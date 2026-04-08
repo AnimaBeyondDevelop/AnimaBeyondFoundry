@@ -13,3 +13,8 @@ package/
 /packs
 
 *.code-workspace
+
+# Local Kiro/agents files
+.kiro/
+.agents/
+AGENTS.md
