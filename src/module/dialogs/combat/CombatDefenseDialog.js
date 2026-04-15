@@ -435,7 +435,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       this.modalData.defenseSent = true;
 
-      this.render();
+      setTimeout(() => this.render(), 0);
     });
 
     html.find('.send-defense-damage-resistance').click(() => {
@@ -453,7 +453,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       this.modalData.defenseSent = true;
 
-      this.render();
+      setTimeout(() => this.render(), 0);
     });
 
     html.find('.send-mystic-defense').click(async () => {
@@ -561,7 +561,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       this.modalData.defenseSent = true;
 
-      this.render();
+      setTimeout(() => this.render(), 0);
     });
 
     html.find('.send-psychic-defense').click(async () => {
@@ -691,7 +691,7 @@ export class CombatDefenseDialog extends FormApplication {
 
       this.modalData.defenseSent = true;
 
-      this.render();
+      setTimeout(() => this.render(), 0);
     });
   }
 
@@ -809,6 +809,6 @@ export class CombatDefenseDialog extends FormApplication {
       ];
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }

@@ -15,7 +15,7 @@
       "changes": [
         {
           "key": "system.general.modifiers.physicalActions.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "-200",
           "priority": null
         }
@@ -40,19 +40,19 @@
       "changes": [
         {
           "key": "system.general.modifiers.physicalActions.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-40",
           "priority": null
         },
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         },
         {
           "key": "system.combat.block.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "20",
           "priority": null
         }
@@ -94,25 +94,25 @@
       "changes": [
         {
           "key": "system.general.modifiers.physicalActions.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-60",
           "priority": null
         },
         {
           "key": "system.combat.attack.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.combat.block.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         },
         {
           "key": "system.combat.dodge.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-20",
           "priority": null
         }
@@ -154,7 +154,7 @@
       "changes": [
         {
           "key": "system.general.modifiers.physicalActions.base.value",
-          "mode": 2,
+          "type": "add",
           "value": "-200",
           "priority": null
         }

@@ -180,7 +180,7 @@ export class GMCombatDialog extends FormApplication {
         data.damage = this.modalData.calculations?.damage;
       }
 
-      await renderTemplate(Templates.Chat.AutoCombatResult, data).then(content => {
+      await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.AutoCombatResult, data).then(content => {
         ChatMessage.create({
           content
         });
@@ -209,7 +209,7 @@ export class GMCombatDialog extends FormApplication {
       attacker.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   updateDefenderData(result) {
@@ -230,7 +230,7 @@ export class GMCombatDialog extends FormApplication {
       defender.result.power = psychicPowers.find(w => w._id === result.values.powerUsed);
     }
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   /**
@@ -269,7 +269,7 @@ export class GMCombatDialog extends FormApplication {
     }
 
     // Renderiza el diálogo actualizado
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 
   getData() {
@@ -399,7 +399,7 @@ export class GMCombatDialog extends FormApplication {
   async _updateObject(event, formData) {
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
   async applyValuesIfBeAble(resistanceRoll) {
     // Si no hay cálculos (ej: en un contraataque que acaba de resetear), no aplicar valores

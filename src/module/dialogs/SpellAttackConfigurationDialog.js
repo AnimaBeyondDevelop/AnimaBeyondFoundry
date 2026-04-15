@@ -88,7 +88,7 @@ export class SpellAttackConfigurationDialog extends FormApplication {
 
     try {
       this.modalData.attackSent = true;
-      this.render();
+      setTimeout(() => this.render(), 0);
 
       const gradeData = spell.system?.grades?.[grade];
       const baseDamage = Number(gradeData?.damage?.value ?? 0) || 0;
@@ -152,12 +152,12 @@ export class SpellAttackConfigurationDialog extends FormApplication {
       ui.notifications?.error('Error al lanzar el conjuro.');
     } finally {
       this.modalData.attackSent = false;
-      if (this.rendered) this.render();
+      if (this.rendered) setTimeout(() => this.render(), 0);
     }
   }
 
   async _updateObject(_event, formData) {
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }

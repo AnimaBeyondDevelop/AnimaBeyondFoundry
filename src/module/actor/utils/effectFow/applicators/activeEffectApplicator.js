@@ -2,7 +2,7 @@
 
 export function applySingleActiveEffectChange(actor, effect, change) {
   const key = change.key;
-  const mode = change.mode;
+  const mode = change.type;
 
   const rawValue =
     typeof actor._applyDynamicEffectValue === 'function'
@@ -17,21 +17,21 @@ export function applySingleActiveEffectChange(actor, effect, change) {
   let nextValue = rawValue;
 
   switch (mode) {
-    case CONST.ACTIVE_EFFECT_MODES.ADD:
+    case 'add':
       nextValue =
         !Number.isNaN(numericCurrent) && !Number.isNaN(numericValue)
           ? numericCurrent + numericValue
           : `${beforeSystem ?? ''}${rawValue ?? ''}`;
       break;
 
-    case CONST.ACTIVE_EFFECT_MODES.MULTIPLY:
+    case 'multiply':
       nextValue =
         !Number.isNaN(numericCurrent) && !Number.isNaN(numericValue)
           ? numericCurrent * numericValue
           : beforeSystem;
       break;
 
-    case CONST.ACTIVE_EFFECT_MODES.OVERRIDE:
+    case 'override':
       nextValue = rawValue;
       break;
 

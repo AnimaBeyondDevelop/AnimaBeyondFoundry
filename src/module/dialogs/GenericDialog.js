@@ -69,6 +69,6 @@ export class GenericDialog extends FormApplication {
   async _updateObject(event, formData) {
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
 
-    this.render();
+    setTimeout(() => this.render(), 0);
   }
 }

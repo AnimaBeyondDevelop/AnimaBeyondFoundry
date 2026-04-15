@@ -15,7 +15,8 @@ import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
-export default class ABFActorSheet extends ActorSheet {
+const ActorSheetV1 = foundry.appv1?.sheets?.ActorSheet ?? ActorSheet;
+export default class ABFActorSheet extends ActorSheetV1 {
   i18n;
 
   constructor(actor, options) {
@@ -149,7 +150,7 @@ export default class ABFActorSheet extends ActorSheet {
   async getData(options) {
     const sheet = await super.getData(options);
 
-    const actor = this.actor; // use the real Document, not sheet.actor
+    const { actor } = this; // use the real Document, not sheet.actor
 
     if (actor?.type === 'character') {
       await actor.prepareDerivedData();
@@ -190,13 +191,20 @@ export default class ABFActorSheet extends ActorSheet {
   }
 
   _activateBaseTypeContextMenu(html) {
-    new ContextMenu(html, '.base-type-row', [
-      {
-        name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
-        icon: '<i class="fas fa-edit fa-fw"></i>',
-        callback: target => this._openBaseTypeEditor(target[0])
-      }
-    ]);
+    const ContextMenuImpl = foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    new ContextMenuImpl(
+      html instanceof HTMLElement ? html : html[0],
+      '.base-type-row',
+      [
+        {
+          name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
+          icon: '<i class="fas fa-edit"></i>',
+          callback: target => this._openBaseTypeEditor(target instanceof HTMLElement ? target : target[0])
+        }
+      ],
+      ...(isV14 ? [{ jQuery: false }] : [])
+    );
   }
 
   async _flushPendingSheetUpdatesImmediately() {
@@ -264,7 +272,7 @@ export default class ABFActorSheet extends ActorSheet {
       const { contractibleItemId } = e.currentTarget.dataset;
       if (!contractibleItemId) return;
 
-      const ui = this.actor.system.ui;
+      const { ui } = this.actor.system;
       ui.contractibleItems = {
         ...ui.contractibleItems,
         [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
@@ -313,7 +321,7 @@ export default class ABFActorSheet extends ActorSheet {
     const node = this.actor.typedNodes?.get(path) ?? null;
     if (!node) return;
 
-    const type = node.constructor.type;
+    const { type } = node.constructor;
 
     const app = TypeEditorRegistry.create(type, this.actor, { path });
     app?.render(true);
@@ -322,7 +330,7 @@ export default class ABFActorSheet extends ActorSheet {
   async _onEffectControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const action = a.dataset.action;
+    const { action } = a.dataset;
     const li = a.closest('.effect');
     const itemId = li?.dataset.itemId;
     const item = itemId ? this.actor.items.get(itemId) : null;
@@ -386,12 +394,9 @@ export default class ABFActorSheet extends ActorSheet {
         if (effect) {
           await effect.update({ disabled: !newActive });
         }
-
-        return;
       }
 
       default:
-        return;
     }
   }
 
@@ -468,9 +473,9 @@ export default class ABFActorSheet extends ActorSheet {
     if (!itemConfig.isInternal && itemConfig.hasSheet) {
       otherItems.push({
         name: this.i18n.localize('contextualMenu.common.options.edit'),
-        icon: '<i class="fas fa-edit fa-fw"></i>',
+        icon: '<i class="fas fa-edit"></i>',
         callback: target => {
-          const { itemId } = target[0].dataset;
+          const { itemId } = (target instanceof HTMLElement ? target : target[0]).dataset;
 
           if (itemId) {
             const item = this.actor.items.get(itemId);
@@ -490,7 +495,7 @@ export default class ABFActorSheet extends ActorSheet {
     if (!hideDeleteRow) {
       otherItems.push({
         name: deleteRowMessage,
-        icon: '<i class="fas fa-trash fa-fw"></i>',
+        icon: '<i class="fas fa-trash"></i>',
         callback: target => {
           if (!customCallbackFn && !fieldPath) {
             Logger.warn(
@@ -501,7 +506,7 @@ export default class ABFActorSheet extends ActorSheet {
           if (customCallbackFn) {
             customCallbackFn(this.actor, target);
           } else {
-            const id = target[0].dataset.itemId;
+            const id = (target instanceof HTMLElement ? target : target[0]).dataset.itemId;
 
             if (!id) {
               throw new Error(
@@ -537,9 +542,16 @@ export default class ABFActorSheet extends ActorSheet {
       });
     }
 
-    return new ContextMenu(this.element.find(containerSelector), rowSelector, [
-      ...otherItems
-    ]);
+    const ContextMenuImpl = foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    return new ContextMenuImpl(
+      this.element instanceof HTMLElement
+        ? this.element.querySelector(containerSelector)
+        : this.element.find(containerSelector)[0],
+      rowSelector,
+      [...otherItems],
+      ...(isV14 ? [{ jQuery: false }] : [])
+    );
   };
 
   _getLinkedEffect(item) {
@@ -555,7 +567,7 @@ export default class ABFActorSheet extends ActorSheet {
   async _ensureEffectForItem(item) {
     if (!item) return null;
 
-    let effect = this._getLinkedEffect(item);
+    const effect = this._getLinkedEffect(item);
     if (effect) return effect;
 
     const rawBaseData = item.system?.effectData ?? {};

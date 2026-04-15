@@ -12,7 +12,7 @@ function localizeGrade(grade) {
 }
 
 async function openShieldConfigDialog({ spell, grade }) {
-  const content = await renderTemplate(Templates.Dialog.SpellShieldConfigDialog, {
+  const content = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Dialog.SpellShieldConfigDialog, {
     formulaBonus: 0
   });
 

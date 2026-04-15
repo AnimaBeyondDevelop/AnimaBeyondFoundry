@@ -15,7 +15,7 @@
       "changes": [
         {
           "key": "system.general.modifiers.allActions.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "15",
           "priority": null
         }

@@ -29,8 +29,8 @@ function getFlaggedDeps(effect, index) {
  * @param {number} mode
  * @returns {'overwrite'|'modify'}
  */
-function writeKindFromAEMode(mode) {
-  return mode === CONST.ACTIVE_EFFECT_MODES.OVERRIDE ? 'overwrite' : 'modify';
+function writeKindFromAEMode(type) {
+  return type === 'override' ? 'overwrite' : 'modify';
 }
 
 /**
@@ -47,7 +47,7 @@ export function buildActiveEffectChangeOp(effect, index, change) {
   const deps = normalizePaths([...flagged, ...inferred]);
 
   const [path] = normalizePaths([change.key]);
-  const kind = writeKindFromAEMode(change.mode);
+  const kind = writeKindFromAEMode(change.type);
 
   return {
     id: `ae:${effect.id}:${index}`,
@@ -73,7 +73,7 @@ export function buildActiveEffectChangeOps(actor) {
   for (const effect of actor.effects?.contents ?? []) {
     if (!effect.active) continue;
 
-    const changes = effect.changes;
+    const changes = effect.system.changes;
     if (!Array.isArray(changes) || changes.length === 0) continue;
 
     for (let i = 0; i < changes.length; i++) {

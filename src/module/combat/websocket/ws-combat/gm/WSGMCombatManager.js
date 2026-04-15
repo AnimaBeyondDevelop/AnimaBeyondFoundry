@@ -132,7 +132,12 @@ export class WSGMCombatManager extends WSCombatManager {
       return;
     }
 
-    const targetToken = getTargetToken(selectedToken, targets);
+    let targetToken;
+    try {
+      targetToken = getTargetToken(selectedToken, targets);
+    } catch {
+      return;
+    }
 
     if (selectedToken?.id) {
       await ABFDialogs.confirm(

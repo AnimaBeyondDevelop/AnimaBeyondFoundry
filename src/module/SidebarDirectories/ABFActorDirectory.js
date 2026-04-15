@@ -1,7 +1,8 @@
 import { read, utils } from 'xlsx';
 import { parseExcelToActor } from '../actor/utils/parseExcelToActor.js';
 
-export default class ABFActorDirectory extends ActorDirectory {
+const ActorDirectoryV1 = foundry.applications?.sidebar?.tabs?.ActorDirectory ?? ActorDirectory;
+export default class ABFActorDirectory extends ActorDirectoryV1 {
   /**
    * Añadir opciones personalizadas al menú contextual del actor.
    */
@@ -13,13 +14,13 @@ export default class ABFActorDirectory extends ActorDirectory {
       name: 'Import from Excel',
       icon: '<i class="fas fa-file-import"></i>',
       condition: li => {
-        const entryId = li.dataset.entryId;
+        const { entryId } = li.dataset;
         const document = this.collection.get(entryId);
         // Verifica que el usuario tenga al menos permiso de OWNER
         return document?.testUserPermission(game.user, 'OWNER');
       },
       callback: li => {
-        const entryId = li.dataset.entryId;
+        const { entryId } = li.dataset;
         const document = this.collection.get(entryId);
         return this.importFromExcelDialog(document);
       }
@@ -39,7 +40,7 @@ export default class ABFActorDirectory extends ActorDirectory {
         title: game.i18n.format('anima.ui.importDataFromExcelTitle', {
           name: document.name
         }),
-        content: await renderTemplate(
+        content: await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(
           'systems/animabf/templates/dialog/import-data-from-excel.html',
           {
             hint1: game.i18n.format('anima.ui.importDataFromExcelHint1', {
@@ -91,7 +92,7 @@ export default class ABFActorDirectory extends ActorDirectory {
         try {
           const data = new Uint8Array(e.target.result);
           const workbook = read(data, { type: 'array' });
-          const worksheet = workbook.Sheets['NamedRangesList'];
+          const worksheet = workbook.Sheets.NamedRangesList;
           if (worksheet) {
             const rows = utils.sheet_to_json(worksheet).reduce((acc, obj) => {
               acc[obj.Name] = obj.Value;

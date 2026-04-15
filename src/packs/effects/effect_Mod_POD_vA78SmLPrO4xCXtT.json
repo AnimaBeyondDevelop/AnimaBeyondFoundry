@@ -13,7 +13,7 @@
       "changes": [
         {
           "key": "system.mystic.zeon.max",
-          "mode": 2,
+          "type": "add",
           "value": "((@system.characteristics.primaries.power.final.value-@system.characteristics.primaries.power.base.value)*10)+(statMod(@system.characteristics.primaries.power.final.value)-statMod(@system.characteristics.primaries.power.base.value))",
           "priority": null
         }

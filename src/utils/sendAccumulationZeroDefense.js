@@ -65,7 +65,7 @@ export async function sendAccumulationZeroDefense({
     alias: tokenName
   };
 
-  const content = await renderTemplate(Templates.Chat.CombatResult, {
+  const content = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.CombatResult, {
     combatResult: { ...combatResult, damageFinal },
     defenderId: actor.id,
     defenderTokenId: defenderToken?.id ?? ''

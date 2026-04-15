@@ -140,7 +140,8 @@ export class ABFAttackData {
 
     const vis = getChatVisibilityOptions();
 
-    const content0 = await renderTemplate(Templates.Chat.AttackData, {
+    const renderTemplateFn = foundry.applications?.handlebars?.renderTemplate ?? renderTemplate;
+    const content0 = await renderTemplateFn(Templates.Chat.AttackData, {
       weapon,
       actor,
       attackData: this
@@ -163,7 +164,7 @@ export class ABFAttackData {
         animabf: {
           kind: 'attackData',
           attackData: this.toJSON(),
-          sessionId: randomID(),
+          sessionId: foundry.utils.randomID(),
           sessionMeta: {
             createdAt: Date.now(),
             combatId: game.combat?.id ?? null,
@@ -175,7 +176,7 @@ export class ABFAttackData {
       }
     });
 
-    const content = await renderTemplate(Templates.Chat.AttackData, {
+    const content = await renderTemplateFn(Templates.Chat.AttackData, {
       weapon,
       actor,
       attackData: this,

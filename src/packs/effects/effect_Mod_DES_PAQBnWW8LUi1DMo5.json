@@ -13,19 +13,19 @@
       "changes": [
         {
           "key": "system.combat.attack.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "statMod(@system.characteristics.primaries.dexterity.final.value)-statMod(@system.characteristics.primaries.dexterity.base.value)",
           "priority": null
         },
         {
           "key": "system.combat.block.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "statMod(@system.characteristics.primaries.dexterity.final.value)-statMod(@system.characteristics.primaries.dexterity.base.value)",
           "priority": null
         },
         {
           "key": "system.characteristics.secondaries.initiative.final.value",
-          "mode": 2,
+          "type": "add",
           "value": "statMod(@system.characteristics.primaries.dexterity.final.value)-statMod(@system.characteristics.primaries.dexterity.base.value)",
           "priority": null
         }

@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build:prod
+
+      - name: Package dist as zip
+        run: cd dist && zip -r ../animabf.zip .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          files: |
+            animabf.zip
+            dist/system.json

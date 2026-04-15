@@ -66,7 +66,7 @@ export default async function autoDefendActionHandler(message, _html, ds) {
       ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
       : ChatMessage.getSpeaker({ actor: tokens[0]?.actor });
 
-    const content = await renderTemplate(Templates.Chat.MultiDefenseResult, {
+    const content = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.MultiDefenseResult, {
       attackLabel: attackData?.weaponId
         ? game.i18n.localize?.('chat.attackData.title') ?? 'Ataque'
         : 'Ataque',
@@ -89,7 +89,7 @@ export default async function autoDefendActionHandler(message, _html, ds) {
     });
 
     // Re-render with final messageId for buttons
-    const content2 = await renderTemplate(Templates.Chat.MultiDefenseResult, {
+    const content2 = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Chat.MultiDefenseResult, {
       attackLabel: attackData?.weaponId
         ? game.i18n.localize?.('chat.attackData.title') ?? 'Ataque'
         : 'Ataque',
