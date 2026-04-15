@@ -11,5 +11,5 @@ export const canOwnerReceiveMessage = actor => {
 
   const activePlayers = game.users.players.filter(u => u.active);
 
-  return activePlayers.filter(u => actor.testUserPermission(u, 'OWNER')).length === 1;
+  return activePlayers.some(u => actor.testUserPermission(u, 'OWNER'));
 };
