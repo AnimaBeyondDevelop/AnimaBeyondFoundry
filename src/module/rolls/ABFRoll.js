@@ -1,5 +1,3 @@
-import ABFFoundryRoll from './ABFFoundryRoll';
-
 /**
  * @abstract
  */

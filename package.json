@@ -11,7 +11,7 @@
     "clean": "rimraf dist/",
     "release": "node scripts/release/release.cjs",
     "release:dry": "node scripts/release/release.cjs --dry",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest src",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.cjs src",
     "hook:pre-commit": "lint-staged",
     "cypress:open": "cd integration && cypress open",
     "compendia:pack": "node scripts/compendia/packCompendia.mjs",
