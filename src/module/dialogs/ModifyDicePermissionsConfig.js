@@ -1,4 +1,4 @@
-import { ABFSettingsKeys } from '../../utils/registerSettings';
+import { ABFSettingsKeys } from '../../utils/settingKeys.js';
 import { Templates } from '../utils/constants';
 
 export default class ModifyDicePermissionsConfig extends FormApplication {

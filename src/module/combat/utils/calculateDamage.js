@@ -1,4 +1,4 @@
-import { ABFSettingsKeys } from '../../../utils/registerSettings';
+import { ABFSettingsKeys } from '../../../utils/settingKeys.js';
 
 /**
  * @param {number} attack
