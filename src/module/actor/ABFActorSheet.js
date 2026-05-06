@@ -408,8 +408,16 @@ export default class ABFActorSheet extends ActorSheetV1 {
     if (dataset.roll) {
       const label = dataset.label ? `Rolling ${dataset.label}` : '';
       const mod = await openModDialog();
-      let formula = `${dataset.roll}+ ${mod}`;
-      if (parseInt(dataset.extra) >= 200) {
+      const rollValue = this._getRollValueFromDataset(element, dataset);
+      let formula = dataset.rollPath
+        ? `${this._getRollDieFormula(dataset.roll)} + ${rollValue} + ${mod ?? 0}`
+        : `${dataset.roll}+ ${mod ?? 0}`;
+      const masteryValue = this._getMasteryValueFromDataset(
+        element,
+        dataset,
+        rollValue
+      );
+      if (masteryValue >= 200) {
         formula = formula.replace(
           this.actor.system.general.diceSettings.abilityDie.value,
           this.actor.system.general.diceSettings.abilityMasteryDie.value
@@ -428,6 +436,48 @@ export default class ABFActorSheet extends ActorSheetV1 {
         flavor: label
       });
     }
+  }
+
+  _getRollDieFormula(rollFormula) {
+    return String(rollFormula).split('+')[0].trim();
+  }
+
+  _getRollValueFromDataset(element, dataset) {
+    if (!dataset.rollPath) {
+      return Number(dataset.roll?.split('+')?.[1] ?? 0);
+    }
+
+    return Number(this._resolveRollPathValue(element, dataset.rollPath) ?? 0);
+  }
+
+  _getMasteryValueFromDataset(element, dataset, fallbackValue = 0) {
+    if (!dataset.extraPath) {
+      return Number(dataset.extra ?? fallbackValue ?? 0);
+    }
+
+    return Number(
+      this._resolveRollPathValue(element, dataset.extraPath) ?? fallbackValue
+    );
+  }
+
+  _resolveRollPathValue(element, path) {
+    const actorValue = foundry.utils.getProperty(this.actor, path);
+    if (actorValue !== undefined) return actorValue;
+
+    const dynamicItemMatch = String(path).match(
+      /^system\.dynamic\.[^.]+\.(?<itemId>[^.]+)\.(?<itemPath>.+)$/
+    );
+
+    if (dynamicItemMatch?.groups) {
+      const { itemId, itemPath } = dynamicItemMatch.groups;
+      const itemValue = foundry.utils.getProperty(this.actor.items.get(itemId), itemPath);
+      if (itemValue !== undefined) return itemValue;
+    }
+
+    const itemId = element?.closest?.('[data-item-id]')?.dataset?.itemId;
+    if (!itemId) return undefined;
+
+    return foundry.utils.getProperty(this.actor.items.get(itemId), path);
   }
 
   protected;

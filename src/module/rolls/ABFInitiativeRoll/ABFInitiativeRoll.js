@@ -1,4 +1,3 @@
-import ABFFoundryRoll from '../ABFFoundryRoll';
 import ABFExploderRoll from '../ABFExploderRoll/ABFExploderRoll';
 
 export default class ABFInitiativeRoll extends ABFExploderRoll {

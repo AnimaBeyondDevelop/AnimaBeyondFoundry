@@ -1,8 +1,10 @@
-// ABFExploderRoll/ABFExploderRoll.js
-import ABFFoundryRoll from '../ABFFoundryRoll';
 import { ABFRoll } from '../ABFRoll';
 
 export default class ABFExploderRoll extends ABFRoll {
+  _createRoll(formula) {
+    return new this.foundryRoll.constructor(formula);
+  }
+
   // Public API preserved
   get fumbled() {
     return this.foundryRoll.firstResult <= this.fumbleRange;
@@ -81,7 +83,7 @@ export default class ABFExploderRoll extends ABFRoll {
       currentObj.exploded = true;
 
       // Roll extra 1d100 and append to the same group/chain
-      const extra = new ABFFoundryRoll('1d100');
+      const extra = this._createRoll('1d100');
       await extra.evaluate();
       this.addRoll(extra);
 
@@ -102,7 +104,7 @@ export default class ABFExploderRoll extends ABFRoll {
     const v = obj.result;
     if (v % 11 !== 0) return false;
 
-    const d10 = new ABFFoundryRoll('1d10');
+    const d10 = this._createRoll('1d10');
     await d10.evaluate();
 
     const ok = d10.total === v / 11;

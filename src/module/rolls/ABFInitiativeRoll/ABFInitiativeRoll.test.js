@@ -1,18 +1,13 @@
-import ABFInitiativeRoll from './ABFInitiativeRoll';
-import ABFRollTesting from '../__mocks__/ABFFoundryRoll';
-import ABFFoundryRoll from '../ABFFoundryRoll';
-import { nextValueService } from '../__mocks__/nextValueService';
-import { jest } from '@jest/globals';
-
-jest.mock('../ABFFoundryRoll');
+import ABFInitiativeRoll from './ABFInitiativeRoll.js';
+import ABFFoundryRoll from '../__mocks__/ABFFoundryRoll.js';
+import { nextValueService } from '../__mocks__/nextValueService.js';
 
 /**
  * @param {string} formula
  */
 function getRoll(formula) {
   const animabfRoll = new ABFFoundryRoll(formula);
-  const animabfRollTesting = /** @type {ABFRollTesting} */ (animabfRoll);
-  return { animabfRoll, animabfRollTesting };
+  return { animabfRoll, animabfRollTesting: animabfRoll };
 }
 
 describe('ABFRoll', () => {
@@ -20,59 +15,59 @@ describe('ABFRoll', () => {
     nextValueService.setNextValue(undefined);
   });
 
-  test('must explode roll if first result is bigger or equals to 90', () => {
+  test('must explode roll if first result is bigger or equals to 90', async () => {
     const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(90);
     animabfRollTesting.evaluate();
 
     const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    animabfRollProxy.evaluate();
+    await animabfRollProxy.evaluate();
 
     expect(animabfRollProxy.getRoll().getResults().length).toBe(2);
     expect(animabfRollProxy.getRoll().getResults()[0]).toBe(90);
     expect(animabfRollProxy.getRoll().total).toBeGreaterThan(90);
   });
 
-  test('must penalize if roll is 1', () => {
+  test('must penalize if roll is 1', async () => {
     const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(1);
     animabfRollTesting.evaluate();
 
     const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    animabfRollProxy.evaluate();
+    await animabfRollProxy.evaluate();
 
     expect(animabfRollProxy.getRoll().getResults().length).toBe(1);
     expect(animabfRollProxy.getRoll().getResults()[0]).toBe(1);
-    expect(animabfRollProxy.getRoll().total).toBe(1 - 125);
+    expect(animabfRollProxy.getRoll().total).toBe(-125);
   });
 
-  test('must penalize if roll is 2', () => {
+  test('must penalize if roll is 2', async () => {
     const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(2);
     animabfRollTesting.evaluate();
 
     const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    animabfRollProxy.evaluate();
+    await animabfRollProxy.evaluate();
 
     expect(animabfRollProxy.getRoll().getResults().length).toBe(1);
     expect(animabfRollProxy.getRoll().getResults()[0]).toBe(2);
-    expect(animabfRollProxy.getRoll().total).toBe(2 - 100);
+    expect(animabfRollProxy.getRoll().total).toBe(-100);
   });
 
-  test('must penalize if roll is 3', () => {
+  test('must penalize if roll is 3', async () => {
     const { animabfRoll, animabfRollTesting } = getRoll('1d100Initiative');
     nextValueService.setNextValue(3);
     animabfRollTesting.evaluate();
 
     const animabfRollProxy = new ABFInitiativeRoll(animabfRoll);
 
-    animabfRollProxy.evaluate();
+    await animabfRollProxy.evaluate();
 
     expect(animabfRollProxy.getRoll().getResults().length).toBe(1);
     expect(animabfRollProxy.getRoll().getResults()[0]).toBe(3);
-    expect(animabfRollProxy.getRoll().total).toBe(3 - 75);
+    expect(animabfRollProxy.getRoll().total).toBe(-75);
   });
 });

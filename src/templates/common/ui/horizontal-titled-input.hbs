@@ -8,6 +8,32 @@
       {{#if this.rollable}}
         data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}{{@root.system.general.diceSettings.abilityDie.value}}{{/if}}+{{#if this.hasTertiaryInput}}{{this.tertiaryInputValue}}{{else}}{{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}{{/if}}"
         data-extra="{{this.inputValue}}"
+        {{#if this.rollableValuePath}}
+          data-roll-path="{{this.rollableValuePath}}"
+        {{else}}
+          {{#if this.hasTertiaryInput}}
+            data-roll-path="{{this.tertiaryInputName}}"
+          {{else}}
+            {{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}
+              data-roll-path="{{this.secondaryInputName}}"
+            {{else}}
+              data-roll-path="{{this.inputName}}"
+            {{/if}}
+          {{/if}}
+        {{/if}}
+        {{#if this.rollableMasteryPath}}
+          data-extra-path="{{this.rollableMasteryPath}}"
+        {{else}}
+          {{#if this.hasTertiaryInput}}
+            data-extra-path="{{this.tertiaryInputName}}"
+          {{else}}
+            {{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}
+              data-extra-path="{{this.secondaryInputName}}"
+            {{else}}
+              data-extra-path="{{this.inputName}}"
+            {{/if}}
+          {{/if}}
+        {{/if}}
         data-label="
           {{#if this.rollableMessage}}
             {{this.rollableMessage}}
