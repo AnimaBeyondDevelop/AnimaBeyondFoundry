@@ -2,6 +2,7 @@
 import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { findEffectLinkedToItem } from '../../actor/utils/findEffectLinkedToItem.js';
 
 export const INITIAL_EFFECT_DATA = {
   active: false,
@@ -75,7 +76,7 @@ export const EffectItemConfig = ABFItemConfigFactory({
     // is high during play. So this onDelete intentionally skips the
     // ABFDialogs.confirm step that the generic delete flow uses for items
     // whose loss is harder to recover (weapons with computed bonuses, etc.).
-    const effect = actor.effects.find(e => e.origin === item.uuid) ?? null;
+    const effect = findEffectLinkedToItem(actor, item);
 
     const ops = [];
     if (effect) {

@@ -12,6 +12,7 @@ import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { createClickHandlers } from './utils/createClickHandlers';
 import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
+import { findEffectLinkedToItem } from './utils/findEffectLinkedToItem.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -606,7 +607,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
   _getLinkedEffect(item) {
     if (!item) return null;
-    return this.actor.effects.find(e => e.origin === item.uuid) ?? null;
+    return findEffectLinkedToItem(this.actor, item);
   }
 
   async _linkItemToEffect(item, effect) {

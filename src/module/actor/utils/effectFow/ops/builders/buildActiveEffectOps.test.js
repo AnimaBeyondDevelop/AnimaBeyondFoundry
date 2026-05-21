@@ -191,3 +191,61 @@ describe('buildActiveEffectChangeOp writeKind', () => {
     expect(op.writes[0].kind).toBe('modify');
   });
 });
+
+/**
+ * Toggle on/off contract for the builder.
+ *
+ * Documents that the builder honours `effect.active` / `effect.disabled`
+ * correctly: an active effect produces ops, a disabled one produces none,
+ * and flipping the flag on the same actor flips the output.
+ *
+ * Note: the user-reported bug "uncheck the toggle, modifiers keep applying"
+ * was NOT here — it lived in `_getLinkedEffect` (compared item.uuid vs
+ * effect.origin and missed unlinked tokens, so the toggle never reached
+ * the AE). Fixed in findEffectLinkedToItem. These tests stay as a
+ * contract: if the builder ever stops respecting `disabled`, they catch it.
+ */
+describe('buildActiveEffectChangeOps — toggle off scenario', () => {
+  const ATTACK_PATH = 'system.combat.attack.final.value';
+
+  const makeEffect = ({ id, disabled }) => ({
+    id,
+    name: 'Sangre de Orochi',
+    disabled,
+    // Foundry's `effect.active` getter: !disabled && !suppressed
+    get active() {
+      return !this.disabled;
+    },
+    priority: 0,
+    changes: [{ key: ATTACK_PATH, value: '20', type: 'add' }],
+    system: {}
+  });
+
+  it('emits one op when the effect is active (toggle ON)', () => {
+    const actor = { effects: { contents: [makeEffect({ id: 'eff1', disabled: false })] } };
+    const ops = buildActiveEffectChangeOps(actor);
+    expect(ops).toHaveLength(1);
+  });
+
+  it('emits zero ops when the effect is disabled (toggle OFF)', () => {
+    const actor = { effects: { contents: [makeEffect({ id: 'eff1', disabled: true })] } };
+    const ops = buildActiveEffectChangeOps(actor);
+    expect(ops).toHaveLength(0);
+  });
+
+  it('honours the live disabled flag — same actor, flipping the effect', () => {
+    const effect = makeEffect({ id: 'eff1', disabled: false });
+    const actor = { effects: { contents: [effect] } };
+
+    // Initially active
+    expect(buildActiveEffectChangeOps(actor)).toHaveLength(1);
+
+    // Simulate the toggle off (the sheet handler does effect.update({disabled: true}))
+    effect.disabled = true;
+    expect(buildActiveEffectChangeOps(actor)).toHaveLength(0);
+
+    // And back on
+    effect.disabled = false;
+    expect(buildActiveEffectChangeOps(actor)).toHaveLength(1);
+  });
+});
