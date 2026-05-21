@@ -90,7 +90,7 @@ const DERIVED_DATA_FUNCTIONS = [
   mutateNaturalPenaltyFinal,
   mutatePhysicalModifier,
   mutatePerceptionPenalty,
-  // mutateCombatData,
+  mutateCombatData,
   mutateMovementType,
   mutateMovementDistances,
   //mutateSecondariesData,
