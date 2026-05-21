@@ -3,7 +3,6 @@ import { ABFConfig } from '../ABFConfig';
 import { ABFAttackData } from '../combat/ABFAttackData';
 import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
 import { getActiveEffectsBreakdownForPath } from '../actor/utils/activeEffectsBreakdown.js';
-import { formatAeBreakdownForFlavor } from '../actor/utils/aeBreakdownFormat.js';
 ///dialogs/AttackConfigurationDialog.js
 ///actor/utils/getSnapshotTargets.js
 
@@ -195,14 +194,11 @@ export class AttackConfigurationDialog extends FormApplication {
         ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
         : ChatMessage.getSpeaker({ actor });
 
-      const baseFlavor = 'Rolling attack';
-      const flavor = aeBreakdown.items.length > 0
-        ? `${baseFlavor}${formatAeBreakdownForFlavor(aeBreakdown)}`
-        : baseFlavor;
-
+      // Flavor base only. The preCreateChatMessage hook in animabf.mjs
+      // appends the breakdown of AE that contributed to this roll.
       await roll.toMessage({
         speaker,
-        flavor
+        flavor: 'Rolling attack'
       });
 
       const attackData = ABFAttackData.builder()

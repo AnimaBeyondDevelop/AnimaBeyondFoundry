@@ -5,7 +5,6 @@ import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
 import { getActiveEffectsBreakdownForPath } from '../../actor/utils/activeEffectsBreakdown.js';
-import { formatAeBreakdownForFlavor } from '../../actor/utils/aeBreakdownFormat.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const combatDistance = !!game.settings.get(
@@ -408,7 +407,11 @@ export class CombatAttackDialog extends FormApplication {
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
-          const baseFlavor = weapon
+          // Flavor base only. The breakdown of AE that contributed to this
+          // roll is appended automatically by the preCreateChatMessage hook
+          // in animabf.mjs, so the trace is consistent across every roll
+          // site in the system.
+          const flavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
                 weapon: weapon?.name,
                 target: this.modalData.defender.token.name
@@ -416,13 +419,6 @@ export class CombatAttackDialog extends FormApplication {
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
                 target: this.modalData.defender.token.name
               });
-
-          // Append a nominal breakdown of the AE that contributed to the roll
-          // so the GM can audit which effect added or subtracted what,
-          // without having to inspect the actor.
-          const flavor = aeBreakdown.items.length > 0
-            ? `${baseFlavor}${formatAeBreakdownForFlavor(aeBreakdown)}`
-            : baseFlavor;
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),

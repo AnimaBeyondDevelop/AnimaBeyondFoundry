@@ -34,6 +34,9 @@ import { registerHandlebarsPartials } from './utils/handlebarsPartials.js';
 
 import { macroCreators, macroExecutors } from './utils/macroCreatorRegistry.js';
 import { ensureLinkedEffectForItem } from './module/actor/utils/ensureLinkedEffectForItem.js';
+import { inferAttributeFromFlavor } from './module/actor/utils/attributeDerivationMap.js';
+import { getActiveEffectsBreakdownForAttribute } from './module/actor/utils/activeEffectsBreakdown.js';
+import { formatAeBreakdownForFlavor } from './module/actor/utils/aeBreakdownFormat.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -378,6 +381,52 @@ Hooks.on('dropCanvasData', async (canvas, data) => {
 
   await hit.actor.createEmbeddedDocuments('Item', [droppedItem.toObject()]);
   return false; // Prevent the default drop handling
+});
+
+// Universal trace: any roll-bearing chat message that comes from an actor
+// of this system gets a breakdown of the Active Effects that contributed to
+// the rolled attribute (Sangre de Orochi (+20), Ceguera parcial (-30), ...).
+// Identifies the attribute from the roll's flavor text. Single touchpoint,
+// covers all dialogs and macro-driven rolls without needing per-site wiring.
+Hooks.on('preCreateChatMessage', (message, data, _options, _userId) => {
+  try {
+    if (!Array.isArray(data?.rolls) && !data?.roll) return;
+
+    const speaker = data.speaker ?? message.speaker;
+    if (!speaker) return;
+
+    // Resolve the actor that owns the token/speaker so AE on unlinked
+    // tokens are read from the token actor (not the world actor).
+    let actor = null;
+    if (speaker.token) {
+      try {
+        const sceneId = speaker.scene;
+        const tokenDoc = sceneId
+          ? game.scenes?.get(sceneId)?.tokens?.get?.(speaker.token)
+          : null;
+        actor = tokenDoc?.actor ?? null;
+      } catch {}
+    }
+    if (!actor && speaker.actor) {
+      actor = game.actors?.get(speaker.actor) ?? null;
+    }
+    if (!actor) return;
+
+    const flavor = data.flavor ?? message.flavor ?? '';
+    const attribute = inferAttributeFromFlavor(flavor);
+    if (!attribute) return;
+
+    const breakdown = getActiveEffectsBreakdownForAttribute(actor, attribute);
+    if (!breakdown.items.length) return;
+
+    const suffix = formatAeBreakdownForFlavor(breakdown);
+    if (!suffix) return;
+    if (typeof flavor === 'string' && flavor.includes('<small><em>Mod')) return;
+
+    message.updateSource({ flavor: `${flavor}${suffix}` });
+  } catch (err) {
+    console.warn('animabf: failed to enrich roll flavor with AE breakdown', err);
+  }
 });
 
 Hooks.on('renderActiveEffectConfig', (app, html) => {
