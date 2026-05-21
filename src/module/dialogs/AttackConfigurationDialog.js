@@ -2,6 +2,8 @@ import { Templates } from '../utils/constants';
 import { ABFConfig } from '../ABFConfig';
 import { ABFAttackData } from '../combat/ABFAttackData';
 import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
+import { getActiveEffectsBreakdownForPath } from '../actor/utils/activeEffectsBreakdown.js';
+import { formatAeBreakdownForFlavor } from '../actor/utils/aeBreakdownFormat.js';
 ///dialogs/AttackConfigurationDialog.js
 ///actor/utils/getSnapshotTargets.js
 
@@ -162,7 +164,25 @@ export class AttackConfigurationDialog extends FormApplication {
           ? actor.system.general.diceSettings.abilityMasteryDie.value
           : actor.system.general.diceSettings.abilityDie.value;
 
-      const formula = `${die} + ${baseAttack} + ${mod}`;
+      // --- Traceability of Active Effects ----------------------------------
+      // Active Effects (Sangre de Orochi, Cegueras, Derribado...) write to
+      // actor.system.combat.attack.final.value. The weapon's attack.final
+      // already inherits that via calculateWeaponAttack, so the AE delta is
+      // fused inside baseAttack. To restore traceability we split it back
+      // out into its own term in the formula (only when every AE is a
+      // linear add — for multiply/override we leave the formula fused and
+      // just expose the nominal list in the flavor).
+      const aeBreakdown = getActiveEffectsBreakdownForPath(
+        actor,
+        'system.combat.attack.final.value'
+      );
+      const aeContribution = aeBreakdown.hasNonLinear ? 0 : aeBreakdown.linearTotal;
+      const attackPure = baseAttack - aeContribution;
+
+      const formula = aeContribution !== 0
+        ? `${die} + ${attackPure} + ${aeContribution} + ${mod}`
+        : `${die} + ${baseAttack} + ${mod}`;
+
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
@@ -175,9 +195,14 @@ export class AttackConfigurationDialog extends FormApplication {
         ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
         : ChatMessage.getSpeaker({ actor });
 
+      const baseFlavor = 'Rolling attack';
+      const flavor = aeBreakdown.items.length > 0
+        ? `${baseFlavor}${formatAeBreakdownForFlavor(aeBreakdown)}`
+        : baseFlavor;
+
       await roll.toMessage({
         speaker,
-        flavor: 'Rolling attack'
+        flavor
       });
 
       const attackData = ABFAttackData.builder()

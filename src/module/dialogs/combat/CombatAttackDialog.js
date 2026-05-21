@@ -4,6 +4,8 @@ import { damageCheck } from '../../combat/utils/damageCheck.js';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
+import { getActiveEffectsBreakdownForPath } from '../../actor/utils/activeEffectsBreakdown.js';
+import { formatAeBreakdownForFlavor } from '../../actor/utils/aeBreakdownFormat.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const combatDistance = !!game.settings.get(
@@ -365,8 +367,33 @@ export class CombatAttackDialog extends FormApplication {
         for (const key in attackerCombatMod)
           combatModifier += attackerCombatMod[key]?.value ?? 0;
 
+        // --- Traceability of Active Effects -------------------------------
+        // Active Effects (Sangre de Orochi, Cegueras, Derribado...) write to
+        // system.combat.attack.final.value directly. When we use that value
+        // in the roll formula their contribution disappears into the total,
+        // losing the breakdown the GM needs to audit a roll.
+        //
+        // To restore traceability we ask the helper how much of the current
+        // attack value comes from AE, and when every AE is a linear `add`
+        // we expose it as its own term in the formula:
+        //   baseDice + counterAttack + attackPure + aeContribution + combatModifier
+        // (with weapon: attackPure = weapon.attack.final - aeContribution,
+        //  because the weapon final already inherits the actor AE.)
+        //
+        // If any AE is multiply/override we keep the formula fused (the
+        // contribution is not a single linear delta we can split safely)
+        // and only expose the nominal list to the chat template.
+        const aeBreakdown = getActiveEffectsBreakdownForPath(
+          this.attackerActor,
+          'system.combat.attack.final.value'
+        );
+        const aeContribution = aeBreakdown.hasNonLinear ? 0 : aeBreakdown.linearTotal;
+        const attackPure = attack - aeContribution;
+
         const baseDice = this.getBaseCombatDiceFormula(this.attackerActor);
-        let formula = `${baseDice} + ${counterAttackBonus} + ${attack} + ${combatModifier}`;
+        let formula = aeContribution !== 0
+          ? `${baseDice} + ${counterAttackBonus} + ${attackPure} + ${aeContribution} + ${combatModifier}`
+          : `${baseDice} + ${counterAttackBonus} + ${attack} + ${combatModifier}`;
 
         if (this.modalData.attacker.withoutRoll) {
           formula = this.removeFirstDiceTerm(formula);
@@ -381,7 +408,7 @@ export class CombatAttackDialog extends FormApplication {
 
         if (this.modalData.attacker.showRoll) {
           const { i18n } = game;
-          const flavor = weapon
+          const baseFlavor = weapon
             ? i18n.format('macros.combat.dialog.physicalAttack.title', {
                 weapon: weapon?.name,
                 target: this.modalData.defender.token.name
@@ -389,6 +416,13 @@ export class CombatAttackDialog extends FormApplication {
             : i18n.format('macros.combat.dialog.physicalAttack.unarmed.title', {
                 target: this.modalData.defender.token.name
               });
+
+          // Append a nominal breakdown of the AE that contributed to the roll
+          // so the GM can audit which effect added or subtracted what,
+          // without having to inspect the actor.
+          const flavor = aeBreakdown.items.length > 0
+            ? `${baseFlavor}${formatAeBreakdownForFlavor(aeBreakdown)}`
+            : baseFlavor;
 
           roll.toMessage({
             speaker: ChatMessage.getSpeaker({ token: this.modalData.attacker.token }),
@@ -432,7 +466,8 @@ export class CombatAttackDialog extends FormApplication {
             projectile,
             attackerCombatMod,
             critDamageBonus: critDamageBonus ?? 0,
-            automaticCrit: !!automaticCrit
+            automaticCrit: !!automaticCrit,
+            activeEffectsBreakdown: aeBreakdown
           }
         });
 
@@ -536,7 +571,8 @@ export class CombatAttackDialog extends FormApplication {
             macro: spell.macro,
             attackerCombatMod,
             critDamageBonus: critDamageBonus ?? 0,
-            automaticCrit: !!automaticCrit
+            automaticCrit: !!automaticCrit,
+            activeEffectsBreakdown: aeBreakdown
           }
         });
 
@@ -655,7 +691,8 @@ export class CombatAttackDialog extends FormApplication {
             macro: power.macro,
             attackerCombatMod,
             critDamageBonus: critDamageBonus ?? 0,
-            automaticCrit: !!automaticCrit
+            automaticCrit: !!automaticCrit,
+            activeEffectsBreakdown: aeBreakdown
           }
         });
 
