@@ -61,7 +61,11 @@ export default async function defendActionHandler(message, _html, dataset) {
 
     const defenseMode =
       defenderToken.actor?.system?.general?.settings?.defenseType?.value;
-    if (defenseMode === 'resistance') {
+    // Both 'resistance' (damage-resistance defenders) and 'mass' (mass-of-enemies
+    // rule defenders) skip the regular defense dialog: no roll, no multi-defense
+    // counter increment, armor still applies. They funnel through the zero-roll
+    // defense helper instead.
+    if (defenseMode === 'resistance' || defenseMode === 'mass') {
       await sendAccumulationZeroDefense({
         defenderToken,
         attackerToken,

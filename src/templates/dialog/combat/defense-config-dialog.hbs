@@ -15,6 +15,24 @@
         inputValue=this.defender.combat.modifier
       }}
 
+      {{#if (is 'eq' this.ui.activeTab 'shield')}}
+        <p class="label defense-count">
+          {{localize 'macros.combat.dialog.defenseCount.exemption.supernaturalShield'}}
+        </p>
+      {{else}}
+        <p class="label defense-count">
+          {{localize 'macros.combat.dialog.defenseCount.title'}}: {{this.defender.combat.multipleDefensesPenalty}}
+        </p>
+      {{/if}}
+
+      {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        title=(localize 'macros.combat.dialog.combat.accumulateDefenses.title')
+        inputType="checkbox"
+        inputName="defender.combat.accumulateDefenses"
+        inputValue=(is 'eq' this.defender.combat.accumulateDefenses true)
+      }}
+
       <nav class="animabf-tabs sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="dodge">{{localize "macros.combat.dialog.dodgeButton.title"}}</a>
         <a class="item" data-tab="block">{{localize "macros.combat.dialog.blockButton.title"}}</a>

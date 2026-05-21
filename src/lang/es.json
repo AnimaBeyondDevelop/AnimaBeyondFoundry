@@ -727,6 +727,7 @@
   "macros.combat.dialog.defense.title": "Defensa",
   "macros.combat.dialog.defenseButton.title": "Enviar defensa",
   "macros.combat.dialog.defenseCount.title": "Penalizador por defensa continua",
+  "macros.combat.dialog.defenseCount.exemption.supernaturalShield": "Los escudos sobrenaturales no aplican penalizador por defensa continua",
   "macros.combat.dialog.defenseSent.title": "Defensa enviada. Esperando a los resultados del combate...",
   "macros.combat.dialog.defenseType.block.title": "Bloqueo",
   "macros.combat.dialog.defenseType.dodge.title": "Esquiva",

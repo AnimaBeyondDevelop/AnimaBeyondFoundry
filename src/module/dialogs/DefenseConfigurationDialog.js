@@ -7,6 +7,7 @@ import { updateAttackTargetsFlag } from '../../utils/updateAttackTargetsFlag.js'
 import { getChatVisibilityOptions } from '../utils/chatVisibility.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll.js';
 import { FormulaEvaluator } from '../../utils/formulaEvaluator.js';
+import { defensesCounterCheck } from '../combat/utils/defensesCounterCheck.js';
 
 export class DefenseConfigurationDialog extends FormApplication {
   constructor(object = {}, options = {}) {
@@ -54,6 +55,14 @@ export class DefenseConfigurationDialog extends FormApplication {
 
     const defenderActor = defender.actor;
 
+    // Read defenses counter flag from defender actor. Same source-of-truth used by
+    // CombatDefenseDialog so both flows stay consistent when the actor accumulates
+    // defenses during a round (reset is handled by ABFCombat hooks on turn change).
+    const defensesCounter = defenderActor.getFlag?.(game.animabf.id, 'defensesCounter') || {
+      accumulated: 0,
+      keepAccumulating: true
+    };
+
     const weapons = defenderActor.system?.combat?.weapons ?? [];
     const firstWeapon = weapons[0];
 
@@ -93,7 +102,12 @@ export class DefenseConfigurationDialog extends FormApplication {
         combat: {
           modifier: 0,
           fatigueUsed: 0,
-          multipleDefensesPenalty: 0,
+          // Auto-derive the multiple-defenses penalty from the actor's running counter.
+          // No manual UI override is exposed in this dialog by design: the penalty
+          // is fully driven by the rules (counter -> defensesCounterCheck mapping)
+          // and the dialog only shows the resulting value as a read-only label.
+          multipleDefensesPenalty: defensesCounterCheck(defensesCounter.accumulated),
+          accumulateDefenses: defensesCounter.keepAccumulating,
 
           weaponUsed: initialWeaponUsed,
           weapon: initialWeapon,
@@ -332,10 +346,18 @@ export class DefenseConfigurationDialog extends FormApplication {
 
       const mod = Number(combat?.modifier ?? 0);
       const multiPenalty = Number(combat?.multipleDefensesPenalty ?? 0);
+      const baseValue = Number(defenseAbility.finalBase ?? 0);
 
-      const formula = `${die} + ${
-        Number(defenseAbility.finalBase ?? 0) + mod + multiPenalty
-      }`;
+      // Defense-type specific rules (mirrors RULES in DefenseStrategies.js):
+      // supernatural shields neither apply the multiple-defenses penalty nor
+      // stack into the defenses counter. Block and dodge do both.
+      const isShieldDefense = type === 'shield';
+      const effectiveMultiPenalty = isShieldDefense ? 0 : multiPenalty;
+
+      // Split each contribution into its own term so the Foundry roll tooltip
+      // shows the breakdown: defense ability, situational modifier, and the
+      // multiple-defenses penalty as three traceable parts.
+      const formula = `${die} + ${baseValue} + ${mod} + (${effectiveMultiPenalty})`;
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
@@ -348,9 +370,13 @@ export class DefenseConfigurationDialog extends FormApplication {
         ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
         : ChatMessage.getSpeaker({ actor });
 
+      const defenseLabel = game.i18n.localize(
+        'macros.combat.dialog.defending.defend.title'
+      );
+
       await roll.toMessage({
         speaker,
-        flavor: 'Rolling defense',
+        flavor: defenseLabel,
         rollMode: vis.rollMode
       });
 
@@ -417,6 +443,15 @@ export class DefenseConfigurationDialog extends FormApplication {
         defenseResult: defenseData.toJSON?.() ?? defenseData,
         updatedAt: Date.now()
       });
+
+      // Increment the defender's defenses counter so the next defense in this
+      // round gets the right multi-defense penalty. The actor method respects
+      // the `keepAccumulating` flag; ABFCombat hooks reset the counter when
+      // the round changes. Supernatural-shield defenses do NOT stack (mirrors
+      // RULES.supernaturalShield.stackDefense in DefenseStrategies.js).
+      if (!isShieldDefense && typeof actor?.accumulateDefenses === 'function') {
+        actor.accumulateDefenses(!!combat?.accumulateDefenses);
+      }
 
       await this.close();
     } catch (err) {

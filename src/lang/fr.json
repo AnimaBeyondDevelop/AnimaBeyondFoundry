@@ -656,6 +656,7 @@
   "macros.combat.dialog.defense.title": "Défense",
   "macros.combat.dialog.defenseButton.title": "Envoyer la défense",
   "macros.combat.dialog.defenseCount.title": "Malus de Défense",
+  "macros.combat.dialog.defenseCount.exemption.supernaturalShield": "Les boucliers surnaturels n'appliquent pas le malus de défense multiple",
   "macros.combat.dialog.defenseSent.title": "Défense envoyée. Attente des résultats du combat...",
   "macros.combat.dialog.defenseType.block.title": "Parade",
   "macros.combat.dialog.defenseType.dodge.title": "Esquive",
