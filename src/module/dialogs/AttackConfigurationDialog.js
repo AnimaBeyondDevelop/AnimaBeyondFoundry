@@ -85,7 +85,13 @@ export class AttackConfigurationDialog extends FormApplication {
   }
 
   get attackerActor() {
-    return this.modalData?.attacker?.token?.actor;
+    // Read the actor through the same resolution that the trace hook
+    // uses, so any unlinked-token delta is read consistently and the
+    // AE applied to the token (not to the world actor of the sidebar)
+    // are visible to the dialog as well.
+    const token = this.modalData?.attacker?.token;
+    if (!token) return this.modalData?.attacker?.actor ?? null;
+    return token.actor ?? token.document?.actor ?? null;
   }
 
   getData() {

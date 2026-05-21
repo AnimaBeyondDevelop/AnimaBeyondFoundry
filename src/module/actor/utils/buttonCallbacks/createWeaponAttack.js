@@ -11,7 +11,14 @@ export function createWeaponAttack(sheet, e) {
   const weapon = sheet.actor?.items?.get(weaponId);
   if (!weapon) return ui.notifications.warn('Arma no encontrada.');
 
-  const attackerToken = sheet.token ?? sheet.actor?.getActiveTokens?.()[0];
+  // Prefer the sheet's token (when the sheet was opened from a token on the
+  // canvas) over a generic getActiveTokens lookup. On unlinked tokens the
+  // sheet.token already carries the ActorDelta we need to read AE from;
+  // grabbing a random active token via the world actor can produce a
+  // different one. If neither is available we fall back to the first active
+  // token only as a last resort.
+  const sheetToken = sheet.token ?? sheet.object?.document ?? null;
+  const attackerToken = sheetToken ?? sheet.actor?.getActiveTokens?.()[0] ?? null;
   if (!attackerToken) return ui.notifications.warn('No attacker token found.');
 
   const snapshotTargets = getSnapshotTargets();

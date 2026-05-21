@@ -37,6 +37,7 @@ import { ensureLinkedEffectForItem } from './module/actor/utils/ensureLinkedEffe
 import { inferAttributeFromFlavor } from './module/actor/utils/attributeDerivationMap.js';
 import { getActiveEffectsBreakdownForAttribute } from './module/actor/utils/activeEffectsBreakdown.js';
 import { formatAeBreakdownForFlavor } from './module/actor/utils/aeBreakdownFormat.js';
+import { resolveActorFromSpeaker } from './module/actor/utils/resolveActorForRoll.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -395,21 +396,9 @@ Hooks.on('preCreateChatMessage', (message, data, _options, _userId) => {
     const speaker = data.speaker ?? message.speaker;
     if (!speaker) return;
 
-    // Resolve the actor that owns the token/speaker so AE on unlinked
-    // tokens are read from the token actor (not the world actor).
-    let actor = null;
-    if (speaker.token) {
-      try {
-        const sceneId = speaker.scene;
-        const tokenDoc = sceneId
-          ? game.scenes?.get(sceneId)?.tokens?.get?.(speaker.token)
-          : null;
-        actor = tokenDoc?.actor ?? null;
-      } catch {}
-    }
-    if (!actor && speaker.actor) {
-      actor = game.actors?.get(speaker.actor) ?? null;
-    }
+    // Use the single resolver to make sure dialog and hook see the same
+    // actor (the TokenActor with ActorDelta for unlinked tokens).
+    const actor = resolveActorFromSpeaker(speaker);
     if (!actor) return;
 
     const flavor = data.flavor ?? message.flavor ?? '';

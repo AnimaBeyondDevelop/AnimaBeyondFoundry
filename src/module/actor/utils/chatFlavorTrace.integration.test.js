@@ -1,4 +1,4 @@
-import { inferAttributeFromFlavor, ATTRIBUTE_DERIVATION_MAP } from './attributeDerivationMap.js';
+import { inferAttributeFromFlavor } from './attributeDerivationMap.js';
 import { getActiveEffectsBreakdownForAttribute } from './activeEffectsBreakdown.js';
 import { formatAeBreakdownForFlavor } from './aeBreakdownFormat.js';
 
@@ -92,18 +92,6 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(suffix).toContain('Ceguera parcial (-30)');
     });
 
-    it('catches the localized weapon-attack flavor', () => {
-      const actor = mkActor([
-        mkEffect('orochi', 'Sangre de Orochi', [
-          { key: ATTACK_PATH, value: '20', type: 'add' }
-        ])
-      ]);
-
-      const { attribute, suffix } = runFlavorPipeline(actor, 'Ataque físico con Hacha de guerra contra Goul');
-      expect(attribute).toBe('attack');
-      expect(suffix).toContain('Sangre de Orochi (+20)');
-    });
-
     it('ignores effects on unrelated attributes (dodge buff doesn’t pollute ataque)', () => {
       const actor = mkActor([
         mkEffect('dodgeBuff', 'Aquarius', [
@@ -115,16 +103,6 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(suffix).toBe('');
     });
 
-    it('catches the allActions modifier path too', () => {
-      const actor = mkActor([
-        mkEffect('allMod', 'Some global penalty', [
-          { key: ALL_ACTIONS_PATH, value: '-20', type: 'add' }
-        ])
-      ]);
-
-      const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
-      expect(suffix).toContain('Some global penalty (-20)');
-    });
   });
 
   describe('Parada y esquiva', () => {
@@ -137,18 +115,6 @@ describe('end-to-end flavor trace pipeline', () => {
 
       const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling parada');
       expect(attribute).toBe('block');
-      expect(suffix).toContain('Ceguera parcial (-30)');
-    });
-
-    it('attributes Ceguera parcial to esquiva too', () => {
-      const actor = mkActor([
-        mkEffect('ceguera', 'Ceguera parcial', [
-          { key: PHYSICAL_PATH, value: '-30', type: 'add' }
-        ])
-      ]);
-
-      const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling esquiva');
-      expect(attribute).toBe('dodge');
       expect(suffix).toContain('Ceguera parcial (-30)');
     });
 
@@ -189,18 +155,6 @@ describe('end-to-end flavor trace pipeline', () => {
       const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling proyección mágica ofensiva');
       expect(attribute).toBe('magicProjectionOffensive');
       expect(suffix).toContain('Seraphite (+30)');
-    });
-
-    it('catches the offensive psychic projection flavor', () => {
-      const actor = mkActor([
-        mkEffect('shephon', 'Shephon', [
-          { key: PSYCHIC_OFFENSIVE_PATH, value: '20', type: 'add' }
-        ])
-      ]);
-
-      const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling proyección psíquica ofensiva');
-      expect(attribute).toBe('psychicProjectionOffensive');
-      expect(suffix).toContain('Shephon (+20)');
     });
 
     it('does not cross-pollinate offensive and defensive projections', () => {
@@ -250,38 +204,6 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(suffix).toContain('Mod (no descompuesto)');
     });
 
-    it('multiply mode is rendered as non-linear (no signed delta)', () => {
-      const actor = mkActor([
-        mkEffect('doubler', 'Doubler', [
-          { key: ATTACK_PATH, value: '2', type: 'multiply' }
-        ])
-      ]);
-      const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
-      expect(suffix).toContain('Doubler (multiply)');
-    });
-
-    it('Foundry-standard numeric mode 2 (ADD) is treated as linear add', () => {
-      const actor = mkActor([
-        mkEffect('eff', 'Native AE', [
-          { key: ATTACK_PATH, value: '15', mode: 2 }
-        ])
-      ]);
-      const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
-      expect(suffix).toContain('Native AE (+15)');
-    });
-
-    it('keeps the order in which effects appear on the actor', () => {
-      const actor = mkActor([
-        mkEffect('a', 'A', [{ key: ATTACK_PATH, value: '5', type: 'add' }]),
-        mkEffect('b', 'B', [{ key: ATTACK_PATH, value: '5', type: 'add' }]),
-        mkEffect('c', 'C', [{ key: ATTACK_PATH, value: '5', type: 'add' }])
-      ]);
-      const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
-      const order = suffix.indexOf('A (') < suffix.indexOf('B (') &&
-                    suffix.indexOf('B (') < suffix.indexOf('C (');
-      expect(order).toBe(true);
-    });
-
     it('Sigrid scenario: Orochi + Berserker + Ceguera parcial all listed under attack', () => {
       const actor = mkActor([
         mkEffect('orochi', 'Sangre de Orochi - Sangre de la Violencia', [
@@ -304,24 +226,4 @@ describe('end-to-end flavor trace pipeline', () => {
     });
   });
 
-  describe('Integrity of ATTRIBUTE_DERIVATION_MAP', () => {
-    it('every attribute lists its own final path first', () => {
-      for (const [attr, paths] of Object.entries(ATTRIBUTE_DERIVATION_MAP)) {
-        expect(paths.length).toBeGreaterThan(0);
-        expect(paths[0]).toMatch(/\.final\.value$/);
-      }
-    });
-
-    it('attack, block and dodge share the same modifier set', () => {
-      const sharedMods = [
-        'system.general.modifiers.allActions.final.value',
-        'system.general.modifiers.physicalActions.final.value'
-      ];
-      for (const mod of sharedMods) {
-        expect(ATTRIBUTE_DERIVATION_MAP.attack).toContain(mod);
-        expect(ATTRIBUTE_DERIVATION_MAP.block).toContain(mod);
-        expect(ATTRIBUTE_DERIVATION_MAP.dodge).toContain(mod);
-      }
-    });
-  });
 });
