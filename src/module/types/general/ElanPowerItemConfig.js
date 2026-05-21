@@ -106,13 +106,18 @@ export const ElanPowerItemConfig = ABFItemConfigFactory({
     }
   },
   onDelete: async (actor, target) => {
-    const { elanId } = target[0].dataset;
+    // Normalize the ContextMenu target shape: jQuery selector (legacy V13)
+    // vs HTMLElement (V14, and V13 when the new ContextMenu implementation
+    // is available). Without this, the V14 path would throw because
+    // `target[0]` is undefined for HTMLElement.
+    const el = target instanceof HTMLElement ? target : target?.[0];
+    const { elanId } = el?.dataset ?? {};
 
     if (!elanId) {
       throw new Error('Data id missing. Are you sure to set data-elan-id to rows?');
     }
 
-    const { elanPowerId } = target[0].dataset;
+    const { elanPowerId } = el.dataset;
 
     if (!elanPowerId) {
       throw new Error('Data id missing. Are you sure to set data-elan-power-id to rows?');
