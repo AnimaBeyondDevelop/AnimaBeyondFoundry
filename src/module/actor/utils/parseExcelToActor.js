@@ -4,14 +4,20 @@ import { calculateRegenerationTypeFromConstitution } from './prepareActor/calcul
 import { calculateAttributeModifier } from './prepareActor/calculations/util/calculateAttributeModifier';
 import { INITIAL_TECHNIQUE_DATA } from '../../types/domine/TechniqueItemConfig';
 import { INITIAL_MENTAL_PATTERN_DATA } from '../../types/psychic/MentalPatternItemConfig';
+import { importCombatEquipment } from './excelImporter/combatEquipment/index.js';
 
 /**
- * Parses excel data to actor data
+ * Parses excel data to actor data.
  *
- * @param {any} excelData - provided exel data
- * @param {ABFActor} actor - provided Actor to update
+ * @param {any} excelData - Flat object with the NamedRangesList contents.
+ * @param {ABFActor} actor - Actor to update.
+ * @param {object} [options] - Additional context.
+ * @param {object} [options.workbook] - Full xlsx workbook. When provided,
+ *   parsers that need other sheets or 2D named ranges (combat equipment,
+ *   for example) can read directly from it. If omitted, those parsers are
+ *   skipped gracefully.
  */
-export const parseExcelToActor = async (excelData, actor) => {
+export const parseExcelToActor = async (excelData, actor, options = {}) => {
   const requiredExcelVersions = ['8.6.4', '8.7.0'];
   const excelVersionSplitted = SetEmptyIfUndefined(excelData.Version)
     .split(' ')
@@ -1150,6 +1156,10 @@ export const parseExcelToActor = async (excelData, actor) => {
       type: ABFItems.MENTAL_PATTERN,
       system: INITIAL_MENTAL_PATTERN_DATA
     });
+  }
+
+  if (options.workbook) {
+    await importCombatEquipment(actor, options.workbook);
   }
 
   actor.prepareData();
