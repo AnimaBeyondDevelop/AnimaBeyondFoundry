@@ -63,7 +63,7 @@ export async function importCombatEquipment(actor, workbook) {
     ? await importArmorsToActor(actor, armors)
     : { imported: 0, notFound: [] };
 
-  // Resumen al GM
+  // Resumen tras importar
   ui.notifications?.info(
     game.i18n.format('anima.ui.excelImporter.combatEquipment.notifSummary', {
       weapons: weaponsResult.imported,

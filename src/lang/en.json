@@ -566,7 +566,7 @@
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Inside managed combat system, the \"Show roll\" checkbox will be checked by default depending on this value",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Show GM rolls automatically in combat",
   "anima.ui.systemSettings.notifyOnMissingExcelMatch.title": "Notify when weapons/armors/ammo are not found on Excel import",
-  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "When an Excel name has no match in the system compendium, show a GM notification. The item is still created with the Excel data as a fallback.",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "If an Excel name has no match in the system compendium, show a notification during import. The item is still created with the Excel data as a fallback.",
   "anima.ui.systemSettings.useCombatTable.title": "Use combat table",
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calculate damage with the Combat Table explained in Core Exxet pg. 334-335",
   "anima.ui.systemSettings.useDistanceAutomation.title": "Automate combat distance",

@@ -569,7 +569,7 @@
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Cuando se use el combate autogestionado por el sistema, posibilidad de mostrar las tiradas que realice el GM vendrán marcadas por defecto según este valor",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Mostrar tiradas del GM forma automática al combatir",
   "anima.ui.systemSettings.notifyOnMissingExcelMatch.title": "Avisar de armas/armaduras/munición no encontradas al importar Excel",
-  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "Cuando un nombre del Excel no tiene match en el compendio del sistema, mostrar notificación al GM. El item se crea igualmente con los datos del Excel como fallback.",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "Si un nombre del Excel no tiene match en el compendio del sistema, mostrar notificación durante el import. El item se crea igualmente con los datos del Excel como fallback.",
   "anima.ui.systemSettings.useCombatTable.title": "Usar la Tabla de combate",
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calcular daño usando la Tabla de combate que aparece en el Core Exxet pg. 334-335",
   "anima.ui.systemSettings.useDistanceAutomation.title": "Automatizar distancia en el combate",

@@ -536,7 +536,7 @@
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Montrer les jets automatiquement au MJ dans un combat",
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calculez les dégâts en utilisant la table de combat dans le Core Exxet pg. 334-335",
   "anima.ui.systemSettings.notifyOnMissingExcelMatch.title": "Avertir quand armes/armures/munitions sont introuvables à l'import Excel",
-  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "Quand un nom de l'Excel n'a pas de correspondance dans le compendium du système, afficher une notification au MJ. L'item est tout de même créé avec les données de l'Excel comme repli.",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "Si un nom de l'Excel n'a pas de correspondance dans le compendium du système, afficher une notification pendant l'import. L'item est tout de même créé avec les données de l'Excel comme repli.",
   "anima.ui.systemSettings.useCombatTable.title": "Utiliser la table de combat",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Encaissement",
