@@ -261,6 +261,12 @@
   "anima.ui.importDataFromExcelHint2": "Esta operación actualizará los datos de {name} y no podrá deshacerse.",
   "anima.ui.importDataFromExcelTitle": "Importar Datos: {name}",
   "anima.ui.importDataFromExcelWarning": "Versión del Excel no compatible, por favor, intente usar una de las siguientes: ",
+  "anima.ui.excelImporter.combatEquipment.notifSummary": "Equipo importado: {weapons} armas, {ammo} munición, {armors} armaduras.",
+  "anima.ui.excelImporter.combatEquipment.notifNotFound": "{type} '{name}' no encontrada en el compendio. Se ha creado con los datos del Excel.",
+  "anima.ui.excelImporter.combatEquipment.notifNotExcel": "Este Excel no parece una ficha estándar de Anima. Faltan referencias clave (Tabla_Combate o cabecera de Armadura).",
+  "anima.ui.excelImporter.combatEquipment.typeWeapon": "Arma",
+  "anima.ui.excelImporter.combatEquipment.typeArmor": "Armadura",
+  "anima.ui.excelImporter.combatEquipment.typeAmmo": "Munición",
   "anima.ui.languageSection.base": "Base",
   "anima.ui.languageSection.title": "Idiomas",
   "anima.ui.levelSection.title": "Categorías",
@@ -562,6 +568,8 @@
   "anima.ui.systemSettings.autoAcceptCombatRequests.hint.title": "En el combate autogestionado las peticiones de combate al DM se auto aceptarán dependiendo de si está activa esta opción",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Cuando se use el combate autogestionado por el sistema, posibilidad de mostrar las tiradas que realice el GM vendrán marcadas por defecto según este valor",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Mostrar tiradas del GM forma automática al combatir",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.title": "Avisar de armas/armaduras/munición no encontradas al importar Excel",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "Cuando un nombre del Excel no tiene match en el compendio del sistema, mostrar notificación al GM. El item se crea igualmente con los datos del Excel como fallback.",
   "anima.ui.systemSettings.useCombatTable.title": "Usar la Tabla de combate",
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calcular daño usando la Tabla de combate que aparece en el Core Exxet pg. 334-335",
   "anima.ui.systemSettings.useDistanceAutomation.title": "Automatizar distancia en el combate",
@@ -853,11 +861,9 @@
   "chat.defend.pickAToken": "Selecciona un token válido para defender.",
   "chat.defend.noPermission": "No tienes permisos para defender con ese token.",
   "chat.defend.openFailed": "No se pudo abrir la defensa.",
-
   "chat.defense.autoRollFlavor.block": "Defensa automática — Bloqueo",
   "chat.defense.autoRollFlavor.dodge": "Defensa automática — Esquiva",
   "chat.defense.autoRollFlavor.supernaturalShield": "Auto defense — Escudo",
-
   "chat.result.confirmTitle": "¿Aplicar el daño de nuevo?",
   "chat.result.confirmBody": "Este resultado ya aplicó daño antes. ¿Seguro?",
   "chat.result.points": "puntos",
@@ -871,22 +877,18 @@
   "chat.combatResult.yes": "Sí",
   "chat.combatResult.no": "No",
   "chat.combatResult.baseCriticalValue": "Valor crítico base",
-
   "chat.attackData.noTargets": "(Sin objetivos en este ataque)",
   "chat.attackData.rollingBy": "Tirando: {name}",
   "chat.attackData.state.pending": "pendiente",
   "chat.attackData.state.rolling": "tirando",
   "chat.attackData.state.done": "resuelto",
   "chat.attackData.state.expired": "expirado",
-
   "chat.common.target": "Objetivo",
-
- "anima.ui.effects.effectsList.title": "Efectos",
- "anima.ui.effects.effectsList.name.title": "Efecto",
- "anima.ui.effects.effectsList.enable.title": "Activar",
- "anima.ui.effects.effectsList.disable.title": "Desactivar",
- "anima.ui.effects.effectsList.edit.title": "Editar",
- "anima.ui.effects.effectsList.delete.title": "Eliminar",
- "anima.effects.newEffect": "Nuevo efecto"
-
+  "anima.ui.effects.effectsList.title": "Efectos",
+  "anima.ui.effects.effectsList.name.title": "Efecto",
+  "anima.ui.effects.effectsList.enable.title": "Activar",
+  "anima.ui.effects.effectsList.disable.title": "Desactivar",
+  "anima.ui.effects.effectsList.edit.title": "Editar",
+  "anima.ui.effects.effectsList.delete.title": "Eliminar",
+  "anima.effects.newEffect": "Nuevo efecto"
 }

@@ -106,6 +106,15 @@ export const registerSettings = systemId => {
     type: Boolean
   });
 
+  game.settings.register(systemId, ABFSettingsKeys.NOTIFY_ON_MISSING_EXCEL_MATCH, {
+    name: 'anima.ui.systemSettings.notifyOnMissingExcelMatch.title',
+    hint: 'anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  });
+
   // This is for migration purposes, it stores the last migration version runned for the world.
   game.settings.register(systemId, ABFSettingsKeys.APPLIED_MIGRATIONS, {
     name: 'Applied Migration Versions',
