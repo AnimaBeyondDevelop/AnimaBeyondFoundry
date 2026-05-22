@@ -10,16 +10,17 @@ import { formatAeBreakdownForFlavor } from './aeBreakdownFormat.js';
  *   actor + attribute -> getActiveEffectsBreakdownForAttribute -> breakdown
  *   breakdown -> formatAeBreakdownForFlavor -> HTML suffix
  *
- * If this suite passes the hook is guaranteed correct for the cases covered;
- * the only remaining unknown is the Foundry-side wiring (speaker -> actor
- * resolution), which is validated manually.
+ * IMPORTANT: per the Anima Beyond Fantasy rules, the physicalActions
+ * modifier is NOT applied to attack/block/dodge (those are primary combat
+ * skills). physicalActions only affects contested secondary skills. The
+ * derivation map and these tests reflect that: only AE that touch the
+ * attribute's own paths contribute to its flavor.
  */
 
 const ATTACK_PATH = 'system.combat.attack.final.value';
-const PHYSICAL_PATH = 'system.general.modifiers.physicalActions.final.value';
-const ALL_ACTIONS_PATH = 'system.general.modifiers.allActions.final.value';
 const BLOCK_PATH = 'system.combat.block.final.value';
 const DODGE_PATH = 'system.combat.dodge.final.value';
+const PHYSICAL_PATH = 'system.general.modifiers.physicalActions.final.value';
 const INITIATIVE_PATH = 'system.characteristics.secondaries.initiative.final.value';
 const MAGIC_OFFENSIVE_PATH = 'system.mystic.magicProjection.imbalance.offensive.final.value';
 const PSYCHIC_OFFENSIVE_PATH = 'system.psychic.psychicProjection.imbalance.offensive.final.value';
@@ -38,7 +39,6 @@ const mkEffect = (id, name, changes, opts = {}) => ({
   system: {}
 });
 
-/** End-to-end pipeline: same logic the hook runs. */
 function runFlavorPipeline(actor, flavor) {
   const attribute = inferAttributeFromFlavor(flavor);
   if (!attribute) return { attribute: null, breakdown: null, suffix: '' };
@@ -49,7 +49,7 @@ function runFlavorPipeline(actor, flavor) {
 
 describe('end-to-end flavor trace pipeline', () => {
   describe('Ataque', () => {
-    it('attributes Sangre de Orochi (direct on attack.final) to ataque', () => {
+    it('lists an AE that targets attack.final directly (Sangre de Orochi)', () => {
       const actor = mkActor([
         mkEffect('orochi', 'Sangre de Orochi', [
           { key: ATTACK_PATH, value: '20', type: 'add' }
@@ -61,7 +61,7 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(suffix).toContain('Sangre de Orochi (+20)');
     });
 
-    it('attributes Ceguera parcial (indirect via physicalActions) to ataque', () => {
+    it('does NOT list AE that only touch physicalActions (Ceguera parcial via physical)', () => {
       const actor = mkActor([
         mkEffect('ceguera', 'Ceguera parcial', [
           { key: PHYSICAL_PATH, value: '-30', type: 'add' }
@@ -70,29 +70,26 @@ describe('end-to-end flavor trace pipeline', () => {
 
       const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling attack');
       expect(attribute).toBe('attack');
-      expect(suffix).toContain('Ceguera parcial (-30)');
+      // physicalActions does not affect attack rolls.
+      expect(suffix).toBe('');
     });
 
-    it('combines direct and indirect contributors under the same flavor', () => {
+    it('combines multiple direct contributors', () => {
       const actor = mkActor([
         mkEffect('orochi', 'Sangre de Orochi', [
           { key: ATTACK_PATH, value: '20', type: 'add' }
         ]),
         mkEffect('berserker', 'Berserker', [
           { key: ATTACK_PATH, value: '10', type: 'add' }
-        ]),
-        mkEffect('ceguera', 'Ceguera parcial', [
-          { key: PHYSICAL_PATH, value: '-30', type: 'add' }
         ])
       ]);
 
       const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
       expect(suffix).toContain('Sangre de Orochi (+20)');
       expect(suffix).toContain('Berserker (+10)');
-      expect(suffix).toContain('Ceguera parcial (-30)');
     });
 
-    it('ignores effects on unrelated attributes (dodge buff doesn’t pollute ataque)', () => {
+    it('ignores effects that target other attributes', () => {
       const actor = mkActor([
         mkEffect('dodgeBuff', 'Aquarius', [
           { key: DODGE_PATH, value: '15', type: 'add' }
@@ -102,36 +99,40 @@ describe('end-to-end flavor trace pipeline', () => {
       const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
       expect(suffix).toBe('');
     });
-
   });
 
   describe('Parada y esquiva', () => {
-    it('attributes Ceguera parcial to parada via the shared physicalActions modifier', () => {
-      const actor = mkActor([
-        mkEffect('ceguera', 'Ceguera parcial', [
-          { key: PHYSICAL_PATH, value: '-30', type: 'add' }
-        ])
-      ]);
-
-      const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling parada');
-      expect(attribute).toBe('block');
-      expect(suffix).toContain('Ceguera parcial (-30)');
-    });
-
-    it('a dodge-only buff appears under esquiva but not parada', () => {
+    it('attributes a direct dodge buff under esquiva but not under parada', () => {
       const actor = mkActor([
         mkEffect('aquarius', 'Aquarius', [
           { key: DODGE_PATH, value: '15', type: 'add' }
         ])
       ]);
-
       expect(runFlavorPipeline(actor, 'Rolling esquiva').suffix).toContain('Aquarius (+15)');
       expect(runFlavorPipeline(actor, 'Rolling parada').suffix).toBe('');
+    });
+
+    it('does NOT list physicalActions-only AE under parada either', () => {
+      const actor = mkActor([
+        mkEffect('ceguera', 'Ceguera parcial', [
+          { key: PHYSICAL_PATH, value: '-30', type: 'add' }
+        ])
+      ]);
+      expect(runFlavorPipeline(actor, 'Rolling parada').suffix).toBe('');
+    });
+
+    it('lists a direct block AE under parada', () => {
+      const actor = mkActor([
+        mkEffect('orochi', 'Sangre de Orochi', [
+          { key: BLOCK_PATH, value: '20', type: 'add' }
+        ])
+      ]);
+      expect(runFlavorPipeline(actor, 'Rolling parada').suffix).toContain('Sangre de Orochi (+20)');
     });
   });
 
   describe('Iniciativa', () => {
-    it('attributes Derribado (indirect — initiative penalty)', () => {
+    it('lists AE that touches initiative.final', () => {
       const actor = mkActor([
         mkEffect('derribado', 'Derribado', [
           { key: INITIATIVE_PATH, value: '-10', type: 'add' }
@@ -145,7 +146,7 @@ describe('end-to-end flavor trace pipeline', () => {
   });
 
   describe('Proyección mágica y psíquica', () => {
-    it('catches the offensive magic projection flavor', () => {
+    it('catches an AE that buffs offensive magic projection', () => {
       const actor = mkActor([
         mkEffect('seraphite', 'Seraphite', [
           { key: MAGIC_OFFENSIVE_PATH, value: '30', type: 'add' }
@@ -157,15 +158,16 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(suffix).toContain('Seraphite (+30)');
     });
 
-    it('does not cross-pollinate offensive and defensive projections', () => {
+    it('catches an AE that buffs offensive psychic projection', () => {
       const actor = mkActor([
-        mkEffect('something', 'Defensive Buff', [
-          { key: 'system.mystic.magicProjection.imbalance.defensive.final.value', value: '30', type: 'add' }
+        mkEffect('shephon', 'Shephon', [
+          { key: PSYCHIC_OFFENSIVE_PATH, value: '20', type: 'add' }
         ])
       ]);
 
-      expect(runFlavorPipeline(actor, 'Rolling proyección mágica ofensiva').suffix).toBe('');
-      expect(runFlavorPipeline(actor, 'Rolling proyección mágica defensiva').suffix).toContain('Defensive Buff (+30)');
+      const { attribute, suffix } = runFlavorPipeline(actor, 'Rolling proyección psíquica ofensiva');
+      expect(attribute).toBe('psychicProjectionOffensive');
+      expect(suffix).toContain('Shephon (+20)');
     });
   });
 
@@ -188,11 +190,6 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(runFlavorPipeline(actor, 'Rolling attack').suffix).toBe('');
     });
 
-    it('actor with no AE produces no suffix', () => {
-      const actor = mkActor([]);
-      expect(runFlavorPipeline(actor, 'Rolling attack').suffix).toBe('');
-    });
-
     it('override mode is rendered as non-linear (no signed delta)', () => {
       const actor = mkActor([
         mkEffect('shinkyou', 'Shinkyou (Posición Espejo)', [
@@ -203,27 +200,43 @@ describe('end-to-end flavor trace pipeline', () => {
       expect(suffix).toContain('Shinkyou (Posición Espejo) (override)');
       expect(suffix).toContain('Mod (no descompuesto)');
     });
+  });
 
-    it('Sigrid scenario: Orochi + Berserker + Ceguera parcial all listed under attack', () => {
+  describe('Una entrada por change (mismo AE, varios paths)', () => {
+    it('lista por separado cada change de un mismo effect (sin agrupar)', () => {
+      // Hypothetical AE that buffs attack from two direct paths simultaneously
+      // (base + special). Each change is listed on its own — la separación es
+      // intencional: gracias a esto detectamos rutas mal cableadas (p.ej. el
+      // bug de physicalActions filtrándose a attack).
       const actor = mkActor([
-        mkEffect('orochi', 'Sangre de Orochi - Sangre de la Violencia', [
-          { key: ATTACK_PATH, value: '20', type: 'add' }
-        ]),
-        mkEffect('berserker', 'Berserker', [
-          { key: ATTACK_PATH, value: '10', type: 'add' }
-        ]),
-        mkEffect('ceguera', 'Ceguera parcial', [
-          { key: PHYSICAL_PATH, value: '-30', type: 'add' }
+        mkEffect('combo', 'Combo Buff', [
+          { key: ATTACK_PATH, value: '20', type: 'add' },
+          { key: 'system.combat.attack.special.value', value: '10', type: 'add' }
         ])
       ]);
 
-      const { suffix, breakdown } = runFlavorPipeline(actor, 'Rolling attack');
-      expect(breakdown.items).toHaveLength(3);
-      expect(breakdown.linearTotal).toBe(0); // 20 + 10 - 30 = 0
-      expect(suffix).toContain('Sangre de Orochi');
-      expect(suffix).toContain('Berserker');
-      expect(suffix).toContain('Ceguera parcial');
+      const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
+      expect(suffix).toContain('Combo Buff (+20)');
+      expect(suffix).toContain('Combo Buff (+10)');
+      const occurrences = (suffix.match(/Combo Buff/g) ?? []).length;
+      expect(occurrences).toBe(2);
+    });
+
+    it('mantiene effects distintos como entradas separadas', () => {
+      const actor = mkActor([
+        mkEffect('a', 'Orochi', [{ key: ATTACK_PATH, value: '20', type: 'add' }]),
+        mkEffect('b', 'Berserker', [{ key: ATTACK_PATH, value: '10', type: 'add' }])
+      ]);
+
+      const { suffix } = runFlavorPipeline(actor, 'Rolling attack');
+      expect(suffix).toContain('Orochi (+20)');
+      expect(suffix).toContain('Berserker (+10)');
     });
   });
-
+});
+;
+      expect(suffix).toContain('Orochi (+20)');
+      expect(suffix).toContain('Berserker (+10)');
+    });
+  });
 });

@@ -1,15 +1,15 @@
 export const mutateCombatData = data => {
-  // Re-enabled: attack.final must include allActions and physicalActions so
-  // that AE penalizing those modifiers (Ceguera parcial, Derribado,
-  // Amenazado, etc.) actually reach the attack roll. AE that target
-  // attack.final directly (Sangre de Orochi, Berserker, ...) still apply on
-  // top because the flow toposort runs overwrite ops (this function) before
-  // modify ops (the AE 'add' changes) for the same path.
-  data.combat.attack.final.value =
-    data.combat.attack.base.value +
-    data.combat.attack.special.value +
-    data.general.modifiers.allActions.final.value +
-    data.general.modifiers.physicalActions.final.value;
+  // attack.final.value is intentionally NOT calculated here.
+  // physicalActions only applies to secondary skills contested between two
+  // subjects (per the Anima Beyond Fantasy core rules). Combat actions
+  // (attack, block, dodge) are primary skills and do not receive the
+  // physicalActions modifier through this path.
+  // See: rule about "modificador a acciones físicas".
+  // data.combat.attack.final.value =
+  //   data.combat.attack.base.value +
+  //   data.combat.attack.special.value +
+  //   data.general.modifiers.allActions.final.value +
+  //   data.general.modifiers.physicalActions.final.value;
 
   data.combat.block.final.value =
     data.combat.block.base.value +
@@ -29,8 +29,8 @@ export const mutateCombatData = data => {
 
 mutateCombatData.abfFlow = {
   deps: [
-    'system.combat.attack.base.value',
-    'system.combat.attack.special.value',
+    // 'system.combat.attack.base.value',
+    // 'system.combat.attack.special.value',
     'system.combat.block.base.value',
     'system.combat.block.special.value',
     'system.combat.dodge.base.value',
@@ -41,7 +41,7 @@ mutateCombatData.abfFlow = {
     'system.general.modifiers.physicalActions.final.value'
   ],
   mods: [
-    'system.combat.attack.final.value',
+    // 'system.combat.attack.final.value',
     'system.combat.block.final.value',
     'system.combat.dodge.final.value'
     // 'system.combat.damageReduction.final.value'

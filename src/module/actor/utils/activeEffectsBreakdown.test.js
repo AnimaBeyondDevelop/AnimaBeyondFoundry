@@ -87,7 +87,11 @@ describe('getActiveEffectsBreakdownForPaths (multi-path)', () => {
 });
 
 describe('getActiveEffectsBreakdownForAttribute (resolves derivation map)', () => {
-  it('attributes Ceguera (vía physicalActions) to the attack attribute', () => {
+  it('does NOT attribute physicalActions to the attack attribute (combat is primary)', () => {
+    // Per Anima Beyond Fantasy rules, physicalActions only modifies contested
+    // secondary skills. Combat skills (attack/block/dodge) are primary skills
+    // and are not derived from physicalActions, so an AE on physicalActions
+    // must not bubble up to the attack breakdown.
     const actor = makeActor({
       effects: [{
         id: 'ceguera', name: 'Ceguera parcial', active: true,
@@ -96,13 +100,12 @@ describe('getActiveEffectsBreakdownForAttribute (resolves derivation map)', () =
     });
 
     const res = getActiveEffectsBreakdownForAttribute(actor, 'attack');
-    expect(res.items).toHaveLength(1);
-    expect(res.items[0].effectName).toBe('Ceguera parcial');
-    expect(res.items[0].path).toBe(PHYSICAL_PATH);
-    expect(res.linearTotal).toBe(-30);
+    expect(res.items).toEqual([]);
+    expect(res.linearTotal).toBe(0);
   });
 
-  it('groups direct and indirect contributors under the same attribute', () => {
+  it('groups multiple direct contributors under the same attribute', () => {
+    const ATTACK_SPECIAL_PATH = 'system.combat.attack.special.value';
     const actor = makeActor({
       effects: [
         {
@@ -110,8 +113,8 @@ describe('getActiveEffectsBreakdownForAttribute (resolves derivation map)', () =
           changes: [{ key: ATTACK_PATH, value: '20', type: 'add' }]
         },
         {
-          id: 'ceguera', name: 'Ceguera parcial', active: true,
-          changes: [{ key: PHYSICAL_PATH, value: '-30', type: 'add' }]
+          id: 'special', name: 'Buff especial', active: true,
+          changes: [{ key: ATTACK_SPECIAL_PATH, value: '-30', type: 'add' }]
         }
       ]
     });

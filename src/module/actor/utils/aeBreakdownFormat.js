@@ -7,6 +7,11 @@
  * are labelled so the GM knows the formula could not split them out
  * cleanly.
  *
+ * One entry per change. If a single AE writes to several paths that all
+ * feed into the same roll, each change is listed on its own — that visible
+ * separation is what surfaces routing bugs (e.g. a path leaking into the
+ * wrong attribute), so we deliberately do NOT group by effect name here.
+ *
  * Shared between CombatAttackDialog and AttackConfigurationDialog (and any
  * future dialog that wants to expose the same nominal trace in chat).
  *
@@ -21,7 +26,6 @@ export function formatAeBreakdownForFlavor(breakdown) {
       const sign = it.value >= 0 ? '+' : '';
       return `${it.effectName} (${sign}${it.value})`;
     }
-    // Non-linear: don't claim a delta we cannot honestly show.
     const tag = it.mode === 'override' ? 'override' : it.mode;
     return `${it.effectName} (${tag})`;
   });

@@ -15,26 +15,24 @@
  * by direct callers; they don't need to match Foundry's data paths.
  */
 export const ATTRIBUTE_DERIVATION_MAP = {
+  // Attack, block and dodge are primary combat skills. They do NOT receive
+  // the physicalActions modifier (which only applies to contested secondary
+  // skills per the Anima rules). Only AE that touch the attribute paths
+  // directly contribute to the flavor.
   attack: [
     'system.combat.attack.final.value',
     'system.combat.attack.base.value',
-    'system.combat.attack.special.value',
-    'system.general.modifiers.allActions.final.value',
-    'system.general.modifiers.physicalActions.final.value'
+    'system.combat.attack.special.value'
   ],
   block: [
     'system.combat.block.final.value',
     'system.combat.block.base.value',
-    'system.combat.block.special.value',
-    'system.general.modifiers.allActions.final.value',
-    'system.general.modifiers.physicalActions.final.value'
+    'system.combat.block.special.value'
   ],
   dodge: [
     'system.combat.dodge.final.value',
     'system.combat.dodge.base.value',
-    'system.combat.dodge.special.value',
-    'system.general.modifiers.allActions.final.value',
-    'system.general.modifiers.physicalActions.final.value'
+    'system.combat.dodge.special.value'
   ],
   initiative: [
     'system.characteristics.secondaries.initiative.final.value',
