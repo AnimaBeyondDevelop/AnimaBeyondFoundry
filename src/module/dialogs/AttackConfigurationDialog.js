@@ -2,6 +2,7 @@ import { Templates } from '../utils/constants';
 import { ABFConfig } from '../ABFConfig';
 import { ABFAttackData } from '../combat/ABFAttackData';
 import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
+import { getActiveEffectsBreakdownForPath } from '../actor/utils/activeEffectsBreakdown.js';
 ///dialogs/AttackConfigurationDialog.js
 ///actor/utils/getSnapshotTargets.js
 
@@ -84,7 +85,13 @@ export class AttackConfigurationDialog extends FormApplication {
   }
 
   get attackerActor() {
-    return this.modalData?.attacker?.token?.actor;
+    // Read the actor through the same resolution that the trace hook
+    // uses, so any unlinked-token delta is read consistently and the
+    // AE applied to the token (not to the world actor of the sidebar)
+    // are visible to the dialog as well.
+    const token = this.modalData?.attacker?.token;
+    if (!token) return this.modalData?.attacker?.actor ?? null;
+    return token.actor ?? token.document?.actor ?? null;
   }
 
   getData() {
@@ -162,7 +169,25 @@ export class AttackConfigurationDialog extends FormApplication {
           ? actor.system.general.diceSettings.abilityMasteryDie.value
           : actor.system.general.diceSettings.abilityDie.value;
 
-      const formula = `${die} + ${baseAttack} + ${mod}`;
+      // --- Traceability of Active Effects ----------------------------------
+      // Active Effects (Sangre de Orochi, Cegueras, Derribado...) write to
+      // actor.system.combat.attack.final.value. The weapon's attack.final
+      // already inherits that via calculateWeaponAttack, so the AE delta is
+      // fused inside baseAttack. To restore traceability we split it back
+      // out into its own term in the formula (only when every AE is a
+      // linear add — for multiply/override we leave the formula fused and
+      // just expose the nominal list in the flavor).
+      const aeBreakdown = getActiveEffectsBreakdownForPath(
+        actor,
+        'system.combat.attack.final.value'
+      );
+      const aeContribution = aeBreakdown.hasNonLinear ? 0 : aeBreakdown.linearTotal;
+      const attackPure = baseAttack - aeContribution;
+
+      const formula = aeContribution !== 0
+        ? `${die} + ${attackPure} + ${aeContribution} + ${mod}`
+        : `${die} + ${baseAttack} + ${mod}`;
+
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
@@ -175,6 +200,8 @@ export class AttackConfigurationDialog extends FormApplication {
         ? { ...ChatMessage.getSpeaker({ token: tokenForSpeaker }), alias: tokenName }
         : ChatMessage.getSpeaker({ actor });
 
+      // Flavor base only. The preCreateChatMessage hook in animabf.mjs
+      // appends the breakdown of AE that contributed to this roll.
       await roll.toMessage({
         speaker,
         flavor: 'Rolling attack'

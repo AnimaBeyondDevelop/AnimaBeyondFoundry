@@ -30,6 +30,44 @@ export default class ABFActorDirectory extends ActorDirectoryV1 {
   }
 
   /**
+   * Intercept drops over an actor row in the sidebar so dragging a system
+   * "effect" Item onto an actor in the directory creates the Item on that
+   * actor (Foundry V13 does not route this drop by default). Once the Item
+   * exists, the global createItem hook materializes the linked ActiveEffect,
+   * matching the behaviour of drops over a token on the canvas and drops
+   * over an open sheet.
+   *
+   * @param {DragEvent} event
+   */
+  async _onDrop(event) {
+    let data;
+    try {
+      const TE = foundry.applications?.ux?.TextEditor?.implementation ?? TextEditor;
+      data = typeof TE?.getDragEventData === 'function'
+        ? TE.getDragEventData(event)
+        : JSON.parse(event.dataTransfer.getData('text/plain'));
+    } catch {
+      data = null;
+    }
+
+    if (data?.type === 'Item' && data.uuid) {
+      const row = event.target?.closest?.('[data-entry-id], [data-document-id]');
+      const actorId = row?.dataset?.entryId ?? row?.dataset?.documentId;
+      const actor = actorId ? game.actors.get(actorId) : null;
+
+      if (actor) {
+        const item = await fromUuid(data.uuid);
+        if (item?.type === 'effect') {
+          await actor.createEmbeddedDocuments('Item', [item.toObject()]);
+          return;
+        }
+      }
+    }
+
+    return super._onDrop?.(event);
+  }
+
+  /**
    * Muestra el diálogo para importar desde Excel
    * @param {Actor} document
    * @returns {Promise<void>}

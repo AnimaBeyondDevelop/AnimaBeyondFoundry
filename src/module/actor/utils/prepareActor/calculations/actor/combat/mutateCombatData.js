@@ -1,4 +1,10 @@
 export const mutateCombatData = data => {
+  // attack.final.value is intentionally NOT calculated here.
+  // physicalActions only applies to secondary skills contested between two
+  // subjects (per the Anima Beyond Fantasy core rules). Combat actions
+  // (attack, block, dodge) are primary skills and do not receive the
+  // physicalActions modifier through this path.
+  // See: rule about "modificador a acciones físicas".
   // data.combat.attack.final.value =
   //   data.combat.attack.base.value +
   //   data.combat.attack.special.value +

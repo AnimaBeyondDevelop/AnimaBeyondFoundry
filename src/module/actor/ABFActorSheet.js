@@ -12,6 +12,8 @@ import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { createClickHandlers } from './utils/createClickHandlers';
 import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
+import { findEffectLinkedToItem } from './utils/findEffectLinkedToItem.js';
+import { ensureLinkedEffectForItem } from './utils/ensureLinkedEffectForItem.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -606,7 +608,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
   _getLinkedEffect(item) {
     if (!item) return null;
-    return this.actor.effects.find(e => e.origin === item.uuid) ?? null;
+    return findEffectLinkedToItem(this.actor, item);
   }
 
   async _linkItemToEffect(item, effect) {
@@ -615,28 +617,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
   }
 
   async _ensureEffectForItem(item) {
-    if (!item) return null;
-
-    const effect = this._getLinkedEffect(item);
-    if (effect) return effect;
-
-    const rawBaseData = item.system?.effectData ?? {};
-    // Ignore old origin if it exists in stored data
-    const { origin, ...baseData } = rawBaseData;
-
-    const data = foundry.utils.mergeObject(
-      {
-        name: item.name,
-        icon: item.img || 'icons/svg/aura.svg',
-        disabled: !item.system?.active,
-        origin: item.uuid // always the current item
-      },
-      baseData,
-      { inplace: false }
-    );
-
-    const [created] = await this.actor.createEmbeddedDocuments('ActiveEffect', [data]);
-    return created ?? null;
+    return ensureLinkedEffectForItem(this.actor, item);
   }
 
   async _onDropItem(event, data) {

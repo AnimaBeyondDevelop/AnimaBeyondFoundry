@@ -727,6 +727,7 @@
   "macros.combat.dialog.defense.title": "Defense",
   "macros.combat.dialog.defenseButton.title": "Send defense",
   "macros.combat.dialog.defenseCount.title": "Defense penalty",
+  "macros.combat.dialog.defenseCount.exemption.supernaturalShield": "Supernatural shields do not apply the multiple-defenses penalty",
   "macros.combat.dialog.defenseSent.title": "Defense sent. Waiting for combat results...",
   "macros.combat.dialog.defenseType.block.title": "Block",
   "macros.combat.dialog.defenseType.dodge.title": "Dodge",

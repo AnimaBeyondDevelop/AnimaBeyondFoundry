@@ -33,6 +33,11 @@ import { FormulaEvaluator } from './utils/formulaEvaluator.js';
 import { registerHandlebarsPartials } from './utils/handlebarsPartials.js';
 
 import { macroCreators, macroExecutors } from './utils/macroCreatorRegistry.js';
+import { ensureLinkedEffectForItem } from './module/actor/utils/ensureLinkedEffectForItem.js';
+import { inferAttributeFromFlavor } from './module/actor/utils/attributeDerivationMap.js';
+import { getActiveEffectsBreakdownForAttribute } from './module/actor/utils/activeEffectsBreakdown.js';
+import { formatAeBreakdownForFlavor } from './module/actor/utils/aeBreakdownFormat.js';
+import { resolveActorFromSpeaker } from './module/actor/utils/resolveActorForRoll.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -338,6 +343,79 @@ Hooks.on('chatMessage', (chatLog, message, chatData) => {
   chatData._animabfFormulaDone = true;
   chatLog.processMessage(replaced, chatData);
   return false;
+});
+
+// When a system "effect" Item is created on an actor (drop to a token,
+// macro, programmatic), make sure the matching ActiveEffect document also
+// exists on the actor. Previously this only happened from the sheet's
+// _onDropItem, so dropping an effect onto a token never created the AE and
+// the modifiers were never applied until the user re-dragged through the
+// sheet.
+Hooks.on('createItem', async (item, _options, userId) => {
+  if (userId !== game.user.id) return;
+  if (item?.type !== 'effect') return;
+  const actor = item.parent;
+  if (!actor) return;
+  await ensureLinkedEffectForItem(actor, item);
+});
+
+// Allow dropping system "effect" items directly onto a token on the canvas.
+// Foundry V13 does not route this drop into the token's actor by default for
+// our effect type, so the item never reaches the sheet's _onDropItem flow.
+// We intercept the canvas drop, resolve the token under the cursor and
+// create the item ourselves; the createItem hook above then materializes the
+// linked ActiveEffect.
+Hooks.on('dropCanvasData', async (canvas, data) => {
+  if (data?.type !== 'Item' || !data.uuid) return;
+
+  const droppedItem = await fromUuid(data.uuid);
+  if (!droppedItem || droppedItem.type !== 'effect') return;
+
+  const gridSize = canvas.grid?.size ?? 100;
+  const hit = canvas.tokens?.placeables?.find(t => {
+    const w = (t.document?.width ?? 1) * gridSize;
+    const h = (t.document?.height ?? 1) * gridSize;
+    return data.x >= t.x && data.x <= t.x + w &&
+           data.y >= t.y && data.y <= t.y + h;
+  });
+  if (!hit?.actor) return;
+
+  await hit.actor.createEmbeddedDocuments('Item', [droppedItem.toObject()]);
+  return false; // Prevent the default drop handling
+});
+
+// Universal trace: any roll-bearing chat message that comes from an actor
+// of this system gets a breakdown of the Active Effects that contributed to
+// the rolled attribute (Sangre de Orochi (+20), Ceguera parcial (-30), ...).
+// Identifies the attribute from the roll's flavor text. Single touchpoint,
+// covers all dialogs and macro-driven rolls without needing per-site wiring.
+Hooks.on('preCreateChatMessage', (message, data, _options, _userId) => {
+  try {
+    if (!Array.isArray(data?.rolls) && !data?.roll) return;
+
+    const speaker = data.speaker ?? message.speaker;
+    if (!speaker) return;
+
+    // Use the single resolver to make sure dialog and hook see the same
+    // actor (the TokenActor with ActorDelta for unlinked tokens).
+    const actor = resolveActorFromSpeaker(speaker);
+    if (!actor) return;
+
+    const flavor = data.flavor ?? message.flavor ?? '';
+    const attribute = inferAttributeFromFlavor(flavor);
+    if (!attribute) return;
+
+    const breakdown = getActiveEffectsBreakdownForAttribute(actor, attribute);
+    if (!breakdown.items.length) return;
+
+    const suffix = formatAeBreakdownForFlavor(breakdown);
+    if (!suffix) return;
+    if (typeof flavor === 'string' && flavor.includes('<small><em>Mod')) return;
+
+    message.updateSource({ flavor: `${flavor}${suffix}` });
+  } catch (err) {
+    console.warn('animabf: failed to enrich roll flavor with AE breakdown', err);
+  }
 });
 
 Hooks.on('renderActiveEffectConfig', (app, html) => {
