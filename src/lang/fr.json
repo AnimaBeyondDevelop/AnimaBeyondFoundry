@@ -257,6 +257,12 @@
   "anima.ui.importDataFromExcelHint2": "Cette opération met à jour les données de {name} et ne peut être annulée.",
   "anima.ui.importDataFromExcelTitle": "Importer des données: {name}",
   "anima.ui.importDataFromExcelWarning": "Version incompatible d'Excel, veuillez essayer avec l'une des versions suivantes: ",
+  "anima.ui.excelImporter.combatEquipment.notifSummary": "Équipement importé: {weapons} armes, {ammo} munitions, {armors} armures.",
+  "anima.ui.excelImporter.combatEquipment.notifNotFound": "{type} '{name}' introuvable dans le compendium. Créé avec les données de l'Excel.",
+  "anima.ui.excelImporter.combatEquipment.notifNotExcel": "Ce fichier Excel ne ressemble pas à une fiche Anima standard. Références manquantes (Tabla_Combate ou en-tête Armure).",
+  "anima.ui.excelImporter.combatEquipment.typeWeapon": "Arme",
+  "anima.ui.excelImporter.combatEquipment.typeArmor": "Armure",
+  "anima.ui.excelImporter.combatEquipment.typeAmmo": "Munition",
   "anima.ui.inventoryItemsSection.amount.title": "Quantité",
   "anima.ui.inventoryItemsSection.name.title": "Objet",
   "anima.ui.inventoryItemsSection.title": "Inventaire",
@@ -529,6 +535,8 @@
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Dans la gestion du sytème de combat, la case \"Show roll\" sera cochée par défaut en fonction de cette valeur",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Montrer les jets automatiquement au MJ dans un combat",
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calculez les dégâts en utilisant la table de combat dans le Core Exxet pg. 334-335",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.title": "Avertir quand armes/armures/munitions sont introuvables à l'import Excel",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "Si un nom de l'Excel n'a pas de correspondance dans le compendium du système, afficher une notification pendant l'import. L'item est tout de même créé avec les données de l'Excel comme repli.",
   "anima.ui.systemSettings.useCombatTable.title": "Utiliser la table de combat",
   "anima.ui.tabs.combat": "Combat",
   "anima.ui.tabs.damageResistance": "Encaissement",
@@ -730,18 +738,15 @@
   "macros.damageCalculator.dialog.ta.title": "IP",
   "macros.damageCalculator.dialog.title": "Calculateur de dégâts",
   "chat.attackData.autoDefendPendingButton": "Défense auto (en attente)",
-
   "chat.defense.autoRollFlavor.block": "Défense automatique — Parade",
   "chat.defense.autoRollFlavor.dodge": "Défense automatique — Esquive",
   "chat.defense.autoRollFlavor.supernaturalShield": "Défense automatique — Shield",
-
   "chat.common.msgNotFound": "Message introuvable.",
   "chat.defend.noAttackData": "Données d’attaque manquantes.",
   "chat.defend.multiSelectedNotSupported": "Cette option ne gère pas la défense avec plusieurs jetons sélectionnés.",
   "chat.defend.pickAToken": "Sélectionnez un pion que vous contrôlez.",
   "chat.defend.noPermission": "Vous n’avez pas l’autorisation de défendre pour cet acteur.",
   "chat.defend.openFailed": "Impossible d’ouvrir la fenêtre de défense.",
-
   "chat.result.confirmTitle": "Appliquer les dégâts à nouveau ?",
   "chat.result.confirmBody": "Ce résultat a déjà appliqué des dégâts auparavant. Confirmer ?",
   "chat.result.points": "points",
@@ -755,16 +760,13 @@
   "chat.combatResult.yes": "Oui",
   "chat.combatResult.no": "Non",
   "chat.combatResult.baseCriticalValue": "Valeur critique de base",
-
   "chat.attackData.noTargets": "(Aucune cible pour cette attaque)",
   "chat.attackData.rollingBy": "Jet en cours : {name}",
   "chat.attackData.state.pending": "en attente",
   "chat.attackData.state.rolling": "en cours",
   "chat.attackData.state.done": "terminé",
   "chat.attackData.state.expired": "expiré",
-
   "chat.common.target": "Cible",
-
   "anima.ui.effects.effectsList.title": "Effects",
   "anima.ui.effects.effectsList.name.title": "Effect",
   "anima.ui.effects.effectsList.enable.title": "Enable",
@@ -772,5 +774,4 @@
   "anima.ui.effects.effectsList.edit.title": "Edit",
   "anima.ui.effects.effectsList.delete.title": "Delete",
   "anima.effects.newEffect": "New effect"
-
 }

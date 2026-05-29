@@ -101,7 +101,9 @@ export default class ABFActorDirectory extends ActorDirectoryV1 {
               }
 
               this.readExcelData(file)
-                .then(excelRows => parseExcelToActor(excelRows, document))
+                .then(({ rows, workbook }) =>
+                  parseExcelToActor(rows, document, { workbook })
+                )
                 .catch(() => {
                   ui.notifications.error('Error reading Excel file.');
                 });
@@ -119,9 +121,15 @@ export default class ABFActorDirectory extends ActorDirectoryV1 {
   }
 
   /**
-   * Lee y convierte los datos del archivo Excel
+   * Lee y convierte los datos del archivo Excel.
+   *
+   * Devuelve el objeto plano `rows` (extraído de la hoja NamedRangesList) y
+   * el `workbook` completo. El workbook permite a parsers especializados
+   * acceder a otros bloques del Excel (named ranges 2D, hojas con anclaje
+   * por texto) que no caben en el formato plano.
+   *
    * @param {File} file
-   * @returns {Promise<Object>}
+   * @returns {Promise<{ rows: Object, workbook: Object }>}
    */
   readExcelData(file) {
     const reader = new FileReader();
@@ -136,7 +144,7 @@ export default class ABFActorDirectory extends ActorDirectoryV1 {
               acc[obj.Name] = obj.Value;
               return acc;
             }, {});
-            resolve(rows);
+            resolve({ rows, workbook });
           } else {
             reject();
           }

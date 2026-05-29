@@ -261,6 +261,12 @@
   "anima.ui.importDataFromExcelHint2": "This operation will update the data for {name} and cannot be undone.",
   "anima.ui.importDataFromExcelTitle": "Import Data: {name}",
   "anima.ui.importDataFromExcelWarning": "Incompatible excel version, please try with one of the following ",
+  "anima.ui.excelImporter.combatEquipment.notifSummary": "Equipment imported: {weapons} weapons, {ammo} ammo, {armors} armors.",
+  "anima.ui.excelImporter.combatEquipment.notifNotFound": "{type} '{name}' not found in the compendium. Created with Excel data instead.",
+  "anima.ui.excelImporter.combatEquipment.notifNotExcel": "This Excel does not look like a standard Anima sheet. Missing key references (Tabla_Combate or Armor header).",
+  "anima.ui.excelImporter.combatEquipment.typeWeapon": "Weapon",
+  "anima.ui.excelImporter.combatEquipment.typeArmor": "Armor",
+  "anima.ui.excelImporter.combatEquipment.typeAmmo": "Ammo",
   "anima.ui.languageSection.base": "Base",
   "anima.ui.languageSection.title": "Languages",
   "anima.ui.levelSection.title": "Level",
@@ -559,6 +565,8 @@
   "anima.ui.systemSettings.roundDamageInMultiplesOf5.title": "¿Floor calculated damage in multiples of 5?",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.hint.title": "Inside managed combat system, the \"Show roll\" checkbox will be checked by default depending on this value",
   "anima.ui.systemSettings.sendRollMessagesOnCombatByDefault.title": "Show GM rolls automatically in combat",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.title": "Notify when weapons/armors/ammo are not found on Excel import",
+  "anima.ui.systemSettings.notifyOnMissingExcelMatch.hint.title": "If an Excel name has no match in the system compendium, show a notification during import. The item is still created with the Excel data as a fallback.",
   "anima.ui.systemSettings.useCombatTable.title": "Use combat table",
   "anima.ui.systemSettings.useCombatTable.hint.title": "Calculate damage with the Combat Table explained in Core Exxet pg. 334-335",
   "anima.ui.systemSettings.useDistanceAutomation.title": "Automate combat distance",
@@ -846,18 +854,15 @@
   "chat.multiDefenseResult.applyRemaining": "Apply to remaining",
   "chat.multiDefenseResult.appliedBy": "Applied by",
   "chat.attackData.autoDefendPendingButton": "Auto defend (pending)",
-
   "chat.defense.autoRollFlavor.block": "Auto defense — Block",
   "chat.defense.autoRollFlavor.dodge": "Auto defense — Dodge",
   "chat.defense.autoRollFlavor.supernaturalShield": "Auto defense — Shield",
-
   "chat.common.msgNotFound": "Message not found.",
   "chat.defend.noAttackData": "Attack data missing.",
   "chat.defend.multiSelectedNotSupported": "This option does not support defending with multiple selected tokens.",
   "chat.defend.pickAToken": "Select a token you control.",
   "chat.defend.noPermission": "You don't have permission to defend for this actor.",
   "chat.defend.openFailed": "Could not open defense dialog.",
-
   "chat.result.confirmTitle": "Apply damage again?",
   "chat.result.confirmBody": "This result already applied damage before. Are you sure?",
   "chat.result.points": "points",
@@ -871,16 +876,13 @@
   "chat.combatResult.yes": "Yes",
   "chat.combatResult.no": "No",
   "chat.combatResult.baseCriticalValue": "Base Critical Value",
-
   "chat.attackData.noTargets": "(No targets in this attack)",
   "chat.attackData.rollingBy": "Rolling: {name}",
   "chat.attackData.state.pending": "pending",
   "chat.attackData.state.rolling": "rolling",
   "chat.attackData.state.done": "done",
   "chat.attackData.state.expired": "expired",
-
   "chat.common.target": "Target",
-
   "anima.ui.effects.effectsList.title": "Effects",
   "anima.ui.effects.effectsList.name.title": "Effect",
   "anima.ui.effects.effectsList.enable.title": "Enable",
@@ -888,6 +890,4 @@
   "anima.ui.effects.effectsList.edit.title": "Edit",
   "anima.ui.effects.effectsList.delete.title": "Delete",
   "anima.effects.newEffect": "New effect"
-
-  
 }
