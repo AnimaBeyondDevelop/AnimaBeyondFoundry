@@ -180,11 +180,14 @@ export function pickBestDefenseCandidate(
   actor,
   { attackData = null, defensesCounter = null } = {}
 ) {
-  const candidates = [
-    BlockStrategy.compute(actor),
-    DodgeStrategy.compute(actor),
-    SupernaturalShieldStrategy.compute(actor)
-  ];
+  const hasSupernaturalShield =
+    (actor.items?.some(i => i.type === 'supernaturalShield')) ?? false;
+
+  const candidates = [BlockStrategy.compute(actor), DodgeStrategy.compute(actor)];
+
+  if (hasSupernaturalShield) {
+    candidates.push(SupernaturalShieldStrategy.compute(actor));
+  }
 
   const priority = { block: 0, dodge: 1, supernaturalShield: 2 };
 

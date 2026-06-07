@@ -883,11 +883,14 @@
   "chat.attackData.state.done": "done",
   "chat.attackData.state.expired": "expired",
   "chat.common.target": "Target",
+  "anima.ui.effects.externalEffectsList.title": "External effects",
+  "anima.ui.effects.customAttributes.title": "Custom attributes",
   "anima.ui.effects.effectsList.title": "Effects",
   "anima.ui.effects.effectsList.name.title": "Effect",
   "anima.ui.effects.effectsList.enable.title": "Enable",
   "anima.ui.effects.effectsList.disable.title": "Disable",
   "anima.ui.effects.effectsList.edit.title": "Edit",
   "anima.ui.effects.effectsList.delete.title": "Delete",
-  "anima.effects.newEffect": "New effect"
+  "anima.effects.newEffect": "New effect",
+  "dialogs.items.customAttribute.content": "Custom attribute name"
 }

@@ -70,7 +70,7 @@ async function applyDamageToActor(actor, amount) {
     const primaryPath = 'system.characteristics.secondaries.lifePoints.value'; // from template
     let cur = getProperty(actor, primaryPath);
     if (typeof cur === 'number' && !Number.isNaN(cur)) {
-      const next = Math.max(0, cur - amount);
+      const next = cur - amount;
       await actor.update({ [primaryPath]: next });
       ui.notifications?.info(`${actor.name}: -${amount} LP`);
       return { path: primaryPath, from: cur, to: next };
@@ -86,7 +86,7 @@ async function applyDamageToActor(actor, amount) {
     for (const path of candidates) {
       cur = getProperty(actor, path);
       if (typeof cur === 'number' && !Number.isNaN(cur)) {
-        const next = Math.max(0, cur - amount);
+        const next = cur - amount;
         await actor.update({ [path]: next });
         ui.notifications?.info(`${actor.name}: -${amount} LP`);
         return { path, from: cur, to: next };

@@ -52,12 +52,18 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
 
   const bonoPresencia = excelData.Presencia_final - presenciaBase;
 
-  //Esto es para cuando esté la automatización de las resistencias
   const bonoRF = excelData.RF_final - conResistance;
   const bonoRE = excelData.RE_final - conResistance;
   const bonoRV = excelData.RV_final - conResistance;
   const bonoRM = excelData.RM_final - podResistance;
   const bonoRP = excelData.RP_final - volResistance;
+  
+  const healthDelta = actor.system.characteristics.secondaries.lifePoints.max-actor.system.characteristics.secondaries.lifePoints.value;
+  const fatigueDelta = actor.system.characteristics.secondaries.fatigue.max-actor.system.characteristics.secondaries.fatigue.value;
+  const zeonDelta = actor.system.mystic.zeon.max-actor.system.mystic.zeon.value;
+  const kiDelta = actor.system.domine.kiAccumulation.generic.max-actor.system.domine.kiAccumulation.generic.value;
+  const cvDelta = actor.system.psychic.psychicPoints.max-actor.system.psychic.psychicPoints.value;
+  const destinyDelta = actor.system.general.destinyPoints.final.value-actor.system.general.destinyPoints.base.value;
 
   const habilidades = separarHabilidadesKi(excelData.HabilidadesKiNemesis);
   const habilidadesKi = SetEmptyIfUndefined(habilidades.habilidadesKi)
@@ -247,7 +253,7 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
         },
         secondaries: {
           fatigue: {
-            value: excelData.Cansancio,
+            value: excelData.Cansancio-fatigueDelta,
             max: excelData.Cansancio
           },
           initiative: {
@@ -256,7 +262,7 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
             }
           },
           lifePoints: {
-            value: excelData.Vida_final,
+            value: excelData.Vida_final-healthDelta,
             max: excelData.Vida_final
           },
           movementType: {
@@ -387,7 +393,7 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
         },
         destinyPoints: {
           base: {
-            value: excelData.PuntosDeDestino_Max - excelData.PuntosDeDestino_Gastados
+            value: excelData.PuntosDeDestino_Max - destinyDelta//excelData.PuntosDeDestino_Gastados
           },
           final: {
             value: excelData.PuntosDeDestino_Max
@@ -454,7 +460,7 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
           }
         },
         zeon: {
-          value: excelData.Zeón_final,
+          value: excelData.Zeón_final-zeonDelta,
           max: excelData.Zeón_final
         },
         zeonRegeneration: {
@@ -537,7 +543,7 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
           }
         },
         psychicPoints: {
-          value: excelData.CVLibres_actual,
+          value: excelData.CVLibres_actual-cvDelta,
           max: excelData.CVLibres_final
         },
         innatePsychicPower: {
@@ -863,7 +869,7 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
             }
           },
           generic: {
-            value: excelData.Ki_final,
+            value: excelData.Ki_final-kiDelta,
             max: excelData.Ki_final
           }
         },

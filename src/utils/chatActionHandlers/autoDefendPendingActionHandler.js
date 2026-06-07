@@ -1,6 +1,6 @@
 import { autoRollDefenseAgainstAttack } from '../../module/combat/autoRollDefenseAgainstAttack.js';
 import { Templates } from '../../module/utils/constants';
-import { updateAttackTargetsFlag } from '../../utils/updateAttackTargetsFlag.js';
+import { updateAttackTargetsFlag } from '../updateAttackTargetsFlag.js';
 import { resolveTokenName } from '../tokenName.js';
 import { openModDialog } from '../../module/utils/dialogs/openSimpleInputDialog.js';
 
