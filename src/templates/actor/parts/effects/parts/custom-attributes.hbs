@@ -1,0 +1,27 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+        class="effects-column custom-attributes-column"
+}}
+    {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+            title=(localize "anima.ui.effects.customAttributes.title")
+            addRowButtonData="add-custom-attribute"
+    }}
+
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+            class="custom-attributes"
+    }}
+
+        <div class="item-list custom-attributes">
+            {{#each system.effects.customAttributes as |customAttribute customAttributeKey|}}
+                {{>
+                  "ui/types/custom-attribute"
+                  path=(concat "system.effects.customAttributes." customAttributeKey)
+                  value=customAttribute
+                  title=customAttributeKey
+                  customAttributeKey=customAttributeKey
+                }}
+            {{/each}}
+        </div>
+
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

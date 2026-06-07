@@ -9,36 +9,22 @@
     class="psychic-projection"
   }}
     <div class='imbalance'>
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="offensive"
-        title=(localize "anima.ui.psychic.psychicProjection.offensive.title")
-        rollable=true
-        rollableMessage=(localize "anima.ui.psychic.psychicProjection.offensive.rollMessage")
-        inputName="system.psychic.psychicProjection.imbalance.offensive.base.value"
-        inputValue=system.psychic.psychicProjection.imbalance.offensive.base.value
-        hasSecondaryInput=true
-        rollSecondaryInput=true
-        disableSecondaryInput=true
-        addTooltips=true
-        secondaryInputName="system.psychic.psychicProjection.imbalance.offensive.final.value"
-        secondaryInputValue=system.psychic.psychicProjection.imbalance.offensive.final.value
-      }}
-      {{>
-      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
-        class="defensive"
-        title=(localize "anima.ui.psychic.psychicProjection.defensive.title")
-        rollable=true
-        rollableMessage=(localize "anima.ui.psychic.psychicProjection.defensive.rollMessage")
-        inputName="system.psychic.psychicProjection.imbalance.defensive.base.value"
-        inputValue=system.psychic.psychicProjection.imbalance.defensive.base.value
-        hasSecondaryInput=true
-        rollSecondaryInput=true
-        disableSecondaryInput=true
-        addTooltips=true
-        secondaryInputName="system.psychic.psychicProjection.imbalance.defensive.final.value"
-        secondaryInputValue=system.psychic.psychicProjection.imbalance.defensive.final.value
-      }}
+        {{>
+        "systems/animabf/templates/common/ui/types/ability.hbs"
+                cssClass="offensive"
+                title=(localize "anima.ui.psychic.psychicProjection.offensive.title")
+                rollable=true
+                path="system.psychic.psychicProjection.imbalance.offensive"
+                value=system.psychic.psychicProjection.imbalance.offensive
+        }}
+        {{>
+        "systems/animabf/templates/common/ui/types/ability.hbs"
+                cssClass="defensive"
+                title=(localize "anima.ui.psychic.psychicProjection.defensive.title")
+                rollable=true
+                path="system.psychic.psychicProjection.imbalance.defensive"
+                value=system.psychic.psychicProjection.imbalance.defensive
+        }}
     </div>
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

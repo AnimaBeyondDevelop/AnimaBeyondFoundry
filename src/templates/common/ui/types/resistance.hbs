@@ -1,0 +1,27 @@
+{{#> "ui/base-type-wrapper"
+    path=path
+    class="resistance-row"}}
+
+  {{>
+    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+    class=cssClass
+    title=title
+    rollable=(is "eq" rollable true)
+    rollableDice=rollableDice
+    rollableValuePath=(concat path ".final.value")
+    rollableMasteryPath=(concat path ".final.value")
+    rollableMessage=rollableMessage
+
+    inputName=(concat path ".special.value")
+    inputValue=value.special.value
+
+    rollSecondaryInput=true
+    hasSecondaryInput=true
+    addTooltips=true
+    disableSecondaryInput=true
+    secondaryInputName=(concat path ".final.value")
+    secondaryInputValue=value.final.value
+  }}
+
+{{/ "ui/base-type-wrapper"}}
+

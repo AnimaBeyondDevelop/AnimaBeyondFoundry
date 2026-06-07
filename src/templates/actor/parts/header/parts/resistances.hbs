@@ -10,20 +10,14 @@
   }}
     {{#each system.characteristics.secondaries.resistances as |atr key|}}
       {{>
-      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-        class="resistance"
-        title=(localize (concat 'anima.ui.resistances.' key))
+      "ui/types/resistance"
+        cssClass="resistance"
         rollable=true
+        path=(concat "system.characteristics.secondaries.resistances." key)
+        value=atr
+        title=(localize (concat 'anima.ui.resistances.' key))
         rollableDice=@root.system.general.diceSettings.resistanceDie.value
         rollableMessage=(localize (concat 'anima.ui.resistances.' key))
-        inputName=(concat "system.characteristics.secondaries.resistances." key ".special.value")
-        inputValue=atr.special.value
-        rollSecondaryInput=true
-        hasSecondaryInput=true
-        addTooltips=true
-        disableSecondaryInput=true
-        secondaryInputName=(concat "system.characteristics.secondaries.resistances." key ".final.value")
-        secondaryInputValue=atr.final.value
       }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}

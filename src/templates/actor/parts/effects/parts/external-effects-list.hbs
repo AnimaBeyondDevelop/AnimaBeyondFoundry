@@ -1,0 +1,33 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="effects-column external-effects-list"
+}}
+  {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize "anima.ui.effects.externalEffectsList.title")
+  }}
+
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="external-effects-list"
+  }}
+
+    <div class="item-list external-effects-list">
+<!--            {{#each effects as |effect|}}-->
+<!--                <div class="item effect effect-row" data-item-id="{{effect.id}}">-->
+
+<!--                    <div class="effect-name">-->
+<!--                        <h4>{{effect.name}}</h4>-->
+<!--                    </div>-->
+
+<!--                    <div class="effect-controls">-->
+<!--                        <input type="checkbox"-->
+<!--                               class="effect-control"-->
+<!--                               data-action="toggle"-->
+<!--                               {{#if effect.system.active}}checked{{/if}} />-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            {{/each}}-->
+    </div>
+
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

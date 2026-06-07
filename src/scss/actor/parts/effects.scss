@@ -3,68 +3,120 @@
 /* ============================= */
 
 /* Este div envuelve todo el bloque de efectos */
-.effects{
-    .first-column {
-        width: 33%;             /* El panel ocupa el ancho total del tab */
-        flex: 0 0 100%;
-        box-sizing: border-box;
-    
-        /* ============================= */
-        /*   LISTA DE EFECTOS            */
-        /* ============================= */
+.effects {
+  .effects-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 1rem;
+  }
 
-        .item-list.effects-list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        }
+  .item-list.effects-list,
+  .item-list.external-effects-list,
+  .item-list.custom-attributes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-        /* ============================= */
-        /*   FILA DE UN EFECTO           */
-        /* ============================= */
+  .custom-attribute-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+    width: 100%;
+    box-sizing: border-box;
 
-        .effect-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 6px 6px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-
-        background: rgba(255,255,255,0.02);
-
-        width: 100%;
-        box-sizing: border-box;
-
-        h4 {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .effect-name {
-            flex: 1;     /* ocupa todo el espacio posible */
-            overflow: hidden;
-        }
-
-        .effect-controls {
-            display: flex;
-            align-items: center;
-            margin-left: auto;
-
-            input[type="checkbox"] {
-            cursor: pointer;
-            transform: scale(1.0);
-            margin-left: 5px;
-            }
-        }
-        }
-
-        /* Hover */
-        .effect-row:hover {
-        background: rgba(255,255,255,0.05);
-        }
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
     }
+
+    .custom-attribute-name {
+      flex: 1;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .custom-attribute-type-select {
+      width: 86px;
+      flex-shrink: 0;
+    }
+
+    .custom-attribute-value {
+      width: 90px;
+      flex-shrink: 0;
+    }
+
+    .custom-attribute-value-bool {
+      width: auto;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .custom-attribute-no-type {
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 12px;
+    }
+
+    .custom-attribute-delete {
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px 4px;
+
+      &:hover {
+        color: #e74c3c;
+      }
+    }
+  }
+
+  /* ============================= */
+  /*   FILA DE UN EFECTO           */
+  /* ============================= */
+
+  .effect-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 6px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+
+    width: 100%;
+    box-sizing: border-box;
+
+    h4 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .effect-name {
+      flex: 1; /* ocupa todo el espacio posible */
+      overflow: hidden;
+    }
+
+    .effect-controls {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      input[type='checkbox'] {
+        cursor: pointer;
+        transform: scale(1);
+        margin-left: 5px;
+      }
+    }
+  }
+
+  /* Hover */
+  .effect-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
 }
-
-

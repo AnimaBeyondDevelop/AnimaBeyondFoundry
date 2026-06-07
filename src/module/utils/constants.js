@@ -86,7 +86,9 @@ export const Templates = {
         'common/ui/types/affected-by-characteristic-value.hbs'
       ),
       Ability: T('common/ui/types/ability.hbs'),
-      SecondaryAbility: T('common/ui/types/secondary-ability.hbs')
+      SecondaryAbility: T('common/ui/types/secondary-ability.hbs'),
+      Resistance: T('common/ui/types/resistance.hbs'),
+      CustomAttribute: T('common/ui/types/custom-attribute.hbs')
     }
   },
 
@@ -222,7 +224,9 @@ export const Templates = {
 
     Effects: {
       Main: T('actor/parts/effects/effects.hbs'),
-      EffectsList: T('actor/parts/effects/parts/effects-list.hbs')
+      EffectsList: T('actor/parts/effects/parts/effects-list.hbs'),
+      ExternalEffectsList: T('actor/parts/effects/parts/external-effects-list.hbs'),
+      CustomAttributes: T('actor/parts/effects/parts/custom-attributes.hbs'),
     },
 
     Settings: {
@@ -253,5 +257,7 @@ export const HandlebarsPartials = {
   'ui/types/secondary-ability': Templates.UI.Types.SecondaryAbility,
   'ui/types/affected-by-characteristic-value':
     Templates.UI.Types.AffectedByCharacteristicValue,
+  'ui/types/resistance': Templates.UI.Types.Resistance,
+  'ui/types/custom-attribute': Templates.UI.Types.CustomAttribute,
   'ui/base-type-wrapper': Templates.UI.BaseTypeWrapper
 };

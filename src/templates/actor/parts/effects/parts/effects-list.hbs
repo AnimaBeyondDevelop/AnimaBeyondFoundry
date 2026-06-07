@@ -1,5 +1,5 @@
 {{#> "systems/animabf/templates/common/ui/group.hbs"
-  class="effects-list"
+  class="effects-column effects-list"
 }}
   {{>
     "systems/animabf/templates/common/ui/group-header.hbs"
@@ -14,7 +14,6 @@
   <div class="item-list effects-list">
     {{#each effects as |effect|}}
       <div class="item effect effect-row" data-item-id="{{effect.id}}">
-        
         <div class="effect-name">
           <h4>{{effect.name}}</h4>
         </div>
@@ -25,7 +24,6 @@
                  data-action="toggle"
                  {{#if effect.system.active}}checked{{/if}} />
         </div>
-
       </div>
     {{/each}}
   </div>

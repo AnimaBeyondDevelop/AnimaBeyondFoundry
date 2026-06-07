@@ -48,37 +48,16 @@ import { mutateInitiative } from './calculations/actor/mutateInitiative';
 import { mutateRegenerationType } from './calculations/actor/general/mutateRegenerationType';
 import { mutatePresence } from './calculations/actor/mutatePresence';
 import { mutateTotalLevel } from './calculations/actor/mutateTotalLevel';
-import {
-  mutatePhysicalResistanceBase,
-  mutatePhysicalResistanceFinal,
-  mutateDiseaseResistanceBase,
-  mutateDiseaseResistanceFinal,
-  mutatePoisonResistanceBase,
-  mutatePoisonResistanceFinal,
-  mutateMagicResistanceBase,
-  mutateMagicResistanceFinal,
-  mutatePsychicResistanceBase,
-  mutatePsychicResistanceFinal
-} from './calculations/actor/mutateResistances';
+// Resistances are now handled by the Resistance typed node (getDerivedFlowSpecs)
 
-import { runEffectFlow } from '../effectFow';
+import { runEffectFlow } from '../effectFlow';
 import { inflateSystemFromTypeMarkers } from '../../types/inflateSystemFromTypeMarkers';
 
 // Be careful with order of this functions, some derived data functions could be dependent of another
 const DERIVED_DATA_FUNCTIONS = [
   mutateTotalLevel,
   mutatePresence,
-  // Resistances — base must run before final (final depends on base)
-  mutatePhysicalResistanceBase,
-  mutatePhysicalResistanceFinal,
-  mutateDiseaseResistanceBase,
-  mutateDiseaseResistanceFinal,
-  mutatePoisonResistanceBase,
-  mutatePoisonResistanceFinal,
-  mutateMagicResistanceBase,
-  mutateMagicResistanceFinal,
-  mutatePsychicResistanceBase,
-  mutatePsychicResistanceFinal,
+  // Resistances — computed by Resistance typed node via getDerivedFlowSpecs()
   // mutatePrimaryModifiers,
   mutateRegenerationType,
   mutateAllActionsModifier,

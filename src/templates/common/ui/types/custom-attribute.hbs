@@ -1,0 +1,46 @@
+{{#> "ui/base-type-wrapper"
+    path=path
+    class="custom-attribute-row"}}
+
+  <span class="custom-attribute-name">{{title}}</span>
+
+  <select class="input custom-attribute-type-select" name="{{concat path ".dataType"}}">
+    <option value="string" {{#if (is 'eq' value.dataType 'string')}}selected{{/if}}>string</option>
+    <option value="bool" {{#if (is 'eq' value.dataType 'bool')}}selected{{/if}}>bool</option>
+    <option value="number" {{#if (is 'eq' value.dataType 'number')}}selected{{/if}}>number</option>
+  </select>
+
+  {{#if (is 'eq' value.dataType 'bool')}}
+    <input
+      class="input custom-attribute-value custom-attribute-value-bool"
+      type="checkbox"
+      name="{{concat path ".boolData"}}"
+      {{checked value.boolData}}
+    />
+  {{else if (is 'eq' value.dataType 'string')}}
+    <input
+      class="input custom-attribute-value"
+      type="text"
+      name="{{concat path ".stringData"}}"
+      value="{{value.stringData}}"
+    />
+  {{else}}
+    <input
+      class="input custom-attribute-value"
+      type="number"
+      name="{{concat path ".numberData"}}"
+      value="{{value.numberData}}"
+    />
+  {{/if}}
+
+  <a
+    class="custom-attribute-delete"
+    data-on-click="delete-custom-attribute"
+    data-custom-attribute-key="{{customAttributeKey}}"
+    title="{{localize 'anima.ui.delete'}}"
+  >
+    <i class="fas fa-trash"></i>
+  </a>
+
+{{/ "ui/base-type-wrapper"}}
+

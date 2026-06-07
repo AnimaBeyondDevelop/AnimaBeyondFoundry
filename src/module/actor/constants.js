@@ -272,61 +272,11 @@ export const INITIAL_ACTOR_DATA = {
         }
       },
       resistances: {
-        physical: {
-          base: {
-            value: 0
-          },
-          special: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
-        },
-        disease: {
-          base: {
-            value: 0
-          },
-          special: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
-        },
-        poison: {
-          base: {
-            value: 0
-          },
-          special: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
-        },
-        magic: {
-          base: {
-            value: 0
-          },
-          special: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
-        },
-        psychic: {
-          base: {
-            value: 0
-          },
-          special: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
-        }
+        physical: { __type: '{"type":"Resistance","characteristicKey":"constitution"}' },
+        disease:  { __type: '{"type":"Resistance","characteristicKey":"constitution"}' },
+        poison:   { __type: '{"type":"Resistance","characteristicKey":"constitution"}' },
+        magic:    { __type: '{"type":"Resistance","characteristicKey":"power"}' },
+        psychic:  { __type: '{"type":"Resistance","characteristicKey":"willPower"}' }
       }
     }
   },
@@ -539,20 +489,10 @@ export const INITIAL_ACTOR_DATA = {
       },
       imbalance: {
         offensive: {
-          base: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
+          __type: '{"type":"Ability", "attribute":"dexterity", "applyPhysicalActionMod":"false"}'
         },
         defensive: {
-          base: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
+          __type: '{"type":"Ability", "attribute":"dexterity", "applyPhysicalActionMod":"false"}'
         }
       }
     },
@@ -786,20 +726,10 @@ export const INITIAL_ACTOR_DATA = {
       },
       imbalance: {
         offensive: {
-          base: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
+          __type: '{"type":"Ability", "attribute":"dexterity", "applyPhysicalActionMod":"false"}'
         },
         defensive: {
-          base: {
-            value: 0
-          },
-          final: {
-            value: 0
-          }
+          __type: '{"type":"Ability", "attribute":"dexterity", "applyPhysicalActionMod":"false"}'
         }
       }
     },
@@ -819,5 +749,9 @@ export const INITIAL_ACTOR_DATA = {
       }
     },
     innatePsychicPowers: []
+  },
+  
+  effects: {
+    customAttributes: {}
   }
 };

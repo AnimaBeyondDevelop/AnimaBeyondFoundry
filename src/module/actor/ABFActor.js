@@ -64,6 +64,8 @@ export class ABFActor extends Actor {
     // Safety: if some actor came without inflation (old data / imports)
     this.system = inflateSystemFromTypeMarkers(this.system);
 
+    this._removeNullCustomAttributes();
+
     buildTypedNodes(this, TYPED_PATHS);
     this._applyDefaultKeysToTypedNodes();
     await prepareActor(this);
@@ -682,6 +684,26 @@ export class ABFActor extends Actor {
         await item.update(updateObject);
       }
     }
+  }
+
+  _removeNullCustomAttributes() {
+    const customAttributes = this.system?.effects?.customAttributes;
+
+    if (!customAttributes || typeof customAttributes !== 'object') return;
+
+    const nullKeys = Object.entries(customAttributes)
+        .filter(([, value]) => value === null)
+        .map(([key]) => key);
+
+    if (nullKeys.length === 0) return;
+
+    const updates = {};
+
+    for (const key of nullKeys) {
+      updates[`system.effects.customAttributes.-=${key}`] = null;
+    }
+
+    this.updateSource(updates);
   }
 
   /**

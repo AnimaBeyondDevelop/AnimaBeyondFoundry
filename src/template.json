@@ -1,224 +1,503 @@
 {
   "Actor": {
-    "types": ["character"],
+    "types": [
+      "character"
+    ],
     "templates": [],
     "character": {
       "version": 0,
       "ui": {
         "contractibleItems": {},
         "tabVisibility": {
-          "mystic": { "value": false },
-          "domine": { "value": false },
-          "psychic": { "value": false },
-          "effects": { "value": false }
+          "mystic": {
+            "value": false
+          },
+          "domine": {
+            "value": false
+          },
+          "psychic": {
+            "value": false
+          },
+          "effects": {
+            "value": false
+          }
         }
       },
       "automationOptions": {
-        "calculateFatigueModifier": { "value": true }
+        "calculateFatigueModifier": {
+          "value": true
+        }
       },
       "general": {
         "settings": {
-          "openRolls": { "value": 90 },
-          "fumbles": { "value": 3 },
-          "openOnDoubles": { "value": false },
-          "perceiveMystic": { "value": false },
-          "perceivePsychic": { "value": false },
-          "inmaterial": { "value": false },
-          "inhuman": { "value": false },
-          "zen": { "value": false },
-          "defenseType": { "value": "" }
+          "openRolls": {
+            "value": 90
+          },
+          "fumbles": {
+            "value": 3
+          },
+          "openOnDoubles": {
+            "value": false
+          },
+          "perceiveMystic": {
+            "value": false
+          },
+          "perceivePsychic": {
+            "value": false
+          },
+          "inmaterial": {
+            "value": false
+          },
+          "inhuman": {
+            "value": false
+          },
+          "zen": {
+            "value": false
+          },
+          "defenseType": {
+            "value": ""
+          }
         },
         "diceSettings": {
-          "characteristicDie": { "value": "1d10ControlRoll" },
-          "initiativeDie": { "value": "1d100Initiative" },
-          "resistanceDie": { "value": "1d100" },
-          "abilityDie": { "value": "1d100xa" },
-          "abilityMasteryDie": { "value": "1d100xamastery" }
+          "characteristicDie": {
+            "value": "1d10ControlRoll"
+          },
+          "initiativeDie": {
+            "value": "1d100Initiative"
+          },
+          "resistanceDie": {
+            "value": "1d100"
+          },
+          "abilityDie": {
+            "value": "1d100xa"
+          },
+          "abilityMasteryDie": {
+            "value": "1d100xamastery"
+          }
         },
         "modifiers": {
           "physicalActions": {
-            "base": { "value": 0 },
-            "special": { "value": 0 },
-            "final": { "value": 0 }
+            "base": {
+              "value": 0
+            },
+            "special": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "allActions": {
-            "base": { "value": 0 },
-            "special": { "value": 0 },
-            "final": { "value": 0 }
+            "base": {
+              "value": 0
+            },
+            "special": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "naturalPenalty": {
-            "unreduced": { "value": 0 },
-            "reduction": { "value": 0 },
-            "base": { "value": 0 },
-            "special": { "value": 0 },
-            "final": { "value": 0 }
+            "unreduced": {
+              "value": 0
+            },
+            "reduction": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "special": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "perceptionPenalty": {
-            "base": { "value": 0 },
-            "special": { "value": 0 },
-            "final": { "value": 0 }
+            "base": {
+              "value": 0
+            },
+            "special": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
-          "extraDamage": { "__type": "{\"type\":\"NumericalValue\"}" },
-          "automaticCrit": { "value": false },
-          "critDamageBonus": { "__type": "{\"type\":\"NumericalValue\"}" }
+          "extraDamage": {
+            "__type": "{\"type\":\"NumericalValue\"}"
+          },
+          "automaticCrit": {
+            "value": false
+          },
+          "critDamageBonus": {
+            "__type": "{\"type\":\"NumericalValue\"}"
+          }
         },
-        "destinyPoints": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "destinyPoints": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
         "presence": {
-          "base": { "value": 0 },
-          "special": { "value": 0 },
-          "final": { "value": 0 }
+          "base": {
+            "value": 0
+          },
+          "special": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
         },
         "aspect": {
-          "hair": { "value": "" },
-          "eyes": { "value": "" },
-          "height": { "value": "" },
-          "weight": { "value": "" },
-          "age": { "value": "" },
-          "gender": { "value": "" },
-          "race": { "value": "" },
-          "ethnicity": { "value": "" },
-          "appearance": { "value": "" },
-          "size": { "value": 0 }
+          "hair": {
+            "value": ""
+          },
+          "eyes": {
+            "value": ""
+          },
+          "height": {
+            "value": ""
+          },
+          "weight": {
+            "value": ""
+          },
+          "age": {
+            "value": ""
+          },
+          "gender": {
+            "value": ""
+          },
+          "race": {
+            "value": ""
+          },
+          "ethnicity": {
+            "value": ""
+          },
+          "appearance": {
+            "value": ""
+          },
+          "size": {
+            "value": 0
+          }
         },
         "advantages": [],
         "contacts": [],
         "inventory": [],
         "money": {
-          "cooper": { "value": 0 },
-          "silver": { "value": 0 },
-          "gold": { "value": 0 }
+          "cooper": {
+            "value": 0
+          },
+          "silver": {
+            "value": 0
+          },
+          "gold": {
+            "value": 0
+          }
         },
-        "description": { "value": "" },
+        "description": {
+          "value": ""
+        },
         "disadvantages": [],
         "elan": [],
-        "experience": { "current": { "value": 0 }, "next": { "value": 0 } },
-        "languages": { "base": { "value": "" }, "others": [] },
+        "experience": {
+          "current": {
+            "value": 0
+          },
+          "next": {
+            "value": 0
+          }
+        },
+        "languages": {
+          "base": {
+            "value": ""
+          },
+          "others": []
+        },
         "levels": [],
-        "level": { "value": 0 },
+        "level": {
+          "value": 0
+        },
         "notes": [],
         "titles": []
       },
       "characteristics": {
         "primaries": {
-          "agility":      { "__type": "{\"type\":\"Characteristic\"}" },
-          "constitution": { "__type": "{\"type\":\"Characteristic\"}" },
-          "dexterity":    { "__type": "{\"type\":\"Characteristic\"}" },
-          "strength":     { "__type": "{\"type\":\"Characteristic\"}" },
-          "intelligence": { "__type": "{\"type\":\"Characteristic\"}" },
-          "perception":   { "__type": "{\"type\":\"Characteristic\"}" },
-          "power":        { "__type": "{\"type\":\"Characteristic\"}" },
-          "willPower":    { "__type": "{\"type\":\"Characteristic\"}" }
+          "agility": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "constitution": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "dexterity": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "strength": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "intelligence": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "perception": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "power": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          },
+          "willPower": {
+            "__type": "{\"type\":\"Characteristic\"}"
+          }
         },
         "secondaries": {
-          "lifePoints": { "value": 0, "max": 0 },
-          "initiative": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
-            },
-          "fatigue": { "value": 0, "max": 0 },
-          "regenerationType": { "mod": { "value": 0 }, "final": { "value": 0 } },
-          "regeneration": {
-            "normal": { "value": 0, "period": "" },
-            "resting": { "value": 0, "period": "" },
-            "recovery": { "value": 0, "period": "" }
+          "lifePoints": {
+            "value": 0,
+            "max": 0
           },
-          "movementType": { "mod": { "value": 0 }, "final": { "value": 0 } },
-          "movement": { "maximum": { "value": 0 }, "running": { "value": 0 } },
+          "initiative": {
+            "base": {
+              "value": 0
+            },
+            "special": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "fatigue": {
+            "value": 0,
+            "max": 0
+          },
+          "regenerationType": {
+            "mod": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "regeneration": {
+            "normal": {
+              "value": 0,
+              "period": ""
+            },
+            "resting": {
+              "value": 0,
+              "period": ""
+            },
+            "recovery": {
+              "value": 0,
+              "period": ""
+            }
+          },
+          "movementType": {
+            "mod": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "movement": {
+            "maximum": {
+              "value": 0
+            },
+            "running": {
+              "value": 0
+            }
+          },
           "resistances": {
             "physical": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
+              "__type": "{\"type\":\"Resistance\",\"characteristicKey\":\"constitution\"}"
             },
             "disease": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
+              "__type": "{\"type\":\"Resistance\",\"characteristicKey\":\"constitution\"}"
             },
             "poison": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
+              "__type": "{\"type\":\"Resistance\",\"characteristicKey\":\"constitution\"}"
             },
             "magic": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
+              "__type": "{\"type\":\"Resistance\",\"characteristicKey\":\"power\"}"
             },
             "psychic": {
-              "base": { "value": 0 },
-              "special": { "value": 0 },
-              "final": { "value": 0 }
+              "__type": "{\"type\":\"Resistance\",\"characteristicKey\":\"willPower\"}"
             }
           }
         }
       },
       "secondaries": {
         "athletics": {
-          "acrobatics":   { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}" },
-          "athleticism":  { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}" },
-          "ride":         { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\"}" },
-          "swim":         { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\",\"maxNaturalPenaltyReductionPercentage\":\"0\"}" },
-          "climb":        { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}" },
-          "jump":         { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"strength\",\"applyNaturalPenalty\":\"true\"}" },
-          "piloting":     { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" }
+          "acrobatics": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "athleticism": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "ride": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\"}"
+          },
+          "swim": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\",\"maxNaturalPenaltyReductionPercentage\":\"0\"}"
+          },
+          "climb": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "jump": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"strength\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "piloting": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          }
         },
         "vigor": {
-          "composure":       { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"willPower\"}" },
-          "featsOfStrength": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"strength\",\"applyNaturalPenalty\":\"true\"}" },
-          "withstandPain":   { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"willPower\"}" }
+          "composure": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"willPower\"}"
+          },
+          "featsOfStrength": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"strength\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "withstandPain": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"willPower\"}"
+          }
         },
         "perception": {
-          "notice": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\",\"applyPerceptionPenalty\":\"true\"}" },
-          "search": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\",\"applyPerceptionPenalty\":\"true\"}" },
-          "track":  { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\"}" }
+          "notice": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\",\"applyPerceptionPenalty\":\"true\"}"
+          },
+          "search": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\",\"applyPerceptionPenalty\":\"true\"}"
+          },
+          "track": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\"}"
+          }
         },
         "intellectual": {
-          "animals":        { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "science":        { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "law":            { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "herbalLore":     { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "history":        { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "tactics":        { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "medicine":       { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "memorize":       { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "navigation":     { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "occult":         { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "appraisal":      { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "magicAppraisal": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" }
+          "animals": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "science": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "law": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "herbalLore": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "history": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "tactics": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "medicine": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "memorize": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "navigation": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "occult": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "appraisal": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "magicAppraisal": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          }
         },
         "social": {
-          "style":      { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" },
-          "intimidate": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"willPower\"}" },
-          "leadership": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" },
-          "persuasion": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "trading":    { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "streetwise": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "etiquette":  { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" }
+          "style": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          },
+          "intimidate": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"willPower\"}"
+          },
+          "leadership": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          },
+          "persuasion": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "trading": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "streetwise": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "etiquette": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          }
         },
         "subterfuge": {
-          "lockPicking": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "disguise":    { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "hide":        { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\",\"applyNaturalPenalty\":\"true\"}" },
-          "theft":       { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "stealth":     { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\",\"maxNaturalPenaltyReductionPercentage\":\"50\"}" },
-          "trapLore":    { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "poisons":     { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" }
+          "lockPicking": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "disguise": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "hide": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"perception\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "theft": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "stealth": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\",\"maxNaturalPenaltyReductionPercentage\":\"50\"}"
+          },
+          "trapLore": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "poisons": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          }
         },
         "creative": {
-          "art":               { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" },
-          "dance":             { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}" },
-          "forging":           { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "runes":             { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "alchemy":           { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}" },
-          "animism":           { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" },
-          "music":             { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" },
-          "sleightOfHand":     { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "ritualCalligraphy": { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "jewelry":           { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "tailoring":         { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}" },
-          "puppetMaking":      { "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}" }
+          "art": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          },
+          "dance": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"agility\",\"applyNaturalPenalty\":\"true\"}"
+          },
+          "forging": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "runes": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "alchemy": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"intelligence\"}"
+          },
+          "animism": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          },
+          "music": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          },
+          "sleightOfHand": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "ritualCalligraphy": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "jewelry": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "tailoring": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"dexterity\"}"
+          },
+          "puppetMaking": {
+            "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
+          }
         },
         "secondarySpecialSkills": []
       },
@@ -237,13 +516,27 @@
         },
         "totalArmor": {
           "at": {
-            "cut": { "value": 0 },
-            "impact": { "value": 0 },
-            "thrust": { "value": 0 },
-            "heat": { "value": 0 },
-            "electricity": { "value": 0 },
-            "cold": { "value": 0 },
-            "energy": { "value": 0 }
+            "cut": {
+              "value": 0
+            },
+            "impact": {
+              "value": 0
+            },
+            "thrust": {
+              "value": 0
+            },
+            "heat": {
+              "value": 0
+            },
+            "electricity": {
+              "value": 0
+            },
+            "cold": {
+              "value": 0
+            },
+            "energy": {
+              "value": 0
+            }
           }
         },
         "combatSpecialSkills": [],
@@ -252,52 +545,146 @@
         "weapons": [],
         "armors": [],
         "supernaturalShields": [],
-        "damageReduction": { "__type": "{\"type\":\"NumericalValue\"}" }
+        "damageReduction": {
+          "__type": "{\"type\":\"NumericalValue\"}"
+        }
       },
       "mystic": {
         "act": {
-          "main": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "main": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
           "via": []
         },
-        "zeon": { "accumulated": 0, "value": 0, "max": 0 },
-        "zeonMaintained": { "value": 0, "max": 0 },
-        "zeonRegeneration": { "base": { "value": 0 }, "final": { "value": 0 } },
+        "zeon": {
+          "accumulated": 0,
+          "value": 0,
+          "max": 0
+        },
+        "zeonMaintained": {
+          "value": 0,
+          "max": 0
+        },
+        "zeonRegeneration": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
         "innateMagic": {
-          "main": { "base": { "value": 0 }, "final": { "value": 0 } },
+          "main": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
           "via": []
         },
         "magicProjection": {
-          "base": { "value": 0 },
-          "final": { "value": 0 },
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
           "imbalance": {
-            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+            "offensive": {
+              "__type": "{\"type\":\"Ability\",\"attribute\":\"dexterity\",\"applyPhysicalActionMod\":\"false\"}"
+            },
+            "defensive": {
+              "__type": "{\"type\":\"Ability\",\"attribute\":\"dexterity\",\"applyPhysicalActionMod\":\"false\"}"
+            }
           }
         },
         "magicLevel": {
           "spheres": {
-            "essence": { "value": 0 },
-            "water": { "value": 0 },
-            "earth": { "value": 0 },
-            "creation": { "value": 0 },
-            "darkness": { "value": 0 },
-            "necromancy": { "value": 0 },
-            "light": { "value": 0 },
-            "destruction": { "value": 0 },
-            "air": { "value": 0 },
-            "fire": { "value": 0 },
-            "illusion": { "value": 0 }
+            "essence": {
+              "value": 0
+            },
+            "water": {
+              "value": 0
+            },
+            "earth": {
+              "value": 0
+            },
+            "creation": {
+              "value": 0
+            },
+            "darkness": {
+              "value": 0
+            },
+            "necromancy": {
+              "value": 0
+            },
+            "light": {
+              "value": 0
+            },
+            "destruction": {
+              "value": 0
+            },
+            "air": {
+              "value": 0
+            },
+            "fire": {
+              "value": 0
+            },
+            "illusion": {
+              "value": 0
+            }
           },
-          "total": { "value": 0 },
-          "used": { "value": 0 }
+          "total": {
+            "value": 0
+          },
+          "used": {
+            "value": 0
+          }
         },
         "summoning": {
-          "summon": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "banish": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "bind": { "base": { "value": 0 }, "final": { "value": 0 } },
-          "control": { "base": { "value": 0 }, "final": { "value": 0 } }
+          "summon": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "banish": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "bind": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          },
+          "control": {
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
+          }
         },
-        "mysticSettings": { "aptitudeForMagicDevelopment": false },
+        "mysticSettings": {
+          "aptitudeForMagicDevelopment": false
+        },
         "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],
@@ -315,72 +702,165 @@
         "techniques": [],
         "seals": {
           "minor": {
-            "fire": { "isActive": false },
-            "metal": { "isActive": false },
-            "wind": { "isActive": false },
-            "water": { "isActive": false },
-            "wood": { "isActive": false }
+            "fire": {
+              "isActive": false
+            },
+            "metal": {
+              "isActive": false
+            },
+            "wind": {
+              "isActive": false
+            },
+            "water": {
+              "isActive": false
+            },
+            "wood": {
+              "isActive": false
+            }
           },
           "major": {
-            "fire": { "isActive": false },
-            "metal": { "isActive": false },
-            "wind": { "isActive": false },
-            "water": { "isActive": false },
-            "wood": { "isActive": false }
+            "fire": {
+              "isActive": false
+            },
+            "metal": {
+              "isActive": false
+            },
+            "wind": {
+              "isActive": false
+            },
+            "water": {
+              "isActive": false
+            },
+            "wood": {
+              "isActive": false
+            }
           }
         },
-        "martialKnowledge": { "used": { "value": 0 }, "max": { "value": 0 } },
+        "martialKnowledge": {
+          "used": {
+            "value": 0
+          },
+          "max": {
+            "value": 0
+          }
+        },
         "kiAccumulation": {
           "strength": {
-            "accumulated": { "value": 0 },
-            "base": { "value": 0 },
-            "final": { "value": 0 }
+            "accumulated": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "agility": {
-            "accumulated": { "value": 0 },
-            "base": { "value": 0 },
-            "final": { "value": 0 }
+            "accumulated": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "dexterity": {
-            "accumulated": { "value": 0 },
-            "base": { "value": 0 },
-            "final": { "value": 0 }
+            "accumulated": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "constitution": {
-            "accumulated": { "value": 0 },
-            "base": { "value": 0 },
-            "final": { "value": 0 }
+            "accumulated": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "willPower": {
-            "accumulated": { "value": 0 },
-            "base": { "value": 0 },
-            "final": { "value": 0 }
+            "accumulated": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
           "power": {
-            "accumulated": { "value": 0 },
-            "base": { "value": 0 },
-            "final": { "value": 0 }
+            "accumulated": {
+              "value": 0
+            },
+            "base": {
+              "value": 0
+            },
+            "final": {
+              "value": 0
+            }
           },
-          "generic": { "value": 0, "max": 0 }
+          "generic": {
+            "value": 0,
+            "max": 0
+          }
         }
       },
       "psychic": {
-        "psychicPotential": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "psychicProjection": {
-          "base": { "value": 0 },
-          "final": { "value": 0 },
-          "imbalance": {
-            "offensive": { "base": { "value": 0 }, "final": { "value": 0 } },
-            "defensive": { "base": { "value": 0 }, "final": { "value": 0 } }
+        "psychicPotential": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
           }
         },
-        "psychicPoints": { "value": 0, "max": 0 },
-        "psychicSettings": { "fatigueResistance": false },
+        "psychicProjection": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          },
+          "imbalance": {
+            "offensive": {
+              "__type": "{\"type\":\"Ability\",\"attribute\":\"dexterity\",\"applyPhysicalActionMod\":\"false\"}"
+            },
+            "defensive": {
+              "__type": "{\"type\":\"Ability\",\"attribute\":\"dexterity\",\"applyPhysicalActionMod\":\"false\"}"
+            }
+          }
+        },
+        "psychicPoints": {
+          "value": 0,
+          "max": 0
+        },
+        "psychicSettings": {
+          "fatigueResistance": false
+        },
         "psychicPowers": [],
         "psychicDisciplines": [],
         "mentalPatterns": [],
-        "innatePsychicPower": { "amount": { "value": 0 } },
+        "innatePsychicPower": {
+          "amount": {
+            "value": 0
+          }
+        },
         "innatePsychicPowers": []
+      },
+      "effects": {
+        "customAttributes": {}
       }
     }
   },
@@ -401,100 +881,300 @@
       "effect"
     ],
     "ammo": {
-      "amount": { "value": 0 },
-      "damage": { "value": 0 },
-      "critic": { "value": "-" },
-      "integrity": { "value": 0 },
-      "breaking": { "value": 0 },
-      "presence": { "value": 0 },
-      "special": { "value": "" },
-      "reducedArmor": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+      "amount": {
+        "value": 0
       },
-      "ignoreArmor": { "value": false }
+      "damage": {
+        "value": 0
+      },
+      "critic": {
+        "value": "-"
+      },
+      "integrity": {
+        "value": 0
+      },
+      "breaking": {
+        "value": 0
+      },
+      "presence": {
+        "value": 0
+      },
+      "special": {
+        "value": ""
+      },
+      "reducedArmor": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
+      },
+      "ignoreArmor": {
+        "value": false
+      }
     },
     "armor": {
-      "cut": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "pierce": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "impact": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "thrust": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "heat": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "electricity": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "cold": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "energy": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "integrity": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "presence": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "movementRestriction": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "naturalPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "perceptionPenalty": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "wearArmorRequirement": { "base": { "value": 0 }, "final": { "value": 0 } }
+      "cut": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "pierce": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "impact": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "thrust": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "heat": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "electricity": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "cold": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "energy": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "integrity": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "presence": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "movementRestriction": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "naturalPenalty": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "perceptionPenalty": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "wearArmorRequirement": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      }
     },
     "spell": {
-      "level": { "value": 0 },
-      "via": { "value": "" },
-      "spellType": { "value": "" },
-      "actionType": { "value": "" },
-      "combatType": { "value": "-" },
-      "hasDailyMaintenance": { "value": false },
-      "description": { "value": "" },
-      "critic": { "value": "-" },
+      "level": {
+        "value": 0
+      },
+      "via": {
+        "value": ""
+      },
+      "spellType": {
+        "value": ""
+      },
+      "actionType": {
+        "value": ""
+      },
+      "combatType": {
+        "value": "-"
+      },
+      "hasDailyMaintenance": {
+        "value": false
+      },
+      "description": {
+        "value": ""
+      },
+      "critic": {
+        "value": "-"
+      },
       "visible": false,
       "macro": "",
       "hotbarMacroCreatorId": "",
       "grades": {
         "base": {
-          "name": { "value": "" },
-          "intRequired": { "value": 0 },
-          "zeon": { "value": 0 },
-          "maintenanceCost": { "value": 0 },
-          "description": { "value": "" },
-          "damage": { "value": 0 },
-          "area": { "value": 0 },
-          "shieldPoints": { "value": 0 },
+          "name": {
+            "value": ""
+          },
+          "intRequired": {
+            "value": 0
+          },
+          "zeon": {
+            "value": 0
+          },
+          "maintenanceCost": {
+            "value": 0
+          },
+          "description": {
+            "value": ""
+          },
+          "damage": {
+            "value": 0
+          },
+          "area": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
           "resistanceEffect": {
             "value": 0,
             "type": ""
           }
         },
         "intermediate": {
-          "name": { "value": "" },
-          "intRequired": { "value": 0 },
-          "zeon": { "value": 0 },
-          "maintenanceCost": { "value": 0 },
-          "description": { "value": "" },
-          "damage": { "value": 0 },
-          "area": { "value": 0 },
-          "shieldPoints": { "value": 0 },
+          "name": {
+            "value": ""
+          },
+          "intRequired": {
+            "value": 0
+          },
+          "zeon": {
+            "value": 0
+          },
+          "maintenanceCost": {
+            "value": 0
+          },
+          "description": {
+            "value": ""
+          },
+          "damage": {
+            "value": 0
+          },
+          "area": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
           "resistanceEffect": {
             "value": 0,
             "type": ""
           }
         },
         "advanced": {
-          "name": { "value": "" },
-          "intRequired": { "value": 0 },
-          "zeon": { "value": 0 },
-          "maintenanceCost": { "value": 0 },
-          "description": { "value": "" },
-          "damage": { "value": 0 },
-          "area": { "value": 0 },
-          "shieldPoints": { "value": 0 },
+          "name": {
+            "value": ""
+          },
+          "intRequired": {
+            "value": 0
+          },
+          "zeon": {
+            "value": 0
+          },
+          "maintenanceCost": {
+            "value": 0
+          },
+          "description": {
+            "value": ""
+          },
+          "damage": {
+            "value": 0
+          },
+          "area": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
           "resistanceEffect": {
             "value": 0,
             "type": ""
           }
         },
         "arcane": {
-          "name": { "value": "" },
-          "intRequired": { "value": 0 },
-          "zeon": { "value": 0 },
-          "maintenanceCost": { "value": 0 },
-          "description": { "value": "" },
-          "damage": { "value": 0 },
-          "area": { "value": 0 },
-          "shieldPoints": { "value": 0 },
+          "name": {
+            "value": ""
+          },
+          "intRequired": {
+            "value": 0
+          },
+          "zeon": {
+            "value": 0
+          },
+          "maintenanceCost": {
+            "value": 0
+          },
+          "description": {
+            "value": ""
+          },
+          "damage": {
+            "value": 0
+          },
+          "area": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
           "resistanceEffect": {
             "value": 0,
             "type": ""
@@ -502,179 +1182,429 @@
         }
       }
     },
-    "psychicDiscipline": { "imbalance": false },
-    "mentalPattern": { "bonus": { "value": "" }, "penalty": { "value": "" } },
+    "psychicDiscipline": {
+      "imbalance": false
+    },
+    "mentalPattern": {
+      "bonus": {
+        "value": ""
+      },
+      "penalty": {
+        "value": ""
+      }
+    },
     "psychicPower": {
-      "level": { "value": 0 },
+      "level": {
+        "value": 0
+      },
       "effects": {
         "20": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "40": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "80": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "120": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "140": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "180": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "240": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "280": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "320": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         },
         "440": {
           "value": "",
-          "damage": { "value": 0 },
-          "fatigue": { "value": 0 },
-          "shieldPoints": { "value": 0 },
-          "affectsInmaterial": { "value": false }
+          "damage": {
+            "value": 0
+          },
+          "fatigue": {
+            "value": 0
+          },
+          "shieldPoints": {
+            "value": 0
+          },
+          "affectsInmaterial": {
+            "value": false
+          }
         }
       },
-      "actionType": { "value": "active" },
-      "combatType": { "value": "attack" },
-      "discipline": { "value": "matrixPowers" },
-      "critic": { "value": "-" },
+      "actionType": {
+        "value": "active"
+      },
+      "combatType": {
+        "value": "attack"
+      },
+      "discipline": {
+        "value": "matrixPowers"
+      },
+      "critic": {
+        "value": "-"
+      },
       "macro": "",
       "hotbarMacroCreatorId": "",
-      "hasMaintenance": { "value": false },
+      "hasMaintenance": {
+        "value": false
+      },
       "visible": false,
-      "bonus": { "value": 0 }
+      "bonus": {
+        "value": 0
+      }
     },
     "technique": {
-      "description": { "value": "" },
-      "strength": { "value": 0 },
-      "agility": { "value": 0 },
-      "dexterity": { "value": 0 },
-      "constitution": { "value": 0 },
-      "willPower": { "value": 0 },
-      "power": { "value": 0 },
-      "martialKnowledge": { "value": 0 }
+      "description": {
+        "value": ""
+      },
+      "strength": {
+        "value": 0
+      },
+      "agility": {
+        "value": 0
+      },
+      "dexterity": {
+        "value": 0
+      },
+      "constitution": {
+        "value": 0
+      },
+      "willPower": {
+        "value": 0
+      },
+      "power": {
+        "value": 0
+      },
+      "martialKnowledge": {
+        "value": 0
+      }
     },
     "weapon": {
-      "equipped": { "value": false },
-      "isShield": { "value": false },
-      "ignoreArmor": { "value": false },
-      "special": { "value": "" },
+      "equipped": {
+        "value": false
+      },
+      "isShield": {
+        "value": false
+      },
+      "ignoreArmor": {
+        "value": false
+      },
+      "special": {
+        "value": ""
+      },
       "integrity": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
       "breaking": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
       "reducedArmor": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
       "attack": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
       "block": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
       "damage": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 },
-        "formula": { "value": "" },
-        "applyQualityInFormula": { "value": false }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        },
+        "formula": {
+          "value": ""
+        },
+        "applyQualityInFormula": {
+          "value": false
+        }
       },
       "initiative": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
       "presence": {
-        "base": { "value": 0 },
-        "final": { "value": 0 },
-        "special": { "value": 0 }
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        },
+        "special": {
+          "value": 0
+        }
       },
-      "size": { "value": 0 },
+      "size": {
+        "value": 0
+      },
       "strRequired": {
-        "oneHand": { "base": { "value": 0 }, "final": { "value": 0 } },
-        "twoHands": { "base": { "value": 0 }, "final": { "value": 0 } }
+        "oneHand": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        },
+        "twoHands": {
+          "base": {
+            "value": 0
+          },
+          "final": {
+            "value": 0
+          }
+        }
       },
-      "quality": { "value": 0 },
-      "oneOrTwoHanded": { "value": "one-handed" },
-      "knowledgeType": { "value": "known" },
-      "manageabilityType": { "value": "one_hand" },
-      "shotType": { "value": "throw" },
-      "isRanged": { "value": false },
-      "range": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "cadence": { "value": "" },
-      "reload": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "sizeProportion": { "value": "" },
-      "hasOwnStr": { "value": false },
-      "weaponStrength": { "base": { "value": 0 }, "final": { "value": 0 } },
-      "critic": { "primary": { "value": "-" }, "secondary": { "value": "-" } },
-      "useCustomFormula": {"value": false },
+      "quality": {
+        "value": 0
+      },
+      "oneOrTwoHanded": {
+        "value": "one-handed"
+      },
+      "knowledgeType": {
+        "value": "known"
+      },
+      "manageabilityType": {
+        "value": "one_hand"
+      },
+      "shotType": {
+        "value": "throw"
+      },
+      "isRanged": {
+        "value": false
+      },
+      "range": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "cadence": {
+        "value": ""
+      },
+      "reload": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "sizeProportion": {
+        "value": ""
+      },
+      "hasOwnStr": {
+        "value": false
+      },
+      "weaponStrength": {
+        "base": {
+          "value": 0
+        },
+        "final": {
+          "value": 0
+        }
+      },
+      "critic": {
+        "primary": {
+          "value": "-"
+        },
+        "secondary": {
+          "value": "-"
+        }
+      },
+      "useCustomFormula": {
+        "value": false
+      },
       "hotbarMacroCreatorId": ""
     },
     "supernaturalShield": {
-      "shieldPoints": { "value": 0 },
-      "abilityFormula": { "value": "" }
+      "shieldPoints": {
+        "value": 0
+      },
+      "abilityFormula": {
+        "value": ""
+      }
     },
     "effect": {
-      "active":   { "value": true },
-      "category": { "value": "generic" },
+      "active": {
+        "value": true
+      },
+      "category": {
+        "value": "generic"
+      },
       "modifiers": []
     }
-
   }
 }
