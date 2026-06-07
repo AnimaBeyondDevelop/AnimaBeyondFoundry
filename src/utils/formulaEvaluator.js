@@ -1,8 +1,11 @@
 // utils/formulaEvaluator.js
 import { calculateAttributeModifier } from '../module/actor/utils/prepareActor/calculations/util/calculateAttributeModifier.js';
+import { FormulaIfComparisonEvaluator } from './formulaIfComparisonEvaluator.js';
 
 export class FormulaEvaluator {
-  // Whitelisted functions. Add your own here.
+  // Temporary actor context while evaluating a formula.
+  static #currentEvaluatingActor = null;
+
   static FUNCTIONS = {
     floor: x => Math.floor(x),
     ceil: x => Math.ceil(x),
@@ -12,14 +15,38 @@ export class FormulaEvaluator {
     max: (...xs) => Math.max(...xs),
     clamp: (v, min, max) => Math.min(Math.max(v, min), max),
 
-    statMod: x => calculateAttributeModifier(x)
+    statMod: x => calculateAttributeModifier(x),
+
+    // currentRound() reads the actor currently being evaluated.
+    currentRound: () => {
+      const actor = FormulaEvaluator.#currentEvaluatingActor;
+      if (!actor) return 0;
+
+      // Preferred Foundry path: actor -> combatant -> combat -> round
+      const roundFromCombatant = Number(actor.combatant?.combat?.round);
+      if (Number.isFinite(roundFromCombatant)) return roundFromCombatant;
+
+      // Fallback used by some mocks/legacy data
+      const roundFromActor = Number(actor.combat?.round);
+      if (Number.isFinite(roundFromActor)) return roundFromActor;
+
+      // Extra fallback: resolve from active combat by actor id when combatant is not attached
+      const actorId = actor.id ?? actor._id;
+      const activeCombat = globalThis.game?.combat;
+      const combatant = activeCombat?.combatants?.find?.(
+        c => c?.actorId === actorId || c?.actor?.id === actorId
+      );
+      if (combatant) return Number(activeCombat?.round) || 0;
+
+      return 0;
+    }
   };
 
   /**
    * Eval numeric formula using actor data paths + whitelisted functions.
    * Supports:
    *  - @paths like @characteristics.primaries.power.mod
-   *  - functions like floor(...), ceil(...), clamp(...), etc.
+   *  - functions like floor(...), ceil(...), clamp(...), currentRound(), etc.
    * No dice allowed here.
    *
    * @param {string} formula
@@ -36,18 +63,20 @@ export class FormulaEvaluator {
       return null;
     }
 
-    // Local context from actor.system
-    /** @type {any} */
-    const ctx = actor?.system ? foundry.utils.duplicate(actor.system) : {};
-    // Allow both @foo.bar and @system.foo.bar
-    ctx.system = ctx;
+    this.#currentEvaluatingActor = actor;
 
     try {
-      // 1) Replace @path with numeric values
-      const withValues = clean.replace(/@([a-zA-Z0-9_.]+)/g, (_match, path) => {
+      const normalized = this.#normalizeBooleanLiterals(clean);
+
+      /** @type {any} */
+      const ctx = actor?.system ? foundry.utils.duplicate(actor.system) : {};
+      // Allow both @foo.bar and @system.foo.bar
+      ctx.system = ctx;
+
+      const withValues = normalized.replace(/@([a-zA-Z0-9_.]+)/g, (_match, path) => {
         let value = foundry.utils.getProperty(ctx, path);
 
-        // If the path resolves to a { value } object, use it automatically
+        // Convenience for fields shaped as { value: X }
         if (value && typeof value === 'object' && 'value' in value) {
           value = value.value;
         }
@@ -56,15 +85,16 @@ export class FormulaEvaluator {
         return Number.isFinite(num) ? String(num) : '0';
       });
 
-      // 2) Resolve whitelisted function calls into numbers
-      const resolved = this.#resolveFunctions(withValues);
+      const withConditionals = this.#resolveConditionals(withValues);
+      const resolved = this.#resolveFunctions(withConditionals);
 
-      // 3) Final validation: only numbers/operators/parentheses/dots
       const compact = resolved.replace(/\s+/g, '');
       if (!/^[0-9+\-*/().,]*$/.test(compact)) {
         console.error('FormulaEvaluator: invalid chars after replace/resolve', {
           original: clean,
+          normalized,
           withValues,
+          withConditionals,
           resolved
         });
         return null;
@@ -78,16 +108,68 @@ export class FormulaEvaluator {
         err
       });
       return null;
+    } finally {
+      this.#currentEvaluatingActor = null;
     }
   }
 
-  // ---- internals ----
+  /**
+   * Resolve if(condition, trueVal, falseVal) lazily (Excel style).
+   */
+  static #resolveConditionals(expr) {
+    let current = expr;
+
+    for (let i = 0; i < 50; i++) {
+      const found = this.#findNextConditional(current);
+      if (!found) break;
+
+      const { startIndex, closeParenIndex, args } = found;
+      const [conditionExpr, trueVal, falseVal] = args;
+
+      const condEval = FormulaIfComparisonEvaluator.evaluateCondition(
+        conditionExpr,
+        nested => this.#resolveFunctions(nested)
+      );
+      const isTruthy = condEval !== 0 && condEval !== false;
+
+      const selectedVal = isTruthy ? this.#evalArg(trueVal) : this.#evalArg(falseVal);
+
+      current =
+        current.slice(0, startIndex) +
+        String(selectedVal) +
+        current.slice(closeParenIndex + 1);
+    }
+
+    return current;
+  }
+
+  static #findNextConditional(s) {
+    const re = /\bif\s*\(/g;
+    const match = re.exec(s);
+    if (!match) return null;
+
+    const startIndex = match.index;
+    const openParenIndex = re.lastIndex - 1;
+    const closeParenIndex = this.#findMatchingParen(s, openParenIndex);
+
+    if (closeParenIndex < 0) {
+      console.error('FormulaEvaluator: unbalanced parentheses in:', s);
+      throw new Error('Unbalanced parentheses');
+    }
+
+    const inside = s.slice(openParenIndex + 1, closeParenIndex);
+    const args = this.#splitArgs(inside);
+
+    if (args.length !== 3) {
+      throw new Error(`if() requires 3 arguments, got ${args.length}`);
+    }
+
+    return { startIndex, openParenIndex, closeParenIndex, args };
+  }
 
   static #resolveFunctions(expr) {
     let current = expr;
 
-    // Resolve repeatedly to handle nested calls: floor(max(1, 2) / 3)
-    // Guard iterations to avoid infinite loops on malformed input.
     for (let i = 0; i < 50; i++) {
       const found = this.#findNextFunctionCall(current);
       if (!found) break;
@@ -95,7 +177,6 @@ export class FormulaEvaluator {
       const { name, startIndex, openParenIndex, closeParenIndex } = found;
       const fn = this.FUNCTIONS[name];
       if (!fn) {
-        console.error('FormulaEvaluator: function not allowed:', name);
         throw new Error(`Function not allowed: ${name}`);
       }
 
@@ -105,17 +186,13 @@ export class FormulaEvaluator {
       const result = fn(...args);
       const num = Number(result);
       if (!Number.isFinite(num)) {
-        console.error('FormulaEvaluator: function returned non-finite:', {
-          name,
-          args,
-          result
-        });
         throw new Error(`Function returned non-finite: ${name}`);
       }
 
-      // Replace "name( ... )" with the computed number
       current =
-        current.slice(0, startIndex) + String(num) + current.slice(closeParenIndex + 1);
+        current.slice(0, startIndex) +
+        String(num) +
+        current.slice(closeParenIndex + 1);
     }
 
     return current;
@@ -125,27 +202,18 @@ export class FormulaEvaluator {
     const trimmed = (argExpr ?? '').trim();
     if (!trimmed) return 0;
 
-    // Args can contain nested functions, resolve them first
-    const resolved = this.#resolveFunctions(trimmed);
+    const normalized = this.#normalizeBooleanLiterals(trimmed);
+    const withConditionals = this.#resolveConditionals(normalized);
+    const resolved = this.#resolveFunctions(withConditionals);
 
-    // Validate arg is numeric expression only
     const compact = resolved.replace(/\s+/g, '');
     if (!/^[0-9+\-*/().,]*$/.test(compact)) {
-      console.error('FormulaEvaluator: invalid chars in function arg:', {
-        argExpr,
-        resolved
-      });
       throw new Error('Invalid chars in function arg');
     }
 
     const value = Roll.safeEval(resolved);
     const num = Number(value);
     if (!Number.isFinite(num)) {
-      console.error('FormulaEvaluator: arg eval not finite:', {
-        argExpr,
-        resolved,
-        value
-      });
       throw new Error('Arg eval not finite');
     }
 
@@ -153,7 +221,6 @@ export class FormulaEvaluator {
   }
 
   static #splitArgs(s) {
-    // Split by commas but respecting nested parentheses.
     const args = [];
     let depth = 0;
     let last = 0;
@@ -167,12 +234,12 @@ export class FormulaEvaluator {
         last = i + 1;
       }
     }
+
     args.push(s.slice(last));
     return args.map(x => x.trim()).filter(x => x.length > 0);
   }
 
   static #findNextFunctionCall(s) {
-    // Find the leftmost occurrence of "<name>(" where name is [a-zA-Z_][a-zA-Z0-9_]*
     const re = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g;
     const match = re.exec(s);
     if (!match) return null;
@@ -180,10 +247,9 @@ export class FormulaEvaluator {
     const name = match[1];
     const startIndex = match.index;
     const openParenIndex = re.lastIndex - 1;
-
     const closeParenIndex = this.#findMatchingParen(s, openParenIndex);
+
     if (closeParenIndex < 0) {
-      console.error('FormulaEvaluator: unbalanced parentheses in:', s);
       throw new Error('Unbalanced parentheses');
     }
 
@@ -203,13 +269,15 @@ export class FormulaEvaluator {
     return -1;
   }
 
+  static #normalizeBooleanLiterals(expr) {
+    return String(expr).replace(/\b(true|false)\b/gi, literal =>
+      literal.toLowerCase() === 'true' ? '1' : '0'
+    );
+  }
+
   /**
    * Extract @path dependencies from a formula.
    * Returns normalized paths prefixed with "system." (unless already "system.").
-   *
-   * Examples:
-   *  "@characteristics.primaries.power.mod" -> "system.characteristics.primaries.power.mod"
-   *  "@system.characteristics.primaries.power.mod" -> "system.characteristics.primaries.power.mod"
    *
    * @param {string} formula
    * @returns {string[]}
@@ -219,10 +287,9 @@ export class FormulaEvaluator {
     if (!clean) return [];
 
     const deps = new Set();
-
-    // Capture @paths (same pattern as evaluate)
     const re = /@([a-zA-Z0-9_.]+)/g;
     let m;
+
     while ((m = re.exec(clean)) !== null) {
       const raw = String(m[1] ?? '').trim();
       if (!raw) continue;

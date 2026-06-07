@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Jest All Tests" type="JavascriptTestRunnerJest" factoryName="Jest">
+    <node-interpreter value="project" />
+    <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+    <working-dir value="$PROJECT_DIR$" />
+    <envs>
+      <env name="NODE_OPTIONS" value="--experimental-vm-modules" />
+    </envs>
+    <config-file value="$PROJECT_DIR$/jest.config.cjs" />
+    <scope-kind value="ALL" />
+    <method v="2" />
+  </configuration>
+</component>
+
