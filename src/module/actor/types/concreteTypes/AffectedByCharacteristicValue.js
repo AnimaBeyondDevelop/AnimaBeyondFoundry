@@ -85,10 +85,7 @@ export class AffectedByCharacteristicValue extends NumericalValue {
     const ch = this.actor?.system?.characteristics?.primaries?.[this.attribute];
     if (!ch) return 0;
 
-    const chBase = Number(ch.base?.value ?? ch.base ?? 0);
-    const chFinal = Number(ch.final?.value ?? ch.final ?? 0);
-
-    return calculateAttributeModifier(chFinal) - calculateAttributeModifier(chBase);
+    return Number(ch.delta?.value ?? 0);
   }
 
   _computeFinal({ base = 0, special = 0 }) {

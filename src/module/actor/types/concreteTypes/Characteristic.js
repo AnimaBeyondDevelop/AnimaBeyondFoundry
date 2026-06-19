@@ -14,6 +14,9 @@ export class Characteristic extends BaseType {
   get final() {
     return this._get('final.value', 0);
   }
+  get delta() {
+    return this._get('delta.value', 0);
+  }
 
   // computeFinal() {
   //   return Math.min(Math.max(this.base + this.special, 0), 20);
@@ -41,6 +44,7 @@ export class Characteristic extends BaseType {
       base: { value: 0 },
       special: { value: 0 },
       final: { value: 0 },
+      delta: { value: 0 },
       mod: { value: 0 }
     };
   }
@@ -69,7 +73,7 @@ export class Characteristic extends BaseType {
 
   static editorConfig() {
     return {
-      readonly: ['final.value', 'mod.value'],
+      readonly: ['final.value', 'mod.value', 'delta.value'],
       hidden: [],
       labels: {
         'base.value': 'Base',
@@ -77,7 +81,7 @@ export class Characteristic extends BaseType {
         'final.value': 'Final',
         'mod.value': 'Mod'
       },
-      order: ['base.value', 'special.value', 'final.value', 'mod.value'],
+      order: ['base.value', 'special.value', 'final.value', 'mod.value', 'delta.value'],
       overrides: {}
     };
   }
@@ -95,6 +99,12 @@ export class Characteristic extends BaseType {
         deps: ['final.value'],
         mods: ['mod.value'],
         compute: this._computeMod.bind(this)
+      },
+      {
+        id: 'delta',
+        deps: ['base.value', 'final.value'],
+        mods: ['delta.value'],
+        compute: this._computeDelta.bind(this)
       }
     ];
   }
@@ -108,5 +118,10 @@ export class Characteristic extends BaseType {
   /** @param {{ final:number }} inputs */
   _computeMod({ final = 0 }) {
     return { mod: calculateAttributeModifier(final) };
+  }
+
+  /** @param {{ final:number }} inputs */
+  _computeDelta({ base = 0, final = 0 }) {
+    return { delta: calculateAttributeModifier(final) - calculateAttributeModifier(base) };
   }
 }

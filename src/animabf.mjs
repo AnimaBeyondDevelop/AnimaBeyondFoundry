@@ -419,6 +419,7 @@ Hooks.on('preCreateChatMessage', (message, data, _options, _userId) => {
 });
 
 Hooks.on('renderActiveEffectConfig', (app, html) => {
+  return; //TO-DO: Check the error on this hook and if it is really needed
   const transfer = html.find('input[name="transfer"]');
   if (!transfer.length) return;
 

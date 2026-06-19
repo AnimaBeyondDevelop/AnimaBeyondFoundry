@@ -14,8 +14,10 @@ export const mutateInitiative = data => {
     ) + general.modifiers.naturalPenalty.final.value;
 
   const { initiative } = data.characteristics.secondaries;
+  
+  const agiDelta = data.characteristics.primaries.agility.delta.value;
 
-  initiative.final.value = initiative.base.value + initiative.special.value + penalty;
+  initiative.final.value = initiative.base.value + initiative.special.value + penalty + data.characteristics.primaries.agility.delta.value + data.characteristics.primaries.dexterity.delta.value;
 
   const equippedWeapons = combat.weapons.filter(weapon => weapon.system.equipped.value);
 
