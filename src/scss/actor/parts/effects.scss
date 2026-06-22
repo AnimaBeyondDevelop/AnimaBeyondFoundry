@@ -62,18 +62,6 @@
       color: rgba(255, 255, 255, 0.3);
       font-size: 12px;
     }
-
-    .custom-attribute-delete {
-      flex-shrink: 0;
-      color: rgba(255, 255, 255, 0.3);
-      cursor: pointer;
-      font-size: 11px;
-      padding: 2px 4px;
-
-      &:hover {
-        color: #e74c3c;
-      }
-    }
   }
 
   /* ============================= */

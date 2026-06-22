@@ -65,6 +65,7 @@ export class ABFActor extends Actor {
     this.system = inflateSystemFromTypeMarkers(this.system);
 
     this._removeNullCustomAttributes();
+    this._removeNullSecondarySpecialSkills();
 
     buildTypedNodes(this, TYPED_PATHS);
     this._applyDefaultKeysToTypedNodes();
@@ -706,6 +707,26 @@ export class ABFActor extends Actor {
     this.updateSource(updates);
   }
 
+  _removeNullSecondarySpecialSkills() {
+    const secondarySpecialSkills = this.system?.secondaries?.secondarySpecialSkills;
+
+    if (!secondarySpecialSkills || typeof secondarySpecialSkills !== 'object') return;
+
+    const nullKeys = Object.entries(secondarySpecialSkills)
+      .filter(([, value]) => value === null)
+      .map(([key]) => key);
+
+    if (nullKeys.length === 0) return;
+
+    const updates = {};
+
+    for (const key of nullKeys) {
+      updates[`system.secondaries.secondarySpecialSkills.-=${key}`] = null;
+    }
+
+    this.updateSource(updates);
+  }
+
   /**
    *  @param {Object} data
    *  @param {import('../items/ABFItems').ABFItemsEnum} data.type
@@ -748,10 +769,6 @@ export class ABFActor extends Actor {
    */
   getInnerItem(type, itemId) {
     return this.getItemsOf(type).find(item => item._id === itemId);
-  }
-
-  getSecondarySpecialSkills() {
-    return this.getItemsOf(ABFItems.SECONDARY_SPECIAL_SKILL);
   }
 
   getKnownSpells() {

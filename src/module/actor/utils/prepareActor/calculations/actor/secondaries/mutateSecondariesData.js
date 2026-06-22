@@ -28,8 +28,6 @@ export const mutateSecondariesData = data => {
     /** @type {keyof import('../../../../../../types/Actor').ABFActorDataSourceData['secondaries']} */
     const secondaryKey = rawSecondaryKey;
 
-    if (secondaryKey === 'secondarySpecialSkills') continue;
-
     for (const key of Object.keys(secondaries[secondaryKey])) {
       /** @type {import('../../../../../../types/Items').SecondaryData} */
       const secondary = data.secondaries[secondaryKey][key];

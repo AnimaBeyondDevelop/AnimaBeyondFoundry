@@ -99,14 +99,25 @@ export async function addCustomAttribute(sheet) {
 
 addCustomAttribute.action = 'add-custom-attribute';
 
-export async function deleteCustomAttribute(sheet, event) {
-  event?.preventDefault?.();
-  event?.stopPropagation?.();
+const CUSTOM_ATTRIBUTE_PATH_PREFIX = 'system.effects.customAttributes.';
+
+function customAttributeKeyFromPath(path) {
+  const normalized = String(path ?? '');
+  if (!normalized.startsWith(CUSTOM_ATTRIBUTE_PATH_PREFIX)) return '';
+  return normalized.slice(CUSTOM_ATTRIBUTE_PATH_PREFIX.length);
+}
+
+export async function deleteCustomAttribute(sheet, eventOrTarget) {
+  eventOrTarget?.preventDefault?.();
+  eventOrTarget?.stopPropagation?.();
 
   const actor = sheet?.actor;
   if (!actor) return;
 
-  const key = String(event?.currentTarget?.dataset?.customAttributeKey ?? '').trim();
+  const el = eventOrTarget?.currentTarget ?? eventOrTarget;
+  const key =
+    String(el?.dataset?.customAttributeKey ?? '').trim() ||
+    customAttributeKeyFromPath(el?.dataset?.path);
   if (!key) return;
 
   await sheet?._flushPendingSheetUpdatesImmediately?.();
@@ -122,6 +133,4 @@ export async function deleteCustomAttribute(sheet, event) {
 
   sheet.render?.(false);
 }
-
-deleteCustomAttribute.action = 'delete-custom-attribute';
 

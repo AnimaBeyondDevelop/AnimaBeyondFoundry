@@ -9,17 +9,16 @@
   {{#> "systems/animabf/templates/common/ui/group-body.hbs"
     class="secondary-special-skills"
   }}
-    {{#each system.secondaries.secondarySpecialSkills}}
-      <div data-item-id='{{this._id}}' class='secondary-special-skill-row'>
-        {{>
-        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-          class="level"
-          rollable=true
-          title=this.name
-          inputName=(concat "system.dynamic.secondarySpecialSkills." this._id ".system.level.value")
-          inputValue=this.system.level.value
-        }}
-      </div>
+    {{#each system.secondaries.secondarySpecialSkills as |ability skillKey|}}
+      {{>
+        "systems/animabf/templates/common/ui/types/secondary-ability.hbs"
+        cssClass="name"
+        rowClass="secondary-ability-row"
+        title=skillKey
+        rollable=true
+        path=(concat "system.secondaries.secondarySpecialSkills." skillKey)
+        value=ability
+      }}
     {{/each}}
   {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
 {{/"systems/animabf/templates/common/ui/group.hbs"}}

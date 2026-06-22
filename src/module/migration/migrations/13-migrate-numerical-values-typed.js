@@ -1,4 +1,3 @@
-import { Logger } from '../../../utils';
 import { TYPED_PATHS, TYPED_DEFAULTS } from '../../actor/types/typedTemplateIndex.js';
 import { TypeRegistry } from '../../actor/types/TypeRegistry.js';
 
@@ -49,7 +48,6 @@ function normalizeNumericalValueNode(node) {
     base.value + special.value
   );
 
-  // New fields (ensure types)
   const formula = typeof out.formula === 'string' ? out.formula : '';
   const calculateBaseFromFormula =
     typeof out.calculateBaseFromFormula === 'boolean'
@@ -65,7 +63,7 @@ function normalizeNumericalValueNode(node) {
     final
   };
 
-  delete normalized.value; // strip legacy if present
+  delete normalized.value;
   return normalized;
 }
 
@@ -87,9 +85,16 @@ export const MigrationXXMigrateTypedNumericalValues = {
     return false;
   },
 
-  updateActor(actor) {
+  /**
+   * @param {import('../../actor/ABFActor').ABFActor} actor
+   * @param {{ pack?: string }} context
+   */
+  async updateActor(actor, context = {}) {
     const ctor = TypeRegistry.get('NumericalValue');
-    if (!ctor) return actor;
+    if (!ctor) return false;
+
+    /** @type {Record<string, object>} */
+    const changes = {};
 
     for (const [path, type] of TYPED_PATHS.entries()) {
       if (type !== 'NumericalValue') continue;
@@ -98,13 +103,8 @@ export const MigrationXXMigrateTypedNumericalValues = {
       const current = foundry.utils.getProperty(actor.system, rel);
       if (!current || typeof current !== 'object') continue;
 
-      // 1) normalize legacy shapes
       const normalizedLegacy = normalizeNumericalValueNode(current);
-
-      // 2) template defaults (include overrides from __type in INITIAL_ACTOR_DATA)
       const def = TYPED_DEFAULTS.get(path) ?? ctor.defaults();
-
-      // 3) merge defaults + normalized data (data wins)
       const merged = foundry.utils.mergeObject(def, normalizedLegacy, {
         inplace: false,
         insertKeys: true,
@@ -112,16 +112,14 @@ export const MigrationXXMigrateTypedNumericalValues = {
         overwrite: true
       });
 
-      // Ensure we never keep the marker in persisted data for template nodes
       delete merged.__type;
-
-      // 4) prune to current type shape
       ctor.pruneToDefaults(merged);
-
-      foundry.utils.setProperty(actor.system, rel, merged);
+      changes[`system.${rel}`] = merged;
     }
 
-    Logger.log('Migrated NumericalValue nodes (template-driven).');
-    return actor;
+    if (!Object.keys(changes).length) return false;
+
+    await actor.update(changes, { render: false, ...context });
+    return false;
   }
 };

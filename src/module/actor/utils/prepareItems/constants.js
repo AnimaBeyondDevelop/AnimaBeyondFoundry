@@ -18,7 +18,6 @@ import { NemesisSkillItemConfig } from '../../../types/domine/NemesisSkillItemCo
 import { NoteItemConfig } from '../../../types/general/NoteItemConfig';
 import { PsychicDisciplineItemConfig } from '../../../types/psychic/PsychicDisciplineItemConfig';
 import { PsychicPowerItemConfig } from '../../../types/psychic/PsychicPowerItemConfig';
-import { SecondarySpecialSkillItemConfig } from '../../../types/secondaries/SecondarySpecialSkillItemConfig';
 import { SelectedSpellItemConfig } from '../../../types/mystic/SelectedSpellItemConfig';
 import { ActViaItemConfig } from '../../../types/mystic/ActViaItemConfig';
 import { InnateMagicViaItemConfig } from '../../../types/mystic/InnateMagicViaItemConfig';
@@ -51,7 +50,6 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [MartialArtItemConfig.type]: MartialArtItemConfig,
   [MetamagicItemConfig.type]: MetamagicItemConfig,
   [NemesisSkillItemConfig.type]: NemesisSkillItemConfig,
-  [SecondarySpecialSkillItemConfig.type]: SecondarySpecialSkillItemConfig,
   [SelectedSpellItemConfig.type]: SelectedSpellItemConfig,
   [SpecialSkillItemConfig.type]: SpecialSkillItemConfig,
   [SpellMaintenanceItemConfig.type]: SpellMaintenanceItemConfig,

@@ -12,6 +12,10 @@ import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { createClickHandlers } from './utils/createClickHandlers';
 import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
+import {
+  isTypedNodeDeletable,
+  resolveTypedNodeDeletableConfig
+} from './types/typedNodeSheetMenuConfig.js';
 import { findEffectLinkedToItem } from './utils/findEffectLinkedToItem.js';
 import { ensureLinkedEffectForItem } from './utils/ensureLinkedEffectForItem.js';
 
@@ -181,7 +185,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
     if (!this.options.editable) return;
 
-    this._activateBaseTypeContextMenu(html);
+    this._activateTypedNodeContextMenu(html);
 
     this._setupDebouncedSheetUpdates(html);
 
@@ -192,9 +196,11 @@ export default class ABFActorSheet extends ActorSheetV1 {
     this._activateEffectControls(html);
   }
 
-  _activateBaseTypeContextMenu(html) {
+  _activateTypedNodeContextMenu(html) {
     const ContextMenuImpl = foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
     const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    const sheet = this;
+
     new ContextMenuImpl(
       html instanceof HTMLElement ? html : html[0],
       '.base-type-row',
@@ -202,7 +208,26 @@ export default class ABFActorSheet extends ActorSheetV1 {
         {
           name: game.i18n.localize('contextualMenu.common.options.edit') ?? 'Edit…',
           icon: '<i class="fas fa-edit"></i>',
-          callback: target => this._openBaseTypeEditor(target instanceof HTMLElement ? target : target[0])
+          callback: target => sheet._openBaseTypeEditor(target instanceof HTMLElement ? target : target[0])
+        },
+        {
+          name: game.i18n.localize('contextualMenu.common.options.delete') ?? 'Delete',
+          icon: '<i class="fas fa-trash"></i>',
+          condition: target => {
+            const el = target instanceof HTMLElement ? target : target[0];
+            const path = el?.dataset?.path;
+            if (!path) return false;
+            return isTypedNodeDeletable(sheet.actor, path);
+          },
+          callback: target => {
+            const el = target instanceof HTMLElement ? target : target[0];
+            const path = el?.dataset?.path;
+            if (!path) return;
+
+            const typedNode = sheet.actor.typedNodes?.get(path) ?? null;
+            const cfg = resolveTypedNodeDeletableConfig(path, typedNode);
+            cfg?.onDelete(sheet, el);
+          }
         }
       ],
       ...(isV14 ? [{ jQuery: false }] : [])

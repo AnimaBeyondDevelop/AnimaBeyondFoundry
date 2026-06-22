@@ -499,7 +499,7 @@
             "__type": "{\"type\":\"SecondaryAbility\",\"attribute\":\"power\"}"
           }
         },
-        "secondarySpecialSkills": []
+        "secondarySpecialSkills": {}
       },
       "combat": {
         "attack": {

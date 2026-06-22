@@ -88,6 +88,14 @@ function migrationApplies(migration) {
 }
 
 /**
+ * Clone actor/item system data into a plain object safe for persistence.
+ * @param {object} system
+ */
+function serializeSystemForUpdate(system) {
+  return foundry.utils.deepClone(system?.toObject?.() ?? system);
+}
+
+/**
  * Migrates a collection of items. If the collection are items belonging to an actor or pack,
  * a context needs to be provided for the `updateDocuments(...)` function.
  * @param {ABFItem[]} items
@@ -120,11 +128,11 @@ async function migrateItemCollection(items, migration, context = {}) {
  * @param {Migration} migration
  * @param {{parent: ABFActor} | {pack: string} | {}} context - context for the updateDocuments calls
  */
-async function migrateActorCollection(actors, migration, context = {}) {
+async function migrateActorCollection(actors, migration, context = {}, options = {}) {
   if (migration.filterActors) actors = actors.filter(migration.filterActors);
   const length = actors.length ?? actors.size; // takes care of the case of a DocumentCollection
   if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
-  Logger.log(`Migrating ${length} Actors.`);
+  if (!options.skipCountLog) Logger.log(`Migrating ${length} Actors.`);
 
   if (migration.updateItem) {
     await Promise.all(
@@ -132,15 +140,29 @@ async function migrateActorCollection(actors, migration, context = {}) {
     );
   }
   if (migration.updateActor) {
-    const migrated = await Promise.all(actors.map(a => migration.updateActor(a)));
-    const updates = migrated
-      .map(a => {
-        if (!a) return;
-        const { _id, name, system } = a;
-        return { _id, name, system };
-      })
-      .filter(u => !!u);
-    await ABFActor.updateDocuments(updates, context);
+    const total = options.totalCount ?? length;
+    let index = options.startIndex ?? 0;
+    const progressLabel = options.progressLabel ?? 'Migrating actor';
+
+    for (const actor of actors) {
+      index++;
+      try {
+        Logger.log(`${progressLabel} ${index}/${total}: ${actor.name}`);
+        const result = await migration.updateActor(actor, context);
+        // false = migration persisted inline (partial updateActor patches)
+        if (result === false) continue;
+        if (!result) continue;
+
+        await result.update(
+          { system: serializeSystemForUpdate(result.system) },
+          { render: false, ...context }
+        );
+      } catch (err) {
+        console.warn(
+          `[ABF] Failed to migrate actor "${actor.name}" (${actor.id}): ${err?.message ?? err}`
+        );
+      }
+    }
   }
 }
 
@@ -154,10 +176,27 @@ async function migrateUnlinkedActors(scenes, migration) {
   const length = scenes?.length ?? scenes?.size ?? 0;
   if (length === 0 || (!migration.updateItem && !migration.updateActor)) return;
 
+  /** @type {{ scene: Scene, token: TokenDocument }[]} */
+  const entries = [];
   for (const scene of scenes) {
     for (const token of scene.tokens.filter(t => !t.actorLink && t.actor)) {
-      await migrateActorCollection([token.actor], migration, { parent: token });
+      if (migration.filterActors && !migration.filterActors(token.actor)) continue;
+      entries.push({ scene, token });
     }
+  }
+  if (!entries.length) return;
+
+  Logger.log(`Migrating ${entries.length} unlinked token actors.`);
+
+  let index = 0;
+  for (const { scene, token } of entries) {
+    index++;
+    await migrateActorCollection([token.actor], migration, {}, {
+      skipCountLog: true,
+      startIndex: index,
+      totalCount: entries.length,
+      progressLabel: `Unlinked token actor (${scene.name})`
+    });
   }
 }
 
@@ -260,6 +299,7 @@ function migrateTokens(migration) {
 async function applyMigration(migration) {
   try {
     Logger.log(`Applying migration ${migration.id}.`);
+    game.animabf._migrationActive = true;
 
     await migrateWorldItems(migration);
     await migrateWorldActors(migration);
@@ -270,12 +310,15 @@ async function applyMigration(migration) {
     Logger.log(`Migration ${migration.id} completed.`);
 
     const currentVersion = game.system.version;
-    const applied = game.settings.get(
-      game.animabf.id,
-      ABFSettingsKeys.APPLIED_MIGRATIONS
+    const applied = foundry.utils.deepClone(
+      game.settings.get(game.animabf.id, ABFSettingsKeys.APPLIED_MIGRATIONS) ?? {}
     );
     applied[migration.id] = currentVersion;
-    game.settings.set(game.animabf.id, ABFSettingsKeys.APPLIED_MIGRATIONS, applied);
+    await game.settings.set(
+      game.animabf.id,
+      ABFSettingsKeys.APPLIED_MIGRATIONS,
+      applied
+    );
 
     // TODO: add french translation for the warning dialog also.
     await ABFDialogs.prompt(
@@ -293,6 +336,8 @@ async function applyMigration(migration) {
         error: err
       })
     );
+  } finally {
+    game.animabf._migrationActive = false;
   }
   return false;
 }

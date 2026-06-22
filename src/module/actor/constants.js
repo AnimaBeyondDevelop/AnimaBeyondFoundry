@@ -389,7 +389,7 @@ export const INITIAL_ACTOR_DATA = {
       puppetMaking: { __type: '{"type":"SecondaryAbility","attribute":"power"}' }
     },
 
-    secondarySpecialSkills: []
+    secondarySpecialSkills: {}
   },
 
   combat: {

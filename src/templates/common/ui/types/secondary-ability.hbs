@@ -1,6 +1,6 @@
 {{#> "ui/base-type-wrapper"
     path=path
-    class="secondary-ability-row"}}
+    class="{{#if rowClass}}{{rowClass}}{{else}}secondary-ability-row{{/if}}"}}
 
   {{>
     "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
