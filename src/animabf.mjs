@@ -33,6 +33,7 @@ import { FormulaEvaluator } from './utils/formulaEvaluator.js';
 import { registerHandlebarsPartials } from './utils/handlebarsPartials.js';
 
 import { macroCreators, macroExecutors } from './utils/macroCreatorRegistry.js';
+import { resolveHotbarMacroCreatorId } from './utils/resolveHotbarMacroCreatorId.js';
 import { ensureLinkedEffectForItem } from './module/actor/utils/ensureLinkedEffectForItem.js';
 import { inferAttributeFromFlavor } from './module/actor/utils/attributeDerivationMap.js';
 import { getActiveEffectsBreakdownForAttribute } from './module/actor/utils/activeEffectsBreakdown.js';
@@ -129,7 +130,8 @@ Hooks.once('ready', async () => {
 
   game.animabf.macros ??= {};
 
-  game.animabf.macros.execute = async ({ id, actorUuid, itemUuid }) => {
+  game.animabf.macros.execute = async payload => {
+    const { id, actorUuid, itemUuid, ...extra } = payload;
     const exec = macroExecutors[id];
     if (typeof exec !== 'function') return;
 
@@ -137,7 +139,7 @@ Hooks.once('ready', async () => {
     const item = await fromUuid(itemUuid);
     if (!actor || !item) return;
 
-    return exec({ actor, item });
+    return exec({ actor, item, ...extra });
   };
 
   // GM-side socket to update attack targets flag
@@ -477,24 +479,26 @@ Hooks.on('renderTokenHUD', async (hud, html) => {
   };
 });
 
-Hooks.on('hotbarDrop', async (_bar, data, slot) => {
+Hooks.on('hotbarDrop', (_bar, data, slot) => {
   if (data?.type !== 'Item' || !data.uuid) return;
 
-  const item = await fromUuid(data.uuid);
-  if (!item) return;
+  let item;
+  try {
+    item = fromUuidSync(data.uuid);
+  } catch {
+    return;
+  }
 
-  const actor = item.parent;
-  if (!actor) return; // No actor -> no macro
+  const actor = item?.parent;
+  if (!actor) return;
 
-  const creatorId = item.system?.hotbarMacroCreatorId;
-  if (!creatorId) return; // No reference -> do nothing (let Foundry default)
+  const creatorId = resolveHotbarMacroCreatorId(item);
+  const creator = creatorId ? macroCreators[creatorId] : null;
+  if (typeof creator !== 'function') return;
 
-  const creator = macroCreators[creatorId];
-  if (typeof creator !== 'function') return; // Unknown id -> do nothing
-
-  // Let the creator build+assign the macro. If it returns true => we handled it.
-  const handled = await creator({ actor, item, slot });
-  if (handled) return false; // Prevent default behavior
+  // Return false synchronously so Foundry does not create its default "Display item" macro.
+  void creator({ actor, item, slot });
+  return false;
 });
 
 // // Auto-number unlinked tokens as "{name} (n)" when dropped

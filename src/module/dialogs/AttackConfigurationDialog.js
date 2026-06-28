@@ -215,7 +215,12 @@ export class AttackConfigurationDialog extends FormApplication {
         .armorType(combat.criticSelected ?? weapon.system.critic?.primary?.value)
         .damageType(game.animabf.combat.DamageType.NONE)
         .presence(Number(weapon.system.presence?.final?.value ?? 0))
-        .isProjectile(!!combat.projectile?.value)
+        .isProjectile(!!combat.projectile?.value || !!weapon.system?.isRanged?.value)
+        .projectileType(
+          combat.projectile?.type ||
+            (weapon.system?.isRanged?.value ? weapon.system?.shotType?.value : '') ||
+            ''
+        )
         .automaticCrit(!!combat.automaticCrit)
         .critBonus(0)
         .critDamageBonus(Number(combat.critDamageBonus ?? 0))

@@ -1,0 +1,28 @@
+{{!-- Solo esquiva y parada: defensa actual, penalización derivada y acumulación en el contador --}}
+
+{{> ui/horizontal-segmented-picker
+  title=(localize 'macros.combat.dialog.defenseCount.current.title')
+  inputName="defender.combat.accumulatedDefenses"
+  value=this.defender.combat.accumulatedDefenses
+  disabled=fieldsDisabled
+  segment1Label=(localize 'macros.combat.dialog.defenseCount.current.segment.1')
+  segment2Label=(localize 'macros.combat.dialog.defenseCount.current.segment.2')
+  segment3Label=(localize 'macros.combat.dialog.defenseCount.current.segment.3')
+  segment4Label=(localize 'macros.combat.dialog.defenseCount.current.segment.4')
+  segment5Label=(localize 'macros.combat.dialog.defenseCount.current.segment.5plus')
+}}
+
+{{!-- Penalización calculada a partir de las defensas acumuladas --}}
+<p class="label defense-count">
+  {{localize 'macros.combat.dialog.defenseCount.title'}}: {{this.defender.combat.multipleDefensesPenalty}}
+</p>
+
+{{!-- Checkbox para acumular esta defensa en el contador de defensas múltiples --}}
+{{>
+  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.combat.accumulateDefenses.title')
+  disabled=fieldsDisabled
+  inputType="checkbox"
+  inputName="defender.combat.accumulateDefenses"
+  inputValue=(is 'eq' this.defender.combat.accumulateDefenses true)
+}}

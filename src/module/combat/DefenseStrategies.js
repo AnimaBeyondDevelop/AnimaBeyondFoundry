@@ -1,4 +1,8 @@
 import { FormulaEvaluator } from '../../utils/formulaEvaluator.js';
+import {
+  getAccumulatedDefenses,
+  multipleDefensePenaltyFromAccumulated
+} from './utils/defensesCounterCheck.js';
 
 const toSafeNumber = v => {
   const n = Number(v);
@@ -9,22 +13,16 @@ const RULES = {
   block: {
     stackDefense: true,
     applyMultipleDefensePenalty: true,
-    projectilePenalty: c => {
-      if (c.isShieldWeapon) return c.hasMastery ? 0 : 30;
-      return c.hasMastery ? 20 : 80;
-    },
     flavorSuffix: c => (c.weaponName ? ` (${c.weaponName})` : '')
   },
   dodge: {
     stackDefense: true,
     applyMultipleDefensePenalty: true,
-    projectilePenalty: c => (c.hasMastery ? 0 : 30),
     flavorSuffix: () => ''
   },
   supernaturalShield: {
     stackDefense: false,
     applyMultipleDefensePenalty: false,
-    projectilePenalty: () => 0,
     flavorSuffix: c => (c.shieldName ? ` (${c.shieldName})` : '')
   }
 };
@@ -35,35 +33,72 @@ function withRules(candidate) {
     ...candidate,
     stackDefense: r.stackDefense,
     applyMultipleDefensePenalty: r.applyMultipleDefensePenalty,
-    projectilePenalty: r.projectilePenalty(candidate),
     flavorSuffix: r.flavorSuffix(candidate)
   };
 }
 
-function isProjectileAttack(attackData) {
-  const projectileType =
-    attackData?.projectile?.type ?? attackData?.projectileType ?? null;
+function resolveAttackWeapon(attackData) {
+  const weaponId = attackData?.weaponId;
+  const attackerId = attackData?.attackerId;
+  if (!weaponId) return null;
+
+  const attacker = attackerId ? game.actors.get(attackerId) : null;
+  return attacker?.items?.get?.(weaponId) ?? null;
+}
+
+export function resolveProjectileType(attackData) {
+  const explicit = attackData?.projectile?.type ?? attackData?.projectileType ?? '';
+  if (explicit === 'shot' || explicit === 'throw') return explicit;
+  if (explicit === 'projectile') return 'shot';
+
+  const weapon = resolveAttackWeapon(attackData);
+  if (weapon?.system?.isRanged?.value) {
+    const shotType = weapon.system?.shotType?.value;
+    if (shotType === 'shot' || shotType === 'throw') return shotType;
+  }
+
+  if (attackData?.isProjectile === true) return 'shot';
+
+  return '';
+}
+
+export function isProjectileAttack(attackData) {
+  const projectileType = resolveProjectileType(attackData);
+  if (projectileType === 'shot' || projectileType === 'throw') return true;
   if (attackData?.isProjectile === true) return true;
-  return (
-    projectileType === 'shot' ||
-    projectileType === 'throw' ||
-    projectileType === 'projectile'
-  );
+  return !!resolveAttackWeapon(attackData)?.system?.isRanged?.value;
 }
 
-function multipleDefensePenaltyFromAccumulated(accumulated) {
-  const a = Math.max(0, Number(accumulated) || 0);
-  if (a <= 0) return 0;
-  if (a === 1) return 30;
-  if (a === 2) return 50;
-  if (a === 3) return 70;
-  return 90;
-}
+/**
+ * Penalties for defending against shot or thrown projectiles.
+ * Mirrors CombatDefenseDialog rules (without distance / point-blank checks).
+ */
+export function computeProjectileDefensePenalty({
+  attackData,
+  defenseType,
+  hasMastery = false,
+  isShieldWeapon = false
+}) {
+  if (defenseType === 'shield' || !isProjectileAttack(attackData)) return 0;
 
-function getAccumulated(defensesCounter) {
-  const keep = defensesCounter?.keepAccumulating ?? true;
-  const acc = defensesCounter?.accumulated ?? 0;
-  return keep ? acc : 0;
+  const projectileType = resolveProjectileType(attackData) || 'shot';
+
+  if (defenseType === 'dodge') {
+    if (projectileType === 'throw') return 0;
+    return hasMastery ? 0 : 30;
+  }
+
+  if (defenseType === 'block') {
+    if (projectileType === 'throw') {
+      if (hasMastery || isShieldWeapon) return 0;
+      return 50;
+    }
+
+    if (isShieldWeapon) return hasMastery ? 0 : 30;
+    return hasMastery ? 20 : 80;
+  }
+
+  return 0;
 }
 
 export const BlockStrategy = {
@@ -117,10 +152,18 @@ export const DodgeStrategy = {
   }
 };
 
+function resolveSupernaturalShields(actor) {
+  return actor.items?.filter(i => i.type === 'supernaturalShield') ?? [];
+}
+
+export function actorHasSupernaturalShield(actor) {
+  return resolveSupernaturalShields(actor).length > 0;
+}
+
 export const SupernaturalShieldStrategy = {
   type: 'supernaturalShield',
   compute(actor) {
-    const shields = actor.items?.filter(i => i.type === 'supernaturalShield') ?? [];
+    const shields = resolveSupernaturalShields(actor);
 
     let bestValue = 0;
     let bestName = '';
@@ -134,7 +177,7 @@ export const SupernaturalShieldStrategy = {
       if (v > bestValue) {
         bestValue = v;
         bestName = s.name ?? '';
-        bestId = s.id ?? '';
+        bestId = s._id ?? s.id ?? '';
       }
     }
 
@@ -153,15 +196,21 @@ export const SupernaturalShieldStrategy = {
 };
 
 function computeEffectiveScore(candidate, attackData, defensesCounter) {
-  const accumulated = getAccumulated(defensesCounter);
+  const accumulated = getAccumulatedDefenses(defensesCounter);
 
   const multiPenalty = candidate.applyMultipleDefensePenalty
     ? multipleDefensePenaltyFromAccumulated(accumulated)
     : 0;
 
-  const projPenalty = isProjectileAttack(attackData)
-    ? Number(candidate.projectilePenalty) || 0
-    : 0;
+  const defenseType =
+    candidate.type === 'supernaturalShield' ? 'shield' : candidate.type;
+
+  const projPenalty = computeProjectileDefensePenalty({
+    attackData,
+    defenseType,
+    hasMastery: candidate.hasMastery,
+    isShieldWeapon: candidate.isShieldWeapon
+  });
 
   return {
     effectiveScore: (Number(candidate.finalBase) || 0) - projPenalty - multiPenalty,
@@ -180,8 +229,7 @@ export function pickBestDefenseCandidate(
   actor,
   { attackData = null, defensesCounter = null } = {}
 ) {
-  const hasSupernaturalShield =
-    (actor.items?.some(i => i.type === 'supernaturalShield')) ?? false;
+  const hasSupernaturalShield = actorHasSupernaturalShield(actor);
 
   const candidates = [BlockStrategy.compute(actor), DodgeStrategy.compute(actor)];
 
@@ -199,7 +247,12 @@ export function pickBestDefenseCandidate(
       attackData,
       defensesCounter
     );
-    const enriched = { ...c, effectiveScore, appliedPenalties };
+    const enriched = {
+      ...c,
+      effectiveScore,
+      appliedPenalties,
+      projectilePenalty: appliedPenalties.projectilePenalty
+    };
 
     if (!best) {
       best = enriched;

@@ -22,7 +22,8 @@ export function computeCombatResult(attackData, defenseData) {
     ? game.actors?.get?.(attackData.attackerId)
     : null;
 
-  const difference = (attackData.attackAbility ?? 0) - (defenseData.defenseAbility ?? 0);
+  const effectiveDefense = Math.max(0, Number(defenseData.defenseAbility ?? 0) || 0);
+  const difference = (attackData.attackAbility ?? 0) - effectiveDefense;
 
   const hasCounterAttack =
     difference <= 0 &&

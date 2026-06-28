@@ -1,0 +1,19 @@
+{{!-- Pestaña de esquiva: solo se renderiza en DOM cuando está activa para evitar inputs duplicados --}}
+{{#if (is 'eq' this.ui.activeTab 'dodge')}}
+  {{> dialog/combat/defense-config/parts/common-fields this=this fieldsDisabled=this.defenseSent}}
+  {{> dialog/combat/defense-config/parts/multiple-defenses-fields this=this fieldsDisabled=this.defenseSent}}
+
+  <p class="label">{{localize "macros.combat.dialog.dodgeButton.title"}}: {{this.ui.dodgeValue}}</p>
+
+  {{#if this.defenseSent}}
+    {{!-- Estado de espera mientras se procesa la defensa enviada --}}
+    <div class='defense-sent'>
+      {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+      <p class='label'>{{localize 'macros.combat.dialog.defenseSent.title'}}</p>
+    </div>
+  {{else}}
+    <button class='animabf-button send-defense' data-type='dodge'>
+      {{localize 'macros.combat.dialog.dodgeButton.title'}}
+    </button>
+  {{/if}}
+{{/if}}

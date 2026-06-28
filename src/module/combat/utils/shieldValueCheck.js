@@ -2,9 +2,20 @@ export const shieldValueCheck = gradeDataOrEffect => {
   if (typeof gradeDataOrEffect === 'object' && gradeDataOrEffect !== null) {
     const v = gradeDataOrEffect.shieldPoints?.value;
     if (typeof v === 'number') return v;
+    if (typeof v === 'string' && v !== '') {
+      const parsed = Number(v);
+      if (Number.isFinite(parsed)) return parsed;
+    }
 
     if (gradeDataOrEffect.description?.value) {
-      return parseShieldPointsFromDescription(gradeDataOrEffect.description.value);
+      const fromDescription = parseShieldPointsFromDescription(
+        gradeDataOrEffect.description.value
+      );
+      if (fromDescription > 0) return fromDescription;
+    }
+
+    if (gradeDataOrEffect.value) {
+      return parseShieldPointsFromDescription(String(gradeDataOrEffect.value));
     }
   }
 

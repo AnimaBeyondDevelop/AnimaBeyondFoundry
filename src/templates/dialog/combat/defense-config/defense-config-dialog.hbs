@@ -1,0 +1,36 @@
+{{!-- Diálogo de configuración de defensa: permite al defensor elegir esquiva, parada o escudo sobrenatural --}}
+<form class='{{cssClass}}' autocomplete='off'>
+  {{#> "systems/animabf/templates/common/ui/group.hbs" class="defense-config"}}
+
+    {{!-- Cabecera del grupo con el título "Defender" --}}
+    {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+      title=(localize "macros.combat.dialog.defending.defend.title")
+    }}
+
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs" class="defense-config"}}
+
+      {{!-- Pestañas para alternar entre esquiva, parada y escudo sobrenatural --}}
+      <nav class="animabf-tabs sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="dodge">{{localize "macros.combat.dialog.dodgeButton.title"}}</a>
+        <a class="item" data-tab="block">{{localize "macros.combat.dialog.blockButton.title"}}</a>
+        <a class="item" data-tab="shield">{{localize "anima.ui.combat.supernaturalShields.title"}}</a>
+      </nav>
+
+      <section class="sheet-body">
+        <div class="tab dodge" data-group="primary" data-tab="dodge">
+          {{> dialog/combat/defense-config/parts/dodge this=this}}
+        </div>
+
+        <div class="tab block" data-group="primary" data-tab="block">
+          {{> dialog/combat/defense-config/parts/block this=this}}
+        </div>
+
+        <div class="tab shield" data-group="primary" data-tab="shield">
+          {{> dialog/combat/defense-config/parts/shield this=this}}
+        </div>
+      </section>
+
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+</form>

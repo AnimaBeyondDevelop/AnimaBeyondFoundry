@@ -8,12 +8,22 @@ import { getChatVisibilityOptions } from '../utils/chatVisibility.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll.js';
 import { FormulaEvaluator } from '../../utils/formulaEvaluator.js';
 import { defensesCounterCheck } from '../combat/utils/defensesCounterCheck.js';
+import { computeProjectileDefensePenalty } from '../combat/DefenseStrategies.js';
+import { hasAbilityMastery } from '../combat/utils/computeAbilityMasteryValue.js';
+
+const DEFENSE_ABILITY_PATHS = {
+  block: 'system.combat.block',
+  dodge: 'system.combat.dodge'
+};
 
 export class DefenseConfigurationDialog extends FormApplication {
+  static _VALID_TABS = new Set(['dodge', 'block', 'shield']);
+  static _LAST_TAB_FLAG = 'lastDefenseConfigTab';
+
   constructor(object = {}, options = {}) {
     const base = DefenseConfigurationDialog._buildInitialData(object);
 
-    base.ui.activeTab = DefenseConfigurationDialog._pickBestDefenseTab(base);
+    base.ui.activeTab = DefenseConfigurationDialog._resolveInitialTab(base);
 
     super(base, options);
 
@@ -25,12 +35,11 @@ export class DefenseConfigurationDialog extends FormApplication {
 
     if (this._tabs?.[0]) {
       this._tabs[0].callback = (_event, _tabs, tabName) => {
+        this._captureFormCombatState();
         this.modalData.ui.activeTab = tabName;
+        DefenseConfigurationDialog._persistTab(this.defenderActor, tabName);
         this.render(true);
       };
-      try {
-        this._tabs[0].activate(this.modalData.ui.activeTab);
-      } catch (_) {}
     }
 
     this.render(true);
@@ -84,7 +93,7 @@ export class DefenseConfigurationDialog extends FormApplication {
         isGM: !!game.user?.isGM,
         hasFatiguePoints:
           (defenderActor.system?.characteristics?.secondaries?.fatigue?.value ?? 0) > 0,
-        activeTab: 'dodge',
+        activeTab: 'block',
 
         // Computed each getData()
         dodgeValue: 0,
@@ -102,10 +111,7 @@ export class DefenseConfigurationDialog extends FormApplication {
         combat: {
           modifier: 0,
           fatigueUsed: 0,
-          // Auto-derive the multiple-defenses penalty from the actor's running counter.
-          // No manual UI override is exposed in this dialog by design: the penalty
-          // is fully driven by the rules (counter -> defensesCounterCheck mapping)
-          // and the dialog only shows the resulting value as a read-only label.
+          accumulatedDefenses: Math.max(0, Number(defensesCounter.accumulated) || 0),
           multipleDefensesPenalty: defensesCounterCheck(defensesCounter.accumulated),
           accumulateDefenses: defensesCounter.keepAccumulating,
 
@@ -130,13 +136,13 @@ export class DefenseConfigurationDialog extends FormApplication {
       width: 600,
       height: 'auto',
       resizable: true,
-      template: Templates.Dialog.Combat.DefenseConfigDialog,
+      template: Templates.Dialog.Combat.DefenseConfigDialog.main,
       title: game.i18n.localize('macros.combat.dialog.defending.defend.title'),
       tabs: [
         {
           navSelector: '.sheet-tabs',
           contentSelector: '.sheet-body',
-          initial: 'dodge'
+          initial: 'block'
         }
       ]
     });
@@ -146,6 +152,39 @@ export class DefenseConfigurationDialog extends FormApplication {
     return this.modalData?.defender?.actor;
   }
 
+  _resolveDefenderWeapons() {
+    const fromSystem = this.defenderActor?.system?.combat?.weapons ?? [];
+    if (fromSystem.length > 0) return fromSystem;
+
+    return (
+      this.defenderActor?.items?.filter(
+        item => item.type === 'weapon' && item.system?.equipped?.value !== false
+      ) ?? []
+    );
+  }
+
+  _captureFormCombatState() {
+    const form = this.form;
+    const combat = this.modalData?.defender?.combat;
+    if (!form || !combat) return;
+
+    try {
+      const { object } = new FormDataExtended(form);
+      const formCombat = object?.defender?.combat;
+      if (!formCombat) return;
+
+      if (formCombat.weaponUsed !== undefined && formCombat.weaponUsed !== '') {
+        combat.weaponUsed = formCombat.weaponUsed;
+      }
+      if (formCombat.modifier !== undefined) {
+        combat.modifier = Number(formCombat.modifier) || 0;
+      }
+      if (formCombat.accumulateDefenses !== undefined) {
+        combat.accumulateDefenses = !!formCombat.accumulateDefenses;
+      }
+    } catch (_) {}
+  }
+
   getData() {
     const { defender, ui } = this.modalData;
     if (!defender?.actor) return this.modalData;
@@ -153,8 +192,12 @@ export class DefenseConfigurationDialog extends FormApplication {
     ui.hasFatiguePoints =
       (this.defenderActor.system?.characteristics?.secondaries?.fatigue?.value ?? 0) > 0;
 
-    // Weapons refresh
-    const weapons = this.defenderActor.system?.combat?.weapons ?? [];
+    // Weapons refresh (fallback to equipped items if system data is mid-prepare)
+    const weapons = this._resolveDefenderWeapons().map(weapon => ({
+      ...weapon,
+      _id: DefenseConfigurationDialog._getDocId(weapon)
+    }));
+    ui.combatWeapons = weapons;
     defender.combat.unarmed = weapons.length === 0;
 
     // Ensure weaponUsed is valid before computing blockValue
@@ -175,6 +218,10 @@ export class DefenseConfigurationDialog extends FormApplication {
     ui.blockValue = defender.combat.unarmed
       ? Number(this.defenderActor.system?.combat?.block?.final?.value ?? 0) || 0
       : Number(defender.combat.weapon?.system?.block?.final?.value ?? 0) || 0;
+
+    const accumulated = Math.max(0, Number(defender.combat.accumulatedDefenses ?? 0) || 0);
+    defender.combat.accumulatedDefenses = accumulated;
+    defender.combat.multipleDefensesPenalty = defensesCounterCheck(accumulated);
 
     // Shields list + evaluated value from abilityFormula using FormulaEvaluator
     const shields = this.defenderActor.system?.combat?.supernaturalShields ?? [];
@@ -215,42 +262,58 @@ export class DefenseConfigurationDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
+    if (this._tabs?.[0]) {
+      this._tabs[0].activate(this.modalData.ui.activeTab);
+    }
+
     html.find('.send-defense').on('click', async ev => {
       ev.preventDefault();
       const raw = ev.currentTarget.dataset.type;
       const type = raw === 'block' ? 'block' : raw === 'shield' ? 'shield' : 'dodge';
       await this._sendDefenseToChat(type);
     });
+
+    html.find('.segmented-picker-segment').on('click', async ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (this.modalData.defenseSent || ev.currentTarget.disabled) return;
+      const accumulated = Math.max(0, Number(ev.currentTarget.dataset.value) || 0);
+      await this._setAccumulatedDefenses(accumulated);
+    });
   }
 
-  static _pickBestDefenseTab(modalData) {
+  async _setAccumulatedDefenses(accumulated) {
+    this._captureFormCombatState();
+
+    const combat = this.modalData?.defender?.combat;
+    if (!combat) return;
+
+    combat.accumulatedDefenses = accumulated;
+    combat.multipleDefensesPenalty = defensesCounterCheck(accumulated);
+
+    this.render(true);
+    await this._persistDefensesCounter();
+  }
+
+  static _resolveInitialTab(modalData) {
     const actor = modalData?.defender?.actor;
-    if (!actor) return 'dodge';
+    if (!actor) return 'block';
 
-    const dodge = Number(actor.system?.combat?.dodge?.final?.value ?? 0) || 0;
-
-    const weapons = actor.system?.combat?.weapons ?? [];
-    const selectedWeaponId = modalData?.defender?.combat?.weaponUsed;
-    const weapon =
-      weapons.find(w => String(w?._id ?? w?.id) === String(selectedWeaponId ?? '')) ??
-      weapons[0];
-
-    const block = weapon
-      ? Number(weapon.system?.block?.final?.value ?? 0) || 0
-      : Number(actor.system?.combat?.block?.final?.value ?? 0) || 0;
-
-    const shields = actor.system?.combat?.supernaturalShields ?? [];
-    let bestShield = 0;
-
-    for (const sh of shields) {
-      const f = String(sh?.system?.abilityFormula ?? '').trim();
-      const v = DefenseConfigurationDialog._evaluateShieldFormula(f, actor);
-      if (v > bestShield) bestShield = v;
+    const saved = actor.getFlag?.(game.animabf.id, DefenseConfigurationDialog._LAST_TAB_FLAG);
+    if (saved && DefenseConfigurationDialog._VALID_TABS.has(saved)) {
+      if (saved === 'shield') {
+        const shields = actor.system?.combat?.supernaturalShields ?? [];
+        if (shields.length === 0) return 'block';
+      }
+      return saved;
     }
 
-    if (bestShield >= dodge && bestShield >= block) return 'shield';
-    if (block >= dodge) return 'block';
-    return 'dodge';
+    return 'block';
+  }
+
+  static _persistTab(actor, tabName) {
+    if (!actor || !DefenseConfigurationDialog._VALID_TABS.has(tabName)) return;
+    actor.setFlag(game.animabf.id, DefenseConfigurationDialog._LAST_TAB_FLAG, tabName);
   }
 
   static _evaluateShieldFormula(formula, actor) {
@@ -274,6 +337,8 @@ export class DefenseConfigurationDialog extends FormApplication {
     const weapon = combat.weapon;
 
     try {
+      await this._persistDefensesCounter();
+
       // NOW we claim rolling: user is actually sending a defense
       if (!this._claimed && this.modalData?.messageId) {
         const { actorUuid, tokenUuid } = this._getTargetKeys();
@@ -338,11 +403,14 @@ export class DefenseConfigurationDialog extends FormApplication {
         )
         .build();
 
-      // Mastery based on naturalBase
-      const die =
-        (defenseAbility.naturalBase ?? 0) >= 200
-          ? actor.system?.general?.diceSettings?.abilityMasteryDie?.value ?? '1d100'
-          : actor.system?.general?.diceSettings?.abilityDie?.value ?? '1d100';
+      const hasMastery =
+        type === 'shield'
+          ? (defenseAbility.naturalBase ?? 0) >= 200
+          : hasAbilityMastery(actor, DEFENSE_ABILITY_PATHS[type]);
+
+      const die = hasMastery
+        ? actor.system?.general?.diceSettings?.abilityMasteryDie?.value ?? '1d100'
+        : actor.system?.general?.diceSettings?.abilityDie?.value ?? '1d100';
 
       const mod = Number(combat?.modifier ?? 0);
       const multiPenalty = Number(combat?.multipleDefensesPenalty ?? 0);
@@ -354,10 +422,18 @@ export class DefenseConfigurationDialog extends FormApplication {
       const isShieldDefense = type === 'shield';
       const effectiveMultiPenalty = isShieldDefense ? 0 : multiPenalty;
 
+      const projectilePenalty = computeProjectileDefensePenalty({
+        attackData,
+        defenseType: type,
+        hasMastery,
+        isShieldWeapon: type === 'block' && !!weapon?.system?.isShield?.value
+      });
+
       // Split each contribution into its own term so the Foundry roll tooltip
-      // shows the breakdown: defense ability, situational modifier, and the
-      // multiple-defenses penalty as three traceable parts.
-      const formula = `${die} + ${baseValue} + ${mod} + (${effectiveMultiPenalty})`;
+      // shows the breakdown: defense ability, situational modifier, the
+      // multiple-defenses penalty, and projectile penalty as traceable parts.
+      const projectileTerm = projectilePenalty ? ` - ${projectilePenalty}` : '';
+      const formula = `${die} + ${baseValue} + ${mod} + (${effectiveMultiPenalty})${projectileTerm}`;
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
@@ -387,8 +463,10 @@ export class DefenseConfigurationDialog extends FormApplication {
           ? actor.system?.combat?.totalArmor?.at?.[armorType]?.value ?? 0
           : 0;
 
+      const effectiveDefenseTotal = Math.max(0, Number(roll.total) || 0);
+
       const defenseData = ABFDefenseData.builder()
-        .defenseAbility(roll.total)
+        .defenseAbility(effectiveDefenseTotal)
         .armor(taFinal)
         .inmodifiableArmor(false)
         .defenseType(type)
@@ -396,6 +474,7 @@ export class DefenseConfigurationDialog extends FormApplication {
         .defenderTokenId(defender?.token?.id ?? '')
         .weaponId(weapon?._id ?? weapon?.id ?? '')
         .shieldId(shieldItemId)
+        .projectilePenalty(projectilePenalty)
         .build();
 
       const combatResult = computeCombatResult(attackData, defenseData);
@@ -453,6 +532,8 @@ export class DefenseConfigurationDialog extends FormApplication {
         actor.accumulateDefenses(!!combat?.accumulateDefenses);
       }
 
+      DefenseConfigurationDialog._persistTab(actor, type);
+
       await this.close();
     } catch (err) {
       console.error(err);
@@ -463,15 +544,40 @@ export class DefenseConfigurationDialog extends FormApplication {
     }
   }
 
-  async _updateObject(_event, formData) {
-    const expanded = foundry.utils.expandObject(formData);
+  async _persistDefensesCounter() {
+    const actor = this.defenderActor;
+    const combat = this.modalData?.defender?.combat;
+    if (!actor || !combat) return;
 
-    this.modalData = foundry.utils.mergeObject(this.modalData, expanded, {
-      inplace: false,
-      overwrite: true,
-      insertKeys: true,
-      insertValues: true
+    const accumulated = Math.max(0, Number(combat.accumulatedDefenses) || 0);
+    await actor.setFlag(game.animabf.id, 'defensesCounter', {
+      accumulated,
+      keepAccumulating: !!combat.accumulateDefenses
     });
+  }
+
+  async _updateObject(event, formData) {
+    if (event?.target?.name === 'defender.combat.accumulateDefenses') {
+      formData['defender.combat.accumulateDefenses'] = event.target.checked;
+    } else if (formData['defender.combat.accumulateDefenses'] !== undefined) {
+      formData['defender.combat.accumulateDefenses'] =
+        formData['defender.combat.accumulateDefenses'] === 'on' ||
+        formData['defender.combat.accumulateDefenses'] === true;
+    }
+
+    if (formData['defender.combat.accumulatedDefenses'] !== undefined) {
+      const accumulated = Math.max(
+        0,
+        Number(formData['defender.combat.accumulatedDefenses']) || 0
+      );
+      formData['defender.combat.accumulatedDefenses'] = accumulated;
+      formData['defender.combat.multipleDefensesPenalty'] =
+        defensesCounterCheck(accumulated);
+    }
+
+    this.modalData = foundry.utils.mergeObject(this.modalData, formData);
+
+    await this._persistDefensesCounter();
 
     setTimeout(() => this.render(), 0);
   }

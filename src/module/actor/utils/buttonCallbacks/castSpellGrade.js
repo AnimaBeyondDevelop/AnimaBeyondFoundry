@@ -1,24 +1,26 @@
 import ABFFoundryRoll from '../../../rolls/ABFFoundryRoll.js';
 import { ABFAttackData } from '../../../combat/ABFAttackData.js';
-import { ABFSupernaturalShieldData } from '../../../combat/ABFSupernaturalShieldData.js';
-import { shieldValueCheck } from '../../../combat/utils/shieldValueCheck.js';
 import { Templates } from '../../../utils/constants';
 import { openModDialog } from '../../../utils/dialogs/openSimpleInputDialog.js';
 import { SpellAttackConfigurationDialog } from '../../../dialogs/SpellAttackConfigurationDialog.js';
 import { getSnapshotTargets } from '../getSnapshotTargets.js';
-
-function localizeGrade(grade) {
-  return game.i18n.localize(`anima.ui.mystic.spell.grade.${grade}.title`);
-}
+import {
+  castMysticDefenseShield,
+  getMysticShieldName,
+  localizeMysticSpellGrade
+} from '../../../mystic/utils/mysticDefenseShield.js';
+import { SpellGrades } from '../../../types/mystic/SpellItemConfig.js';
 
 async function openShieldConfigDialog({ spell, grade }) {
-  const content = await (foundry.applications?.handlebars?.renderTemplate ?? renderTemplate)(Templates.Dialog.SpellShieldConfigDialog, {
+  const content = await (
+    foundry.applications?.handlebars?.renderTemplate ?? renderTemplate
+  )(Templates.Dialog.SpellShieldConfigDialog, {
     formulaBonus: 0
   });
 
   return new Promise(resolve => {
     new Dialog({
-      title: `${spell.name} (${localizeGrade(grade)})`,
+      title: getMysticShieldName(spell, grade),
       content,
       buttons: {
         ok: {
@@ -38,47 +40,92 @@ async function openShieldConfigDialog({ spell, grade }) {
   });
 }
 
-export async function castSpellGrade(sheet, event) {
-  const { spellId, grade } = event.currentTarget.dataset;
-  const useDialog = !!event.shiftKey;
+/**
+ * @param {object} [params]
+ * @param {string} [params.defaultGrade]
+ * @returns {Promise<{ grade?: string, cancelled: boolean }>}
+ */
+export async function openSpellGradeDialog({ defaultGrade = SpellGrades.BASE } = {}) {
+  const { i18n } = game;
+  const options = Object.values(SpellGrades)
+    .map(
+      grade =>
+        `<option value="${grade}"${grade === defaultGrade ? ' selected' : ''}>${i18n.localize(
+          `dialogs.spellGrade.${grade}.title`
+        )}</option>`
+    )
+    .join('');
 
-  const actor = sheet.actor;
+  const content = `
+    <form>
+      <div class="form-group">
+        <label>${i18n.localize('dialogs.spellGrade.title')}</label>
+        <select name="grade">${options}</select>
+      </div>
+    </form>
+  `;
+
+  return new Promise(resolve => {
+    new Dialog({
+      title: i18n.localize('dialogs.castSpell.title'),
+      content,
+      buttons: {
+        ok: {
+          label: i18n.localize('dialogs.continue'),
+          callback: html => {
+            const grade = html.find('[name="grade"]').val();
+            resolve({ grade, cancelled: false });
+          }
+        },
+        cancel: {
+          label: i18n.localize('dialogs.cancel'),
+          callback: () => resolve({ cancelled: true })
+        }
+      },
+      default: 'ok'
+    }).render(true);
+  });
+}
+
+/**
+ * @param {Actor} actor
+ * @param {object} params
+ * @param {string} params.spellId
+ * @param {string} params.grade
+ * @param {TokenDocument | object | null} [params.token]
+ * @param {boolean} [params.useDialog]
+ */
+export async function castSpellAtGrade(actor, { spellId, grade, token, useDialog = false }) {
   const spell = actor.items.get(spellId);
+  if (!spell) {
+    ui.notifications?.warn('Conjuro no encontrado.');
+    return;
+  }
+
   const combatType = spell.system.combatType.value;
 
   // ---------- DEFENSE ----------
   if (combatType === 'defense') {
-    const gradeData = spell.system.grades[grade];
-    const shieldPoints = Number(shieldValueCheck(gradeData)) || 0;
-    const baseFormula = '@mystic.magicProjection.imbalance.defensive.final.value';
-
-    let abilityFormula = baseFormula;
+    let formulaBonus = 0;
 
     if (useDialog) {
       const res = await openShieldConfigDialog({ spell, grade });
       if (res.cancelled) return;
-      if (res.bonus !== 0) abilityFormula = `${baseFormula} + ${res.bonus}`;
+      formulaBonus = res.bonus;
     }
 
-    await actor.newSupernaturalShield(
-      ABFSupernaturalShieldData.builder()
-        .name(`${spell.name} (${localizeGrade(grade)})`)
-        .shieldPoints(shieldPoints)
-        .abilityFormula(abilityFormula)
-        .flags({ animabf: { supernaturalShield: { type: 'mystic' } } })
-        .build()
-    );
+    await castMysticDefenseShield({ actor, spell, grade, formulaBonus });
 
     return;
   }
 
   // ---------- ATTACK ----------
   if (useDialog) {
-    const token =
-      sheet.token?.document ?? sheet.token ?? actor.getActiveTokens()[0]?.document;
+    const attackerToken =
+      token?.document ?? token ?? actor.getActiveTokens()[0]?.document;
 
     new SpellAttackConfigurationDialog({
-      attacker: token,
+      attacker: attackerToken,
       spell,
       grade,
       targets: getSnapshotTargets()
@@ -90,15 +137,19 @@ export async function castSpellGrade(sheet, event) {
   // Quick attack
   const mod = Number(await openModDialog()) || 0;
 
-  const baseMP = actor.system.mystic.magicProjection.imbalance.offensive.base.value;
-  const die = baseMP >= 200 ? '1d100xamastery' : '1d100xa';
+  const offensiveProjection = actor.system.mystic.magicProjection.imbalance.offensive;
+  const hasMastery = offensiveProjection.base.value >= 200;
+  const die = hasMastery ? '1d100xamastery' : '1d100xa';
 
-  const roll = new ABFFoundryRoll(`${die} + ${baseMP} + ${mod}`, actor.system);
+  const roll = new ABFFoundryRoll(
+    `${die} + ${offensiveProjection.final.value} + ${mod}`,
+    actor.system
+  );
   await roll.evaluate({ async: true });
 
   await roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor }),
-    flavor: `${spell.name} (${localizeGrade(grade)})`
+    flavor: `${spell.name} (${localizeMysticSpellGrade(grade)})`
   });
 
   const baseDamage = Number(spell.system.grades[grade]?.damage?.value ?? 0);
@@ -112,7 +163,7 @@ export async function castSpellGrade(sheet, event) {
     .damageType(game.animabf.combat.DamageType.NONE)
     .presence(0)
     .isProjectile(true)
-    .automaticCrit(!!(actor.system.general.modifiers.automaticCrit?.value))
+    .automaticCrit(!!actor.system.general.modifiers.automaticCrit?.value)
     .critBonus(0)
     .critDamageBonus(actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
     .attackerId(actor.id)
@@ -120,6 +171,17 @@ export async function castSpellGrade(sheet, event) {
     .targets(getSnapshotTargets())
     .build()
     .toChatMessage({ actor, weapon: spell });
+}
+
+export async function castSpellGrade(sheet, event) {
+  const { spellId, grade } = event.currentTarget.dataset;
+
+  await castSpellAtGrade(sheet.actor, {
+    spellId,
+    grade,
+    token: sheet.token?.document ?? sheet.token ?? null,
+    useDialog: !!event.shiftKey
+  });
 }
 
 castSpellGrade.action = 'castSpellGrade';

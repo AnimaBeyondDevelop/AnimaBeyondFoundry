@@ -2,7 +2,9 @@ import { Templates } from '../../utils/constants';
 import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { defensesCounterCheck } from '../../combat/utils/defensesCounterCheck.js';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
-import { shieldValueCheck } from '../../combat/utils/shieldValueCheck.js';
+import { getMysticShieldPoints } from '../../mystic/utils/mysticDefenseShield.js';
+import { getPsychicShieldPoints } from '../../psychic/utils/psychicDefenseShield.js';
+import { hasAbilityMastery } from '../../combat/utils/computeAbilityMasteryValue.js';
 
 const getInitialData = (attacker, defender) => {
   const showRollByDefault = !!game.settings.get(
@@ -52,6 +54,7 @@ const getInitialData = (attacker, defender) => {
       inmaterial: defenderActor.system.general.settings.inmaterial.value,
       combat: {
         fatigueUsed: 0,
+        accumulatedDefenses: Math.max(0, Number(defensesCounter.accumulated) || 0),
         multipleDefensesPenalty: defensesCounterCheck(defensesCounter.accumulated),
         accumulateDefenses: defensesCounter.keepAccumulating,
         modifier: 0,
@@ -298,6 +301,14 @@ export class CombatDefenseDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.find('.segmented-picker-segment').on('click', async ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (this.modalData.defenseSent || ev.currentTarget.disabled) return;
+      const accumulated = Math.max(0, Number(ev.currentTarget.dataset.value) || 0);
+      await this._setAccumulatedDefenses(accumulated);
+    });
+
     html.find('.send-defense').click(async e => {
       const {
         combat: {
@@ -312,11 +323,13 @@ export class CombatDefenseDialog extends FormApplication {
         blindness,
         distance
       } = this.modalData.defender;
+
+      await this._persistDefensesCounter();
       this.defenderActor.setFlag(game.animabf.id, 'lastDefensiveWeaponUsed', weaponUsed);
 
       const type = e.currentTarget.dataset.type === 'dodge' ? 'dodge' : 'block';
       let value;
-      let baseDefense;
+      let hasMastery;
       const defenderCombatMod = {
         modifier: { value: modifier, apply: true },
         fatigueUsed: { value: fatigueUsed * 15, apply: true },
@@ -331,13 +344,12 @@ export class CombatDefenseDialog extends FormApplication {
       const projectileType = this.modalData.attacker.projectile?.type;
       if (e.currentTarget.dataset.type === 'dodge') {
         value = this.defenderActor.system.combat.dodge.final.value;
-        baseDefense = this.defenderActor.system.combat.dodge.base.value;
-        const maestry = baseDefense >= 200;
+        hasMastery = hasAbilityMastery(this.defenderActor, 'system.combat.dodge');
         if (
           ((!distance.enable && !distance.check) ||
             (distance.enable && distance.value > 1)) &&
           projectileType == 'shot' &&
-          !maestry
+          !hasMastery
         ) {
           defenderCombatMod.dodgeProjectile = {
             value: -30,
@@ -348,12 +360,11 @@ export class CombatDefenseDialog extends FormApplication {
         value = weapon
           ? weapon.system.block.final.value
           : this.defenderActor.system.combat.block.final.value;
-        baseDefense = this.defenderActor.system.combat.block.base.value;
+        hasMastery = hasAbilityMastery(this.defenderActor, 'system.combat.block');
         const isShield = weapon?.system.isShield.value;
-        const maestry = baseDefense >= 200;
         if (!distance.check || (distance.enable && distance.value > 1)) {
           if (projectileType == 'shot') {
-            if (!maestry) {
+            if (!hasMastery) {
               if (!isShield) {
                 defenderCombatMod.parryProjectile = {
                   value: -80,
@@ -373,7 +384,7 @@ export class CombatDefenseDialog extends FormApplication {
             }
           }
           if (projectileType == 'throw') {
-            if (!maestry) {
+            if (!hasMastery) {
               if (!isShield) {
                 defenderCombatMod.parryThrow = {
                   value: -50,
@@ -395,7 +406,7 @@ export class CombatDefenseDialog extends FormApplication {
       if (this.modalData.defender.withoutRoll) {
         formula = this.removeFirstDiceTerm(formula);
       }
-      if (baseDefense >= 200) {
+      if (hasMastery) {
         formula = formula.replace('xa', 'xamastery');
       }
 
@@ -504,12 +515,7 @@ export class CombatDefenseDialog extends FormApplication {
           return;
         }
 
-        const gradeData = spell?.system?.grades?.[spellGrade];
-        const structured = gradeData?.shieldPoints?.value;
-        const fallbackFromDesc = shieldValueCheck(gradeData?.description?.value ?? '');
-        const shieldPoints = Number.isFinite(structured) ? structured : fallbackFromDesc;
-
-        supShield = { create: true, shieldPoints };
+        supShield = { create: true, shieldPoints: getMysticShieldPoints(spell, spellGrade) };
       }
 
       let combatModifier = 0;
@@ -649,13 +655,7 @@ export class CombatDefenseDialog extends FormApplication {
         );
 
         if (!psychicFatigue) {
-          const effStr =
-            power?.system?.effects?.[newPsychicPotential]?.value ??
-            power?.system?.effects?.[String(newPsychicPotential)]?.value ??
-            '';
-          const shieldPoints = shieldValueCheck(effStr);
-
-          supShield = { create: true, shieldPoints };
+          supShield = { create: true, shieldPoints: getPsychicShieldPoints(power, newPsychicPotential) };
         }
       }
 
@@ -775,13 +775,59 @@ export class CombatDefenseDialog extends FormApplication {
 
     combat.at.final = combat.at.base + combat.at.special;
 
+    const accumulated = Math.max(0, Number(combat.accumulatedDefenses ?? 0) || 0);
+    combat.accumulatedDefenses = accumulated;
+    combat.multipleDefensesPenalty = defensesCounterCheck(accumulated);
+
     return this.modalData;
+  }
+
+  async _persistDefensesCounter() {
+    const combat = this.modalData?.defender?.combat;
+    if (!combat) return;
+
+    const accumulated = Math.max(0, Number(combat.accumulatedDefenses) || 0);
+    await this.defenderActor.setFlag(game.animabf.id, 'defensesCounter', {
+      accumulated,
+      keepAccumulating: !!combat.accumulateDefenses
+    });
+  }
+
+  async _setAccumulatedDefenses(accumulated) {
+    const combat = this.modalData?.defender?.combat;
+    if (!combat) return;
+
+    combat.accumulatedDefenses = accumulated;
+    combat.multipleDefensesPenalty = defensesCounterCheck(accumulated);
+
+    this.render(true);
+    await this._persistDefensesCounter();
   }
 
   async _updateObject(event, formData) {
     const prevSpell = this.modalData.defender.mystic.spellUsed;
 
+    if (event?.target?.name === 'defender.combat.accumulateDefenses') {
+      formData['defender.combat.accumulateDefenses'] = event.target.checked;
+    } else if (formData['defender.combat.accumulateDefenses'] !== undefined) {
+      formData['defender.combat.accumulateDefenses'] =
+        formData['defender.combat.accumulateDefenses'] === 'on' ||
+        formData['defender.combat.accumulateDefenses'] === true;
+    }
+
+    if (formData['defender.combat.accumulatedDefenses'] !== undefined) {
+      const accumulated = Math.max(
+        0,
+        Number(formData['defender.combat.accumulatedDefenses']) || 0
+      );
+      formData['defender.combat.accumulatedDefenses'] = accumulated;
+      formData['defender.combat.multipleDefensesPenalty'] =
+        defensesCounterCheck(accumulated);
+    }
+
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);
+
+    await this._persistDefensesCounter();
 
     if (prevSpell !== this.modalData.defender.mystic.spellUsed) {
       const { spells } = this.defenderActor.system.mystic;

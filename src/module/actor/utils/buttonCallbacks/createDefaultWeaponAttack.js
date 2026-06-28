@@ -33,6 +33,8 @@ export async function createDefaultWeaponAttack(sheet, e) {
     flavor: label
   });
 
+  const isRangedWeapon = !!weapon.system?.isRanged?.value;
+
   const attackData = ABFAttackData.builder()
     .attackAbility(roll.total)
     .damage(weapon.system.damage?.final?.value)
@@ -42,7 +44,8 @@ export async function createDefaultWeaponAttack(sheet, e) {
     .damageType(game.animabf.combat.DamageType.NONE)
     .presence(weapon.system.presence?.final?.value)
     //   .aimed(true).aimedWhere("Cabeza")
-    .isProjectile(false) //.projectileType("Flecha")
+    .isProjectile(isRangedWeapon)
+    .projectileType(isRangedWeapon ? weapon.system?.shotType?.value ?? '' : '')
     .automaticCrit(!!(sheet.actor.system.general.modifiers.automaticCrit?.value))
     .critBonus(0)
     .critDamageBonus(sheet.actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)

@@ -127,6 +127,7 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   hasMaintenance: { value: false },
   visible: false,
   macro: '',
+  hotbarMacroCreatorId: 'psychicPower.cast',
   bonus: { value: 0 }
 };
 

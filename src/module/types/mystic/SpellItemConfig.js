@@ -48,6 +48,7 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
   actionType: { value: '' },
   combatType: { value: '' },
   macro: '',
+  hotbarMacroCreatorId: 'spell.cast',
   grades: {
     base: {
       name: { value: SpellGradeNames.BASE },

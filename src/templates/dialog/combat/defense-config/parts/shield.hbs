@@ -1,0 +1,33 @@
+{{!-- Pestaña de escudo sobrenatural: solo se renderiza en DOM cuando está activa --}}
+{{#if (is 'eq' this.ui.activeTab 'shield')}}
+  {{> dialog/combat/defense-config/parts/common-fields this=this fieldsDisabled=this.defenseSent}}
+
+  {{#if (isArrayEmpty this.ui.supernaturalShields)}}
+    <p class="label">{{localize "macros.combat.dialog.weapon.notFound"}}</p>
+  {{else}}
+    {{!-- Lista los escudos sobrenaturales disponibles con nombre y puntos de vida --}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'anima.ui.combat.supernaturalShields.title')
+      inputName='defender.combat.supernaturalShieldUsed'
+    }}
+      {{#each this.ui.supernaturalShields as |sh|}}
+        <option {{#if (is 'eq' sh._id ../defender.combat.supernaturalShieldUsed)}}selected{{/if}} value='{{sh._id}}'>
+          {{sh.name}} ({{sh.value}})
+        </option>
+      {{/each}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+
+    <p class="label">{{localize "anima.ui.combat.defense.title"}}: {{this.ui.shieldValue}}</p>
+  {{/if}}
+
+  {{#if this.defenseSent}}
+    <div class='defense-sent'>
+      {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+      <p class='label'>{{localize 'macros.combat.dialog.defenseSent.title'}}</p>
+    </div>
+  {{else}}
+    <button class='animabf-button send-defense' data-type='shield'>
+      {{localize 'macros.combat.dialog.defenseButton.title'}}
+    </button>
+  {{/if}}
+{{/if}}

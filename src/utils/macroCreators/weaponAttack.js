@@ -1,7 +1,6 @@
-import { System } from '../systemMeta.js';
-import { createWeaponAttack } from '../../module/actor/utils/buttonCallbacks/createWeaponAttack';
 import { AttackConfigurationDialog } from '../../module/dialogs/AttackConfigurationDialog.js';
 import { getSnapshotTargets } from '../../module/actor/utils/getSnapshotTargets.js';
+import { createItemMacro } from './createItemMacro.js';
 
 export const id = 'weapon.attack';
 
@@ -9,36 +8,13 @@ export const id = 'weapon.attack';
  * Creator: called on hotbarDrop. Creates/assigns a macro for this weapon+actor.
  */
 export default async function createWeaponAttackMacro({ actor, item, slot }) {
-  const actorUuid = actor.uuid;
-  const itemUuid = item.uuid;
-
-  const payload = { id, actorUuid, itemUuid };
-  const command = `await game.animabf.macros.execute(${JSON.stringify(payload)});`;
-
-  let macro = game.macros?.find(
-    m =>
-      m.getFlag(System.id, 'kind') === id &&
-      m.getFlag(System.id, 'actorUuid') === actorUuid &&
-      m.getFlag(System.id, 'itemUuid') === itemUuid
-  );
-
-  if (!macro) {
-    macro = await Macro.create(
-      {
-        name: `Atacar: ${item.name}`,
-        type: 'script',
-        img: item.img,
-        command,
-        flags: {
-          [System.id]: { kind: id, actorUuid, itemUuid }
-        }
-      },
-      { displaySheet: false }
-    );
-  }
-
-  await game.user?.assignHotbarMacro(macro, slot);
-  return true;
+  return createItemMacro({
+    id,
+    actor,
+    item,
+    slot,
+    name: `Atacar: ${item.name}`
+  });
 }
 
 /**

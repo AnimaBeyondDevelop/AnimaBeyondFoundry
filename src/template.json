@@ -1058,7 +1058,7 @@
       },
       "visible": false,
       "macro": "",
-      "hotbarMacroCreatorId": "",
+      "hotbarMacroCreatorId": "spell.cast",
       "grades": {
         "base": {
           "name": {
@@ -1362,7 +1362,7 @@
         "value": "-"
       },
       "macro": "",
-      "hotbarMacroCreatorId": "",
+      "hotbarMacroCreatorId": "psychicPower.cast",
       "hasMaintenance": {
         "value": false
       },
@@ -1587,7 +1587,7 @@
       "useCustomFormula": {
         "value": false
       },
-      "hotbarMacroCreatorId": ""
+      "hotbarMacroCreatorId": "weapon.attack"
     },
     "supernaturalShield": {
       "shieldPoints": {

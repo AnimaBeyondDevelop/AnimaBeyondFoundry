@@ -40,7 +40,16 @@ export const Templates = {
       },
       CombatRequestDialog: T('dialog/combat/combat-request-dialog.hbs'),
       GMCombatDialog: T('dialog/combat/gm-combat-dialog.hbs'),
-      DefenseConfigDialog: T('dialog/combat/defense-config-dialog.hbs'),
+      DefenseConfigDialog: {
+        main: T('dialog/combat/defense-config/defense-config-dialog.hbs'),
+        parts: {
+          commonFields: T('dialog/combat/defense-config/parts/common-fields.hbs'),
+          multipleDefensesFields: T('dialog/combat/defense-config/parts/multiple-defenses-fields.hbs'),
+          dodge: T('dialog/combat/defense-config/parts/dodge.hbs'),
+          block: T('dialog/combat/defense-config/parts/block.hbs'),
+          shield: T('dialog/combat/defense-config/parts/shield.hbs')
+        }
+      },
       AttackConfigDialog: T('dialog/combat/attack-config-dialog.hbs')
     },
     GenericDialog: T('dialog/generic-dialog/generic-dialog.hbs'),
@@ -78,6 +87,7 @@ export const Templates = {
     CustomSelect: T('common/ui/custom-select.hbs'),
     CustomSelectChoices: T('common/ui/custom-select-choices.hbs'),
     LoadingIndicator: T('common/ui/loading-indicator.hbs'),
+    HorizontalSegmentedPicker: T('common/ui/horizontal-segmented-picker.hbs'),
     BaseTypeWrapper: T('common/ui/base-type-wrapper.hbs'),
     Types: {
       Characteristic: T('common/ui/types/characteristic.hbs'),
@@ -248,6 +258,7 @@ export const HandlebarsPartials = {
   'ui/vertical-titled-input': Templates.UI.VerticalTitledInput,
   'ui/custom-select': Templates.UI.CustomSelect,
   'ui/loading-indicator': Templates.UI.LoadingIndicator,
+  'ui/horizontal-segmented-picker': Templates.UI.HorizontalSegmentedPicker,
   'ui/group-header-title': Templates.UI.GroupHeaderTitle,
   'ui/add-item-button': Templates.UI.AddItemButton,
   'ui/custom-select-choices': Templates.UI.CustomSelectChoices,
@@ -259,5 +270,15 @@ export const HandlebarsPartials = {
     Templates.UI.Types.AffectedByCharacteristicValue,
   'ui/types/resistance': Templates.UI.Types.Resistance,
   'ui/types/custom-attribute': Templates.UI.Types.CustomAttribute,
-  'ui/base-type-wrapper': Templates.UI.BaseTypeWrapper
+  'ui/base-type-wrapper': Templates.UI.BaseTypeWrapper,
+  'dialog/combat/defense-config/parts/common-fields':
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.commonFields,
+  'dialog/combat/defense-config/parts/multiple-defenses-fields':
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.multipleDefensesFields,
+  'dialog/combat/defense-config/parts/dodge':
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.dodge,
+  'dialog/combat/defense-config/parts/block':
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.block,
+  'dialog/combat/defense-config/parts/shield':
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.shield
 };

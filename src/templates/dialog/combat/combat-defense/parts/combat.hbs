@@ -42,32 +42,7 @@
   {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
 {{/if}}
 
-{{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
-  class="defense-count"
-  title=(localize 'macros.combat.dialog.defenseCount.title')
-  disabled=this.defenseSent
-  inputName='defender.combat.multipleDefensesPenalty'
-  inputValue=this.defender.combat.multipleDefensesPenalty
-}}
-  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -0)}}selected{{/if}} value="-0">1ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -30)}}selected{{/if}} value="-30">2ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -50)}}selected{{/if}} value="-50">3ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -70)}}selected{{/if}} value="-70">4ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-  <option {{#if (is "eq" this.defender.combat.multipleDefensesPenalty -90)}}selected{{/if}} value="-90">5ª {{localize 'macros.combat.dialog.defending.defend.title'}}</option>
-{{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
-
-<div class='columns'>
-  <div>
-    {{>
-    "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-    title=(localize 'macros.combat.dialog.combat.accumulateDefenses.title')
-    disabled=this.defenseSent
-    inputType="checkbox"
-    inputName="defender.combat.accumulateDefenses"
-    inputValue=(is 'eq' this.defender.combat.accumulateDefenses true)
-    }}
-  </div>
-</div>
+{{> dialog/combat/defense-config/parts/multiple-defenses-fields this=this fieldsDisabled=this.defenseSent}}
 
 {{#if this.defenseSent}}
   <div class='defense-sent'>

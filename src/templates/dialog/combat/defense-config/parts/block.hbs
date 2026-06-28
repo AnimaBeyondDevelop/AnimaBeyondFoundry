@@ -1,0 +1,40 @@
+{{!-- Pestaña de parada: solo se renderiza en DOM cuando está activa para evitar inputs duplicados --}}
+{{#if (is 'eq' this.ui.activeTab 'block')}}
+  {{> dialog/combat/defense-config/parts/common-fields this=this fieldsDisabled=this.defenseSent}}
+  {{> dialog/combat/defense-config/parts/multiple-defenses-fields this=this fieldsDisabled=this.defenseSent}}
+
+  {{#if this.defender.combat.unarmed}}
+    {{!-- Sin armas equipadas: selector deshabilitado con opción "Unarmed" --}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'macros.combat.dialog.weapon.title')
+      disabled=true
+    }}
+      <option>Unarmed</option>
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{else}}
+    {{!-- Lista las armas del actor con su valor de parada para elegir cuál usar --}}
+    {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
+      title=(localize 'macros.combat.dialog.weapon.title')
+      inputName='defender.combat.weaponUsed'
+    }}
+      {{#each this.ui.combatWeapons}}
+        <option {{#if (is 'eq' this._id ../defender.combat.weaponUsed)}}selected{{/if}} value='{{this._id}}'>
+          {{localize 'macros.combat.dialog.weaponRow.defense.title' name=this.name value=this.system.block.final.value}}
+        </option>
+      {{/each}}
+    {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
+  {{/if}}
+
+  <p class="label">{{localize "macros.combat.dialog.blockButton.title"}}: {{this.ui.blockValue}}</p>
+
+  {{#if this.defenseSent}}
+    <div class='defense-sent'>
+      {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+      <p class='label'>{{localize 'macros.combat.dialog.defenseSent.title'}}</p>
+    </div>
+  {{else}}
+    <button class='animabf-button send-defense' data-type='block'>
+      {{localize 'macros.combat.dialog.blockButton.title'}}
+    </button>
+  {{/if}}
+{{/if}}

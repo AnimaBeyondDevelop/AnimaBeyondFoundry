@@ -1,0 +1,45 @@
+{{!--
+  Selector segmentado horizontal (estilo barra de botones).
+  Parámetros: title, inputName, value (índice interno 0-4), disabled, class (opcional)
+  Etiquetas: segment1Label … segment5Label (visuales; mapean a valores internos 0-4)
+--}}
+<div class='{{this.class}} horizontal-segmented-picker common-titled-input'>
+  {{#unless this.hideTitle}}
+    <p class='label'>{{this.title}}</p>
+  {{/unless}}
+
+  <div class='input-container segmented-control' role='group'>
+    <button
+      type='button'
+      class='segment segmented-picker-segment {{#if (is "eq" this.value 0)}}active{{/if}}'
+      data-value='0'
+      {{#if this.disabled}}disabled{{/if}}
+    >{{this.segment1Label}}</button>
+    <button
+      type='button'
+      class='segment segmented-picker-segment {{#if (is "eq" this.value 1)}}active{{/if}}'
+      data-value='1'
+      {{#if this.disabled}}disabled{{/if}}
+    >{{this.segment2Label}}</button>
+    <button
+      type='button'
+      class='segment segmented-picker-segment {{#if (is "eq" this.value 2)}}active{{/if}}'
+      data-value='2'
+      {{#if this.disabled}}disabled{{/if}}
+    >{{this.segment3Label}}</button>
+    <button
+      type='button'
+      class='segment segmented-picker-segment {{#if (is "eq" this.value 3)}}active{{/if}}'
+      data-value='3'
+      {{#if this.disabled}}disabled{{/if}}
+    >{{this.segment4Label}}</button>
+    <button
+      type='button'
+      class='segment segmented-picker-segment {{#if (is "gte" this.value 4)}}active{{/if}}'
+      data-value='4'
+      {{#if this.disabled}}disabled{{/if}}
+    >{{this.segment5Label}}</button>
+  </div>
+
+  <input type='hidden' name='{{this.inputName}}' value='{{this.value}}' />
+</div>

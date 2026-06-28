@@ -1,31 +1,25 @@
+import { ABFAttackData } from './ABFAttackData.js';
 import { ABFDefenseData } from './ABFDefenseData.js';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll.js';
 import { computeCombatResult } from './computeCombatResult.js';
-import { pickBestDefenseCandidate } from './DefenseStrategies.js';
+import {
+  computeProjectileDefensePenalty,
+  pickBestDefenseCandidate
+} from './DefenseStrategies.js';
+import {
+  getAccumulatedDefenses,
+  multipleDefensePenaltyFromAccumulated
+} from './utils/defensesCounterCheck.js';
 
 function toSafeNumber(v) {
   const n = Number(v);
   return Number.isFinite(n) ? n : 0;
 }
 
-function isProjectileAttack(attackData) {
-  const projectileType =
-    attackData?.projectile?.type ?? attackData?.projectileType ?? null;
-  if (attackData?.isProjectile === true) return true;
-  return (
-    projectileType === 'shot' ||
-    projectileType === 'throw' ||
-    projectileType === 'projectile'
-  );
-}
-
-function multipleDefensePenaltyFromAccumulated(accumulated) {
-  const a = Math.max(0, Number(accumulated) || 0);
-  if (a <= 0) return 0;
-  if (a === 1) return 30;
-  if (a === 2) return 50;
-  if (a === 3) return 70;
-  return 90;
+function normalizeAttackData(attackData) {
+  if (!attackData) return new ABFAttackData();
+  if (attackData instanceof ABFAttackData) return attackData;
+  return ABFAttackData.fromJSON(attackData);
 }
 
 function getDefensesCounter(actor) {
@@ -35,6 +29,10 @@ function getDefensesCounter(actor) {
       keepAccumulating: true
     }
   );
+}
+
+function resolveDefenseTypeForPenalty(candidate) {
+  return candidate.type === 'supernaturalShield' ? 'shield' : candidate.type;
 }
 
 function buildZeroDefenseResult({ actor, defenderToken, attackData }) {
@@ -83,6 +81,8 @@ export async function autoRollDefenseAgainstAttack({
   const actor = defenderActor ?? defenderToken?.actor ?? null;
   if (!actor) throw new Error('autoRollDefenseAgainstAttack: defender actor missing');
 
+  attackData = normalizeAttackData(attackData);
+
   const defenseMode = actor.system?.general?.settings?.defenseType?.value;
 
   // Accumulation/resistance defenders: base defense 0, no roll, no penalties.
@@ -97,16 +97,19 @@ export async function autoRollDefenseAgainstAttack({
     throw new Error('autoRollDefenseAgainstAttack: no defense candidates available');
 
   const safeMod = toSafeNumber(defenseMod);
-
-  const accumulated = defensesCounter.keepAccumulating ? defensesCounter.accumulated : 0;
+  const accumulated = getAccumulatedDefenses(defensesCounter);
 
   const multipleDefensePenalty = candidate.applyMultipleDefensePenalty
     ? multipleDefensePenaltyFromAccumulated(accumulated)
     : 0;
 
-  const projectilePenalty = isProjectileAttack(attackData)
-    ? candidate.projectilePenalty
-    : 0;
+  const defenseTypeForPenalty = resolveDefenseTypeForPenalty(candidate);
+  const projectilePenalty = computeProjectileDefensePenalty({
+    attackData,
+    defenseType: defenseTypeForPenalty,
+    hasMastery: !!candidate.hasMastery,
+    isShieldWeapon: defenseTypeForPenalty === 'block' && !!candidate.isShieldWeapon
+  });
 
   const die =
     candidate.naturalBase >= 200
@@ -138,8 +141,8 @@ export async function autoRollDefenseAgainstAttack({
 
   await roll.toMessage({ speaker, flavor, rollMode });
 
-  if (typeof actor.accumulateDefenses === 'function') {
-    actor.accumulateDefenses(!!candidate.stackDefense);
+  if (candidate.stackDefense && typeof actor.accumulateDefenses === 'function') {
+    actor.accumulateDefenses(defensesCounter.keepAccumulating ?? true);
   }
 
   const armorType = attackData?.armorType;
@@ -150,8 +153,10 @@ export async function autoRollDefenseAgainstAttack({
   const defenseTypeNormalized =
     candidate.type === 'supernaturalShield' ? 'shield' : candidate.type;
 
+  const effectiveDefenseTotal = Math.max(0, toSafeNumber(roll.total));
+
   const defenseData = ABFDefenseData.builder()
-    .defenseAbility(roll.total)
+    .defenseAbility(effectiveDefenseTotal)
     .armor(taFinal)
     .inmodifiableArmor(false)
     .defenseType(defenseTypeNormalized)
@@ -170,7 +175,7 @@ export async function autoRollDefenseAgainstAttack({
     actor,
     token: defenderToken ?? null,
     defenseType: defenseTypeNormalized,
-    defenseTotal: roll.total,
+    defenseTotal: effectiveDefenseTotal,
     weaponId: candidate.weaponId ?? '',
     shieldId: candidate.shieldId ?? '',
     defenseData,
