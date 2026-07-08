@@ -78,6 +78,28 @@ export default class ABFFoundryRoll extends Roll {
     }
   }
 
+  /**
+   * Posts the roll to chat. Psychic potential rolls keep the rounded total for
+   * game logic but show the raw dice sum in the chat message.
+   *
+   * @param {object} [messageData]
+   * @param {object} [options]
+   * @returns {Promise<ChatMessage|undefined>}
+   */
+  async toMessage(messageData = {}, options = {}) {
+    const { psychicDisplayTotal } = this;
+    if (psychicDisplayTotal != null && psychicDisplayTotal !== this._total) {
+      const effectiveTotal = this._total;
+      this._total = psychicDisplayTotal;
+      try {
+        return await super.toMessage(messageData, options);
+      } finally {
+        this._total = effectiveTotal;
+      }
+    }
+    return super.toMessage(messageData, options);
+  }
+
   getResults() {
     return this.dice
       .map(d =>

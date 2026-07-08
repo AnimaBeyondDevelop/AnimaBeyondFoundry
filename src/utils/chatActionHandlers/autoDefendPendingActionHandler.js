@@ -6,6 +6,8 @@ import { openModDialog } from '../../module/utils/dialogs/openSimpleInputDialog.
 
 export default async function autoDefendPendingActionHandler(message, _html, ds) {
   try {
+    if (!game.user.isGM) return;
+
     const msg = game.messages.get(ds.messageId ?? message?.id);
     if (!msg) return ui.notifications?.warn('Mensaje de ataque no encontrado.');
 

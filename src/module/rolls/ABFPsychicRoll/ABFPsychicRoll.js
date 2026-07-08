@@ -7,6 +7,7 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
   /** @returns {Promise<ABFFoundryRoll>} */
   async evaluate() {
     await super.evaluate();
+    const psychicDisplayTotal = this.foundryRoll.total ?? 0;
     const {
       general: {
         settings: { inhuman, zen }
@@ -48,6 +49,7 @@ export default class ABFPsychicRoll extends ABFExploderRoll {
       }
     }
 
+    this.foundryRoll.psychicDisplayTotal = psychicDisplayTotal;
     this.foundryRoll.overrideTotal(newPotentialTotal);
 
     return new Promise((resolve, reject) => {

@@ -35,34 +35,59 @@ function resolveDefenseTypeForPenalty(candidate) {
   return candidate.type === 'supernaturalShield' ? 'shield' : candidate.type;
 }
 
-function buildZeroDefenseResult({ actor, defenderToken, attackData }) {
+function buildFixedDefenseResult({
+  actor,
+  defenderToken,
+  attackData,
+  defenseTotal,
+  defenseType,
+  candidate = null,
+  defensesCounter = null
+}) {
   const armorType = attackData?.armorType;
   const taFinal =
     armorType != null ? actor.system?.combat?.totalArmor?.at?.[armorType]?.value ?? 0 : 0;
 
+  const defenseTypeNormalized =
+    defenseType === 'resistance'
+      ? 'resistance'
+      : candidate?.type === 'supernaturalShield'
+      ? 'shield'
+      : candidate?.type ?? 'dodge';
+
+  const effectiveDefenseTotal = Math.max(0, toSafeNumber(defenseTotal));
+
   const defenseData = ABFDefenseData.builder()
-    .defenseAbility(0)
+    .defenseAbility(effectiveDefenseTotal)
     .armor(taFinal)
     .inmodifiableArmor(false)
-    .defenseType('resistance')
+    .defenseType(defenseTypeNormalized)
     .defenderId(actor.id)
     .defenderTokenId(defenderToken?.id ?? '')
-    .weaponId('')
-    .shieldId('')
-    .stackDefense(false)
-    .applyMultipleDefensePenalty(false)
+    .weaponId(candidate?.weaponId ?? '')
+    .shieldId(candidate?.shieldId ?? '')
+    .stackDefense(candidate?.stackDefense ?? false)
+    .applyMultipleDefensePenalty(candidate?.applyMultipleDefensePenalty ?? false)
     .projectilePenalty(0)
     .build();
 
   const combatResult = computeCombatResult(attackData, defenseData);
 
+  if (
+    candidate?.stackDefense &&
+    defensesCounter &&
+    typeof actor.accumulateDefenses === 'function'
+  ) {
+    actor.accumulateDefenses(defensesCounter.keepAccumulating ?? true);
+  }
+
   return {
     actor,
     token: defenderToken ?? null,
-    defenseType: 'resistance',
-    defenseTotal: 0,
-    weaponId: '',
-    shieldId: '',
+    defenseType: defenseTypeNormalized,
+    defenseTotal: effectiveDefenseTotal,
+    weaponId: candidate?.weaponId ?? '',
+    shieldId: candidate?.shieldId ?? '',
     defenseData,
     combatResult,
     appliedPenalties: {
@@ -84,13 +109,35 @@ export async function autoRollDefenseAgainstAttack({
   attackData = normalizeAttackData(attackData);
 
   const defenseMode = actor.system?.general?.settings?.defenseType?.value;
+  const defensesCounter = getDefensesCounter(actor);
 
-  // Accumulation/resistance defenders: base defense 0, no roll, no penalties.
+  // Accumulation/resistance defenders: final defense 0, no roll.
   if (defenseMode === 'resistance') {
-    return buildZeroDefenseResult({ actor, defenderToken, attackData });
+    return buildFixedDefenseResult({
+      actor,
+      defenderToken,
+      attackData,
+      defenseTotal: 0,
+      defenseType: 'resistance'
+    });
   }
 
-  const defensesCounter = getDefensesCounter(actor);
+  // Mass defenders: use defense.final without rolling dice.
+  if (defenseMode === 'mass') {
+    const candidate = pickBestDefenseCandidate(actor, { attackData, defensesCounter });
+    if (!candidate)
+      throw new Error('autoRollDefenseAgainstAttack: no defense candidates available');
+
+    return buildFixedDefenseResult({
+      actor,
+      defenderToken,
+      attackData,
+      defenseTotal: candidate.finalBase,
+      defenseType: 'mass',
+      candidate,
+      defensesCounter
+    });
+  }
 
   const candidate = pickBestDefenseCandidate(actor, { attackData, defensesCounter });
   if (!candidate)

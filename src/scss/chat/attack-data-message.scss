@@ -83,10 +83,10 @@
   hyphens: none;
 }
 
-/* [Attack Data] Top action row: 3 equal columns */
+/* [Attack Data] Top action row: equal columns (2 for players, 3 for GM) */
 .animabf-chat-message.attack-data-message .attack-actions-row{
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: .5rem;
   width: 100%;
 }
