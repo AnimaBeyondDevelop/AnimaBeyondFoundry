@@ -5,6 +5,9 @@ import ABFFoundryRoll from '../../rolls/ABFFoundryRoll';
 import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { ABFConfig } from '../../ABFConfig';
 import { getActiveEffectsBreakdownForPath } from '../../actor/utils/activeEffectsBreakdown.js';
+import { enrichMassAttackCombatUi, applyMassAttackBonusToCombatMod } from '../../actor/utils/enrichMassAttackCombatUi.js';
+import { combineMassAttackDamage } from '../../actor/utils/applyMassAttackDamage.js';
+import { isMassOfEnemies } from '../../actor/utils/massSettings.js';
 
 const getInitialData = (attacker, defender, options = {}) => {
   const combatDistance = !!game.settings.get(
@@ -25,7 +28,8 @@ const getInitialData = (attacker, defender, options = {}) => {
       isGM,
       hasFatiguePoints:
         attackerActor.system.characteristics.secondaries.fatigue.value > 0,
-      weaponHasSecondaryCritic: undefined
+      weaponHasSecondaryCritic: undefined,
+      isMassOfEnemies: isMassOfEnemies(attackerActor)
     },
     attacker: {
       token: attacker,
@@ -64,7 +68,10 @@ const getInitialData = (attacker, defender, options = {}) => {
         },
         critDamageBonus:
           attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
-        automaticCrit: !!attackerActor.system.general.modifiers.automaticCrit?.value
+        automaticCrit: !!attackerActor.system.general.modifiers.automaticCrit?.value,
+        massAttackBonusEnabled: isMassOfEnemies(attackerActor) ? true : undefined,
+        massTargetCount: 1,
+        massAttackBonusValue: 0
       },
       mystic: {
         modifier: 0,
@@ -377,6 +384,12 @@ export class CombatAttackDialog extends FormApplication {
           attackerCombatMod.secondaryCritic = { value: -10, apply: true };
         }
 
+        applyMassAttackBonusToCombatMod(
+          attackerCombatMod,
+          this.attackerActor,
+          this.modalData.attacker.combat
+        );
+
         const attack = weapon
           ? weapon.system.attack.final.value
           : this.attackerActor.system.combat.attack.final.value;
@@ -501,6 +514,12 @@ export class CombatAttackDialog extends FormApplication {
         const attackerCombatMod = {
           modifier: { value: modifier, apply: true }
         };
+
+        applyMassAttackBonusToCombatMod(
+          attackerCombatMod,
+          this.attackerActor,
+          this.modalData.attacker.combat
+        );
 
         this.attackerActor.setFlag(
           game.animabf.id,
@@ -632,6 +651,12 @@ export class CombatAttackDialog extends FormApplication {
           modifier: { value: modifier, apply: true }
         };
 
+        applyMassAttackBonusToCombatMod(
+          attackerCombatMod,
+          this.attackerActor,
+          this.modalData.attacker.combat
+        );
+
         const { psychicPowers } = this.attackerActor.system.psychic;
         const power = psychicPowers.find(w => w._id === powerUsed);
 
@@ -709,7 +734,12 @@ export class CombatAttackDialog extends FormApplication {
         }
 
         const powerUsedEffect = power?.system.effects[psychicPotentialRoll.total].value;
-        const finalDamage = damageCheck(powerUsedEffect) + damage.special;
+        const finalDamage = combineMassAttackDamage(
+          this.attackerActor,
+          damageCheck(powerUsedEffect),
+          damage.special,
+          { supernatural: true }
+        );
         const resistanceEffect = resistanceEffectCheck(powerUsedEffect);
         const visibleCheck = power?.system.visible;
 
@@ -789,7 +819,12 @@ export class CombatAttackDialog extends FormApplication {
 
     const spellGradeData = spell?.system?.grades?.[mystic.spellGrade];
 
-    mystic.damage.final = mystic.damage.special + damageCheck(spellGradeData);
+    mystic.damage.final = combineMassAttackDamage(
+      this.attackerActor,
+      damageCheck(spellGradeData),
+      mystic.damage.special,
+      { supernatural: true }
+    );
     mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(
       spell,
       mystic.spellGrade,
@@ -803,10 +838,11 @@ export class CombatAttackDialog extends FormApplication {
     combat.unarmed = weapons.length === 0;
 
     if (combat.unarmed) {
-      combat.damage.final =
-        combat.damage.special +
-        10 +
-        this.attackerActor.system.characteristics.primaries.strength.mod;
+      combat.damage.final = combineMassAttackDamage(
+        this.attackerActor,
+        10 + this.attackerActor.system.characteristics.primaries.strength.mod,
+        combat.damage.special
+      );
     } else {
       combat.weapon = weapon;
 
@@ -825,10 +861,15 @@ export class CombatAttackDialog extends FormApplication {
         weapon.system.critic.secondary.value !==
         game.animabf.weapon.NoneWeaponCritic.NONE;
 
-      combat.damage.final = combat.damage.special + weapon.system.damage.final.value;
+      combat.damage.final = combineMassAttackDamage(
+        this.attackerActor,
+        weapon.system.damage.final.value,
+        combat.damage.special
+      );
     }
 
     this.modalData.config = ABFConfig;
+    enrichMassAttackCombatUi(this.attackerActor, this.modalData);
 
     return this.modalData;
   }
@@ -856,6 +897,12 @@ export class CombatAttackDialog extends FormApplication {
       formData['attacker.combat.projectile.value'] =
         formData['attacker.combat.projectile.value'] === 'on' ||
         formData['attacker.combat.projectile.value'] === true;
+    }
+
+    if (formData['attacker.combat.massAttackBonusEnabled'] !== undefined) {
+      formData['attacker.combat.massAttackBonusEnabled'] =
+        formData['attacker.combat.massAttackBonusEnabled'] === 'on' ||
+        formData['attacker.combat.massAttackBonusEnabled'] === true;
     }
 
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);

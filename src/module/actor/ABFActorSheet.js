@@ -18,6 +18,11 @@ import {
 } from './types/typedNodeSheetMenuConfig.js';
 import { findEffectLinkedToItem } from './utils/findEffectLinkedToItem.js';
 import { ensureLinkedEffectForItem } from './utils/ensureLinkedEffectForItem.js';
+import { activateItemReorder } from './utils/activateItemReorder.js';
+import { ITEM_REORDER_MIME } from './utils/reorderEmbeddedItems.js';
+import { ensureGeneralSettingsDefaults } from './utils/ensureGeneralSettingsDefaults.js';
+import { augmentActorChangesWithMassMemberCount } from './utils/syncMassMemberCount.js';
+import { augmentActorChangesWithMassAttackBonus } from './utils/syncMassAttackBonus.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -160,7 +165,8 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
     if (actor?.type === 'character') {
       await actor.prepareDerivedData();
-      sheet.system = actor.system;
+      ensureGeneralSettingsDefaults(actor.system);
+      sheet.system = foundry.utils.deepClone(actor.system);
     }
 
     sheet.config = CONFIG.config;
@@ -172,10 +178,9 @@ export default class ABFActorSheet extends ActorSheetV1 {
     sheet.canModifyDice = permissions?.[game.user.role] === true;
 
     // Use embedded item collection directly
-    const effectItems = actor.items.filter(i => i && i.type === ABFItems.EFFECT);
-    sheet.effects = effectItems;
-
-    console.log('EFFECT ITEMS EN SHEET', sheet.effects);
+    sheet.effects = actor.items
+      .filter(i => i && i.type === ABFItems.EFFECT)
+      .sort((a, b) => a.sort - b.sort);
 
     return sheet;
   }
@@ -192,6 +197,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
     this._activateRollables(html);
     this._activateContractibleButtons(html);
     this._activateItemsDragAndContextMenus(html);
+    activateItemReorder(this, html);
     this._activateDataOnClickHandlers(html);
     this._activateEffectControls(html);
   }
@@ -251,7 +257,12 @@ export default class ABFActorSheet extends ActorSheetV1 {
     await this.updateItems(itemChanges);
 
     if (actorChanges && Object.keys(actorChanges).length > 0) {
-      await this.actor.update(actorChanges);
+      await this.actor.update(
+        augmentActorChangesWithMassAttackBonus(
+          augmentActorChangesWithMassMemberCount(actorChanges, this.actor),
+          this.actor
+        )
+      );
     }
   }
 
@@ -310,7 +321,10 @@ export default class ABFActorSheet extends ActorSheetV1 {
   }
 
   _activateItemsDragAndContextMenus(html) {
-    const handler = ev => this._onDragStart(ev);
+    const handler = ev => {
+      if (ev.target?.closest?.('.item-drag-handle')) return;
+      this._onDragStart(ev);
+    };
 
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
       this.buildCommonContextualMenu(item);
@@ -645,13 +659,31 @@ export default class ABFActorSheet extends ActorSheetV1 {
     return ensureLinkedEffectForItem(this.actor, item);
   }
 
+  _isItemReorderDrop(event) {
+    return (
+      this._isReorderingItems === true ||
+      event?.dataTransfer?.types?.includes?.(ITEM_REORDER_MIME) === true
+    );
+  }
+
+  async _onDrop(event) {
+    if (this._isItemReorderDrop(event)) return false;
+    return super._onDrop(event);
+  }
+
   async _onDropItem(event, data) {
+    if (this._isItemReorderDrop(event)) return false;
+
+    const existingItemIds = new Set(this.actor.items.map(i => i.id));
     const created = await super._onDropItem(event, data);
 
     const items = Array.isArray(created) ? created : created ? [created] : [];
 
     for (const item of items) {
       if (item.type !== ABFItems.EFFECT) continue;
+      // Reorders and other internal moves return items that already belonged to
+      // this actor. Only freshly imported effects should start inactive.
+      if (existingItemIds.has(item.id)) continue;
 
       await item.update({
         'system.active': false,

@@ -1,4 +1,5 @@
 @use '../../variable' as *;
+@use '../../mixin' as *;
 
 .settings {
   .settings-body {
@@ -27,6 +28,21 @@
         width: 100%;      
         max-width: none;  
       }
+    }
+
+    .calculate-mass-life {
+      margin-top: 0.5rem;
+
+      .calculate-mass-life-button {
+        @include button;
+        width: 100%;
+        cursor: pointer;
+      }
+    }
+
+    .massMemberCount input.disabled {
+      opacity: 0.85;
+      cursor: default;
     }
   }
 }

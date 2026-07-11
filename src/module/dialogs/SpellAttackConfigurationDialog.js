@@ -3,6 +3,7 @@ import { ABFAttackData } from '../combat/ABFAttackData';
 import ABFFoundryRoll from '../rolls/ABFFoundryRoll.js';
 import { ABFConfig } from '../ABFConfig';
 import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
+import { combineMassAttackDamage } from '../actor/utils/applyMassAttackDamage.js';
 
 export class SpellAttackConfigurationDialog extends FormApplication {
   constructor(object = {}, options = {}) {
@@ -63,7 +64,12 @@ export class SpellAttackConfigurationDialog extends FormApplication {
     const baseDamage = Number(gradeData?.damage?.value ?? 0) || 0;
     const bonusDamage = Number(attacker.combat?.damage?.special ?? 0) || 0;
 
-    attacker.combat.damage.final = baseDamage + bonusDamage;
+    attacker.combat.damage.final = combineMassAttackDamage(
+      attacker.actor,
+      baseDamage,
+      bonusDamage,
+      { supernatural: true }
+    );
 
     return data;
   }
@@ -93,7 +99,12 @@ export class SpellAttackConfigurationDialog extends FormApplication {
       const gradeData = spell.system?.grades?.[grade];
       const baseDamage = Number(gradeData?.damage?.value ?? 0) || 0;
       const bonusDamage = Number(attacker.combat?.damage?.special ?? 0) || 0;
-      const finalDamage = baseDamage + bonusDamage;
+      const finalDamage = combineMassAttackDamage(
+        actor,
+        baseDamage,
+        bonusDamage,
+        { supernatural: true }
+      );
 
       const mod = Number(attacker.combat?.modifier ?? 0) || 0;
 

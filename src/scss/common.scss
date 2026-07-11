@@ -29,6 +29,48 @@ img {
     }
   }
 
+  .item-drag-handle {
+    cursor: grab;
+    flex-shrink: 0;
+    align-self: stretch;
+    min-width: 0.75rem;
+    touch-action: none;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .weapon-row.dragging,
+  .armor-row.dragging,
+  .effect-row.dragging {
+    pointer-events: none;
+
+    .effect-control,
+    input,
+    select,
+    textarea,
+    button {
+      pointer-events: none;
+    }
+  }
+
+  .weapon-row,
+  .armor-row,
+  .effect-row {
+    &.dragging {
+      opacity: 0.5;
+    }
+
+    &.drag-over-top {
+      box-shadow: inset 0 2px 0 $red;
+    }
+
+    &.drag-over-bottom {
+      box-shadow: inset 0 -2px 0 $red;
+    }
+  }
+
   .input {
     &[type='select'] {
       height: 1.5rem;

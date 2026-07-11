@@ -47,10 +47,12 @@ export const Templates = {
           multipleDefensesFields: T('dialog/combat/defense-config/parts/multiple-defenses-fields.hbs'),
           dodge: T('dialog/combat/defense-config/parts/dodge.hbs'),
           block: T('dialog/combat/defense-config/parts/block.hbs'),
-          shield: T('dialog/combat/defense-config/parts/shield.hbs')
+          shield: T('dialog/combat/defense-config/parts/shield.hbs'),
+          fatigueFields: T('dialog/combat/defense-config/parts/fatigue-fields.hbs')
         }
       },
-      AttackConfigDialog: T('dialog/combat/attack-config-dialog.hbs')
+      AttackConfigDialog: T('dialog/combat/attack-config-dialog.hbs'),
+      MassAttackBonusFields: T('dialog/combat/mass-attack-bonus-fields.hbs')
     },
     GenericDialog: T('dialog/generic-dialog/generic-dialog.hbs'),
     Icons: {
@@ -243,8 +245,9 @@ export const Templates = {
       Main: T('actor/parts/settings/settings.hbs'),
       TabVisibility: T('actor/parts/settings/parts/tabVisibility.hbs'),
       AutomationOptions: T('actor/parts/settings/parts/automationOptions.hbs'),
-      AdvancedSettings: T('actor/parts/settings/parts/advancedSettings.hbs'),
-      AdvancedCharacteristics: T('actor/parts/settings/parts/advancedCharacteristics.hbs')
+      DiceSettings: T('actor/parts/settings/parts/diceSettings.hbs'),
+      AdvancedCharacteristics: T('actor/parts/settings/parts/advancedCharacteristics.hbs'),
+      MassSettings: T('actor/parts/settings/parts/massSettings.hbs')
     }
   }
 };
@@ -280,5 +283,10 @@ export const HandlebarsPartials = {
   'dialog/combat/defense-config/parts/block':
     Templates.Dialog.Combat.DefenseConfigDialog.parts.block,
   'dialog/combat/defense-config/parts/shield':
-    Templates.Dialog.Combat.DefenseConfigDialog.parts.shield
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.shield,
+  'dialog/combat/defense-config/parts/fatigue-fields':
+    Templates.Dialog.Combat.DefenseConfigDialog.parts.fatigueFields,
+  'actor/parts/settings/parts/massSettings': Templates.Actor.Settings.MassSettings,
+  'actor/parts/settings/parts/diceSettings': Templates.Actor.Settings.DiceSettings,
+  'dialog/combat/mass-attack-bonus-fields': Templates.Dialog.Combat.MassAttackBonusFields
 };

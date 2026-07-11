@@ -1,0 +1,56 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="massSettings"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.settings.massSettings.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="massSettings"
+  }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="massOfEnemies"
+        title=(localize "anima.ui.settings.massSettings.massOfEnemies.title")
+        inputType="checkbox"
+        inputName="system.general.settings.massOfEnemies.value"
+        inputValue=system.general.settings.massOfEnemies.value
+      }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="organizedMass"
+        title=(localize "anima.ui.settings.massSettings.organizedMass.title")
+        inputType="checkbox"
+        inputName="system.general.settings.organizedMass.value"
+        inputValue=system.general.settings.organizedMass.value
+      }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="individualLife"
+        title=(localize "anima.ui.settings.massSettings.individualLife.title")
+        inputName="system.general.settings.individualLife.value"
+        inputValue=system.general.settings.individualLife.value
+      }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="massMemberCount"
+        title=(localize "anima.ui.settings.massSettings.massMemberCount.title")
+        inputName="system.general.settings.massMemberCount.value"
+        inputValue=system.general.settings.massMemberCount.value
+        disabled=true
+      }}
+    {{>
+      "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+        class="massAttackBonus"
+        title=(localize "anima.ui.settings.massSettings.massAttackBonus.title")
+        inputName="system.general.settings.massAttackBonus.value"
+        inputValue=system.general.settings.massAttackBonus.value
+        disabled=true
+      }}
+    <div class="calculate-mass-life">
+      <button type="button" class="calculate-mass-life-button" data-on-click="calculateMassLife">
+        {{localize "anima.ui.settings.massSettings.calculateLife.title"}}
+      </button>
+    </div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

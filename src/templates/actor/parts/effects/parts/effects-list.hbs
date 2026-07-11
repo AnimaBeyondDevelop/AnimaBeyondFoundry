@@ -14,6 +14,7 @@
   <div class="item-list effects-list">
     {{#each effects as |effect|}}
       <div class="item effect effect-row" data-item-id="{{effect.id}}">
+        <span class="item-drag-handle" draggable="true" title="{{localize 'anima.ui.common.dragHandle.title'}}"></span>
         <div class="effect-name">
           <h4>{{effect.name}}</h4>
         </div>

@@ -39,7 +39,17 @@ export function ABFItemConfigFactory(minimal) {
       }
     },
     async resetFieldPath(actor) {
-      if (!this.isInternal) this.cleanFieldPath(actor);
+      if (!this.isInternal) {
+        this.cleanFieldPath(actor);
+
+        const path = ['system', ...this.fieldPath];
+        const lastKey = path.pop();
+        if (lastKey) {
+          const parentField = path.reduce((field, nextKey) => field[nextKey], actor);
+          parentField[lastKey] = [];
+        }
+      }
+
       const items = actor.getItemsOf(this.type);
 
       for (const item of items) {

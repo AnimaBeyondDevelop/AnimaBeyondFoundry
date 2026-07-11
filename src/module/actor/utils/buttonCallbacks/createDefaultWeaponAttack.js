@@ -1,6 +1,7 @@
 import { Templates } from '../../../utils/constants';
 import { ABFAttackData } from '../../../combat/ABFAttackData';
 import { openModDialog } from '../../../utils/dialogs/openSimpleInputDialog.js';
+import { combineMassAttackDamage } from '../applyMassAttackDamage.js';
 
 export async function createDefaultWeaponAttack(sheet, e) {
   const weaponId = e.currentTarget.dataset.weaponId;
@@ -37,7 +38,9 @@ export async function createDefaultWeaponAttack(sheet, e) {
 
   const attackData = ABFAttackData.builder()
     .attackAbility(roll.total)
-    .damage(weapon.system.damage?.final?.value)
+    .damage(
+      combineMassAttackDamage(actor, weapon.system.damage?.final?.value ?? 0)
+    )
     .ignoreArmor(weapon.system.ignoreArmor.value)
     .reducedArmor(weapon.system.reducedArmor.final.value)
     .armorType(weapon.system.critic?.primary?.value)

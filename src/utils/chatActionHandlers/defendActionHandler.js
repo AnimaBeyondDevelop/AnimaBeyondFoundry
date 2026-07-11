@@ -1,5 +1,9 @@
 import { DefenseConfigurationDialog } from '../../module/dialogs/DefenseConfigurationDialog';
 import { sendAccumulationZeroDefense } from '../sendAccumulationZeroDefense.js';
+import {
+  usesMassDefenseRules,
+  usesResistanceDefenseRules
+} from '../../module/actor/utils/massSettings.js';
 
 export default async function defendActionHandler(message, _html, dataset) {
   try {
@@ -59,13 +63,12 @@ export default async function defendActionHandler(message, _html, dataset) {
         canvas.tokens.placeables.find(t => t.actor?.id === attackData.attackerId) ?? null;
     }
 
-    const defenseMode =
-      defenderToken.actor?.system?.general?.settings?.defenseType?.value;
-    // Both 'resistance' (damage-resistance defenders) and 'mass' (mass-of-enemies
-    // rule defenders) skip the regular defense dialog: no roll, no multi-defense
-    // counter increment, armor still applies. They funnel through the zero-roll
-    // defense helper instead.
-    if (defenseMode === 'resistance' || defenseMode === 'mass') {
+    // Damage accumulation and mass-of-enemies defenders skip the regular defense
+    // dialog: no roll, no multi-defense counter increment, armor still applies.
+    if (
+      usesResistanceDefenseRules(defenderToken.actor) ||
+      usesMassDefenseRules(defenderToken.actor)
+    ) {
       await sendAccumulationZeroDefense({
         defenderToken,
         attackerToken,

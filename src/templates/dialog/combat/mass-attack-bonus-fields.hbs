@@ -1,0 +1,42 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="mass-attack-dialog-settings"
+}}
+  {{>
+    "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "macros.combat.dialog.massAttackBonus.section.title")
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="mass-attack-dialog-settings"
+  }}
+    <div class='columns mass-attack-bonus'>
+      <div>
+        {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="label-below"
+            title=(localize 'macros.combat.dialog.massAttackBonus.enabled.title')
+            inputType="checkbox"
+            inputName="attacker.combat.massAttackBonusEnabled"
+            inputValue=(is 'eq' this.attacker.combat.massAttackBonusEnabled true)
+            disabled=this.attackSent
+        }}
+      </div>
+      <div>
+        {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="massTargetCount label-below"
+            title=(localize 'macros.combat.dialog.massAttackBonus.targetCount.title')
+            inputName="attacker.combat.massTargetCount"
+            inputValue=this.attacker.combat.massTargetCount
+            disabled=this.attackSent
+        }}
+      </div>
+      <div>
+        {{> "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+            class="massAttackBonusValue label-below"
+            title=(localize 'macros.combat.dialog.massAttackBonus.value.title')
+            inputName="attacker.combat.massAttackBonusValue"
+            inputValue=this.attacker.combat.massAttackBonusValue
+            disabled=true
+        }}
+      </div>
+    </div>
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

@@ -16,7 +16,11 @@ import {
   ARMOR_QUALITY_COL,
   ARMOR_MAX_SLOTS
 } from './constants.js';
-import { findInCompendium, cloneCompendiumItem } from './compendiumMatch.js';
+import {
+  findInCompendium,
+  cloneCompendiumItem,
+  findExistingEmbeddedItem
+} from './compendiumMatch.js';
 
 function colLetterToIndex(letter) {
   let n = 0;
@@ -98,8 +102,14 @@ export function readArmorsFromWorkbook(workbook) {
 export async function importArmorsToActor(actor, armors) {
   const items = [];
   const notFound = [];
+  let skipped = 0;
 
   for (const a of armors) {
+    if (await findExistingEmbeddedItem(actor, 'armors', a.name)) {
+      skipped++;
+      continue;
+    }
+
     const doc = await findInCompendium('armors', a.name);
     if (!doc) {
       notFound.push(a.name);
@@ -135,5 +145,5 @@ export async function importArmorsToActor(actor, armors) {
   if (items.length) {
     await actor.createEmbeddedDocuments('Item', items);
   }
-  return { imported: items.length, notFound };
+  return { imported: items.length, skipped, notFound };
 }

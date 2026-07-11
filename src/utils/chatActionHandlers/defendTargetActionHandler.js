@@ -1,6 +1,10 @@
 import { DefenseConfigurationDialog } from '../../module/dialogs/DefenseConfigurationDialog';
 import { ABFAttackData } from '../../module/combat/ABFAttackData';
 import { sendAccumulationZeroDefense } from '../sendAccumulationZeroDefense.js';
+import {
+  usesMassDefenseRules,
+  usesResistanceDefenseRules
+} from '../../module/actor/utils/massSettings.js';
 
 async function defendTargetActionHandler(message, _html, dataset) {
   try {
@@ -72,17 +76,15 @@ async function defendTargetActionHandler(message, _html, dataset) {
       if (!ok) return ui.notifications?.warn('Sin permisos para defender este objetivo.');
     }
 
-    const defenseMode =
-      defenderToken.actor?.system?.general?.settings?.defenseType?.value;
-
     // Use the stored token key when present, so the flag update hits the correct entry
     const storedTokenKey = targetEntry?.tokenUuid ?? '';
 
-    // Both 'resistance' (damage-resistance defenders) and 'mass' (mass-of-enemies
-    // rule defenders) skip the regular defense dialog: no roll, no multi-defense
-    // counter increment, armor still applies. They funnel through the zero-roll
-    // defense helper instead.
-    if (defenseMode === 'resistance' || defenseMode === 'mass') {
+    // Damage accumulation and mass-of-enemies defenders skip the regular defense
+    // dialog: no roll, no multi-defense counter increment, armor still applies.
+    if (
+      usesResistanceDefenseRules(defenderToken.actor) ||
+      usesMassDefenseRules(defenderToken.actor)
+    ) {
       await sendAccumulationZeroDefense({
         defenderToken,
         attackerToken,

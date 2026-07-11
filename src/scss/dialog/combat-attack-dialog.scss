@@ -1,9 +1,12 @@
 @use '../variable' as *;
 
-.combat-attack-dialog {
+.combat-attack-dialog,
+.attack-config-dialog {
   height: auto !important;
 
-  width: 550px;
+  width: auto;
+  min-width: 520px;
+  max-width: 95vw;
 
   .window-content {
     display: flex;
@@ -14,6 +17,7 @@
 
   .common-group {
     height: 100%;
+    width: 100%;
   }
 
   .sheet-tabs {
@@ -92,6 +96,53 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .common-group.mass-attack-dialog-settings {
+      width: 100%;
+      margin: 0.75rem 0;
+      align-items: stretch;
+
+      .group-body.mass-attack-dialog-settings {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        overflow: visible;
+      }
+
+      .mass-attack-bonus {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.5rem;
+        width: 100%;
+        margin-bottom: 0;
+
+        > div {
+          flex: 1 1 10rem;
+          min-width: 0;
+        }
+
+        .common-titled-input {
+          width: 100%;
+
+          &.label-below {
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: flex-start;
+
+            .label {
+              margin-right: 0;
+              margin-top: 0.25rem;
+              text-align: center;
+              font-size: 0.85rem;
+              white-space: normal;
+            }
+
+            .input-container {
+              flex-shrink: 0;
+            }
+          }
+        }
+      }
     }
 
     .hr {

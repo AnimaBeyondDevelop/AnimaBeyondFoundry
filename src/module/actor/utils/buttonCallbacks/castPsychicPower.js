@@ -2,6 +2,7 @@ import ABFFoundryRoll from '../../../rolls/ABFFoundryRoll.js';
 import { ABFAttackData } from '../../../combat/ABFAttackData.js';
 import { openModDialog } from '../../../utils/dialogs/openSimpleInputDialog.js';
 import { getSnapshotTargets } from '../getSnapshotTargets.js';
+import { combineMassAttackDamage } from '../applyMassAttackDamage.js';
 import { castPsychicDefenseShield } from '../../../psychic/utils/psychicDefenseShield.js';
 
 function _getBestEffectKey(effects, rolledValue) {
@@ -148,7 +149,9 @@ async function _sendPsychicAttackToChat({
 
   await ABFAttackData.builder()
     .attackAbility(roll.total)
-    .damage(Number(baseDamage) || 0)
+    .damage(
+      combineMassAttackDamage(actor, Number(baseDamage) || 0, 0, { supernatural: true })
+    )
     .ignoreArmor(false)
     .reducedArmor(0)
     .armorType(power.system?.critic?.value ?? game.animabf.weapon.NoneWeaponCritic.NONE)

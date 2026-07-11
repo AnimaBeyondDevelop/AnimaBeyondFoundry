@@ -347,6 +347,9 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
           },
           zen: {
             value: excelData.Zen
+          },
+          individualLife: {
+            value: excelData.Vida_final
           }
         },
         aspect: {

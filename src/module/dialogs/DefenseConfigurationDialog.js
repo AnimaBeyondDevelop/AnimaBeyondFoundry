@@ -179,6 +179,9 @@ export class DefenseConfigurationDialog extends FormApplication {
       if (formCombat.modifier !== undefined) {
         combat.modifier = Number(formCombat.modifier) || 0;
       }
+      if (formCombat.fatigueUsed !== undefined) {
+        combat.fatigueUsed = Number(formCombat.fatigueUsed) || 0;
+      }
       if (formCombat.accumulateDefenses !== undefined) {
         combat.accumulateDefenses = !!formCombat.accumulateDefenses;
       }
@@ -329,6 +332,8 @@ export class DefenseConfigurationDialog extends FormApplication {
   }
 
   async _sendDefenseToChat(type) {
+    this._captureFormCombatState();
+
     const actor = this.defenderActor;
     if (!actor) return ui.notifications?.warn('Defender no encontrado.');
 
@@ -413,6 +418,8 @@ export class DefenseConfigurationDialog extends FormApplication {
         : actor.system?.general?.diceSettings?.abilityDie?.value ?? '1d100';
 
       const mod = Number(combat?.modifier ?? 0);
+      const fatigueUsed = type === 'shield' ? 0 : Number(combat?.fatigueUsed ?? 0);
+      const fatigueMod = fatigueUsed * 15;
       const multiPenalty = Number(combat?.multipleDefensesPenalty ?? 0);
       const baseValue = Number(defenseAbility.finalBase ?? 0);
 
@@ -433,7 +440,7 @@ export class DefenseConfigurationDialog extends FormApplication {
       // shows the breakdown: defense ability, situational modifier, the
       // multiple-defenses penalty, and projectile penalty as traceable parts.
       const projectileTerm = projectilePenalty ? ` - ${projectilePenalty}` : '';
-      const formula = `${die} + ${baseValue} + ${mod} + (${effectiveMultiPenalty})${projectileTerm}`;
+      const formula = `${die} + ${baseValue} + ${mod} + (${effectiveMultiPenalty})${projectileTerm} + ${fatigueMod}`;
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
 
@@ -530,6 +537,10 @@ export class DefenseConfigurationDialog extends FormApplication {
       // RULES.supernaturalShield.stackDefense in DefenseStrategies.js).
       if (!isShieldDefense && typeof actor?.accumulateDefenses === 'function') {
         actor.accumulateDefenses(!!combat?.accumulateDefenses);
+      }
+
+      if (!isShieldDefense && fatigueUsed > 0) {
+        actor.applyFatigue(fatigueUsed);
       }
 
       DefenseConfigurationDialog._persistTab(actor, type);

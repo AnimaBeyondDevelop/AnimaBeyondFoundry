@@ -9,9 +9,14 @@
             inputValue=this.attacker.combat.modifier }}
       </div>
 
-      {{!-- {{#if this.ui.hasFatiguePoints}}
+      {{#if this.ui.isMassOfEnemies}}
+        {{> dialog/combat/mass-attack-bonus-fields this=this}}
+      {{/if}}
+
+      {{#if this.ui.hasFatiguePoints}}
         {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
             title=(localize 'macros.combat.dialog.fatigue.title')
+            disabled=this.attackSent
             inputName="attacker.combat.fatigueUsed"
             inputValue=this.attacker.combat.fatigueUsed }}
           <option {{#if (is "eq" 0 this.attacker.combat.fatigueUsed)}}selected{{/if}} value='0'>0</option>
@@ -21,7 +26,7 @@
         {{/'systems/animabf/templates/common/ui/custom-select.hbs'}}
       {{else}}
         <p class='label no-fatigue'>{{localize 'macros.combat.dialog.notEnoughFatigue.title'}}</p>
-      {{/if}} --}}
+      {{/if}}
 
       {{#if this.attacker.combat.weapon}}
         {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'

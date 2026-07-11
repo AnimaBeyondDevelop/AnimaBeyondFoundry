@@ -30,7 +30,13 @@ export const INITIAL_ACTOR_DATA = {
       inhuman: { value: false },
       zen: { value: false },
       perceivePsychic: { value: false },
-      defenseType: { value: '' }
+      defenseType: { value: '' },
+      massOfEnemies: { value: false },
+      damageAccumulation: { value: false },
+      individualLife: { value: 0 },
+      organizedMass: { value: false },
+      massMemberCount: { value: 0 },
+      massAttackBonus: { value: 0 }
     },
     diceSettings: {
       characteristicDie: { value: '1d10ControlRoll' },

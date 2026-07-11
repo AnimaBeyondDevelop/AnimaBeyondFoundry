@@ -3,6 +3,9 @@ import { ABFConfig } from '../ABFConfig';
 import { ABFAttackData } from '../combat/ABFAttackData';
 import { getSnapshotTargets } from '../actor/utils/getSnapshotTargets.js';
 import { getActiveEffectsBreakdownForPath } from '../actor/utils/activeEffectsBreakdown.js';
+import { enrichMassAttackCombatUi, getAppliedMassAttackBonus } from '../actor/utils/enrichMassAttackCombatUi.js';
+import { isMassOfEnemies } from '../actor/utils/massSettings.js';
+import { combineMassAttackDamage } from '../actor/utils/applyMassAttackDamage.js';
 ///dialogs/AttackConfigurationDialog.js
 ///actor/utils/getSnapshotTargets.js
 
@@ -32,6 +35,8 @@ export class AttackConfigurationDialog extends FormApplication {
 
     // Fallback targets snapshot (reusing shared helper)
     const fallbackSnapshot = getSnapshotTargets();
+    const resolvedTargets =
+      Array.isArray(targets) && targets.length ? targets : fallbackSnapshot;
 
     const isOwner = attackerActor.testUserPermission?.(
       game.user,
@@ -44,7 +49,8 @@ export class AttackConfigurationDialog extends FormApplication {
         hasFatiguePoints:
           (attackerActor.system?.characteristics?.secondaries?.fatigue?.value ?? 0) > 0,
         weaponHasSecondaryCritic: undefined,
-        lockedWeapon: !!resolvedWeapon
+        lockedWeapon: !!resolvedWeapon,
+        isMassOfEnemies: isMassOfEnemies(attackerActor)
       },
       attacker: {
         token: attacker,
@@ -60,11 +66,14 @@ export class AttackConfigurationDialog extends FormApplication {
           projectile: { value: false, type: '' },
           damage: { special: 0, final: 0 },
           critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
-          automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value)
+          automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value),
+          massAttackBonusEnabled: isMassOfEnemies(attackerActor) ? true : undefined,
+          massTargetCount: Math.max(1, resolvedTargets.length || 1),
+          massAttackBonusValue: 0
         },
         distance: { value: 0, enable: false, check: false }
       },
-      targets: Array.isArray(targets) && targets.length ? targets : fallbackSnapshot,
+      targets: resolvedTargets,
       allowed: options?.allowed ?? isOwner ?? false,
       config: ABFConfig,
       attackSent: false
@@ -115,10 +124,11 @@ export class AttackConfigurationDialog extends FormApplication {
     if (!weapon) {
       combat.weapon = undefined;
       combat.projectile = { value: false, type: '' };
-      combat.damage.final =
-        (combat.damage.special ?? 0) +
-        10 +
-        this.attackerActor.system.characteristics.primaries.strength.mod;
+      combat.damage.final = combineMassAttackDamage(
+        this.attackerActor,
+        10 + this.attackerActor.system.characteristics.primaries.strength.mod,
+        combat.damage.special ?? 0
+      );
     } else {
       combat.weapon = weapon;
       combat.weaponUsed = weapon._id;
@@ -135,11 +145,15 @@ export class AttackConfigurationDialog extends FormApplication {
         weapon?.system?.critic?.secondary?.value !==
         game.animabf.weapon.NoneWeaponCritic.NONE;
 
-      combat.damage.final =
-        (combat.damage.special ?? 0) + (weapon?.system?.damage?.final?.value ?? 0);
+      combat.damage.final = combineMassAttackDamage(
+        this.attackerActor,
+        weapon?.system?.damage?.final?.value ?? 0,
+        combat.damage.special ?? 0
+      );
     }
 
     this.modalData.config = ABFConfig;
+    enrichMassAttackCombatUi(this.attackerActor, this.modalData);
     return this.modalData;
   }
 
@@ -151,7 +165,28 @@ export class AttackConfigurationDialog extends FormApplication {
     });
   }
 
+  _captureFormCombatState() {
+    const form = this.form;
+    const combat = this.modalData?.attacker?.combat;
+    if (!form || !combat) return;
+
+    try {
+      const { object } = new FormDataExtended(form);
+      const formCombat = object?.attacker?.combat;
+      if (!formCombat) return;
+
+      if (formCombat.modifier !== undefined) {
+        combat.modifier = Number(formCombat.modifier) || 0;
+      }
+      if (formCombat.fatigueUsed !== undefined) {
+        combat.fatigueUsed = Number(formCombat.fatigueUsed) || 0;
+      }
+    } catch (_) {}
+  }
+
   async _sendAttack() {
+    this._captureFormCombatState();
+
     const actor = this.attackerActor;
     if (!actor) return ui.notifications?.warn('Actor no encontrado.');
     const combat = this.modalData.attacker?.combat;
@@ -164,6 +199,9 @@ export class AttackConfigurationDialog extends FormApplication {
 
       const baseAttack = Number(weapon.system.attack?.final?.value ?? 0);
       const mod = Number(combat.modifier ?? 0);
+      const fatigueUsed = Number(combat.fatigueUsed ?? 0);
+      const fatigueMod = fatigueUsed * 15;
+      const massBonus = getAppliedMassAttackBonus(this.attackerActor, combat);
       const die =
         actor.system.combat.attack.base.value >= 200
           ? actor.system.general.diceSettings.abilityMasteryDie.value
@@ -185,8 +223,8 @@ export class AttackConfigurationDialog extends FormApplication {
       const attackPure = baseAttack - aeContribution;
 
       const formula = aeContribution !== 0
-        ? `${die} + ${attackPure} + ${aeContribution} + ${mod}`
-        : `${die} + ${baseAttack} + ${mod}`;
+        ? `${die} + ${attackPure} + ${aeContribution} + ${mod} + ${massBonus} + ${fatigueMod}`
+        : `${die} + ${baseAttack} + ${mod} + ${massBonus} + ${fatigueMod}`;
 
       const roll = new ABFFoundryRoll(formula, actor.system);
       await roll.evaluate({ async: true });
@@ -231,6 +269,10 @@ export class AttackConfigurationDialog extends FormApplication {
 
       await attackData.toChatMessage({ actor, weapon });
 
+      if (fatigueUsed > 0) {
+        actor.applyFatigue(fatigueUsed);
+      }
+
       await this.close();
     } catch (err) {
       console.error(err);
@@ -253,6 +295,12 @@ export class AttackConfigurationDialog extends FormApplication {
       formData['attacker.combat.projectile.value'] =
         formData['attacker.combat.projectile.value'] === 'on' ||
         formData['attacker.combat.projectile.value'] === true;
+    }
+
+    if (formData['attacker.combat.massAttackBonusEnabled'] !== undefined) {
+      formData['attacker.combat.massAttackBonusEnabled'] =
+        formData['attacker.combat.massAttackBonusEnabled'] === 'on' ||
+        formData['attacker.combat.massAttackBonusEnabled'] === true;
     }
 
     this.modalData = foundry.utils.mergeObject(this.modalData, formData);

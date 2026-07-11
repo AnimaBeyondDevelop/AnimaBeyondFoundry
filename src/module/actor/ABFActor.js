@@ -25,6 +25,10 @@ import { FormulaEvaluator } from '../../utils/formulaEvaluator.js';
 import { inflateSystemFromTypeMarkers } from './types/inflateSystemFromTypeMarkers.js';
 import { TYPED_PATHS } from './types/typedTemplateIndex.js';
 import { buildTypedNodes } from './types/runtimeTypedNodes.js';
+import { usesMassDefenseRules, usesResistanceDefenseRules } from './utils/massSettings.js';
+import { ensureGeneralSettingsDefaults } from './utils/ensureGeneralSettingsDefaults.js';
+import { syncMassMemberCountOnActor } from './utils/syncMassMemberCount.js';
+import { syncMassAttackBonusOnActor } from './utils/syncMassAttackBonus.js';
 
 export class ABFActor extends Actor {
   i18n = game.i18n;
@@ -35,6 +39,8 @@ export class ABFActor extends Actor {
    */
   constructor(data, context) {
     super(data, context);
+
+    ensureGeneralSettingsDefaults(this.system);
 
     if (this.system.version !== INITIAL_ACTOR_DATA.version) {
       Logger.log(
@@ -56,6 +62,10 @@ export class ABFActor extends Actor {
 
   async prepareDerivedData() {
     super.prepareDerivedData();
+
+    ensureGeneralSettingsDefaults(this.system);
+    syncMassMemberCountOnActor(this, { persist: true });
+    syncMassAttackBonusOnActor(this, { persist: true });
 
     // this.system = foundry.utils.mergeObject(this.system, INITIAL_ACTOR_DATA, {
     //   overwrite: false
@@ -355,6 +365,8 @@ export class ABFActor extends Actor {
    * @param {boolean} keepAccumulating - A flag indicating whether to continue accumulating defenses or not.
    */
   accumulateDefenses(keepAccumulating) {
+    if (usesResistanceDefenseRules(this) || usesMassDefenseRules(this)) return;
+
     /** @type {{accumulated: number, keepAccumulating: boolean}} */
     const defensesCounter = this.getFlag(game.animabf.id, 'defensesCounter') || {
       accumulated: 0,
@@ -937,7 +949,7 @@ export class ABFActor extends Actor {
       return this.getInnerItems(type);
     }
 
-    return this.items.filter(i => i.type === type);
+    return this.items.filter(i => i.type === type).sort((a, b) => a.sort - b.sort);
   }
 
   /**

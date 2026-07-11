@@ -25,7 +25,7 @@ export const EffectItemConfig = ABFItemConfigFactory({
   fieldPath: ['_effectsDummy'],
 
   selectors: {
-    containerSelector: '.effects-list',
+    containerSelector: '#effects-list-context-menu-container',
     rowSelector: '.item.effect',
     addItemButtonSelector: 'add-effect'
   },

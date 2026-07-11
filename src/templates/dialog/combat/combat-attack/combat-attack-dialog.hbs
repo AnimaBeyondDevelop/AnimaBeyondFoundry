@@ -49,6 +49,10 @@
           }}
         {{/if}}
 
+        {{#if this.ui.isMassOfEnemies}}
+          {{> dialog/combat/mass-attack-bonus-fields this=this}}
+        {{/if}}
+
         <section class="sheet-body">
           <div class="tab combat" data-group="primary" data-tab="combat">
             {{> 'systems/animabf/templates/dialog/combat/combat-attack/parts/combat.hbs' this=this}}

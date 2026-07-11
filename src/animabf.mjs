@@ -38,7 +38,15 @@ import { ensureLinkedEffectForItem } from './module/actor/utils/ensureLinkedEffe
 import { inferAttributeFromFlavor } from './module/actor/utils/attributeDerivationMap.js';
 import { getActiveEffectsBreakdownForAttribute } from './module/actor/utils/activeEffectsBreakdown.js';
 import { formatAeBreakdownForFlavor } from './module/actor/utils/aeBreakdownFormat.js';
+import {
+  drawMassMemberBadge,
+  refreshMassMemberBadgesForActor,
+  shouldRefreshMassMemberBadge
+} from './module/token/drawMassMemberBadge.js';
 import { resolveActorFromSpeaker } from './module/actor/utils/resolveActorForRoll.js';
+import { isMassOfEnemies } from './module/actor/utils/massSettings.js';
+import { buildMassMemberCountUpdate } from './module/actor/utils/syncMassMemberCount.js';
+import { buildMassAttackBonusUpdate } from './module/actor/utils/syncMassAttackBonus.js';
 
 /* ------------------------------------ */
 /* Initialize system */
@@ -477,6 +485,41 @@ Hooks.on('renderTokenHUD', async (hud, html) => {
       accumulated: newValue
     });
   };
+});
+
+Hooks.on('drawToken', (token, _layer) => {
+  drawMassMemberBadge(token);
+});
+
+Hooks.on('refreshToken', token => {
+  drawMassMemberBadge(token);
+});
+
+Hooks.on('preUpdateActor', (actor, changes) => {
+  const newLife =
+    foundry.utils.getProperty(changes, 'system.characteristics.secondaries.lifePoints.value') ??
+    changes['system.characteristics.secondaries.lifePoints.value'];
+
+  if (newLife !== undefined && isMassOfEnemies(actor)) {
+    const update = buildMassMemberCountUpdate(actor, Number(newLife) || 0);
+    if (update) {
+      for (const [path, value] of Object.entries(update)) {
+        foundry.utils.setProperty(changes, path, value);
+      }
+    }
+  }
+
+  const bonusUpdate = buildMassAttackBonusUpdate(actor, changes);
+  if (!bonusUpdate) return;
+
+  for (const [path, value] of Object.entries(bonusUpdate)) {
+    foundry.utils.setProperty(changes, path, value);
+  }
+});
+
+Hooks.on('updateActor', (actor, changes) => {
+  if (!shouldRefreshMassMemberBadge(changes)) return;
+  refreshMassMemberBadgesForActor(actor);
 });
 
 Hooks.on('hotbarDrop', (_bar, data, slot) => {

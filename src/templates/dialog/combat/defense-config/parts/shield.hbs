@@ -3,7 +3,7 @@
   {{> dialog/combat/defense-config/parts/common-fields this=this fieldsDisabled=this.defenseSent}}
 
   {{#if (isArrayEmpty this.ui.supernaturalShields)}}
-    <p class="label">{{localize "macros.combat.dialog.weapon.notFound"}}</p>
+    <p class="label no-shields-message">{{localize "macros.combat.dialog.supernaturalShield.noneCreated"}}</p>
   {{else}}
     {{!-- Lista los escudos sobrenaturales disponibles con nombre y puntos de vida --}}
     {{#> 'systems/animabf/templates/common/ui/custom-select.hbs'
@@ -20,14 +20,16 @@
     <p class="label">{{localize "anima.ui.combat.defense.title"}}: {{this.ui.shieldValue}}</p>
   {{/if}}
 
-  {{#if this.defenseSent}}
-    <div class='defense-sent'>
-      {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
-      <p class='label'>{{localize 'macros.combat.dialog.defenseSent.title'}}</p>
-    </div>
-  {{else}}
-    <button class='animabf-button send-defense' data-type='shield'>
-      {{localize 'macros.combat.dialog.defenseButton.title'}}
-    </button>
-  {{/if}}
+  {{#unless (isArrayEmpty this.ui.supernaturalShields)}}
+    {{#if this.defenseSent}}
+      <div class='defense-sent'>
+        {{>'systems/animabf/templates/common/ui/loading-indicator.hbs' class="big"}}
+        <p class='label'>{{localize 'macros.combat.dialog.defenseSent.title'}}</p>
+      </div>
+    {{else}}
+      <button class='animabf-button send-defense' data-type='shield'>
+        {{localize 'macros.combat.dialog.defenseButton.title'}}
+      </button>
+    {{/if}}
+  {{/unless}}
 {{/if}}

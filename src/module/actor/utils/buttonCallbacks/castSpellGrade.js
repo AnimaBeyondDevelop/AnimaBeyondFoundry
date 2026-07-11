@@ -4,6 +4,7 @@ import { Templates } from '../../../utils/constants';
 import { openModDialog } from '../../../utils/dialogs/openSimpleInputDialog.js';
 import { SpellAttackConfigurationDialog } from '../../../dialogs/SpellAttackConfigurationDialog.js';
 import { getSnapshotTargets } from '../getSnapshotTargets.js';
+import { combineMassAttackDamage } from '../applyMassAttackDamage.js';
 import {
   castMysticDefenseShield,
   getMysticShieldName,
@@ -152,7 +153,12 @@ export async function castSpellAtGrade(actor, { spellId, grade, token, useDialog
     flavor: `${spell.name} (${localizeMysticSpellGrade(grade)})`
   });
 
-  const baseDamage = Number(spell.system.grades[grade]?.damage?.value ?? 0);
+  const baseDamage = combineMassAttackDamage(
+    actor,
+    Number(spell.system.grades[grade]?.damage?.value ?? 0),
+    0,
+    { supernatural: true }
+  );
 
   await ABFAttackData.builder()
     .attackAbility(roll.total)

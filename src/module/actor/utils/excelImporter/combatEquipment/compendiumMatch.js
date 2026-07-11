@@ -71,13 +71,43 @@ async function loadPack(logicalType) {
   return cache[logicalType];
 }
 
-function normalize(s) {
+export function normalize(s) {
   if (!s) return '';
   return String(s)
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
     .trim();
+}
+
+/**
+ * Devuelve un item embebido del actor que ya representa el mismo equipo que
+ * el nombre del Excel (match directo, alias o entrada del compendio).
+ *
+ * @param {Actor} actor
+ * @param {'weapons'|'armors'|'ammo'} logicalType
+ * @param {string} excelName
+ * @returns {Promise<Item|null>}
+ */
+export async function findExistingEmbeddedItem(actor, logicalType, excelName) {
+  const cfg = SOURCE_MAP[logicalType];
+  if (!cfg || !excelName) return null;
+
+  const existing = actor.items?.filter(i => i.type === cfg.itemType) ?? [];
+  if (!existing.length) return null;
+
+  const importDoc = await findInCompendium(logicalType, excelName);
+
+  for (const item of existing) {
+    if (normalize(item.name) === normalize(excelName)) return item;
+
+    if (importDoc) {
+      if (normalize(item.name) === normalize(importDoc.name)) return item;
+      const existingDoc = await findInCompendium(logicalType, item.name);
+      if (existingDoc?.id === importDoc.id) return item;
+    }
+  }
+  return null;
 }
 
 /**

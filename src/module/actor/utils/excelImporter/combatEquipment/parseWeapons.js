@@ -10,7 +10,11 @@ import {
   WEAPON_TABLE_NAMED_RANGE,
   WEAPON_ROW
 } from './constants.js';
-import { findInCompendium, cloneCompendiumItem } from './compendiumMatch.js';
+import {
+  findInCompendium,
+  cloneCompendiumItem,
+  findExistingEmbeddedItem
+} from './compendiumMatch.js';
 
 /**
  * Resuelve el rango "Tabla_Combate" en el workbook xlsx.
@@ -125,13 +129,19 @@ export function readWeaponsFromWorkbook(workbook) {
  *   el sistema para resolver la munición asociada al disparar).
  *   Si el arma no tiene ammo o la ammo no está en el mapa, no se enlaza.
  *
- * @returns {{ imported: number, notFound: string[] }}
+ * @returns {{ imported: number, skipped: number, notFound: string[] }}
  */
 export async function importWeaponsToActor(actor, weapons, ammoIdMap = {}) {
   const items = [];
   const notFound = [];
+  let skipped = 0;
 
   for (const w of weapons) {
+    if (await findExistingEmbeddedItem(actor, 'weapons', w.name)) {
+      skipped++;
+      continue;
+    }
+
     const ammoId = w.ammo && ammoIdMap[w.ammo] ? ammoIdMap[w.ammo] : null;
     const doc = await findInCompendium('weapons', w.name);
 
@@ -177,5 +187,5 @@ export async function importWeaponsToActor(actor, weapons, ammoIdMap = {}) {
   if (items.length) {
     await actor.createEmbeddedDocuments('Item', items);
   }
-  return { imported: items.length, notFound };
+  return { imported: items.length, skipped, notFound };
 }

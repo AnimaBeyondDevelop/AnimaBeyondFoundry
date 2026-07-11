@@ -1,6 +1,7 @@
 {{!-- Pestaña de parada: solo se renderiza en DOM cuando está activa para evitar inputs duplicados --}}
 {{#if (is 'eq' this.ui.activeTab 'block')}}
   {{> dialog/combat/defense-config/parts/common-fields this=this fieldsDisabled=this.defenseSent}}
+  {{> dialog/combat/defense-config/parts/fatigue-fields this=this fieldsDisabled=this.defenseSent}}
   {{> dialog/combat/defense-config/parts/multiple-defenses-fields this=this fieldsDisabled=this.defenseSent}}
 
   {{#if this.defender.combat.unarmed}}

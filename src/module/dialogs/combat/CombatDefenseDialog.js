@@ -5,6 +5,10 @@ import { ABFSettingsKeys } from '../../../utils/registerSettings';
 import { getMysticShieldPoints } from '../../mystic/utils/mysticDefenseShield.js';
 import { getPsychicShieldPoints } from '../../psychic/utils/psychicDefenseShield.js';
 import { hasAbilityMastery } from '../../combat/utils/computeAbilityMasteryValue.js';
+import {
+  usesMassDefenseRules,
+  usesResistanceDefenseRules
+} from '../../actor/utils/massSettings.js';
 
 const getInitialData = (attacker, defender) => {
   const showRollByDefault = !!game.settings.get(
@@ -16,10 +20,9 @@ const getInitialData = (attacker, defender) => {
   const attackerActor = attacker.token.actor;
   const defenderActor = defender.actor;
 
-  const activeTab =
-    defenderActor.system.general.settings.defenseType.value === 'resistance'
-      ? 'damageResistance'
-      : 'combat';
+  const activeTab = usesResistanceDefenseRules(defenderActor)
+    ? 'damageResistance'
+    : 'combat';
 
   const defensesCounter = defenderActor.getFlag(game.animabf.id, 'defensesCounter') || {
     accumulated: 0,
@@ -46,7 +49,8 @@ const getInitialData = (attacker, defender) => {
       token: defender,
       actor: defenderActor,
       showRoll: !isGM || showRollByDefault,
-      withoutRoll: defenderActor.system.general.settings.defenseType.value === 'mass',
+      withoutRoll: usesMassDefenseRules(defenderActor),
+      usesResistanceDefense: usesResistanceDefenseRules(defenderActor),
       blindness: false,
       distance: attacker.distance,
       zen: defenderActor.system.general.settings.zen.value,

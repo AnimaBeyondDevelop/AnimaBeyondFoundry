@@ -56,6 +56,24 @@
           },
           "defenseType": {
             "value": ""
+          },
+          "massOfEnemies": {
+            "value": false
+          },
+          "damageAccumulation": {
+            "value": false
+          },
+          "individualLife": {
+            "value": 0
+          },
+          "organizedMass": {
+            "value": false
+          },
+          "massMemberCount": {
+            "value": 0
+          },
+          "massAttackBonus": {
+            "value": 0
           }
         },
         "diceSettings": {

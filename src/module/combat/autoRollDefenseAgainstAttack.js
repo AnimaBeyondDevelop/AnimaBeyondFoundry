@@ -10,6 +10,10 @@ import {
   getAccumulatedDefenses,
   multipleDefensePenaltyFromAccumulated
 } from './utils/defensesCounterCheck.js';
+import {
+  usesMassDefenseRules,
+  usesResistanceDefenseRules
+} from '../actor/utils/massSettings.js';
 
 function toSafeNumber(v) {
   const n = Number(v);
@@ -41,8 +45,7 @@ function buildFixedDefenseResult({
   attackData,
   defenseTotal,
   defenseType,
-  candidate = null,
-  defensesCounter = null
+  candidate = null
 }) {
   const armorType = attackData?.armorType;
   const taFinal =
@@ -73,14 +76,6 @@ function buildFixedDefenseResult({
 
   const combatResult = computeCombatResult(attackData, defenseData);
 
-  if (
-    candidate?.stackDefense &&
-    defensesCounter &&
-    typeof actor.accumulateDefenses === 'function'
-  ) {
-    actor.accumulateDefenses(defensesCounter.keepAccumulating ?? true);
-  }
-
   return {
     actor,
     token: defenderToken ?? null,
@@ -108,11 +103,10 @@ export async function autoRollDefenseAgainstAttack({
 
   attackData = normalizeAttackData(attackData);
 
-  const defenseMode = actor.system?.general?.settings?.defenseType?.value;
   const defensesCounter = getDefensesCounter(actor);
 
   // Accumulation/resistance defenders: final defense 0, no roll.
-  if (defenseMode === 'resistance') {
+  if (usesResistanceDefenseRules(actor)) {
     return buildFixedDefenseResult({
       actor,
       defenderToken,
@@ -123,7 +117,7 @@ export async function autoRollDefenseAgainstAttack({
   }
 
   // Mass defenders: use defense.final without rolling dice.
-  if (defenseMode === 'mass') {
+  if (usesMassDefenseRules(actor)) {
     const candidate = pickBestDefenseCandidate(actor, { attackData, defensesCounter });
     if (!candidate)
       throw new Error('autoRollDefenseAgainstAttack: no defense candidates available');
@@ -134,8 +128,7 @@ export async function autoRollDefenseAgainstAttack({
       attackData,
       defenseTotal: candidate.finalBase,
       defenseType: 'mass',
-      candidate,
-      defensesCounter
+      candidate
     });
   }
 

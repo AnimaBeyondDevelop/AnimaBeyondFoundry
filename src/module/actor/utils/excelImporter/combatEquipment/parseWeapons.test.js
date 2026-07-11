@@ -23,6 +23,7 @@ function makePack(items) {
 
 function makeItem(name, type, system = {}) {
   return {
+    id: 'comp_' + name,
     name,
     type,
     toObject() {
@@ -37,11 +38,16 @@ function makeItem(name, type, system = {}) {
   };
 }
 
-function makeActor() {
+function makeActor(existingItems = []) {
   const created = [];
   let counter = 0;
   return {
     created,
+    items: {
+      filter(fn) {
+        return existingItems.filter(fn);
+      }
+    },
     createEmbeddedDocuments: async (kind, items) => {
       const withIds = items.map(i => ({ ...i, _id: 'w_' + (++counter) }));
       created.push(...withIds);
@@ -253,5 +259,43 @@ describe('importWeaponsToActor — linking ammo → weapon', () => {
     const byName = Object.fromEntries(actor.created.map(w => [w.name, w.system.ammoId]));
     expect(byName['Ballesta']).toBe('ammo_alpha');
     expect(byName['Pistola']).toBe('ammo_beta');
+  });
+
+  it('skips weapons that already exist on the actor (by compendium name)', async () => {
+    globalThis.game.packs = { get: () => makePack([makeItem('Pistola', 'weapon', {})]) };
+    const actor = makeActor([{ name: 'Pistola', type: 'weapon' }]);
+
+    const result = await importWeaponsToActor(actor, [
+      { slot: 1, name: 'Pistola', quality: 0, knowledge: 'known', ammo: null, ammoQuality: 0, hands: null }
+    ]);
+
+    expect(actor.created).toHaveLength(0);
+    expect(result.imported).toBe(0);
+    expect(result.skipped).toBe(1);
+  });
+
+  it('skips weapons matched via compendium alias when the actor already has the compendium item', async () => {
+    globalThis.game.packs = { get: () => makePack([makeItem('Mandoble', 'weapon', {})]) };
+    const actor = makeActor([{ name: 'Mandoble', type: 'weapon' }]);
+
+    const result = await importWeaponsToActor(actor, [
+      { slot: 1, name: 'Espada a dos manos', quality: 0, knowledge: 'known', ammo: null, ammoQuality: 0, hands: null }
+    ]);
+
+    expect(actor.created).toHaveLength(0);
+    expect(result.skipped).toBe(1);
+  });
+
+  it('skips unmatched fallback weapons when the actor already has the same name', async () => {
+    globalThis.game.packs = { get: () => makePack([]) };
+    const actor = makeActor([{ name: 'Pistola exótica', type: 'weapon' }]);
+
+    const result = await importWeaponsToActor(actor, [
+      { slot: 1, name: 'Pistola exótica', quality: 0, knowledge: 'known', ammo: null, ammoQuality: 0, hands: null }
+    ]);
+
+    expect(actor.created).toHaveLength(0);
+    expect(result.skipped).toBe(1);
+    expect(result.notFound).toEqual([]);
   });
 });

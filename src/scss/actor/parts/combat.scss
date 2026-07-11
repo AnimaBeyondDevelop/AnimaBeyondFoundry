@@ -102,6 +102,9 @@
     }
 
     .weapon-header {
+      display: flex;
+      align-items: center;
+
       .input-container {
         width: 15rem;
       }
@@ -190,6 +193,9 @@
     }
 
     .armor-header {
+      display: flex;
+      align-items: center;
+
       .input-container {
         width: 15rem;
       }
