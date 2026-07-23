@@ -1,0 +1,37 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="supernatural-shield-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+      <div class='supernatural-shield-header'>
+        {{>
+        "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+          class="name"
+          hideTitle=true
+          inputType="text"
+          inputName="name"
+          inputValue=item.name
+        }}
+      </div>
+    {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+    {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+      class="supernatural-shield-item-dialog"
+    }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="shieldPoints"
+        title=(localize "anima.ui.combat.supernaturalShields.shieldPoints.title")
+        inputName="system.shieldPoints"
+        inputValue=system.shieldPoints
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="ability-formula"
+        title=(localize "anima.ui.combat.supernaturalShields.abilityFormula.title")
+        inputType="text"
+        inputName="system.abilityFormula"
+        inputValue=system.abilityFormula
+      }}
+    {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

@@ -1,0 +1,37 @@
+@use '../../variable' as *;
+
+.base-item {
+  .supernatural-shield-item-dialog {
+    padding-left: 1rem;
+
+    .group-header {
+      .input-container {
+        width: 100%;
+      }
+    }
+
+    .group-body {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+
+      .common-titled-input {
+        margin: 0.5rem;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .ability-formula {
+        .input-container {
+          width: 28rem;
+        }
+      }
+    }
+  }
+}

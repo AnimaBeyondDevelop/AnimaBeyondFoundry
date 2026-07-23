@@ -120,6 +120,7 @@
   "anima.ui.combat.supernaturalShields.origin.title": "Origin",
   "anima.ui.combat.supernaturalShields.shieldPoints.title": "Life points",
   "anima.ui.combat.supernaturalShields.ability.title": "Ability",
+  "anima.ui.combat.supernaturalShields.abilityFormula.title": "Formule d'habileté",
   "anima.ui.combat.supernaturalShields.bonus.title": "Modifier",
   "anima.ui.combat.supernaturalShields.addedNotification": "Bouclier surnaturel ajouté : {name}",
   "anima.ui.combat.attack.modifier.title": "Modifier",
