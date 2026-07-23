@@ -35,6 +35,7 @@ import { registerHandlebarsPartials } from './utils/handlebarsPartials.js';
 import { macroCreators, macroExecutors } from './utils/macroCreatorRegistry.js';
 import { resolveHotbarMacroCreatorId } from './utils/resolveHotbarMacroCreatorId.js';
 import { ensureLinkedEffectForItem } from './module/actor/utils/ensureLinkedEffectForItem.js';
+import { ABFItems } from './module/items/ABFItems.js';
 import { inferAttributeFromFlavor } from './module/actor/utils/attributeDerivationMap.js';
 import { getActiveEffectsBreakdownForAttribute } from './module/actor/utils/activeEffectsBreakdown.js';
 import { formatAeBreakdownForFlavor } from './module/actor/utils/aeBreakdownFormat.js';
@@ -367,6 +368,23 @@ Hooks.on('createItem', async (item, _options, userId) => {
   const actor = item.parent;
   if (!actor) return;
   await ensureLinkedEffectForItem(actor, item);
+});
+
+// Auto-release supernatural shields when their points reach 0 (manual edits included).
+Hooks.on('updateItem', async (item, changes, _options, userId) => {
+  if (userId !== game.user.id) return;
+  if (item?.type !== ABFItems.SUPERNATURAL_SHIELD) return;
+  if (changes.system?.shieldPoints === undefined) return;
+
+  const points = Number(changes.system.shieldPoints);
+  if (!Number.isFinite(points) || points > 0) return;
+
+  const actor = item.parent;
+  if (typeof actor?.deleteSupernaturalShield === 'function') {
+    await actor.deleteSupernaturalShield(item.id);
+  } else if (item.id) {
+    await item.delete();
+  }
 });
 
 // Allow dropping system "effect" items directly onto a token on the canvas.
