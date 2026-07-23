@@ -164,14 +164,20 @@ export async function castSpellAtGrade(actor, { spellId, grade, token, useDialog
     .attackAbility(roll.total)
     .damage(baseDamage)
     .ignoreArmor(false)
-    .reducedArmor(0)
+    .reducedArmor(Number(spell.system.grades?.[grade]?.reducedArmor?.value ?? 0))
     .armorType(spell.system.critic?.value ?? game.animabf.weapon.NoneWeaponCritic.NONE)
     .damageType(game.animabf.combat.DamageType.NONE)
     .presence(0)
     .isProjectile(true)
-    .automaticCrit(!!actor.system.general.modifiers.automaticCrit?.value)
-    .critBonus(0)
-    .critDamageBonus(actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
+    .automaticCrit(
+      !!spell.system.grades?.[grade]?.automaticCrit?.value ||
+        !!actor.system.general.modifiers.automaticCrit?.value
+    )
+    .critBonus(
+      Number(spell.system.grades?.[grade]?.critBonus?.value ?? 0) +
+        Number(actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
+    )
+    .critDamageBonus(0)
     .attackerId(actor.id)
     .weaponId(spell.id)
     .targets(getSnapshotTargets())

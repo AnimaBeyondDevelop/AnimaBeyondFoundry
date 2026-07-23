@@ -63,10 +63,26 @@
 
 {{>
 "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
-  title=(localize 'macros.combat.dialog.critDamageBonus.title')
-  inputName="attacker.mystic.critDamageBonus"
-  inputValue=this.attacker.mystic.critDamageBonus
+  title=(localize 'anima.ui.combat.weapons.reducedArmor.final.title')
+  inputName="attacker.mystic.reducedArmor.special"
+  inputValue=this.attacker.mystic.reducedArmor.special
   disabled=this.attackSent
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.mystic.reducedArmor.final"
+  secondaryInputValue=this.attacker.mystic.reducedArmor.final
+}}
+
+{{>
+"systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+  title=(localize 'macros.combat.dialog.critDamageBonus.title')
+  inputName="attacker.mystic.critDamageBonus.special"
+  inputValue=this.attacker.mystic.critDamageBonus.special
+  disabled=this.attackSent
+  hasSecondaryInput=true
+  disableSecondaryInput=true
+  secondaryInputName="attacker.mystic.critDamageBonus.final"
+  secondaryInputValue=this.attacker.mystic.critDamageBonus.final
 }}
 
 <div class='columns'>

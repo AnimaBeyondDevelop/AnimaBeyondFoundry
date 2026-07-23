@@ -110,8 +110,14 @@ function tryApplySupernaturalShieldWear(
   const shieldItem = defenderActor.items?.get?.(shieldId);
   if (shieldItem) {
     const current = Number(shieldItem.system?.shieldPoints ?? 0) || 0;
-    const next = Math.max(0, current - totalShieldDamage);
-    if (next !== current) {
+    const next = current - totalShieldDamage;
+    if (next <= 0) {
+      if (typeof defenderActor.deleteSupernaturalShield === 'function') {
+        defenderActor.deleteSupernaturalShield(shieldId).catch(() => {});
+      } else {
+        shieldItem.delete().catch(() => {});
+      }
+    } else if (next !== current) {
       shieldItem.update({ 'system.shieldPoints': next }).catch(() => {});
     }
     return;
@@ -120,8 +126,12 @@ function tryApplySupernaturalShieldWear(
   const dyn = defenderActor.system?.dynamic?.supernaturalShields?.[shieldId];
   if (dyn?.system) {
     const current = Number(dyn.system.shieldPoints ?? 0) || 0;
-    const next = Math.max(0, current - totalShieldDamage);
-    if (next !== current) {
+    const next = current - totalShieldDamage;
+    if (next <= 0) {
+      if (typeof defenderActor.deleteSupernaturalShield === 'function') {
+        defenderActor.deleteSupernaturalShield(shieldId).catch(() => {});
+      }
+    } else if (next !== current) {
       defenderActor
         .update({
           [`system.dynamic.supernaturalShields.${shieldId}.system.shieldPoints`]: next

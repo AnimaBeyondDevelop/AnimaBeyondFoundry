@@ -54,6 +54,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     40: {
@@ -61,6 +64,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     80: {
@@ -68,6 +74,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     120: {
@@ -75,6 +84,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     140: {
@@ -82,6 +94,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     180: {
@@ -89,6 +104,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     240: {
@@ -96,6 +114,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     280: {
@@ -103,6 +124,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     320: {
@@ -110,6 +134,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     },
     440: {
@@ -117,6 +144,9 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
       damage: { value: 0 },
       fatigue: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       affectsInmaterial: { value: false }
     }
   },

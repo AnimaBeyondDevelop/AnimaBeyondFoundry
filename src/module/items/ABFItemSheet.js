@@ -1,5 +1,7 @@
 import { ABFItems } from './ABFItems';
 import { ITEM_CONFIGURATIONS } from '../actor/utils/prepareItems/constants';
+import { SpellGradeConfigDialog } from '../dialogs/SpellGradeConfigDialog.js';
+import { PsychicEffectConfigDialog } from '../dialogs/PsychicEffectConfigDialog.js';
 
 const ItemSheetV1 = foundry.appv1?.sheets?.ItemSheet ?? ItemSheet;
 export default class ABFItemSheet extends ItemSheetV1 {
@@ -34,6 +36,8 @@ export default class ABFItemSheet extends ItemSheetV1 {
         return 1000;
       case ABFItems.WEAPON:
         return 815;
+      case ABFItems.SUPERNATURAL_SHIELD:
+        return 720;
       default:
         return 900;
     }
@@ -51,6 +55,8 @@ export default class ABFItemSheet extends ItemSheetV1 {
         return 144;
       case ABFItems.PSYCHIC_POWER:
         return 540;
+      case ABFItems.SUPERNATURAL_SHIELD:
+        return 180;
       default:
         return 450;
     }
@@ -65,6 +71,67 @@ export default class ABFItemSheet extends ItemSheetV1 {
     sheet.config = CONFIG.config;
 
     return sheet;
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    if (this.item?.type === ABFItems.SPELL) {
+      this._activateSpellGradeContextMenu(html);
+    }
+    if (this.item?.type === ABFItems.PSYCHIC_POWER) {
+      this._activatePsychicEffectContextMenu(html);
+    }
+  }
+
+  _activateSpellGradeContextMenu(html) {
+    const ContextMenuImpl =
+      foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    const sheet = this;
+
+    new ContextMenuImpl(
+      html instanceof HTMLElement ? html : html[0],
+      '.grade-row',
+      [
+        {
+          name: game.i18n.localize('contextualMenu.common.options.edit'),
+          icon: '<i class="fas fa-edit"></i>',
+          callback: target => {
+            const el = target instanceof HTMLElement ? target : target[0];
+            const gradeKey = el?.dataset?.grade;
+            if (!gradeKey) return;
+            new SpellGradeConfigDialog(sheet.item, { gradeKey }).render(true);
+          }
+        }
+      ],
+      ...(isV14 ? [{ jQuery: false }] : [])
+    );
+  }
+
+  _activatePsychicEffectContextMenu(html) {
+    const ContextMenuImpl =
+      foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    const sheet = this;
+
+    new ContextMenuImpl(
+      html instanceof HTMLElement ? html : html[0],
+      '.effect-row',
+      [
+        {
+          name: game.i18n.localize('contextualMenu.common.options.edit'),
+          icon: '<i class="fas fa-edit"></i>',
+          callback: target => {
+            const el = target instanceof HTMLElement ? target : target[0];
+            const difficultyKey = el?.dataset?.difficulty;
+            if (difficultyKey == null || difficultyKey === '') return;
+            new PsychicEffectConfigDialog(sheet.item, { difficultyKey }).render(true);
+          }
+        }
+      ],
+      ...(isV14 ? [{ jQuery: false }] : [])
+    );
   }
 
   // ABFItemSheet.js

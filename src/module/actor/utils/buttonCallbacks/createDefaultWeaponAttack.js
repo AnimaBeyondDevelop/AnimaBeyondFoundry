@@ -50,8 +50,11 @@ export async function createDefaultWeaponAttack(sheet, e) {
     .isProjectile(isRangedWeapon)
     .projectileType(isRangedWeapon ? weapon.system?.shotType?.value ?? '' : '')
     .automaticCrit(!!(sheet.actor.system.general.modifiers.automaticCrit?.value))
-    .critBonus(0)
-    .critDamageBonus(sheet.actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
+    .critBonus(
+      Number(weapon.system.critBonus?.value ?? 0) +
+        Number(sheet.actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
+    )
+    .critDamageBonus(0)
     //   .maneuvers(["Finta"])
     //   .onHitEffects(["Aturdido 1 asalto"])
     .attackerId(sheet.actor.id)

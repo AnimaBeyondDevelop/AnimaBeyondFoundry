@@ -102,6 +102,7 @@ export const INITIAL_WEAPON_DATA = {
   special: { value: '' },
   hasOwnStr: { value: false },
   ignoreArmor: { value: false },
+  critBonus: { value: 0 },
   reducedArmor: {
     base: { value: 0 },
     special: { value: 0 },

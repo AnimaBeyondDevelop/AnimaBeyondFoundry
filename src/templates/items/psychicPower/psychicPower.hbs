@@ -57,7 +57,7 @@
         class="psychic-power"
       }}
         {{#each system.effects as |effect key|}}
-          <div class='effect-row'>
+          <div class='effect-row' data-difficulty='{{key}}'>
             <input
               type='text'
               class='input difficulty'

@@ -228,6 +228,13 @@
       {{/if}}
       {{>
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+        class="crit-bonus"
+        title=(localize "anima.ui.combat.weapons.critBonus.title")
+        inputName="system.critBonus.value"
+        inputValue=system.critBonus.value
+      }}
+      {{>
+      "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="special"
         title=(localize "anima.ui.combat.weapons.special.title")
         inputType="text"

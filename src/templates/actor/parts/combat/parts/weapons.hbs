@@ -134,6 +134,13 @@
               disableSecondaryInput=true
               secondaryInputValue=weapon.system.reducedArmor.final.value
             }}
+            {{>
+            "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+              class="crit-bonus"
+              title=(localize "anima.ui.combat.weapons.critBonus.title")
+              inputName=(concat "system.dynamic.weapons." weapon._id ".system.critBonus.value")
+              inputValue=weapon.system.critBonus.value
+            }}
           {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
           {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
             <div class='weapon-footer'>

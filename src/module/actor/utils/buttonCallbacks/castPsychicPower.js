@@ -153,15 +153,21 @@ async function _sendPsychicAttackToChat({
       combineMassAttackDamage(actor, Number(baseDamage) || 0, 0, { supernatural: true })
     )
     .ignoreArmor(false)
-    .reducedArmor(0)
+    .reducedArmor(Number(effectData?.reducedArmor?.value ?? 0))
     .armorType(power.system?.critic?.value ?? game.animabf.weapon.NoneWeaponCritic.NONE)
     .damageType(game.animabf.combat.DamageType.NONE)
     .presence(0)
     .isProjectile(true)
     .damagesEnergy(effectData?.affectsInmaterial?.value)
-    .automaticCrit(!!actor.system.general.modifiers.automaticCrit?.value)
-    .critBonus(0)
-    .critDamageBonus(actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
+    .automaticCrit(
+      !!effectData?.automaticCrit?.value ||
+        !!actor.system.general.modifiers.automaticCrit?.value
+    )
+    .critBonus(
+      Number(effectData?.critBonus?.value ?? 0) +
+        Number(actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0)
+    )
+    .critDamageBonus(0)
     .attackerId(actor.id)
     .weaponId(power.id)
     .targets(targets ?? [])
@@ -197,8 +203,9 @@ async function _castPsychicPowerAtPotential({
   roll = null
 }) {
   const combatType = power.system?.combatType?.value ?? 'attack';
+  const fatigue = _getFatigueResult(effectData, effectText);
 
-  if (combatType === 'defense') {
+  if (combatType === 'defense' && fatigue === 0) {
     await castPsychicDefenseShield({
       actor,
       power,
@@ -217,7 +224,7 @@ async function _castPsychicPowerAtPotential({
     return;
   }
 
-  if (combatType === 'attack' && _getFatigueResult(effectData, effectText) === 0) {
+  if (combatType === 'attack' && fatigue === 0) {
     const baseDamage = Number(effectData?.damage?.value ?? 0) || 0;
     const snapshotTargets = getSnapshotTargets();
 

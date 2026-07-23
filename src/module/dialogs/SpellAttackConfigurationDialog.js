@@ -18,6 +18,8 @@ export class SpellAttackConfigurationDialog extends FormApplication {
 
     const actor = attacker.actor;
     const resolvedSpell = spell ?? (spellId ? actor.items.get(spellId) : null);
+    const resolvedGrade = grade ?? 'base';
+    const gradeData = resolvedSpell?.system?.grades?.[resolvedGrade];
 
     const fallbackSnapshot = getSnapshotTargets();
 
@@ -29,12 +31,15 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         token: attacker,
         actor,
         spell: resolvedSpell,
-        grade: grade ?? 'base',
+        grade: resolvedGrade,
         combat: {
           modifier: 0,
           damage: { special: 0, final: 0 },
-          critDamageBonus: actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
-          automaticCrit: !!(actor.system.general.modifiers.automaticCrit?.value)
+          reducedArmor: { special: 0, final: 0 },
+          critBonus: { special: 0, final: 0 },
+          automaticCrit:
+            !!actor.system.general.modifiers.automaticCrit?.value ||
+            !!gradeData?.automaticCrit?.value
         }
       },
       targets: Array.isArray(targets) && targets.length ? targets : fallbackSnapshot
@@ -70,6 +75,15 @@ export class SpellAttackConfigurationDialog extends FormApplication {
       bonusDamage,
       { supernatural: true }
     );
+
+    attacker.combat.reducedArmor.final =
+      Number(gradeData?.reducedArmor?.value ?? 0) +
+      Number(attacker.combat?.reducedArmor?.special ?? 0);
+
+    attacker.combat.critBonus.final =
+      Number(attacker.actor.system.general.modifiers.critDamageBonus?.final?.value ?? 0) +
+      Number(gradeData?.critBonus?.value ?? 0) +
+      Number(attacker.combat?.critBonus?.special ?? 0);
 
     return data;
   }
@@ -141,7 +155,7 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         .attackAbility(roll.total)
         .damage(finalDamage)
         .ignoreArmor(false)
-        .reducedArmor(0)
+        .reducedArmor(Number(attacker.combat?.reducedArmor?.final ?? 0))
         .armorType(
           spell.system?.critic?.value ?? game.animabf.weapon.NoneWeaponCritic.NONE
         )
@@ -149,8 +163,8 @@ export class SpellAttackConfigurationDialog extends FormApplication {
         .presence(0)
         .isProjectile(true)
         .automaticCrit(!!attacker.combat?.automaticCrit)
-        .critBonus(0)
-        .critDamageBonus(Number(attacker.combat?.critDamageBonus ?? 0))
+        .critBonus(Number(attacker.combat?.critBonus?.final ?? 0))
+        .critDamageBonus(0)
         .attackerId(actor.id)
         .weaponId(spell.id)
         .targets(this.modalData.targets ?? [])

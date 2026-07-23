@@ -558,8 +558,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
     const customCallbackFn = itemConfig.onDelete;
 
-    const otherItems =
-      itemConfig.contextMenuConfig?.buildExtraOptionsInContextMenu?.(this.actor) ?? [];
+    const otherItems = [];
 
     if (!itemConfig.isInternal && itemConfig.hasSheet) {
       otherItems.push({
@@ -582,6 +581,10 @@ export default class ABFActorSheet extends ActorSheetV1 {
         }
       });
     }
+
+    otherItems.push(
+      ...(itemConfig.contextMenuConfig?.buildExtraOptionsInContextMenu?.(this.actor) ?? [])
+    );
 
     if (!hideDeleteRow) {
       otherItems.push({

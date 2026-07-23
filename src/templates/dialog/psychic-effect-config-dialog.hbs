@@ -1,0 +1,52 @@
+<form class="abf-psychic-effect-config">
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.spell.grade.description.title"}}</label>
+    <input type="text" name="value" value="{{value}}" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.psychic.psychicPowers.power.effect.fatigue.title"}}</label>
+    <input type="number" name="fatigue" value="{{fatigue}}" step="1" />
+  </div>
+
+  {{#if isAttack}}
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.spell.grade.damage.title"}}</label>
+    <input type="number" name="damage" value="{{damage}}" step="1" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.combat.weapons.reducedArmor.final.title"}}</label>
+    <input type="number" name="reducedArmor" value="{{reducedArmor}}" step="1" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "macros.combat.dialog.critBonus.title"}}</label>
+    <input type="number" name="critBonus" value="{{critBonus}}" step="1" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "macros.combat.dialog.automaticCrit.title"}}</label>
+    <input type="checkbox" name="automaticCrit" {{checked automaticCrit}} />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.psychic.psychicPowers.power.effect.affectsInmaterial.title"}}</label>
+    <input type="checkbox" name="affectsInmaterial" {{checked affectsInmaterial}} />
+  </div>
+  {{/if}}
+
+  {{#if isDefense}}
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.spell.grade.shieldPoints.title"}}</label>
+    <input type="number" name="shieldPoints" value="{{shieldPoints}}" step="1" />
+  </div>
+  {{/if}}
+
+  <footer class="sheet-footer flexrow">
+    <button type="submit">
+      <i class="fas fa-save"></i>
+      {{localize "dialogs.save"}}
+    </button>
+  </footer>
+</form>

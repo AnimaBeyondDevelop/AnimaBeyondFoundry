@@ -95,6 +95,14 @@
     .advanced-grade {
       .grade-name {
         min-width: 5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      span.grade-name {
+        height: 1.7rem;
+        font-weight: bold;
       }
     }
 

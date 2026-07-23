@@ -65,7 +65,8 @@ export class AttackConfigurationDialog extends FormApplication {
           weapon: resolvedWeapon,
           projectile: { value: false, type: '' },
           damage: { special: 0, final: 0 },
-          critDamageBonus: attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+          reducedArmor: { special: 0, final: 0 },
+          critDamageBonus: { special: 0, final: 0 },
           automaticCrit: !!(attackerActor.system.general.modifiers.automaticCrit?.value),
           massAttackBonusEnabled: isMassOfEnemies(attackerActor) ? true : undefined,
           massTargetCount: Math.max(1, resolvedTargets.length || 1),
@@ -129,6 +130,11 @@ export class AttackConfigurationDialog extends FormApplication {
         10 + this.attackerActor.system.characteristics.primaries.strength.mod,
         combat.damage.special ?? 0
       );
+      combat.reducedArmor.final = Number(combat.reducedArmor?.special ?? 0);
+      combat.critDamageBonus.final =
+        Number(
+          this.attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0
+        ) + Number(combat.critDamageBonus?.special ?? 0);
     } else {
       combat.weapon = weapon;
       combat.weaponUsed = weapon._id;
@@ -150,6 +156,15 @@ export class AttackConfigurationDialog extends FormApplication {
         weapon?.system?.damage?.final?.value ?? 0,
         combat.damage.special ?? 0
       );
+      combat.reducedArmor.final =
+        Number(weapon.system?.reducedArmor?.final?.value ?? 0) +
+        Number(combat.reducedArmor?.special ?? 0);
+      combat.critDamageBonus.final =
+        Number(
+          this.attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0
+        ) +
+        Number(weapon.system?.critBonus?.value ?? 0) +
+        Number(combat.critDamageBonus?.special ?? 0);
     }
 
     this.modalData.config = ABFConfig;
@@ -180,6 +195,12 @@ export class AttackConfigurationDialog extends FormApplication {
       }
       if (formCombat.fatigueUsed !== undefined) {
         combat.fatigueUsed = Number(formCombat.fatigueUsed) || 0;
+      }
+      if (formCombat.reducedArmor?.special !== undefined) {
+        combat.reducedArmor.special = Number(formCombat.reducedArmor.special) || 0;
+      }
+      if (formCombat.critDamageBonus?.special !== undefined) {
+        combat.critDamageBonus.special = Number(formCombat.critDamageBonus.special) || 0;
       }
     } catch (_) {}
   }
@@ -249,7 +270,7 @@ export class AttackConfigurationDialog extends FormApplication {
         .attackAbility(roll.total)
         .damage(Number(combat.damage?.final ?? weapon.system.damage?.final?.value ?? 0))
         .ignoreArmor(!!weapon.system.ignoreArmor?.value)
-        .reducedArmor(Number(weapon.system.reducedArmor?.final?.value ?? 0))
+        .reducedArmor(Number(combat.reducedArmor?.final ?? 0))
         .armorType(combat.criticSelected ?? weapon.system.critic?.primary?.value)
         .damageType(game.animabf.combat.DamageType.NONE)
         .presence(Number(weapon.system.presence?.final?.value ?? 0))
@@ -260,8 +281,8 @@ export class AttackConfigurationDialog extends FormApplication {
             ''
         )
         .automaticCrit(!!combat.automaticCrit)
-        .critBonus(0)
-        .critDamageBonus(Number(combat.critDamageBonus ?? 0))
+        .critBonus(Number(combat.critDamageBonus?.final ?? 0))
+        .critDamageBonus(0)
         .attackerId(actor.id)
         .weaponId(weapon.id)
         .targets(this.modalData.targets ?? [])

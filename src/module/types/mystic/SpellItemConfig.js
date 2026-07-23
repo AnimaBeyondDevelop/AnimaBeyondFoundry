@@ -59,6 +59,9 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       damage: { value: 0 },
       area: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       resistanceEffect: {
         value: 0,
         type: ''
@@ -73,6 +76,9 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       damage: { value: 0 },
       area: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       resistanceEffect: {
         value: 0,
         type: ''
@@ -87,6 +93,9 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       damage: { value: 0 },
       area: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       resistanceEffect: {
         value: 0,
         type: ''
@@ -101,6 +110,9 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
       damage: { value: 0 },
       area: { value: 0 },
       shieldPoints: { value: 0 },
+      reducedArmor: { value: 0 },
+      critBonus: { value: 0 },
+      automaticCrit: { value: false },
       resistanceEffect: {
         value: 0,
         type: ''

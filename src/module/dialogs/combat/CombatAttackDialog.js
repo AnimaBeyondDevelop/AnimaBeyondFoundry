@@ -66,8 +66,14 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        critDamageBonus:
-          attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+        reducedArmor: {
+          special: 0,
+          final: 0
+        },
+        critDamageBonus: {
+          special: 0,
+          final: 0
+        },
         automaticCrit: !!attackerActor.system.general.modifiers.automaticCrit?.value,
         massAttackBonusEnabled: isMassOfEnemies(attackerActor) ? true : undefined,
         massTargetCount: 1,
@@ -103,8 +109,14 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        critDamageBonus:
-          attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+        reducedArmor: {
+          special: 0,
+          final: 0
+        },
+        critDamageBonus: {
+          special: 0,
+          final: 0
+        },
         automaticCrit: !!attackerActor.system.general.modifiers.automaticCrit?.value
       },
       psychic: {
@@ -130,8 +142,14 @@ const getInitialData = (attacker, defender, options = {}) => {
           special: 0,
           final: 0
         },
-        critDamageBonus:
-          attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0,
+        reducedArmor: {
+          special: 0,
+          final: 0
+        },
+        critDamageBonus: {
+          special: 0,
+          final: 0
+        },
         automaticCrit: !!attackerActor.system.general.modifiers.automaticCrit?.value
       }
     },
@@ -324,6 +342,7 @@ export class CombatAttackDialog extends FormApplication {
           unarmed,
           visible,
           distanceCheck,
+          reducedArmor,
           critDamageBonus,
           automaticCrit
         },
@@ -444,7 +463,7 @@ export class CombatAttackDialog extends FormApplication {
           });
         }
 
-        const reducedArmorFinal = weapon?.system?.reducedArmor?.final?.value ?? 0;
+        const reducedArmorFinal = Number(reducedArmor?.final ?? 0);
         const weaponName =
           weapon?.name ?? game.i18n.localize('macros.combat.unarmed') ?? 'Unarmed';
 
@@ -479,7 +498,8 @@ export class CombatAttackDialog extends FormApplication {
             distance,
             projectile,
             attackerCombatMod,
-            critDamageBonus: critDamageBonus ?? 0,
+            critBonus: Number(critDamageBonus?.final ?? 0),
+            critDamageBonus: 0,
             automaticCrit: !!automaticCrit,
             activeEffectsBreakdown: aeBreakdown
           }
@@ -502,6 +522,7 @@ export class CombatAttackDialog extends FormApplication {
           damage,
           projectile,
           distanceCheck,
+          reducedArmor,
           critDamageBonus,
           automaticCrit
         },
@@ -601,7 +622,7 @@ export class CombatAttackDialog extends FormApplication {
             magicProjection: magicProjection.final,
             critic,
             damage: damage.final,
-            reducedArmorFinal: 0,
+            reducedArmorFinal: Number(reducedArmor?.final ?? 0),
             roll: rolled,
             total: roll.total,
             fumble: roll.fumbled,
@@ -612,8 +633,11 @@ export class CombatAttackDialog extends FormApplication {
             spellCasting,
             macro: spell.macro,
             attackerCombatMod,
-            critDamageBonus: critDamageBonus ?? 0,
-            automaticCrit: !!automaticCrit,
+            critBonus: Number(critDamageBonus?.final ?? 0),
+            critDamageBonus: 0,
+            automaticCrit:
+              !!automaticCrit ||
+              !!spell.system?.grades?.[spellGrade]?.automaticCrit?.value,
             activeEffectsBreakdown: aeBreakdown
           }
         });
@@ -637,6 +661,7 @@ export class CombatAttackDialog extends FormApplication {
           mentalPatternImbalance,
           projectile,
           distanceCheck,
+          reducedArmor,
           critDamageBonus,
           automaticCrit
         },
@@ -756,7 +781,12 @@ export class CombatAttackDialog extends FormApplication {
             psychicProjection,
             critic,
             damage: finalDamage,
-            reducedArmorFinal: 0,
+            reducedArmorFinal:
+              Number(reducedArmor?.final ?? 0) +
+              Number(
+                power?.system?.effects?.[psychicPotentialRoll.total]?.reducedArmor
+                  ?.value ?? 0
+              ),
             roll: psychicFatigue ? 0 : rolled,
             total: psychicFatigue ? 0 : psychicProjectionRoll.total,
             fumble: psychicFatigue ? false : psychicProjectionRoll.fumbled,
@@ -766,8 +796,16 @@ export class CombatAttackDialog extends FormApplication {
             projectile,
             macro: power.macro,
             attackerCombatMod,
-            critDamageBonus: critDamageBonus ?? 0,
-            automaticCrit: !!automaticCrit,
+            critBonus:
+              Number(critDamageBonus?.final ?? 0) +
+              Number(
+                power?.system?.effects?.[psychicPotentialRoll.total]?.critBonus?.value ?? 0
+              ),
+            critDamageBonus: 0,
+            automaticCrit:
+              !!automaticCrit ||
+              !!power?.system?.effects?.[psychicPotentialRoll.total]?.automaticCrit
+                ?.value,
             activeEffectsBreakdown: aeBreakdown
           }
         });
@@ -804,6 +842,11 @@ export class CombatAttackDialog extends FormApplication {
       this.attackerActor.system.psychic.psychicPotential.final.value +
       psychicBonus;
     psychic.damage.final = psychic.damage.special;
+    psychic.reducedArmor.final = Number(psychic.reducedArmor?.special ?? 0);
+    psychic.critDamageBonus.final =
+      Number(
+        this.attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0
+      ) + Number(psychic.critDamageBonus?.special ?? 0);
 
     const { spells } = this.attackerActor.system.mystic;
 
@@ -825,6 +868,15 @@ export class CombatAttackDialog extends FormApplication {
       mystic.damage.special,
       { supernatural: true }
     );
+    mystic.reducedArmor.final =
+      Number(spellGradeData?.reducedArmor?.value ?? 0) +
+      Number(mystic.reducedArmor?.special ?? 0);
+    mystic.critDamageBonus.final =
+      Number(
+        this.attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0
+      ) +
+      Number(spellGradeData?.critBonus?.value ?? 0) +
+      Number(mystic.critDamageBonus?.special ?? 0);
     mystic.spellCasting = this.attackerActor.mysticCanCastEvaluate(
       spell,
       mystic.spellGrade,
@@ -837,12 +889,19 @@ export class CombatAttackDialog extends FormApplication {
 
     combat.unarmed = weapons.length === 0;
 
+    const actorCritBonus = Number(
+      this.attackerActor.system.general.modifiers.critDamageBonus?.final?.value ?? 0
+    );
+
     if (combat.unarmed) {
       combat.damage.final = combineMassAttackDamage(
         this.attackerActor,
         10 + this.attackerActor.system.characteristics.primaries.strength.mod,
         combat.damage.special
       );
+      combat.reducedArmor.final = Number(combat.reducedArmor?.special ?? 0);
+      combat.critDamageBonus.final =
+        actorCritBonus + Number(combat.critDamageBonus?.special ?? 0);
     } else {
       combat.weapon = weapon;
 
@@ -866,6 +925,13 @@ export class CombatAttackDialog extends FormApplication {
         weapon.system.damage.final.value,
         combat.damage.special
       );
+      combat.reducedArmor.final =
+        Number(weapon.system?.reducedArmor?.final?.value ?? 0) +
+        Number(combat.reducedArmor?.special ?? 0);
+      combat.critDamageBonus.final =
+        actorCritBonus +
+        Number(weapon.system?.critBonus?.value ?? 0) +
+        Number(combat.critDamageBonus?.special ?? 0);
     }
 
     this.modalData.config = ABFConfig;

@@ -12,8 +12,10 @@
     {{!-- <p><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{weapon.system.attack.final.value}}</p> --}}
     <p data-requires-permission="owner"><strong>{{localize "anima.ui.combat.weapons.attack.title"}}:</strong> {{attackData.attackAbility}}</p>
     <p data-requires-permission="owner"><strong>{{localize "anima.ui.combat.weapons.damage.final.title"}}:</strong> {{attackData.damage}}</p>
-    {{#if attackData.critDamageBonus}}
-      <p data-requires-permission="owner"><strong>{{localize "macros.combat.dialog.critDamageBonus.title"}}:</strong> {{attackData.critDamageBonus}}</p>
+    {{#if attackData.critBonus}}
+      <p data-requires-permission="owner"><strong>{{localize "macros.combat.dialog.critBonus.title"}}:</strong> {{attackData.critBonus}}</p>
+    {{else if attackData.critDamageBonus}}
+      <p data-requires-permission="owner"><strong>{{localize "macros.combat.dialog.critBonus.title"}}:</strong> {{attackData.critDamageBonus}}</p>
     {{/if}}
     {{#if attackData.automaticCrit}}
       <p data-requires-permission="owner"><strong>{{localize "macros.combat.dialog.automaticCrit.title"}}</strong></p>

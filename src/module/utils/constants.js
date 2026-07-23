@@ -63,7 +63,9 @@ export const Templates = {
       ModifyDiceFormulas: T('dialog/config/modify-dice-formulas.hbs')
     },
     SpellShieldConfigDialog: T('dialog/spell-shield-config-dialog.hbs'),
-    SpellAttackConfigDialog: T('dialog/spell-attack-config-dialog.hbs')
+    SpellAttackConfigDialog: T('dialog/spell-attack-config-dialog.hbs'),
+    SpellGradeConfigDialog: T('dialog/spell-grade-config-dialog.hbs'),
+    PsychicEffectConfigDialog: T('dialog/psychic-effect-config-dialog.hbs')
   },
 
   CustomHotBar: T('custom-hotbar/custom-hotbar.hbs'),
@@ -128,7 +130,8 @@ export const Templates = {
     Ammo: T('items/ammo/ammo.hbs'),
     Armor: T('items/armor/armor.hbs'),
     Spell: T('items/spell/spell.hbs'),
-    PsychicPower: T('items/psychicPower/psychicPower.hbs')
+    PsychicPower: T('items/psychicPower/psychicPower.hbs'),
+    SupernaturalShield: T('items/supernaturalShield/supernaturalShield.hbs')
   },
 
   Actor: {

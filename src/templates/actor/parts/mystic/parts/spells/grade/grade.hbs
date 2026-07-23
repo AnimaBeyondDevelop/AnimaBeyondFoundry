@@ -1,4 +1,9 @@
-<div class='{{this.class}} grade-row'>
+<div class='{{this.class}} grade-row' data-grade='{{this.gradeName}}'>
+  {{#if this.disableCast}}
+  <span class="grade-name">
+    {{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}
+  </span>
+  {{else}}
   <button
     type="button"
     class="grade-name spell-cast-button"
@@ -8,6 +13,7 @@
   >
     {{localize (concat 'anima.ui.mystic.spell.grade.' this.gradeName '.title')}}
   </button>
+  {{/if}}
   {{>
   "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
     class="int-required"

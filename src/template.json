@@ -1103,6 +1103,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "resistanceEffect": {
             "value": 0,
             "type": ""
@@ -1132,6 +1141,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "resistanceEffect": {
             "value": 0,
@@ -1163,6 +1181,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "resistanceEffect": {
             "value": 0,
             "type": ""
@@ -1192,6 +1219,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "resistanceEffect": {
             "value": 0,
@@ -1227,6 +1263,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "affectsInmaterial": {
             "value": false
           }
@@ -1241,6 +1286,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "affectsInmaterial": {
             "value": false
@@ -1257,6 +1311,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "affectsInmaterial": {
             "value": false
           }
@@ -1271,6 +1334,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "affectsInmaterial": {
             "value": false
@@ -1287,6 +1359,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "affectsInmaterial": {
             "value": false
           }
@@ -1301,6 +1382,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "affectsInmaterial": {
             "value": false
@@ -1317,6 +1407,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "affectsInmaterial": {
             "value": false
           }
@@ -1331,6 +1430,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "affectsInmaterial": {
             "value": false
@@ -1347,6 +1455,15 @@
           "shieldPoints": {
             "value": 0
           },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
+          },
           "affectsInmaterial": {
             "value": false
           }
@@ -1361,6 +1478,15 @@
           },
           "shieldPoints": {
             "value": 0
+          },
+          "reducedArmor": {
+            "value": 0
+          },
+          "critBonus": {
+            "value": 0
+          },
+          "automaticCrit": {
+            "value": false
           },
           "affectsInmaterial": {
             "value": false
@@ -1424,6 +1550,9 @@
       },
       "ignoreArmor": {
         "value": false
+      },
+      "critBonus": {
+        "value": 0
       },
       "special": {
         "value": ""
@@ -1608,12 +1737,8 @@
       "hotbarMacroCreatorId": "weapon.attack"
     },
     "supernaturalShield": {
-      "shieldPoints": {
-        "value": 0
-      },
-      "abilityFormula": {
-        "value": ""
-      }
+      "shieldPoints": 0,
+      "abilityFormula": ""
     },
     "effect": {
       "active": {

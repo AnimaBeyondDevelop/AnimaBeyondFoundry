@@ -17,6 +17,8 @@ export const INITIAL_SUPERNATURAL_SHIELD_DATA = {
 export const SupernaturalShieldItemConfig = ABFItemConfigFactory({
   type: ABFItems.SUPERNATURAL_SHIELD,
   isInternal: false,
+  defaultValue: INITIAL_SUPERNATURAL_SHIELD_DATA,
+  hasSheet: true,
   fieldPath: ['combat', 'supernaturalShields'],
   selectors: {
     addItemButtonSelector: 'add-supernatural-shield',
