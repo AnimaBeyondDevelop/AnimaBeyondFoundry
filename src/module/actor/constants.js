@@ -17,9 +17,7 @@ export const INITIAL_ACTOR_DATA = {
       }
     }
   },
-  automationOptions: {
-    calculateFatigueModifier: { value: true }
-  },
+  automationOptions: {},
   general: {
     settings: {
       openRolls: { value: 90 },
@@ -61,12 +59,47 @@ export const INITIAL_ACTOR_DATA = {
         base: {
           value: 0
         },
-        special: {
-          value: 0
+        bonus: {
+          base: {
+            value: 0
+          },
+          special: {
+            value: 0
+          },
+          final: {
+            value: 0
+          }
         },
         final: {
           value: 0
         }
+      },
+      allActionsPenalties: {
+        fatigue: {
+          base: { value: 0 },
+          special: { value: 0 },
+          multiplier: { value: 1 },
+          final: { value: 0 }
+        },
+        pain: {
+          base: { value: 0 },
+          special: { value: 0 },
+          multiplier: { value: 1 },
+          final: { value: 0 }
+        },
+        physicalDeficiency: {
+          base: { value: 0 },
+          special: { value: 0 },
+          multiplier: { value: 1 },
+          final: { value: 0 }
+        },
+        supernatural: {
+          base: { value: 0 },
+          special: { value: 0 },
+          multiplier: { value: 1 },
+          final: { value: 0 }
+        },
+        withstandPainMitigation: { value: 0 }
       },
       naturalPenalty: {
         base: {

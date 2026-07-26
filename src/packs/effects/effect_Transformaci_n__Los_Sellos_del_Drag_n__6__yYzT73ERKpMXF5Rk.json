@@ -56,9 +56,9 @@
           "priority": null
         },
         {
-          "key": "system.automationOptions.calculateFatigueModifier.value",
+          "key": "system.general.modifiers.allActionsPenalties.fatigue.multiplier.value",
           "type": "override",
-          "value": "False",
+          "value": "0",
           "priority": null
         }
       ],

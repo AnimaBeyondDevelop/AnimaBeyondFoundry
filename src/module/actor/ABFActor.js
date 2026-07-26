@@ -28,6 +28,7 @@ import { buildTypedNodes } from './types/runtimeTypedNodes.js';
 import { usesMassDefenseRules, usesResistanceDefenseRules } from './utils/massSettings.js';
 import { ensureGeneralSettingsDefaults } from './utils/ensureGeneralSettingsDefaults.js';
 import { syncMassMemberCountOnActor } from './utils/syncMassMemberCount.js';
+import { getWithstandPainMitigation } from './utils/prepareActor/calculations/actor/modifiers/calculations/withstandPainMitigation.js';
 import { syncMassAttackBonusOnActor } from './utils/syncMassAttackBonus.js';
 
 export class ABFActor extends Actor {
@@ -147,6 +148,7 @@ export class ABFActor extends Actor {
    *
    * @param {string} ability - The name of the ability to roll.
    * @param {boolean} sendToChat - Whether to send the roll result to the chat. Default is true.
+   * @param {{ applyWithstandPainMitigation?: boolean }} [options] - If true and ability is withstandPain, saves mitigation from the roll total.
    * @returns {Promise<number>} - The total result of the dice roll.
    *
    * @example
@@ -155,7 +157,7 @@ export class ABFActor extends Actor {
    *
    * This code creates a new instance of the ABFActor class and calls the `rollAbility` method with the ability name 'agility' and the `sendToChat` parameter set to true. The method will calculate the ability value, prompt the user for a modifier, roll the dice, and display the result in the chat.
    */
-  async rollAbility(ability, sendToChat = true) {
+  async rollAbility(ability, sendToChat = true, { applyWithstandPainMitigation = false } = {}) {
     const name = game.i18n.localize(`anima.ui.secondaries.${ability}.title`);
     const { secondaries } = this.system;
     let groupPath = '';
@@ -186,6 +188,12 @@ export class ABFActor extends Actor {
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this }),
         flavor: label
+      });
+    }
+    if (ability === 'withstandPain' && applyWithstandPainMitigation) {
+      await this.update({
+        'system.general.modifiers.allActionsPenalties.withstandPainMitigation.value':
+          getWithstandPainMitigation(roll.total)
       });
     }
     return roll.total;

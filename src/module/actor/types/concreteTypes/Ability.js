@@ -1,4 +1,6 @@
 import { AffectedByCharacteristicValue } from './AffectedByCharacteristicValue.js';
+import { ABFSettingsKeys } from '../../../../utils/settingKeys.js';
+import { applyWithstandPainMitigation } from '../../utils/prepareActor/calculations/actor/modifiers/calculations/withstandPainMitigation.js';
 
 export class Ability extends AffectedByCharacteristicValue {
   static type = 'Ability';
@@ -73,6 +75,37 @@ export class Ability extends AffectedByCharacteristicValue {
     return { final };
   }
 
+  _isWithstandPain() {
+    return (
+      typeof this.systemPath === 'string' && this.systemPath.endsWith('.withstandPain')
+    );
+  }
+
+  _withstandPainIgnoresFatigueAndPain() {
+    try {
+      return !!game.settings.get(
+        game.animabf.id,
+        ABFSettingsKeys.WITHSTAND_PAIN_IGNORES_FATIGUE_AND_PAIN
+      );
+    } catch {
+      return true;
+    }
+  }
+
+  /**
+   * Mitigated fatigue+pain contribution currently folded into allActions.base.
+   * @returns {number}
+   */
+  _mitigatedFatiguePainContribution() {
+    const penalties = this.actor?.system?.general?.modifiers?.allActionsPenalties;
+    if (!penalties) return 0;
+    return applyWithstandPainMitigation(
+      penalties.fatigue?.final?.value,
+      penalties.pain?.final?.value,
+      penalties.withstandPainMitigation?.value
+    );
+  }
+
   /**
    *
    * Calculates ability mod
@@ -81,9 +114,15 @@ export class Ability extends AffectedByCharacteristicValue {
   _computeMods() {
     let result = 0;
     if (this.applyAllActionMod) {
-      result += Number(
+      let allActions = Number(
         this.actor?.system?.general?.modifiers?.allActions?.final?.value ?? 0
       );
+
+      if (this._isWithstandPain() && this._withstandPainIgnoresFatigueAndPain()) {
+        allActions -= this._mitigatedFatiguePainContribution();
+      }
+
+      result += allActions;
     }
 
     if (this.applyPhysicalActionMod) {
@@ -107,6 +146,13 @@ export class Ability extends AffectedByCharacteristicValue {
 
       if (this.applyAllActionMod) {
         extraDeps.push('system.general.modifiers.allActions.final.value');
+        if (this._isWithstandPain()) {
+          extraDeps.push(
+            'system.general.modifiers.allActionsPenalties.fatigue.final.value',
+            'system.general.modifiers.allActionsPenalties.pain.final.value',
+            'system.general.modifiers.allActionsPenalties.withstandPainMitigation.value'
+          );
+        }
       }
       if (this.applyPhysicalActionMod) {
         extraDeps.push('system.general.modifiers.physicalActions.final.value');

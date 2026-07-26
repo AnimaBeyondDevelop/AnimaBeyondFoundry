@@ -11,6 +11,8 @@ import { ABFDialogs } from '../dialogs/ABFDialogs';
 import { Logger } from '../../utils';
 import { ABFSettingsKeys } from '../../utils/registerSettings';
 import { createClickHandlers } from './utils/createClickHandlers';
+import { openAllActionsBreakdown } from './utils/buttonCallbacks/openAllActionsBreakdown.js';
+import { getWithstandPainMitigation } from './utils/prepareActor/calculations/actor/modifiers/calculations/withstandPainMitigation.js';
 import { TypeEditorRegistry } from './types/TypeEditorRegistry.js';
 import {
   isTypedNodeDeletable,
@@ -23,6 +25,11 @@ import { ITEM_REORDER_MIME } from './utils/reorderEmbeddedItems.js';
 import { ensureGeneralSettingsDefaults } from './utils/ensureGeneralSettingsDefaults.js';
 import { augmentActorChangesWithMassMemberCount } from './utils/syncMassMemberCount.js';
 import { augmentActorChangesWithMassAttackBonus } from './utils/syncMassAttackBonus.js';
+import {
+  bringChildAppsToTop,
+  closeTrackedChildApps,
+  renderChildAppAboveParent
+} from './utils/childAppStacking.js';
 
 /** @typedef {import('./constants').TActorData} TData */
 /** @typedef {typeof FormApplication<FormApplicationOptions, TData, TData>} TFormApplication */
@@ -83,6 +90,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
     try {
       await this._flushPendingSheetUpdatesImmediately();
+      await closeTrackedChildApps(this);
 
       // Capture image before close; persist it after close to avoid re-render race.
       const nextImg = this._getEditedActorImage();
@@ -99,6 +107,16 @@ export default class ABFActorSheet extends ActorSheetV1 {
     } finally {
       this._isClosing = false;
     }
+  }
+
+  /**
+   * Keep tracked child windows (breakdown, type editors, item sheets) above this sheet.
+   * @override
+   */
+  bringToTop() {
+    const result = super.bringToTop();
+    bringChildAppsToTop(this);
+    return result;
   }
 
   _getEditedActorImage() {
@@ -190,7 +208,9 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
     if (!this.options.editable) return;
 
+    this._preventEnterFromActivatingButtons(html);
     this._activateTypedNodeContextMenu(html);
+    this._activateAllActionsBreakdownContextMenu(html);
 
     this._setupDebouncedSheetUpdates(html);
 
@@ -200,6 +220,22 @@ export default class ABFActorSheet extends ActorSheetV1 {
     activateItemReorder(this, html);
     this._activateDataOnClickHandlers(html);
     this._activateEffectControls(html);
+  }
+
+  /**
+   * Inside a form, Enter in an input activates the first submit button.
+   * Buttons without type="button" default to submit, so Enter can fire
+   * attack/cast handlers. Prevent that while still committing the input value.
+   */
+  _preventEnterFromActivatingButtons(html) {
+    html.on('keydown', 'input', ev => {
+      if (ev.key !== 'Enter') return;
+      // Leave checkboxes/radios alone; Enter is not their primary commit path.
+      if (ev.currentTarget.type === 'checkbox' || ev.currentTarget.type === 'radio') return;
+
+      ev.preventDefault();
+      ev.currentTarget.blur();
+    });
   }
 
   _activateTypedNodeContextMenu(html) {
@@ -234,6 +270,33 @@ export default class ABFActorSheet extends ActorSheetV1 {
             const cfg = resolveTypedNodeDeletableConfig(path, typedNode);
             cfg?.onDelete(sheet, el);
           }
+        }
+      ],
+      ...(isV14 ? [{ jQuery: false }] : [])
+    );
+  }
+
+  /**
+   * Context menu to open the all-actions breakdown.
+   * @param {JQuery|HTMLElement} html
+   */
+  _activateAllActionsBreakdownContextMenu(html) {
+    const ContextMenuImpl =
+      foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
+    const sheet = this;
+
+    new ContextMenuImpl(
+      html instanceof HTMLElement ? html : html[0],
+      '.modifiers .all-actions',
+      [
+        {
+          name:
+            game.i18n.localize(
+              'anima.ui.general.modifiers.allActions.breakdown.open.title'
+            ) ?? 'Open breakdown',
+          icon: '<i class="fas fa-list"></i>',
+          callback: () => openAllActionsBreakdown(sheet)
         }
       ],
       ...(isV14 ? [{ jQuery: false }] : [])
@@ -378,7 +441,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
     const { type } = node.constructor;
 
     const app = TypeEditorRegistry.create(type, this.actor, { path });
-    app?.render(true);
+    if (app) renderChildAppAboveParent(this, app);
   }
 
   async _onEffectControl(event) {
@@ -399,7 +462,9 @@ export default class ABFActorSheet extends ActorSheetV1 {
             system: INITIAL_EFFECT_DATA
           }
         ]);
-        if (created?.sheet) created.sheet.render(true);
+        if (created?.sheet) {
+          renderChildAppAboveParent(this, created.sheet);
+        }
         return;
       }
 
@@ -413,7 +478,10 @@ export default class ABFActorSheet extends ActorSheetV1 {
         // Configura la sincronización item <-> AE
         this._setupEffectSync(item, effect);
 
-        return effect.sheet?.render(true);
+        if (effect.sheet) {
+          return renderChildAppAboveParent(this, effect.sheet);
+        }
+        return;
       }
 
       case 'delete': {
@@ -485,10 +553,20 @@ export default class ABFActorSheet extends ActorSheetV1 {
       }
       const roll = new ABFFoundryRoll(formula, this.actor.system);
 
-      roll.toMessage({
+      await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor: label
       });
+
+      if (
+        String(dataset.rollPath ?? '').includes('withstandPain') &&
+        event.shiftKey
+      ) {
+        await this.actor.update({
+          'system.general.modifiers.allActionsPenalties.withstandPainMitigation.value':
+            getWithstandPainMitigation(roll.total)
+        });
+      }
     }
   }
 
@@ -584,7 +662,7 @@ export default class ABFActorSheet extends ActorSheetV1 {
             const item = this.actor.items.get(itemId);
 
             if (item?.sheet) {
-              item.sheet.render(true);
+              renderChildAppAboveParent(this, item.sheet);
             } else {
               Logger.warn('Item sheet was not found for item:', item);
             }

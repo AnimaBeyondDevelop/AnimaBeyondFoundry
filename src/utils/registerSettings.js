@@ -115,6 +115,19 @@ export const registerSettings = systemId => {
     type: Boolean
   });
 
+  game.settings.register(
+    systemId,
+    ABFSettingsKeys.WITHSTAND_PAIN_IGNORES_FATIGUE_AND_PAIN,
+    {
+      name: 'anima.ui.systemSettings.withstandPainIgnoresFatigueAndPain.title',
+      hint: 'anima.ui.systemSettings.withstandPainIgnoresFatigueAndPain.hint.title',
+      scope: 'world',
+      config: true,
+      default: true,
+      type: Boolean
+    }
+  );
+
   // This is for migration purposes, it stores the last migration version runned for the world.
   game.settings.register(systemId, ABFSettingsKeys.APPLIED_MIGRATIONS, {
     name: 'Applied Migration Versions',

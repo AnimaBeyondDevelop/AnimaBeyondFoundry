@@ -31,7 +31,7 @@ function ensureIsAreaField(gradeOrEffect) {
 /** @type Migration */
 export const Migration16AddIsAreaFlag = {
   id: 'migration_add-is-area-flag',
-  version: '2.2.3',
+  version: '2.2.4',
   order: 2,
   title: 'Add isArea checkbox to spells and psychic powers',
   description:

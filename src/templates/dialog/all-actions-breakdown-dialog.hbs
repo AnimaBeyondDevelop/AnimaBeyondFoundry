@@ -1,0 +1,106 @@
+<form class="abf-all-actions-breakdown">
+  <section class="penalties-section">
+    <h3>{{localize "anima.ui.general.modifiers.allActions.breakdown.penalties.title"}}</h3>
+
+    <div class="penalty-formula">
+      <span class="penalty-name">{{localize "anima.ui.general.modifiers.allActions.breakdown.fatigue.title"}}:</span>
+      <span class="penalty-expr">
+        (
+        <input type="number" class="penalty-base" value="{{penalties.fatigue.base}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.base.title'}}" />
+        +
+        <input type="number" class="penalty-special" name="fatigueSpecial" value="{{penalties.fatigue.special}}" step="1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.special.title'}}" />
+        )
+        ×
+        <input type="number" class="penalty-multiplier" name="fatigueMultiplier" value="{{penalties.fatigue.multiplier}}" step="0.1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.multiplier.title'}}" />
+        =
+        <input type="number" class="penalty-final" value="{{penalties.fatigue.final}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.final.title'}}" />
+      </span>
+    </div>
+
+    <div class="penalty-formula">
+      <span class="penalty-name">{{localize "anima.ui.general.modifiers.allActions.breakdown.pain.title"}}:</span>
+      <span class="penalty-expr">
+        (
+        <input type="number" class="penalty-base" value="{{penalties.pain.base}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.base.title'}}" />
+        +
+        <input type="number" class="penalty-special" name="painSpecial" value="{{penalties.pain.special}}" step="1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.special.title'}}" />
+        )
+        ×
+        <input type="number" class="penalty-multiplier" name="painMultiplier" value="{{penalties.pain.multiplier}}" step="0.1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.multiplier.title'}}" />
+        =
+        <input type="number" class="penalty-final" value="{{penalties.pain.final}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.final.title'}}" />
+      </span>
+    </div>
+
+    <div class="penalty-formula">
+      <span class="penalty-name">{{localize "anima.ui.general.modifiers.allActions.breakdown.physicalDeficiency.title"}}:</span>
+      <span class="penalty-expr">
+        (
+        <input type="number" class="penalty-base" value="{{penalties.physicalDeficiency.base}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.base.title'}}" />
+        +
+        <input type="number" class="penalty-special" name="physicalDeficiencySpecial" value="{{penalties.physicalDeficiency.special}}" step="1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.special.title'}}" />
+        )
+        ×
+        <input type="number" class="penalty-multiplier" name="physicalDeficiencyMultiplier" value="{{penalties.physicalDeficiency.multiplier}}" step="0.1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.multiplier.title'}}" />
+        =
+        <input type="number" class="penalty-final" value="{{penalties.physicalDeficiency.final}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.final.title'}}" />
+      </span>
+    </div>
+
+    <div class="penalty-formula">
+      <span class="penalty-name">{{localize "anima.ui.general.modifiers.allActions.breakdown.supernatural.title"}}:</span>
+      <span class="penalty-expr">
+        (
+        <input type="number" class="penalty-base" value="{{penalties.supernatural.base}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.base.title'}}" />
+        +
+        <input type="number" class="penalty-special" name="supernaturalSpecial" value="{{penalties.supernatural.special}}" step="1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.special.title'}}" />
+        )
+        ×
+        <input type="number" class="penalty-multiplier" name="supernaturalMultiplier" value="{{penalties.supernatural.multiplier}}" step="0.1" title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.multiplier.title'}}" />
+        =
+        <input type="number" class="penalty-final" value="{{penalties.supernatural.final}}" disabled title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.final.title'}}" />
+      </span>
+    </div>
+
+    <div class="form-group mitigation-field">
+      <label>{{localize "anima.ui.general.modifiers.allActions.breakdown.withstandPainMitigation.title"}}</label>
+      <input type="number" name="withstandPainMitigation" value="{{withstandPainMitigation}}" step="1" min="0" />
+    </div>
+  </section>
+
+  <section class="bonus-section">
+    <h3>{{localize "anima.ui.general.modifiers.allActions.breakdown.bonus.title"}}</h3>
+    <div class="form-group">
+      <label>{{localize "anima.ui.general.modifiers.allActions.breakdown.base.title"}}</label>
+      <input type="number" value="{{bonus.base}}" disabled />
+    </div>
+    <div class="form-group">
+      <label>{{localize "anima.ui.general.modifiers.allActions.breakdown.special.title"}}</label>
+      <input type="number" name="bonusSpecial" value="{{bonus.special}}" step="1" />
+    </div>
+    <div class="form-group">
+      <label>{{localize "anima.ui.general.modifiers.allActions.breakdown.final.title"}}</label>
+      <input type="number" value="{{bonus.final}}" disabled />
+    </div>
+  </section>
+
+  <hr class="breakdown-separator" />
+
+  <section class="totals-section">
+    <div class="form-group">
+      <label>{{localize "anima.ui.general.modifiers.allActions.breakdown.penaltiesTotal.title"}}</label>
+      <input type="number" value="{{allActionsBase}}" disabled />
+    </div>
+    <div class="form-group">
+      <label>{{localize "anima.ui.general.modifiers.allActions.title"}}</label>
+      <input type="number" value="{{allActionsFinal}}" disabled />
+    </div>
+  </section>
+
+  <footer class="sheet-footer">
+    <button type="submit">
+      <i class="fas fa-save"></i>
+      {{localize "dialogs.save"}}
+    </button>
+  </footer>
+</form>

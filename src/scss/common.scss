@@ -21,7 +21,8 @@ img {
 
 
 .animabf.sheet.actor {
-  .rollable {
+  .rollable,
+  .clickable-label {
     cursor: pointer;
     &:hover,
     &:focus {
@@ -254,24 +255,29 @@ img {
     &.vertical {
       flex-direction: column;
 
+      .label-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
       .label {
         text-align: center;
         margin-right: 0;
         margin-top: 0;
-
-        .rollable {
-          cursor: pointer;
-          &:hover,
-          &:focus {
-            text-shadow: 0 0 8px $intensified-red;
-          }
-        }
       }
     }
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .label-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
 
     .label {
       font-weight: bold;

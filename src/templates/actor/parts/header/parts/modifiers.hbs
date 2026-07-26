@@ -25,11 +25,15 @@
       "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
         class="all-actions"
         title=(localize "anima.ui.general.modifiers.allActions.title")
-        inputName="system.general.modifiers.allActions.base.value"
-        inputValue=system.general.modifiers.allActions.base.value
+        labelButtonOnClick="openAllActionsBreakdown"
+        labelButtonTitle=(localize "anima.ui.general.modifiers.allActions.breakdown.open.title")
+        inputName="system.general.modifiers.allActions.bonus.special.value"
+        inputValue=system.general.modifiers.allActions.bonus.special.value
         hasSecondaryInput=true
         disableSecondaryInput=true
         addTooltips=true
+        tooltip=(localize "anima.ui.tooltips.special")
+        secondaryTooltip=(localize "anima.ui.tooltips.final")
         secondaryInputName="system.general.modifiers.allActions.final.value"
         secondaryInputValue=system.general.modifiers.allActions.final.value
       }}

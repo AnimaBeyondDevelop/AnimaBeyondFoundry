@@ -68,6 +68,7 @@ export const Templates = {
     PsychicEffectConfigDialog: T('dialog/psychic-effect-config-dialog.hbs'),
     EntityPowerConfigDialog: T('dialog/entity-power-config-dialog.hbs'),
     InvokeEntityPowerDialog: T('dialog/invoke-entity-power-dialog.hbs'),
+    AllActionsBreakdownDialog: T('dialog/all-actions-breakdown-dialog.hbs'),
     ResistanceCheckFields: T('dialog/parts/resistance-check-fields.hbs')
   },
 
@@ -250,7 +251,6 @@ export const Templates = {
     Settings: {
       Main: T('actor/parts/settings/settings.hbs'),
       TabVisibility: T('actor/parts/settings/parts/tabVisibility.hbs'),
-      AutomationOptions: T('actor/parts/settings/parts/automationOptions.hbs'),
       DiceSettings: T('actor/parts/settings/parts/diceSettings.hbs'),
       AdvancedCharacteristics: T('actor/parts/settings/parts/advancedCharacteristics.hbs'),
       MassSettings: T('actor/parts/settings/parts/massSettings.hbs')

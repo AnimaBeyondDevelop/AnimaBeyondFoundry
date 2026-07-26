@@ -86,14 +86,16 @@
 
   &.entity-power-config-dialog,
   &.spell-grade-config-dialog,
-  &.psychic-effect-config-dialog {
+  &.psychic-effect-config-dialog,
+  &.all-actions-breakdown-dialog {
     .window-content {
       align-items: stretch;
     }
 
     .abf-entity-power-config,
     .abf-spell-grade-config,
-    .abf-psychic-effect-config {
+    .abf-psychic-effect-config,
+    .abf-all-actions-breakdown {
       .form-group {
         display: grid;
         grid-template-columns: 11rem minmax(0, 1fr);
@@ -179,6 +181,54 @@
           margin: 0 0 0.5rem;
           font-size: 1em;
         }
+      }
+
+      .penalty-formula {
+        display: grid;
+        grid-template-columns: minmax(7rem, 9.5rem) minmax(0, 1fr);
+        column-gap: 0.5rem;
+        align-items: center;
+        margin: 0.35rem 0;
+
+        .penalty-name {
+          font-weight: 600;
+          white-space: nowrap;
+        }
+
+        .penalty-expr {
+          display: inline-flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0.25rem;
+          font-variant-numeric: tabular-nums;
+
+          input[type='number'] {
+            width: 3.5rem;
+            max-width: 3.5rem;
+            text-align: center;
+            margin: 0;
+          }
+
+          .penalty-multiplier {
+            width: 3rem;
+            max-width: 3rem;
+          }
+        }
+      }
+
+      .bonus-section,
+      .totals-section,
+      .penalties-section {
+        > h3 {
+          margin: 0.75rem 0 0.35rem;
+          font-size: 1rem;
+        }
+      }
+
+      .breakdown-separator {
+        margin: 0.85rem 0;
+        border: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
       }
     }
   }

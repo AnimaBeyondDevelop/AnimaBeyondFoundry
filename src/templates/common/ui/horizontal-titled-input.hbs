@@ -1,47 +1,64 @@
 <div class='{{this.class}} common-titled-input'>
   {{#unless this.hideTitle}}
-    <p
-      class='label
-            {{#if this.rollable}}
-              rollable
-            {{/if}}'
-      {{#if this.rollable}}
-        data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}{{@root.system.general.diceSettings.abilityDie.value}}{{/if}}+{{#if this.hasTertiaryInput}}{{this.tertiaryInputValue}}{{else}}{{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}{{/if}}"
-        data-extra="{{this.inputValue}}"
-        {{#if this.rollableValuePath}}
-          data-roll-path="{{this.rollableValuePath}}"
-        {{else}}
-          {{#if this.hasTertiaryInput}}
-            data-roll-path="{{this.tertiaryInputName}}"
+    <div class="label-row">
+      <p
+        class='label
+              {{#if this.rollable}}
+                rollable
+              {{else if this.labelOnClick}}
+                clickable-label
+              {{/if}}'
+        {{#if this.rollable}}
+          data-roll="{{#if this.rollableDice}}{{this.rollableDice}}{{else}}{{@root.system.general.diceSettings.abilityDie.value}}{{/if}}+{{#if this.hasTertiaryInput}}{{this.tertiaryInputValue}}{{else}}{{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}{{this.secondaryInputValue}}{{else}}{{this.inputValue}}{{/if}}{{/if}}"
+          data-extra="{{this.inputValue}}"
+          {{#if this.rollableValuePath}}
+            data-roll-path="{{this.rollableValuePath}}"
           {{else}}
-            {{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}
-              data-roll-path="{{this.secondaryInputName}}"
+            {{#if this.hasTertiaryInput}}
+              data-roll-path="{{this.tertiaryInputName}}"
             {{else}}
-              data-roll-path="{{this.inputName}}"
+              {{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}
+                data-roll-path="{{this.secondaryInputName}}"
+              {{else}}
+                data-roll-path="{{this.inputName}}"
+              {{/if}}
             {{/if}}
           {{/if}}
-        {{/if}}
-        {{#if this.rollableMasteryPath}}
-          data-extra-path="{{this.rollableMasteryPath}}"
-        {{else}}
-          {{#if this.hasTertiaryInput}}
-            data-extra-path="{{this.tertiaryInputName}}"
+          {{#if this.rollableMasteryPath}}
+            data-extra-path="{{this.rollableMasteryPath}}"
           {{else}}
-            {{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}
-              data-extra-path="{{this.secondaryInputName}}"
+            {{#if this.hasTertiaryInput}}
+              data-extra-path="{{this.tertiaryInputName}}"
             {{else}}
-              data-extra-path="{{this.inputName}}"
+              {{#if (and this.rollSecondaryInput this.hasSecondaryInput)}}
+                data-extra-path="{{this.secondaryInputName}}"
+              {{else}}
+                data-extra-path="{{this.inputName}}"
+              {{/if}}
             {{/if}}
           {{/if}}
+          data-label="
+            {{#if this.rollableMessage}}
+              {{this.rollableMessage}}
+            {{else}}
+              {{manipulateString "toLowerCase" this.title}}
+            {{/if}}"
+        {{else if this.labelOnClick}}
+          data-on-click="{{this.labelOnClick}}"
+          title="{{localize 'anima.ui.general.modifiers.allActions.breakdown.open.title'}}"
         {{/if}}
-        data-label="
-          {{#if this.rollableMessage}}
-            {{this.rollableMessage}}
-          {{else}}
-            {{manipulateString "toLowerCase" this.title}}
-          {{/if}}"
+      >{{this.title}}</p>
+      {{#if this.labelButtonOnClick}}
+        <button
+          type="button"
+          class="label-action-button"
+          data-on-click="{{this.labelButtonOnClick}}"
+          title="{{#if this.labelButtonTitle}}{{this.labelButtonTitle}}{{else}}{{localize 'anima.ui.general.modifiers.allActions.breakdown.open.title'}}{{/if}}"
+        >
+          <i class="fas {{#if this.labelButtonIcon}}{{this.labelButtonIcon}}{{else}}fa-list{{/if}}"></i>
+        </button>
       {{/if}}
-    >{{this.title}}</p>
+    </div>
   {{/unless}}
 
   <div class='input-container {{#if this.hasSecondaryInput}}big{{/if}}{{#if this.hasTertiaryInput}} bigger{{/if}}'>
