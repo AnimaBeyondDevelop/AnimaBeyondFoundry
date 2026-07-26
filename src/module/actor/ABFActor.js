@@ -815,10 +815,6 @@ export class ABFActor extends Actor {
     return this.getItemsOf(ABFItems.METAMAGIC);
   }
 
-  getKnownSummonings() {
-    return this.getItemsOf(ABFItems.SUMMON);
-  }
-
   getCategories() {
     return this.getItemsOf(ABFItems.LEVEL);
   }

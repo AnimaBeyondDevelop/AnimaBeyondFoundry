@@ -4,7 +4,8 @@ import { ABFItems } from '../module/items/ABFItems.js';
 const FALLBACK_BY_TYPE = {
   [ABFItems.WEAPON]: 'weapon.attack',
   [ABFItems.SPELL]: 'spell.cast',
-  [ABFItems.PSYCHIC_POWER]: 'psychicPower.cast'
+  [ABFItems.PSYCHIC_POWER]: 'psychicPower.cast',
+  [ABFItems.ENTITY_POWER]: 'entityPower.invoke'
 };
 
 /**

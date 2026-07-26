@@ -2,6 +2,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { createFixedResistanceCheck } from '../common/resistanceCheck.js';
 
 /**
  * @readonly
@@ -41,6 +42,22 @@ export const PsychicPowerDisciplines = {
   HYPERSENSITIVITY: 'hypersensitivity'
 };
 
+function createInitialPsychicEffect() {
+  return {
+    value: '',
+    damage: { value: 0 },
+    fatigue: { value: 0 },
+    area: { value: 0 },
+    isArea: { value: false },
+    shieldPoints: { value: 0 },
+    reducedArmor: { value: 0 },
+    critBonus: { value: 0 },
+    automaticCrit: { value: false },
+    affectsInmaterial: { value: false },
+    resistanceEffect: createFixedResistanceCheck(0)
+  };
+}
+
 /**
  * Initial data for a new psychic power. Used to infer the type of the data inside `power.system`
  * @readonly
@@ -49,106 +66,16 @@ export const INITIAL_PSYCHIC_POWER_DATA = {
   description: { value: '' },
   level: { value: 0 },
   effects: {
-    20: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    40: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    80: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    120: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    140: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    180: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    240: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    280: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    320: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    },
-    440: {
-      value: '',
-      damage: { value: 0 },
-      fatigue: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      affectsInmaterial: { value: false }
-    }
+    20: createInitialPsychicEffect(),
+    40: createInitialPsychicEffect(),
+    80: createInitialPsychicEffect(),
+    120: createInitialPsychicEffect(),
+    140: createInitialPsychicEffect(),
+    180: createInitialPsychicEffect(),
+    240: createInitialPsychicEffect(),
+    280: createInitialPsychicEffect(),
+    320: createInitialPsychicEffect(),
+    440: createInitialPsychicEffect()
   },
   actionType: { value: PsychicPowerActionTypes.ACTIVE },
   combatType: { value: PsychicPowerCombatTypes.ATTACK },

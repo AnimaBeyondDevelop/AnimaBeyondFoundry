@@ -32,6 +32,8 @@ export default class ABFItemSheet extends ItemSheetV1 {
     switch (this.item?.type) {
       case ABFItems.SPELL:
         return 700;
+      case ABFItems.INVOCATION:
+        return 650;
       case ABFItems.ARMOR:
         return 1000;
       case ABFItems.WEAPON:
@@ -47,6 +49,8 @@ export default class ABFItemSheet extends ItemSheetV1 {
     switch (this.item?.type) {
       case ABFItems.SPELL:
         return 450;
+      case ABFItems.INVOCATION:
+        return 520;
       case ABFItems.WEAPON:
         return 300;
       case ABFItems.ARMOR:
@@ -139,6 +143,17 @@ export default class ABFItemSheet extends ItemSheetV1 {
   async _render(force, options = {}) {
     if (!this.item || !this.item.type) {
       return super._render(force, options);
+    }
+
+    if (this.item.type === ABFItems.ENTITY_POWER) {
+      const { EntityPowerConfigDialog } = await import(
+        '../dialogs/EntityPowerConfigDialog.js'
+      );
+      new EntityPowerConfigDialog(this.item.actor, {
+        entityPowerId: this.item.id,
+        item: this.item
+      }).render(true);
+      return;
     }
 
     if (this.item.type !== ABFItems.EFFECT) {

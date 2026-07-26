@@ -6,6 +6,8 @@ import { ContactItemConfig } from '../../../types/general/ContactItemConfig';
 import { CreatureItemConfig } from '../../../types/domine/CreatureItemConfig';
 import { DisadvantageItemConfig } from '../../../types/general/DisadvantageItemConfig';
 import { SpellItemConfig } from '../../../types/mystic/SpellItemConfig';
+import { InvocationItemConfig } from '../../../types/mystic/InvocationItemConfig';
+import { EntityPowerItemConfig } from '../../../types/mystic/EntityPowerItemConfig';
 import { ElanItemConfig } from '../../../types/general/ElanItemConfig';
 import { InnatePsychicPowerItemConfig } from '../../../types/psychic/InnatePsychicPowerItemConfig';
 import { KiSkillItemConfig } from '../../../types/domine/KiSkillItemConfig';
@@ -24,7 +26,6 @@ import { InnateMagicViaItemConfig } from '../../../types/mystic/InnateMagicViaIt
 import { PreparedSpellItemConfig } from '../../../types/mystic/PreparedSpellItemConfig';
 import { SpecialSkillItemConfig } from '../../../types/domine/SpecialSkillItemConfig';
 import { SpellMaintenanceItemConfig } from '../../../types/mystic/SpellMaintenanceItemConfig';
-import { SummonItemConfig } from '../../../types/mystic/SummonItemConfig';
 import { TechniqueItemConfig } from '../../../types/domine/TechniqueItemConfig';
 import { TitleItemConfig } from '../../../types/general/TitleItemConfig';
 import { WeaponItemConfig } from '../../../types/combat/WeaponItemConfig';
@@ -56,7 +57,6 @@ export const INTERNAL_ITEM_CONFIGURATIONS = {
   [PreparedSpellItemConfig.type]: PreparedSpellItemConfig,
   [ActViaItemConfig.type]: ActViaItemConfig,
   [InnateMagicViaItemConfig.type]: InnateMagicViaItemConfig,
-  [SummonItemConfig.type]: SummonItemConfig,
   [TitleItemConfig.type]: TitleItemConfig,
   [InventoryItemItemConfig.type]: InventoryItemItemConfig
 };
@@ -68,6 +68,9 @@ export const ITEM_CONFIGURATIONS = {
   [SupernaturalShieldItemConfig.type]: SupernaturalShieldItemConfig,
   [DisadvantageItemConfig.type]: DisadvantageItemConfig,
   [SpellItemConfig.type]: SpellItemConfig,
+  // Entity powers before invocations so parent onAttach can resolve children.
+  [EntityPowerItemConfig.type]: EntityPowerItemConfig,
+  [InvocationItemConfig.type]: InvocationItemConfig,
   [MentalPatternItemConfig.type]: MentalPatternItemConfig,
   [NoteItemConfig.type]: NoteItemConfig,
   [PsychicDisciplineItemConfig.type]: PsychicDisciplineItemConfig,

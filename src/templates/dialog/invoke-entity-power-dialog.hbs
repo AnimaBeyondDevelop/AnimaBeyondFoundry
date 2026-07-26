@@ -1,0 +1,17 @@
+<form class="abf-invoke-entity-power-dialog">
+  <div class="form-group">
+    <label>{{localize "dialogs.mod.content"}}</label>
+    <input type="number" name="mod" value="0" step="1" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.ritualTime.title"}}</label>
+    <select name="ritualTime">
+      {{#each ritualTimes as |ritual key|}}
+        <option value="{{key}}" {{#if (is 'eq' key ../defaultRitualTime)}}selected{{/if}}>
+          {{localize ritual.label}} ({{#if (is 'gt' ritual.modifier 0)}}+{{/if}}{{ritual.modifier}})
+        </option>
+      {{/each}}
+    </select>
+  </div>
+</form>

@@ -104,7 +104,7 @@ img {
 
       &.contracted {
         &.contract-footer {
-          .group-footer {
+          > .group-footer {
             display: none !important;
 
             * {
@@ -113,7 +113,8 @@ img {
           }
         }
 
-        .group-body {
+        // Direct child only so nested contractible groups keep independent fold state
+        > .group-body {
           display: none !important;
 
           * {

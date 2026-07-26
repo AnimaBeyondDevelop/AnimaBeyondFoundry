@@ -1,0 +1,312 @@
+<form class="abf-entity-power-config">
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.difficulty.title"}}</label>
+    <input type="number" name="difficulty" value="{{difficulty}}" step="1" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.cost.title"}}</label>
+    <input type="number" name="cost" value="{{cost}}" step="1" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.actionType.title"}}</label>
+    <select name="actionType">
+      <option value=""></option>
+      {{#each actionTypes as |label key|}}
+        <option value="{{key}}" {{#if (is 'eq' ../actionType key)}}selected{{/if}}>
+          {{localize label}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.powerType.title"}}</label>
+    <select name="powerType">
+      <option value=""></option>
+      {{#each powerTypes as |label key|}}
+        <option value="{{key}}" {{#if (is 'eq' ../powerType key)}}selected{{/if}}>
+          {{localize label}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group scaled-stat">
+    <label>{{localize "anima.ui.mystic.entityPower.attackAbility.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="attackAbility"
+        value="{{attackAbility}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="attackAbilityScaleAmount"
+        value="{{attackAbilityScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="attackAbilityScalePer"
+        value="{{attackAbilityScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+
+  <div class="form-group scaled-stat">
+    <label>{{localize "anima.ui.mystic.entityPower.defenseAbility.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="defenseAbility"
+        value="{{defenseAbility}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="defenseAbilityScaleAmount"
+        value="{{defenseAbilityScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="defenseAbilityScalePer"
+        value="{{defenseAbilityScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+
+  {{#if isAttack}}
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.spell.grade.isArea.title"}}</label>
+    <input type="checkbox" name="isArea" {{checked isArea}} />
+  </div>
+
+  <div class="form-group scaled-stat area-field" {{#unless isArea}}style="display:none"{{/unless}}>
+    <label>{{localize "anima.ui.mystic.spell.grade.area.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="area"
+        value="{{area}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="areaScaleAmount"
+        value="{{areaScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="areaScalePer"
+        value="{{areaScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+  {{else}}
+  <input type="hidden" name="isArea" value="{{#if isArea}}on{{/if}}" />
+  <input type="hidden" name="area" value="{{area}}" />
+  <input type="hidden" name="areaScaleAmount" value="{{areaScaleAmount}}" />
+  <input type="hidden" name="areaScalePer" value="{{areaScalePer}}" />
+  {{/if}}
+
+  <div class="form-group scaled-stat">
+    <label>{{localize "anima.ui.mystic.spell.grade.damage.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="damage"
+        value="{{damage}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="damageScaleAmount"
+        value="{{damageScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="damageScalePer"
+        value="{{damageScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+
+  {{#if isAttack}}
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.spell.critic.title"}}</label>
+    <select name="critic">
+      {{#each criticTypes as |label key|}}
+        <option value="{{key}}" {{#if (is 'eq' ../critic key)}}selected{{/if}}>
+          {{localize label}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group scaled-stat">
+    <label>{{localize "anima.ui.combat.weapons.reducedArmor.final.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="reducedArmor"
+        value="{{reducedArmor}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="reducedArmorScaleAmount"
+        value="{{reducedArmorScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="reducedArmorScalePer"
+        value="{{reducedArmorScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.combat.weapons.ignoreArmor.title"}}</label>
+    <input type="checkbox" name="ignoreArmor" {{checked ignoreArmor}} />
+  </div>
+  {{else}}
+  <input type="hidden" name="critic" value="{{critic}}" />
+  <input type="hidden" name="reducedArmor" value="{{reducedArmor}}" />
+  <input type="hidden" name="reducedArmorScaleAmount" value="{{reducedArmorScaleAmount}}" />
+  <input type="hidden" name="reducedArmorScalePer" value="{{reducedArmorScalePer}}" />
+  <input type="hidden" name="ignoreArmor" value="{{#if ignoreArmor}}on{{/if}}" />
+  {{/if}}
+
+  <div class="form-group scaled-stat">
+    <label>{{localize "macros.combat.dialog.critBonus.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="critBonus"
+        value="{{critBonus}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="critBonusScaleAmount"
+        value="{{critBonusScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="critBonusScalePer"
+        value="{{critBonusScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "macros.combat.dialog.automaticCrit.title"}}</label>
+    <input type="checkbox" name="automaticCrit" {{checked automaticCrit}} />
+  </div>
+
+  <div class="form-group scaled-stat">
+    <label>{{localize "anima.ui.mystic.spell.grade.shieldPoints.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="shieldPoints"
+        value="{{shieldPoints}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="shieldPointsScaleAmount"
+        value="{{shieldPointsScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="shieldPointsScalePer"
+        value="{{shieldPointsScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+
+  {{> dialog/parts/resistance-check-fields}}
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.description.title"}}</label>
+    <input type="text" name="description" value="{{description}}" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.duration.title"}}</label>
+    <input type="text" name="duration" value="{{duration}}" />
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.mystic.entityPower.appearance.title"}}</label>
+    <input type="text" name="appearance" value="{{appearance}}" />
+  </div>
+
+  <p class="scaled-stat-hint">{{localize "anima.ui.mystic.entityPower.scale.hint"}}</p>
+
+  <footer class="sheet-footer flexrow">
+    <button type="submit">
+      <i class="fas fa-save"></i>
+      {{localize "dialogs.save"}}
+    </button>
+  </footer>
+</form>

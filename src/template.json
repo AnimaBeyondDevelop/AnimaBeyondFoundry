@@ -706,9 +706,10 @@
         "spells": [],
         "spellMaintenances": [],
         "selectedSpells": [],
-        "summons": [],
         "metamagics": [],
-        "preparedSpells": []
+        "preparedSpells": [],
+        "invocations": [],
+        "entityPowers": []
       },
       "domine": {
         "kiSkills": [],
@@ -896,7 +897,9 @@
       "psychicPower",
       "technique",
       "weapon",
-      "effect"
+      "effect",
+      "invocation",
+      "entityPower"
     ],
     "ammo": {
       "amount": {
@@ -1114,7 +1117,10 @@
           },
           "resistanceEffect": {
             "value": 0,
-            "type": ""
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "intermediate": {
@@ -1153,7 +1159,10 @@
           },
           "resistanceEffect": {
             "value": 0,
-            "type": ""
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "advanced": {
@@ -1192,7 +1201,10 @@
           },
           "resistanceEffect": {
             "value": 0,
-            "type": ""
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "arcane": {
@@ -1231,7 +1243,10 @@
           },
           "resistanceEffect": {
             "value": 0,
-            "type": ""
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         }
       }
@@ -1274,6 +1289,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "40": {
@@ -1298,6 +1320,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "80": {
@@ -1322,6 +1351,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "120": {
@@ -1346,6 +1382,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "140": {
@@ -1370,6 +1413,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "180": {
@@ -1394,6 +1444,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "240": {
@@ -1418,6 +1475,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "280": {
@@ -1442,6 +1506,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "320": {
@@ -1466,6 +1537,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         },
         "440": {
@@ -1490,6 +1568,13 @@
           },
           "affectsInmaterial": {
             "value": false
+          },
+          "resistanceEffect": {
+            "value": 0,
+            "types": [],
+            "selection": "highest",
+            "application": "onHit",
+            "allowComposure": false
           }
         }
       },
@@ -1748,6 +1833,119 @@
         "value": "generic"
       },
       "modifiers": []
+    },
+    "invocation": {
+      "pact": {
+        "value": ""
+      },
+      "description": {
+        "value": ""
+      },
+      "initialInvocationCost": {
+        "value": 0
+      },
+      "initialInvocationDifficulty": {
+        "value": 0
+      }
+    },
+    "entityPower": {
+      "invocationId": {
+        "value": ""
+      },
+      "difficulty": {
+        "value": 0
+      },
+      "cost": {
+        "value": 0
+      },
+      "actionType": {
+        "value": "active"
+      },
+      "powerType": {
+        "value": "attack"
+      },
+      "attackAbility": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "defenseAbility": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "damage": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "area": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "isArea": {
+        "value": false
+      },
+      "shieldPoints": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "critic": {
+        "value": "-"
+      },
+      "reducedArmor": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "ignoreArmor": {
+        "value": false
+      },
+      "critBonus": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        }
+      },
+      "automaticCrit": {
+        "value": false
+      },
+      "resistance": {
+        "value": 0,
+        "scale": {
+          "amount": 0,
+          "per": 10
+        },
+        "types": [],
+        "selection": "highest",
+        "application": "onHit",
+        "allowComposure": false
+      },
+      "description": {
+        "value": ""
+      },
+      "duration": {
+        "value": ""
+      },
+      "appearance": {
+        "value": ""
+      },
+      "hotbarMacroCreatorId": "entityPower.invoke"
     }
   }
 }

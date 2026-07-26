@@ -583,9 +583,10 @@ export const INITIAL_ACTOR_DATA = {
     spells: [],
     spellMaintenances: [],
     selectedSpells: [],
-    summons: [],
     metamagics: [],
-    preparedSpells: []
+    preparedSpells: [],
+    invocations: [],
+    entityPowers: []
   },
 
   domine: {

@@ -2,6 +2,7 @@ import { ABFItems } from '../../items/ABFItems';
 import { openSimpleInputDialog } from '../../utils/dialogs/openSimpleInputDialog';
 import { NoneWeaponCritic } from '../combat/WeaponItemConfig.js';
 import { ABFItemConfigFactory } from '../ABFItemConfig';
+import { createFixedResistanceCheck } from '../common/resistanceCheck.js';
 
 /**
  * An object that contains information about the zeon points, whether the spell can be cast (prepared or innate), if and how the spell has been casted, and whether the casting rules should be overridden.
@@ -37,6 +38,28 @@ export const SpellGradeNames = {
   ADVANCED: 'anima.ui.mystic.spell.grade.advanced.title',
   ARCANE: 'anima.ui.mystic.spell.grade.arcane.title'
 };
+
+/**
+ * @param {string} gradeNameKey
+ */
+function createInitialSpellGrade(gradeNameKey) {
+  return {
+    name: { value: gradeNameKey },
+    intRequired: { value: 0 },
+    maintenanceCost: { value: 0 },
+    zeon: { value: 0 },
+    description: { value: '' },
+    damage: { value: 0 },
+    area: { value: 0 },
+    isArea: { value: false },
+    shieldPoints: { value: 0 },
+    reducedArmor: { value: 0 },
+    critBonus: { value: 0 },
+    automaticCrit: { value: false },
+    resistanceEffect: createFixedResistanceCheck(0)
+  };
+}
+
 export const INITIAL_MYSTIC_SPELL_DATA = {
   description: '',
   level: { value: 0 },
@@ -50,74 +73,10 @@ export const INITIAL_MYSTIC_SPELL_DATA = {
   macro: '',
   hotbarMacroCreatorId: 'spell.cast',
   grades: {
-    base: {
-      name: { value: SpellGradeNames.BASE },
-      intRequired: { value: 0 },
-      maintenanceCost: { value: 0 },
-      zeon: { value: 0 },
-      description: { value: '' },
-      damage: { value: 0 },
-      area: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      resistanceEffect: {
-        value: 0,
-        type: ''
-      }
-    },
-    intermediate: {
-      name: { value: SpellGradeNames.INTERMEDIATE },
-      intRequired: { value: 0 },
-      maintenanceCost: { value: 0 },
-      zeon: { value: 0 },
-      description: { value: '' },
-      damage: { value: 0 },
-      area: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      resistanceEffect: {
-        value: 0,
-        type: ''
-      }
-    },
-    advanced: {
-      name: { value: SpellGradeNames.ADVANCED },
-      intRequired: { value: 0 },
-      maintenanceCost: { value: 0 },
-      zeon: { value: 0 },
-      description: { value: '' },
-      damage: { value: 0 },
-      area: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      resistanceEffect: {
-        value: 0,
-        type: ''
-      }
-    },
-    arcane: {
-      name: { value: SpellGradeNames.ARCANE },
-      intRequired: { value: 0 },
-      maintenanceCost: { value: 0 },
-      zeon: { value: 0 },
-      description: { value: '' },
-      damage: { value: 0 },
-      area: { value: 0 },
-      shieldPoints: { value: 0 },
-      reducedArmor: { value: 0 },
-      critBonus: { value: 0 },
-      automaticCrit: { value: false },
-      resistanceEffect: {
-        value: 0,
-        type: ''
-      }
-    }
+    base: createInitialSpellGrade(SpellGradeNames.BASE),
+    intermediate: createInitialSpellGrade(SpellGradeNames.INTERMEDIATE),
+    advanced: createInitialSpellGrade(SpellGradeNames.ADVANCED),
+    arcane: createInitialSpellGrade(SpellGradeNames.ARCANE)
   }
 };
 /** @type {import("../Items").SpellItemConfig} */

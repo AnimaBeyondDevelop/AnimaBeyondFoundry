@@ -68,6 +68,7 @@
               descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.description.value")
               damageInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.damage.value")
               shieldPointsInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.shieldPoints.value")
+              areaInputName=(concat "system.dynamic.spells." spell._id ".system.grades.base.area.value")
               spellCombatType=spell.system.combatType.value
               gradeName='base'
               grade=spell.system.grades.base
@@ -83,6 +84,7 @@
               descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.description.value")
               damageInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.damage.value")
               shieldPointsInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.shieldPoints.value")
+              areaInputName=(concat "system.dynamic.spells." spell._id ".system.grades.intermediate.area.value")
               spellCombatType=spell.system.combatType.value
               gradeName='intermediate'
               grade=spell.system.grades.intermediate
@@ -98,6 +100,7 @@
               descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.description.value")
               damageInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.damage.value")
               shieldPointsInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.shieldPoints.value")
+              areaInputName=(concat "system.dynamic.spells." spell._id ".system.grades.advanced.area.value")
               spellCombatType=spell.system.combatType.value
               gradeName='advanced'
               grade=spell.system.grades.advanced
@@ -113,6 +116,7 @@
               descriptionInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.description.value")
               damageInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.damage.value")
               shieldPointsInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.shieldPoints.value")
+              areaInputName=(concat "system.dynamic.spells." spell._id ".system.grades.arcane.area.value")
               spellCombatType=spell.system.combatType.value
               gradeName='arcane'
               grade=spell.system.grades.arcane
@@ -136,6 +140,16 @@
                 inputName=(concat "system.dynamic.spells." spell._id ".system.actionType.value")
                 inputValue=spell.system.actionType.value
               }}
+              {{#if (is 'eq' spell.system.combatType.value 'attack')}}
+              {{>
+              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                class="critic"
+                choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
+                title=(localize "anima.ui.mystic.spell.critic.title")
+                inputName=(concat "system.dynamic.spells." spell._id ".system.critic.value")
+                inputValue=spell.system.critic.value
+              }}
+              {{/if}}
               {{>
               'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
                 class="has-daily-maintenance"

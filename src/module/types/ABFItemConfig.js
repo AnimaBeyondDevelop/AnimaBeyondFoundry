@@ -16,21 +16,42 @@ export function ABFItemConfigFactory(minimal) {
   return {
     getFromDynamicChanges(changes) {
       const path = ['system', 'dynamic', ...this.fieldPath.slice(-1)];
-      return path.reduce((field, nextKey) => field[nextKey], changes);
+      return path.reduce((field, nextKey) => field?.[nextKey], changes);
     },
     cleanFieldPath(actor) {
       if (this.isInternal) return;
-      const currentItems = actor.itemTypes[this.type];
+      if (!this.fieldPath.length) return;
+
+      const currentItems = actor.itemTypes?.[this.type] ?? [];
       const path = ['system', ...this.fieldPath];
       const lastKey = path.pop();
       if (!lastKey) return;
-      const parentField = path.reduce((field, nextKey) => field[nextKey], actor);
-      parentField[lastKey] = parentField[lastKey].filter(i => currentItems.includes(i));
+
+      const parentField = path.reduce((field, nextKey) => field?.[nextKey], actor);
+      if (!parentField || typeof parentField !== 'object') return;
+
+      const current = Array.isArray(parentField[lastKey]) ? parentField[lastKey] : [];
+      parentField[lastKey] = current.filter(i => currentItems.includes(i));
     },
     addToFieldPath(actor, item) {
+      if (!this.fieldPath.length) return;
+
       const path = ['system', ...this.fieldPath];
       const lastKey = path.pop();
-      const parentField = path.reduce((field, nextKey) => field[nextKey], actor);
+      if (!lastKey) return;
+
+      let parentField = actor;
+      for (const nextKey of path) {
+        if (!parentField[nextKey] || typeof parentField[nextKey] !== 'object') {
+          parentField[nextKey] = {};
+        }
+        parentField = parentField[nextKey];
+      }
+
+      if (!Array.isArray(parentField[lastKey])) {
+        parentField[lastKey] = [];
+      }
+
       const index = parentField[lastKey].findIndex(i => i._id === item._id);
       if (index === -1) {
         parentField[lastKey].push(item);
@@ -42,11 +63,19 @@ export function ABFItemConfigFactory(minimal) {
       if (!this.isInternal) {
         this.cleanFieldPath(actor);
 
-        const path = ['system', ...this.fieldPath];
-        const lastKey = path.pop();
-        if (lastKey) {
-          const parentField = path.reduce((field, nextKey) => field[nextKey], actor);
-          parentField[lastKey] = [];
+        if (this.fieldPath.length) {
+          const path = ['system', ...this.fieldPath];
+          const lastKey = path.pop();
+          if (lastKey) {
+            let parentField = actor;
+            for (const nextKey of path) {
+              if (!parentField[nextKey] || typeof parentField[nextKey] !== 'object') {
+                parentField[nextKey] = {};
+              }
+              parentField = parentField[nextKey];
+            }
+            parentField[lastKey] = [];
+          }
         }
       }
 

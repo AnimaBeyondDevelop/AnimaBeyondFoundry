@@ -1,0 +1,106 @@
+{{!--
+  Reusable resistance-check fields for dialogs.
+  Expects data from resistanceCheckToFormFields() plus:
+    resistanceTypeOptions, resistanceSelectionModes, resistanceApplicationModes,
+    resistanceScalable, resistanceFieldPrefix (default "resistance")
+--}}
+<section class="resistance-check-fields" data-resistance-prefix="{{resistanceFieldPrefix}}">
+  <h3 class="resistance-check-title">
+    {{localize "anima.ui.resistanceCheck.title"}}
+  </h3>
+
+  {{#if resistanceScalable}}
+  <div class="form-group scaled-stat">
+    <label>{{localize "anima.ui.resistanceCheck.difficulty.title"}}</label>
+    <div class="scaled-stat-inputs">
+      <input
+        type="number"
+        name="{{resistanceFieldPrefix}}Difficulty"
+        value="{{resistanceDifficulty}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.base.title'}}"
+      />
+      <span class="scaled-stat-op">+</span>
+      <input
+        type="number"
+        name="{{resistanceFieldPrefix}}DifficultyScaleAmount"
+        value="{{resistanceDifficultyScaleAmount}}"
+        step="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.amount.title'}}"
+      />
+      <span class="scaled-stat-op">/</span>
+      <input
+        type="number"
+        name="{{resistanceFieldPrefix}}DifficultyScalePer"
+        value="{{resistanceDifficultyScalePer}}"
+        step="1"
+        min="1"
+        title="{{localize 'anima.ui.mystic.entityPower.scale.per.title'}}"
+      />
+    </div>
+  </div>
+  {{else}}
+  <div class="form-group">
+    <label>{{localize "anima.ui.resistanceCheck.difficulty.title"}}</label>
+    <input
+      type="number"
+      name="{{resistanceFieldPrefix}}Difficulty"
+      value="{{resistanceDifficulty}}"
+      step="1"
+    />
+  </div>
+  {{/if}}
+
+  <div class="form-group resistance-types">
+    <label>{{localize "anima.ui.resistanceCheck.types.title"}}</label>
+    <div class="resistance-type-checks">
+      {{#each resistanceTypeOptions as |label key|}}
+        <label class="resistance-type-check">
+          <input
+            type="checkbox"
+            class="resistance-type-checkbox"
+            name="{{../resistanceFieldPrefix}}Type_{{key}}"
+            {{#if (lookup ../resistanceTypes key)}}checked{{/if}}
+          />
+          <span>{{localize label}}</span>
+        </label>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "anima.ui.resistanceCheck.application.title"}}</label>
+    <select name="{{resistanceFieldPrefix}}Application">
+      {{#each resistanceApplicationModes as |label key|}}
+        <option value="{{key}}" {{#if (is 'eq' ../resistanceApplication key)}}selected{{/if}}>
+          {{localize label}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div
+    class="form-group resistance-selection-field"
+    {{#unless resistanceHasMultipleTypes}}style="display:none"{{/unless}}
+  >
+    <label>{{localize "anima.ui.resistanceCheck.selection.title"}}</label>
+    <select name="{{resistanceFieldPrefix}}Selection">
+      {{#each resistanceSelectionModes as |label key|}}
+        <option value="{{key}}" {{#if (is 'eq' ../resistanceSelection key)}}selected{{/if}}>
+          {{localize label}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label title="{{localize 'anima.ui.resistanceCheck.allowComposure.hint'}}">
+      {{localize "anima.ui.resistanceCheck.allowComposure.title"}}
+    </label>
+    <input
+      type="checkbox"
+      name="{{resistanceFieldPrefix}}AllowComposure"
+      {{checked resistanceAllowComposure}}
+    />
+  </div>
+</section>

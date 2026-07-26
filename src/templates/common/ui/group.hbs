@@ -1,14 +1,15 @@
-<div class='common-group {{this.class}} {{#if this.contractible}}contractible-group {{#if (is 'eq' (lookup xRoot.system.ui.contractibleItems this.contractibleItemId) true)}}contracted{{/if}} {{#if this.contractFooter}}contract-footer{{/if}}{{/if}}'>
+<div class='common-group {{this.class}} {{#if this.contractible}}contractible-group {{#if (isContracted (lookup xRoot.system.ui.contractibleItems this.contractibleItemId) this.contractedByDefault)}}contracted{{/if}} {{#if this.contractFooter}}contract-footer{{/if}}{{/if}}'>
   {{#if this.contractible}}
     <img
-      class='contractible-button {{#if (is 'eq' (lookup xRoot.system.ui.contractibleItems this.contractibleItemId) true)}}contracted{{/if}}'
+      class='contractible-button {{#if (isContracted (lookup xRoot.system.ui.contractibleItems this.contractibleItemId) this.contractedByDefault)}}contracted{{/if}}'
       data-contractible-item-id='{{this.contractibleItemId}}'
+      data-contracted-by-default='{{this.contractedByDefault}}'
       src='/systems/animabf/assets/icons/own/expand-up.png'
     />
     <input
       type='hidden'
       name='system.ui.contractibleItems.{{this.contractibleItemId}}'
-      value={{lookup xRoot.system.ui.contractibleItems this.contractibleItemId}}
+      value={{isContracted (lookup xRoot.system.ui.contractibleItems this.contractibleItemId) this.contractedByDefault}}
     />
   {{/if}}
 

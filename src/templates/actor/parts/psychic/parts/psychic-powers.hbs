@@ -59,10 +59,13 @@
           {{#> "systems/animabf/templates/common/ui/group-body.hbs"
             class="psychic-power"
           }}
-          <div class='effect-row{{#unless (is "eq" power.system.combatType.value "attack")}}{{#unless (is "eq" power.system.combatType.value "defense")}} no-combat-type{{/unless}}{{/unless}}'>
+          <div class='effect-row{{#if (is "eq" power.system.combatType.value "attack")}} attack-combat-type{{else}}{{#if (is "eq" power.system.combatType.value "defense")}} defense-combat-type{{else}} no-combat-type{{/if}}{{/if}}'>
             {{#if (is 'eq' power.system.combatType.value 'attack')}}
               <p class="damage-title">
                 {{localize "anima.ui.mystic.spell.grade.damage.title"}}
+              </p>
+              <p class="area-title">
+                {{localize "anima.ui.mystic.spell.grade.area.title"}}
               </p>
             {{/if}}
             {{#if (is 'eq' power.system.combatType.value 'defense')}}
@@ -75,7 +78,7 @@
             </p>
           </div>
             {{#each power.system.effects as |effect key|}}
-              <div class='effect-row{{#unless (is "eq" power.system.combatType.value "attack")}}{{#unless (is "eq" power.system.combatType.value "defense")}} no-combat-type{{/unless}}{{/unless}}'>
+              <div class='effect-row{{#if (is "eq" power.system.combatType.value "attack")}} attack-combat-type{{else}}{{#if (is "eq" power.system.combatType.value "defense")}} defense-combat-type{{else}} no-combat-type{{/if}}{{/if}}'>
                 <button
                   type="button"
                   class="input difficulty psychic-cast-button"
@@ -94,6 +97,19 @@
                     inputName=(concat "system.dynamic.psychicPowers." power._id ".system.effects." key ".damage.value")
                     inputValue=effect.damage.value
                   }}
+                  {{#if effect.isArea.value}}
+                  {{>
+                  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                    class="area"
+                    hideTitle=true
+                    title=(localize "anima.ui.mystic.spell.grade.area.title")
+                    inputType="text"
+                    inputName=(concat "system.dynamic.psychicPowers." power._id ".system.effects." key ".area.value")
+                    inputValue=effect.area.value
+                  }}
+                  {{else}}
+                  <div class="area area-placeholder"></div>
+                  {{/if}}
                 {{/if}}
                 {{#if (is 'eq' power.system.combatType.value 'defense')}}
                   {{>

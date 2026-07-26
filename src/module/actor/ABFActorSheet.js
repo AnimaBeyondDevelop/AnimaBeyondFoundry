@@ -307,13 +307,22 @@ export default class ABFActorSheet extends ActorSheetV1 {
 
   _activateContractibleButtons(html) {
     html.find('.contractible-button').click(e => {
-      const { contractibleItemId } = e.currentTarget.dataset;
+      e.preventDefault();
+      e.stopPropagation();
+
+      const { contractibleItemId, contractedByDefault } = e.currentTarget.dataset;
       if (!contractibleItemId) return;
 
       const { ui } = this.actor.system;
+      const stored = ui.contractibleItems?.[contractibleItemId];
+      const currentlyContracted =
+        stored === undefined
+          ? contractedByDefault === 'true'
+          : !!stored;
+
       ui.contractibleItems = {
         ...ui.contractibleItems,
-        [contractibleItemId]: !ui.contractibleItems[contractibleItemId]
+        [contractibleItemId]: !currentlyContracted
       };
 
       this.actor.update({ system: { ui } });
@@ -326,6 +335,10 @@ export default class ABFActorSheet extends ActorSheetV1 {
       this._onDragStart(ev);
     };
 
+    // Fresh registry each activate — used to close sibling menus on open
+    // when stopPropagation would otherwise leave another menu visible.
+    this._commonContextMenus = [];
+
     for (const item of Object.values(ALL_ITEM_CONFIGURATIONS)) {
       this.buildCommonContextualMenu(item);
 
@@ -334,8 +347,8 @@ export default class ABFActorSheet extends ActorSheetV1 {
         row.addEventListener('dragstart', handler, false);
       });
 
-      html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(() => {
-        item.onCreate(this.actor);
+      html.find(`[data-on-click="${item.selectors.addItemButtonSelector}"]`).click(ev => {
+        item.onCreate(this.actor, ev.currentTarget.dataset.parentId);
       });
     }
   }
@@ -636,16 +649,61 @@ export default class ABFActorSheet extends ActorSheetV1 {
       });
     }
 
-    const ContextMenuImpl = foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
+    const ContextMenuImpl =
+      foundry.applications?.ux?.ContextMenu?.implementation ?? ContextMenu;
     const isV14 = !!foundry.applications?.ux?.ContextMenu?.implementation;
-    return new ContextMenuImpl(
+    const parent =
       this.element instanceof HTMLElement
         ? this.element.querySelector(containerSelector)
-        : this.element.find(containerSelector)[0],
-      rowSelector,
-      [...otherItems],
-      ...(isV14 ? [{ jQuery: false }] : [])
-    );
+        : this.element.find(containerSelector)[0];
+
+    const menu = new ContextMenuImpl(parent, rowSelector, [...otherItems], {
+      fixed: true,
+      // v14+: place at cursor; ignored on earlier cores (patched below).
+      relative: 'cursor',
+      ...(isV14 ? { jQuery: false } : {})
+    });
+
+    (this._commonContextMenus ??= []).push(menu);
+
+    const closeSiblingMenus = () => {
+      for (const other of this._commonContextMenus ?? []) {
+        if (other === menu || !other.element) continue;
+        void other.close?.({ animate: false });
+      }
+    };
+
+    const previousOnOpen = menu.onOpen?.bind(menu);
+    menu.onOpen = (...args) => {
+      closeSiblingMenus();
+      return previousOnOpen?.(...args);
+    };
+
+    // v13 (and any core without relative:"cursor") still anchors to the target.
+    // Prefer the click coordinates whenever the opening event has them.
+    const setFixedPosition = menu._setFixedPosition?.bind(menu);
+    if (setFixedPosition) {
+      menu._setFixedPosition = (menuEl, target, options = {}) => {
+        setFixedPosition(menuEl, target, options);
+        const ev = options.event;
+        if (!menuEl || !ev || !Number.isFinite(ev.clientX) || !Number.isFinite(ev.clientY)) {
+          return;
+        }
+        const pad = 2;
+        const left = Math.max(
+          pad,
+          Math.min(ev.clientX, window.innerWidth - menuEl.offsetWidth - pad)
+        );
+        const top = Math.max(
+          pad,
+          Math.min(ev.clientY, window.innerHeight - menuEl.offsetHeight - pad)
+        );
+        menuEl.style.left = `${left}px`;
+        menuEl.style.top = `${top}px`;
+      };
+    }
+
+    return menu;
   };
 
   _getLinkedEffect(item) {

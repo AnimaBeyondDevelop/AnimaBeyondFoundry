@@ -83,4 +83,126 @@
       }
     }
   }
+
+  &.entity-power-config-dialog,
+  &.spell-grade-config-dialog,
+  &.psychic-effect-config-dialog {
+    .window-content {
+      align-items: stretch;
+    }
+
+    .abf-entity-power-config,
+    .abf-spell-grade-config,
+    .abf-psychic-effect-config {
+      .form-group {
+        display: grid;
+        grid-template-columns: 11rem minmax(0, 1fr);
+        column-gap: 0.75rem;
+        align-items: center;
+        margin: 0.4rem 0;
+
+        > label {
+          margin: 0;
+          white-space: nowrap;
+        }
+
+        > input[type='text'],
+        > input[type='number'],
+        > select {
+          width: 100%;
+          max-width: 14rem;
+          justify-self: start;
+        }
+
+        > input[type='checkbox'] {
+          width: auto;
+          justify-self: start;
+        }
+
+        &.scaled-stat {
+          .scaled-stat-inputs {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+            justify-self: start;
+
+            > input[type='number'] {
+              width: 4.25rem;
+              max-width: none;
+            }
+
+            .scaled-stat-op {
+              opacity: 0.7;
+              font-weight: 600;
+            }
+          }
+        }
+
+        &.resistance-types {
+          align-items: start;
+
+          .resistance-type-checks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.75rem;
+            justify-self: start;
+          }
+
+          .resistance-type-check {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
+            font-weight: normal;
+
+            input[type='checkbox'] {
+              width: auto;
+              margin: 0;
+            }
+          }
+        }
+      }
+
+      .scaled-stat-hint {
+        margin: 0.75rem 0 0.25rem;
+        font-size: 0.85em;
+        opacity: 0.8;
+      }
+
+      .resistance-check-fields {
+        margin: 0.75rem 0;
+        padding-top: 0.35rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+        .resistance-check-title {
+          margin: 0 0 0.5rem;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+
+  &.invoke-entity-power-dialog,
+  .abf-invoke-entity-power-dialog {
+    .form-group {
+      display: grid;
+      grid-template-columns: 11rem minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: center;
+      margin: 0.4rem 0;
+
+      > label {
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      > input,
+      > select {
+        width: 100%;
+        max-width: 16rem;
+        justify-self: start;
+      }
+    }
+  }
 }

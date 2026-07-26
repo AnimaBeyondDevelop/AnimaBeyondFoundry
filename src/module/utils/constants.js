@@ -65,7 +65,10 @@ export const Templates = {
     SpellShieldConfigDialog: T('dialog/spell-shield-config-dialog.hbs'),
     SpellAttackConfigDialog: T('dialog/spell-attack-config-dialog.hbs'),
     SpellGradeConfigDialog: T('dialog/spell-grade-config-dialog.hbs'),
-    PsychicEffectConfigDialog: T('dialog/psychic-effect-config-dialog.hbs')
+    PsychicEffectConfigDialog: T('dialog/psychic-effect-config-dialog.hbs'),
+    EntityPowerConfigDialog: T('dialog/entity-power-config-dialog.hbs'),
+    InvokeEntityPowerDialog: T('dialog/invoke-entity-power-dialog.hbs'),
+    ResistanceCheckFields: T('dialog/parts/resistance-check-fields.hbs')
   },
 
   CustomHotBar: T('custom-hotbar/custom-hotbar.hbs'),
@@ -207,8 +210,8 @@ export const Templates = {
       SpellMaintenances: T('actor/parts/mystic/parts/spell-maintenances.hbs'),
       SelectedSpells: T('actor/parts/mystic/parts/selected-spells.hbs'),
       PreparedSpells: T('actor/parts/mystic/parts/prepared-spells.hbs'),
-      Summons: T('actor/parts/mystic/parts/summons.hbs'),
-      Metamagics: T('actor/parts/mystic/parts/metamagics.hbs')
+      Metamagics: T('actor/parts/mystic/parts/metamagics.hbs'),
+      Invocations: T('actor/parts/mystic/parts/invocations.hbs')
     },
 
     Domine: {
@@ -291,5 +294,6 @@ export const HandlebarsPartials = {
     Templates.Dialog.Combat.DefenseConfigDialog.parts.fatigueFields,
   'actor/parts/settings/parts/massSettings': Templates.Actor.Settings.MassSettings,
   'actor/parts/settings/parts/diceSettings': Templates.Actor.Settings.DiceSettings,
-  'dialog/combat/mass-attack-bonus-fields': Templates.Dialog.Combat.MassAttackBonusFields
+  'dialog/combat/mass-attack-bonus-fields': Templates.Dialog.Combat.MassAttackBonusFields,
+  'dialog/parts/resistance-check-fields': Templates.Dialog.ResistanceCheckFields
 };

@@ -11,6 +11,16 @@
 
   {{#if isAttack}}
   <div class="form-group">
+    <label>{{localize "anima.ui.mystic.spell.grade.isArea.title"}}</label>
+    <input type="checkbox" name="isArea" {{checked isArea}} />
+  </div>
+
+  <div class="form-group area-field" {{#unless isArea}}style="display:none"{{/unless}}>
+    <label>{{localize "anima.ui.mystic.spell.grade.area.title"}}</label>
+    <input type="text" name="area" value="{{area}}" />
+  </div>
+
+  <div class="form-group">
     <label>{{localize "anima.ui.mystic.spell.grade.damage.title"}}</label>
     <input type="number" name="damage" value="{{damage}}" step="1" />
   </div>
@@ -42,6 +52,8 @@
     <input type="number" name="shieldPoints" value="{{shieldPoints}}" step="1" />
   </div>
   {{/if}}
+
+  {{> dialog/parts/resistance-check-fields}}
 
   <footer class="sheet-footer flexrow">
     <button type="submit">

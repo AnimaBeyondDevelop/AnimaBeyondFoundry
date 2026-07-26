@@ -1,4 +1,9 @@
 import { Templates } from '../utils/constants.js';
+import { ABFConfig } from '../ABFConfig.js';
+import {
+  resistanceCheckDialogData,
+  resistanceCheckFromFormData
+} from '../types/common/resistanceCheck.js';
 
 /**
  * Secondary editor for a single spell grade.
@@ -20,7 +25,7 @@ export class SpellGradeConfigDialog extends FormApplication {
       id: 'abf-spell-grade-config',
       classes: ['animabf-dialog', 'spell-grade-config-dialog'],
       template: Templates.Dialog.SpellGradeConfigDialog,
-      width: 420,
+      width: 540,
       closeOnSubmit: true,
       submitOnChange: false,
       resizable: true
@@ -47,23 +52,44 @@ export class SpellGradeConfigDialog extends FormApplication {
       maintenanceCost: grade.maintenanceCost?.value ?? 0,
       description: grade.description?.value ?? '',
       area: grade.area?.value ?? 0,
+      isArea: !!grade.isArea?.value,
       damage: Number(grade.damage?.value ?? 0) || 0,
       shieldPoints: Number(grade.shieldPoints?.value ?? 0) || 0,
       reducedArmor: Number(grade.reducedArmor?.value ?? 0) || 0,
       critBonus: Number(grade.critBonus?.value ?? 0) || 0,
-      automaticCrit: !!grade.automaticCrit?.value
+      automaticCrit: !!grade.automaticCrit?.value,
+      ...resistanceCheckDialogData(grade.resistanceEffect, ABFConfig)
     };
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find('input[name="isArea"]').on('change', event => {
+      html.find('.area-field').toggle(!!event.currentTarget.checked);
+    });
+
+    const syncResistanceSelectionVisibility = () => {
+      const checked = html.find('.resistance-type-checkbox:checked').length;
+      html.find('.resistance-selection-field').toggle(checked > 1);
+    };
+    html.find('.resistance-type-checkbox').on('change', syncResistanceSelectionVisibility);
   }
 
   async _updateObject(_event, formData) {
     const prefix = `system.grades.${this.gradeKey}`;
     const combatType = this.item?.system?.combatType?.value ?? '';
+    const isArea = formData.isArea === 'on' || formData.isArea === true;
     const update = {
       [`${prefix}.intRequired.value`]: Number(formData.intRequired ?? 0) || 0,
       [`${prefix}.zeon.value`]: Number(formData.zeon ?? 0) || 0,
       [`${prefix}.maintenanceCost.value`]: formData.maintenanceCost ?? 0,
       [`${prefix}.description.value`]: String(formData.description ?? ''),
-      [`${prefix}.area.value`]: formData.area ?? 0
+      [`${prefix}.isArea.value`]: isArea,
+      [`${prefix}.area.value`]: formData.area ?? 0,
+      [`${prefix}.resistanceEffect`]: resistanceCheckFromFormData(formData, {
+        prefix: 'resistance',
+        scalable: false
+      })
     };
 
     if (combatType === 'attack') {

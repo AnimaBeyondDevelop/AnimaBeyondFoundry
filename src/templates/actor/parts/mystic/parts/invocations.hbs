@@ -1,0 +1,293 @@
+{{#> "systems/animabf/templates/common/ui/group.hbs"
+  class="invocations"
+}}
+  {{>
+  "systems/animabf/templates/common/ui/group-header.hbs"
+    title=(localize "anima.ui.mystic.invocations.title")
+    addRowButtonData="add-invocation"
+  }}
+  {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+    class="invocations"
+  }}
+    {{#each system.mystic.invocations as |invocation|}}
+      <div class='invocation-row'>
+        {{!--
+          Keep .invocation-base as a sibling region to .entity-power-row (Elan pattern).
+          Nesting powers inside the invocation menu target made both ContextMenus fight
+          and forced a fragile capturePriority dismiss that ate Edit/Delete clicks.
+        --}}
+        {{#> "systems/animabf/templates/common/ui/group.hbs"
+          class="invocation"
+          contractible=true
+          contractibleItemId=invocation._id
+        }}
+          {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+            <div class='invocation-base' data-item-id='{{invocation._id}}'>
+              <div class='invocation-header'>
+                <div class='first-row'>
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="name"
+                    hideTitle=true
+                    inputType="text"
+                    inputName=(concat "system.dynamic.invocations." invocation._id ".name")
+                    inputValue=invocation.name
+                  }}
+                </div>
+                <div class='second-row'>
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="initial-invocation-cost"
+                    title=(localize "anima.ui.mystic.invocation.initialInvocationCost.title")
+                    inputName=(concat "system.dynamic.invocations." invocation._id ".system.initialInvocationCost.value")
+                    inputValue=invocation.system.initialInvocationCost.value
+                  }}
+                  {{>
+                  "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                    class="initial-invocation-difficulty"
+                    title=(localize "anima.ui.mystic.invocation.initialInvocationDifficulty.title")
+                    inputName=(concat "system.dynamic.invocations." invocation._id ".system.initialInvocationDifficulty.value")
+                    inputValue=invocation.system.initialInvocationDifficulty.value
+                  }}
+                </div>
+              </div>
+            </div>
+          {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+            class="invocation"
+          }}
+            {{#> "systems/animabf/templates/common/ui/group.hbs"
+              class="invocation-pact"
+              contractible=true
+              contractedByDefault=true
+              contractibleItemId=(concat invocation._id "-pact")
+            }}
+              {{>
+              "systems/animabf/templates/common/ui/group-header.hbs"
+                title=(localize "anima.ui.mystic.invocation.pact.title")
+              }}
+              {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+                class="invocation-pact"
+              }}
+                {{editor invocation.system.enrichedPact target=(concat "system.dynamic.invocations." invocation._id ".system.pact.value") button=true owner=true editable=true}}
+              {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+            {{/"systems/animabf/templates/common/ui/group.hbs"}}
+
+            {{#> "systems/animabf/templates/common/ui/group.hbs"
+              class="invocation-description"
+              contractible=true
+              contractedByDefault=true
+              contractibleItemId=(concat invocation._id "-description")
+            }}
+              {{>
+              "systems/animabf/templates/common/ui/group-header.hbs"
+                title=(localize "anima.ui.mystic.invocation.description.title")
+              }}
+              {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+                class="invocation-description"
+              }}
+                {{editor invocation.system.enrichedDescription target=(concat "system.dynamic.invocations." invocation._id ".system.description.value") button=true owner=true editable=true}}
+              {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+            {{/"systems/animabf/templates/common/ui/group.hbs"}}
+
+            {{#> "systems/animabf/templates/common/ui/group.hbs"
+              class="entity-powers"
+              contractible=true
+              contractibleItemId=(concat invocation._id "-powers")
+            }}
+              {{>
+              "systems/animabf/templates/common/ui/group-header.hbs"
+                title=(localize "anima.ui.mystic.invocation.powers.title")
+                addRowButtonData="add-entity-power"
+                addRowButtonParentId=invocation._id
+              }}
+              {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+                class="entity-powers"
+              }}
+                {{#each invocation.system.powers as |power|}}
+                  <div
+                    class='entity-power-row'
+                    data-item-id='{{power._id}}'
+                    data-invocation-id='{{invocation._id}}'
+                    data-entity-power-id='{{power._id}}'
+                  >
+                    <input
+                      type='hidden'
+                      name='system.dynamic.entityPower.{{power._id}}.system.invocationId.value'
+                      value='{{invocation._id}}'
+                    />
+                    {{#> "systems/animabf/templates/common/ui/group.hbs"
+                      class="entity-power"
+                      contractible=true
+                      contractibleItemId=power._id
+                    }}
+                      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+                        <div class='entity-power-header'>
+                          <div class='first-row'>
+                            {{>
+                            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                              class="name"
+                              hideTitle=true
+                              inputType="text"
+                              inputName=(concat "system.dynamic.entityPower." power._id ".name")
+                              inputValue=power.name
+                            }}
+                          </div>
+                          <div class='second-row'>
+                            {{>
+                            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                              class="cost"
+                              title=(localize "anima.ui.mystic.entityPower.cost.title")
+                              inputName=(concat "system.dynamic.entityPower." power._id ".system.cost.value")
+                              inputValue=power.system.cost.value
+                            }}
+                            {{>
+                            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+                              class="difficulty"
+                              title=(localize "anima.ui.mystic.entityPower.difficulty.title")
+                              inputName=(concat "system.dynamic.entityPower." power._id ".system.difficulty.value")
+                              inputValue=power.system.difficulty.value
+                            }}
+                            {{>
+                            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                              class="action-type"
+                              choices=xRoot.config.iterables.mystic.entityPowerActionTypes
+                              title=(localize "anima.ui.mystic.entityPower.actionType.title")
+                              inputName=(concat "system.dynamic.entityPower." power._id ".system.actionType.value")
+                              inputValue=power.system.actionType.value
+                            }}
+                            {{>
+                            'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                              class="power-type"
+                              choices=xRoot.config.iterables.mystic.entityPowerTypes
+                              title=(localize "anima.ui.mystic.entityPower.powerType.title")
+                              inputName=(concat "system.dynamic.entityPower." power._id ".system.powerType.value")
+                              inputValue=power.system.powerType.value
+                            }}
+                          </div>
+                        </div>
+                      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+                      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+                        class="entity-power"
+                      }}
+                        {{#> "systems/animabf/templates/common/ui/group.hbs"
+                          class="entity-power-description"
+                          contractible=true
+                          contractedByDefault=true
+                          contractibleItemId=(concat power._id "-description")
+                        }}
+                          {{>
+                          "systems/animabf/templates/common/ui/group-header.hbs"
+                            title=(localize "anima.ui.mystic.entityPower.description.title")
+                          }}
+                          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+                            class="entity-power-description"
+                          }}
+                            {{editor power.system.enrichedDescription target=(concat "system.dynamic.entityPower." power._id ".system.description.value") button=true owner=true editable=true}}
+                          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+                        {{/"systems/animabf/templates/common/ui/group.hbs"}}
+
+                        {{#> "systems/animabf/templates/common/ui/group.hbs"
+                          class="entity-power-appearance"
+                          contractible=true
+                          contractedByDefault=true
+                          contractibleItemId=(concat power._id "-appearance")
+                        }}
+                          {{>
+                          "systems/animabf/templates/common/ui/group-header.hbs"
+                            title=(localize "anima.ui.mystic.entityPower.appearance.title")
+                          }}
+                          {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+                            class="entity-power-appearance"
+                          }}
+                            {{editor power.system.enrichedAppearance target=(concat "system.dynamic.entityPower." power._id ".system.appearance.value") button=true owner=true editable=true}}
+                          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+                        {{/"systems/animabf/templates/common/ui/group.hbs"}}
+                      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+                      {{#> "systems/animabf/templates/common/ui/group-footer.hbs"}}
+                        <div class='entity-power-footer'>
+                          <div class='entity-power-footer-stats'>
+                            {{#if (is 'eq' power.system.powerType.value 'attack')}}
+                              {{>
+                              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                                class="attack-ability"
+                                title=(localize "anima.ui.mystic.entityPower.attackAbility.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.attackAbility.value")
+                                inputValue=power.system.attackAbility.value
+                              }}
+                              {{>
+                              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                                class="damage"
+                                title=(localize "anima.ui.mystic.spell.grade.damage.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.damage.value")
+                                inputValue=power.system.damage.value
+                              }}
+                              {{>
+                              'systems/animabf/templates/common/ui/custom-select-choices.hbs'
+                                class="critic"
+                                isVertical=true
+                                choices=xRoot.config.iterables.combat.weapon.criticTypesWithNone
+                                title=(localize "anima.ui.mystic.spell.critic.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.critic.value")
+                                inputValue=power.system.critic.value
+                              }}
+                              {{#if power.system.isArea.value}}
+                              {{>
+                              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                                class="area"
+                                title=(localize "anima.ui.mystic.spell.grade.area.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.area.value")
+                                inputValue=power.system.area.value
+                              }}
+                              {{/if}}
+                            {{/if}}
+                            {{#if (is 'eq' power.system.powerType.value 'defense')}}
+                              {{>
+                              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                                class="defense-ability"
+                                title=(localize "anima.ui.mystic.entityPower.defenseAbility.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.defenseAbility.value")
+                                inputValue=power.system.defenseAbility.value
+                              }}
+                              {{>
+                              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                                class="shield-points"
+                                title=(localize "anima.ui.mystic.spell.grade.shieldPoints.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.shieldPoints.value")
+                                inputValue=power.system.shieldPoints.value
+                              }}
+                            {{/if}}
+                            {{#if power.system.hasResistanceCheck}}
+                              {{>
+                              "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+                                class="resistance-difficulty"
+                                title=(localize "anima.ui.resistanceCheck.difficulty.title")
+                                inputName=(concat "system.dynamic.entityPower." power._id ".system.resistance.value")
+                                inputValue=power.system.resistance.value
+                              }}
+                            {{/if}}
+                          </div>
+                          <div class='entity-power-footer-actions'>
+                            <button
+                              type="button"
+                              class="invoke-button"
+                              data-on-click="invokeEntityPower"
+                              data-invocation-id="{{invocation._id}}"
+                              data-entity-power-id="{{power._id}}"
+                            >
+                              {{localize "anima.ui.mystic.entityPower.invoke.button.title"}}
+                            </button>
+                          </div>
+                        </div>
+                      {{/"systems/animabf/templates/common/ui/group-footer.hbs"}}
+                    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+                  </div>
+                {{/each}}
+              {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+            {{/"systems/animabf/templates/common/ui/group.hbs"}}
+          {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+        {{/"systems/animabf/templates/common/ui/group.hbs"}}
+      </div>
+    {{/each}}
+  {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+{{/"systems/animabf/templates/common/ui/group.hbs"}}

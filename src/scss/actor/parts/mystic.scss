@@ -287,27 +287,6 @@
     }
     // Prepared Spells
 
-    // Summons
-    .summons {
-      .summon-row:first-child {
-        margin-top: 0;
-      }
-
-      .summon-row {
-        margin-top: 0.75rem;
-
-        .input {
-          border-radius: $border-radius;
-          background: $light-cream;
-          font-weight: bold;
-          padding: 0.25rem 1rem;
-
-          width: 100%;
-        }
-      }
-    }
-    // Summons
-
     // Metamagics
     .metamagics {
       .metamagic-row:first-child {
@@ -425,7 +404,9 @@
 
           .int-required,
           .zeon,
-          .maintenance-cost {
+          .maintenance-cost,
+          .damage,
+          .area {
             .input-container {
               width: 3rem;
             }
@@ -451,6 +432,12 @@
           .input {
             height: 1.5rem;
           }
+          .critic {
+            .input {
+              height: 1.5rem;
+              padding: 0.15rem 0.5rem;
+            }
+          }
           .has-daily-maintenance {
             .input-container {
               width: 1rem;
@@ -460,5 +447,230 @@
       }
     }
     // Spells
+  }
+
+  .mystic-invocations-tab {
+    .invocations {
+      & > .group-body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .invocation-row {
+        width: calc(50% - 1rem);
+        height: 100%;
+
+        border-radius: $border-radius;
+        box-shadow: $card-box-shadow;
+
+        margin: 0.5rem;
+
+        .input {
+          height: 1.25rem;
+        }
+
+        .invocation-base {
+          width: 100%;
+        }
+
+        .invocation-header {
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+          width: 100%;
+
+          .first-row {
+            width: 100%;
+
+            .name .input-container {
+              width: 100%;
+            }
+          }
+
+          .second-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+
+            .initial-invocation-cost,
+            .initial-invocation-difficulty {
+              .input {
+                height: 1.5rem;
+              }
+
+              .input-container {
+                width: 3.5rem;
+              }
+            }
+          }
+        }
+
+        .invocation-pact,
+        .invocation-description {
+          width: 100%;
+          margin-top: 0.35rem;
+          padding: 0 0.5rem;
+
+          .editor {
+            @include input;
+            font-weight: inherit;
+            height: 8rem;
+            width: 100%;
+            margin-top: 0;
+            border-radius: 0.5rem;
+          }
+        }
+
+        .entity-powers {
+          width: 100%;
+          padding: 0.5rem;
+          margin-top: 0.5rem;
+
+          .entity-power-row {
+            margin-top: 0.5rem;
+            width: 100%;
+            border-radius: $border-radius;
+            box-shadow: $card-box-shadow;
+          }
+
+          .entity-power {
+            .group-footer {
+              align-items: stretch;
+              min-height: auto;
+              padding-bottom: 0.5rem;
+            }
+
+            .input {
+              height: 1.5rem;
+              line-height: 1.2;
+              box-sizing: border-box;
+            }
+
+            select.input {
+              height: 1.75rem;
+              padding-top: 0.15rem;
+              padding-bottom: 0.15rem;
+            }
+          }
+
+          .entity-power-header {
+            width: 100%;
+            padding: 0 0.5rem;
+
+            .first-row {
+              width: 100%;
+
+              .name .input-container {
+                width: 100%;
+              }
+            }
+
+            .second-row {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 0.35rem;
+              flex-wrap: wrap;
+              padding-bottom: 0.25rem;
+
+              .cost,
+              .difficulty {
+                .input-container {
+                  width: 3rem;
+                  height: 1.75rem;
+                }
+              }
+
+              .action-type,
+              .power-type {
+                .input-container,
+                select.input {
+                  min-width: 5.5rem;
+                  height: 1.75rem;
+                }
+              }
+            }
+          }
+
+          .entity-power-description,
+          .entity-power-appearance {
+            width: 100%;
+            margin-top: 0.35rem;
+
+            .editor {
+              @include input;
+              font-weight: inherit;
+              height: 8rem;
+              width: 100%;
+              margin-top: 0;
+              border-radius: 0.5rem;
+            }
+          }
+
+          .entity-power-footer {
+            width: 100%;
+            padding: 1.5rem 0.5rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .entity-power-footer-stats {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+
+              .common-titled-input.vertical {
+                .label {
+                  line-height: 1.2;
+                  margin-bottom: 0.15rem;
+                  overflow: visible;
+                  white-space: nowrap;
+                }
+
+                .input-container {
+                  height: 1.75rem;
+                }
+              }
+
+              .attack-ability,
+              .defense-ability,
+              .damage,
+              .shield-points,
+              .area,
+              .resistance-difficulty {
+                .input-container {
+                  width: 3.5rem;
+                }
+              }
+
+              .critic {
+                .input {
+                  height: 1.75rem;
+                  width: 4.5rem;
+                  padding: 0.15rem 0.25rem;
+                }
+              }
+            }
+
+            .entity-power-footer-actions {
+              width: 100%;
+              display: flex;
+              justify-content: flex-end;
+
+              .invoke-button {
+                @include button;
+                padding-top: 0;
+                height: 1.7rem;
+                min-width: 6rem;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

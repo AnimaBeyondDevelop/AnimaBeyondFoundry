@@ -48,6 +48,17 @@
     inputName=this.damageInputName
     inputValue=this.grade.damage.value
   }}
+  {{#if this.grade.isArea.value}}
+  {{>
+  "systems/animabf/templates/common/ui/vertical-titled-input.hbs"
+    class="area"
+    hideTitle=this.hideTitle
+    title=(localize "anima.ui.mystic.spell.grade.area.title")
+    inputType="text"
+    inputName=this.areaInputName
+    inputValue=this.grade.area.value
+  }}
+  {{/if}}
   {{/if}}
   {{#if (is 'eq' this.spellCombatType 'defense')}}
   {{>

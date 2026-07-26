@@ -163,10 +163,10 @@
           margin-top: 0.5rem;
 
           .difficulty { width: 3rem; }
-          .damage, .shield-points { width: 100%; } 
+          .damage, .shield-points, .area, .area-placeholder { width: 100%; }
           .description { width: 100%; }
 
-          .damage-title, .shield-points-title { grid-column: 2; margin: 0; font-weight: bold; text-align: center;}
+          .damage-title, .shield-points-title { grid-column: 2; margin: 0; font-weight: bold; text-align: center; }
           .description-title { grid-column: 3; margin: 0; font-weight: bold; text-align: center; }
 
           .input {
@@ -182,6 +182,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+
+          &.attack-combat-type {
+            grid-template-columns: 3rem 3rem 3.5rem 1fr; // dificultad | daño | área | descripción
+
+            .area-title { grid-column: 3; margin: 0; font-weight: bold; text-align: center; }
+            .description-title { grid-column: 4; }
           }
 
           &.no-combat-type {

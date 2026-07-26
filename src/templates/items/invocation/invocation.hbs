@@ -1,0 +1,52 @@
+{{#> "systems/animabf/templates/items/base/base-sheet.hbs"}}
+  {{#> "systems/animabf/templates/common/ui/group.hbs"
+    class="invocation-item-dialog"
+  }}
+    {{#> "systems/animabf/templates/common/ui/group.hbs"
+      class="invocation"
+    }}
+      {{#> "systems/animabf/templates/common/ui/group-header.hbs"}}
+        <div class='invocation-header'>
+          <div class='first-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="name"
+              hideTitle=true
+              inputType="text"
+              inputName="name"
+              inputValue=item.name
+            }}
+          </div>
+          <div class='second-row'>
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="initial-invocation-cost"
+              title=(localize "anima.ui.mystic.invocation.initialInvocationCost.title")
+              inputName="system.initialInvocationCost.value"
+              inputValue=system.initialInvocationCost.value
+            }}
+            {{>
+            "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
+              class="initial-invocation-difficulty"
+              title=(localize "anima.ui.mystic.invocation.initialInvocationDifficulty.title")
+              inputName="system.initialInvocationDifficulty.value"
+              inputValue=system.initialInvocationDifficulty.value
+            }}
+          </div>
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-header.hbs"}}
+      {{#> "systems/animabf/templates/common/ui/group-body.hbs"
+        class="invocation"
+      }}
+        <div class='form-group'>
+          <label>{{localize "anima.ui.mystic.invocation.pact.title"}}</label>
+          {{editor system.enrichedPact target="system.pact.value" button=true owner=true editable=true}}
+        </div>
+        <div class='form-group'>
+          <label>{{localize "anima.ui.mystic.invocation.description.title"}}</label>
+          {{editor system.enrichedDescription target="system.description.value" button=true owner=true editable=true}}
+        </div>
+      {{/"systems/animabf/templates/common/ui/group-body.hbs"}}
+    {{/"systems/animabf/templates/common/ui/group.hbs"}}
+  {{/"systems/animabf/templates/common/ui/group.hbs"}}
+{{/"systems/animabf/templates/items/base/base-sheet.hbs"}}

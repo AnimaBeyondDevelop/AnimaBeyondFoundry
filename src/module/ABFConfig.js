@@ -12,6 +12,12 @@ import {
   PsychicPowerCombatTypes
 } from './types/psychic/PsychicPowerItemConfig.js';
 import { SpellGrades } from './types/mystic/SpellItemConfig';
+import { EntityPowerActionTypes } from './types/mystic/EntityPowerItemConfig.js';
+import {
+  ResistanceTypes,
+  ResistanceSelectionModes,
+  ResistanceApplicationModes
+} from './types/common/resistanceCheck.js';
 
 /** @type {Record<string, object>} */
 export const ABFConfig = {};
@@ -29,6 +35,25 @@ const criticTypes = {
 ABFConfig.ui = {};
 
 ABFConfig.iterables = {
+  resistances: {
+    [ResistanceTypes.PHYSICAL]: 'anima.ui.resistances.physical',
+    [ResistanceTypes.DISEASE]: 'anima.ui.resistances.disease',
+    [ResistanceTypes.POISON]: 'anima.ui.resistances.poison',
+    [ResistanceTypes.MAGIC]: 'anima.ui.resistances.magic',
+    [ResistanceTypes.PSYCHIC]: 'anima.ui.resistances.psychic'
+  },
+  resistanceSelectionModes: {
+    [ResistanceSelectionModes.HIGHEST]:
+      'anima.ui.resistanceCheck.selection.highest.title',
+    [ResistanceSelectionModes.LOWEST]:
+      'anima.ui.resistanceCheck.selection.lowest.title'
+  },
+  resistanceApplicationModes: {
+    [ResistanceApplicationModes.ON_HIT]:
+      'anima.ui.resistanceCheck.application.onHit.title',
+    [ResistanceApplicationModes.AUTOMATIC]:
+      'anima.ui.resistanceCheck.application.automatic.title'
+  },
   combat: {
     weapon: {
       sizes: {
@@ -113,6 +138,17 @@ ABFConfig.iterables = {
       [SpellGrades.INTERMEDIATE]: 'anima.ui.mystic.spell.grade.intermediate.title',
       [SpellGrades.ADVANCED]: 'anima.ui.mystic.spell.grade.advanced.title',
       [SpellGrades.ARCANE]: 'anima.ui.mystic.spell.grade.arcane.title'
+    },
+    entityPowerTypes: {
+      attack: 'anima.ui.mystic.entityPower.powerType.attack.title',
+      defense: 'anima.ui.mystic.entityPower.powerType.defense.title',
+      effect: 'anima.ui.mystic.entityPower.powerType.effect.title'
+    },
+    entityPowerActionTypes: {
+      [EntityPowerActionTypes.ACTIVE]:
+        'anima.ui.mystic.entityPower.actionType.active.title',
+      [EntityPowerActionTypes.PASSIVE]:
+        'anima.ui.mystic.entityPower.actionType.passive.title'
     }
   },
   psychic: {

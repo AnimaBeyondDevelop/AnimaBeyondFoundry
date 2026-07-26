@@ -64,6 +64,10 @@
           zeonInputName="system.grades.base.zeon.value"
           maintenanceCostInputName="system.grades.base.maintenanceCost.value"
           descriptionInputName="system.grades.base.description.value"
+          damageInputName="system.grades.base.damage.value"
+          shieldPointsInputName="system.grades.base.shieldPoints.value"
+          areaInputName="system.grades.base.area.value"
+          spellCombatType=system.combatType.value
           gradeName='base'
           grade=system.grades.base
         }}
@@ -77,6 +81,10 @@
           zeonInputName="system.grades.intermediate.zeon.value"
           maintenanceCostInputName="system.grades.intermediate.maintenanceCost.value"
           descriptionInputName="system.grades.intermediate.description.value"
+          damageInputName="system.grades.intermediate.damage.value"
+          shieldPointsInputName="system.grades.intermediate.shieldPoints.value"
+          areaInputName="system.grades.intermediate.area.value"
+          spellCombatType=system.combatType.value
           gradeName='intermediate'
           grade=system.grades.intermediate
         }}
@@ -90,6 +98,10 @@
           zeonInputName="system.grades.advanced.zeon.value"
           maintenanceCostInputName="system.grades.advanced.maintenanceCost.value"
           descriptionInputName="system.grades.advanced.description.value"
+          damageInputName="system.grades.advanced.damage.value"
+          shieldPointsInputName="system.grades.advanced.shieldPoints.value"
+          areaInputName="system.grades.advanced.area.value"
+          spellCombatType=system.combatType.value
           gradeName='advanced'
           grade=system.grades.advanced
         }}
@@ -103,6 +115,10 @@
           zeonInputName="system.grades.arcane.zeon.value"
           maintenanceCostInputName="system.grades.arcane.maintenanceCost.value"
           descriptionInputName="system.grades.arcane.description.value"
+          damageInputName="system.grades.arcane.damage.value"
+          shieldPointsInputName="system.grades.arcane.shieldPoints.value"
+          areaInputName="system.grades.arcane.area.value"
+          spellCombatType=system.combatType.value
           gradeName='arcane'
           grade=system.grades.arcane
         }}
@@ -137,6 +153,7 @@
             inputName="system.actionType.value"
             inputValue=system.actionType.value
           }}
+          {{#if (is 'eq' system.combatType.value 'attack')}}
           {{>
           'systems/animabf/templates/common/ui/custom-select-choices.hbs'
             class="critic"
@@ -145,8 +162,9 @@
             inputName=(concat "system.critic.value")
             inputValue=system.critic.value
           }}
+          {{/if}}
           {{>
-          'systems/animabf/templates/common/ui/horizontal-titled-input.hbs'
+          "systems/animabf/templates/common/ui/horizontal-titled-input.hbs"
             class="has-daily-maintenance"
             title=(localize "anima.ui.mystic.spell.hasDailyMaintenance.title")
             inputType="checkbox"

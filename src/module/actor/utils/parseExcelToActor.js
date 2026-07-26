@@ -131,10 +131,6 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
     .split(',')
     .map(value => value.trim())
     .filter(element => element !== '');
-  const invocaciones = SetEmptyIfUndefined(excelData.InvocacionesSeleccionadas)
-    .split(',')
-    .map(value => value.trim())
-    .filter(element => element !== '');
   const viasMagia = separarNivelDeVia(
     SetEmptyIfUndefined(excelData.VíasDeMagiaSeleccionadas)
       .split(',')
@@ -474,7 +470,6 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
         mysticSettings: {
           aptitudeForMagicDevelopment: aptoParaElDesarrolloDeLaMagia
         },
-        summons: [],
         metamagics: [],
         spellMaintenances: [],
         selectedSpells: [],
@@ -1073,13 +1068,6 @@ export const parseExcelToActor = async (excelData, actor, options = {}) => {
   //         system: INITIAL_TECHNIQUE_DATA
   //     });
   // };
-
-  for (var i = 0; i < invocaciones.length; i++) {
-    await actor.createInnerItem({
-      name: invocaciones[i],
-      type: ABFItems.SUMMON
-    });
-  }
 
   for (var i = 0; i < conjurosMantenidos.length; i++) {
     let mantenidoSeparado = conjurosMantenidos[i]
